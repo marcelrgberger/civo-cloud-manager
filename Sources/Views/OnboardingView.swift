@@ -397,7 +397,7 @@ struct OnboardingView: View {
         case .welcome: return true
         case .cliCheck: return cliInstalled
         case .authCheck: return authenticated
-        case .region: return true
+        case .region: return !state.currentRegion.isEmpty
         case .firewallDiscovery: return firewallSelections.values.contains(true) && allPortsValid
         case .launchAtLogin: return true
         case .done: return true

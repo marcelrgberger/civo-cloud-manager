@@ -187,7 +187,7 @@ final class CivoAdapter: Sendable {
         let matchingRule = rules.first { rule in
             guard let label = rule.label else { return false }
             let isOurRule = label.hasPrefix(fullLabelPrefix)
-            let matchesCidr = rule.cidr?.contains(cidr) ?? false
+            let matchesCidr = rule.cidr == cidr
             return isOurRule && matchesCidr
         }
 
@@ -195,7 +195,7 @@ final class CivoAdapter: Sendable {
             managed: managed,
             isOpen: matchingRule != nil,
             ruleId: matchingRule?.id,
-            ruleCidr: matchingRule?.cidr?.first
+            ruleCidr: matchingRule?.cidr
         )
     }
 

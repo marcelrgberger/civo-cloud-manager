@@ -18,16 +18,19 @@ struct CivoFirewall: Codable, Identifiable, Sendable {
 }
 
 /// Represents a single firewall rule from `civo firewall rule ls --output json`.
-struct CivoRule: Codable, Sendable {
+/// Note: civo CLI returns `cidr` as either a String or an Array depending on context.
+struct CivoRule: Sendable {
     let id: String
     let label: String?
-    let cidr: [String]?
+    let cidr: String?       // normalized to single string
     let ports: String?
     let startPort: String?
     let endPort: String?
     let direction: String?
     let action: String?
+}
 
+extension CivoRule: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case label
@@ -37,6 +40,26 @@ struct CivoRule: Codable, Sendable {
         case endPort = "end_port"
         case direction
         case action
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        label = try c.decodeIfPresent(String.self, forKey: .label)
+        ports = try c.decodeIfPresent(String.self, forKey: .ports)
+        startPort = try c.decodeIfPresent(String.self, forKey: .startPort)
+        endPort = try c.decodeIfPresent(String.self, forKey: .endPort)
+        direction = try c.decodeIfPresent(String.self, forKey: .direction)
+        action = try c.decodeIfPresent(String.self, forKey: .action)
+
+        // cidr can be a String or an Array of Strings
+        if let s = try? c.decode(String.self, forKey: .cidr) {
+            cidr = s
+        } else if let arr = try? c.decode([String].self, forKey: .cidr), let first = arr.first {
+            cidr = first
+        } else {
+            cidr = nil
+        }
     }
 }
 
