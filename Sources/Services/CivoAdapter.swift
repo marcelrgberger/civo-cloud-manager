@@ -180,12 +180,13 @@ final class CivoAdapter: Sendable {
     private func getFirewallStatus(managed: ManagedFirewall, currentIP: String) async throws -> FirewallStatus {
         let rules = try await getRulesForFirewall(managed.name)
         let cidr = "\(currentIP)/32"
-        let labelPrefix = CivoAccessLabel.prefix
+        let hostname = CivoAccessLabel.hostname
+        let fullLabelPrefix = "\(CivoAccessLabel.prefix)\(hostname)-"
 
-        // Find a rule created by this app that matches the current IP
+        // Find a rule created by THIS machine that matches the current IP
         let matchingRule = rules.first { rule in
             guard let label = rule.label else { return false }
-            let isOurRule = label.hasPrefix(labelPrefix)
+            let isOurRule = label.hasPrefix(fullLabelPrefix)
             let matchesCidr = rule.cidr?.contains(cidr) ?? false
             return isOurRule && matchesCidr
         }
@@ -200,27 +201,30 @@ final class CivoAdapter: Sendable {
 
     // MARK: - Bulk close
 
-    /// Close ALL rules created by this app (matching the label prefix) across managed firewalls.
-    /// Returns number of rules removed.
-    func closeAllManagedRules(managedFirewalls: [ManagedFirewall]) async throws -> Int {
+    /// Close ALL rules created by this machine (matching the full label prefix including hostname) across managed firewalls.
+    /// Returns number of rules removed and the count of failures.
+    func closeAllManagedRules(managedFirewalls: [ManagedFirewall]) async throws -> (removed: Int, failed: Int) {
         var removedCount = 0
-        let labelPrefix = CivoAccessLabel.prefix
+        var failedCount = 0
+        let hostname = CivoAccessLabel.hostname
+        let fullLabelPrefix = "\(CivoAccessLabel.prefix)\(hostname)-"
 
         for managed in managedFirewalls where managed.enabled {
             let rules = try await getRulesForFirewall(managed.name)
-            let ourRules = rules.filter { $0.label?.hasPrefix(labelPrefix) ?? false }
+            let ourRules = rules.filter { $0.label?.hasPrefix(fullLabelPrefix) ?? false }
 
             for rule in ourRules {
                 do {
                     try await closeAccess(firewall: managed.name, ruleId: rule.id)
                     removedCount += 1
                 } catch {
+                    failedCount += 1
                     Log.error("Failed to remove rule \(rule.id) from \(managed.name): \(error.localizedDescription)")
                 }
             }
         }
 
-        Log.info("Closed \(removedCount) civo-access rules total")
-        return removedCount
+        Log.info("Closed \(removedCount) civo-access rules total, \(failedCount) failed")
+        return (removed: removedCount, failed: failedCount)
     }
 }

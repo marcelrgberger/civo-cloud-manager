@@ -3,6 +3,7 @@ import SwiftUI
 struct MenuBarView: View {
     @Bindable var state: AppState
     @Environment(\.openWindow) private var openWindow
+    @State private var hasLoaded = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -26,6 +27,8 @@ struct MenuBarView: View {
         }
         .frame(width: 340)
         .task {
+            guard !hasLoaded else { return }
+            hasLoaded = true
             await state.initialLoad()
             // Auto-open onboarding if setup not complete
             if state.setupState != .ready {

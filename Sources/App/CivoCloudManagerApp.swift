@@ -9,18 +9,6 @@ struct CivoCloudManagerApp: App {
     var body: some Scene {
         MenuBarExtra {
             MenuBarView(state: appState)
-                .onAppear {
-                    // When user clicks the menu bar icon for the first time,
-                    // check if onboarding is needed
-                    if !appState.onboardingComplete && appState.setupState != .ready {
-                        Task { @MainActor in
-                            try? await Task.sleep(for: .milliseconds(500))
-                            openWindow(id: "onboarding")
-                            NSApp.setActivationPolicy(.regular)
-                            NSApp.activate(ignoringOtherApps: true)
-                        }
-                    }
-                }
         } label: {
             Image(systemName: appState.menuBarIcon)
                 .renderingMode(.template)

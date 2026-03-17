@@ -4,6 +4,8 @@ enum IPDetectorError: LocalizedError {
     case noIPReturned
     case invalidIP(String)
     case allProvidersFailed
+    case privateIP(String)
+    case ipv6NotSupported(String)
 
     var errorDescription: String? {
         switch self {
@@ -13,6 +15,10 @@ enum IPDetectorError: LocalizedError {
             return "Invalid IP address: \(ip)"
         case .allProvidersFailed:
             return "All IP detection providers failed"
+        case .privateIP(let ip):
+            return "Detected private IP (\(ip)), not usable for firewall rules. Connect to a public network."
+        case .ipv6NotSupported(let ip):
+            return "IPv6 address detected (\(ip)). Civo firewall rules require IPv4. Connect to an IPv4 network."
         }
     }
 }
@@ -45,17 +51,32 @@ final class IPDetector: Sendable {
                     continue
                 }
 
-                // Basic IPv4 validation
+                // Detect IPv6 (contains colon)
+                if ip.contains(":") {
+                    Log.warning("IPv6 address detected from \(provider): \(ip)")
+                    throw IPDetectorError.ipv6NotSupported(ip)
+                }
+
+                // IPv4 validation
                 let parts = ip.split(separator: ".")
                 if parts.count == 4,
                     parts.allSatisfy({ Int($0) != nil && Int($0)! >= 0 && Int($0)! <= 255 })
                 {
+                    // Check for private/reserved IP ranges
+                    if isPrivateIP(ip) {
+                        Log.warning("Private IP detected from \(provider): \(ip)")
+                        throw IPDetectorError.privateIP(ip)
+                    }
+
                     Log.info("Detected public IP: \(ip) via \(provider)")
                     return ip
                 } else {
                     Log.warning("Invalid IP format from \(provider): \(ip)")
                     continue
                 }
+            } catch let error as IPDetectorError {
+                // Re-throw our own errors immediately (IPv6, private IP)
+                throw error
             } catch {
                 lastError = error
                 Log.warning("IP detection failed for \(provider): \(error.localizedDescription)")
@@ -64,5 +85,27 @@ final class IPDetector: Sendable {
         }
 
         throw lastError
+    }
+
+    /// Check if an IPv4 address is in a private/reserved range.
+    private func isPrivateIP(_ ip: String) -> Bool {
+        let parts = ip.split(separator: ".").compactMap { Int($0) }
+        guard parts.count == 4 else { return false }
+
+        let first = parts[0]
+        let second = parts[1]
+
+        // 127.x.x.x (loopback)
+        if first == 127 { return true }
+        // 10.x.x.x (Class A private)
+        if first == 10 { return true }
+        // 172.16.0.0 - 172.31.255.255 (Class B private)
+        if first == 172 && (16...31).contains(second) { return true }
+        // 192.168.x.x (Class C private)
+        if first == 192 && second == 168 { return true }
+        // 169.254.x.x (link-local)
+        if first == 169 && second == 254 { return true }
+
+        return false
     }
 }

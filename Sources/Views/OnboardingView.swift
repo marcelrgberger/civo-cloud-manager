@@ -246,8 +246,10 @@ struct OnboardingView: View {
 
         let portValue = Binding<Int>(
             get: { firewallPorts[fw.id] ?? 6443 },
-            set: { firewallPorts[fw.id] = $0 }
+            set: { firewallPorts[fw.id] = max(1, min(65535, $0)) }
         )
+
+        let portIsValid = isPortValid(for: fw.id)
 
         return HStack(spacing: 12) {
             Toggle("", isOn: isSelected)
@@ -265,14 +267,21 @@ struct OnboardingView: View {
             Spacer()
 
             if isSelected.wrappedValue {
-                HStack(spacing: 4) {
-                    Text("Port:")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    TextField("Port", value: portValue, format: .number)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 70)
-                        .font(.caption.monospaced())
+                VStack(alignment: .trailing, spacing: 2) {
+                    HStack(spacing: 4) {
+                        Text("Port:")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        TextField("Port", value: portValue, format: .number)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 70)
+                            .font(.caption.monospaced())
+                    }
+                    if !portIsValid {
+                        Text("Port must be 1-65535")
+                            .font(.caption2)
+                            .foregroundStyle(.red)
+                    }
                 }
             }
         }
@@ -282,6 +291,19 @@ struct OnboardingView: View {
             RoundedRectangle(cornerRadius: 6)
                 .fill(isSelected.wrappedValue ? Color.accentColor.opacity(0.08) : Color.clear)
         )
+    }
+
+    private func isPortValid(for firewallId: String) -> Bool {
+        let port = firewallPorts[firewallId] ?? 6443
+        return port >= 1 && port <= 65535
+    }
+
+    /// Check if all enabled firewalls have valid ports
+    private var allPortsValid: Bool {
+        for (fwId, selected) in firewallSelections where selected {
+            if !isPortValid(for: fwId) { return false }
+        }
+        return true
     }
 
     // MARK: - Launch at Login
@@ -372,7 +394,7 @@ struct OnboardingView: View {
         case .cliCheck: return cliInstalled
         case .authCheck: return authenticated
         case .region: return true
-        case .firewallDiscovery: return firewallSelections.values.contains(true)
+        case .firewallDiscovery: return firewallSelections.values.contains(true) && allPortsValid
         case .launchAtLogin: return true
         case .done: return true
         }

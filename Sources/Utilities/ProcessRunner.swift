@@ -25,10 +25,15 @@ final class ProcessRunner: @unchecked Sendable {
     }
 
     /// Run a process fully off the cooperative thread pool using a dedicated Thread.
+    /// Reads stdout and stderr concurrently to prevent pipe buffer deadlock.
+    /// On timeout, terminates the process before resuming the continuation.
     func run(_ executable: String, arguments: [String], timeout: TimeInterval = 120) async throws -> Result {
         let sem = DispatchSemaphore(value: 0)
         var processResult: Result?
         var processError: Error?
+
+        // Hold a reference to the process so we can terminate it on timeout
+        let processHolder = ProcessHolder()
 
         let thread = Thread {
             let process = Process()
@@ -52,8 +57,29 @@ final class ProcessRunner: @unchecked Sendable {
                 return
             }
 
-            let stdoutData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
-            let stderrData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
+            processHolder.process = process
+
+            // Read stdout and stderr CONCURRENTLY to prevent pipe buffer deadlock.
+            // If one pipe's buffer fills up while we're blocking on the other,
+            // the child process stalls and we deadlock.
+            var stdoutData = Data()
+            var stderrData = Data()
+
+            let readGroup = DispatchGroup()
+
+            readGroup.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                stdoutData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
+                readGroup.leave()
+            }
+
+            readGroup.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                stderrData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
+                readGroup.leave()
+            }
+
+            readGroup.wait()
             process.waitUntilExit()
 
             let stdout = String(data: stdoutData, encoding: .utf8)?
@@ -71,6 +97,11 @@ final class ProcessRunner: @unchecked Sendable {
             DispatchQueue.global(qos: .userInitiated).async {
                 let waitResult = sem.wait(timeout: .now() + timeout)
                 if waitResult == .timedOut {
+                    // Terminate the timed-out process before resuming
+                    if let process = processHolder.process, process.isRunning {
+                        process.terminate()
+                        Log.warning("Terminated timed-out process: \(executable)")
+                    }
                     continuation.resume(throwing: ProcessRunnerError.timeout(seconds: Int(timeout)))
                 } else if let error = processError {
                     continuation.resume(throwing: error)
@@ -99,4 +130,9 @@ final class ProcessRunner: @unchecked Sendable {
         }
         return "/usr/bin/\(name)"
     }
+}
+
+/// Thread-safe holder for a Process reference, used to terminate on timeout.
+private final class ProcessHolder: @unchecked Sendable {
+    var process: Process?
 }

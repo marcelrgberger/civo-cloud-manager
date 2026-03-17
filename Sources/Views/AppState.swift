@@ -46,6 +46,7 @@ final class AppState {
 
     var launchAtLogin: Bool {
         didSet {
+            guard !isRevertingLaunchAtLogin else { return }
             UserDefaults.standard.set(launchAtLogin, forKey: UDKey.launchAtLogin)
             updateLaunchAtLogin()
         }
@@ -59,6 +60,8 @@ final class AppState {
     private let civoAdapter = CivoAdapter()
     private let ipDetector = IPDetector()
     private var refreshTimer: Timer?
+    private var refreshTask: Task<Void, Never>?
+    private var isRevertingLaunchAtLogin = false
 
     // MARK: - Computed properties
 
@@ -140,6 +143,12 @@ final class AppState {
             }
         } catch {
             Log.error("Launch at login toggle failed: \(error.localizedDescription)")
+            // Revert the toggle on failure (use flag to prevent infinite recursion via didSet)
+            isRevertingLaunchAtLogin = true
+            launchAtLogin = !launchAtLogin
+            UserDefaults.standard.set(launchAtLogin, forKey: UDKey.launchAtLogin)
+            isRevertingLaunchAtLogin = false
+            self.error = "Launch at login failed: \(error.localizedDescription)"
         }
     }
 
@@ -151,7 +160,6 @@ final class AppState {
         // Check CLI installed
         guard civoAdapter.isCLIInstalled() else {
             setupState = .cliMissing
-            if !onboardingComplete { showOnboarding = true }
             return
         }
 
@@ -159,14 +167,12 @@ final class AppState {
         let authed = await civoAdapter.isAuthenticated()
         guard authed else {
             setupState = .unauthenticated
-            if !onboardingComplete { showOnboarding = true }
             return
         }
 
         // Check if user has configured firewalls
         if enabledFirewalls.isEmpty {
             setupState = .needsFirewallSelection
-            if !onboardingComplete { showOnboarding = true }
             return
         }
 
@@ -174,6 +180,10 @@ final class AppState {
     }
 
     func discoverFirewalls() async {
+        // Clear stale data before fetching so errors don't leave old results
+        discoveredFirewalls = []
+        currentRegion = ""
+
         do {
             discoveredFirewalls = try await civoAdapter.discoverFirewalls()
             currentRegion = try await civoAdapter.getCurrentRegion()
@@ -197,6 +207,12 @@ final class AppState {
 
     func initialLoad() async {
         await checkSetup()
+
+        // Trigger onboarding AFTER checkSetup completes, not during
+        if setupState != .ready && !onboardingComplete {
+            showOnboarding = true
+        }
+
         guard setupState == .ready else { return }
         await refresh()
         startAutoRefresh()
@@ -243,9 +259,8 @@ final class AppState {
         defer { isLoading = false }
 
         do {
-            if currentIP == "..." {
-                currentIP = try await ipDetector.detectIP()
-            }
+            // Always re-detect IP before opening to avoid stale IP rules
+            currentIP = try await ipDetector.detectIP()
             let label = CivoAccessLabel.make(firewallName: managed.name)
             try await civoAdapter.openAccess(
                 firewall: managed.name,
@@ -289,9 +304,8 @@ final class AppState {
         defer { isLoading = false }
 
         do {
-            if currentIP == "..." {
-                currentIP = try await ipDetector.detectIP()
-            }
+            // Always re-detect IP before opening to avoid stale IP rules
+            currentIP = try await ipDetector.detectIP()
 
             for managed in enabledFirewalls {
                 let existing = firewalls.first { $0.id == managed.id }
@@ -323,8 +337,11 @@ final class AppState {
         defer { isLoading = false }
 
         do {
-            let count = try await civoAdapter.closeAllManagedRules(managedFirewalls: enabledFirewalls)
-            Log.info("Closed \(count) rules")
+            let result = try await civoAdapter.closeAllManagedRules(managedFirewalls: enabledFirewalls)
+            Log.info("Closed \(result.removed) rules, \(result.failed) failed")
+            if result.failed > 0 {
+                self.error = "Failed to remove \(result.failed) rule\(result.failed == 1 ? "" : "s")"
+            }
             try? await Task.sleep(for: .seconds(1))
         } catch {
             self.error = error.localizedDescription
@@ -359,7 +376,11 @@ final class AppState {
         refreshTimer?.invalidate()
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in
-                await self?.refresh()
+                // Cancel any previous refresh task before starting a new one
+                self?.refreshTask?.cancel()
+                self?.refreshTask = Task {
+                    await self?.refresh()
+                }
             }
         }
     }
@@ -367,5 +388,7 @@ final class AppState {
     func stopAutoRefresh() {
         refreshTimer?.invalidate()
         refreshTimer = nil
+        refreshTask?.cancel()
+        refreshTask = nil
     }
 }
