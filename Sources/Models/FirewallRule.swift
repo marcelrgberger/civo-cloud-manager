@@ -6,7 +6,9 @@ import Foundation
 struct CivoFirewall: Codable, Identifiable, Sendable {
     let id: String
     let name: String
-    let rulesCount: Int
+    let rulesCount: String  // civo returns this as a string, e.g. "6"
+
+    var rulesCountInt: Int { Int(rulesCount) ?? 0 }
 
     enum CodingKeys: String, CodingKey {
         case id

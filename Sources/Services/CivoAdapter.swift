@@ -75,12 +75,12 @@ final class CivoAdapter: Sendable {
         struct CivoRegion: Decodable {
             let code: String
             let name: String
-            let current: Bool?
+            let current: String?  // "Yes" or "No", not Bool
         }
 
         do {
             let regions = try JSONDecoder().decode([CivoRegion].self, from: data)
-            if let current = regions.first(where: { $0.current == true }) {
+            if let current = regions.first(where: { $0.current?.lowercased() == "yes" }) {
                 return "\(current.name) (\(current.code))"
             }
             // Fallback: if there's only one region, use that
