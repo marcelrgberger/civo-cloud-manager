@@ -9,31 +9,39 @@ struct CivoCloudManagerApp: App {
     var body: some Scene {
         MenuBarExtra {
             MenuBarView(state: appState)
-                .onChange(of: appState.showOnboarding) { _, newValue in
-                    if newValue {
-                        openWindow(id: "onboarding")
-                        appState.showOnboarding = false
+                .onAppear {
+                    // When user clicks the menu bar icon for the first time,
+                    // check if onboarding is needed
+                    if !appState.onboardingComplete && appState.setupState != .ready {
+                        Task { @MainActor in
+                            try? await Task.sleep(for: .milliseconds(500))
+                            openWindow(id: "onboarding")
+                            NSApp.setActivationPolicy(.regular)
+                            NSApp.activate(ignoringOtherApps: true)
+                        }
                     }
                 }
         } label: {
             Image(systemName: appState.menuBarIcon)
                 .renderingMode(.template)
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(appState.menuBarColor)
         }
         .menuBarExtraStyle(.window)
 
         Window("Civo Cloud Manager Setup", id: "onboarding") {
             OnboardingView(state: appState)
+                .onDisappear {
+                    NSApp.setActivationPolicy(.accessory)
+                }
         }
         .windowResizability(.contentSize)
         .defaultPosition(.center)
     }
 }
 
-/// Forces the app to run as a menu-bar-only agent (no Dock icon).
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            NSApp.setActivationPolicy(.accessory)
+        }
     }
 }

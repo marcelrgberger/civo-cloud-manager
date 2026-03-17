@@ -27,6 +27,20 @@ struct MenuBarView: View {
         .frame(width: 340)
         .task {
             await state.initialLoad()
+            // Auto-open onboarding if setup not complete
+            if state.setupState != .ready {
+                NSApp.setActivationPolicy(.regular)
+                openWindow(id: "onboarding")
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        }
+        .onChange(of: state.showOnboarding) { _, show in
+            if show {
+                NSApp.setActivationPolicy(.regular)
+                openWindow(id: "onboarding")
+                NSApp.activate(ignoringOtherApps: true)
+                state.showOnboarding = false
+            }
         }
     }
 
@@ -59,7 +73,9 @@ struct MenuBarView: View {
                 .multilineTextAlignment(.center)
 
             Button("Open Setup...") {
+                NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
+                NSApp.activate(ignoringOtherApps: true)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.small)
@@ -264,7 +280,9 @@ struct MenuBarView: View {
             Spacer()
 
             Button {
+                NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
+                NSApp.activate(ignoringOtherApps: true)
             } label: {
                 Label("Settings...", systemImage: "gear")
             }
