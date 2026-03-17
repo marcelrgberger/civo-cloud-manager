@@ -372,8 +372,12 @@ struct OnboardingView: View {
                 Button("Finish") {
                     applyFirewallSelections()
                     state.completeOnboarding()
+                    // Close the onboarding window
+                    NSApp.keyWindow?.close()
+                    NSApp.setActivationPolicy(.accessory)
                 }
                 .buttonStyle(.borderedProminent)
+                .controlSize(.large)
             } else {
                 Button("Next") {
                     withAnimation {
