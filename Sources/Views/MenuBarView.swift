@@ -2,24 +2,31 @@ import SwiftUI
 
 struct MenuBarView: View {
     @Bindable var state: AppState
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         VStack(spacing: 0) {
             headerSection
             Divider()
-            ipSection
-            Divider()
-            firewallSection
-            Divider()
-            bulkActionsSection
-            Divider()
-            statusSection
+
+            if state.setupState != .ready {
+                setupRequiredSection
+            } else {
+                ipSection
+                Divider()
+                firewallSection
+                Divider()
+                bulkActionsSection
+                Divider()
+                statusSection
+            }
+
             Divider()
             bottomBar
         }
         .frame(width: 340)
         .task {
-            state.initialLoad()
+            await state.initialLoad()
         }
     }
 
@@ -36,6 +43,39 @@ struct MenuBarView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
+    }
+
+    // MARK: - Setup Required
+
+    private var setupRequiredSection: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "gear.badge.xmark")
+                .font(.title2)
+                .foregroundStyle(.orange)
+
+            Text(setupMessage)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+
+            Button("Open Setup...") {
+                openWindow(id: "onboarding")
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.small)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 16)
+    }
+
+    private var setupMessage: String {
+        switch state.setupState {
+        case .checking: return "Checking setup..."
+        case .cliMissing: return "civo CLI is not installed.\nInstall with: brew install civo"
+        case .unauthenticated: return "civo CLI is not authenticated.\nRun: civo apikey save YOUR_KEY --name default"
+        case .needsFirewallSelection: return "No firewalls configured.\nOpen setup to select firewalls."
+        case .ready: return ""
+        }
     }
 
     // MARK: - IP Section
@@ -101,9 +141,9 @@ struct MenuBarView: View {
                 .frame(width: 20)
 
             VStack(alignment: .leading, spacing: 1) {
-                Text(fw.config.displayName)
+                Text(fw.managed.name)
                     .font(.subheadline.weight(.medium))
-                Text("Port \(fw.config.port)")
+                Text("Port \(fw.managed.port)")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
@@ -122,7 +162,7 @@ struct MenuBarView: View {
                 .tint(.orange)
             } else {
                 Button("Open") {
-                    Task { await state.openFirewall(fw.config) }
+                    Task { await state.openFirewall(fw.managed) }
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
@@ -145,7 +185,7 @@ struct MenuBarView: View {
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
-            .disabled(state.isLoading)
+            .disabled(state.isLoading || state.enabledFirewalls.isEmpty)
 
             Button {
                 Task { await state.closeAll() }
@@ -220,6 +260,15 @@ struct MenuBarView: View {
             }
             .buttonStyle(.borderless)
             .disabled(state.isLoading)
+
+            Spacer()
+
+            Button {
+                openWindow(id: "onboarding")
+            } label: {
+                Label("Settings...", systemImage: "gear")
+            }
+            .buttonStyle(.borderless)
 
             Spacer()
 

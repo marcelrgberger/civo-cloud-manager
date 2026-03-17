@@ -33,19 +33,23 @@ final class IPDetector: Sendable {
                 let (data, response) = try await URLSession.shared.data(from: url)
 
                 guard let httpResponse = response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 else {
+                      httpResponse.statusCode == 200
+                else {
                     continue
                 }
 
                 guard let ip = String(data: data, encoding: .utf8)?
                     .trimmingCharacters(in: .whitespacesAndNewlines),
-                      !ip.isEmpty else {
+                    !ip.isEmpty
+                else {
                     continue
                 }
 
                 // Basic IPv4 validation
                 let parts = ip.split(separator: ".")
-                if parts.count == 4, parts.allSatisfy({ Int($0) != nil && Int($0)! >= 0 && Int($0)! <= 255 }) {
+                if parts.count == 4,
+                    parts.allSatisfy({ Int($0) != nil && Int($0)! >= 0 && Int($0)! <= 255 })
+                {
                     Log.info("Detected public IP: \(ip) via \(provider)")
                     return ip
                 } else {

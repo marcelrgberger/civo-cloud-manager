@@ -5,30 +5,55 @@ enum CivoAdapterError: LocalizedError {
     case notAuthenticated
     case parseError(String)
     case operationFailed(String)
+    case noRegion
 
     var errorDescription: String? {
         switch self {
         case .cliNotFound:
             return "civo CLI not found. Install with: brew install civo"
         case .notAuthenticated:
-            return "civo CLI is not authenticated. Run: civo apikey save"
+            return "civo CLI is not authenticated. Run: civo apikey save YOUR_KEY --name default"
         case .parseError(let detail):
             return "Failed to parse civo output: \(detail)"
         case .operationFailed(let detail):
             return "Operation failed: \(detail)"
+        case .noRegion:
+            return "No region configured. Run: civo region use REGION"
         }
+    }
+}
+
+/// The label prefix used to identify rules created by this app.
+/// Full label format: civo-access-HOSTNAME-FIREWALLNAME
+enum CivoAccessLabel {
+    static let prefix = "civo-access-"
+
+    static var hostname: String {
+        Host.current().localizedName?.replacingOccurrences(of: " ", with: "-") ?? "unknown"
+    }
+
+    static func make(firewallName: String) -> String {
+        "\(prefix)\(hostname)-\(firewallName)"
     }
 }
 
 final class CivoAdapter: Sendable {
     private let runner = ProcessRunner()
 
-    /// Check if civo CLI is available and authenticated.
+    // MARK: - Setup checks
+
+    /// Check if civo CLI binary exists.
+    func isCLIInstalled() -> Bool {
+        let path = runner.findExecutable("civo")
+        return FileManager.default.isExecutableFile(atPath: path)
+    }
+
+    /// Check if civo CLI is authenticated (`civo apikey show` succeeds).
     func isAuthenticated() async -> Bool {
         do {
             let result = try await runner.run(
                 runner.findExecutable("civo"),
-                arguments: ["region", "ls", "--output", "json"],
+                arguments: ["apikey", "show"],
                 timeout: 15
             )
             return result.exitCode == 0
@@ -38,51 +63,62 @@ final class CivoAdapter: Sendable {
         }
     }
 
-    /// Get status of all configured firewalls.
-    func getStatus(currentIP: String) async throws -> [FirewallStatus] {
-        var statuses: [FirewallStatus] = []
+    /// Get the current region from `civo region ls --output json`.
+    /// Returns the name of the region marked as default/current.
+    func getCurrentRegion() async throws -> String {
+        let output = try await runner.runCivo(["region", "ls", "--output", "json"])
 
-        for config in Firewalls.all {
-            let status = try await getFirewallStatus(config: config, currentIP: currentIP)
-            statuses.append(status)
+        guard let data = output.data(using: .utf8) else {
+            throw CivoAdapterError.parseError("Invalid UTF-8 output from region ls")
         }
 
-        return statuses
+        struct CivoRegion: Decodable {
+            let code: String
+            let name: String
+            let current: Bool?
+        }
+
+        do {
+            let regions = try JSONDecoder().decode([CivoRegion].self, from: data)
+            if let current = regions.first(where: { $0.current == true }) {
+                return "\(current.name) (\(current.code))"
+            }
+            // Fallback: if there's only one region, use that
+            if let first = regions.first {
+                return "\(first.name) (\(first.code))"
+            }
+            throw CivoAdapterError.noRegion
+        } catch let error as CivoAdapterError {
+            throw error
+        } catch {
+            throw CivoAdapterError.parseError("region parse: \(error.localizedDescription)")
+        }
     }
 
-    /// Get status of a single firewall.
-    private func getFirewallStatus(config: FirewallConfig, currentIP: String) async throws -> FirewallStatus {
-        let rules = try await listRules(firewallName: config.name)
-        let cidr = "\(currentIP)/32"
+    // MARK: - Firewall discovery
 
-        // Find a manual-access rule matching the label prefix and current IP
-        let matchingRule = rules.first { rule in
-            guard let label = rule.label else { return false }
-            let isManualAccess = label.hasPrefix("manual-access-")
-            let matchesCidr = rule.cidr?.contains(cidr) ?? false
-            return isManualAccess && matchesCidr
+    /// Discover all firewalls from the account: `civo firewall ls --output json`.
+    func discoverFirewalls() async throws -> [CivoFirewall] {
+        let output = try await runner.runCivo(["firewall", "ls", "--output", "json"])
+
+        guard let data = output.data(using: .utf8) else {
+            throw CivoAdapterError.parseError("Invalid UTF-8 output from firewall ls")
         }
 
-        // Also check for rules with matching label regardless of IP
-        let labelRule = rules.first { rule in
-            rule.label == config.label
+        do {
+            let firewalls = try JSONDecoder().decode([CivoFirewall].self, from: data)
+            return firewalls
+        } catch {
+            Log.error("JSON parse error for firewall ls: \(error.localizedDescription)")
+            Log.debug("Raw output: \(output)")
+            throw CivoAdapterError.parseError(error.localizedDescription)
         }
-
-        let activeRule = matchingRule ?? labelRule
-
-        return FirewallStatus(
-            id: config.name,
-            config: config,
-            isOpen: activeRule != nil,
-            ruleId: activeRule?.id,
-            ruleCidr: activeRule?.cidr?.first
-        )
     }
 
     /// List all rules for a firewall.
-    private func listRules(firewallName: String) async throws -> [CivoFirewallRule] {
+    func getRulesForFirewall(_ firewallName: String) async throws -> [CivoRule] {
         let output = try await runner.runCivo([
-            "firewall", "rule", "ls", firewallName, "--output", "json"
+            "firewall", "rule", "ls", firewallName, "--output", "json",
         ])
 
         guard let data = output.data(using: .utf8) else {
@@ -90,60 +126,101 @@ final class CivoAdapter: Sendable {
         }
 
         do {
-            let rules = try JSONDecoder().decode([CivoFirewallRule].self, from: data)
+            let rules = try JSONDecoder().decode([CivoRule].self, from: data)
             return rules
         } catch {
-            Log.error("JSON parse error for \(firewallName): \(error.localizedDescription)")
+            Log.error("JSON parse error for \(firewallName) rules: \(error.localizedDescription)")
             Log.debug("Raw output: \(output)")
             throw CivoAdapterError.parseError(error.localizedDescription)
         }
     }
 
-    /// Open firewall access for the given IP.
-    func openAccess(firewall: FirewallConfig, ip: String) async throws {
+    // MARK: - Rule management
+
+    /// Open access for a given firewall, port, and IP.
+    func openAccess(firewall: String, port: Int, ip: String, label: String) async throws {
         let cidr = "\(ip)/32"
-        Log.info("Opening \(firewall.name) for \(cidr) with label \(firewall.label)")
+        Log.info("Opening \(firewall) port \(port) for \(cidr) with label \(label)")
 
         try await runner.runCivo([
-            "firewall", "rule", "create", firewall.name,
-            "-s", String(firewall.port),
-            "-l", firewall.label,
+            "firewall", "rule", "create", firewall,
+            "-s", String(port),
+            "-l", label,
             "-c", cidr,
         ])
 
-        Log.info("Opened \(firewall.name) for \(cidr)")
+        Log.info("Opened \(firewall) port \(port) for \(cidr)")
     }
 
-    /// Close a specific firewall rule.
-    func closeAccess(firewallName: String, ruleId: String) async throws {
-        Log.info("Removing rule \(ruleId) from \(firewallName)")
+    /// Close a specific firewall rule by ID.
+    func closeAccess(firewall: String, ruleId: String) async throws {
+        Log.info("Removing rule \(ruleId) from \(firewall)")
 
         try await runner.runCivo([
-            "firewall", "rule", "remove", firewallName, ruleId, "--yes"
+            "firewall", "rule", "remove", firewall, ruleId, "--yes",
         ])
 
-        Log.info("Removed rule \(ruleId) from \(firewallName)")
+        Log.info("Removed rule \(ruleId) from \(firewall)")
     }
 
-    /// Close ALL manual-access rules across all firewalls. Returns number of rules removed.
-    func closeAllAccess() async throws -> Int {
+    // MARK: - Status
+
+    /// Get status of all managed firewalls against the current IP.
+    func getStatus(managedFirewalls: [ManagedFirewall], currentIP: String) async throws -> [FirewallStatus] {
+        var statuses: [FirewallStatus] = []
+
+        for managed in managedFirewalls where managed.enabled {
+            let status = try await getFirewallStatus(managed: managed, currentIP: currentIP)
+            statuses.append(status)
+        }
+
+        return statuses
+    }
+
+    private func getFirewallStatus(managed: ManagedFirewall, currentIP: String) async throws -> FirewallStatus {
+        let rules = try await getRulesForFirewall(managed.name)
+        let cidr = "\(currentIP)/32"
+        let labelPrefix = CivoAccessLabel.prefix
+
+        // Find a rule created by this app that matches the current IP
+        let matchingRule = rules.first { rule in
+            guard let label = rule.label else { return false }
+            let isOurRule = label.hasPrefix(labelPrefix)
+            let matchesCidr = rule.cidr?.contains(cidr) ?? false
+            return isOurRule && matchesCidr
+        }
+
+        return FirewallStatus(
+            managed: managed,
+            isOpen: matchingRule != nil,
+            ruleId: matchingRule?.id,
+            ruleCidr: matchingRule?.cidr?.first
+        )
+    }
+
+    // MARK: - Bulk close
+
+    /// Close ALL rules created by this app (matching the label prefix) across managed firewalls.
+    /// Returns number of rules removed.
+    func closeAllManagedRules(managedFirewalls: [ManagedFirewall]) async throws -> Int {
         var removedCount = 0
+        let labelPrefix = CivoAccessLabel.prefix
 
-        for config in Firewalls.all {
-            let rules = try await listRules(firewallName: config.name)
-            let manualRules = rules.filter { $0.label?.hasPrefix("manual-access-") ?? false }
+        for managed in managedFirewalls where managed.enabled {
+            let rules = try await getRulesForFirewall(managed.name)
+            let ourRules = rules.filter { $0.label?.hasPrefix(labelPrefix) ?? false }
 
-            for rule in manualRules {
+            for rule in ourRules {
                 do {
-                    try await closeAccess(firewallName: config.name, ruleId: rule.id)
+                    try await closeAccess(firewall: managed.name, ruleId: rule.id)
                     removedCount += 1
                 } catch {
-                    Log.error("Failed to remove rule \(rule.id) from \(config.name): \(error.localizedDescription)")
+                    Log.error("Failed to remove rule \(rule.id) from \(managed.name): \(error.localizedDescription)")
                 }
             }
         }
 
-        Log.info("Closed \(removedCount) manual-access rules total")
+        Log.info("Closed \(removedCount) civo-access rules total")
         return removedCount
     }
 }

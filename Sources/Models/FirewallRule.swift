@@ -1,28 +1,28 @@
 import Foundation
 
-/// Configuration for a known firewall.
-struct FirewallConfig: Sendable {
-    let name: String        // e.g. "fw-cluster"
-    let displayName: String // e.g. "Cluster (K8s API)"
-    let port: Int           // e.g. 6443
-    let label: String       // e.g. "manual-access-marcelrgberger-cluster"
+// MARK: - Discovered from civo CLI
+
+/// Represents a firewall as returned by `civo firewall ls --output json`.
+struct CivoFirewall: Codable, Identifiable, Sendable {
+    let id: String
+    let name: String
+    let rulesCount: Int
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case rulesCount = "rules_count"
+    }
 }
 
-/// Runtime status of a firewall including whether the current IP has access.
-struct FirewallStatus: Sendable, Identifiable {
-    let id: String          // firewall name, e.g. "fw-cluster"
-    let config: FirewallConfig
-    let isOpen: Bool        // true if current IP has a manual-access rule
-    let ruleId: String?     // rule ID for deletion
-    let ruleCidr: String?   // the IP/32 of the active rule
-}
-
-/// Represents a single firewall rule from the civo CLI JSON output.
-struct CivoFirewallRule: Decodable, Sendable {
+/// Represents a single firewall rule from `civo firewall rule ls --output json`.
+struct CivoRule: Codable, Sendable {
     let id: String
     let label: String?
     let cidr: [String]?
     let ports: String?
+    let startPort: String?
+    let endPort: String?
     let direction: String?
     let action: String?
 
@@ -31,31 +31,31 @@ struct CivoFirewallRule: Decodable, Sendable {
         case label
         case cidr
         case ports
+        case startPort = "start_port"
+        case endPort = "end_port"
         case direction
         case action
     }
 }
 
-/// Known firewall configurations.
-enum Firewalls {
-    static let all: [FirewallConfig] = [
-        FirewallConfig(
-            name: "fw-cluster",
-            displayName: "Cluster (K8s API)",
-            port: 6443,
-            label: "manual-access-marcelrgberger-cluster"
-        ),
-        FirewallConfig(
-            name: "fw-db-dev",
-            displayName: "Database Dev",
-            port: 5432,
-            label: "manual-access-marcelrgberger-db-dev"
-        ),
-        FirewallConfig(
-            name: "fw-db-prod",
-            displayName: "Database Prod",
-            port: 5432,
-            label: "manual-access-marcelrgberger-db-prod"
-        ),
-    ]
+// MARK: - User's managed config (persisted in UserDefaults)
+
+/// A firewall the user has chosen to manage, with configurable port.
+struct ManagedFirewall: Codable, Identifiable, Sendable, Hashable {
+    let id: String          // civo firewall ID
+    let name: String        // display name (= civo firewall name)
+    var port: Int           // port to open (user configurable)
+    var enabled: Bool       // whether to manage this firewall
+}
+
+// MARK: - Runtime status
+
+/// Combines the user's managed config with live rule state.
+struct FirewallStatus: Identifiable, Sendable {
+    let managed: ManagedFirewall
+    let isOpen: Bool
+    let ruleId: String?
+    let ruleCidr: String?
+
+    var id: String { managed.id }
 }
