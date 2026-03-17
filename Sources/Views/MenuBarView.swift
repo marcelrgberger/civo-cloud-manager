@@ -5,35 +5,19 @@ struct MenuBarView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
             headerSection
-
             Divider()
-
-            // IP display
             ipSection
-
             Divider()
-
-            // Firewall rows
             firewallSection
-
             Divider()
-
-            // Bulk actions
             bulkActionsSection
-
             Divider()
-
-            // Status footer
             statusSection
-
             Divider()
-
-            // Bottom bar
             bottomBar
         }
-        .frame(width: 320)
+        .frame(width: 340)
         .task {
             state.initialLoad()
         }
@@ -51,7 +35,7 @@ struct MenuBarView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 10)
+        .padding(.vertical, 12)
     }
 
     // MARK: - IP Section
@@ -79,7 +63,7 @@ struct MenuBarView: View {
     // MARK: - Firewall Section
 
     private var firewallSection: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 2) {
             if state.firewalls.isEmpty && !state.isLoading {
                 HStack {
                     Text("No firewalls loaded")
@@ -106,28 +90,26 @@ struct MenuBarView: View {
                 }
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 6)
     }
 
     private func firewallRow(_ fw: FirewallStatus) -> some View {
         HStack(spacing: 10) {
-            // Status indicator
-            Circle()
-                .fill(fw.isOpen ? Color.yellow : Color.green)
-                .frame(width: 8, height: 8)
+            Image(systemName: fw.isOpen ? "lock.open.fill" : "lock.fill")
+                .foregroundStyle(fw.isOpen ? .yellow : .primary)
+                .font(.body)
+                .frame(width: 20)
 
-            // Firewall info
             VStack(alignment: .leading, spacing: 1) {
                 Text(fw.config.displayName)
                     .font(.subheadline.weight(.medium))
                 Text("Port \(fw.config.port)")
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundStyle(.secondary)
             }
 
             Spacer()
 
-            // Action button
             if state.isLoading {
                 ProgressView()
                     .controlSize(.small)
@@ -148,7 +130,7 @@ struct MenuBarView: View {
             }
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 4)
+        .padding(.vertical, 5)
     }
 
     // MARK: - Bulk Actions
@@ -177,7 +159,7 @@ struct MenuBarView: View {
             .disabled(state.isLoading || state.allClosed)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.vertical, 10)
     }
 
     // MARK: - Status Section
@@ -194,12 +176,19 @@ struct MenuBarView: View {
                 Spacer()
             }
 
+            if let error = state.error {
+                Text(error)
+                    .font(.caption2)
+                    .foregroundStyle(.red)
+                    .lineLimit(2)
+            }
+
             HStack {
                 Image(systemName: "clock")
                     .foregroundStyle(.tertiary)
-                    .font(.caption)
+                    .font(.caption2)
                 Text("Last check: \(state.lastRefreshText)")
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundStyle(.tertiary)
                 Spacer()
             }
@@ -244,6 +233,6 @@ struct MenuBarView: View {
             .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.vertical, 10)
     }
 }
