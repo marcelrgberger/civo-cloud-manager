@@ -90,7 +90,7 @@ struct OnboardingView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(.blue)
 
-            Text("Civo Access Manager")
+            Text("Civo Cloud Manager")
                 .font(.title.bold())
 
             Text(
@@ -295,7 +295,7 @@ struct OnboardingView: View {
             Text("Launch at Login")
                 .font(.title2.bold())
 
-            Text("Start Civo Access Manager automatically when you log in.")
+            Text("Start Civo Cloud Manager automatically when you log in.")
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
 

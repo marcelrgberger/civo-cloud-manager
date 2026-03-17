@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>de.berger-rosenstock.CivoAccessManager</string>
+    <string>de.berger-rosenstock.CivoCloudManager</string>
     <key>CFBundleName</key>
-    <string>CivoAccessManager</string>
+    <string>CivoCloudManager</string>
     <key>CFBundleDisplayName</key>
     <string>Civo Access Manager</string>
     <key>CFBundlePackageType</key>
@@ -15,7 +15,7 @@
     <key>CFBundleVersion</key>
     <string>2</string>
     <key>CFBundleExecutable</key>
-    <string>CivoAccessManager</string>
+    <string>CivoCloudManager</string>
     <key>LSUIElement</key>
     <true/>
     <key>LSMinimumSystemVersion</key>

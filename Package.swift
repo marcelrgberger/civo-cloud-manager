@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "CivoAccessManager",
+    name: "CivoCloudManager",
     platforms: [.macOS(.v15)],
     targets: [
         .executableTarget(
-            name: "CivoAccessManager",
+            name: "CivoCloudManager",
             path: "Sources",
             exclude: ["Info.plist"],
             linkerSettings: [

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CivoAccessManagerApp: App {
+struct CivoCloudManagerApp: App {
     @State private var appState = AppState()
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.openWindow) private var openWindow
@@ -23,7 +23,7 @@ struct CivoAccessManagerApp: App {
         }
         .menuBarExtraStyle(.window)
 
-        Window("Civo Access Manager Setup", id: "onboarding") {
+        Window("Civo Cloud Manager Setup", id: "onboarding") {
             OnboardingView(state: appState)
         }
         .windowResizability(.contentSize)

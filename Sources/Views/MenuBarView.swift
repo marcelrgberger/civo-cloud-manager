@@ -37,7 +37,7 @@ struct MenuBarView: View {
             Image(systemName: "shield.fill")
                 .foregroundStyle(state.menuBarColor)
                 .font(.title3)
-            Text("Civo Access Manager")
+            Text("Civo Cloud Manager")
                 .font(.headline)
             Spacer()
         }

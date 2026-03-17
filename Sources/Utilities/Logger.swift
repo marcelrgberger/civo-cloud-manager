@@ -2,7 +2,7 @@ import Foundation
 import os
 
 enum Log {
-    private static let logger = os.Logger(subsystem: "de.berger-rosenstock.CivoAccessManager", category: "general")
+    private static let logger = os.Logger(subsystem: "de.berger-rosenstock.CivoCloudManager", category: "general")
 
     static func info(_ message: String) {
         logger.info("\(message, privacy: .public)")

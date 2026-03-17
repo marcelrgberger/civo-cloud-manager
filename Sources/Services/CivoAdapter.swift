@@ -24,9 +24,9 @@ enum CivoAdapterError: LocalizedError {
 }
 
 /// The label prefix used to identify rules created by this app.
-/// Full label format: civo-access-HOSTNAME-FIREWALLNAME
+/// Full label format: civo-cloud-HOSTNAME-FIREWALLNAME
 enum CivoAccessLabel {
-    static let prefix = "civo-access-"
+    static let prefix = "civo-cloud-"
 
     static var hostname: String {
         Host.current().localizedName?.replacingOccurrences(of: " ", with: "-") ?? "unknown"

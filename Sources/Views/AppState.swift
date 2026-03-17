@@ -4,9 +4,9 @@ import SwiftUI
 // MARK: - UserDefaults keys
 
 private enum UDKey {
-    static let managedFirewalls = "CivoAccessManager.managedFirewalls"
-    static let onboardingComplete = "CivoAccessManager.onboardingComplete"
-    static let launchAtLogin = "CivoAccessManager.launchAtLogin"
+    static let managedFirewalls = "CivoCloudManager.managedFirewalls"
+    static let onboardingComplete = "CivoCloudManager.onboardingComplete"
+    static let launchAtLogin = "CivoCloudManager.launchAtLogin"
 }
 
 // MARK: - Setup state
