@@ -13,8 +13,8 @@ private enum UDKey {
 
 enum SetupState: Equatable {
     case checking
-    case cliMissing
-    case unauthenticated
+    case needsAPIKey
+    case needsRegion
     case needsFirewallSelection
     case ready
 }
@@ -38,6 +38,7 @@ final class AppState {
     // Discovered (not persisted)
     var discoveredFirewalls: [CivoFirewall] = []
     var currentRegion: String = ""
+    var availableRegions: [CivoRegion] = []
 
     // Persisted settings
     var managedFirewalls: [ManagedFirewall] {
@@ -57,13 +58,16 @@ final class AppState {
     }
 
     // Internal
-    private let civoAdapter = CivoAdapter()
+    private let firewallService = CivoFirewallService()
+    private let regionService = CivoRegionService()
     private let ipDetector = IPDetector()
     private var refreshTimer: Timer?
     private var refreshTask: Task<Void, Never>?
     private var isRevertingLaunchAtLogin = false
 
     // MARK: - Computed properties
+
+    var config: CivoConfig { CivoConfig.shared }
 
     var enabledFirewalls: [ManagedFirewall] {
         managedFirewalls.filter(\.enabled)
@@ -82,13 +86,14 @@ final class AppState {
 
     var menuBarColor: Color {
         if setupState != .ready && setupState != .checking { return .red }
+        if error != nil { return .red }
         if anyOpen { return .yellow }
         return .green
     }
 
     var statusText: String {
-        if setupState == .cliMissing { return "civo CLI not installed" }
-        if setupState == .unauthenticated { return "civo CLI not authenticated" }
+        if setupState == .needsAPIKey { return "API key not configured" }
+        if setupState == .needsRegion { return "No region selected" }
         if setupState == .needsFirewallSelection { return "Setup required" }
         if isLoading { return "Loading..." }
         if let error { return "Error: \(error)" }
@@ -110,7 +115,6 @@ final class AppState {
     // MARK: - Init
 
     init() {
-        // Load persisted managed firewalls
         if let data = UserDefaults.standard.data(forKey: UDKey.managedFirewalls),
             let decoded = try? JSONDecoder().decode([ManagedFirewall].self, from: data)
         {
@@ -136,14 +140,10 @@ final class AppState {
         do {
             if launchAtLogin {
                 try service.register()
-                Log.info("Launch at login: registered")
             } else {
                 try service.unregister()
-                Log.info("Launch at login: unregistered")
             }
         } catch {
-            Log.error("Launch at login toggle failed: \(error.localizedDescription)")
-            // Revert the toggle on failure (use flag to prevent infinite recursion via didSet)
             isRevertingLaunchAtLogin = true
             launchAtLogin = !launchAtLogin
             UserDefaults.standard.set(launchAtLogin, forKey: UDKey.launchAtLogin)
@@ -157,20 +157,32 @@ final class AppState {
     func checkSetup() async {
         setupState = .checking
 
-        // Check CLI installed
-        guard civoAdapter.isCLIInstalled() else {
-            setupState = .cliMissing
+        guard config.hasAPIKey else {
+            setupState = .needsAPIKey
             return
         }
 
-        // Check authenticated
-        let authed = await civoAdapter.isAuthenticated()
-        guard authed else {
-            setupState = .unauthenticated
+        // Validate API key — only reject if we get a definitive auth failure,
+        // not on network errors (timeout, DNS, etc.)
+        do {
+            let regions: [CivoRegion] = try await CivoAPIClient.shared.getArray(
+                path: "/regions", regionRequired: false
+            )
+            // Key is valid if we got a response
+            _ = regions
+        } catch CivoAPIError.httpError(let code, _) where code == 401 || code == 403 {
+            setupState = .needsAPIKey
+            return
+        } catch {
+            // Network error — don't force re-auth, just log and continue
+            Log.warning("API validation failed (network): \(error.localizedDescription)")
+        }
+
+        guard config.hasRegion else {
+            setupState = .needsRegion
             return
         }
 
-        // Check if user has configured firewalls
         if enabledFirewalls.isEmpty {
             setupState = .needsFirewallSelection
             return
@@ -180,16 +192,26 @@ final class AppState {
     }
 
     func discoverFirewalls() async {
-        // Clear stale data before fetching so errors don't leave old results
         discoveredFirewalls = []
-        currentRegion = ""
 
         do {
-            discoveredFirewalls = try await civoAdapter.discoverFirewalls()
-            currentRegion = try await civoAdapter.getCurrentRegion()
+            discoveredFirewalls = try await firewallService.listFirewalls()
         } catch {
             self.error = error.localizedDescription
             Log.error("Firewall discovery failed: \(error.localizedDescription)")
+        }
+    }
+
+    func loadRegions() async {
+        do {
+            availableRegions = try await regionService.listRegions()
+            if let current = availableRegions.first(where: { $0.isCurrent }) {
+                currentRegion = "\(current.name) (\(current.code))"
+            } else if !config.region.isEmpty {
+                currentRegion = config.region
+            }
+        } catch {
+            Log.error("Region load failed: \(error.localizedDescription)")
         }
     }
 
@@ -208,7 +230,6 @@ final class AppState {
     func initialLoad() async {
         await checkSetup()
 
-        // Trigger onboarding AFTER checkSetup completes, not during
         if setupState != .ready && !onboardingComplete {
             showOnboarding = true
         }
@@ -230,17 +251,19 @@ final class AppState {
             return
         }
 
-        // Detect IP
         do {
             currentIP = try await ipDetector.detectIP()
+        } catch is CancellationError {
+            return // Task was cancelled (e.g. popover closed), don't show error
+        } catch let urlError as URLError where urlError.code == .cancelled {
+            return
         } catch {
             self.error = "IP detection failed: \(error.localizedDescription)"
             return
         }
 
-        // Get firewall status for managed firewalls
         do {
-            firewalls = try await civoAdapter.getStatus(
+            firewalls = try await firewallService.getStatus(
                 managedFirewalls: enabledFirewalls,
                 currentIP: currentIP
             )
@@ -255,15 +278,13 @@ final class AppState {
         guard !isLoading else { return }
         isLoading = true
         error = nil
-
         defer { isLoading = false }
 
         do {
-            // Always re-detect IP before opening to avoid stale IP rules
             currentIP = try await ipDetector.detectIP()
             let label = CivoAccessLabel.make(firewallName: managed.name)
-            try await civoAdapter.openAccess(
-                firewall: managed.name,
+            try await firewallService.openAccess(
+                firewallId: managed.id,
                 port: managed.port,
                 ip: currentIP,
                 label: label
@@ -274,7 +295,6 @@ final class AppState {
             return
         }
 
-        // Refresh without the isLoading guard
         await forceRefresh()
     }
 
@@ -282,11 +302,10 @@ final class AppState {
         guard !isLoading, let ruleId = status.ruleId else { return }
         isLoading = true
         error = nil
-
         defer { isLoading = false }
 
         do {
-            try await civoAdapter.closeAccess(firewall: status.managed.name, ruleId: ruleId)
+            try await firewallService.closeAccess(firewallId: status.managed.id, ruleId: ruleId)
             try? await Task.sleep(for: .seconds(1))
         } catch {
             self.error = error.localizedDescription
@@ -300,19 +319,17 @@ final class AppState {
         guard !isLoading else { return }
         isLoading = true
         error = nil
-
         defer { isLoading = false }
 
         do {
-            // Always re-detect IP before opening to avoid stale IP rules
             currentIP = try await ipDetector.detectIP()
 
             for managed in enabledFirewalls {
                 let existing = firewalls.first { $0.id == managed.id }
                 if existing?.isOpen != true {
                     let label = CivoAccessLabel.make(firewallName: managed.name)
-                    try await civoAdapter.openAccess(
-                        firewall: managed.name,
+                    try await firewallService.openAccess(
+                        firewallId: managed.id,
                         port: managed.port,
                         ip: currentIP,
                         label: label
@@ -333,12 +350,10 @@ final class AppState {
         guard !isLoading else { return }
         isLoading = true
         error = nil
-
         defer { isLoading = false }
 
         do {
-            let result = try await civoAdapter.closeAllManagedRules(managedFirewalls: enabledFirewalls)
-            Log.info("Closed \(result.removed) rules, \(result.failed) failed")
+            let result = try await firewallService.closeAllManagedRules(managedFirewalls: enabledFirewalls)
             if result.failed > 0 {
                 self.error = "Failed to remove \(result.failed) rule\(result.failed == 1 ? "" : "s")"
             }
@@ -351,7 +366,6 @@ final class AppState {
         await forceRefresh()
     }
 
-    /// Internal refresh that does not check isLoading — used after mutations.
     private func forceRefresh() async {
         error = nil
 
@@ -359,7 +373,7 @@ final class AppState {
             if currentIP == "..." {
                 currentIP = try await ipDetector.detectIP()
             }
-            firewalls = try await civoAdapter.getStatus(
+            firewalls = try await firewallService.getStatus(
                 managedFirewalls: enabledFirewalls,
                 currentIP: currentIP
             )
@@ -376,7 +390,6 @@ final class AppState {
         refreshTimer?.invalidate()
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             Task { @MainActor [weak self] in
-                // Cancel any previous refresh task before starting a new one
                 self?.refreshTask?.cancel()
                 self?.refreshTask = Task {
                     await self?.refresh()

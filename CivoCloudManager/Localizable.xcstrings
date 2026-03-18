@@ -1,0 +1,1557 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Civo Cloud Manager": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager" } }
+      }
+    },
+    "Civo Cloud Manager Pro": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager Pro" } }
+      }
+    },
+    "Dashboard": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dashboard" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Dashboard" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Panel de control" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Tableau de bord" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Pannello di controllo" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dashboard" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Panel sterowania" } }
+      }
+    },
+    "Refresh": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Aktualisieren" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Refresh" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actualizar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Actualiser" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Aggiorna" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Vernieuwen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Odśwież" } }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Einstellungen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Settings" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ajustes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Réglages" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Impostazioni" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Instellingen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ustawienia" } }
+      }
+    },
+    "Quit": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Beenden" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Quit" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Salir" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Quitter" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Esci" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Stop" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zakończ" } }
+      }
+    },
+    "Detecting IP...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "IP wird erkannt ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Detecting IP..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Detectando IP..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Détection de l'IP ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Rilevamento IP ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "IP detecteren ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wykrywanie IP ..." } }
+      }
+    },
+    "No firewalls loaded": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Firewalls geladen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No firewalls loaded" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se cargaron cortafuegos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun pare-feu chargé" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun firewall caricato" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen firewalls geladen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie załadowano zapór sieciowych" } }
+      }
+    },
+    "Loading firewalls...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Firewalls werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading firewalls..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando cortafuegos..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des pare-feu ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento firewall ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Firewalls laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie zapór sieciowych ..." } }
+      }
+    },
+    "Open": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Öffnen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Open" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Abrir" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Ouvrir" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Apri" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Openen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Otwórz" } }
+      }
+    },
+    "Close": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Schließen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Close" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cerrar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Fermer" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiudi" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Sluiten" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zamknij" } }
+      }
+    },
+    "Open All": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Alle öffnen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Open All" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Abrir todo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Tout ouvrir" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Apri tutto" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Alles openen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Otwórz wszystkie" } }
+      }
+    },
+    "Close All": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Alle schließen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Close All" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cerrar todo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Tout fermer" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiudi tutto" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Alles sluiten" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zamknij wszystkie" } }
+      }
+    },
+    "Open Setup...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Einrichtung öffnen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Open Setup..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Abrir configuración..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Ouvrir la configuration ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Apri configurazione ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Instellingen openen ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Otwórz konfigurację ..." } }
+      }
+    },
+    "Upgrade": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Upgrade" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Upgrade" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Mejorar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Mettre à niveau" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Aggiorna" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Upgraden" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ulepsz" } }
+      }
+    },
+    "Free — Menu bar only": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Kostenlos — nur Menüleiste" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Free — Menu bar only" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gratis — solo barra de menú" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Gratuit — barre de menus uniquement" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Gratuito — solo barra dei menu" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Gratis — alleen menubalk" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Bezpłatnie — tylko pasek menu" } }
+      }
+    },
+    "Last check: %@": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Letzte Prüfung: %@" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Last check: %@" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Última comprobación: %@" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Dernière vérification : %@" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Ultimo controllo: %@" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Laatste controle: %@" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ostatnie sprawdzenie: %@" } }
+      }
+    },
+    "All closed": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Alle geschlossen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "All closed" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Todo cerrado" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Tout fermé" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Tutto chiuso" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Alles gesloten" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wszystkie zamknięte" } }
+      }
+    },
+    "Loading...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Laden ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie ..." } }
+      }
+    },
+    "Ready": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Bereit" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Ready" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Listo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Prêt" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Pronto" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Gereed" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Gotowe" } }
+      }
+    },
+    "No firewalls managed": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Firewalls verwaltet" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No firewalls managed" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ningún cortafuegos gestionado" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun pare-feu géré" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun firewall gestito" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen firewalls beheerd" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak zarządzanych zapór sieciowych" } }
+      }
+    },
+    "API key not configured": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "API-Schlüssel nicht konfiguriert" } },
+        "en": { "stringUnit": { "state": "translated", "value": "API key not configured" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Clave de API no configurada" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Clé API non configurée" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiave API non configurata" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "API-sleutel niet geconfigureerd" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klucz API nie skonfigurowany" } }
+      }
+    },
+    "No region selected": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Region ausgewählt" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No region selected" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ninguna región seleccionada" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune région sélectionnée" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna regione selezionata" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen regio geselecteerd" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie wybrano regionu" } }
+      }
+    },
+    "Setup required": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Einrichtung erforderlich" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Setup required" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Configuración necesaria" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Configuration requise" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Configurazione necessaria" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Configuratie vereist" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wymagana konfiguracja" } }
+      }
+    },
+    "API key not configured.\nOpen setup to add your Civo API key.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "API-Schlüssel nicht konfiguriert.\nÖffne die Einrichtung, um deinen Civo-API-Schlüssel hinzuzufügen." } },
+        "en": { "stringUnit": { "state": "translated", "value": "API key not configured.\nOpen setup to add your Civo API key." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Clave de API no configurada.\nAbre la configuración para añadir tu clave de API de Civo." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Clé API non configurée.\nOuvrez la configuration pour ajouter votre clé API Civo." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiave API non configurata.\nApri la configurazione per aggiungere la tua chiave API Civo." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "API-sleutel niet geconfigureerd.\nOpen de instellingen om je Civo-API-sleutel toe te voegen." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klucz API nie skonfigurowany.\nOtwórz konfigurację, aby dodać swój klucz API Civo." } }
+      }
+    },
+    "No region selected.\nOpen setup to choose a region.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Region ausgewählt.\nÖffne die Einrichtung, um eine Region auszuwählen." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No region selected.\nOpen setup to choose a region." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ninguna región seleccionada.\nAbre la configuración para elegir una región." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune région sélectionnée.\nOuvrez la configuration pour choisir une région." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna regione selezionata.\nApri la configurazione per scegliere una regione." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen regio geselecteerd.\nOpen de instellingen om een regio te kiezen." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie wybrano regionu.\nOtwórz konfigurację, aby wybrać region." } }
+      }
+    },
+    "No firewalls configured.\nOpen setup to select firewalls.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Firewalls konfiguriert.\nÖffne die Einrichtung, um Firewalls auszuwählen." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No firewalls configured.\nOpen setup to select firewalls." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ningún cortafuegos configurado.\nAbre la configuración para seleccionar cortafuegos." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun pare-feu configuré.\nOuvrez la configuration pour sélectionner des pare-feu." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun firewall configurato.\nApri la configurazione per selezionare i firewall." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen firewalls geconfigureerd.\nOpen de instellingen om firewalls te selecteren." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie skonfigurowano zapór sieciowych.\nOtwórz konfigurację, aby wybrać zapory." } }
+      }
+    },
+    "Checking setup...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Einrichtung wird geprüft ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Checking setup..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Comprobando configuración..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Vérification de la configuration ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Verifica della configurazione ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Configuratie controleren ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Sprawdzanie konfiguracji ..." } }
+      }
+    },
+    "Unlock full access to all Civo Cloud resources": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Voller Zugriff auf alle Civo Cloud Ressourcen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Unlock full access to all Civo Cloud resources" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Desbloquea el acceso completo a todos los recursos de Civo Cloud" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Débloquez l'accès complet à toutes les ressources Civo Cloud" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Sblocca l'accesso completo a tutte le risorse Civo Cloud" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Ontgrendel volledige toegang tot alle Civo Cloud bronnen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Odblokuj pełny dostęp do wszystkich zasobów Civo Cloud" } }
+      }
+    },
+    "Dashboard with quota overview": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dashboard mit Kontingentübersicht" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Dashboard with quota overview" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Panel de control con resumen de cuotas" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Tableau de bord avec aperçu des quotas" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Pannello di controllo con panoramica delle quote" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dashboard met quota-overzicht" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Panel sterowania z przeglądem limitów" } }
+      }
+    },
+    "Kubernetes cluster management": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Kubernetes-Cluster-Verwaltung" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Kubernetes cluster management" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gestión de clústeres Kubernetes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Gestion des clusters Kubernetes" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Gestione dei cluster Kubernetes" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Kubernetes-clusterbeheer" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zarządzanie klastrami Kubernetes" } }
+      }
+    },
+    "Database management": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Datenbankverwaltung" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Database management" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gestión de bases de datos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Gestion des bases de données" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Gestione dei database" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Databasebeheer" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zarządzanie bazami danych" } }
+      }
+    },
+    "Network, firewall & load balancer views": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Netzwerk-, Firewall- und Load-Balancer-Ansichten" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Network, firewall & load balancer views" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Vistas de red, cortafuegos y balanceador de carga" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Vues réseau, pare-feu et répartiteur de charge" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Viste rete, firewall e bilanciatore di carico" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Netwerk-, firewall- en load-balanceroverzichten" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Widoki sieci, zapór sieciowych i load balancerów" } }
+      }
+    },
+    "Volume & object store management": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Volume- und Objektspeicherverwaltung" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Volume & object store management" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gestión de volúmenes y almacenamiento de objetos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Gestion des volumes et du stockage objet" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Gestione volumi e object store" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Volume- en objectopslagbeheer" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zarządzanie wolumenami i magazynami obiektów" } }
+      }
+    },
+    "Instance & SSH key management": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Instanz- und SSH-Schlüsselverwaltung" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Instance & SSH key management" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Gestión de instancias y claves SSH" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Gestion des instances et des clés SSH" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Gestione istanze e chiavi SSH" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Instantie- en SSH-sleutelbeheer" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zarządzanie instancjami i kluczami SSH" } }
+      }
+    },
+    "Region switching": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Regionswechsel" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Region switching" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cambio de región" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Changement de région" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Cambio regione" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Regio wisselen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zmiana regionu" } }
+      }
+    },
+    "Unlock for %@ — one-time purchase": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Freischalten für %@ — einmaliger Kauf" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Unlock for %@ — one-time purchase" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Desbloquear por %@ — compra única" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Débloquer pour %@ — achat unique" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Sblocca per %@ — acquisto unico" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Ontgrendelen voor %@ — eenmalige aankoop" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Odblokuj za %@ — jednorazowy zakup" } }
+      }
+    },
+    "Loading price...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Preis wird geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading price..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando precio..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement du prix ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento prezzo ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Prijs laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie ceny ..." } }
+      }
+    },
+    "Restore Purchase": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Kauf wiederherstellen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Restore Purchase" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Restaurar compra" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Restaurer l'achat" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Ripristina acquisto" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Aankoop herstellen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Przywróć zakup" } }
+      }
+    },
+    "Redeem Code": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Code einlösen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Redeem Code" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Canjear código" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Utiliser un code" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Riscatta codice" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Code inwisselen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zrealizuj kod" } }
+      }
+    },
+    "Quota Usage": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Kontingentnutzung" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Quota Usage" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Uso de cuota" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Utilisation des quotas" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Utilizzo delle quote" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Quotumgebruik" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wykorzystanie limitów" } }
+      }
+    },
+    "Kubernetes Clusters": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Kubernetes-Cluster" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Kubernetes Clusters" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Clústeres Kubernetes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Clusters Kubernetes" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Cluster Kubernetes" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Kubernetes-clusters" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klastry Kubernetes" } }
+      }
+    },
+    "Databases": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Datenbanken" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Databases" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Bases de datos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Bases de données" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Database" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Databases" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Bazy danych" } }
+      }
+    },
+    "Volumes": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Volumes" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Volumes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Volúmenes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Volumes" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Volumi" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Volumes" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wolumeny" } }
+      }
+    },
+    "Object Stores": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Objektspeicher" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Object Stores" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Almacenes de objetos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Stockage objet" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Object Store" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Objectopslag" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Magazyny obiektów" } }
+      }
+    },
+    "Load Balancers": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Load Balancer" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Load Balancers" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Balanceadores de carga" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Répartiteurs de charge" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Bilanciatori di carico" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Load balancers" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Load balancery" } }
+      }
+    },
+    "Networks": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Netzwerke" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Networks" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Redes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Réseaux" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Reti" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Netwerken" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Sieci" } }
+      }
+    },
+    "Instances": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Instanzen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Instances" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Instancias" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Instances" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Istanze" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Instanties" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Instancje" } }
+      }
+    },
+    "SSH Keys": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "SSH-Schlüssel" } },
+        "en": { "stringUnit": { "state": "translated", "value": "SSH Keys" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Claves SSH" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Clés SSH" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiavi SSH" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "SSH-sleutels" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klucze SSH" } }
+      }
+    },
+    "Firewalls": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Firewalls" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Firewalls" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cortafuegos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Pare-feu" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Firewall" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Firewalls" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zapory sieciowe" } }
+      }
+    },
+    "Domains": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Domains" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Domains" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Dominios" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Domaines" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Domini" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Domeinen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Domeny" } }
+      }
+    },
+    "Regions": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Regionen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Regions" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Regiones" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Régions" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Regioni" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Regio's" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Regiony" } }
+      }
+    },
+    "Overview": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Übersicht" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Overview" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Resumen" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Vue d'ensemble" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Panoramica" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Overzicht" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Przegląd" } }
+      }
+    },
+    "Compute": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Compute" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Compute" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cómputo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Calcul" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Calcolo" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Compute" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Obliczenia" } }
+      }
+    },
+    "Kubernetes": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Kubernetes" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Kubernetes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Kubernetes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Kubernetes" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Kubernetes" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Kubernetes" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Kubernetes" } }
+      }
+    },
+    "Networking": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Netzwerk" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Networking" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Red" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Réseau" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Rete" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Netwerk" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Sieć" } }
+      }
+    },
+    "Storage & Data": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Speicher & Daten" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Storage & Data" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Almacenamiento y datos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Stockage et données" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Archiviazione e dati" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Opslag & data" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Przechowywanie i dane" } }
+      }
+    },
+    "Account": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Konto" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Account" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cuenta" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Compte" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Account" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Account" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Konto" } }
+      }
+    },
+    "No Clusters": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Cluster" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Clusters" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin clústeres" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun cluster" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun cluster" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen clusters" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak klastrów" } }
+      }
+    },
+    "No Kubernetes clusters found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Kubernetes-Cluster in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Kubernetes clusters found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron clústeres Kubernetes en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun cluster Kubernetes trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun cluster Kubernetes trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen Kubernetes-clusters gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono klastrów Kubernetes na Twoim koncie." } }
+      }
+    },
+    "Loading clusters...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Cluster werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading clusters..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando clústeres..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des clusters ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento cluster ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Clusters laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie klastrów ..." } }
+      }
+    },
+    "Cluster Info": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Cluster-Info" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Cluster Info" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Información del clúster" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Infos cluster" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Informazioni cluster" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Clusterinformatie" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Informacje o klastrze" } }
+      }
+    },
+    "Conditions": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Bedingungen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Conditions" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Condiciones" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Conditions" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Condizioni" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Condities" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Warunki" } }
+      }
+    },
+    "Node Pools": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Node-Pools" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Node Pools" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Grupos de nodos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Pools de nœuds" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Pool di nodi" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Node-pools" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Pule węzłów" } }
+      }
+    },
+    "Installed Applications": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Installierte Anwendungen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Installed Applications" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Aplicaciones instaladas" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Applications installées" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Applicazioni installate" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geïnstalleerde applicaties" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zainstalowane aplikacje" } }
+      }
+    },
+    "No conditions available": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Bedingungen verfügbar" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No conditions available" } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay condiciones disponibles" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune condition disponible" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna condizione disponibile" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen condities beschikbaar" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak dostępnych warunków" } }
+      }
+    },
+    "No node pools": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Node-Pools" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No node pools" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin grupos de nodos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun pool de nœuds" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun pool di nodi" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen node-pools" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak pul węzłów" } }
+      }
+    },
+    "No applications installed": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Anwendungen installiert" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No applications installed" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Ninguna aplicación instalada" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune application installée" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna applicazione installata" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen applicaties geïnstalleerd" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie zainstalowano żadnych aplikacji" } }
+      }
+    },
+    "Back": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Zurück" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Back" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Atrás" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Retour" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Indietro" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Terug" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wstecz" } }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń" } }
+      }
+    },
+    "Delete Cluster": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Cluster löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete Cluster" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar clúster" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer le cluster" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina cluster" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Cluster verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń klaster" } }
+      }
+    },
+    "Version": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Version" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Version" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Versión" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Version" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Versione" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Versie" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wersja" } }
+      }
+    },
+    "API Endpoint": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "API-Endpunkt" } },
+        "en": { "stringUnit": { "state": "translated", "value": "API Endpoint" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Punto de acceso API" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Point de terminaison API" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Endpoint API" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "API-eindpunt" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Punkt końcowy API" } }
+      }
+    },
+    "Master IP": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Master-IP" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Master IP" } },
+        "es": { "stringUnit": { "state": "translated", "value": "IP maestra" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "IP maître" } },
+        "it": { "stringUnit": { "state": "translated", "value": "IP master" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Master-IP" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "IP mastera" } }
+      }
+    },
+    "DNS": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "DNS" } },
+        "en": { "stringUnit": { "state": "translated", "value": "DNS" } },
+        "es": { "stringUnit": { "state": "translated", "value": "DNS" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "DNS" } },
+        "it": { "stringUnit": { "state": "translated", "value": "DNS" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "DNS" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "DNS" } }
+      }
+    },
+    "CNI Plugin": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "CNI-Plugin" } },
+        "en": { "stringUnit": { "state": "translated", "value": "CNI Plugin" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Plugin CNI" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Plugin CNI" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Plugin CNI" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "CNI-plugin" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wtyczka CNI" } }
+      }
+    },
+    "Target Nodes": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Zielknoten" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Target Nodes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Nodos objetivo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Nœuds cibles" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nodi target" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Doelknooppunten" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Węzły docelowe" } }
+      }
+    },
+    "Node Size": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Knotengröße" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Node Size" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Tamaño de nodo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Taille du nœud" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Dimensione nodo" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Knooppuntgrootte" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Rozmiar węzła" } }
+      }
+    },
+    "Created": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Erstellt" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Created" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Creado" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Créé" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Creato" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Aangemaakt" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Utworzono" } }
+      }
+    },
+    "This will permanently delete the Kubernetes cluster and all its resources. This action cannot be undone.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dies löscht den Kubernetes-Cluster und alle zugehörigen Ressourcen dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "This will permanently delete the Kubernetes cluster and all its resources. This action cannot be undone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esto eliminará permanentemente el clúster Kubernetes y todos sus recursos. Esta acción no se puede deshacer." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Cette action supprimera définitivement le cluster Kubernetes et toutes ses ressources. Cette action est irréversible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Questo eliminerà permanentemente il cluster Kubernetes e tutte le sue risorse. Questa azione non può essere annullata." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dit verwijdert het Kubernetes-cluster en alle bijbehorende bronnen permanent. Deze actie kan niet ongedaan worden gemaakt." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Spowoduje to trwałe usunięcie klastra Kubernetes i wszystkich jego zasobów. Tej operacji nie można cofnąć." } }
+      }
+    },
+    "No Databases": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Datenbanken" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Databases" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin bases de datos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune base de données" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun database" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen databases" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak baz danych" } }
+      }
+    },
+    "No databases found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Datenbanken in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No databases found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron bases de datos en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune base de données trouvée dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun database trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen databases gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono baz danych na Twoim koncie." } }
+      }
+    },
+    "Loading databases...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Datenbanken werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading databases..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando bases de datos..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des bases de données ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento database ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Databases laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie baz danych ..." } }
+      }
+    },
+    "Delete Database": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Datenbank löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete Database" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar base de datos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer la base de données" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina database" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Database verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń bazę danych" } }
+      }
+    },
+    "This will permanently delete the database. This action cannot be undone.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dies löscht die Datenbank dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "This will permanently delete the database. This action cannot be undone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esto eliminará permanentemente la base de datos. Esta acción no se puede deshacer." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Cette action supprimera définitivement la base de données. Cette action est irréversible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Questo eliminerà permanentemente il database. Questa azione non può essere annullata." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dit verwijdert de database permanent. Deze actie kan niet ongedaan worden gemaakt." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Spowoduje to trwałe usunięcie bazy danych. Tej operacji nie można cofnąć." } }
+      }
+    },
+    "No Volumes": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Volumes" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Volumes" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin volúmenes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun volume" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun volume" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen volumes" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak wolumenów" } }
+      }
+    },
+    "No volumes found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Volumes in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No volumes found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron volúmenes en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun volume trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun volume trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen volumes gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono wolumenów na Twoim koncie." } }
+      }
+    },
+    "Loading volumes...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Volumes werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading volumes..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando volúmenes..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des volumes ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento volumi ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Volumes laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie wolumenów ..." } }
+      }
+    },
+    "Delete Volume": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Volume löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete Volume" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar volumen" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer le volume" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina volume" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Volume verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń wolumen" } }
+      }
+    },
+    "This will permanently delete the volume. This action cannot be undone.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dies löscht das Volume dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "This will permanently delete the volume. This action cannot be undone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esto eliminará permanentemente el volumen. Esta acción no se puede deshacer." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Cette action supprimera définitivement le volume. Cette action est irréversible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Questo eliminerà permanentemente il volume. Questa azione non può essere annullata." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dit verwijdert het volume permanent. Deze actie kan niet ongedaan worden gemaakt." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Spowoduje to trwałe usunięcie wolumenu. Tej operacji nie można cofnąć." } }
+      }
+    },
+    "No Object Stores": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Objektspeicher" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Object Stores" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin almacenes de objetos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun stockage objet" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun object store" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen objectopslag" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak magazynów obiektów" } }
+      }
+    },
+    "No object stores found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Objektspeicher in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No object stores found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron almacenes de objetos en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun stockage objet trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun object store trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen objectopslag gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono magazynów obiektów na Twoim koncie." } }
+      }
+    },
+    "Loading object stores...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Objektspeicher werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading object stores..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando almacenes de objetos..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement du stockage objet ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento object store ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Objectopslag laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie magazynów obiektów ..." } }
+      }
+    },
+    "Delete Object Store": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Objektspeicher löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete Object Store" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar almacén de objetos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer le stockage objet" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina object store" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Objectopslag verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń magazyn obiektów" } }
+      }
+    },
+    "This will permanently delete the object store and all its contents. This action cannot be undone.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dies löscht den Objektspeicher und alle Inhalte dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "This will permanently delete the object store and all its contents. This action cannot be undone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esto eliminará permanentemente el almacén de objetos y todo su contenido. Esta acción no se puede deshacer." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Cette action supprimera définitivement le stockage objet et tout son contenu. Cette action est irréversible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Questo eliminerà permanentemente l'object store e tutti i suoi contenuti. Questa azione non può essere annullata." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dit verwijdert de objectopslag en alle inhoud permanent. Deze actie kan niet ongedaan worden gemaakt." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Spowoduje to trwałe usunięcie magazynu obiektów i całej jego zawartości. Tej operacji nie można cofnąć." } }
+      }
+    },
+    "No Networks": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Netzwerke" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Networks" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin redes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun réseau" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna rete" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen netwerken" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak sieci" } }
+      }
+    },
+    "No networks found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Netzwerke in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No networks found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron redes en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun réseau trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna rete trovata nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen netwerken gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono sieci na Twoim koncie." } }
+      }
+    },
+    "Loading networks...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Netzwerke werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading networks..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando redes..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des réseaux ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento reti ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Netwerken laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie sieci ..." } }
+      }
+    },
+    "No Firewalls": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Firewalls" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Firewalls" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin cortafuegos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun pare-feu" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun firewall" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen firewalls" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak zapór sieciowych" } }
+      }
+    },
+    "No firewalls found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Firewalls in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No firewalls found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron cortafuegos en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun pare-feu trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun firewall trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen firewalls gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono zapór sieciowych na Twoim koncie." } }
+      }
+    },
+    "No Load Balancers": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Load Balancer" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Load Balancers" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin balanceadores de carga" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun répartiteur de charge" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun bilanciatore di carico" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen load balancers" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak load balancerów" } }
+      }
+    },
+    "No load balancers found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Load Balancer in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No load balancers found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron balanceadores de carga en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun répartiteur de charge trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun bilanciatore di carico trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen load balancers gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono load balancerów na Twoim koncie." } }
+      }
+    },
+    "Loading load balancers...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Load Balancer werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading load balancers..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando balanceadores de carga..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des répartiteurs de charge ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento bilanciatori di carico ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Load balancers laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie load balancerów ..." } }
+      }
+    },
+    "No Domains": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Domains" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Domains" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin dominios" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun domaine" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun dominio" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen domeinen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak domen" } }
+      }
+    },
+    "No domains found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Domains in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No domains found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron dominios en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucun domaine trouvé dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessun dominio trovato nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen domeinen gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono domen na Twoim koncie." } }
+      }
+    },
+    "Loading domains...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Domains werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading domains..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando dominios..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des domaines ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento domini ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Domeinen laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie domen ..." } }
+      }
+    },
+    "No Instances": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Instanzen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Instances" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin instancias" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune instance" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna istanza" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen instanties" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak instancji" } }
+      }
+    },
+    "No compute instances found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Compute-Instanzen in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No compute instances found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron instancias de cómputo en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune instance de calcul trouvée dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna istanza di calcolo trovata nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen compute-instanties gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono instancji obliczeniowych na Twoim koncie." } }
+      }
+    },
+    "Loading instances...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Instanzen werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading instances..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando instancias..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des instances ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento istanze ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Instanties laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie instancji ..." } }
+      }
+    },
+    "Delete Instance": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Instanz löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete Instance" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar instancia" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer l'instance" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina istanza" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Instantie verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń instancję" } }
+      }
+    },
+    "This will permanently delete the instance. This action cannot be undone.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dies löscht die Instanz dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "This will permanently delete the instance. This action cannot be undone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esto eliminará permanentemente la instancia. Esta acción no se puede deshacer." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Cette action supprimera définitivement l'instance. Cette action est irréversible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Questo eliminerà permanentemente l'istanza. Questa azione non può essere annullata." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dit verwijdert de instantie permanent. Deze actie kan niet ongedaan worden gemaakt." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Spowoduje to trwałe usunięcie instancji. Tej operacji nie można cofnąć." } }
+      }
+    },
+    "No SSH Keys": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine SSH-Schlüssel" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No SSH Keys" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin claves SSH" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune clé SSH" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna chiave SSH" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen SSH-sleutels" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak kluczy SSH" } }
+      }
+    },
+    "No SSH keys found in your account.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine SSH-Schlüssel in deinem Konto gefunden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No SSH keys found in your account." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No se encontraron claves SSH en tu cuenta." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune clé SSH trouvée dans votre compte." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna chiave SSH trovata nel tuo account." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen SSH-sleutels gevonden in je account." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Nie znaleziono kluczy SSH na Twoim koncie." } }
+      }
+    },
+    "Loading SSH keys...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "SSH-Schlüssel werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading SSH keys..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando claves SSH..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des clés SSH ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento chiavi SSH ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "SSH-sleutels laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie kluczy SSH ..." } }
+      }
+    },
+    "Delete SSH Key": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "SSH-Schlüssel löschen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Delete SSH Key" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Eliminar clave SSH" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Supprimer la clé SSH" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Elimina chiave SSH" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "SSH-sleutel verwijderen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Usuń klucz SSH" } }
+      }
+    },
+    "This will permanently delete the SSH key. This action cannot be undone.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dies löscht den SSH-Schlüssel dauerhaft. Diese Aktion kann nicht rückgängig gemacht werden." } },
+        "en": { "stringUnit": { "state": "translated", "value": "This will permanently delete the SSH key. This action cannot be undone." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Esto eliminará permanentemente la clave SSH. Esta acción no se puede deshacer." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Cette action supprimera définitivement la clé SSH. Cette action est irréversible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Questo eliminerà permanentemente la chiave SSH. Questa azione non può essere annullata." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dit verwijdert de SSH-sleutel permanent. Deze actie kan niet ongedaan worden gemaakt." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Spowoduje to trwałe usunięcie klucza SSH. Tej operacji nie można cofnąć." } }
+      }
+    },
+    "No Regions": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Regionen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "No Regions" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Sin regiones" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune région" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna regione" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen regio's" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak regionów" } }
+      }
+    },
+    "No regions available.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Keine Regionen verfügbar." } },
+        "en": { "stringUnit": { "state": "translated", "value": "No regions available." } },
+        "es": { "stringUnit": { "state": "translated", "value": "No hay regiones disponibles." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Aucune région disponible." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuna regione disponibile." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Geen regio's beschikbaar." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Brak dostępnych regionów." } }
+      }
+    },
+    "Loading regions...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Regionen werden geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading regions..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando regiones..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement des régions ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento regioni ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Regio's laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie regionów ..." } }
+      }
+    },
+    "Current": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Aktuell" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Current" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Actual" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Actuelle" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Corrente" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Huidig" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Bieżący" } }
+      }
+    },
+    "Use": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Verwenden" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Use" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Usar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Utiliser" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Usa" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Gebruiken" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Użyj" } }
+      }
+    },
+    "API Key": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "API-Schlüssel" } },
+        "en": { "stringUnit": { "state": "translated", "value": "API Key" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Clave de API" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Clé API" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiave API" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "API-sleutel" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klucz API" } }
+      }
+    },
+    "Enter your Civo API key.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Gib deinen Civo-API-Schlüssel ein." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Enter your Civo API key." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Introduce tu clave de API de Civo." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Entrez votre clé API Civo." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Inserisci la tua chiave API Civo." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Voer je Civo-API-sleutel in." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wprowadź swój klucz API Civo." } }
+      }
+    },
+    "Civo API Key": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Civo-API-Schlüssel" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Civo API Key" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Clave de API de Civo" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Clé API Civo" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chiave API Civo" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Civo-API-sleutel" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klucz API Civo" } }
+      }
+    },
+    "Validate": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Überprüfen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Validate" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Validar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Valider" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Verifica" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Valideren" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zweryfikuj" } }
+      }
+    },
+    "API key is valid": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "API-Schlüssel ist gültig" } },
+        "en": { "stringUnit": { "state": "translated", "value": "API key is valid" } },
+        "es": { "stringUnit": { "state": "translated", "value": "La clave de API es válida" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "La clé API est valide" } },
+        "it": { "stringUnit": { "state": "translated", "value": "La chiave API è valida" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "API-sleutel is geldig" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Klucz API jest prawidłowy" } }
+      }
+    },
+    "Region": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Region" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Region" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Región" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Région" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Regione" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Regio" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Region" } }
+      }
+    },
+    "Select your preferred region:": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Wähle deine bevorzugte Region:" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Select your preferred region:" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Selecciona tu región preferida:" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Sélectionnez votre région préférée :" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Seleziona la tua regione preferita:" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Selecteer je voorkeurregio:" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wybierz preferowany region:" } }
+      }
+    },
+    "Select Firewalls": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Firewalls auswählen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Select Firewalls" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Seleccionar cortafuegos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Sélectionner les pare-feu" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Seleziona firewall" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Firewalls selecteren" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wybierz zapory sieciowe" } }
+      }
+    },
+    "Choose which firewalls to manage and set the port for each.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Wähle die zu verwaltenden Firewalls und lege den Port für jede fest." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Choose which firewalls to manage and set the port for each." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Elige qué cortafuegos gestionar y establece el puerto para cada uno." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Choisissez les pare-feu à gérer et définissez le port pour chacun." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Scegli quali firewall gestire e imposta la porta per ciascuno." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Kies welke firewalls je wilt beheren en stel de poort in voor elk." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wybierz zapory sieciowe do zarządzania i ustaw port dla każdej z nich." } }
+      }
+    },
+    "Launch at Login": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Beim Anmelden starten" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Launch at Login" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Abrir al iniciar sesión" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Lancer à l'ouverture de session" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Avvia al login" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Starten bij inloggen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Uruchom przy logowaniu" } }
+      }
+    },
+    "Start Civo Cloud Manager automatically when you log in.": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager automatisch beim Anmelden starten." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Start Civo Cloud Manager automatically when you log in." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Iniciar Civo Cloud Manager automáticamente al iniciar sesión." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Démarrer Civo Cloud Manager automatiquement à l'ouverture de session." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Avvia Civo Cloud Manager automaticamente al login." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Civo Cloud Manager automatisch starten bij het inloggen." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Uruchom Civo Cloud Manager automatycznie po zalogowaniu." } }
+      }
+    },
+    "All Set!": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Alles bereit!" } },
+        "en": { "stringUnit": { "state": "translated", "value": "All Set!" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Todo listo!" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Tout est prêt !" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Tutto pronto!" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Alles klaar!" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wszystko gotowe!" } }
+      }
+    },
+    "Next": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Weiter" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Next" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Siguiente" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Suivant" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Avanti" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Volgende" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Dalej" } }
+      }
+    },
+    "Finish": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Fertig" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Finish" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Finalizar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Terminer" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Fine" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Voltooien" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Zakończ" } }
+      }
+    },
+    "Retry": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Erneut versuchen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Retry" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Reintentar" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Réessayer" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Riprova" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Opnieuw proberen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ponów" } }
+      }
+    },
+    "Port:": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Port:" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Port:" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Puerto:" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Port :" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Porta:" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Poort:" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Port:" } }
+      }
+    },
+    "Port must be 1-65535": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Port muss zwischen 1 und 65535 liegen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Port must be 1-65535" } },
+        "es": { "stringUnit": { "state": "translated", "value": "El puerto debe estar entre 1 y 65535" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Le port doit être compris entre 1 et 65535" } },
+        "it": { "stringUnit": { "state": "translated", "value": "La porta deve essere compresa tra 1 e 65535" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Poort moet tussen 1 en 65535 liggen" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Port musi mieścić się w zakresie 1-65535" } }
+      }
+    },
+    "Loading dashboard...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dashboard wird geladen ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Loading dashboard..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Cargando panel de control..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chargement du tableau de bord ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Caricamento pannello di controllo ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Dashboard laden ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Ładowanie panelu sterowania ..." } }
+      }
+    },
+    "Discovering firewalls...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Firewalls werden erkannt ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Discovering firewalls..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Descubriendo cortafuegos..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Découverte des pare-feu ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Rilevamento firewall ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Firewalls detecteren ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wykrywanie zapór sieciowych ..." } }
+      }
+    },
+    "Validating...": {
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Wird überprüft ..." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Validating..." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Validando..." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Validation ..." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Verifica in corso ..." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Valideren ..." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Weryfikacja ..." } }
+      }
+    }
+  },
+  "version": "1.0"
+}

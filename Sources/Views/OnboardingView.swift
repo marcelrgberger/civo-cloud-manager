@@ -3,9 +3,10 @@ import SwiftUI
 struct OnboardingView: View {
     @Bindable var state: AppState
     @State private var step: OnboardingStep = .welcome
-    @State private var cliInstalled: Bool = false
-    @State private var authenticated: Bool = false
     @State private var isChecking: Bool = false
+    @State private var apiKeyInput: String = ""
+    @State private var apiKeyValid: Bool = false
+    @State private var selectedRegion: String = ""
 
     // Temporary editing state for firewall selection
     @State private var firewallSelections: [String: Bool] = [:]
@@ -13,8 +14,7 @@ struct OnboardingView: View {
 
     enum OnboardingStep: Int, CaseIterable {
         case welcome
-        case cliCheck
-        case authCheck
+        case apiKey
         case region
         case firewallDiscovery
         case launchAtLogin
@@ -23,22 +23,18 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Progress
             progressBar
                 .padding(.horizontal, 32)
                 .padding(.top, 20)
 
             Spacer()
 
-            // Step content
             Group {
                 switch step {
                 case .welcome:
                     welcomeStep
-                case .cliCheck:
-                    cliCheckStep
-                case .authCheck:
-                    authCheckStep
+                case .apiKey:
+                    apiKeyStep
                 case .region:
                     regionStep
                 case .firewallDiscovery:
@@ -53,12 +49,15 @@ struct OnboardingView: View {
 
             Spacer()
 
-            // Navigation
             navigationBar
                 .padding(.horizontal, 32)
                 .padding(.bottom, 20)
         }
         .frame(width: 520, height: 480)
+        .onAppear {
+            apiKeyInput = state.config.apiKey
+            selectedRegion = state.config.region
+        }
     }
 
     // MARK: - Progress
@@ -94,7 +93,7 @@ struct OnboardingView: View {
                 .font(.title.bold())
 
             Text(
-                "Manages firewall rules for your Civo Cloud infrastructure.\n\nAutomatically opens and closes firewall ports based on your current IP address."
+                "Manage your Civo Cloud infrastructure directly from your Mac.\n\nFirewalls, Kubernetes, databases, and more — all in one app."
             )
             .multilineTextAlignment(.center)
             .foregroundStyle(.secondary)
@@ -102,68 +101,44 @@ struct OnboardingView: View {
         }
     }
 
-    // MARK: - CLI Check
+    // MARK: - API Key
 
-    private var cliCheckStep: some View {
+    private var apiKeyStep: some View {
         VStack(spacing: 16) {
-            stepIcon(ok: cliInstalled)
+            Image(systemName: apiKeyValid ? "key.fill" : "key")
+                .font(.system(size: 36))
+                .foregroundStyle(apiKeyValid ? .green : .blue)
 
-            Text("Civo CLI")
+            Text("API Key")
                 .font(.title2.bold())
 
-            if isChecking {
-                ProgressView("Checking...")
-            } else if cliInstalled {
-                Label("civo CLI is installed", systemImage: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
-            } else {
-                Label("civo CLI not found", systemImage: "xmark.circle.fill")
-                    .foregroundStyle(.red)
+            Text("Enter your Civo API key. You can find it at\ncivo.com → Account → Security → API Keys.")
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.secondary)
+                .font(.subheadline)
 
-                Text("Install it with:")
-                    .foregroundStyle(.secondary)
-
-                codeBlock("brew install civo")
-
-                Button("Re-check") {
-                    Task { await checkCLI() }
-                }
-                .buttonStyle(.bordered)
-            }
-        }
-        .task { await checkCLI() }
-    }
-
-    // MARK: - Auth Check
-
-    private var authCheckStep: some View {
-        VStack(spacing: 16) {
-            stepIcon(ok: authenticated)
-
-            Text("Authentication")
-                .font(.title2.bold())
+            SecureField("Civo API Key", text: $apiKeyInput)
+                .textFieldStyle(.roundedBorder)
+                .frame(maxWidth: 360)
 
             if isChecking {
-                ProgressView("Checking...")
-            } else if authenticated {
-                Label("Authenticated", systemImage: "checkmark.circle.fill")
+                ProgressView("Validating...")
+            } else if apiKeyValid {
+                Label("API key is valid", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
-            } else {
-                Label("Not authenticated", systemImage: "xmark.circle.fill")
-                    .foregroundStyle(.red)
-
-                Text("Save your API key:")
-                    .foregroundStyle(.secondary)
-
-                codeBlock("civo apikey save YOUR_KEY --name default")
-
-                Button("Re-check") {
-                    Task { await checkAuth() }
+            } else if !apiKeyInput.isEmpty {
+                Button("Validate") {
+                    Task { await validateAPIKey() }
                 }
-                .buttonStyle(.bordered)
+                .buttonStyle(.borderedProminent)
+            }
+
+            if let validationError {
+                Text(validationError)
+                    .font(.caption)
+                    .foregroundStyle(apiKeyValid ? .orange : .red)
             }
         }
-        .task { await checkAuth() }
     }
 
     // MARK: - Region
@@ -178,20 +153,31 @@ struct OnboardingView: View {
                 .font(.title2.bold())
 
             if isChecking {
-                ProgressView("Detecting region...")
-            } else if !state.currentRegion.isEmpty {
-                Label(state.currentRegion, systemImage: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
-                    .font(.headline)
-            } else {
-                Label("No region detected", systemImage: "exclamationmark.triangle.fill")
-                    .foregroundStyle(.orange)
-                Text("Set a region:")
+                ProgressView("Loading regions...")
+            } else if state.availableRegions.isEmpty {
+                Text("Could not load regions.")
                     .foregroundStyle(.secondary)
-                codeBlock("civo region use REGION")
+                Button("Retry") {
+                    Task { await loadRegions() }
+                }
+                .buttonStyle(.bordered)
+            } else {
+                Text("Select your preferred region:")
+                    .foregroundStyle(.secondary)
+
+                Picker("Region", selection: $selectedRegion) {
+                    ForEach(state.availableRegions) { region in
+                        Text("\(region.name) — \(region.country ?? "")")
+                            .tag(region.code)
+                    }
+                }
+                .pickerStyle(.radioGroup)
+                .onChange(of: selectedRegion) { _, newValue in
+                    CivoConfig.shared.region = newValue
+                }
             }
         }
-        .task { await loadRegion() }
+        .task { await loadRegions() }
     }
 
     // MARK: - Firewall Discovery
@@ -298,7 +284,6 @@ struct OnboardingView: View {
         return port >= 1 && port <= 65535
     }
 
-    /// Check if all enabled firewalls have valid ports
     private var allPortsValid: Bool {
         for (fwId, selected) in firewallSelections where selected {
             if !isPortValid(for: fwId) { return false }
@@ -372,7 +357,6 @@ struct OnboardingView: View {
                 Button("Finish") {
                     applyFirewallSelections()
                     state.completeOnboarding()
-                    // Close the onboarding window
                     NSApp.keyWindow?.close()
                     NSApp.setActivationPolicy(.accessory)
                 }
@@ -395,54 +379,48 @@ struct OnboardingView: View {
     private var canAdvance: Bool {
         switch step {
         case .welcome: return true
-        case .cliCheck: return cliInstalled
-        case .authCheck: return authenticated
-        case .region: return !state.currentRegion.isEmpty
+        case .apiKey: return apiKeyValid
+        case .region: return !selectedRegion.isEmpty
         case .firewallDiscovery: return firewallSelections.values.contains(true) && allPortsValid
         case .launchAtLogin: return true
         case .done: return true
         }
     }
 
-    // MARK: - Helpers
-
-    private func stepIcon(ok: Bool) -> some View {
-        Image(systemName: ok ? "checkmark.circle.fill" : "xmark.octagon.fill")
-            .font(.system(size: 36))
-            .foregroundStyle(ok ? .green : .red)
-    }
-
-    private func codeBlock(_ text: String) -> some View {
-        Text(text)
-            .font(.system(.body, design: .monospaced))
-            .padding(8)
-            .frame(maxWidth: .infinity)
-            .background(Color.secondary.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .textSelection(.enabled)
-    }
-
     // MARK: - Async checks
 
-    private func checkCLI() async {
-        isChecking = true
-        defer { isChecking = false }
-        cliInstalled = CivoAdapter().isCLIInstalled()
-    }
+    @State private var validationError: String?
 
-    private func checkAuth() async {
+    private func validateAPIKey() async {
         isChecking = true
+        validationError = nil
         defer { isChecking = false }
-        authenticated = await CivoAdapter().isAuthenticated()
-    }
 
-    private func loadRegion() async {
-        isChecking = true
-        defer { isChecking = false }
         do {
-            state.currentRegion = try await CivoAdapter().getCurrentRegion()
+            let _: [CivoRegion] = try await CivoAPIClient.shared.getArray(
+                path: "/regions", regionRequired: false
+            )
+            apiKeyValid = true
+            CivoConfig.shared.apiKey = apiKeyInput
+        } catch CivoAPIError.httpError(let code, _) where code == 401 || code == 403 {
+            apiKeyValid = false
+            validationError = "Invalid API key."
         } catch {
-            Log.error("Region check failed: \(error.localizedDescription)")
+            // Network error — let the user proceed, key might be valid
+            apiKeyValid = true
+            CivoConfig.shared.apiKey = apiKeyInput
+            validationError = "Could not verify (network issue). Saved anyway."
+        }
+    }
+
+    private func loadRegions() async {
+        isChecking = true
+        defer { isChecking = false }
+        await state.loadRegions()
+
+        if selectedRegion.isEmpty, let current = state.availableRegions.first(where: { $0.isCurrent }) {
+            selectedRegion = current.code
+            CivoConfig.shared.region = current.code
         }
     }
 
@@ -451,7 +429,6 @@ struct OnboardingView: View {
         defer { isChecking = false }
         await state.discoverFirewalls()
 
-        // Pre-populate selections from already-managed firewalls
         for managed in state.managedFirewalls {
             firewallSelections[managed.id] = managed.enabled
             firewallPorts[managed.id] = managed.port

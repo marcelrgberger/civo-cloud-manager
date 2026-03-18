@@ -4,6 +4,7 @@ struct MenuBarView: View {
     @Bindable var state: AppState
     @Environment(\.openWindow) private var openWindow
     @State private var hasLoaded = false
+    @State private var store = StoreManager.shared
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,6 +23,11 @@ struct MenuBarView: View {
                 statusSection
             }
 
+            if !store.isFullAccessUnlocked {
+                Divider()
+                FreeModeBanner()
+            }
+
             Divider()
             bottomBar
         }
@@ -30,7 +36,6 @@ struct MenuBarView: View {
             guard !hasLoaded else { return }
             hasLoaded = true
             await state.initialLoad()
-            // Auto-open onboarding if setup not complete
             if state.setupState != .ready {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
@@ -90,8 +95,8 @@ struct MenuBarView: View {
     private var setupMessage: String {
         switch state.setupState {
         case .checking: return "Checking setup..."
-        case .cliMissing: return "civo CLI is not installed.\nInstall with: brew install civo"
-        case .unauthenticated: return "civo CLI is not authenticated.\nRun: civo apikey save YOUR_KEY --name default"
+        case .needsAPIKey: return "API key not configured.\nOpen setup to add your Civo API key."
+        case .needsRegion: return "No region selected.\nOpen setup to choose a region."
         case .needsFirewallSelection: return "No firewalls configured.\nOpen setup to select firewalls."
         case .ready: return ""
         }
@@ -158,6 +163,7 @@ struct MenuBarView: View {
                 .foregroundStyle(fw.isOpen ? .yellow : .primary)
                 .font(.body)
                 .frame(width: 20)
+                .contentTransition(.symbolEffect(.replace))
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(fw.managed.name)
@@ -229,17 +235,11 @@ struct MenuBarView: View {
                 Image(systemName: statusIcon)
                     .foregroundStyle(statusColor)
                     .font(.caption)
-                Text(state.statusText)
+                Text(state.error ?? state.statusText)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
-                Spacer()
-            }
-
-            if let error = state.error {
-                Text(error)
-                    .font(.caption2)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(state.error != nil ? .red : .secondary)
                     .lineLimit(2)
+                Spacer()
             }
 
             HStack {
@@ -271,14 +271,27 @@ struct MenuBarView: View {
     // MARK: - Bottom Bar
 
     private var bottomBar: some View {
-        HStack {
+        HStack(spacing: 0) {
             Button {
                 Task { await state.refresh() }
             } label: {
-                Label("Refresh", systemImage: "arrow.clockwise")
+                Image(systemName: "arrow.clockwise")
             }
             .buttonStyle(.borderless)
             .disabled(state.isLoading)
+            .help("Refresh")
+
+            Spacer()
+
+            Button {
+                NSApp.setActivationPolicy(.regular)
+                openWindow(id: "main")
+                NSApp.activate(ignoringOtherApps: true)
+            } label: {
+                Image(systemName: "square.grid.2x2")
+            }
+            .buttonStyle(.borderless)
+            .help("Dashboard")
 
             Spacer()
 
@@ -287,9 +300,10 @@ struct MenuBarView: View {
                 openWindow(id: "onboarding")
                 NSApp.activate(ignoringOtherApps: true)
             } label: {
-                Label("Settings...", systemImage: "gear")
+                Image(systemName: "gear")
             }
             .buttonStyle(.borderless)
+            .help("Settings")
 
             Spacer()
 
@@ -297,10 +311,11 @@ struct MenuBarView: View {
                 state.stopAutoRefresh()
                 NSApp.terminate(nil)
             } label: {
-                Label("Quit", systemImage: "power")
+                Image(systemName: "power")
             }
             .buttonStyle(.borderless)
             .foregroundStyle(.secondary)
+            .help("Quit")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)

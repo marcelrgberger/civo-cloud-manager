@@ -1,0 +1,114 @@
+{
+  "identifier" : "de.berger-rosenstock.CivoCloudManager.storekit",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : true,
+      "internalID" : "fullaccess",
+      "localizations" : [
+        {
+          "description" : "Unlock Dashboard, Kubernetes, Databases, Networking, Storage, Compute, and all resource management.",
+          "displayName" : "Full Access",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Dashboard, Kubernetes, Datenbanken, Netzwerk, Storage, Compute und alle Ressourcen freischalten.",
+          "displayName" : "Vollzugriff",
+          "locale" : "de"
+        },
+        {
+          "description" : "Desbloquear panel, Kubernetes, bases de datos, redes, almacenamiento, computaci\u00f3n y gesti\u00f3n de todos los recursos.",
+          "displayName" : "Acceso completo",
+          "locale" : "es"
+        },
+        {
+          "description" : "D\u00e9bloquer le tableau de bord, Kubernetes, bases de donn\u00e9es, r\u00e9seau, stockage, calcul et gestion de toutes les ressources.",
+          "displayName" : "Acc\u00e8s complet",
+          "locale" : "fr"
+        },
+        {
+          "description" : "Sblocca dashboard, Kubernetes, database, rete, archiviazione, calcolo e gestione di tutte le risorse.",
+          "displayName" : "Accesso completo",
+          "locale" : "it"
+        },
+        {
+          "description" : "Desbloquear painel, Kubernetes, bancos de dados, rede, armazenamento, computa\u00e7\u00e3o e gerenciamento de todos os recursos.",
+          "displayName" : "Acesso completo",
+          "locale" : "pt"
+        },
+        {
+          "description" : "Ontgrendel dashboard, Kubernetes, databases, netwerken, opslag, compute en alle resourcebeheer.",
+          "displayName" : "Volledige toegang",
+          "locale" : "nl"
+        }
+      ],
+      "productID" : "de.berger_rosenstock.CivoCloudManager.fullaccess",
+      "referenceName" : "Full Access",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "CivoCloudManager",
+    "_developerTeamID" : "",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

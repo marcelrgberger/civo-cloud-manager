@@ -8,7 +8,7 @@ let package = Package(
         .executableTarget(
             name: "CivoCloudManager",
             path: "Sources",
-            exclude: ["Info.plist"],
+            exclude: ["Info.plist", "Localizable.xcstrings"],
             linkerSettings: [
                 .unsafeFlags([
                     "-Xlinker", "-sectcreate",
@@ -17,6 +17,11 @@ let package = Package(
                     "-Xlinker", "Sources/Info.plist",
                 ]),
             ]
+        ),
+        .testTarget(
+            name: "CivoCloudManagerTests",
+            dependencies: ["CivoCloudManager"],
+            path: "Tests"
         ),
     ]
 )

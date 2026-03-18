@@ -1,0 +1,84 @@
+name: CivoCloudManager
+options:
+  bundleIdPrefix: de.berger-rosenstock
+  deploymentTarget:
+    macOS: "15.0"
+  xcodeVersion: "16.2"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "2.0.0"
+    CURRENT_PROJECT_VERSION: "2"
+    PRODUCT_NAME: "Civo Cloud Manager"
+    PRODUCT_BUNDLE_IDENTIFIER: de.berger-rosenstock.CivoCloudManager
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    INFOPLIST_FILE: CivoCloudManager/Info.plist
+    CODE_SIGN_ENTITLEMENTS: CivoCloudManager/CivoCloudManager.entitlements
+    SWIFT_EMIT_LOC_STRINGS: "YES"
+
+targets:
+  CivoCloudManager:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources
+        excludes:
+          - Info.plist
+          - Localizable.xcstrings
+      - path: CivoCloudManager/Assets.xcassets
+    resources:
+      - path: CivoCloudManager/Localizable.xcstrings
+      - path: CivoCloudManager/CivoCloudManager.storekit
+    settings:
+      base:
+        LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
+        COMBINE_HIDPI_IMAGES: YES
+    info:
+      path: CivoCloudManager/Info.plist
+      properties:
+        CFBundleDisplayName: "Civo Cloud Manager"
+        CFBundleName: "CivoCloudManager"
+        CFBundlePackageType: APPL
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        LSUIElement: true
+        LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
+        NSHumanReadableCopyright: "Copyright © 2025 Marcel R. G. Berger. All rights reserved."
+        LSApplicationCategoryType: "public.app-category.utilities"
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations:
+          - en
+          - de
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+    entitlements:
+      path: CivoCloudManager/CivoCloudManager.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        keychain-access-groups:
+          - "$(AppIdentifierPrefix)de.berger-rosenstock.CivoCloudManager"
+
+
+  CivoCloudManagerTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: CivoCloudManager
+    settings:
+      base:
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Civo Cloud Manager.app/Contents/MacOS/Civo Cloud Manager"

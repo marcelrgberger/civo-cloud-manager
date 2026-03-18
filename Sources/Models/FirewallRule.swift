@@ -1,28 +1,44 @@
 import Foundation
 
-// MARK: - Discovered from civo CLI
+// MARK: - Firewall
 
-/// Represents a firewall as returned by `civo firewall ls --output json`.
-struct CivoFirewall: Codable, Identifiable, Sendable {
+/// Represents a firewall from the Civo API.
+struct CivoFirewall: Identifiable, Sendable {
     let id: String
     let name: String
-    let rulesCount: String  // civo returns this as a string, e.g. "6"
+    let rulesCount: String
 
     var rulesCountInt: Int { Int(rulesCount) ?? 0 }
+}
 
+extension CivoFirewall: Decodable {
     enum CodingKeys: String, CodingKey {
-        case id
-        case name
+        case id, name
         case rulesCount = "rules_count"
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        name = try c.decode(String.self, forKey: .name)
+        // rules_count can be String or Int depending on the API version
+        if let s = try? c.decode(String.self, forKey: .rulesCount) {
+            rulesCount = s
+        } else if let i = try? c.decode(Int.self, forKey: .rulesCount) {
+            rulesCount = String(i)
+        } else {
+            rulesCount = "0"
+        }
     }
 }
 
-/// Represents a single firewall rule from `civo firewall rule ls --output json`.
-/// Note: civo CLI returns `cidr` as either a String or an Array depending on context.
+// MARK: - Rule
+
+/// Represents a single firewall rule.
 struct CivoRule: Sendable {
     let id: String
     let label: String?
-    let cidr: String?       // normalized to single string
+    let cidr: String?
     let ports: String?
     let startPort: String?
     let endPort: String?
@@ -32,14 +48,9 @@ struct CivoRule: Sendable {
 
 extension CivoRule: Decodable {
     enum CodingKeys: String, CodingKey {
-        case id
-        case label
-        case cidr
-        case ports
+        case id, label, cidr, ports, direction, action
         case startPort = "start_port"
         case endPort = "end_port"
-        case direction
-        case action
     }
 
     init(from decoder: Decoder) throws {
@@ -65,17 +76,15 @@ extension CivoRule: Decodable {
 
 // MARK: - User's managed config (persisted in UserDefaults)
 
-/// A firewall the user has chosen to manage, with configurable port.
 struct ManagedFirewall: Codable, Identifiable, Sendable, Hashable {
-    let id: String          // civo firewall ID
-    let name: String        // display name (= civo firewall name)
-    var port: Int           // port to open (user configurable)
-    var enabled: Bool       // whether to manage this firewall
+    let id: String
+    let name: String
+    var port: Int
+    var enabled: Bool
 }
 
 // MARK: - Runtime status
 
-/// Combines the user's managed config with live rule state.
 struct FirewallStatus: Identifiable, Sendable {
     let managed: ManagedFirewall
     let isOpen: Bool

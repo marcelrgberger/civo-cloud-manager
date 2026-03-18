@@ -1,0 +1,141 @@
+import SwiftUI
+
+enum SidebarSection: String, CaseIterable, Identifiable {
+    case dashboard = "Dashboard"
+    case instances = "Instances"
+    case sshKeys = "SSH Keys"
+    case clusters = "Kubernetes"
+    case networks = "Networks"
+    case firewalls = "Firewalls"
+    case loadBalancers = "Load Balancers"
+    case domains = "Domains"
+    case databases = "Databases"
+    case volumes = "Volumes"
+    case objectStores = "Object Stores"
+    case regions = "Regions"
+
+    var id: String { rawValue }
+
+    var icon: String {
+        switch self {
+        case .dashboard: return "gauge.with.dots.needle.33percent"
+        case .instances: return "desktopcomputer"
+        case .sshKeys: return "key"
+        case .clusters: return "helm"
+        case .networks: return "point.3.connected.trianglepath.dotted"
+        case .firewalls: return "shield"
+        case .loadBalancers: return "arrow.triangle.branch"
+        case .domains: return "globe"
+        case .databases: return "cylinder.split.1x2"
+        case .volumes: return "cylinder"
+        case .objectStores: return "tray.2"
+        case .regions: return "map"
+        }
+    }
+
+    var category: SidebarCategory {
+        switch self {
+        case .dashboard: return .overview
+        case .instances, .sshKeys: return .compute
+        case .clusters: return .kubernetes
+        case .networks, .firewalls, .loadBalancers, .domains: return .networking
+        case .databases, .volumes, .objectStores: return .storage
+        case .regions: return .account
+        }
+    }
+}
+
+enum SidebarCategory: String, CaseIterable {
+    case overview = "Overview"
+    case compute = "Compute"
+    case kubernetes = "Kubernetes"
+    case networking = "Networking"
+    case storage = "Storage & Data"
+    case account = "Account"
+
+    var sections: [SidebarSection] {
+        SidebarSection.allCases.filter { $0.category == self }
+    }
+}
+
+struct MainWindowView: View {
+    @State private var store = StoreManager.shared
+    @State private var selection: SidebarSection = .dashboard
+    @State private var dashboardVM = DashboardViewModel()
+    @State private var kubernetesVM = KubernetesViewModel()
+    @State private var databaseVM = DatabaseViewModel()
+    @State private var networkVM = NetworkViewModel()
+    @State private var volumeVM = VolumeViewModel()
+    @State private var instanceVM = InstanceViewModel()
+    @State private var domainVM = DomainViewModel()
+    @State private var regionVM = RegionViewModel()
+
+    var body: some View {
+        Group {
+            if store.isFullAccessUnlocked {
+                NavigationSplitView {
+                    sidebar
+                } detail: {
+                    detailView
+                        .animation(.easeOut(duration: 0.2), value: selection)
+                }
+            } else {
+                PaywallView()
+            }
+        }
+        .navigationTitle("")
+        .frame(minWidth: 900, minHeight: 600)
+        .task {
+            await store.refreshPurchaseStatus()
+        }
+    }
+
+    // MARK: - Sidebar
+
+    private var sidebar: some View {
+        List(selection: $selection) {
+            ForEach(SidebarCategory.allCases, id: \.self) { category in
+                Section(category.rawValue) {
+                    ForEach(category.sections) { section in
+                        Label(section.rawValue, systemImage: section.icon)
+                            .tag(section)
+                    }
+                }
+            }
+        }
+        .listStyle(.sidebar)
+        .navigationSplitViewColumnWidth(min: 180, ideal: 220)
+    }
+
+    // MARK: - Detail
+
+    @ViewBuilder
+    private var detailView: some View {
+        switch selection {
+        case .dashboard:
+            DashboardView(vm: dashboardVM)
+        case .instances:
+            InstanceListView(vm: instanceVM)
+        case .sshKeys:
+            SSHKeyListView(vm: instanceVM)
+        case .clusters:
+            ClusterListView(vm: kubernetesVM)
+        case .networks:
+            NetworkListView(vm: networkVM)
+        case .firewalls:
+            FirewallListView(vm: networkVM)
+        case .loadBalancers:
+            LoadBalancerListView(vm: networkVM)
+        case .domains:
+            DomainListView(vm: domainVM)
+        case .databases:
+            DatabaseListView(vm: databaseVM)
+        case .volumes:
+            VolumeListView(vm: volumeVM)
+        case .objectStores:
+            ObjectStoreListView(vm: volumeVM)
+        case .regions:
+            RegionListView(vm: regionVM)
+        }
+    }
+}
