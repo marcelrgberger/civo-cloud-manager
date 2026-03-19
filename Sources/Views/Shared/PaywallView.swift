@@ -105,9 +105,24 @@ struct PaywallView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+            } else if store.isLoading {
+                ProgressView("Loading price...")
+                    .controlSize(.small)
             } else {
-                Text("Loading price...")
-                    .foregroundStyle(.secondary)
+                // Fallback when products can't be loaded (no StoreKit config or network issue)
+                Button {
+                    Task { await store.loadProducts() }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "cart.fill")
+                        Text("Unlock Full Access")
+                            .font(.headline)
+                    }
+                    .frame(maxWidth: 400)
+                    .padding(.vertical, 10)
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
             }
 
             if let error = store.error {
