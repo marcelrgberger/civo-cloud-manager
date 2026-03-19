@@ -5,8 +5,8 @@ struct ClusterListView: View {
 
     var body: some View {
         Group {
-            if vm.selectedCluster != nil {
-                ClusterDetailView(cluster: vm.selectedCluster!, vm: vm) {
+            if let cluster = vm.selectedCluster {
+                ClusterDetailView(cluster: cluster, vm: vm) {
                     vm.selectedCluster = nil
                 }
             } else {

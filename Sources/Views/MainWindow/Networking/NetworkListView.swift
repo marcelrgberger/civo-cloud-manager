@@ -11,8 +11,8 @@ struct NetworkListView: View {
                 ForEach(vm.networks) { net in
                     ResourceListRow(
                         icon: "point.3.connected.trianglepath.dotted",
-                        name: net.name,
-                        subtitle: "Region: \(net.region ?? "—") — \(net.isDefault == "true" ? "Default" : "")",
+                        name: net.displayName,
+                        subtitle: "Region: \(net.region ?? "—")\(net.isDefault == true ? " — Default" : "")",
                         status: net.status
                     )
                 }

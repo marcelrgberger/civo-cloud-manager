@@ -12,8 +12,8 @@ settings:
     SWIFT_VERSION: "6.0"
     MACOSX_DEPLOYMENT_TARGET: "15.0"
     SWIFT_STRICT_CONCURRENCY: complete
-    MARKETING_VERSION: "2.0.0"
-    CURRENT_PROJECT_VERSION: "2"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
     PRODUCT_NAME: "Civo Cloud Manager"
     PRODUCT_BUNDLE_IDENTIFIER: de.berger-rosenstock.CivoCloudManager
     ENABLE_HARDENED_RUNTIME: YES
@@ -36,7 +36,6 @@ targets:
       - path: CivoCloudManager/Assets.xcassets
     resources:
       - path: CivoCloudManager/Localizable.xcstrings
-      - path: CivoCloudManager/CivoCloudManager.storekit
     settings:
       base:
         LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]

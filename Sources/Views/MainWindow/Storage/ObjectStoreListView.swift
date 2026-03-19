@@ -13,7 +13,7 @@ struct ObjectStoreListView: View {
                     ResourceListRow(
                         icon: "tray.2",
                         name: store.name,
-                        subtitle: "\(store.maxSize ?? "?") GB max — \(store.objectstoreEndpoint ?? "")",
+                        subtitle: "\(store.maxSizeDisplay) max — \(store.objectstoreEndpoint ?? "")",
                         status: store.status
                     )
                     .contextMenu {

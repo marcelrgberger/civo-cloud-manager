@@ -34,7 +34,7 @@ struct RegionListView: View {
                                         .clipShape(Capsule())
                                 }
                             }
-                            Text("\(region.country ?? "") — \(region.code)")
+                            Text("\(region.countryDisplay) — \(region.code)")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }

@@ -1,42 +1,42 @@
 import Foundation
 
 struct CivoQuota: Codable, Sendable {
-    let instanceCountLimit: String
-    let instanceCountUsage: String
-    let cpuCoreLimit: String
-    let cpuCoreUsage: String
-    let ramMbLimit: String
-    let ramMbUsage: String
-    let diskGbLimit: String
-    let diskGbUsage: String
-    let diskVolumeCountLimit: String
-    let diskVolumeCountUsage: String
-    let diskSnapshotCountLimit: String
-    let diskSnapshotCountUsage: String
-    let publicIpAddressLimit: String
-    let publicIpAddressUsage: String
-    let networkCountLimit: String
-    let networkCountUsage: String
-    let securityGroupLimit: String
-    let securityGroupUsage: String
-    let securityGroupRuleLimit: String
-    let securityGroupRuleUsage: String
-    let subnetCountLimit: String
-    let subnetCountUsage: String
-    let loadbalancerCountLimit: String
-    let loadbalancerCountUsage: String
-    let objectstoreGbLimit: String
-    let objectstoreGbUsage: String
-    let databaseCountLimit: String
-    let databaseCountUsage: String
-    let databaseCpuCoreLimit: String
-    let databaseCpuCoreUsage: String
-    let databaseRamMbLimit: String
-    let databaseRamMbUsage: String
-    let databaseDiskGbLimit: String
-    let databaseDiskGbUsage: String
-    let databaseSnapshotCountLimit: String
-    let databaseSnapshotCountUsage: String
+    let instanceCountLimit: Int
+    let instanceCountUsage: Int
+    let cpuCoreLimit: Int
+    let cpuCoreUsage: Int
+    let ramMbLimit: Int
+    let ramMbUsage: Int
+    let diskGbLimit: Int
+    let diskGbUsage: Int
+    let diskVolumeCountLimit: Int
+    let diskVolumeCountUsage: Int
+    let diskSnapshotCountLimit: Int
+    let diskSnapshotCountUsage: Int
+    let publicIpAddressLimit: Int
+    let publicIpAddressUsage: Int
+    let networkCountLimit: Int
+    let networkCountUsage: Int
+    let securityGroupLimit: Int
+    let securityGroupUsage: Int
+    let securityGroupRuleLimit: Int
+    let securityGroupRuleUsage: Int
+    let subnetCountLimit: Int
+    let subnetCountUsage: Int
+    let loadbalancerCountLimit: Int
+    let loadbalancerCountUsage: Int
+    let objectstoreGbLimit: Int
+    let objectstoreGbUsage: Int
+    let databaseCountLimit: Int
+    let databaseCountUsage: Int
+    let databaseCpuCoreLimit: Int
+    let databaseCpuCoreUsage: Int
+    let databaseRamMbLimit: Int
+    let databaseRamMbUsage: Int
+    let databaseDiskGbLimit: Int
+    let databaseDiskGbUsage: Int
+    let databaseSnapshotCountLimit: Int
+    let databaseSnapshotCountUsage: Int
 
     enum CodingKeys: String, CodingKey {
         case instanceCountLimit = "instance_count_limit"
@@ -94,19 +94,19 @@ struct QuotaItem: Identifiable, Sendable {
 extension CivoQuota {
     var items: [QuotaItem] {
         [
-            QuotaItem(id: "instances", label: "Instances", usage: Int(instanceCountUsage) ?? 0, limit: Int(instanceCountLimit) ?? 0, icon: "desktopcomputer"),
-            QuotaItem(id: "cpu", label: "CPU Cores", usage: Int(cpuCoreUsage) ?? 0, limit: Int(cpuCoreLimit) ?? 0, icon: "cpu"),
-            QuotaItem(id: "ram", label: "RAM (MB)", usage: Int(ramMbUsage) ?? 0, limit: Int(ramMbLimit) ?? 0, icon: "memorychip"),
-            QuotaItem(id: "disk", label: "Disk (GB)", usage: Int(diskGbUsage) ?? 0, limit: Int(diskGbLimit) ?? 0, icon: "externaldrive"),
-            QuotaItem(id: "volumes", label: "Volumes", usage: Int(diskVolumeCountUsage) ?? 0, limit: Int(diskVolumeCountLimit) ?? 0, icon: "cylinder"),
-            QuotaItem(id: "publicIps", label: "Public IPs", usage: Int(publicIpAddressUsage) ?? 0, limit: Int(publicIpAddressLimit) ?? 0, icon: "network"),
-            QuotaItem(id: "networks", label: "Networks", usage: Int(networkCountUsage) ?? 0, limit: Int(networkCountLimit) ?? 0, icon: "point.3.connected.trianglepath.dotted"),
-            QuotaItem(id: "loadbalancers", label: "Load Balancers", usage: Int(loadbalancerCountUsage) ?? 0, limit: Int(loadbalancerCountLimit) ?? 0, icon: "arrow.triangle.branch"),
-            QuotaItem(id: "objectstore", label: "Object Store (GB)", usage: Int(objectstoreGbUsage) ?? 0, limit: Int(objectstoreGbLimit) ?? 0, icon: "tray.2"),
-            QuotaItem(id: "databases", label: "Databases", usage: Int(databaseCountUsage) ?? 0, limit: Int(databaseCountLimit) ?? 0, icon: "cylinder.split.1x2"),
-            QuotaItem(id: "dbCpu", label: "DB CPU Cores", usage: Int(databaseCpuCoreUsage) ?? 0, limit: Int(databaseCpuCoreLimit) ?? 0, icon: "cpu"),
-            QuotaItem(id: "dbRam", label: "DB RAM (MB)", usage: Int(databaseRamMbUsage) ?? 0, limit: Int(databaseRamMbLimit) ?? 0, icon: "memorychip"),
-            QuotaItem(id: "dbDisk", label: "DB Disk (GB)", usage: Int(databaseDiskGbUsage) ?? 0, limit: Int(databaseDiskGbLimit) ?? 0, icon: "externaldrive"),
+            QuotaItem(id: "instances", label: "Instances", usage: instanceCountUsage, limit: instanceCountLimit, icon: "desktopcomputer"),
+            QuotaItem(id: "cpu", label: "CPU Cores", usage: cpuCoreUsage, limit: cpuCoreLimit, icon: "cpu"),
+            QuotaItem(id: "ram", label: "RAM (MB)", usage: ramMbUsage, limit: ramMbLimit, icon: "memorychip"),
+            QuotaItem(id: "disk", label: "Disk (GB)", usage: diskGbUsage, limit: diskGbLimit, icon: "externaldrive"),
+            QuotaItem(id: "volumes", label: "Volumes", usage: diskVolumeCountUsage, limit: diskVolumeCountLimit, icon: "cylinder"),
+            QuotaItem(id: "publicIps", label: "Public IPs", usage: publicIpAddressUsage, limit: publicIpAddressLimit, icon: "network"),
+            QuotaItem(id: "networks", label: "Networks", usage: networkCountUsage, limit: networkCountLimit, icon: "point.3.connected.trianglepath.dotted"),
+            QuotaItem(id: "loadbalancers", label: "Load Balancers", usage: loadbalancerCountUsage, limit: loadbalancerCountLimit, icon: "arrow.triangle.branch"),
+            QuotaItem(id: "objectstore", label: "Object Store (GB)", usage: objectstoreGbUsage, limit: objectstoreGbLimit, icon: "tray.2"),
+            QuotaItem(id: "databases", label: "Databases", usage: databaseCountUsage, limit: databaseCountLimit, icon: "cylinder.split.1x2"),
+            QuotaItem(id: "dbCpu", label: "DB CPU Cores", usage: databaseCpuCoreUsage, limit: databaseCpuCoreLimit, icon: "cpu"),
+            QuotaItem(id: "dbRam", label: "DB RAM (MB)", usage: databaseRamMbUsage, limit: databaseRamMbLimit, icon: "memorychip"),
+            QuotaItem(id: "dbDisk", label: "DB Disk (GB)", usage: databaseDiskGbUsage, limit: databaseDiskGbLimit, icon: "externaldrive"),
         ]
     }
 }

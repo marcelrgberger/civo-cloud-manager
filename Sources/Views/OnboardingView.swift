@@ -167,7 +167,7 @@ struct OnboardingView: View {
 
                 Picker("Region", selection: $selectedRegion) {
                     ForEach(state.availableRegions) { region in
-                        Text("\(region.name) — \(region.country ?? "")")
+                        Text("\(region.name) — \(region.countryDisplay)")
                             .tag(region.code)
                     }
                 }
@@ -396,20 +396,15 @@ struct OnboardingView: View {
         validationError = nil
         defer { isChecking = false }
 
-        do {
-            let _: [CivoRegion] = try await CivoAPIClient.shared.getArray(
-                path: "/regions", regionRequired: false
-            )
+        let valid = await CivoAPIClient.shared.validateAPIKey(apiKeyInput)
+        if valid {
             apiKeyValid = true
             CivoConfig.shared.apiKey = apiKeyInput
-        } catch CivoAPIError.httpError(let code, _) where code == 401 || code == 403 {
+        } else {
+            // Could be invalid key or network error — save and let user proceed
+            // They'll get clear errors later if the key is actually wrong
             apiKeyValid = false
-            validationError = "Invalid API key."
-        } catch {
-            // Network error — let the user proceed, key might be valid
-            apiKeyValid = true
-            CivoConfig.shared.apiKey = apiKeyInput
-            validationError = "Could not verify (network issue). Saved anyway."
+            validationError = "Could not validate. Check your key and network connection."
         }
     }
 

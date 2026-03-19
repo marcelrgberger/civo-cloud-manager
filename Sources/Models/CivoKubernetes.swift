@@ -42,20 +42,6 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
     }
 }
 
-struct CivoKubernetesListItem: Codable, Identifiable, Sendable {
-    let id: String
-    let name: String
-    let clusterType: String?
-    let status: String
-    let nodes: String?
-    let pools: String?
-    let conditions: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id, name, status, nodes, pools, conditions
-        case clusterType = "cluster_type"
-    }
-}
 
 struct CivoNodePool: Codable, Identifiable, Sendable {
     let id: String

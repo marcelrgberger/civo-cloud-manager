@@ -30,7 +30,6 @@
 		6A716F6B87A5AC593E9E4265 /* CivoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC8DFAD9117EFEF6903AED4 /* CivoNetworkService.swift */; };
 		6B8A56EB41EAE1C976F90A64 /* DatabaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653BFE15133D119B968E37B8 /* DatabaseViewModel.swift */; };
 		6CC6DEBD99341B72B627860D /* CivoDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A68203D97D90CDCA97D376 /* CivoDomain.swift */; };
-		6F8D79DB1B54CC8D58503F73 /* CivoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FD50818CE1B57EE2438DE /* CivoSize.swift */; };
 		75EDB8203F59DA1810ABEB54 /* CivoDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE806E4E9859BB153E37AFF /* CivoDatabaseService.swift */; };
 		7D216DF7D015810A3E3C4B16 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32F73DFD7020CC9F97E2C25 /* NetworkListView.swift */; };
 		7ED6A368F04214AFBA5C5860 /* CivoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDBA7D898CA6DBFB09B03EA /* CivoAPIClient.swift */; };
@@ -134,7 +133,6 @@
 		B05E15BCB23C10E4B4E14F11 /* ObjectStoreListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectStoreListView.swift; sourceTree = "<group>"; };
 		B1597B9E26FE112E2374B929 /* CivoQuota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoQuota.swift; sourceTree = "<group>"; };
 		B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoSSHKey.swift; sourceTree = "<group>"; };
-		B50FD50818CE1B57EE2438DE /* CivoSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoSize.swift; sourceTree = "<group>"; };
 		C1D54B903278A16C0A7C3FCE /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		C32F73DFD7020CC9F97E2C25 /* NetworkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		C77C55AD8BDAD5DEE1E1F5D7 /* CivoCloudManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoCloudManagerApp.swift; sourceTree = "<group>"; };
@@ -347,7 +345,6 @@
 				4112A2183F0F82E271E7CBEB /* CivoObjectStore.swift */,
 				B1597B9E26FE112E2374B929 /* CivoQuota.swift */,
 				7126A77B7B656502483F1E79 /* CivoRegion.swift */,
-				B50FD50818CE1B57EE2438DE /* CivoSize.swift */,
 				B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */,
 				94F9EC147708D73711161AE0 /* CivoVolume.swift */,
 				4B022376D3CE5DDD6EE9505B /* FirewallRule.swift */,
@@ -492,7 +489,6 @@
 				B4438FF85101F9D3A50DE6D9 /* CivoRegionService.swift in Sources */,
 				FB906C15123E6D7852E79705 /* CivoSSHKey.swift in Sources */,
 				A7E8C8D74E51158DC428AA51 /* CivoSSHKeyService.swift in Sources */,
-				6F8D79DB1B54CC8D58503F73 /* CivoSize.swift in Sources */,
 				40A3C0CB4DF41A1CFE101E44 /* CivoVolume.swift in Sources */,
 				96F3EDB8E751E382EEEFFC1D /* CivoVolumeService.swift in Sources */,
 				B890A5AB4C1AABAC54BD74FD /* ClusterDetailView.swift in Sources */,
@@ -595,7 +591,7 @@
 				CODE_SIGN_ENTITLEMENTS = CivoCloudManager/CivoCloudManager.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = X6AG9W7D3G;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -617,7 +613,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = CivoCloudManager/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -714,7 +710,7 @@
 				CODE_SIGN_ENTITLEMENTS = CivoCloudManager/CivoCloudManager.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = X6AG9W7D3G;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -730,7 +726,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = CivoCloudManager/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManager";

@@ -11,7 +11,7 @@ final class CivoConfig: @unchecked Sendable {
     static let shared = CivoConfig()
 
     var apiKey: String {
-        get { readKeychain() ?? UserDefaults.standard.string(forKey: "CivoCloudManager.apiKey.fallback") ?? "" }
+        get { readKeychain() ?? "" }
         set { writeKeychain(newValue) }
     }
 
@@ -37,7 +37,6 @@ final class CivoConfig: @unchecked Sendable {
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
-
         guard status == errSecSuccess, let data = result as? Data else { return nil }
         return String(data: data, encoding: .utf8)
     }
@@ -60,16 +59,8 @@ final class CivoConfig: @unchecked Sendable {
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
         ]
         let status = SecItemAdd(addQuery as CFDictionary, nil)
-        if status != errSecSuccess {
+        if status != errSecSuccess && status != errSecDuplicateItem {
             Log.error("Keychain write failed: \(status)")
-            // Fallback: store in UserDefaults if Keychain is unavailable
-            UserDefaults.standard.set(value, forKey: "CivoCloudManager.apiKey.fallback")
         }
-    }
-
-    /// Read from Keychain first, fall back to UserDefaults if Keychain was unavailable.
-    private func readWithFallback() -> String? {
-        if let key = readKeychain() { return key }
-        return UserDefaults.standard.string(forKey: "CivoCloudManager.apiKey.fallback")
     }
 }

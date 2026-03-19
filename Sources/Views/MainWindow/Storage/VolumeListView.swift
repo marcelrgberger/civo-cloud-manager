@@ -13,7 +13,7 @@ struct VolumeListView: View {
                     ResourceListRow(
                         icon: "cylinder",
                         name: vol.name,
-                        subtitle: "\(vol.sizeGigabytes ?? "?") — \(vol.mountPoint ?? "unmounted")",
+                        subtitle: "\(vol.sizeDisplay) — \(vol.mountpoint ?? "unmounted")",
                         status: vol.status
                     )
                     .contextMenu {

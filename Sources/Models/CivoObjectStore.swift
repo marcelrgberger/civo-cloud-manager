@@ -3,7 +3,7 @@ import Foundation
 struct CivoObjectStore: Codable, Identifiable, Sendable {
     let id: String
     let name: String
-    let maxSize: String?
+    let maxSize: Int?
     let objectstoreEndpoint: String?
     let status: String?
 
@@ -13,5 +13,8 @@ struct CivoObjectStore: Codable, Identifiable, Sendable {
         case objectstoreEndpoint = "objectstore_endpoint"
     }
 
-    var maxSizeInt: Int { Int(maxSize ?? "0") ?? 0 }
+    var maxSizeDisplay: String {
+        if let maxSize { return "\(maxSize) GB" }
+        return "—"
+    }
 }

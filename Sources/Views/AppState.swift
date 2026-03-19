@@ -205,8 +205,8 @@ final class AppState {
     func loadRegions() async {
         do {
             availableRegions = try await regionService.listRegions()
-            if let current = availableRegions.first(where: { $0.isCurrent }) {
-                currentRegion = "\(current.name) (\(current.code))"
+            if let matched = availableRegions.first(where: { $0.code == config.region }) {
+                currentRegion = "\(matched.countryDisplay) (\(matched.code))"
             } else if !config.region.isEmpty {
                 currentRegion = config.region
             }
