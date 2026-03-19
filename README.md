@@ -23,9 +23,20 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - Confirmation dialogs on all destructive operations
 - Error banners on every view
 
+### Monetization
+- **Free tier** — menu bar firewall management
+- **Full Access ($9.99)** — one-time purchase, unlocks dashboard + all resources
+- **Apple offer codes** — redeem codes generated in App Store Connect
+- **Family Sharing** enabled
+
+### Localization
+- 7 languages: English, German, Spanish, French, Italian, Dutch, Polish
+
 ### Architecture
 - **Native HTTP API** — connects directly to `api.civo.com/v2`, no CLI required
-- **App Sandbox** — network client entitlement only
+- **App Sandbox** — network client entitlement
+- **Keychain** — API key stored securely in macOS Keychain
+- **StoreKit 2** — modern in-app purchase with transaction listener
 - **Zero dependencies** — only Apple frameworks
 - **Swift 6 strict concurrency** — all types Sendable
 
@@ -550,14 +561,14 @@ All settings are stored in UserDefaults under the `de.berger-rosenstock.CivoClou
 
 ## Testing
 
-The project includes 21 decoding tests that verify all model types parse correctly against real Civo API responses.
+The project includes 22 decoding tests that verify all model types parse correctly against real Civo API responses.
 
 ```bash
 swift test
 ```
 
 ```
-✔ Test run with 21 tests in 1 suite passed after 0.001 seconds.
+✔ Test run with 22 tests in 1 suite passed after 0.001 seconds.
 ```
 
 Tests cover:
@@ -577,9 +588,12 @@ Tests cover:
 | Platform | macOS 15+ |
 | API | Civo REST API v2 via URLSession |
 | IP Detection | ipify.org + ifconfig.me + icanhazip.com |
-| Persistence | UserDefaults |
+| Secrets | macOS Keychain (API key) |
+| Persistence | UserDefaults (settings) |
+| Purchases | StoreKit 2 (Non-Consumable) |
+| Localization | String Catalog — 7 languages |
 | Login | SMAppService |
-| Logging | os.Logger |
+| Logging | os.Logger (privacy: .private) |
 | Dependencies | None (Apple frameworks only) |
 
 ---
@@ -588,16 +602,16 @@ Tests cover:
 
 ```
 civo-cloud-manager/
-├── Package.swift                              # SPM build (debug/test)
 ├── project.yml                                # XcodeGen project definition
-├── CivoCloudManager.xcodeproj/                # Generated Xcode project
+├── CivoCloudManager.xcodeproj/                # Xcode project (primary build)
+├── Package.swift                              # SPM (tests only)
 ├── CivoCloudManager/
-│   ├── Info.plist                              # App metadata
+│   ├── Info.plist                              # App metadata + localizations
 │   ├── CivoCloudManager.entitlements           # App Sandbox + network
+│   ├── CivoCloudManager.storekit              # StoreKit test configuration
+│   ├── Localizable.xcstrings                   # String catalog (7 languages)
 │   └── Assets.xcassets/                        # App icon + accent color
 ├── Sources/
-│   ├── Info.plist                              # SPM build Info.plist
-│   ├── Localizable.xcstrings                   # String catalog (6 languages)
 │   ├── App/
 │   │   └── CivoCloudManagerApp.swift           # @main — 3 scenes
 │   ├── Models/
@@ -617,7 +631,7 @@ civo-cloud-manager/
 │   │   └── CivoQuota.swift                     # + QuotaItem
 │   ├── Services/
 │   │   ├── CivoAPIClient.swift                 # HTTP client for api.civo.com/v2
-│   │   ├── CivoConfig.swift                    # API key + region storage
+│   │   ├── CivoConfig.swift                    # API key (Keychain) + region
 │   │   ├── CivoFirewallService.swift            # Firewall rules via REST
 │   │   ├── CivoQuotaService.swift
 │   │   ├── CivoKubernetesService.swift
@@ -630,7 +644,8 @@ civo-cloud-manager/
 │   │   ├── CivoSSHKeyService.swift
 │   │   ├── CivoDomainService.swift
 │   │   ├── CivoRegionService.swift
-│   │   └── IPDetector.swift
+│   │   ├── IPDetector.swift
+│   │   └── StoreManager.swift                 # StoreKit 2 IAP ($9.99 lifetime)
 │   ├── ViewModels/
 │   │   ├── DashboardViewModel.swift
 │   │   ├── KubernetesViewModel.swift
@@ -669,11 +684,12 @@ civo-cloud-manager/
 │   │       ├── QuotaGauge.swift
 │   │       ├── ResourceListRow.swift
 │   │       ├── EmptyStateView.swift
-│   │       └── ErrorBanner.swift
+│   │       ├── ErrorBanner.swift
+│   │       └── PaywallView.swift              # Buy-once paywall + offer codes
 │   └── Utilities/
 │       └── Logger.swift
 ├── Tests/
-│   └── APIDecodingTests.swift                  # 21 model decoding tests
+│   └── APIDecodingTests.swift                  # 22 model decoding tests
 ├── README.md
 ├── CLAUDE.md
 ├── LICENSE
