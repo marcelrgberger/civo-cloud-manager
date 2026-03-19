@@ -59,8 +59,9 @@ final class IPDetector: Sendable {
 
                 // IPv4 validation
                 let parts = ip.split(separator: ".")
-                if parts.count == 4,
-                    parts.allSatisfy({ Int($0) != nil && Int($0)! >= 0 && Int($0)! <= 255 })
+                let octets = parts.compactMap { Int($0) }
+                if parts.count == 4, octets.count == 4,
+                    octets.allSatisfy({ $0 >= 0 && $0 <= 255 })
                 {
                     // Check for private/reserved IP ranges
                     if isPrivateIP(ip) {

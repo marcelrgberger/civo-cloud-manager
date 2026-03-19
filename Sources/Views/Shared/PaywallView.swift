@@ -1,5 +1,4 @@
 import SwiftUI
-import StoreKit
 
 struct PaywallView: View {
     @State private var store = StoreManager.shared

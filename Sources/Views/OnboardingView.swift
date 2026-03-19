@@ -396,15 +396,20 @@ struct OnboardingView: View {
         validationError = nil
         defer { isChecking = false }
 
+        guard !apiKeyInput.trimmingCharacters(in: .whitespaces).isEmpty else {
+            validationError = "Please enter an API key."
+            return
+        }
+
         let valid = await CivoAPIClient.shared.validateAPIKey(apiKeyInput)
         if valid {
             apiKeyValid = true
             CivoConfig.shared.apiKey = apiKeyInput
         } else {
-            // Could be invalid key or network error — save and let user proceed
-            // They'll get clear errors later if the key is actually wrong
-            apiKeyValid = false
-            validationError = "Could not validate. Check your key and network connection."
+            // Save anyway — could be network issue, user gets clear errors later
+            apiKeyValid = true
+            CivoConfig.shared.apiKey = apiKeyInput
+            validationError = "Could not verify online. Saved — will retry on use."
         }
     }
 

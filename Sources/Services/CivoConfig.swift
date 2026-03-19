@@ -22,18 +22,21 @@ final class CivoConfig: @unchecked Sendable {
 
     var hasAPIKey: Bool { !apiKey.isEmpty }
     var hasRegion: Bool { !region.isEmpty }
-    var isConfigured: Bool { hasAPIKey && hasRegion }
 
     // MARK: - Keychain
 
-    private func readKeychain() -> String? {
-        let query: [String: Any] = [
+    private var baseQuery: [String: Any] {
+        [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: ConfigKey.keychainService,
             kSecAttrAccount as String: ConfigKey.keychainAccount,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne,
         ]
+    }
+
+    private func readKeychain() -> String? {
+        var query = baseQuery
+        query[kSecReturnData as String] = true
+        query[kSecMatchLimit as String] = kSecMatchLimitOne
 
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
@@ -42,25 +45,29 @@ final class CivoConfig: @unchecked Sendable {
     }
 
     private func writeKeychain(_ value: String) {
-        let deleteQuery: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: ConfigKey.keychainService,
-            kSecAttrAccount as String: ConfigKey.keychainAccount,
-        ]
-        SecItemDelete(deleteQuery as CFDictionary)
+        guard !value.isEmpty else {
+            // Delete only when explicitly clearing
+            SecItemDelete(baseQuery as CFDictionary)
+            return
+        }
 
-        guard !value.isEmpty else { return }
+        guard let valueData = value.data(using: .utf8) else { return }
 
-        let addQuery: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: ConfigKey.keychainService,
-            kSecAttrAccount as String: ConfigKey.keychainAccount,
-            kSecValueData as String: value.data(using: .utf8)!,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-        ]
-        let status = SecItemAdd(addQuery as CFDictionary, nil)
-        if status != errSecSuccess && status != errSecDuplicateItem {
-            Log.error("Keychain write failed: \(status)")
+        // Try update first — preserves existing item if present
+        let updateAttrs: [String: Any] = [kSecValueData as String: valueData]
+        let updateStatus = SecItemUpdate(baseQuery as CFDictionary, updateAttrs as CFDictionary)
+
+        if updateStatus == errSecItemNotFound {
+            // No existing item — add new
+            var addQuery = baseQuery
+            addQuery[kSecValueData as String] = valueData
+            addQuery[kSecAttrAccessible as String] = kSecAttrAccessibleWhenUnlocked
+            let addStatus = SecItemAdd(addQuery as CFDictionary, nil)
+            if addStatus != errSecSuccess {
+                Log.error("Keychain add failed: \(addStatus)")
+            }
+        } else if updateStatus != errSecSuccess {
+            Log.error("Keychain update failed: \(updateStatus)")
         }
     }
 }

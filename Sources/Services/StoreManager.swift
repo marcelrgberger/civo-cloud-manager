@@ -111,7 +111,11 @@ final class StoreManager {
     private func listenForTransactions() async {
         for await result in Transaction.updates {
             if let transaction = try? checkVerified(result) {
-                purchasedProductIDs.insert(transaction.productID)
+                if transaction.revocationDate != nil {
+                    purchasedProductIDs.remove(transaction.productID)
+                } else {
+                    purchasedProductIDs.insert(transaction.productID)
+                }
                 await transaction.finish()
             }
         }

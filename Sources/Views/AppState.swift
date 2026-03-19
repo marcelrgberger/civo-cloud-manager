@@ -37,7 +37,6 @@ final class AppState {
 
     // Discovered (not persisted)
     var discoveredFirewalls: [CivoFirewall] = []
-    var currentRegion: String = ""
     var availableRegions: [CivoRegion] = []
 
     // Persisted settings
@@ -205,11 +204,8 @@ final class AppState {
     func loadRegions() async {
         do {
             availableRegions = try await regionService.listRegions()
-            if let matched = availableRegions.first(where: { $0.code == config.region }) {
-                currentRegion = "\(matched.countryDisplay) (\(matched.code))"
-            } else if !config.region.isEmpty {
-                currentRegion = config.region
-            }
+            // Regions loaded for onboarding picker
+            _ = availableRegions
         } catch {
             Log.error("Region load failed: \(error.localizedDescription)")
         }

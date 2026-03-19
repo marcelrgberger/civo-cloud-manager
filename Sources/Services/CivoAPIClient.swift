@@ -128,7 +128,9 @@ final class CivoAPIClient: Sendable {
         let apiKey = CivoConfig.shared.apiKey
         guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
 
-        var components = URLComponents(string: "\(baseURL)\(path)")!
+        guard var components = URLComponents(string: "\(baseURL)\(path)") else {
+            throw CivoAPIError.networkError("Invalid API path: \(path)")
+        }
         var items = queryItems ?? []
         if regionRequired {
             let region = CivoConfig.shared.region
@@ -137,7 +139,10 @@ final class CivoAPIClient: Sendable {
         }
         if !items.isEmpty { components.queryItems = items }
 
-        var request = URLRequest(url: components.url!)
+        guard let url = components.url else {
+            throw CivoAPIError.networkError("Invalid URL for path: \(path)")
+        }
+        var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue("bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
