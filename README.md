@@ -273,20 +273,21 @@ classDiagram
     class CivoNetwork {
         +String id
         +String? label
+        +Bool? isDefault
         +String? status
     }
 
     class CivoVolume {
         +String id
         +String name
-        +String? sizeGigabytes
+        +Int? sizeGb
         +String? status
     }
 
     class CivoObjectStore {
         +String id
         +String name
-        +String? maxSize
+        +Int? maxSize
     }
 
     class CivoLoadBalancer {
@@ -305,12 +306,13 @@ classDiagram
     class CivoRegion {
         +String code
         +String name
-        +String? country
+        +String? countryName
+        +Bool? isDefault
     }
 
     class CivoQuota {
-        +String instanceCountLimit
-        +String instanceCountUsage
+        +Int instanceCountLimit
+        +Int instanceCountUsage
         +QuotaItem[] items
     }
 
@@ -335,9 +337,8 @@ classDiagram
     }
 
     class CivoConfig {
-        +String apiKey
-        +String region
-        +Bool isConfigured
+        +String apiKey (Keychain)
+        +String region (UserDefaults)
     }
 
     class CivoFirewallService {
@@ -531,17 +532,13 @@ Some Civo API endpoints return paginated objects, others return plain arrays:
 
 ### JSON Quirks
 
-| Field | Expected | Actual |
-|-------|----------|--------|
-| `rules_count` | Int | **String** (`"6"`) |
-| `cidr` | Array | **String** or Array |
-| `region.current` | Bool | **String** (`"Yes"`) |
-| `quota.*` | Int | **String** (`"74"`) |
-| `database.nodes` | Int | **String** (`"1"`) |
-| `database.port` | Int | **String** (`"5432"`) |
-| `volume.size_gigabytes` | Int | **String** (`"20 GB"`) |
-| `objectstore.max_size` | Int | **String** (`"500"`) |
-| `loadbalancer.Backends` | `backends` | **Capital B** (`Backends`) |
+| Field | Expected | Actual | Handled |
+|-------|----------|--------|---------|
+| `rules_count` | Int | **String or Int** | Custom decoder |
+| `cidr` | Array | **String or Array** | Custom decoder |
+| `loadbalancer.Backends` | `backends` | **Capital B** (`Backends`) | CodingKey |
+| `database.nodes` | Int | **String** (`"1"`) | String model |
+| `database.port` | Int | **String** (`"5432"`) | String model |
 
 ---
 
@@ -549,10 +546,10 @@ Some Civo API endpoints return paginated objects, others return plain arrays:
 
 All settings are stored in UserDefaults under the `de.berger-rosenstock.CivoCloudManager` domain:
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `CivoCloudManager.apiKey` | String | Civo API key |
-| `CivoCloudManager.region` | String | Active region code (e.g. `fra1`) |
+| Key | Storage | Description |
+|-----|---------|-------------|
+| API Key | **macOS Keychain** | Civo API key (encrypted) |
+| `CivoCloudManager.region` | UserDefaults | Active region code (e.g. `fra1`) |
 | `CivoCloudManager.managedFirewalls` | Data (JSON) | Selected firewalls with ports |
 | `CivoCloudManager.launchAtLogin` | Bool | Auto-start on login |
 | `CivoCloudManager.onboardingComplete` | Bool | Setup wizard completed |
@@ -561,14 +558,14 @@ All settings are stored in UserDefaults under the `de.berger-rosenstock.CivoClou
 
 ## Testing
 
-The project includes 22 decoding tests that verify all model types parse correctly against real Civo API responses.
+The project includes 21 decoding tests that verify all model types parse correctly against real Civo API responses.
 
 ```bash
 swift test
 ```
 
 ```
-✔ Test run with 22 tests in 1 suite passed after 0.001 seconds.
+✔ Test run with 21 tests in 1 suite passed after 0.001 seconds.
 ```
 
 Tests cover:
@@ -610,6 +607,7 @@ civo-cloud-manager/
 │   ├── CivoCloudManager.entitlements           # App Sandbox + network
 │   ├── CivoCloudManager.storekit              # StoreKit test configuration
 │   ├── Localizable.xcstrings                   # String catalog (7 languages)
+│   ├── PrivacyInfo.xcprivacy                   # Apple privacy manifest
 │   └── Assets.xcassets/                        # App icon + accent color
 ├── Sources/
 │   ├── App/
@@ -617,7 +615,7 @@ civo-cloud-manager/
 │   ├── Models/
 │   │   ├── CivoAccessLabel.swift               # Rule label generation
 │   │   ├── FirewallRule.swift                   # CivoFirewall, CivoRule, ManagedFirewall, FirewallStatus
-│   │   ├── CivoKubernetes.swift                # Cluster, ListItem, NodePool, App, Condition
+│   │   ├── CivoKubernetes.swift                # Cluster, NodePool, App, Condition
 │   │   ├── CivoDatabase.swift
 │   │   ├── CivoNetwork.swift
 │   │   ├── CivoVolume.swift
@@ -627,7 +625,6 @@ civo-cloud-manager/
 │   │   ├── CivoSSHKey.swift
 │   │   ├── CivoDomain.swift
 │   │   ├── CivoRegion.swift
-│   │   ├── CivoSize.swift
 │   │   └── CivoQuota.swift                     # + QuotaItem
 │   ├── Services/
 │   │   ├── CivoAPIClient.swift                 # HTTP client for api.civo.com/v2
@@ -689,7 +686,7 @@ civo-cloud-manager/
 │   └── Utilities/
 │       └── Logger.swift
 ├── Tests/
-│   └── APIDecodingTests.swift                  # 22 model decoding tests
+│   └── APIDecodingTests.swift                  # 21 model decoding tests
 ├── README.md
 ├── CLAUDE.md
 ├── LICENSE
