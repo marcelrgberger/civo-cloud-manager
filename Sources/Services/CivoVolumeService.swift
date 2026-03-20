@@ -7,6 +7,10 @@ final class CivoVolumeService: Sendable {
         try await api.getArray(path: "/volumes")
     }
 
+    func createVolume(_ body: [String: Any]) async throws -> CivoVolume {
+        try await api.post(path: "/volumes", body: body)
+    }
+
     func removeVolume(_ id: String) async throws {
         try await api.delete(path: "/volumes/\(id)")
     }

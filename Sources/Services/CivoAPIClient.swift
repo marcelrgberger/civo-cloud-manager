@@ -95,6 +95,15 @@ final class CivoAPIClient: Sendable {
         try await execute("POST", path: path, body: body, regionRequired: regionRequired)
     }
 
+    /// PUT with a JSON body.
+    func put<T: Decodable>(
+        path: String,
+        body: [String: Any],
+        regionRequired: Bool = true
+    ) async throws -> T {
+        try await execute("PUT", path: path, body: body, regionRequired: regionRequired)
+    }
+
     /// DELETE a resource.
     func delete(path: String, regionRequired: Bool = true) async throws {
         let _: CivoResult = try await execute("DELETE", path: path, regionRequired: regionRequired)

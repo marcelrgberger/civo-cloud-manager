@@ -8,7 +8,19 @@ final class KubernetesViewModel {
     var isLoading = false
     var error: String?
 
+    // Create/Edit state
+    var isCreating = false
+    var isSaving = false
+    var saveError: String?
+    var showSuccess = false
+
+    // Form picker data
+    var availableNetworks: [CivoNetwork] = []
+    var availableSizes: [CivoSize] = []
+
     private let service = CivoKubernetesService()
+    private let networkService = CivoNetworkService()
+    private let sizeService = CivoSizeService()
 
     func refresh() async {
         isLoading = true
@@ -23,6 +35,17 @@ final class KubernetesViewModel {
         }
     }
 
+    func loadFormData() async {
+        do {
+            async let nets = networkService.listNetworks()
+            async let sizes = sizeService.listSizes()
+            availableNetworks = try await nets
+            availableSizes = (try await sizes).filter { $0.type == "kubernetes" || $0.type == nil }
+        } catch {
+            Log.error("Failed to load form data: \(error.localizedDescription)")
+        }
+    }
+
     func loadClusterDetail(_ id: String) async {
         isLoading = true
         error = nil
@@ -33,6 +56,39 @@ final class KubernetesViewModel {
         } catch {
             self.error = error.localizedDescription
             Log.error("Kubernetes show failed: \(error.localizedDescription)")
+        }
+    }
+
+    func createCluster(_ body: sending [String: Any]) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            _ = try await service.createCluster(body)
+            isCreating = false
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = error.localizedDescription
+            return false
+        }
+    }
+
+    func updateCluster(_ id: String, body: sending [String: Any]) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            _ = try await service.updateCluster(id, body: body)
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = error.localizedDescription
+            return false
         }
     }
 

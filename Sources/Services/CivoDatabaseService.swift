@@ -7,6 +7,10 @@ final class CivoDatabaseService: Sendable {
         try await api.getPaginatedList(path: "/databases")
     }
 
+    func createDatabase(_ body: [String: Any]) async throws -> CivoDatabase {
+        try await api.post(path: "/databases", body: body)
+    }
+
     func removeDatabase(_ id: String) async throws {
         try await api.delete(path: "/databases/\(id)")
     }

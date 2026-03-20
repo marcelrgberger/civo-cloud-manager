@@ -19,12 +19,20 @@ struct DatabaseListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.databases.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Databases")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreating = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -38,6 +46,13 @@ struct DatabaseListView: View {
             if vm.isLoading && vm.databases.isEmpty {
                 ProgressView("Loading databases...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreating) {
+            CreateDatabaseView(vm: vm)
+                .frame(minWidth: 500, minHeight: 400)
         }
         .confirmationDialog("Delete Database", isPresented: Binding(
             get: { deleteTarget != nil },

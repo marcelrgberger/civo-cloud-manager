@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DashboardView: View {
     @Bindable var vm: DashboardViewModel
+    @Binding var selection: SidebarSection
 
     var body: some View {
         ScrollView {
@@ -51,41 +52,53 @@ struct DashboardView: View {
 
     private var resourceCountsSection: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 3), spacing: 16) {
-            resourceCard("Kubernetes Clusters", count: vm.clusterCount, icon: "helm", color: .blue)
-            resourceCard("Databases", count: vm.databaseCount, icon: "cylinder.split.1x2", color: .purple)
-            resourceCard("Volumes", count: vm.volumeCount, icon: "cylinder", color: .orange)
-            resourceCard("Object Stores", count: vm.objectStoreCount, icon: "tray.2", color: .teal)
-            resourceCard("Load Balancers", count: vm.loadBalancerCount, icon: "arrow.triangle.branch", color: .indigo)
-            resourceCard("Networks", count: vm.networkCount, icon: "point.3.connected.trianglepath.dotted", color: .green)
+            resourceCard("Kubernetes Clusters", count: vm.clusterCount, icon: "helm", color: .blue, target: .clusters)
+            resourceCard("Databases", count: vm.databaseCount, icon: "cylinder.split.1x2", color: .purple, target: .databases)
+            resourceCard("Volumes", count: vm.volumeCount, icon: "cylinder", color: .orange, target: .volumes)
+            resourceCard("Object Stores", count: vm.objectStoreCount, icon: "tray.2", color: .teal, target: .objectStores)
+            resourceCard("Load Balancers", count: vm.loadBalancerCount, icon: "arrow.triangle.branch", color: .indigo, target: .loadBalancers)
+            resourceCard("Networks", count: vm.networkCount, icon: "point.3.connected.trianglepath.dotted", color: .green, target: .networks)
         }
     }
 
-    private func resourceCard(_ title: String, count: Int?, icon: String, color: Color) -> some View {
-        VStack(spacing: 8) {
-            HStack {
-                Image(systemName: icon)
-                    .font(.title2)
-                    .foregroundStyle(color)
-                Spacer()
-                if let count {
-                    Text("\(count)")
-                        .font(.system(.title, design: .rounded).bold())
-                        .contentTransition(.numericText())
-                } else {
-                    ProgressView()
-                        .controlSize(.small)
+    @State private var hoveredCard: SidebarSection?
+
+    private func resourceCard(_ title: String, count: Int?, icon: String, color: Color, target: SidebarSection) -> some View {
+        Button {
+            selection = target
+        } label: {
+            VStack(spacing: 8) {
+                HStack {
+                    Image(systemName: icon)
+                        .font(.title2)
+                        .foregroundStyle(color)
+                    Spacer()
+                    if let count {
+                        Text("\(count)")
+                            .font(.system(.title, design: .rounded).bold())
+                            .contentTransition(.numericText())
+                    } else {
+                        ProgressView()
+                            .controlSize(.small)
+                    }
+                }
+                HStack {
+                    Text(title)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Spacer()
                 }
             }
-            HStack {
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                Spacer()
-            }
+            .padding(16)
+            .background(.quaternary.opacity(0.5))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
-        .padding(16)
-        .background(.quaternary.opacity(0.5))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .buttonStyle(.plain)
+        .scaleEffect(hoveredCard == target ? 1.02 : 1.0)
+        .animation(.easeOut(duration: 0.15), value: hoveredCard)
+        .onHover { isHovered in
+            hoveredCard = isHovered ? target : nil
+        }
         .animation(.easeOut(duration: 0.3), value: count)
     }
 

@@ -11,6 +11,14 @@ final class CivoKubernetesService: Sendable {
         try await api.get(path: "/kubernetes/clusters/\(id)")
     }
 
+    func createCluster(_ body: [String: Any]) async throws -> CivoKubernetesCluster {
+        try await api.post(path: "/kubernetes/clusters", body: body)
+    }
+
+    func updateCluster(_ id: String, body: [String: Any]) async throws -> CivoKubernetesCluster {
+        try await api.put(path: "/kubernetes/clusters/\(id)", body: body)
+    }
+
     func removeCluster(_ id: String) async throws {
         try await api.delete(path: "/kubernetes/clusters/\(id)")
     }

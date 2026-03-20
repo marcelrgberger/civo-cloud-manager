@@ -7,7 +7,19 @@ final class DatabaseViewModel {
     var isLoading = false
     var error: String?
 
+    var isCreating = false
+    var isSaving = false
+    var saveError: String?
+    var showSuccess = false
+
+    var availableNetworks: [CivoNetwork] = []
+    var availableFirewalls: [CivoFirewall] = []
+    var availableSizes: [CivoSize] = []
+
     private let service = CivoDatabaseService()
+    private let networkService = CivoNetworkService()
+    private let firewallService = CivoFirewallService()
+    private let sizeService = CivoSizeService()
 
     func refresh() async {
         isLoading = true
@@ -19,6 +31,36 @@ final class DatabaseViewModel {
         } catch {
             self.error = error.localizedDescription
             Log.error("Database list failed: \(error.localizedDescription)")
+        }
+    }
+
+    func loadFormData() async {
+        do {
+            async let nets = networkService.listNetworks()
+            async let fws = firewallService.listFirewalls()
+            async let sizes = sizeService.listSizes()
+            availableNetworks = try await nets
+            availableFirewalls = try await fws
+            availableSizes = (try await sizes).filter { $0.type == "database" || $0.type == nil }
+        } catch {
+            Log.error("Failed to load form data: \(error.localizedDescription)")
+        }
+    }
+
+    func createDatabase(_ body: sending [String: Any]) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            _ = try await service.createDatabase(body)
+            isCreating = false
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = error.localizedDescription
+            return false
         }
     }
 

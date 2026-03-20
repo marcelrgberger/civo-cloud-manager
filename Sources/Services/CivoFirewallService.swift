@@ -7,6 +7,10 @@ final class CivoFirewallService: Sendable {
         try await api.getArray(path: "/firewalls")
     }
 
+    func createFirewall(_ body: [String: Any]) async throws -> CivoFirewall {
+        try await api.post(path: "/firewalls", body: body)
+    }
+
     func getRulesForFirewall(_ firewallId: String) async throws -> [CivoRule] {
         try await api.getArray(path: "/firewalls/\(firewallId)/rules")
     }

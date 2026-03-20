@@ -7,6 +7,10 @@ final class CivoObjectStoreService: Sendable {
         try await api.getPaginatedList(path: "/objectstores")
     }
 
+    func createObjectStore(_ body: [String: Any]) async throws -> CivoObjectStore {
+        try await api.post(path: "/objectstores", body: body)
+    }
+
     func removeObjectStore(_ id: String) async throws {
         try await api.delete(path: "/objectstores/\(id)")
     }

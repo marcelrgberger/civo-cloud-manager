@@ -24,12 +24,20 @@ struct InstanceListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.instances.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Instances")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreatingInstance = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -43,6 +51,13 @@ struct InstanceListView: View {
             if vm.isLoading && vm.instances.isEmpty {
                 ProgressView("Loading instances...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreatingInstance) {
+            CreateInstanceView(vm: vm)
+                .frame(minWidth: 500, minHeight: 400)
         }
         .confirmationDialog("Delete Instance", isPresented: Binding(
             get: { deleteTarget != nil },

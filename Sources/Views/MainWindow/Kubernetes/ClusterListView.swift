@@ -17,12 +17,26 @@ struct ClusterListView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
+                    vm.isCreating = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
+            ToolbarItem(placement: .automatic) {
+                Button {
                     Task { await vm.refresh() }
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .disabled(vm.isLoading)
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreating) {
+            CreateClusterView(vm: vm)
+                .frame(minWidth: 500, minHeight: 400)
         }
     }
 
@@ -46,6 +60,7 @@ struct ClusterListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.clusters.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }

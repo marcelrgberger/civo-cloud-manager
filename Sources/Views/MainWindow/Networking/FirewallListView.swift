@@ -17,12 +17,20 @@ struct FirewallListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.firewalls.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Firewalls")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreatingFirewall = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -36,6 +44,13 @@ struct FirewallListView: View {
             if vm.isLoading && vm.firewalls.isEmpty {
                 ProgressView("Loading firewalls...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreatingFirewall) {
+            CreateFirewallView(vm: vm)
+                .frame(minWidth: 400, minHeight: 200)
         }
     }
 }

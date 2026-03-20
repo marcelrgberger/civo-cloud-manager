@@ -113,7 +113,7 @@ struct MainWindowView: View {
     private var detailView: some View {
         switch selection {
         case .dashboard:
-            DashboardView(vm: dashboardVM)
+            DashboardView(vm: dashboardVM, selection: $selection)
         case .instances:
             InstanceListView(vm: instanceVM)
         case .sshKeys:

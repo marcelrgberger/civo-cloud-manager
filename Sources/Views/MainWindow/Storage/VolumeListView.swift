@@ -24,12 +24,20 @@ struct VolumeListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.volumes.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Volumes")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreatingVolume = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -43,6 +51,13 @@ struct VolumeListView: View {
             if vm.isLoading && vm.volumes.isEmpty {
                 ProgressView("Loading volumes...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreatingVolume) {
+            CreateVolumeView(vm: vm)
+                .frame(minWidth: 450, minHeight: 250)
         }
         .confirmationDialog("Delete Volume", isPresented: Binding(
             get: { deleteTarget != nil },

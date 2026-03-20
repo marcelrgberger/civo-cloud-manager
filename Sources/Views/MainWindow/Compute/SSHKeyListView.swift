@@ -23,12 +23,20 @@ struct SSHKeyListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.sshKeys.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("SSH Keys")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreatingSSHKey = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -42,6 +50,13 @@ struct SSHKeyListView: View {
             if vm.isLoading && vm.sshKeys.isEmpty {
                 ProgressView("Loading SSH keys...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreatingSSHKey) {
+            CreateSSHKeyView(vm: vm)
+                .frame(minWidth: 500, minHeight: 250)
         }
         .confirmationDialog("Delete SSH Key", isPresented: Binding(
             get: { deleteTarget != nil },

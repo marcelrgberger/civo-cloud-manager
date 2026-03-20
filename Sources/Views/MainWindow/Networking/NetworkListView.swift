@@ -18,12 +18,20 @@ struct NetworkListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.networks.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Networks")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreatingNetwork = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -37,6 +45,13 @@ struct NetworkListView: View {
             if vm.isLoading && vm.networks.isEmpty {
                 ProgressView("Loading networks...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreatingNetwork) {
+            CreateNetworkView(vm: vm)
+                .frame(minWidth: 400, minHeight: 200)
         }
     }
 }

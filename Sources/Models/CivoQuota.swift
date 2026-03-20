@@ -96,7 +96,7 @@ extension CivoQuota {
         [
             QuotaItem(id: "instances", label: "Instances", usage: instanceCountUsage, limit: instanceCountLimit, icon: "desktopcomputer"),
             QuotaItem(id: "cpu", label: "CPU Cores", usage: cpuCoreUsage, limit: cpuCoreLimit, icon: "cpu"),
-            QuotaItem(id: "ram", label: "RAM (MB)", usage: ramMbUsage, limit: ramMbLimit, icon: "memorychip"),
+            QuotaItem(id: "ram", label: "RAM (GB)", usage: ramMbUsage / 1024, limit: ramMbLimit / 1024, icon: "memorychip"),
             QuotaItem(id: "disk", label: "Disk (GB)", usage: diskGbUsage, limit: diskGbLimit, icon: "externaldrive"),
             QuotaItem(id: "volumes", label: "Volumes", usage: diskVolumeCountUsage, limit: diskVolumeCountLimit, icon: "cylinder"),
             QuotaItem(id: "publicIps", label: "Public IPs", usage: publicIpAddressUsage, limit: publicIpAddressLimit, icon: "network"),
@@ -105,7 +105,7 @@ extension CivoQuota {
             QuotaItem(id: "objectstore", label: "Object Store (GB)", usage: objectstoreGbUsage, limit: objectstoreGbLimit, icon: "tray.2"),
             QuotaItem(id: "databases", label: "Databases", usage: databaseCountUsage, limit: databaseCountLimit, icon: "cylinder.split.1x2"),
             QuotaItem(id: "dbCpu", label: "DB CPU Cores", usage: databaseCpuCoreUsage, limit: databaseCpuCoreLimit, icon: "cpu"),
-            QuotaItem(id: "dbRam", label: "DB RAM (MB)", usage: databaseRamMbUsage, limit: databaseRamMbLimit, icon: "memorychip"),
+            QuotaItem(id: "dbRam", label: "DB RAM (GB)", usage: databaseRamMbUsage / 1024, limit: databaseRamMbLimit / 1024, icon: "memorychip"),
             QuotaItem(id: "dbDisk", label: "DB Disk (GB)", usage: databaseDiskGbUsage, limit: databaseDiskGbLimit, icon: "externaldrive"),
         ]
     }

@@ -24,12 +24,20 @@ struct ObjectStoreListView: View {
                 }
             }
         }
+        .animation(.easeOut, value: vm.objectStores.map(\.id))
         .safeAreaInset(edge: .top) {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Object Stores")
         .task { await vm.refresh() }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    vm.isCreatingObjectStore = true
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+            }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await vm.refresh() }
@@ -43,6 +51,13 @@ struct ObjectStoreListView: View {
             if vm.isLoading && vm.objectStores.isEmpty {
                 ProgressView("Loading object stores...")
             }
+        }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isCreatingObjectStore) {
+            CreateObjectStoreView(vm: vm)
+                .frame(minWidth: 400, minHeight: 200)
         }
         .confirmationDialog("Delete Object Store", isPresented: Binding(
             get: { deleteTarget != nil },
