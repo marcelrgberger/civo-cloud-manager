@@ -17,9 +17,7 @@ struct InstanceListView: View {
                         status: inst.status
                     )
                     .contextMenu {
-                        Button("Delete", role: .destructive) {
-                            deleteTarget = inst
-                        }
+                        Button("Delete", role: .destructive) { deleteTarget = inst }
                     }
                 }
             }
@@ -32,45 +30,25 @@ struct InstanceListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    vm.isCreatingInstance = true
-                } label: {
-                    Label("Add", systemImage: "plus")
-                }
+                Button { vm.isCreatingInstance = true } label: { Label("Add", systemImage: "plus") }
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise")
-                }
-                .disabled(vm.isLoading)
+                Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .disabled(vm.isLoading)
             }
         }
-        .overlay {
-            if vm.isLoading && vm.instances.isEmpty {
-                ProgressView("Loading instances...")
-            }
-        }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
+        .overlay { if vm.isLoading && vm.instances.isEmpty { ProgressView("Loading instances...") } }
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingInstance) {
-            CreateInstanceView(vm: vm)
-                .frame(minWidth: 500, minHeight: 400)
+            CreateInstanceView(vm: vm).frame(minWidth: 500, minHeight: 400)
         }
-        .confirmationDialog("Delete Instance", isPresented: Binding(
-            get: { deleteTarget != nil },
-            set: { if !$0 { deleteTarget = nil } }
-        )) {
+        .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
+                DeleteConfirmationSheet(resourceType: "Instance", resourceName: target.name, onConfirm: {
                     Task { await vm.removeInstance(target.id) }
                     deleteTarget = nil
-                }
+                }, onCancel: { deleteTarget = nil })
             }
-        } message: {
-            Text("This will permanently delete the instance. This action cannot be undone.")
         }
     }
 }

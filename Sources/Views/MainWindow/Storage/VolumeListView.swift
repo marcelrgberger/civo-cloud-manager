@@ -18,9 +18,7 @@ struct VolumeListView: View {
                         status: vol.status
                     )
                     .contextMenu {
-                        Button("Delete", role: .destructive) {
-                            deleteTarget = vol
-                        }
+                        Button("Delete", role: .destructive) { deleteTarget = vol }
                     }
                 }
             }
@@ -33,54 +31,30 @@ struct VolumeListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    vm.isCreatingVolume = true
-                } label: {
-                    Label("Add", systemImage: "plus")
-                }
+                Button { vm.isCreatingVolume = true } label: { Label("Add", systemImage: "plus") }
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    showCleanupConfirm = true
-                } label: {
-                    Label("Cleanup Unused", systemImage: "trash.slash")
-                }
-                .disabled(vm.unusedVolumes.isEmpty || vm.isLoading)
-                .help("Delete all volumes not attached to any instance or cluster")
+                Button { showCleanupConfirm = true } label: { Label("Cleanup Unused", systemImage: "trash.slash") }
+                    .disabled(vm.unusedVolumes.isEmpty || vm.isLoading)
+                    .help("Delete all volumes not attached to any instance or cluster")
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise")
-                }
-                .disabled(vm.isLoading)
+                Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .disabled(vm.isLoading)
             }
         }
-        .overlay {
-            if vm.isLoading && vm.volumes.isEmpty {
-                ProgressView("Loading volumes...")
-            }
-        }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
+        .overlay { if vm.isLoading && vm.volumes.isEmpty { ProgressView("Loading volumes...") } }
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingVolume) {
-            CreateVolumeView(vm: vm)
-                .frame(minWidth: 450, minHeight: 250)
+            CreateVolumeView(vm: vm).frame(minWidth: 450, minHeight: 250)
         }
-        .confirmationDialog("Delete Volume", isPresented: Binding(
-            get: { deleteTarget != nil },
-            set: { if !$0 { deleteTarget = nil } }
-        )) {
+        .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
+                DeleteConfirmationSheet(resourceType: "Volume", resourceName: target.name, onConfirm: {
                     Task { await vm.removeVolume(target.id) }
                     deleteTarget = nil
-                }
+                }, onCancel: { deleteTarget = nil })
             }
-        } message: {
-            Text("This will permanently delete the volume. This action cannot be undone.")
         }
         .confirmationDialog("Cleanup Unused Volumes", isPresented: $showCleanupConfirm) {
             Button("Delete \(vm.unusedVolumes.count) unused volume\(vm.unusedVolumes.count == 1 ? "" : "s")", role: .destructive) {

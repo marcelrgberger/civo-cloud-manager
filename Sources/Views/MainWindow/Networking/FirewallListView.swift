@@ -31,45 +31,40 @@ struct FirewallListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    vm.isCreatingFirewall = true
-                } label: {
+                Button { vm.isCreatingFirewall = true } label: {
                     Label("Add", systemImage: "plus")
                 }
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
+                Button { Task { await vm.refresh() } } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .disabled(vm.isLoading)
             }
         }
         .overlay {
-            if vm.isLoading && vm.firewalls.isEmpty {
-                ProgressView("Loading firewalls...")
-            }
+            if vm.isLoading && vm.firewalls.isEmpty { ProgressView("Loading firewalls...") }
         }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingFirewall) {
             CreateFirewallView(vm: vm)
                 .frame(minWidth: 400, minHeight: 200)
         }
-        .confirmationDialog("Delete Firewall", isPresented: Binding(
+        .sheet(isPresented: Binding(
             get: { deleteTarget != nil },
             set: { if !$0 { deleteTarget = nil } }
         )) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
-                    Task { await vm.removeFirewall(target.id) }
-                    deleteTarget = nil
-                }
+                DeleteConfirmationSheet(
+                    resourceType: "Firewall",
+                    resourceName: target.name,
+                    onConfirm: {
+                        Task { await vm.removeFirewall(target.id) }
+                        deleteTarget = nil
+                    },
+                    onCancel: { deleteTarget = nil }
+                )
             }
-        } message: {
-            Text("This will permanently delete the firewall and all its rules. This action cannot be undone.")
         }
     }
 }

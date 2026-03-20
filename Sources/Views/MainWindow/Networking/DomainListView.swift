@@ -162,18 +162,13 @@ struct DomainListView: View {
             CreateDomainView(vm: vm)
                 .frame(minWidth: 400, minHeight: 150)
         }
-        .confirmationDialog("Delete Domain", isPresented: Binding(
-            get: { deleteTarget != nil },
-            set: { if !$0 { deleteTarget = nil } }
-        )) {
+        .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
+                DeleteConfirmationSheet(resourceType: "Domain", resourceName: target.name, onConfirm: {
                     Task { await vm.removeDomain(target.id) }
                     deleteTarget = nil
-                }
+                }, onCancel: { deleteTarget = nil })
             }
-        } message: {
-            Text("This will permanently delete the domain and all its records. This action cannot be undone.")
         }
     }
 }

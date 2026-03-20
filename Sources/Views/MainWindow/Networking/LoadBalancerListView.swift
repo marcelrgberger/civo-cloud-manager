@@ -32,34 +32,31 @@ struct LoadBalancerListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
+                Button { Task { await vm.refresh() } } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .disabled(vm.isLoading)
             }
         }
         .overlay {
-            if vm.isLoading && vm.loadBalancers.isEmpty {
-                ProgressView("Loading load balancers...")
-            }
+            if vm.isLoading && vm.loadBalancers.isEmpty { ProgressView("Loading load balancers...") }
         }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
-        .confirmationDialog("Delete Load Balancer", isPresented: Binding(
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
+        .sheet(isPresented: Binding(
             get: { deleteTarget != nil },
             set: { if !$0 { deleteTarget = nil } }
         )) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
-                    Task { await vm.removeLoadBalancer(target.id) }
-                    deleteTarget = nil
-                }
+                DeleteConfirmationSheet(
+                    resourceType: "Load Balancer",
+                    resourceName: target.name,
+                    onConfirm: {
+                        Task { await vm.removeLoadBalancer(target.id) }
+                        deleteTarget = nil
+                    },
+                    onCancel: { deleteTarget = nil }
+                )
             }
-        } message: {
-            Text("This will permanently delete the load balancer. This action cannot be undone.")
         }
     }
 }

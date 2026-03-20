@@ -33,9 +33,7 @@ struct ObjectStoreListView: View {
                             }
                         }
                         Divider()
-                        Button("Delete", role: .destructive) {
-                            deleteTarget = store
-                        }
+                        Button("Delete", role: .destructive) { deleteTarget = store }
                     }
                 }
             }
@@ -48,53 +46,31 @@ struct ObjectStoreListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    vm.isCreatingObjectStore = true
-                } label: {
-                    Label("Add", systemImage: "plus")
-                }
+                Button { vm.isCreatingObjectStore = true } label: { Label("Add", systemImage: "plus") }
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise")
-                }
-                .disabled(vm.isLoading)
+                Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .disabled(vm.isLoading)
             }
         }
-        .overlay {
-            if vm.isLoading && vm.objectStores.isEmpty {
-                ProgressView("Loading object stores...")
-            }
-        }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
+        .overlay { if vm.isLoading && vm.objectStores.isEmpty { ProgressView("Loading object stores...") } }
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingObjectStore) {
-            CreateObjectStoreView(vm: vm)
-                .frame(minWidth: 400, minHeight: 200)
+            CreateObjectStoreView(vm: vm).frame(minWidth: 400, minHeight: 200)
         }
         .sheet(isPresented: $showCredentials) {
             if let cred = credential {
-                ObjectStoreCredentialView(credential: cred) {
-                    showCredentials = false
-                }
-                .frame(minWidth: 450, minHeight: 200)
+                ObjectStoreCredentialView(credential: cred) { showCredentials = false }
+                    .frame(minWidth: 450, minHeight: 200)
             }
         }
-        .confirmationDialog("Delete Object Store", isPresented: Binding(
-            get: { deleteTarget != nil },
-            set: { if !$0 { deleteTarget = nil } }
-        )) {
+        .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
+                DeleteConfirmationSheet(resourceType: "Object Store", resourceName: target.name, onConfirm: {
                     Task { await vm.removeObjectStore(target.id) }
                     deleteTarget = nil
-                }
+                }, onCancel: { deleteTarget = nil })
             }
-        } message: {
-            Text("This will permanently delete the object store and all its contents. This action cannot be undone.")
         }
     }
 }
@@ -107,22 +83,16 @@ struct ObjectStoreCredentialView: View {
         Form {
             Section("Object Store Credentials") {
                 LabeledContent("Access Key ID") {
-                    Text(credential.accessKeyId ?? "—")
-                        .textSelection(.enabled)
-                        .font(.body.monospaced())
+                    Text(credential.accessKeyId ?? "—").textSelection(.enabled).font(.body.monospaced())
                 }
                 LabeledContent("Secret Access Key") {
-                    Text(credential.secretAccessKey ?? "—")
-                        .textSelection(.enabled)
-                        .font(.body.monospaced())
+                    Text(credential.secretAccessKey ?? "—").textSelection(.enabled).font(.body.monospaced())
                 }
             }
         }
         .formStyle(.grouped)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Done") { onDismiss() }
-            }
+            ToolbarItem(placement: .cancellationAction) { Button("Done") { onDismiss() } }
         }
     }
 }

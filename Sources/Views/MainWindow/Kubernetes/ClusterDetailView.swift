@@ -28,15 +28,14 @@ struct ClusterDetailView: View {
                 }
             }
         }
-        .confirmationDialog("Delete Cluster", isPresented: $showDeleteConfirmation) {
-            Button("Delete \(cluster.name)", role: .destructive) {
+        .sheet(isPresented: $showDeleteConfirmation) {
+            DeleteConfirmationSheet(resourceType: "Kubernetes Cluster", resourceName: cluster.name, onConfirm: {
                 Task {
                     let success = await vm.removeCluster(cluster.id)
                     if success { onBack() }
                 }
-            }
-        } message: {
-            Text("This will permanently delete the Kubernetes cluster and all its resources. This action cannot be undone.")
+                showDeleteConfirmation = false
+            }, onCancel: { showDeleteConfirmation = false })
         }
     }
 

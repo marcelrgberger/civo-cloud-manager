@@ -34,45 +34,40 @@ struct NetworkListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    vm.isCreatingNetwork = true
-                } label: {
+                Button { vm.isCreatingNetwork = true } label: {
                     Label("Add", systemImage: "plus")
                 }
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
+                Button { Task { await vm.refresh() } } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .disabled(vm.isLoading)
             }
         }
         .overlay {
-            if vm.isLoading && vm.networks.isEmpty {
-                ProgressView("Loading networks...")
-            }
+            if vm.isLoading && vm.networks.isEmpty { ProgressView("Loading networks...") }
         }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingNetwork) {
             CreateNetworkView(vm: vm)
                 .frame(minWidth: 400, minHeight: 200)
         }
-        .confirmationDialog("Delete Network", isPresented: Binding(
+        .sheet(isPresented: Binding(
             get: { deleteTarget != nil },
             set: { if !$0 { deleteTarget = nil } }
         )) {
             if let target = deleteTarget {
-                Button("Delete \(target.displayName)", role: .destructive) {
-                    Task { await vm.removeNetwork(target.id) }
-                    deleteTarget = nil
-                }
+                DeleteConfirmationSheet(
+                    resourceType: "Network",
+                    resourceName: target.displayName,
+                    onConfirm: {
+                        Task { await vm.removeNetwork(target.id) }
+                        deleteTarget = nil
+                    },
+                    onCancel: { deleteTarget = nil }
+                )
             }
-        } message: {
-            Text("This will permanently delete the network. This action cannot be undone.")
         }
     }
 }

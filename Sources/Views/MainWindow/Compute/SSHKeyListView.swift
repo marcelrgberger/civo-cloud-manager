@@ -10,16 +10,10 @@ struct SSHKeyListView: View {
                 EmptyStateView(icon: "key", title: "No SSH Keys", message: "No SSH keys found in your account.")
             } else {
                 ForEach(vm.sshKeys) { key in
-                    ResourceListRow(
-                        icon: "key",
-                        name: key.name,
-                        subtitle: key.fingerprint
-                    )
-                    .contextMenu {
-                        Button("Delete", role: .destructive) {
-                            deleteTarget = key
+                    ResourceListRow(icon: "key", name: key.name, subtitle: key.fingerprint)
+                        .contextMenu {
+                            Button("Delete", role: .destructive) { deleteTarget = key }
                         }
-                    }
                 }
             }
         }
@@ -31,45 +25,25 @@ struct SSHKeyListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button {
-                    vm.isCreatingSSHKey = true
-                } label: {
-                    Label("Add", systemImage: "plus")
-                }
+                Button { vm.isCreatingSSHKey = true } label: { Label("Add", systemImage: "plus") }
             }
             ToolbarItem(placement: .automatic) {
-                Button {
-                    Task { await vm.refresh() }
-                } label: {
-                    Label("Refresh", systemImage: "arrow.clockwise")
-                }
-                .disabled(vm.isLoading)
+                Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .disabled(vm.isLoading)
             }
         }
-        .overlay {
-            if vm.isLoading && vm.sshKeys.isEmpty {
-                ProgressView("Loading SSH keys...")
-            }
-        }
-        .overlay {
-            SuccessOverlay(isPresented: $vm.showSuccess)
-        }
+        .overlay { if vm.isLoading && vm.sshKeys.isEmpty { ProgressView("Loading SSH keys...") } }
+        .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingSSHKey) {
-            CreateSSHKeyView(vm: vm)
-                .frame(minWidth: 500, minHeight: 250)
+            CreateSSHKeyView(vm: vm).frame(minWidth: 500, minHeight: 250)
         }
-        .confirmationDialog("Delete SSH Key", isPresented: Binding(
-            get: { deleteTarget != nil },
-            set: { if !$0 { deleteTarget = nil } }
-        )) {
+        .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
-                Button("Delete \(target.name)", role: .destructive) {
+                DeleteConfirmationSheet(resourceType: "SSH Key", resourceName: target.name, onConfirm: {
                     Task { await vm.removeSSHKey(target.id) }
                     deleteTarget = nil
-                }
+                }, onCancel: { deleteTarget = nil })
             }
-        } message: {
-            Text("This will permanently delete the SSH key. This action cannot be undone.")
         }
     }
 }
