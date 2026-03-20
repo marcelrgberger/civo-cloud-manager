@@ -22,6 +22,7 @@ struct PaywallView: View {
                 featureList
                 purchaseSection
                 actionButtons
+                legalLinks
                 Spacer(minLength: 20)
             }
             .frame(maxWidth: .infinity)
@@ -158,6 +159,20 @@ struct PaywallView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.5), value: appeared)
+    }
+
+    // MARK: - Legal (Apple Guideline 3.1.2)
+
+    private var legalLinks: some View {
+        HStack(spacing: 16) {
+            Link("Terms of Use", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+            Text("·").foregroundStyle(.tertiary)
+            Link("Privacy Policy", destination: URL(string: "https://marcelrgberger.com/privacy")!)
+        }
+        .font(.caption2)
+        .foregroundStyle(.tertiary)
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.6), value: appeared)
     }
 }
 
