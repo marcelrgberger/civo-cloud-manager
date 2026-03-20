@@ -35,9 +35,9 @@
           "locale" : "it"
         },
         {
-          "description" : "Desbloquear painel, Kubernetes, bancos de dados, rede, armazenamento, computa\u00e7\u00e3o e gerenciamento de todos os recursos.",
-          "displayName" : "Acesso completo",
-          "locale" : "pt"
+          "description" : "Odblokuj panel, Kubernetes, bazy danych, sieci, pami\u0119\u0107 masow\u0105, obliczenia i zarz\u0105dzanie wszystkimi zasobami.",
+          "displayName" : "Pe\u0142ny dost\u0119p",
+          "locale" : "pl"
         },
         {
           "description" : "Ontgrendel dashboard, Kubernetes, databases, netwerken, opslag, compute en alle resourcebeheer.",

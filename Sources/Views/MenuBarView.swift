@@ -308,6 +308,19 @@ struct MenuBarView: View {
             Spacer()
 
             Button {
+                if let url = URL(string: "https://berger-rosenstock.de/privacy") {
+                    NSWorkspace.shared.open(url)
+                }
+            } label: {
+                Image(systemName: "hand.raised")
+            }
+            .buttonStyle(.borderless)
+            .foregroundStyle(.secondary)
+            .help("Privacy Policy")
+
+            Spacer()
+
+            Button {
                 state.stopAutoRefresh()
                 NSApp.terminate(nil)
             } label: {

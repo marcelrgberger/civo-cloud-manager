@@ -36,6 +36,7 @@ targets:
       - path: CivoCloudManager/Assets.xcassets
     resources:
       - path: CivoCloudManager/Localizable.xcstrings
+      - path: CivoCloudManager/PrivacyInfo.xcprivacy
     settings:
       base:
         LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
