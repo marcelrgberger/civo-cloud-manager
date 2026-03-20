@@ -18,3 +18,13 @@ struct CivoObjectStore: Codable, Identifiable, Sendable {
         return "—"
     }
 }
+
+struct CivoObjectStoreCredential: Codable, Sendable {
+    let accessKeyId: String?
+    let secretAccessKey: String?
+
+    enum CodingKeys: String, CodingKey {
+        case accessKeyId = "access_key_id"
+        case secretAccessKey = "secret_access_key"
+    }
+}

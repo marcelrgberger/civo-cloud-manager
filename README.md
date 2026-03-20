@@ -14,12 +14,13 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 
 ### Dashboard (Full Management)
 - **Quota overview** — circular gauges for all account limits (RAM/DB RAM in GB)
+- **Quota increase request** — "Request Change" button opens form with steppers for all quota limits, sends PUT /quota
 - **Clickable resource cards** — navigate directly to any resource section
 - **Full CRUD** — create, view, and delete resources across all categories
 - **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps
 - **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config
-- **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline
-- **Storage** — create volumes and object stores with size configuration
+- **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers via context menu with confirmation
+- **Storage** — create volumes and object stores with size configuration; bulk-delete unused volumes via toolbar button; view object store credentials (endpoint, access key, secret key)
 - **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys
 - **Regions** — view available regions, switch active region
 - Confirmation dialogs on all destructive operations
@@ -33,7 +34,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Family Sharing** enabled
 
 ### Localization
-- 7 languages: English, German, Spanish, French, Italian, Dutch, Polish
+- 8 languages: English, German, Spanish, French, Italian, Dutch, Polish, Portuguese
 
 ### Architecture
 - **Native HTTP API** — connects directly to `api.civo.com/v2`, no CLI required
@@ -111,11 +112,11 @@ The sidebar is organized into categories:
 
 | Category | Sections | CRUD |
 |----------|----------|------|
-| **Overview** | Dashboard (quota gauges, clickable resource cards) | — |
+| **Overview** | Dashboard (quota gauges, clickable resource cards, quota change request) | Request Change |
 | **Compute** | Instances, SSH Keys | Create, Delete |
 | **Kubernetes** | Clusters (detail view for pools, apps, conditions) | Create, Delete |
 | **Networking** | Networks, Firewalls, Load Balancers, Domains | Create, Edit (DNS records), Delete |
-| **Storage & Data** | Databases, Volumes, Object Stores | Create, Delete |
+| **Storage & Data** | Databases, Volumes, Object Stores | Create, Delete, Show Credentials, Cleanup Unused |
 | **Account** | Regions | Switch |
 
 **Each resource view provides:**
@@ -126,6 +127,14 @@ The sidebar is organized into categories:
 - Context menu with Delete option (where applicable)
 - Confirmation dialog before any destructive action
 - **Success overlay** after successful create/edit
+
+**Network delete** skips the default network — only non-default networks can be deleted.
+
+**Object store credentials** — context menu "Show Credentials" opens a sheet displaying endpoint, access_key_id, and secret_access_key as selectable text.
+
+**Volume cleanup** — toolbar button to bulk-delete all volumes not attached to any instance or cluster, with confirmation dialog.
+
+**Quota increase request** — "Request Change" button in the quota section opens a form with steppers for all quota limits, submits via PUT /quota.
 
 **Dashboard cards** are clickable — tap any card to navigate directly to that resource section.
 
@@ -336,6 +345,8 @@ classDiagram
         +String id
         +String name
         +Int? maxSize
+        +String? accessKeyId
+        +String? secretAccessKey
     }
 
     class CivoLoadBalancer {
@@ -419,16 +430,17 @@ classDiagram
     class CivoFirewallService {
         +listFirewalls() CivoFirewall[]
         +createFirewall(body) CivoFirewall
+        +removeFirewall(id)
         +getRulesForFirewall(id) CivoRule[]
         +openAccess(firewallId, port, ip, label)
         +closeAccess(firewallId, ruleId)
         +getStatus(managedFirewalls, currentIP) FirewallStatus[]
     }
 
-    class CivoQuotaService { +getQuota() CivoQuota }
+    class CivoQuotaService { +getQuota() CivoQuota; +updateQuota(body) }
     class CivoKubernetesService { +listClusters(); +showCluster(id); +createCluster(body); +updateCluster(id, body); +removeCluster(id) }
     class CivoDatabaseService { +listDatabases(); +createDatabase(body); +removeDatabase(id) }
-    class CivoNetworkService { +listNetworks(); +createNetwork(body); +updateNetwork(id, body) }
+    class CivoNetworkService { +listNetworks(); +createNetwork(body); +updateNetwork(id, body); +removeNetwork(id) }
     class CivoVolumeService { +listVolumes(); +createVolume(body); +removeVolume(id) }
     class CivoObjectStoreService { +listObjectStores(); +createObjectStore(body); +removeObjectStore(id) }
     class CivoLoadBalancerService { +listLoadBalancers(); +removeLoadBalancer(id) }
@@ -632,8 +644,13 @@ graph LR
         OL -.->|"+"| COS[CreateObjectStoreView]
     end
 
+    subgraph "Edit Sheets"
+        DA -.->|"Request Change"| QE[QuotaEditView]
+    end
+
     style DA fill:#2563EB,color:#fff
     style CD fill:#10B981,color:#fff
+    style QE fill:#F59E0B,color:#fff
 ```
 
 ---
@@ -648,7 +665,7 @@ Some Civo API endpoints return paginated objects, others return plain arrays:
 
 | Endpoint | HTTP Methods | Format | Region |
 |----------|-------------|--------|--------|
-| `/quota` | GET | Single `{}` | No |
+| `/quota` | GET, PUT | Single `{}` | No |
 | `/kubernetes/clusters` | GET, POST | Paginated `{items:[]}` | Yes |
 | `/kubernetes/clusters/:id` | GET, PUT, DELETE | Single `{}` | Yes |
 | `/databases` | GET, POST | Paginated `{items:[]}` | Yes |
@@ -658,13 +675,15 @@ Some Civo API endpoints return paginated objects, others return plain arrays:
 | `/objectstores` | GET, POST | Paginated `{items:[]}` | Yes |
 | `/objectstores/:id` | DELETE | Single `{}` | Yes |
 | `/firewalls` | GET, POST | Array `[]` | Yes |
+| `/firewalls/:id` | DELETE | — | Yes |
 | `/firewalls/:id/rules` | GET, POST | Array `[]` | Yes |
 | `/firewalls/:id/rules/:rid` | DELETE | — | Yes |
 | `/volumes` | GET, POST | Array `[]` | Yes |
 | `/volumes/:id` | DELETE | — | Yes |
 | `/loadbalancers` | GET | Array `[]` | Yes |
+| `/loadbalancers/:id` | DELETE | — | Yes |
 | `/networks` | GET, POST | Array `[]` | Yes |
-| `/networks/:id` | PUT | Single `{}` | Yes |
+| `/networks/:id` | PUT, DELETE | Single `{}` | Yes |
 | `/regions` | GET | Array `[]` | No |
 | `/sshkeys` | GET, POST | Array `[]` | No |
 | `/sshkeys/:id` | DELETE | — | No |
@@ -733,7 +752,7 @@ Tests cover:
 | Secrets | macOS Keychain (API key) |
 | Persistence | UserDefaults (settings) |
 | Purchases | StoreKit 2 (Non-Consumable) |
-| Localization | String Catalog — 7 languages |
+| Localization | String Catalog — 8 languages |
 | Login | SMAppService |
 | Logging | os.Logger (privacy: .private) |
 | Dependencies | None (Apple frameworks only) |
@@ -751,7 +770,7 @@ civo-cloud-manager/
 │   ├── Info.plist                              # App metadata + localizations
 │   ├── CivoCloudManager.entitlements           # App Sandbox + network
 │   ├── CivoCloudManager.storekit              # StoreKit test configuration
-│   ├── Localizable.xcstrings                   # String catalog (7 languages)
+│   ├── Localizable.xcstrings                   # String catalog (8 languages)
 │   ├── PrivacyInfo.xcprivacy                   # Apple privacy manifest
 │   └── Assets.xcassets/                        # App icon + accent color
 ├── Sources/
@@ -764,7 +783,7 @@ civo-cloud-manager/
 │   │   ├── CivoDatabase.swift
 │   │   ├── CivoNetwork.swift
 │   │   ├── CivoVolume.swift
-│   │   ├── CivoObjectStore.swift
+│   │   ├── CivoObjectStore.swift               # + accessKeyId, secretAccessKey fields
 │   │   ├── CivoLoadBalancer.swift
 │   │   ├── CivoInstance.swift
 │   │   ├── CivoSSHKey.swift
@@ -776,14 +795,14 @@ civo-cloud-manager/
 │   ├── Services/
 │   │   ├── CivoAPIClient.swift                 # HTTP client — GET, POST, PUT, DELETE
 │   │   ├── CivoConfig.swift                    # API key (Keychain) + region
-│   │   ├── CivoFirewallService.swift           # Firewall CRUD + rule management
-│   │   ├── CivoQuotaService.swift
+│   │   ├── CivoFirewallService.swift           # Firewall CRUD + rule management + removeFirewall
+│   │   ├── CivoQuotaService.swift              # GET /quota + PUT /quota (change request)
 │   │   ├── CivoKubernetesService.swift         # List, show, create, update, delete
 │   │   ├── CivoDatabaseService.swift           # List, create, delete
-│   │   ├── CivoNetworkService.swift            # List, create, update
+│   │   ├── CivoNetworkService.swift            # List, create, update, delete (removeNetwork)
 │   │   ├── CivoVolumeService.swift             # List, create, delete
 │   │   ├── CivoObjectStoreService.swift        # List, create, delete
-│   │   ├── CivoLoadBalancerService.swift
+│   │   ├── CivoLoadBalancerService.swift       # List, delete
 │   │   ├── CivoInstanceService.swift           # List, create, update, delete
 │   │   ├── CivoSSHKeyService.swift             # List, create, delete
 │   │   ├── CivoDomainService.swift             # Domains + records CRUD
@@ -795,8 +814,8 @@ civo-cloud-manager/
 │   │   ├── DashboardViewModel.swift
 │   │   ├── KubernetesViewModel.swift           # + create/update, form data
 │   │   ├── DatabaseViewModel.swift             # + create, form data
-│   │   ├── NetworkViewModel.swift              # + create network/firewall, update
-│   │   ├── VolumeViewModel.swift               # + create volume/object store
+│   │   ├── NetworkViewModel.swift              # + create network/firewall, update, delete network/firewall/LB
+│   │   ├── VolumeViewModel.swift               # + create volume/object store, cleanup unused
 │   │   ├── InstanceViewModel.swift             # + create instance/SSH key, form data
 │   │   ├── DomainViewModel.swift               # + create/update domain/record
 │   │   └── RegionViewModel.swift
@@ -807,6 +826,7 @@ civo-cloud-manager/
 │   │   ├── MainWindow/
 │   │   │   ├── MainWindowView.swift             # NavigationSplitView + sidebar
 │   │   │   ├── DashboardView.swift              # Clickable cards → sidebar nav
+│   │   │   ├── QuotaEditView.swift              # Quota increase request form (steppers + PUT /quota)
 │   │   │   ├── Compute/
 │   │   │   │   ├── InstanceListView.swift       # + toolbar, sheet, overlay
 │   │   │   │   ├── SSHKeyListView.swift         # + toolbar, sheet, overlay
@@ -817,9 +837,9 @@ civo-cloud-manager/
 │   │   │   │   ├── ClusterDetailView.swift
 │   │   │   │   └── CreateClusterView.swift      # Form: name, CNI, nodes, apps
 │   │   │   ├── Networking/
-│   │   │   │   ├── NetworkListView.swift        # + toolbar, sheet, overlay
-│   │   │   │   ├── FirewallListView.swift       # + toolbar, sheet, overlay
-│   │   │   │   ├── LoadBalancerListView.swift
+│   │   │   │   ├── NetworkListView.swift        # + toolbar, sheet, overlay, context delete
+│   │   │   │   ├── FirewallListView.swift       # + toolbar, sheet, overlay, context delete
+│   │   │   │   ├── LoadBalancerListView.swift   # + context delete
 │   │   │   │   ├── DomainListView.swift         # + inline records, edit, delete
 │   │   │   │   ├── CreateNetworkView.swift      # Form: label, CIDR
 │   │   │   │   ├── CreateFirewallView.swift     # Form: name, network
@@ -827,8 +847,8 @@ civo-cloud-manager/
 │   │   │   │   └── CreateDNSRecordView.swift    # Form: type, name, value, TTL
 │   │   │   ├── Storage/
 │   │   │   │   ├── DatabaseListView.swift       # + toolbar, sheet, overlay
-│   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
-│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay
+│   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay, cleanup unused
+│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay, show credentials
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
 │   │   │   │   └── CreateObjectStoreView.swift  # Form: name, max size

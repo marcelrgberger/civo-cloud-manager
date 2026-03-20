@@ -3,14 +3,14 @@ import SwiftUI
 struct CreateDatabaseView: View {
     @Bindable var vm: DatabaseViewModel
     @State private var name = ""
-    @State private var software = "MySQL"
-    @State private var softwareVersion = "8.0"
+    @State private var software = "PostgreSQL"
+    @State private var softwareVersion = "16"
     @State private var size = ""
     @State private var nodes = 1
     @State private var networkId = ""
     @State private var firewallId = ""
 
-    private let softwareOptions = ["MySQL", "PostgreSQL"]
+    private let softwareOptions = ["PostgreSQL", "MySQL"]
 
     var body: some View {
         Form {

@@ -11,6 +11,10 @@ final class CivoFirewallService: Sendable {
         try await api.post(path: "/firewalls", body: body)
     }
 
+    func removeFirewall(_ id: String) async throws {
+        try await api.delete(path: "/firewalls/\(id)")
+    }
+
     func getRulesForFirewall(_ firewallId: String) async throws -> [CivoRule] {
         try await api.getArray(path: "/firewalls/\(firewallId)/rules")
     }

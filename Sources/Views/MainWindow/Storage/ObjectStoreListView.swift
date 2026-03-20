@@ -3,6 +3,11 @@ import SwiftUI
 struct ObjectStoreListView: View {
     @Bindable var vm: VolumeViewModel
     @State private var deleteTarget: CivoObjectStore?
+    @State private var showCredentials = false
+    @State private var credential: CivoObjectStoreCredential?
+    @State private var credentialError: String?
+
+    private let credentialService = CivoObjectStoreService()
 
     var body: some View {
         List {
@@ -17,6 +22,17 @@ struct ObjectStoreListView: View {
                         status: store.status
                     )
                     .contextMenu {
+                        Button("Show Credentials") {
+                            Task {
+                                do {
+                                    credential = try await credentialService.getCredentials()
+                                    showCredentials = true
+                                } catch {
+                                    credentialError = error.localizedDescription
+                                }
+                            }
+                        }
+                        Divider()
                         Button("Delete", role: .destructive) {
                             deleteTarget = store
                         }
@@ -26,7 +42,7 @@ struct ObjectStoreListView: View {
         }
         .animation(.easeOut, value: vm.objectStores.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            if let error = vm.error ?? credentialError { ErrorBanner(message: error) }
         }
         .navigationTitle("Object Stores")
         .task { await vm.refresh() }
@@ -59,6 +75,14 @@ struct ObjectStoreListView: View {
             CreateObjectStoreView(vm: vm)
                 .frame(minWidth: 400, minHeight: 200)
         }
+        .sheet(isPresented: $showCredentials) {
+            if let cred = credential {
+                ObjectStoreCredentialView(credential: cred) {
+                    showCredentials = false
+                }
+                .frame(minWidth: 450, minHeight: 200)
+            }
+        }
         .confirmationDialog("Delete Object Store", isPresented: Binding(
             get: { deleteTarget != nil },
             set: { if !$0 { deleteTarget = nil } }
@@ -71,6 +95,34 @@ struct ObjectStoreListView: View {
             }
         } message: {
             Text("This will permanently delete the object store and all its contents. This action cannot be undone.")
+        }
+    }
+}
+
+struct ObjectStoreCredentialView: View {
+    let credential: CivoObjectStoreCredential
+    let onDismiss: () -> Void
+
+    var body: some View {
+        Form {
+            Section("Object Store Credentials") {
+                LabeledContent("Access Key ID") {
+                    Text(credential.accessKeyId ?? "—")
+                        .textSelection(.enabled)
+                        .font(.body.monospaced())
+                }
+                LabeledContent("Secret Access Key") {
+                    Text(credential.secretAccessKey ?? "—")
+                        .textSelection(.enabled)
+                        .font(.body.monospaced())
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Done") { onDismiss() }
+            }
         }
     }
 }

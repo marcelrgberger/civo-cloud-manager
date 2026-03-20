@@ -71,6 +71,33 @@ final class NetworkViewModel {
         }
     }
 
+    func removeNetwork(_ id: String) async {
+        do {
+            try await networkService.removeNetwork(id)
+            await refresh()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func removeFirewall(_ id: String) async {
+        do {
+            try await firewallService.removeFirewall(id)
+            await refresh()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func removeLoadBalancer(_ id: String) async {
+        do {
+            try await loadBalancerService.removeLoadBalancer(id)
+            await refresh()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
     func createFirewall(_ body: sending [String: Any]) async -> Bool {
         isSaving = true
         saveError = nil

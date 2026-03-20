@@ -36,46 +36,71 @@ CivoCloudManagerApp (@main)
 CivoAPIClient (shared singleton)
 ├── GET  /quota, /kubernetes/clusters, /databases, /firewalls, /sizes, /disk_images, ...
 ├── POST /kubernetes/clusters, /databases, /instances, /firewalls, /volumes, /objectstores, /sshkeys, /dns, /dns/:id/records
-├── PUT  /kubernetes/clusters/:id, /instances/:id, /networks/:id, /dns/:id, /dns/:id/records/:id
-├── DELETE /kubernetes/clusters/{id}, /databases/{id}, /instances/{id}, ...
+├── PUT  /kubernetes/clusters/:id, /instances/:id, /networks/:id, /dns/:id, /dns/:id/records/:id, /quota
+├── DELETE /kubernetes/clusters/{id}, /databases/{id}, /instances/{id}, /networks/{id}, /firewalls/{id}, ...
 └── Bearer token auth via CivoConfig (Keychain + UserDefaults)
 
 DashboardView (clickable cards → sidebar navigation)
 ├── Resource cards with hover scale animation
-└── Binding to sidebar selection
+├── Binding to sidebar selection
+└── QuotaEditView (quota increase request form via PUT /quota)
 
 Create Views (10 sheet forms)
 ├── Simple: Firewall, Network, Domain, SSHKey, Volume, ObjectStore
 ├── Complex: Database, Instance, Kubernetes Cluster
 ├── DNS Record (with edit support)
 └── All use .formStyle(.grouped), Cancel + Create toolbar
+
+Delete Support
+├── Networks (context menu, skips default network)
+├── Firewalls (context menu with confirmation)
+├── Load Balancers (context menu with confirmation)
+├── Volumes (individual + bulk cleanup of unused)
+└── All with confirmation dialogs
 ```
 
 **Key data flow:** User action → ViewModel method → Service → CivoAPIClient (URLSession) → decode JSON → update @Observable state → SwiftUI reacts.
 
 **Create flow:** "+" toolbar button → sheet with Form → ViewModel.create(body) → Service.create(body) → POST → dismiss sheet → show SuccessOverlay → refresh list.
 
+**Delete flow (networks/firewalls/LBs):** Context menu "Delete" → confirmation dialog → ViewModel.remove(id) → Service.remove(id) → DELETE → refresh list.
+
+**Quota change flow:** "Request Change" button → QuotaEditView sheet with steppers → ViewModel.updateQuota(body) → CivoQuotaService.updateQuota(body) → PUT /quota.
+
+**Volume cleanup flow:** Toolbar "Cleanup Unused" button → confirmation dialog listing unattached volumes → bulk delete all → refresh list.
+
+**Object store credentials flow:** Context menu "Show Credentials" → sheet displaying endpoint, access_key_id, secret_access_key as selectable text.
+
 ## Key Patterns
 
 - **CivoAPIClient** — singleton HTTP client. Methods: `get()`, `getPaginatedList()`, `getArray()`, `post()`, `put()`, `delete()`.
 - **CivoConfig** — stores API key (Keychain) and region (UserDefaults). Read by services on every request.
 - **Service per resource domain** — each `Civo*Service` wraps API calls for one resource type with list/create/update/delete methods.
-- **CivoSizeService** — fetches available sizes (GET /sizes) and disk images (GET /disk_images) for create form pickers.
+- **CivoSizeService** — fetches available sizes (GET /sizes) and disk images (GET /disk_images) for create form pickers. All sizes shown without type filtering.
 - **ViewModel CRUD state** — each VM has `isCreating`, `isSaving`, `saveError`, `showSuccess` for managing create/edit flows.
 - **`sending` parameters** — all ViewModel create/update methods use `sending [String: Any]` to satisfy Swift 6 strict concurrency when passing bodies from @MainActor to nonisolated services.
 - **Rule ownership** — rules labeled `civo-cloud-<hostname>-<firewallname>`, app only touches its own.
 - **IP detection** — 3-provider fallback chain with IPv4 validation.
 - **Dashboard navigation** — resource cards accept `$selection` binding, clicking navigates to sidebar section.
 - **SuccessOverlay** — shared component, auto-dismiss after 1.5s with opacity+scale transition.
+- **Context menu delete** — Networks (skips default), Firewalls, and Load Balancers support delete via context menu with confirmation dialog.
+- **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
+- **Volume cleanup** — toolbar button to bulk-delete volumes not attached to any instance/cluster, with confirmation listing affected volumes.
+- **Object store credentials** — CivoObjectStore model includes accessKeyId and secretAccessKey; context menu "Show Credentials" displays them in a sheet.
 
 ## Code Layout
 
 - `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 16 Codable model types (includes CivoSize, CivoDiskImage)
+- `Sources/Models/` — 16 Codable model types (includes CivoSize, CivoDiskImage; CivoObjectStore has accessKeyId/secretAccessKey)
 - `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), IPDetector
+  - `CivoNetworkService` — list, create, update, delete (removeNetwork)
+  - `CivoFirewallService` — list, create, delete (removeFirewall), rule CRUD, status checks
+  - `CivoQuotaService` — GET /quota, PUT /quota (updateQuota)
+  - `CivoLoadBalancerService` — list, delete (removeLoadBalancer)
 - `Sources/ViewModels/` — 8 @Observable @MainActor view models with CRUD state
 - `Sources/Views/` — MenuBarView, AppState, OnboardingView
-- `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 10 create/edit views
+- `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 10 create/edit views + QuotaEditView
+- `Sources/Views/MainWindow/QuotaEditView.swift` — quota increase request form with steppers for all limits
 - `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, PaywallView
 - `Sources/Utilities/` — Logger (os.Logger)
 - `Tests/` — 21 model decoding tests

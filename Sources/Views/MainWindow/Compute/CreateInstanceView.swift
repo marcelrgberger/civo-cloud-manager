@@ -79,7 +79,7 @@ struct CreateInstanceView: View {
                         if !firewallId.isEmpty { body["firewall_id"] = firewallId }
                         if !sshKeyId.isEmpty { body["ssh_key_id"] = sshKeyId }
                         if !tags.isEmpty {
-                            body["tags"] = tags.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+                            body["tags"] = tags.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }.joined(separator: " ")
                         }
                         _ = await vm.createInstance(body)
                     }

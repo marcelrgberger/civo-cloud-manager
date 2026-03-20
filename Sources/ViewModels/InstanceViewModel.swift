@@ -50,7 +50,7 @@ final class InstanceViewModel {
             async let images = sizeService.listDiskImages()
             availableNetworks = try await nets
             availableFirewalls = try await fws
-            availableSizes = (try await sizes).filter { $0.type == "instance" || $0.type == nil }
+            availableSizes = try await sizes
             availableDiskImages = try await images
         } catch {
             Log.error("Failed to load form data: \(error.localizedDescription)")

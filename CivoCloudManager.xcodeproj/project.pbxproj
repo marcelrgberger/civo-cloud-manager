@@ -34,6 +34,7 @@
 		6B8A56EB41EAE1C976F90A64 /* DatabaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653BFE15133D119B968E37B8 /* DatabaseViewModel.swift */; };
 		6CC6DEBD99341B72B627860D /* CivoDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A68203D97D90CDCA97D376 /* CivoDomain.swift */; };
 		6F8D79DB1B54CC8D58503F73 /* CivoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FD50818CE1B57EE2438DE /* CivoSize.swift */; };
+		73BFF2DEAFDD610E7403551A /* QuotaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F433A006707610057BD0009F /* QuotaEditView.swift */; };
 		75EDB8203F59DA1810ABEB54 /* CivoDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE806E4E9859BB153E37AFF /* CivoDatabaseService.swift */; };
 		7757AD8818E017E73DD1BEDB /* CreateSSHKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0987C26DCF1A5F657A46A /* CreateSSHKeyView.swift */; };
 		7D216DF7D015810A3E3C4B16 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32F73DFD7020CC9F97E2C25 /* NetworkListView.swift */; };
@@ -176,6 +177,7 @@
 		EA5232B575D10CB2EB4ED7C0 /* CivoCloudManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CivoCloudManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF772687EC5E14C580B3E54F /* FirewallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
 		F113A37E7EAD44865E9A109F /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
+		F433A006707610057BD0009F /* QuotaEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotaEditView.swift; sourceTree = "<group>"; };
 		F837BF987709F6BEA39F3C88 /* CivoKubernetesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoKubernetesService.swift; sourceTree = "<group>"; };
 		FC651DD74FA16D0BC0D705B3 /* CivoQuotaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoQuotaService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -285,6 +287,7 @@
 			children = (
 				4413AF2496E5F73132915C3A /* DashboardView.swift */,
 				F113A37E7EAD44865E9A109F /* MainWindowView.swift */,
+				F433A006707610057BD0009F /* QuotaEditView.swift */,
 				0A6EB52D0EFC0F1BA3A38028 /* Account */,
 				4977AB13B20AA86BCA5AF1E8 /* Compute */,
 				591DAB97263BAD0650D40B23 /* Kubernetes */,
@@ -571,6 +574,7 @@
 				06646DCE38F5CCC8EFF8202D /* ObjectStoreListView.swift in Sources */,
 				9BCE43A7AD935BCDDD5CCF55 /* OnboardingView.swift in Sources */,
 				68AC75A2F8C9E88D4BFC6FFC /* PaywallView.swift in Sources */,
+				73BFF2DEAFDD610E7403551A /* QuotaEditView.swift in Sources */,
 				E083AC17B80D72EBCFC34EB1 /* QuotaGauge.swift in Sources */,
 				D7BCE84ADCD95C32A59F5D29 /* RegionListView.swift in Sources */,
 				57708DF578C420C911D33150 /* RegionViewModel.swift in Sources */,

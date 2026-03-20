@@ -3,6 +3,7 @@ import SwiftUI
 struct VolumeListView: View {
     @Bindable var vm: VolumeViewModel
     @State private var deleteTarget: CivoVolume?
+    @State private var showCleanupConfirm = false
 
     var body: some View {
         List {
@@ -40,6 +41,15 @@ struct VolumeListView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
+                    showCleanupConfirm = true
+                } label: {
+                    Label("Cleanup Unused", systemImage: "trash.slash")
+                }
+                .disabled(vm.unusedVolumes.isEmpty || vm.isLoading)
+                .help("Delete all volumes not attached to any instance or cluster")
+            }
+            ToolbarItem(placement: .automatic) {
+                Button {
                     Task { await vm.refresh() }
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
@@ -71,6 +81,13 @@ struct VolumeListView: View {
             }
         } message: {
             Text("This will permanently delete the volume. This action cannot be undone.")
+        }
+        .confirmationDialog("Cleanup Unused Volumes", isPresented: $showCleanupConfirm) {
+            Button("Delete \(vm.unusedVolumes.count) unused volume\(vm.unusedVolumes.count == 1 ? "" : "s")", role: .destructive) {
+                Task { await vm.cleanupUnusedVolumes() }
+            }
+        } message: {
+            Text("This will permanently delete all volumes not attached to any instance or cluster. This action cannot be undone.")
         }
     }
 }

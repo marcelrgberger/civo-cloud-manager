@@ -11,6 +11,10 @@ final class CivoObjectStoreService: Sendable {
         try await api.post(path: "/objectstores", body: body)
     }
 
+    func getCredentials() async throws -> CivoObjectStoreCredential {
+        try await api.get(path: "/objectstores/credentials")
+    }
+
     func removeObjectStore(_ id: String) async throws {
         try await api.delete(path: "/objectstores/\(id)")
     }

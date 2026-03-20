@@ -40,7 +40,7 @@ final class KubernetesViewModel {
             async let nets = networkService.listNetworks()
             async let sizes = sizeService.listSizes()
             availableNetworks = try await nets
-            availableSizes = (try await sizes).filter { $0.type == "kubernetes" || $0.type == nil }
+            availableSizes = try await sizes
         } catch {
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }

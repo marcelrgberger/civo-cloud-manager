@@ -14,4 +14,8 @@ final class CivoNetworkService: Sendable {
     func updateNetwork(_ id: String, body: [String: Any]) async throws -> CivoNetwork {
         try await api.put(path: "/networks/\(id)", body: body)
     }
+
+    func removeNetwork(_ id: String) async throws {
+        try await api.delete(path: "/networks/\(id)")
+    }
 }

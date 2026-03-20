@@ -31,6 +31,15 @@ struct DashboardView: View {
                 ProgressView("Loading dashboard...")
             }
         }
+        .overlay {
+            SuccessOverlay(isPresented: $vm.showSuccess)
+        }
+        .sheet(isPresented: $vm.isEditingQuota) {
+            if let quota = vm.quota {
+                QuotaEditView(vm: vm, currentQuota: quota)
+                    .frame(minWidth: 500, minHeight: 500)
+            }
+        }
     }
 
     private var header: some View {
@@ -104,8 +113,18 @@ struct DashboardView: View {
 
     private func quotaSection(_ quota: CivoQuota) -> some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Quota Usage")
-                .font(.title2.bold())
+            HStack {
+                Text("Quota Usage")
+                    .font(.title2.bold())
+                Spacer()
+                Button {
+                    vm.isEditingQuota = true
+                } label: {
+                    Label("Request Change", systemImage: "arrow.up.arrow.down")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+            }
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 6), spacing: 20) {
                 ForEach(quota.items) { item in

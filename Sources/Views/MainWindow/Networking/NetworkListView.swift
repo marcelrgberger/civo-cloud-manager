@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NetworkListView: View {
     @Bindable var vm: NetworkViewModel
+    @State private var deleteTarget: CivoNetwork?
 
     var body: some View {
         List {
@@ -15,6 +16,13 @@ struct NetworkListView: View {
                         subtitle: "Region: \(net.region ?? "—")\(net.isDefault == true ? " — Default" : "")",
                         status: net.status
                     )
+                    .contextMenu {
+                        if net.isDefault != true {
+                            Button("Delete", role: .destructive) {
+                                deleteTarget = net
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -52,6 +60,19 @@ struct NetworkListView: View {
         .sheet(isPresented: $vm.isCreatingNetwork) {
             CreateNetworkView(vm: vm)
                 .frame(minWidth: 400, minHeight: 200)
+        }
+        .confirmationDialog("Delete Network", isPresented: Binding(
+            get: { deleteTarget != nil },
+            set: { if !$0 { deleteTarget = nil } }
+        )) {
+            if let target = deleteTarget {
+                Button("Delete \(target.displayName)", role: .destructive) {
+                    Task { await vm.removeNetwork(target.id) }
+                    deleteTarget = nil
+                }
+            }
+        } message: {
+            Text("This will permanently delete the network. This action cannot be undone.")
         }
     }
 }

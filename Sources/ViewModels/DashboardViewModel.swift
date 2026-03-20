@@ -14,6 +14,11 @@ final class DashboardViewModel {
     var error: String?
     var warnings: [String] = []
 
+    var isEditingQuota = false
+    var isSavingQuota = false
+    var quotaSaveError: String?
+    var showSuccess = false
+
     private let quotaService = CivoQuotaService()
     private let kubernetesService = CivoKubernetesService()
     private let databaseService = CivoDatabaseService()
@@ -42,7 +47,6 @@ final class DashboardViewModel {
             Log.error("Dashboard quota fetch failed: \(error.localizedDescription)")
         }
 
-        // Fetch resource counts concurrently, track individual failures
         async let clusters = kubernetesService.listClusters()
         async let databases = databaseService.listDatabases()
         async let volumes = volumeService.listVolumes()
@@ -67,6 +71,23 @@ final class DashboardViewModel {
         }
         do { networkCount = try await networks.count } catch {
             warnings.append("Networks: \(error.localizedDescription)")
+        }
+    }
+
+    func requestQuotaChange(_ body: sending [String: Any]) async -> Bool {
+        isSavingQuota = true
+        quotaSaveError = nil
+        defer { isSavingQuota = false }
+
+        do {
+            _ = try await quotaService.requestQuotaChange(body)
+            isEditingQuota = false
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            quotaSaveError = error.localizedDescription
+            return false
         }
     }
 }

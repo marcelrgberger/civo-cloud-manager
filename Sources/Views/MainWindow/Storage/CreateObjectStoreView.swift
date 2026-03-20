@@ -29,7 +29,7 @@ struct CreateObjectStoreView: View {
                     Task {
                         _ = await vm.createObjectStore([
                             "name": name,
-                            "max_size_gb": maxSize,
+                            "size": maxSize,
                         ])
                     }
                 }

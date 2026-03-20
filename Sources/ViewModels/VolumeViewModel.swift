@@ -79,6 +79,26 @@ final class VolumeViewModel {
         }
     }
 
+    var unusedVolumes: [CivoVolume] {
+        volumes.filter { $0.instanceId == nil && $0.clusterId == nil }
+    }
+
+    func cleanupUnusedVolumes() async {
+        let unused = unusedVolumes
+        var hadError = false
+        for vol in unused {
+            do {
+                try await volumeService.removeVolume(vol.id)
+            } catch {
+                hadError = true
+                self.error = error.localizedDescription
+                Log.error("Failed to remove volume \(vol.name): \(error.localizedDescription)")
+            }
+        }
+        await refresh()
+        if !hadError { showSuccess = true }
+    }
+
     func removeVolume(_ id: String) async {
         do {
             try await volumeService.removeVolume(id)

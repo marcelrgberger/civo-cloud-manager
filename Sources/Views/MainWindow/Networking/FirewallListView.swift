@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FirewallListView: View {
     @Bindable var vm: NetworkViewModel
+    @State private var deleteTarget: CivoFirewall?
 
     var body: some View {
         List {
@@ -14,6 +15,11 @@ struct FirewallListView: View {
                         name: fw.name,
                         subtitle: "\(fw.rulesCountInt) rules"
                     )
+                    .contextMenu {
+                        Button("Delete", role: .destructive) {
+                            deleteTarget = fw
+                        }
+                    }
                 }
             }
         }
@@ -51,6 +57,19 @@ struct FirewallListView: View {
         .sheet(isPresented: $vm.isCreatingFirewall) {
             CreateFirewallView(vm: vm)
                 .frame(minWidth: 400, minHeight: 200)
+        }
+        .confirmationDialog("Delete Firewall", isPresented: Binding(
+            get: { deleteTarget != nil },
+            set: { if !$0 { deleteTarget = nil } }
+        )) {
+            if let target = deleteTarget {
+                Button("Delete \(target.name)", role: .destructive) {
+                    Task { await vm.removeFirewall(target.id) }
+                    deleteTarget = nil
+                }
+            }
+        } message: {
+            Text("This will permanently delete the firewall and all its rules. This action cannot be undone.")
         }
     }
 }

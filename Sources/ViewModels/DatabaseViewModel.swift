@@ -41,7 +41,7 @@ final class DatabaseViewModel {
             async let sizes = sizeService.listSizes()
             availableNetworks = try await nets
             availableFirewalls = try await fws
-            availableSizes = (try await sizes).filter { $0.type == "database" || $0.type == nil }
+            availableSizes = try await sizes
         } catch {
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
