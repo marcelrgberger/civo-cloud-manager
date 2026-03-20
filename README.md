@@ -23,7 +23,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Storage** — create volumes and object stores with size configuration; bulk-delete unused volumes via toolbar button; view object store credentials (endpoint, access key, secret key)
 - **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys
 - **Regions** — view available regions, switch active region
-- Confirmation dialogs on all destructive operations
+- **Safe deletion** — all destructive operations require typing the resource name to confirm (DeleteConfirmationSheet)
 - Success overlay animation after create/edit operations
 - Error banners on every view
 
@@ -125,7 +125,7 @@ The sidebar is organized into categories:
 - Refresh button in the toolbar
 - Error banner if the API call fails
 - Context menu with Delete option (where applicable)
-- Confirmation dialog before any destructive action
+- **Name-confirmation delete** — typing the exact resource name required before deletion is enabled
 - **Success overlay** after successful create/edit
 
 **Network delete** skips the default network — only non-default networks can be deleted.
@@ -861,7 +861,8 @@ civo-cloud-manager/
 │   │       ├── EmptyStateView.swift
 │   │       ├── ErrorBanner.swift
 │   │       ├── SuccessOverlay.swift             # Green checkmark, auto-dismiss
-│   │       └── PaywallView.swift              # Buy-once paywall + offer codes
+│   │       ├── DeleteConfirmationSheet.swift   # Name-match confirmation for deletes
+│   │       └── PaywallView.swift              # Buy-once paywall + ToS/Privacy links
 │   └── Utilities/
 │       └── Logger.swift
 ├── Tests/

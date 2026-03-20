@@ -56,14 +56,15 @@ Delete Support
 ├── Firewalls (context menu with confirmation)
 ├── Load Balancers (context menu with confirmation)
 ├── Volumes (individual + bulk cleanup of unused)
-└── All with confirmation dialogs
+├── All resources: Instances, SSH Keys, Databases, Domains, Object Stores
+└── All use DeleteConfirmationSheet (requires typing resource name to confirm)
 ```
 
 **Key data flow:** User action → ViewModel method → Service → CivoAPIClient (URLSession) → decode JSON → update @Observable state → SwiftUI reacts.
 
 **Create flow:** "+" toolbar button → sheet with Form → ViewModel.create(body) → Service.create(body) → POST → dismiss sheet → show SuccessOverlay → refresh list.
 
-**Delete flow (networks/firewalls/LBs):** Context menu "Delete" → confirmation dialog → ViewModel.remove(id) → Service.remove(id) → DELETE → refresh list.
+**Delete flow:** Context menu "Delete" → DeleteConfirmationSheet (type resource name to confirm) → ViewModel.remove(id) → Service.remove(id) → DELETE → refresh list.
 
 **Quota change flow:** "Request Change" button → QuotaEditView sheet with steppers → ViewModel.updateQuota(body) → CivoQuotaService.updateQuota(body) → PUT /quota.
 
@@ -83,7 +84,8 @@ Delete Support
 - **IP detection** — 3-provider fallback chain with IPv4 validation.
 - **Dashboard navigation** — resource cards accept `$selection` binding, clicking navigates to sidebar section.
 - **SuccessOverlay** — shared component, auto-dismiss after 1.5s with opacity+scale transition.
-- **Context menu delete** — Networks (skips default), Firewalls, and Load Balancers support delete via context menu with confirmation dialog.
+- **DeleteConfirmationSheet** — shared component for all destructive operations. Requires typing the exact resource name to enable the delete button. Used by all list views.
+- **Context menu delete** — all resource list views have "Delete" in context menu, opening DeleteConfirmationSheet.
 - **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
 - **Volume cleanup** — toolbar button to bulk-delete volumes not attached to any instance/cluster, with confirmation listing affected volumes.
 - **Object store credentials** — CivoObjectStore model includes accessKeyId and secretAccessKey; context menu "Show Credentials" displays them in a sheet.
@@ -101,7 +103,7 @@ Delete Support
 - `Sources/Views/` — MenuBarView, AppState, OnboardingView
 - `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 10 create/edit views + QuotaEditView
 - `Sources/Views/MainWindow/QuotaEditView.swift` — quota increase request form with steppers for all limits
-- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, PaywallView
+- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, PaywallView
 - `Sources/Utilities/` — Logger (os.Logger)
 - `Tests/` — 21 model decoding tests
 - `CivoCloudManager/` — Xcode project support (Info.plist, Entitlements, Assets)
