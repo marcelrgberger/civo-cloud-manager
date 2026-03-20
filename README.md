@@ -25,7 +25,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 
 ### Monetization
 - **Free tier** — menu bar firewall management
-- **Full Access ($9.99)** — one-time purchase, unlocks dashboard + all resources
+- **Full Access ($14.99)** — one-time purchase, unlocks dashboard + all resources
 - **Apple offer codes** — redeem codes generated in App Store Connect
 - **Family Sharing** enabled
 
