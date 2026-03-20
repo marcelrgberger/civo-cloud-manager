@@ -51,7 +51,7 @@ targets:
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         LSUIElement: true
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
-        NSHumanReadableCopyright: "Copyright © 2025-2026 Marcel R. G. Berger. All rights reserved."
+        NSHumanReadableCopyright: "Copyright © 2026 Marcel R. G. Berger. All rights reserved."
         LSApplicationCategoryType: "public.app-category.utilities"
         CFBundleDevelopmentRegion: en
         CFBundleLocalizations:
