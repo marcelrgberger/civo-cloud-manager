@@ -7,23 +7,21 @@ struct CivoDatabase: Codable, Identifiable, Sendable {
     let software: String?
     let softwareVersion: String?
     let size: String?
-    let nodes: String?
-    let port: String?
-    let host: String?
+    let nodes: Int?
+    let port: Int?
+    let publicIpv4: String?
     let privateIpv4: String?
     let firewallId: String?
     let networkId: String?
     let dnsEntry: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, status, software, size, nodes, port, host
+        case id, name, status, software, size, nodes, port
         case softwareVersion = "software_version"
+        case publicIpv4 = "public_ipv4"
         case privateIpv4 = "private_ipv4"
         case firewallId = "firewall_id"
         case networkId = "network_id"
         case dnsEntry = "dns_entry"
     }
-
-    var nodesInt: Int { Int(nodes ?? "1") ?? 1 }
-    var portInt: Int { Int(port ?? "5432") ?? 5432 }
 }

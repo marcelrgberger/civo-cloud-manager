@@ -68,12 +68,12 @@ struct DatabaseListView: View {
                     Label(db.software ?? "—", systemImage: "cpu")
                     Label("v\(db.softwareVersion ?? "?")", systemImage: "tag")
                     Label(db.size ?? "—", systemImage: "memorychip")
-                    Label("Port \(db.port ?? "?")", systemImage: "network")
+                    Label("Port \(db.port ?? 0)", systemImage: "network")
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-                if let host = db.host {
+                if let host = db.publicIpv4 {
                     Text(host)
                         .font(.caption.monospaced())
                         .foregroundStyle(.secondary)

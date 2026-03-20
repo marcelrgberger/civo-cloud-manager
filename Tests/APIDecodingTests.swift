@@ -43,7 +43,7 @@ struct APIDecodingTests {
     @Test("Decode database list response (paginated)")
     func decodeDatabaseList() throws {
         let json = """
-        {"page":1,"per_page":20,"pages":1,"items":[{"id":"67763af0","name":"dev-database","status":"Ready","software":"PostgreSQL","software_version":"14","size":"g3.db.xsmall","nodes":"1","port":"5432","host":"74.220.25.6","private_ipv4":"192.168.1.8","firewall_id":"62f22b50","network_id":"7fa62450","dns_entry":"67763af0.db.civo.com"}]}
+        {"page":1,"per_page":20,"pages":1,"items":[{"id":"67763af0","name":"dev-database","status":"Ready","software":"PostgreSQL","software_version":"14","size":"g3.db.xsmall","nodes":1,"port":5432,"public_ipv4":"74.220.25.6","private_ipv4":"192.168.1.8","firewall_id":"62f22b50","network_id":"7fa62450","dns_entry":"67763af0.db.civo.com"}]}
         """
         let data = json.data(using: .utf8)!
         let response = try JSONDecoder().decode(PaginatedResponse<CivoDatabase>.self, from: data)
@@ -51,7 +51,9 @@ struct APIDecodingTests {
         let db = response.items[0]
         #expect(db.name == "dev-database")
         #expect(db.software == "PostgreSQL")
-        #expect(db.portInt == 5432)
+        #expect(db.port == 5432)
+        #expect(db.nodes == 1)
+        #expect(db.publicIpv4 == "74.220.25.6")
     }
 
     // MARK: - CivoFirewall (plain array, rules_count as string or int)
