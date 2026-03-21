@@ -18,9 +18,19 @@ final class KubernetesViewModel {
     var availableNetworks: [CivoNetwork] = []
     var availableSizes: [CivoSize] = []
 
+    // K8s API state
+    var k8sNodes: [K8sNode] = []
+    var selectedNode: K8sNode?
+    var nodePods: [K8sPod] = []
+    var podLog: String?
+    var selectedPod: K8sPod?
+    var isLoadingK8s = false
+    var k8sError: String?
+
     private let service = CivoKubernetesService()
     private let networkService = CivoNetworkService()
     private let sizeService = CivoSizeService()
+    private var k8sClient: KubernetesAPIClient?
 
     func refresh() async {
         isLoading = true
@@ -58,6 +68,79 @@ final class KubernetesViewModel {
             Log.error("Kubernetes show failed: \(error.localizedDescription)")
         }
     }
+
+    // MARK: - K8s API (via kubeconfig)
+
+    func connectToCluster(_ clusterId: String) async {
+        isLoadingK8s = true
+        k8sError = nil
+        defer { isLoadingK8s = false }
+
+        do {
+            let yaml = try await service.getKubeconfig(clusterId)
+            let creds = try KubeconfigParser.parse(yaml)
+            k8sClient = try KubernetesAPIClient(credentials: creds)
+            Log.info("Connected to K8s API at \(creds.server)")
+        } catch {
+            k8sError = error.localizedDescription
+            Log.error("K8s connect failed: \(error.localizedDescription)")
+        }
+    }
+
+    func loadNodes() async {
+        guard let client = k8sClient else {
+            k8sError = "Not connected to cluster"
+            return
+        }
+        isLoadingK8s = true
+        k8sError = nil
+        defer { isLoadingK8s = false }
+
+        do {
+            let list = try await client.listNodes()
+            k8sNodes = list.items
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
+    func loadPods(nodeName: String) async {
+        guard let client = k8sClient else { return }
+        isLoadingK8s = true
+        k8sError = nil
+        defer { isLoadingK8s = false }
+
+        do {
+            let list = try await client.listPods(nodeName: nodeName)
+            nodePods = list.items
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
+    func loadPodLog(namespace: String, pod: String) async {
+        guard let client = k8sClient else { return }
+        isLoadingK8s = true
+        k8sError = nil
+        defer { isLoadingK8s = false }
+
+        do {
+            podLog = try await client.getPodLogs(namespace: namespace, pod: pod)
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
+    func saveKubeconfig(_ clusterId: String) async -> String? {
+        do {
+            return try await service.getKubeconfig(clusterId)
+        } catch {
+            self.error = error.localizedDescription
+            return nil
+        }
+    }
+
+    // MARK: - CRUD
 
     func createCluster(_ body: sending [String: Any]) async -> Bool {
         isSaving = true

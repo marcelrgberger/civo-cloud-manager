@@ -244,14 +244,30 @@ struct ClusterDetailView: View {
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
                     ForEach(Array(names.enumerated()), id: \.offset) { _, name in
-                        HStack(spacing: 6) {
-                            Image(systemName: "desktopcomputer")
-                                .font(.caption)
-                                .foregroundStyle(.blue)
-                            Text(name)
-                                .font(.caption.monospaced())
-                                .textSelection(.enabled)
+                        Button {
+                            Task {
+                                if vm.k8sNodes.isEmpty {
+                                    await vm.connectToCluster(cluster.id)
+                                    await vm.loadNodes()
+                                }
+                                if let node = vm.k8sNodes.first(where: { $0.name == name }) {
+                                    vm.selectedNode = node
+                                }
+                            }
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "desktopcomputer")
+                                    .font(.caption)
+                                    .foregroundStyle(.blue)
+                                Text(name)
+                                    .font(.caption.monospaced())
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.caption2)
+                                    .foregroundStyle(.tertiary)
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
                 }
             }

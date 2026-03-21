@@ -56,6 +56,45 @@ final class CivoAPIClient: Sendable {
 
     // MARK: - Public API
 
+    /// GET raw string response from the API.
+    func getRaw(
+        path: String,
+        queryItems: [URLQueryItem]? = nil,
+        regionRequired: Bool = true
+    ) async throws -> String {
+        let apiKey = CivoConfig.shared.apiKey
+        guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
+
+        guard var components = URLComponents(string: "\(baseURL)\(path)") else {
+            throw CivoAPIError.networkError("Invalid API path: \(path)")
+        }
+        var items = queryItems ?? []
+        if regionRequired {
+            let region = CivoConfig.shared.region
+            guard !region.isEmpty else { throw CivoAPIError.noRegion }
+            items.append(URLQueryItem(name: "region", value: region))
+        }
+        if !items.isEmpty { components.queryItems = items }
+
+        guard let url = components.url else {
+            throw CivoAPIError.networkError("Invalid URL for path: \(path)")
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw CivoAPIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, message)
+        }
+        guard let text = String(data: data, encoding: .utf8) else {
+            throw CivoAPIError.decodingError("Invalid text encoding")
+        }
+        return text
+    }
+
     /// GET a decoded response from the API.
     func get<T: Decodable>(
         path: String,
