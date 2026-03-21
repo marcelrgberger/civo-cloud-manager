@@ -126,11 +126,11 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.timeoutInterval = 15
 
-        let delegate = K8sTaskDelegate(identity: identity, caCert: caCert)
-        let session = URLSession(configuration: .ephemeral)
+        let delegate = K8sSessionDelegate(identity: identity, caCert: caCert)
+        let session = URLSession(configuration: .ephemeral, delegate: delegate, delegateQueue: nil)
         defer { session.invalidateAndCancel() }
 
-        let (data, response) = try await session.data(for: request, delegate: delegate)
+        let (data, response) = try await session.data(for: request)
 
         guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
             let msg = String(data: data, encoding: .utf8) ?? "Unknown"
@@ -140,9 +140,9 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     }
 }
 
-// MARK: - Task Delegate
+// MARK: - Session Delegate
 
-final class K8sTaskDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
+final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
     private let identity: SecIdentity
     private let caCert: SecCertificate
 
@@ -153,9 +153,9 @@ final class K8sTaskDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendab
 
     func urlSession(
         _ session: URLSession,
-        task: URLSessionTask,
-        didReceive challenge: URLAuthenticationChallenge
-    ) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
         let method = challenge.protectionSpace.authenticationMethod
 
         if method == NSURLAuthenticationMethodServerTrust,
@@ -163,18 +163,20 @@ final class K8sTaskDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendab
         {
             SecTrustSetAnchorCertificates(trust, [caCert] as CFArray)
             SecTrustSetAnchorCertificatesOnly(trust, true)
-            return (.useCredential, URLCredential(trust: trust))
+            completionHandler(.useCredential, URLCredential(trust: trust))
+            return
         }
 
         if method == NSURLAuthenticationMethodClientCertificate {
-            return (.useCredential, URLCredential(
+            completionHandler(.useCredential, URLCredential(
                 identity: identity,
                 certificates: nil,
                 persistence: .forSession
             ))
+            return
         }
 
-        return (.performDefaultHandling, nil)
+        completionHandler(.performDefaultHandling, nil)
     }
 }
 
