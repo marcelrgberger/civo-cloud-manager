@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="anchors">
+<title>Ayuda de Civo Cloud Manager</title>
+<style>
+body { font-family: -apple-system, Helvetica Neue, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; color: #333; }
+h1 { font-size: 28px; margin-bottom: 4px; }
+h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+h3 { font-size: 16px; margin-top: 20px; }
+p, li { font-size: 14px; line-height: 1.6; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+th { font-weight: 600; }
+.tip { background: #e8f4fd; border-left: 3px solid #2196F3; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+.warning { background: #fff3e0; border-left: 3px solid #ff9800; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<h1>Ayuda de Civo Cloud Manager</h1>
+<p class="subtitle">Gestione su infraestructura de Civo Cloud desde su Mac.</p>
+
+<h2 id="getting-started">Primeros pasos</h2>
+<p>Civo Cloud Manager se ejecuta como una app en la barra de men&uacute;s. Tras el inicio, aparece un icono de escudo en la barra de men&uacute;s de su Mac.</p>
+<ol>
+<li>Haga clic en el icono del escudo para abrir el popover.</li>
+<li>Si es la primera vez que lo abre, el <strong>Asistente de configuraci&oacute;n</strong> se abre autom&aacute;ticamente.</li>
+<li>Introduzca su <strong>Civo API Key</strong> (enc&uacute;entrelo en civo.com &rarr; Account &rarr; Security &rarr; API Keys).</li>
+<li>Seleccione su <strong>regi&oacute;n</strong> (p. ej. fra1, lon1, nyc1).</li>
+<li>Elija qu&eacute; <strong>firewalls</strong> gestionar y configure los puertos.</li>
+<li>Opcionalmente, active <strong>Iniciar al iniciar sesi&oacute;n</strong>.</li>
+</ol>
+
+<h2 id="menu-bar">Barra de men&uacute;s</h2>
+<p>El popover de la barra de men&uacute;s proporciona gesti&oacute;n r&aacute;pida de firewalls:</p>
+<table>
+<tr><th>Icono</th><th>Significado</th></tr>
+<tr><td>Escudo (verde)</td><td>Todos los firewalls cerrados</td></tr>
+<tr><td>Escudo (amarillo)</td><td>Algunos firewalls abiertos para su IP</td></tr>
+<tr><td>Escudo (rojo)</td><td>Configuraci&oacute;n no completada</td></tr>
+</table>
+<ul>
+<li><strong>Abrir</strong> &mdash; crea una regla de firewall que permite su IP p&uacute;blica actual en el puerto configurado.</li>
+<li><strong>Cerrar</strong> &mdash; elimina la regla.</li>
+<li><strong>Abrir todos / Cerrar todos</strong> &mdash; acciones masivas para todos los firewalls gestionados.</li>
+<li><strong>Dashboard</strong> &mdash; abre la ventana de gesti&oacute;n completa.</li>
+<li><strong>Ajustes</strong> &mdash; vuelve a abrir el asistente de configuraci&oacute;n.</li>
+<li><strong>Actualizar</strong> &mdash; vuelve a verificar el estado manualmente.</li>
+</ul>
+<p class="tip">Su IP p&uacute;blica se detecta autom&aacute;ticamente a trav&eacute;s de ipify.org con proveedores de respaldo. La app solo gestiona las reglas que ella misma cre&oacute; &mdash; etiquetadas con su nombre de host.</p>
+
+<h2 id="dashboard">Dashboard</h2>
+<p>El Dashboard muestra el recuento de recursos y el uso de cuotas. Haga clic en cualquier tarjeta de recurso para navegar directamente a esa secci&oacute;n.</p>
+<h3>Indicadores de cuota</h3>
+<p>Los indicadores circulares muestran el uso frente al l&iacute;mite para todas las cuotas de la cuenta (RAM y DB RAM se muestran en GB).</p>
+<h3>Solicitar cambio de cuota</h3>
+<p>Haga clic en <strong>Solicitar cambio</strong> junto a &laquo;Uso de cuota&raquo; para abrir un formulario con steppers para todos los l&iacute;mites de cuota. Env&iacute;a una solicitud de cambio a trav&eacute;s de la Civo API.</p>
+
+<h2 id="compute">Compute</h2>
+<h3>Instancias</h3>
+<p>Ver, crear y eliminar instancias de c&oacute;mputo. Haga clic en una instancia para ver los detalles:</p>
+<ul>
+<li>Especificaciones de CPU, RAM y disco</li>
+<li>Direcciones IP p&uacute;blicas y privadas</li>
+<li>Contrase&ntilde;a root inicial (bot&oacute;n mostrar/ocultar)</li>
+<li>Tags, regi&oacute;n, fecha de creaci&oacute;n</li>
+<li>Asociaciones de red y firewall</li>
+</ul>
+<p>Para crear: haga clic en <strong>+</strong> en la barra de herramientas. Complete el hostname, tama&ntilde;o, imagen de disco, red, firewall, SSH Key y tags.</p>
+
+<h3>SSH Keys</h3>
+<p>Gestione SSH Keys para el acceso a instancias. Para a&ntilde;adir una clave: haga clic en <strong>+</strong>, introduzca un nombre y pegue su clave p&uacute;blica.</p>
+
+<h2 id="kubernetes">Kubernetes</h2>
+<h3>Clusters</h3>
+<p>Ver, crear y eliminar clusters de Kubernetes. Haga clic en un cluster para ver su vista de detalle con:</p>
+<ul>
+<li><strong>Estad&iacute;sticas</strong> &mdash; Nodes, Pools, estado de salud, aplicaciones instaladas de un vistazo.</li>
+<li><strong>Info del cluster</strong> &mdash; endpoint de API, IP maestra, DNS, plugin CNI, tama&ntilde;o de node, fecha de creaci&oacute;n.</li>
+<li><strong>Condiciones</strong> &mdash; ControlPlaneReady, WorkerNodesReady, ClusterVersionSync con indicadores de salud.</li>
+<li><strong>Node Pools</strong> &mdash; haga clic para expandir y ver ID del pool, tama&ntilde;o, n&uacute;mero de nodes, IPs p&uacute;blicas, nombres de instancia, labels y taints.</li>
+<li><strong>Labels</strong> &mdash; haga clic en <strong>Editar</strong> para a&ntilde;adir, eliminar o modificar labels de un node pool.</li>
+<li><strong>Aplicaciones instaladas</strong> &mdash; cert-manager, ingress-nginx, etc.</li>
+</ul>
+<p>Para crear: haga clic en <strong>+</strong>. Configure nombre, plugin CNI, tama&ntilde;o de node, n&uacute;mero de nodes, red y apps del marketplace.</p>
+
+<h2 id="networking">Red</h2>
+<h3>Redes</h3>
+<p>Ver y crear redes virtuales. La red predeterminada no se puede eliminar. Haga clic en <strong>+</strong> para crear una con una etiqueta y CIDR opcional.</p>
+
+<h3>Firewalls</h3>
+<p>Haga clic en un firewall para ver todas sus reglas. Cada regla muestra:</p>
+<ul>
+<li>Protocolo, rango de puertos, CIDR</li>
+<li>Direcci&oacute;n (ingress/egress) y acci&oacute;n (permitir/denegar) como badges de colores</li>
+<li>Etiqueta</li>
+</ul>
+<p>Haga clic en <strong>+</strong> en la vista de detalle de reglas para a&ntilde;adir una nueva regla. Elimine reglas mediante el men&uacute; contextual de clic derecho (requiere escribir el nombre de la regla).</p>
+
+<h3>Load Balancers</h3>
+<p>Ver detalles del load balancer incluyendo algoritmo, IPs p&uacute;blicas/privadas, pol&iacute;tica de tr&aacute;fico y lista de backends. Eliminar mediante men&uacute; contextual.</p>
+
+<h3>Dominios &amp; DNS</h3>
+<p>Expanda un dominio para ver todos los registros DNS. Cada registro muestra tipo, nombre, valor y TTL.</p>
+<ul>
+<li><strong>A&ntilde;adir registro</strong> &mdash; haga clic en el bot&oacute;n &laquo;A&ntilde;adir registro&raquo; dentro del dominio.</li>
+<li><strong>Editar registro</strong> &mdash; haga clic derecho en un registro y seleccione &laquo;Editar&raquo;.</li>
+<li><strong>Eliminar registro</strong> &mdash; haga clic derecho y seleccione &laquo;Eliminar&raquo;.</li>
+</ul>
+
+<h2 id="storage">Almacenamiento &amp; datos</h2>
+<h3>Bases de datos</h3>
+<p>Haga clic en una base de datos para ver los detalles de conexi&oacute;n (host, puerto, entrada DNS, IP privada), configuraci&oacute;n (software, versi&oacute;n, tama&ntilde;o, nodes) y asociaciones de red/firewall.</p>
+<p>Para crear: haga clic en <strong>+</strong>. Elija PostgreSQL o MySQL, versi&oacute;n, tama&ntilde;o, nodes, red y firewall.</p>
+
+<h3>Volumes</h3>
+<p>Haga clic en un volume para ver el estado de conexi&oacute;n (a qu&eacute; instancia o cluster est&aacute; conectado), punto de montaje, tama&ntilde;o, estado de arranque, regi&oacute;n y fecha de creaci&oacute;n.</p>
+<p>La lista muestra si cada volume est&aacute; &laquo;conectado a instancia&raquo;, &laquo;conectado a cluster&raquo; o &laquo;disponible&raquo;.</p>
+<p><strong>Limpiar disponibles</strong> &mdash; bot&oacute;n en la barra de herramientas para eliminar masivamente todos los volumes con estado &laquo;disponible&raquo;. Requiere escribir <code>DELETE ALL DATA</code> para confirmar.</p>
+
+<h3>Object Stores</h3>
+<p>Ver object stores con endpoint y tama&ntilde;o m&aacute;ximo. Haga clic derecho para:</p>
+<ul>
+<li><strong>Mostrar credenciales</strong> &mdash; muestra el access key ID y el secret access key (seleccionable para copiar).</li>
+<li><strong>Eliminar</strong> &mdash; elimina permanentemente el object store.</li>
+</ul>
+
+<h2 id="account">Cuenta</h2>
+<h3>Regiones</h3>
+<p>Ver todas las regiones de Civo disponibles. Haga clic en <strong>Usar</strong> para cambiar su regi&oacute;n activa. Todas las llamadas API posteriores se dirigir&aacute;n a la regi&oacute;n seleccionada.</p>
+
+<h3>Acerca de</h3>
+<p>Muestra la versi&oacute;n de la app, n&uacute;mero de build, informaci&oacute;n del desarrollador y enlaces a la Pol&iacute;tica de privacidad y los T&eacute;rminos de uso.</p>
+
+<h2 id="deleting">Eliminar recursos</h2>
+<p class="warning">Todas las operaciones de eliminaci&oacute;n requieren que escriba el nombre exacto del recurso para confirmar. Esto evita la eliminaci&oacute;n accidental de infraestructura cloud cr&iacute;tica.</p>
+<p>Para eliminar: haga clic derecho en un recurso y seleccione <strong>Eliminar</strong>. Aparece un di&aacute;logo de confirmaci&oacute;n donde debe escribir el nombre exactamente como se muestra. El bot&oacute;n de eliminar solo se activa cuando el nombre coincide.</p>
+
+<h2 id="purchase">Acceso completo</h2>
+<p>La gesti&oacute;n de firewalls en la barra de men&uacute;s es gratuita. El dashboard completo con toda la gesti&oacute;n de recursos requiere una compra &uacute;nica de <strong>Acceso completo</strong> (14,99 $).</p>
+<ul>
+<li><strong>Restaurar compra</strong> &mdash; si compr&oacute; previamente en otro dispositivo.</li>
+<li><strong>Canjear c&oacute;digo</strong> &mdash; para c&oacute;digos de oferta de Apple.</li>
+<li><strong>Compartir en familia</strong> &mdash; activado.</li>
+</ul>
+
+<h2 id="shortcuts">Consejos</h2>
+<ul>
+<li>Todos los campos de texto con IPs, endpoints y credenciales admiten <strong>selecci&oacute;n de texto</strong> para copiar f&aacute;cilmente.</li>
+<li>La app actualiza autom&aacute;ticamente el estado del firewall cada 60 segundos.</li>
+<li>Las tarjetas de recursos del dashboard son clicables &mdash; navegue a cualquier secci&oacute;n con un clic.</li>
+<li>Las reglas de firewall creadas por esta app est&aacute;n etiquetadas como <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> y solo se gestionan las reglas de esta app.</li>
+</ul>
+
+</body>
+</html>

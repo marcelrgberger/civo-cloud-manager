@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="anchors">
+<title>Pomoc Civo Cloud Manager</title>
+<style>
+body { font-family: -apple-system, Helvetica Neue, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; color: #333; }
+h1 { font-size: 28px; margin-bottom: 4px; }
+h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+h3 { font-size: 16px; margin-top: 20px; }
+p, li { font-size: 14px; line-height: 1.6; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+th { font-weight: 600; }
+.tip { background: #e8f4fd; border-left: 3px solid #2196F3; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+.warning { background: #fff3e0; border-left: 3px solid #ff9800; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<h1>Pomoc Civo Cloud Manager</h1>
+<p class="subtitle">Zarz&#x105;dzaj infrastruktur&#x105; Civo Cloud ze swojego Maca.</p>
+
+<h2 id="getting-started">Pierwsze kroki</h2>
+<p>Civo Cloud Manager dzia&#x142;a jako aplikacja w pasku menu. Po uruchomieniu w pasku menu Maca pojawia si&#x119; ikona tarczy.</p>
+<ol>
+<li>Kliknij ikon&#x119; tarczy, aby otworzy&#x107; popover.</li>
+<li>Przy pierwszym uruchomieniu <strong>Kreator konfiguracji</strong> otwiera si&#x119; automatycznie.</li>
+<li>Wprowad&#x17A; sw&oacute;j <strong>Civo API Key</strong> (znajdziesz go na civo.com &rarr; Account &rarr; Security &rarr; API Keys).</li>
+<li>Wybierz sw&oacute;j <strong>region</strong> (np. fra1, lon1, nyc1).</li>
+<li>Wybierz, kt&oacute;re <strong>firewalle</strong> chcesz zarz&#x105;dza&#x107; i ustaw porty.</li>
+<li>Opcjonalnie w&#x142;&#x105;cz <strong>Uruchamianie przy logowaniu</strong>.</li>
+</ol>
+
+<h2 id="menu-bar">Pasek menu</h2>
+<p>Popover paska menu zapewnia szybki dost&#x119;p do zarz&#x105;dzania firewallami:</p>
+<table>
+<tr><th>Ikona</th><th>Znaczenie</th></tr>
+<tr><td>Tarcza (zielona)</td><td>Wszystkie firewalle zamkni&#x119;te</td></tr>
+<tr><td>Tarcza (&zdot;&oacute;&#x142;ta)</td><td>Niekt&oacute;re firewalle otwarte dla Twojego IP</td></tr>
+<tr><td>Tarcza (czerwona)</td><td>Konfiguracja niezako&#x144;czona</td></tr>
+</table>
+<ul>
+<li><strong>Otw&oacute;rz</strong> &mdash; tworzy regu&#x142;&#x119; firewalla zezwalaj&#x105;c&#x105; na Tw&oacute;j aktualny publiczny IP na skonfigurowanym porcie.</li>
+<li><strong>Zamknij</strong> &mdash; usuwa regu&#x142;&#x119;.</li>
+<li><strong>Otw&oacute;rz wszystkie / Zamknij wszystkie</strong> &mdash; akcje masowe dla wszystkich zarz&#x105;dzanych firewalli.</li>
+<li><strong>Dashboard</strong> &mdash; otwiera pe&#x142;ne okno zarz&#x105;dzania.</li>
+<li><strong>Ustawienia</strong> &mdash; ponownie otwiera kreator konfiguracji.</li>
+<li><strong>Od&#x15B;wie&#x17C;</strong> &mdash; r&#x119;cznie sprawdza status ponownie.</li>
+</ul>
+<p class="tip">Tw&oacute;j publiczny IP jest automatycznie wykrywany przez ipify.org z zapasowymi dostawcami. Aplikacja zarz&#x105;dza tylko regu&#x142;ami, kt&oacute;re sama utworzy&#x142;a &mdash; oznaczonymi Twoj&#x105; nazw&#x105; hosta.</p>
+
+<h2 id="dashboard">Dashboard</h2>
+<p>Dashboard pokazuje liczb&#x119; zasob&oacute;w i wykorzystanie limit&oacute;w. Kliknij dowoln&#x105; kart&#x119; zasobu, aby przej&#x15B;&#x107; bezpo&#x15B;rednio do tej sekcji.</p>
+<h3>Wska&#x17A;niki limit&oacute;w</h3>
+<p>Okr&#x105;g&#x142;e wska&#x17A;niki pokazuj&#x105; wykorzystanie w stosunku do limitu dla wszystkich limit&oacute;w konta (RAM i DB RAM wy&#x15B;wietlane w GB).</p>
+<h3>Pro&#x15B;ba o zmian&#x119; limitu</h3>
+<p>Kliknij <strong>Pro&#x15B;ba o zmian&#x119;</strong> obok &bdquo;Wykorzystanie limit&oacute;w&rdquo;, aby otworzy&#x107; formularz ze stepperami dla wszystkich limit&oacute;w. Wysy&#x142;a pro&#x15B;b&#x119; o zmian&#x119; przez Civo API.</p>
+
+<h2 id="compute">Compute</h2>
+<h3>Instancje</h3>
+<p>Przegl&#x105;daj, tworzaj i usuwaj instancje obliczeniowe. Kliknij instancj&#x119;, aby zobaczy&#x107; szczeg&oacute;&#x142;y:</p>
+<ul>
+<li>Specyfikacje CPU, RAM i dysku</li>
+<li>Publiczne i prywatne adresy IP</li>
+<li>Pocz&#x105;tkowe has&#x142;o root (prze&#x142;&#x105;cznik poka&#x17C;/ukryj)</li>
+<li>Tagi, region, data utworzenia</li>
+<li>Powi&#x105;zania sieciowe i firewallowe</li>
+</ul>
+<p>Aby utworzy&#x107;: kliknij <strong>+</strong> na pasku narz&#x119;dzi. Wype&#x142;nij nazw&#x119; hosta, rozmiar, obraz dysku, sie&#x107;, firewall, SSH Key i tagi.</p>
+
+<h3>SSH Keys</h3>
+<p>Zarz&#x105;dzaj SSH Keys do dost&#x119;pu do instancji. Aby doda&#x107; klucz: kliknij <strong>+</strong>, wprowad&#x17A; nazw&#x119; i wklej sw&oacute;j klucz publiczny.</p>
+
+<h2 id="kubernetes">Kubernetes</h2>
+<h3>Klastry</h3>
+<p>Przegl&#x105;daj, tworzaj i usuwaj klastry Kubernetes. Kliknij klaster, aby zobaczy&#x107; widok szczeg&oacute;&#x142;owy z:</p>
+<ul>
+<li><strong>Statystyki</strong> &mdash; Nodes, Pools, stan zdrowia, zainstalowane aplikacje w jednym widoku.</li>
+<li><strong>Info o klastrze</strong> &mdash; endpoint API, IP mastera, DNS, plugin CNI, rozmiar node, data utworzenia.</li>
+<li><strong>Warunki</strong> &mdash; ControlPlaneReady, WorkerNodesReady, ClusterVersionSync ze wska&#x17A;nikami zdrowia.</li>
+<li><strong>Node Pools</strong> &mdash; kliknij, aby rozwin&#x105;&#x107; i zobaczy&#x107; ID puli, rozmiar, liczb&#x119; node'&oacute;w, publiczne IP, nazwy instancji, labels i taints.</li>
+<li><strong>Labels</strong> &mdash; kliknij <strong>Edytuj</strong>, aby dodawa&#x107;, usuwa&#x107; lub modyfikowa&#x107; labels w node pool.</li>
+<li><strong>Zainstalowane aplikacje</strong> &mdash; cert-manager, ingress-nginx itp.</li>
+</ul>
+<p>Aby utworzy&#x107;: kliknij <strong>+</strong>. Skonfiguruj nazw&#x119;, plugin CNI, rozmiar node, liczb&#x119; node'&oacute;w, sie&#x107; i aplikacje z marketplace.</p>
+
+<h2 id="networking">Sie&#x107;</h2>
+<h3>Sieci</h3>
+<p>Przegl&#x105;daj i tworzaj sieci wirtualne. Domy&#x15B;lna sie&#x107; nie mo&#x17C;e by&#x107; usuni&#x119;ta. Kliknij <strong>+</strong>, aby utworzy&#x107; sie&#x107; z etykiet&#x105; i opcjonalnym CIDR.</p>
+
+<h3>Firewalle</h3>
+<p>Kliknij firewall, aby zobaczy&#x107; wszystkie jego regu&#x142;y. Ka&#x17C;da regu&#x142;a pokazuje:</p>
+<ul>
+<li>Protok&oacute;&#x142;, zakres port&oacute;w, CIDR</li>
+<li>Kierunek (ingress/egress) i akcja (zezw&oacute;l/odmowa) jako kolorowe badge</li>
+<li>Etykieta</li>
+</ul>
+<p>Kliknij <strong>+</strong> w widoku szczeg&oacute;&#x142;&oacute;w regu&#x142;, aby doda&#x107; now&#x105; regu&#x142;&#x119;. Usuwaj regu&#x142;y przez menu kontekstowe (prawym przyciskiem, wymaga wpisania nazwy regu&#x142;y).</p>
+
+<h3>Load Balancery</h3>
+<p>Przegl&#x105;daj szczeg&oacute;&#x142;y load balancera, w tym algorytm, publiczne/prywatne IP, polityk&#x119; ruchu i list&#x119; backend&oacute;w. Usuwanie przez menu kontekstowe.</p>
+
+<h3>Domeny &amp; DNS</h3>
+<p>Rozwi&#x144; domen&#x119;, aby zobaczy&#x107; wszystkie rekordy DNS. Ka&#x17C;dy rekord pokazuje typ, nazw&#x119;, warto&#x15B;&#x107; i TTL.</p>
+<ul>
+<li><strong>Dodaj rekord</strong> &mdash; kliknij przycisk &bdquo;Dodaj rekord&rdquo; wewn&#x105;trz domeny.</li>
+<li><strong>Edytuj rekord</strong> &mdash; kliknij prawym przyciskiem na rekordzie i wybierz &bdquo;Edytuj&rdquo;.</li>
+<li><strong>Usu&#x144; rekord</strong> &mdash; kliknij prawym przyciskiem i wybierz &bdquo;Usu&#x144;&rdquo;.</li>
+</ul>
+
+<h2 id="storage">Magazyn &amp; dane</h2>
+<h3>Bazy danych</h3>
+<p>Kliknij baz&#x119; danych, aby zobaczy&#x107; szczeg&oacute;&#x142;y po&#x142;&#x105;czenia (host, port, wpis DNS, prywatne IP), konfiguracj&#x119; (oprogramowanie, wersja, rozmiar, nodes) oraz powi&#x105;zania sieciowe/firewallowe.</p>
+<p>Aby utworzy&#x107;: kliknij <strong>+</strong>. Wybierz PostgreSQL lub MySQL, wersj&#x119;, rozmiar, nodes, sie&#x107; i firewall.</p>
+
+<h3>Wolumeny</h3>
+<p>Kliknij wolumen, aby zobaczy&#x107; status pod&#x142;&#x105;czenia (do kt&oacute;rej instancji lub klastra jest pod&#x142;&#x105;czony), punkt montowania, rozmiar, status rozruchowy, region i dat&#x119; utworzenia.</p>
+<p>Lista pokazuje, czy ka&#x17C;dy wolumen jest &bdquo;pod&#x142;&#x105;czony do instancji&rdquo;, &bdquo;pod&#x142;&#x105;czony do klastra&rdquo; lub &bdquo;dost&#x119;pny&rdquo;.</p>
+<p><strong>Wyczy&#x15B;&#x107; dost&#x119;pne</strong> &mdash; przycisk na pasku narz&#x119;dzi do masowego usuwania wszystkich wolumen&oacute;w ze statusem &bdquo;dost&#x119;pny&rdquo;. Wymaga wpisania <code>DELETE ALL DATA</code> w celu potwierdzenia.</p>
+
+<h3>Object Stores</h3>
+<p>Przegl&#x105;daj object stores z endpointem i maksymalnym rozmiarem. Kliknij prawym przyciskiem, aby:</p>
+<ul>
+<li><strong>Poka&#x17C; dane uwierzytelniaj&#x105;ce</strong> &mdash; wy&#x15B;wietla access key ID i secret access key (mo&#x17C;na zaznaczy&#x107; do skopiowania).</li>
+<li><strong>Usu&#x144;</strong> &mdash; trwale usuwa object store.</li>
+</ul>
+
+<h2 id="account">Konto</h2>
+<h3>Regiony</h3>
+<p>Przegl&#x105;daj wszystkie dost&#x119;pne regiony Civo. Kliknij <strong>U&#x17C;yj</strong>, aby zmieni&#x107; aktywny region. Wszystkie kolejne wywo&#x142;ania API b&#x119;d&#x105; kierowane do wybranego regionu.</p>
+
+<h3>O aplikacji</h3>
+<p>Pokazuje wersj&#x119; aplikacji, numer buildu, informacje o deweloperze oraz linki do Polityki prywatno&#x15B;ci i Warunk&oacute;w u&#x17C;ytkowania.</p>
+
+<h2 id="deleting">Usuwanie zasob&oacute;w</h2>
+<p class="warning">Wszystkie operacje usuwania wymagaj&#x105; wpisania dok&#x142;adnej nazwy zasobu w celu potwierdzenia. Zapobiega to przypadkowemu usuni&#x119;ciu krytycznej infrastruktury chmurowej.</p>
+<p>Aby usun&#x105;&#x107;: kliknij prawym przyciskiem na zasobie i wybierz <strong>Usu&#x144;</strong>. Pojawia si&#x119; okno potwierdzenia, w kt&oacute;rym musisz wpisa&#x107; nazw&#x119; dok&#x142;adnie tak, jak jest wy&#x15B;wietlana. Przycisk usuwania staje si&#x119; aktywny dopiero po dopasowaniu nazwy.</p>
+
+<h2 id="purchase">Pe&#x142;ny dost&#x119;p</h2>
+<p>Zarz&#x105;dzanie firewallami w pasku menu jest bezp&#x142;atne. Pe&#x142;ny dashboard z ca&#x142;ym zarz&#x105;dzaniem zasobami wymaga jednorazowego zakupu <strong>Pe&#x142;nego dost&#x119;pu</strong> (14,99 $).</p>
+<ul>
+<li><strong>Przywr&oacute;&#x107; zakup</strong> &mdash; je&#x15B;li wcze&#x15B;niej kupiono na innym urz&#x105;dzeniu.</li>
+<li><strong>Zrealizuj kod</strong> &mdash; dla kod&oacute;w promocyjnych Apple.</li>
+<li><strong>Udost&#x119;pnianie rodzinne</strong> &mdash; w&#x142;&#x105;czone.</li>
+</ul>
+
+<h2 id="shortcuts">Wskaz&oacute;wki</h2>
+<ul>
+<li>Wszystkie pola tekstowe z adresami IP, endpointami i danymi uwierzytelniaj&#x105;cymi obs&#x142;uguj&#x105; <strong>zaznaczanie tekstu</strong> do &#x142;atwego kopiowania.</li>
+<li>Aplikacja automatycznie od&#x15B;wie&#x17C;a status firewalla co 60 sekund.</li>
+<li>Karty zasob&oacute;w na dashboardzie s&#x105; klikalne &mdash; przejd&#x17A; do dowolnej sekcji jednym klikni&#x119;ciem.</li>
+<li>Regu&#x142;y firewalla utworzone przez t&#x119; aplikacj&#x119; s&#x105; oznaczone jako <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> i tylko regu&#x142;y tej aplikacji s&#x105; zarz&#x105;dzane.</li>
+</ul>
+
+</body>
+</html>

@@ -6,6 +6,7 @@ struct ClusterDetailView: View {
     let onBack: () -> Void
     @State private var showDeleteConfirmation = false
     @State private var appeared = false
+    @State private var editingLabelsPool: CivoNodePool?
 
     private var totalNodes: Int {
         cluster.pools?.reduce(0) { $0 + ($1.count ?? 0) } ?? cluster.numTargetNodes ?? 0
@@ -48,6 +49,19 @@ struct ClusterDetailView: View {
                 Button("Delete", systemImage: "trash", role: .destructive) {
                     showDeleteConfirmation = true
                 }
+            }
+        }
+        .sheet(isPresented: Binding(get: { editingLabelsPool != nil }, set: { if !$0 { editingLabelsPool = nil } })) {
+            if let pool = editingLabelsPool {
+                EditLabelsView(
+                    clusterId: cluster.id,
+                    poolId: pool.id,
+                    initialLabels: pool.labels ?? [:],
+                    vm: vm
+                ) {
+                    editingLabelsPool = nil
+                }
+                .frame(minWidth: 500, minHeight: 300)
             }
         }
         .sheet(isPresented: $showDeleteConfirmation) {
@@ -242,11 +256,21 @@ struct ClusterDetailView: View {
                 }
             }
 
-            if let labels = pool.labels, !labels.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
                     Text("Labels")
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
+                    Spacer()
+                    Button {
+                        editingLabelsPool = pool
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                            .font(.caption)
+                    }
+                    .buttonStyle(.borderless)
+                }
+                if let labels = pool.labels, !labels.isEmpty {
                     ForEach(Array(labels.sorted(by: { $0.key < $1.key })), id: \.key) { key, value in
                         Text("\(key)=\(value)")
                             .font(.caption2.monospaced())
@@ -255,6 +279,10 @@ struct ClusterDetailView: View {
                             .background(.blue.opacity(0.1))
                             .clipShape(Capsule())
                     }
+                } else {
+                    Text("No labels")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
                 }
             }
 

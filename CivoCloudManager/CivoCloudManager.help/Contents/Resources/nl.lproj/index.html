@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="anchors">
+<title>Civo Cloud Manager Help</title>
+<style>
+body { font-family: -apple-system, Helvetica Neue, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; color: #333; }
+h1 { font-size: 28px; margin-bottom: 4px; }
+h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+h3 { font-size: 16px; margin-top: 20px; }
+p, li { font-size: 14px; line-height: 1.6; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+th { font-weight: 600; }
+.tip { background: #e8f4fd; border-left: 3px solid #2196F3; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+.warning { background: #fff3e0; border-left: 3px solid #ff9800; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<h1>Civo Cloud Manager Help</h1>
+<p class="subtitle">Beheer uw Civo Cloud-infrastructuur vanaf uw Mac.</p>
+
+<h2 id="getting-started">Aan de slag</h2>
+<p>Civo Cloud Manager draait als een menubalk-app. Na het starten verschijnt een schildpictogram in de menubalk van uw Mac.</p>
+<ol>
+<li>Klik op het schildpictogram om de popover te openen.</li>
+<li>Bij de eerste keer starten opent de <strong>Configuratieassistent</strong> automatisch.</li>
+<li>Voer uw <strong>Civo API Key</strong> in (te vinden op civo.com &rarr; Account &rarr; Security &rarr; API Keys).</li>
+<li>Selecteer uw <strong>regio</strong> (bijv. fra1, lon1, nyc1).</li>
+<li>Kies welke <strong>firewalls</strong> u wilt beheren en stel poorten in.</li>
+<li>Schakel optioneel <strong>Starten bij inloggen</strong> in.</li>
+</ol>
+
+<h2 id="menu-bar">Menubalk</h2>
+<p>De menubalk-popover biedt snel toegang tot firewallbeheer:</p>
+<table>
+<tr><th>Pictogram</th><th>Betekenis</th></tr>
+<tr><td>Schild (groen)</td><td>Alle firewalls gesloten</td></tr>
+<tr><td>Schild (geel)</td><td>Sommige firewalls open voor uw IP</td></tr>
+<tr><td>Schild (rood)</td><td>Configuratie niet voltooid</td></tr>
+</table>
+<ul>
+<li><strong>Openen</strong> &mdash; maakt een firewallregel aan die uw huidige openbare IP toestaat op de geconfigureerde poort.</li>
+<li><strong>Sluiten</strong> &mdash; verwijdert de regel.</li>
+<li><strong>Alles openen / Alles sluiten</strong> &mdash; bulkacties voor alle beheerde firewalls.</li>
+<li><strong>Dashboard</strong> &mdash; opent het volledige beheervenster.</li>
+<li><strong>Instellingen</strong> &mdash; opent de configuratieassistent opnieuw.</li>
+<li><strong>Vernieuwen</strong> &mdash; controleert de status handmatig.</li>
+</ul>
+<p class="tip">Uw openbare IP wordt automatisch gedetecteerd via ipify.org met fallback-providers. De app beheert alleen regels die hij zelf heeft aangemaakt &mdash; gelabeld met uw hostnaam.</p>
+
+<h2 id="dashboard">Dashboard</h2>
+<p>Het Dashboard toont het aantal resources en quotumgebruik. Klik op een resourcekaart om direct naar die sectie te navigeren.</p>
+<h3>Quotummeters</h3>
+<p>Cirkelvormige meters tonen het gebruik ten opzichte van de limiet voor alle accountquota (RAM en DB RAM weergegeven in GB).</p>
+<h3>Quotumwijziging aanvragen</h3>
+<p>Klik op <strong>Wijziging aanvragen</strong> naast &ldquo;Quotumgebruik&rdquo; om een formulier te openen met steppers voor alle quotumlimieten. Dient een wijzigingsverzoek in via de Civo API.</p>
+
+<h2 id="compute">Compute</h2>
+<h3>Instanties</h3>
+<p>Bekijk, maak en verwijder compute-instanties. Klik op een instantie om details te zien:</p>
+<ul>
+<li>CPU-, RAM- en schijfspecificaties</li>
+<li>Openbare en priv&eacute;-IP-adressen</li>
+<li>Initi&euml;el root-wachtwoord (toon/verberg-schakelaar)</li>
+<li>Tags, regio, aanmaakdatum</li>
+<li>Netwerk- en firewallassociaties</li>
+</ul>
+<p>Om te maken: klik op <strong>+</strong> in de werkbalk. Vul hostnaam, grootte, schijfimage, netwerk, firewall, SSH Key en tags in.</p>
+
+<h3>SSH Keys</h3>
+<p>Beheer SSH Keys voor toegang tot instanties. Om een sleutel toe te voegen: klik op <strong>+</strong>, voer een naam in en plak uw openbare sleutel.</p>
+
+<h2 id="kubernetes">Kubernetes</h2>
+<h3>Clusters</h3>
+<p>Bekijk, maak en verwijder Kubernetes-clusters. Klik op een cluster om de detailweergave te zien met:</p>
+<ul>
+<li><strong>Statistieken</strong> &mdash; Nodes, Pools, gezondheidsstatus, ge&iuml;nstalleerde apps in &eacute;&eacute;n oogopslag.</li>
+<li><strong>Clusterinfo</strong> &mdash; API-endpoint, master-IP, DNS, CNI-plugin, node-grootte, aanmaakdatum.</li>
+<li><strong>Condities</strong> &mdash; ControlPlaneReady, WorkerNodesReady, ClusterVersionSync met gezondheidsindicatoren.</li>
+<li><strong>Node Pools</strong> &mdash; klik om uit te vouwen en pool-ID, grootte, aantal nodes, openbare IP's, instantienamen, labels en taints te zien.</li>
+<li><strong>Labels</strong> &mdash; klik op <strong>Bewerken</strong> om labels van een node pool toe te voegen, te verwijderen of te wijzigen.</li>
+<li><strong>Ge&iuml;nstalleerde applicaties</strong> &mdash; cert-manager, ingress-nginx, enz.</li>
+</ul>
+<p>Om te maken: klik op <strong>+</strong>. Configureer naam, CNI-plugin, node-grootte, aantal nodes, netwerk en marketplace-apps.</p>
+
+<h2 id="networking">Netwerk</h2>
+<h3>Netwerken</h3>
+<p>Bekijk en maak virtuele netwerken. Het standaardnetwerk kan niet worden verwijderd. Klik op <strong>+</strong> om er een te maken met een label en optioneel CIDR.</p>
+
+<h3>Firewalls</h3>
+<p>Klik op een firewall om alle regels te zien. Elke regel toont:</p>
+<ul>
+<li>Protocol, poortbereik, CIDR</li>
+<li>Richting (ingress/egress) en actie (toestaan/weigeren) als gekleurde badges</li>
+<li>Label</li>
+</ul>
+<p>Klik op <strong>+</strong> in de regeldetailweergave om een nieuwe regel toe te voegen. Verwijder regels via het contextmenu (rechtsklik, vereist het typen van de regelnaam).</p>
+
+<h3>Load Balancers</h3>
+<p>Bekijk load balancer-details inclusief algoritme, openbare/priv&eacute;-IP's, verkeersbeleid en backendlijst. Verwijderen via contextmenu.</p>
+
+<h3>Domeinen &amp; DNS</h3>
+<p>Vouw een domein uit om alle DNS-records te zien. Elk record toont type, naam, waarde en TTL.</p>
+<ul>
+<li><strong>Record toevoegen</strong> &mdash; klik op de knop &ldquo;Record toevoegen&rdquo; binnen het domein.</li>
+<li><strong>Record bewerken</strong> &mdash; klik rechts op een record en selecteer &ldquo;Bewerken&rdquo;.</li>
+<li><strong>Record verwijderen</strong> &mdash; klik rechts en selecteer &ldquo;Verwijderen&rdquo;.</li>
+</ul>
+
+<h2 id="storage">Opslag &amp; gegevens</h2>
+<h3>Databases</h3>
+<p>Klik op een database om verbindingsdetails te zien (host, poort, DNS-vermelding, priv&eacute;-IP), configuratie (software, versie, grootte, nodes) en netwerk-/firewallassociaties.</p>
+<p>Om te maken: klik op <strong>+</strong>. Kies PostgreSQL of MySQL, versie, grootte, nodes, netwerk en firewall.</p>
+
+<h3>Volumes</h3>
+<p>Klik op een volume om de koppelingsstatus te zien (aan welke instantie of cluster het is gekoppeld), mountpoint, grootte, opstartstatus, regio en aanmaakdatum.</p>
+<p>De lijst toont of elk volume &ldquo;gekoppeld aan instantie&rdquo;, &ldquo;gekoppeld aan cluster&rdquo; of &ldquo;beschikbaar&rdquo; is.</p>
+<p><strong>Beschikbare opruimen</strong> &mdash; werkbalkknop om alle volumes met de status &ldquo;beschikbaar&rdquo; in bulk te verwijderen. Vereist het typen van <code>DELETE ALL DATA</code> om te bevestigen.</p>
+
+<h3>Object Stores</h3>
+<p>Bekijk object stores met endpoint en maximale grootte. Klik rechts voor:</p>
+<ul>
+<li><strong>Referenties tonen</strong> &mdash; toont access key ID en secret access key (selecteerbaar om te kopi&euml;ren).</li>
+<li><strong>Verwijderen</strong> &mdash; verwijdert de object store permanent.</li>
+</ul>
+
+<h2 id="account">Account</h2>
+<h3>Regio's</h3>
+<p>Bekijk alle beschikbare Civo-regio's. Klik op <strong>Gebruiken</strong> om uw actieve regio te wijzigen. Alle volgende API-aanroepen worden gericht op de geselecteerde regio.</p>
+
+<h3>Over</h3>
+<p>Toont de app-versie, buildnummer, ontwikkelaarsinformatie en links naar het Privacybeleid en de Gebruiksvoorwaarden.</p>
+
+<h2 id="deleting">Resources verwijderen</h2>
+<p class="warning">Alle verwijderingsacties vereisen dat u de exacte resourcenaam typt ter bevestiging. Dit voorkomt het per ongeluk verwijderen van kritieke cloudinfrastructuur.</p>
+<p>Om te verwijderen: klik rechts op een resource en selecteer <strong>Verwijderen</strong>. Er verschijnt een bevestigingsvenster waarin u de naam exact moet typen zoals weergegeven. De verwijderknop wordt pas actief wanneer de naam overeenkomt.</p>
+
+<h2 id="purchase">Volledige toegang</h2>
+<p>Het firewallbeheer via de menubalk is gratis. Het volledige dashboard met al het resourcebeheer vereist een eenmalige aankoop van <strong>Volledige toegang</strong> ($ 14,99).</p>
+<ul>
+<li><strong>Aankoop herstellen</strong> &mdash; als u eerder op een ander apparaat hebt gekocht.</li>
+<li><strong>Code inwisselen</strong> &mdash; voor Apple-aanbiedingscodes.</li>
+<li><strong>Gezinsdeling</strong> &mdash; ingeschakeld.</li>
+</ul>
+
+<h2 id="shortcuts">Tips</h2>
+<ul>
+<li>Alle tekstvelden met IP's, endpoints en referenties ondersteunen <strong>tekstselectie</strong> voor eenvoudig kopi&euml;ren.</li>
+<li>De app vernieuwt de firewallstatus automatisch elke 60 seconden.</li>
+<li>Dashboard-resourcekaarten zijn klikbaar &mdash; navigeer met &eacute;&eacute;n klik naar elke sectie.</li>
+<li>Firewallregels die door deze app zijn aangemaakt, zijn gelabeld als <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> en alleen de regels van deze app worden beheerd.</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="anchors">
+<title>Civo Cloud Manager Help</title>
+<style>
+body { font-family: -apple-system, Helvetica Neue, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; color: #333; }
+h1 { font-size: 28px; margin-bottom: 4px; }
+h2 { font-size: 20px; margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+h3 { font-size: 16px; margin-top: 20px; }
+p, li { font-size: 14px; line-height: 1.6; }
+code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 20px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; }
+th { font-weight: 600; }
+.tip { background: #e8f4fd; border-left: 3px solid #2196F3; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+.warning { background: #fff3e0; border-left: 3px solid #ff9800; padding: 10px 14px; margin: 12px 0; border-radius: 4px; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<h1>Civo Cloud Manager Help</h1>
+<p class="subtitle">Manage your Civo Cloud infrastructure from your Mac.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+<p>Civo Cloud Manager runs as a menu bar app. After launching, a shield icon appears in your Mac's menu bar.</p>
+<ol>
+<li>Click the shield icon to open the popover.</li>
+<li>If this is your first launch, the <strong>Setup Wizard</strong> opens automatically.</li>
+<li>Enter your <strong>Civo API Key</strong> (find it at civo.com &rarr; Account &rarr; Security &rarr; API Keys).</li>
+<li>Select your <strong>region</strong> (e.g. fra1, lon1, nyc1).</li>
+<li>Choose which <strong>firewalls</strong> to manage and set ports.</li>
+<li>Optionally enable <strong>Launch at Login</strong>.</li>
+</ol>
+
+<h2 id="menu-bar">Menu Bar</h2>
+<p>The menu bar popover provides quick-access firewall management:</p>
+<table>
+<tr><th>Icon</th><th>Meaning</th></tr>
+<tr><td>Shield (green)</td><td>All firewalls closed</td></tr>
+<tr><td>Shield (yellow)</td><td>Some firewalls open for your IP</td></tr>
+<tr><td>Shield (red)</td><td>Setup not complete</td></tr>
+</table>
+<ul>
+<li><strong>Open</strong> &mdash; creates a firewall rule allowing your current public IP on the configured port.</li>
+<li><strong>Close</strong> &mdash; removes the rule.</li>
+<li><strong>Open All / Close All</strong> &mdash; bulk actions for all managed firewalls.</li>
+<li><strong>Dashboard</strong> &mdash; opens the full management window.</li>
+<li><strong>Settings</strong> &mdash; re-opens the setup wizard.</li>
+<li><strong>Refresh</strong> &mdash; manually re-checks status.</li>
+</ul>
+<p class="tip">Your public IP is auto-detected via ipify.org with fallback providers. The app only manages rules it created &mdash; labeled with your hostname.</p>
+
+<h2 id="dashboard">Dashboard</h2>
+<p>The Dashboard shows resource counts and quota usage. Click any resource card to navigate directly to that section.</p>
+<h3>Quota Gauges</h3>
+<p>Circular gauges show usage vs. limit for all account quotas (RAM and DB RAM displayed in GB).</p>
+<h3>Request Quota Change</h3>
+<p>Click <strong>Request Change</strong> next to "Quota Usage" to open a form with steppers for all quota limits. Submits a change request via the Civo API.</p>
+
+<h2 id="compute">Compute</h2>
+<h3>Instances</h3>
+<p>View, create, and delete compute instances. Click an instance to see details:</p>
+<ul>
+<li>CPU, RAM, and Disk specifications</li>
+<li>Public and private IP addresses</li>
+<li>Initial root password (show/hide toggle)</li>
+<li>Tags, region, creation date</li>
+<li>Network and firewall associations</li>
+</ul>
+<p>To create: click <strong>+</strong> in the toolbar. Fill in hostname, size, disk image, network, firewall, SSH key, and tags.</p>
+
+<h3>SSH Keys</h3>
+<p>Manage SSH keys for instance access. To add a key: click <strong>+</strong>, enter a name, and paste your public key.</p>
+
+<h2 id="kubernetes">Kubernetes</h2>
+<h3>Clusters</h3>
+<p>View, create, and delete Kubernetes clusters. Click a cluster to see its detail view with:</p>
+<ul>
+<li><strong>Stats</strong> &mdash; Nodes, Pools, Health status, installed Apps at a glance.</li>
+<li><strong>Cluster Info</strong> &mdash; API endpoint, master IP, DNS, CNI plugin, node size, creation date.</li>
+<li><strong>Conditions</strong> &mdash; ControlPlaneReady, WorkerNodesReady, ClusterVersionSync with health indicators.</li>
+<li><strong>Node Pools</strong> &mdash; click to expand and see pool ID, size, node count, public IPs, instance names, labels, and taints.</li>
+<li><strong>Labels</strong> &mdash; click <strong>Edit</strong> to add, remove, or modify labels on a node pool.</li>
+<li><strong>Installed Applications</strong> &mdash; cert-manager, ingress-nginx, etc.</li>
+</ul>
+<p>To create: click <strong>+</strong>. Configure name, CNI plugin, node size, node count, network, and marketplace apps.</p>
+
+<h2 id="networking">Networking</h2>
+<h3>Networks</h3>
+<p>View and create virtual networks. The default network cannot be deleted. Click <strong>+</strong> to create with a label and optional CIDR.</p>
+
+<h3>Firewalls</h3>
+<p>Click a firewall to see all its rules. Each rule shows:</p>
+<ul>
+<li>Protocol, port range, CIDR</li>
+<li>Direction (ingress/egress) and action (allow/deny) as colored badges</li>
+<li>Label</li>
+</ul>
+<p>Click <strong>+</strong> in the rule detail view to add a new rule. Delete rules via right-click context menu (requires typing the rule name).</p>
+
+<h3>Load Balancers</h3>
+<p>View load balancer details including algorithm, public/private IPs, traffic policy, and backend list. Delete via context menu.</p>
+
+<h3>Domains &amp; DNS</h3>
+<p>Expand a domain to see all DNS records. Each record shows type, name, value, and TTL.</p>
+<ul>
+<li><strong>Add Record</strong> &mdash; click the "Add Record" button inside the domain.</li>
+<li><strong>Edit Record</strong> &mdash; right-click a record and select "Edit".</li>
+<li><strong>Delete Record</strong> &mdash; right-click and select "Delete".</li>
+</ul>
+
+<h2 id="storage">Storage &amp; Data</h2>
+<h3>Databases</h3>
+<p>Click a database to see connection details (host, port, DNS entry, private IP), configuration (software, version, size, nodes), and network/firewall associations.</p>
+<p>To create: click <strong>+</strong>. Choose PostgreSQL or MySQL, version, size, nodes, network, and firewall.</p>
+
+<h3>Volumes</h3>
+<p>Click a volume to see attachment status (which instance or cluster it's attached to), mountpoint, size, bootable status, region, and creation date.</p>
+<p>The list shows whether each volume is "attached to instance", "attached to cluster", or "available".</p>
+<p><strong>Cleanup Available</strong> &mdash; toolbar button to bulk-delete all volumes with status "available". Requires typing <code>DELETE ALL DATA</code> to confirm.</p>
+
+<h3>Object Stores</h3>
+<p>View object stores with endpoint and max size. Right-click to:</p>
+<ul>
+<li><strong>Show Credentials</strong> &mdash; displays access key ID and secret access key (selectable for copying).</li>
+<li><strong>Delete</strong> &mdash; permanently removes the object store.</li>
+</ul>
+
+<h2 id="account">Account</h2>
+<h3>Regions</h3>
+<p>View all available Civo regions. Click <strong>Use</strong> to switch your active region. All subsequent API calls will target the selected region.</p>
+
+<h3>About</h3>
+<p>Shows the app version, build number, developer information, and links to Privacy Policy and Terms of Use.</p>
+
+<h2 id="deleting">Deleting Resources</h2>
+<p class="warning">All delete operations require you to type the exact resource name to confirm. This prevents accidental deletion of critical cloud infrastructure.</p>
+<p>To delete: right-click a resource and select <strong>Delete</strong>. A confirmation sheet appears where you must type the name exactly as shown. The delete button only becomes active when the name matches.</p>
+
+<h2 id="purchase">Full Access</h2>
+<p>The menu bar firewall management is free. The full dashboard with all resource management requires a one-time purchase of <strong>Full Access</strong> ($14.99).</p>
+<ul>
+<li><strong>Restore Purchase</strong> &mdash; if you previously purchased on another device.</li>
+<li><strong>Redeem Code</strong> &mdash; for Apple offer codes.</li>
+<li><strong>Family Sharing</strong> &mdash; enabled.</li>
+</ul>
+
+<h2 id="shortcuts">Tips</h2>
+<ul>
+<li>All text fields with IPs, endpoints, and credentials support <strong>text selection</strong> for easy copying.</li>
+<li>The app auto-refreshes firewall status every 60 seconds.</li>
+<li>Dashboard resource cards are clickable &mdash; navigate to any section with one click.</li>
+<li>Firewall rules created by this app are labeled <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> and only this app's rules are managed.</li>
+</ul>
+
+</body>
+</html>
