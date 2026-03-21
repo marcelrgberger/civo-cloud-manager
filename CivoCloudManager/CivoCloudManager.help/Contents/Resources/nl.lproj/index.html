@@ -89,6 +89,17 @@ th { font-weight: 600; }
 </ul>
 <p>Om te maken: klik op <strong>+</strong>. Configureer naam, CNI-plugin, node-grootte, aantal nodes, netwerk en marketplace-apps.</p>
 
+<h3>Verbinden met Kubernetes API</h3>
+<p>Klik in de clusterdetailweergave op <strong>Verbinden met Kubernetes API</strong> om live clustergegevens rechtstreeks vanuit de Kubernetes API te bekijken:</p>
+<ul>
+<li><strong>CPU- &amp; geheugenmeters</strong> &mdash; cirkelvormige percentagemeters die het realtime resourcegebruik van het cluster tonen (vereist metrics-server ge&iuml;nstalleerd op het cluster).</li>
+<li><strong>Pod-aantal &amp; node-gezondheid</strong> &mdash; live-indicatoren van de clusterstatus.</li>
+<li><strong>Recente gebeurtenissen</strong> &mdash; clustergebeurtenissen met waarschuwingen gemarkeerd in oranje.</li>
+<li><strong>Deployments</strong> &mdash; workloads die gereedstaande vs. gewenste replica's tonen.</li>
+</ul>
+<p>Als metrics-server niet op het cluster is ge&iuml;nstalleerd, toont de app statische clusterstatistieken van de Civo API.</p>
+<p class="tip">Wanneer u verbinding maakt met de Kubernetes API, opent de app automatisch poort 6443 op de clusterfirewall voor uw huidige IP. De regel is gelabeld als <code>civo-cloud-&lt;hostname&gt;-k8s-api</code> en wordt automatisch verwijderd wanneer u terugnaviegeert vanuit het cluster.</p>
+
 <h3>Node-details (K8s API)</h3>
 <p>Klik op een <strong>node-naam</strong> in een node pool om rechtstreeks verbinding te maken met de Kubernetes API en gedetailleerde node-informatie te zien:</p>
 <ul>
@@ -153,11 +164,14 @@ th { font-weight: 600; }
 <p><strong>Beschikbare opruimen</strong> &mdash; werkbalkknop om alle volumes met de status &ldquo;beschikbaar&rdquo; in bulk te verwijderen. Vereist het typen van <code>DELETE ALL DATA</code> om te bevestigen.</p>
 
 <h3>Object Stores</h3>
-<p>Bekijk object stores met endpoint en maximale grootte. Klik rechts voor:</p>
+<p>Klik op een object store om de <strong>detailweergave</strong> te openen met:</p>
 <ul>
-<li><strong>Referenties tonen</strong> &mdash; toont access key ID en secret access key (selecteerbaar om te kopi&euml;ren).</li>
-<li><strong>Verwijderen</strong> &mdash; verwijdert de object store permanent.</li>
+<li><strong>Referenties</strong> &mdash; endpoint, bucket-URL, access key en secret key (allemaal selecteerbaar om te kopi&euml;ren).</li>
+<li><strong>Configuratie</strong> &mdash; maximale grootte, regio, aanmaakdatum en status.</li>
+<li><strong>Formaat wijzigen</strong> &mdash; stepper om de maximale grootte te wijzigen. Wijzigingen worden via PUT naar de Civo API verzonden.</li>
 </ul>
+<p>Klik rechts op een object store in de lijst om te verwijderen.</p>
+<p class="tip">Referenties (access key en secret key) komen rechtstreeks uit de object store-resource zelf, niet van een apart endpoint.</p>
 
 <h2 id="account">Account</h2>
 <h3>Regio's</h3>
@@ -185,6 +199,7 @@ th { font-weight: 600; }
 <li>Dashboard-resourcekaarten zijn klikbaar &mdash; navigeer met &eacute;&eacute;n klik naar elke sectie.</li>
 <li>Firewallregels die door deze app zijn aangemaakt, zijn gelabeld als <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> en alleen de regels van deze app worden beheerd.</li>
 <li>De Kubernetes-drill-downstroom: Clusterlijst &rarr; Clusterdetail &rarr; Nodedetail &rarr; Podlijst &rarr; Podlogs.</li>
+<li>Bij het verbinden met de Kubernetes API wordt poort 6443 automatisch geopend en gesloten voor uw IP &mdash; geen handmatige firewallconfiguratie nodig.</li>
 </ul>
 
 </body>
