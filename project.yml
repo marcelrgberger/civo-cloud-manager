@@ -37,7 +37,6 @@ targets:
     resources:
       - path: CivoCloudManager/Localizable.xcstrings
       - path: CivoCloudManager/PrivacyInfo.xcprivacy
-      - path: CivoCloudManager/CivoCloudManager.help
     settings:
       base:
         LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
@@ -55,8 +54,6 @@ targets:
         NSHumanReadableCopyright: "Copyright © 2026 Marcel R. G. Berger. All rights reserved."
         LSApplicationCategoryType: "public.app-category.utilities"
         ITSAppUsesNonExemptEncryption: false
-        CFBundleHelpBookFolder: "CivoCloudManager.help"
-        CFBundleHelpBookName: "de.berger-rosenstock.CivoCloudManager.help"
         CFBundleDevelopmentRegion: en
         CFBundleLocalizations:
           - en

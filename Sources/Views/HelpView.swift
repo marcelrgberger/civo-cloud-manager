@@ -1,0 +1,139 @@
+import SwiftUI
+
+struct HelpView: View {
+    @State private var searchText = ""
+
+    private var filteredSections: [HelpSection] {
+        if searchText.isEmpty { return HelpSection.all }
+        let query = searchText.lowercased()
+        return HelpSection.all.filter { section in
+            section.title.lowercased().contains(query) ||
+            section.items.contains { $0.lowercased().contains(query) }
+        }
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                header
+                ForEach(Array(filteredSections.enumerated()), id: \.element.title) { index, section in
+                    sectionView(section)
+                        .modifier(StaggeredAppear(index: index))
+                }
+            }
+            .padding(24)
+        }
+        .searchable(text: $searchText, prompt: "Search Help")
+        .navigationTitle("Help")
+        .frame(minWidth: 500, minHeight: 400)
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 12) {
+                Image(systemName: "shield.checkered")
+                    .font(.system(size: 36))
+                    .foregroundStyle(.blue)
+                VStack(alignment: .leading) {
+                    Text("Civo Cloud Manager")
+                        .font(.title.bold())
+                    Text("Help & Documentation")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
+    private func sectionView(_ section: HelpSection) -> some View {
+        GroupBox {
+            VStack(alignment: .leading, spacing: 6) {
+                ForEach(section.items, id: \.self) { item in
+                    HStack(alignment: .top, spacing: 8) {
+                        Image(systemName: "circle.fill")
+                            .font(.system(size: 4))
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 6)
+                        Text(item)
+                            .font(.callout)
+                    }
+                }
+            }
+            .padding(4)
+        } label: {
+            Label(section.title, systemImage: section.icon)
+                .font(.headline)
+        }
+    }
+}
+
+struct HelpSection {
+    let title: String
+    let icon: String
+    let items: [String]
+
+    static let all: [HelpSection] = [
+        HelpSection(title: "Getting Started", icon: "play.circle", items: [
+            "The app runs as a menu bar icon (shield). Click it to open the popover.",
+            "On first launch, the Setup Wizard guides you through API key, region, and firewall configuration.",
+            "Enter your Civo API key (found at civo.com > Account > Security > API Keys).",
+            "Select your region (e.g. fra1, lon1, nyc1).",
+            "Choose which firewalls to manage and set the port for each.",
+            "Click 'Dashboard' in the menu bar popover to open the full management window.",
+        ]),
+        HelpSection(title: "Menu Bar", icon: "menubar.rectangle", items: [
+            "Green shield: All firewalls closed.",
+            "Yellow shield: Some firewalls open for your IP.",
+            "Red shield: Setup not complete.",
+            "'Open' creates a firewall rule allowing your current public IP.",
+            "'Close' removes the rule. 'Open All / Close All' for bulk actions.",
+            "Your public IP is auto-detected. The app only manages rules it created.",
+        ]),
+        HelpSection(title: "Dashboard", icon: "gauge.with.dots.needle.33percent", items: [
+            "Resource cards are clickable — navigate directly to any section.",
+            "Quota gauges show usage vs. limits (RAM and DB RAM displayed in GB).",
+            "'Request Change' opens a form to request quota limit adjustments.",
+        ]),
+        HelpSection(title: "Kubernetes", icon: "helm", items: [
+            "Click a cluster to see details: version, API endpoint, conditions, node pools, apps.",
+            "'Connect to Kubernetes API' loads live metrics, events, and deployments.",
+            "The app auto-opens port 6443 on the cluster firewall for your IP.",
+            "Click a node name to see CPU, Memory, Pods capacity, conditions, and system info.",
+            "'View Pods on this Node' shows all pods with status and restart count.",
+            "Click a pod to view its logs (scrollable, auto-scroll toggle, refresh).",
+            "'Save Kubeconfig' exports the kubeconfig as a .yaml file.",
+            "Node pool labels can be edited (add/remove) via the Edit button.",
+        ]),
+        HelpSection(title: "Networking", icon: "point.3.connected.trianglepath.dotted", items: [
+            "Click a firewall to see all its rules (protocol, ports, CIDR, direction, action).",
+            "Add new rules with '+' in the rule detail view.",
+            "Create networks with a label and optional CIDR range.",
+            "Default network cannot be deleted.",
+            "Expand a domain to see DNS records. Add, edit, or delete records inline.",
+            "Load balancers show algorithm, IPs, traffic policy, and backend list.",
+        ]),
+        HelpSection(title: "Storage & Data", icon: "cylinder.split.1x2", items: [
+            "Click a database to see connection info (host, port, DNS), config, and network.",
+            "Click a volume to see attachment status, size, mountpoint, and bootable flag.",
+            "'Cleanup Available' deletes all volumes with status 'available' (requires typing DELETE ALL DATA).",
+            "Click an object store to see credentials (access key, secret key), config, and resize.",
+            "Object store size can be changed via the stepper in the detail view.",
+        ]),
+        HelpSection(title: "Compute", icon: "desktopcomputer", items: [
+            "Click an instance to see CPU, RAM, Disk specs, IPs, initial password, and tags.",
+            "Initial password has a show/hide toggle for security.",
+            "Add SSH keys by pasting the public key.",
+        ]),
+        HelpSection(title: "Deleting Resources", icon: "trash", items: [
+            "All delete operations require typing the exact resource name to confirm.",
+            "This prevents accidental deletion of critical cloud infrastructure.",
+            "Right-click any resource and select 'Delete' to start.",
+        ]),
+        HelpSection(title: "Full Access", icon: "cart", items: [
+            "Menu bar firewall management is free.",
+            "Full Access ($14.99 one-time) unlocks the dashboard and all resource management.",
+            "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes.",
+            "Family Sharing is enabled.",
+        ]),
+    ]
+}
