@@ -376,18 +376,56 @@ struct ClusterDetailView: View {
     // MARK: - Storage
 
     private var storageSection: some View {
-        GroupBox("Persistent Volume Claims (\(vm.pvcs.count))") {
+        GroupBox("Storage") {
             VStack(spacing: 4) {
-                ForEach(vm.pvcs) { pvc in
-                    HStack(spacing: 8) {
-                        Image(systemName: pvc.phase == "Bound" ? "cylinder.fill" : "cylinder")
-                            .font(.caption).foregroundStyle(pvc.phase == "Bound" ? .green : .orange)
-                        Text(pvc.name).font(.caption.weight(.medium))
-                        Text(pvc.namespace).font(.caption2).foregroundStyle(.tertiary)
-                        Spacer()
-                        Text(pvc.capacity).font(.caption2.monospaced())
-                        StatusBadge(status: pvc.phase)
+                DisclosureGroup("Persistent Volume Claims (\(vm.pvcs.count))") {
+                    ForEach(vm.pvcs) { pvc in
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack(spacing: 8) {
+                                Image(systemName: pvc.phase == "Bound" ? "cylinder.fill" : "cylinder")
+                                    .font(.caption).foregroundStyle(pvc.phase == "Bound" ? .green : .orange)
+                                Text(pvc.name).font(.caption.weight(.medium))
+                                Text(pvc.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                Spacer()
+                                Text(pvc.capacity).font(.caption2.monospaced())
+                                StatusBadge(status: pvc.phase)
+                            }
+                            if let civoId = vm.civoVolumeIdForPVC(pvc) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "link")
+                                        .font(.caption2).foregroundStyle(.blue)
+                                    Text("Civo Volume:")
+                                        .font(.caption2).foregroundStyle(.secondary)
+                                    Text(civoId)
+                                        .font(.caption2.monospaced()).foregroundStyle(.blue)
+                                        .textSelection(.enabled)
+                                }
+                                .padding(.leading, 24)
+                            }
+                        }
+                        .padding(.vertical, 1)
                     }
+                }
+                .font(.caption.weight(.medium))
+
+                if !vm.pvs.isEmpty {
+                    DisclosureGroup("Persistent Volumes (\(vm.pvs.count))") {
+                        ForEach(vm.pvs) { pv in
+                            HStack(spacing: 8) {
+                                Image(systemName: "externaldrive.connected.to.line.below")
+                                    .font(.caption).foregroundStyle(.blue)
+                                Text(pv.name).font(.caption.weight(.medium)).lineLimit(1)
+                                Spacer()
+                                Text(pv.capacity).font(.caption2.monospaced())
+                                if let civoId = pv.civoVolumeId {
+                                    Text(civoId.prefix(8) + "...")
+                                        .font(.caption2.monospaced()).foregroundStyle(.tertiary)
+                                }
+                                StatusBadge(status: pv.status?.phase ?? "—")
+                            }
+                        }
+                    }
+                    .font(.caption.weight(.medium))
                 }
             }
             .padding(8)

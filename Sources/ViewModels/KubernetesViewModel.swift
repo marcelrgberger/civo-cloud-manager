@@ -38,6 +38,7 @@ final class KubernetesViewModel {
     var ingresses: [K8sIngress] = []
     var namespaces: [K8sNamespace] = []
     var pvcs: [K8sPVC] = []
+    var pvs: [K8sPV] = []
     var metricsAvailable = true
 
     // Auto-firewall state
@@ -155,6 +156,7 @@ final class KubernetesViewModel {
         ingresses = []
         namespaces = []
         pvcs = []
+        pvs = []
 
         await autoCloseFirewall()
     }
@@ -299,6 +301,13 @@ final class KubernetesViewModel {
     private func loadStorage(_ client: KubernetesAPIClient) async {
         do { pvcs = try await client.listPVCs().items }
         catch { Log.error("PVCs: \(error.localizedDescription)") }
+        do { pvs = try await client.listPVs().items }
+        catch { Log.error("PVs: \(error.localizedDescription)") }
+    }
+
+    func civoVolumeIdForPVC(_ pvc: K8sPVC) -> String? {
+        guard let pvName = pvc.volumeName else { return nil }
+        return pvs.first(where: { $0.name == pvName })?.civoVolumeId
     }
 
     func loadPods(nodeName: String) async {

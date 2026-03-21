@@ -59,6 +59,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
     func listIngresses() async throws -> K8sIngressList { try await get("/apis/networking.k8s.io/v1/ingresses") }
     func listNamespaces() async throws -> K8sNamespaceList { try await get("/api/v1/namespaces") }
     func listPVCs() async throws -> K8sPVCList { try await get("/api/v1/persistentvolumeclaims") }
+    func listPVs() async throws -> K8sPVList { try await get("/api/v1/persistentvolumes") }
     func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics { try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)") }
 
     // MARK: - HTTP
