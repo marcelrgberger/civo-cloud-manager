@@ -4,9 +4,30 @@ struct ObjectStoreListView: View {
     @Bindable var vm: VolumeViewModel
     @State private var deleteTarget: CivoObjectStore?
 
+    private var navigationKey: String {
+        if vm.browsingObjectStore != nil { return "browse" }
+        if vm.selectedObjectStore != nil { return "detail" }
+        return "list"
+    }
+
     var body: some View {
         Group {
-            if let store = vm.selectedObjectStore {
+            if let store = vm.browsingObjectStore, let cred = vm.credentialForStore(store) {
+                ObjectStoreBrowserView(
+                    store: store,
+                    s3Client: S3Client(
+                        endpoint: store.objectstoreEndpoint ?? "objectstore.\(CivoConfig.shared.region).civo.com",
+                        accessKey: cred.accessKeyId ?? "",
+                        secretKey: cred.secretAccessKeyId ?? "",
+                        region: CivoConfig.shared.region
+                    )
+                ) {
+                    withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
+                        vm.browsingObjectStore = nil
+                    }
+                }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+            } else if let store = vm.selectedObjectStore {
                 ObjectStoreDetailView(store: store, vm: vm) {
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
                         vm.selectedObjectStore = nil
@@ -18,7 +39,7 @@ struct ObjectStoreListView: View {
                     .transition(.move(edge: .leading).combined(with: .opacity))
             }
         }
-        .animation(.spring(duration: 0.3, bounce: 0.1), value: vm.selectedObjectStore?.id)
+        .animation(.spring(duration: 0.3, bounce: 0.1), value: navigationKey)
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -44,9 +65,7 @@ struct ObjectStoreListView: View {
             } else {
                 ForEach(Array(vm.objectStores.enumerated()), id: \.element.id) { index, store in
                     Button {
-                        Task {
-                            await vm.loadObjectStoreDetail(store.id)
-                        }
+                        Task { await vm.loadObjectStoreDetail(store.id) }
                     } label: {
                         ResourceListRow(
                             icon: "tray.2",

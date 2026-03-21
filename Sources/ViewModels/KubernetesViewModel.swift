@@ -26,11 +26,19 @@ final class KubernetesViewModel {
     var k8sError: String?
     var isK8sConnected = false
 
-    // Metrics + Events + Workloads
+    // Metrics + Events + Workloads + Networking + Storage
     var clusterMetrics: K8sClusterMetrics?
     var nodeMetrics: [K8sNodeMetrics] = []
     var events: [K8sEvent] = []
     var deployments: [K8sDeployment] = []
+    var daemonSets: [K8sDaemonSet] = []
+    var statefulSets: [K8sStatefulSet] = []
+    var cronJobs: [K8sCronJob] = []
+    var services: [K8sService] = []
+    var ingresses: [K8sIngress] = []
+    var namespaces: [K8sNamespace] = []
+    var pvcs: [K8sPVC] = []
+    var pvs: [K8sPV] = []
     var metricsAvailable = true
 
     // Auto-firewall state
@@ -76,6 +84,12 @@ final class KubernetesViewModel {
             selectedCluster = try await service.showCluster(id)
         } catch {
             self.error = error.localizedDescription
+            return
+        }
+
+        // Auto-connect to K8s API in background
+        if selectedCluster?.status.lowercased() == "active" {
+            Task { await connectToCluster(id) }
         }
     }
 
@@ -86,20 +100,40 @@ final class KubernetesViewModel {
         k8sError = nil
         defer { isLoadingK8s = false }
 
+        var steps: [String] = []
         do {
+            // Step 1: Auto-open firewall
             if let cluster = selectedCluster, let fwId = cluster.firewallId {
                 await autoOpenFirewall(firewallId: fwId, port: 6443)
+                steps.append("Firewall opened")
+            } else {
+                steps.append("No firewall ID")
             }
 
+            // Step 2: Get kubeconfig
             let yaml = try await service.getKubeconfig(clusterId)
+            steps.append("Kubeconfig: \(yaml.count) chars")
+
+            // Step 3: Parse kubeconfig
             let creds = try KubeconfigParser.parse(yaml)
-            k8sClient = try KubernetesAPIClient(credentials: creds)
+            steps.append("Parsed: server=\(creds.server), CA=\(creds.caCertPEM.count)b, cert=\(creds.clientCertPEM.count)b, key=\(creds.clientKeyPEM.count)b")
+
+            // Step 4: Create client
+            let client = try KubernetesAPIClient(credentials: creds)
+            steps.append("Client created")
+            k8sClient = client
+
+            // Step 5: Test connection
+            let nodeList = try await client.listNodes()
+            k8sNodes = nodeList.items
             isK8sConnected = true
-            Log.info("Connected to K8s API at \(creds.server)")
+            steps.append("Connected: \(k8sNodes.count) nodes")
 
             await loadClusterData()
         } catch {
-            k8sError = error.localizedDescription
+            steps.append("FAILED: \(error.localizedDescription)")
+            k8sError = steps.joined(separator: " → ")
+            await autoCloseFirewall()
         }
     }
 
@@ -115,6 +149,15 @@ final class KubernetesViewModel {
         nodeMetrics = []
         events = []
         deployments = []
+        daemonSets = []
+        statefulSets = []
+        cronJobs = []
+        services = []
+        ingresses = []
+        namespaces = []
+        pvcs = []
+        pvs = []
+        selectedNamespace = nil
 
         await autoCloseFirewall()
     }
@@ -164,11 +207,13 @@ final class KubernetesViewModel {
 
         await loadNodes()
 
-        // Load metrics, events, workloads concurrently
+        // Load everything concurrently
         async let m: () = loadMetrics(client)
         async let e: () = loadEvents(client)
         async let w: () = loadWorkloads(client)
-        _ = await (m, e, w)
+        async let n: () = loadNetworking(client)
+        async let s: () = loadStorage(client)
+        _ = await (m, e, w, n, s)
     }
 
     func loadNodes() async {
@@ -204,7 +249,7 @@ final class KubernetesViewModel {
             // Count all running pods
             var podCount = 0
             do {
-                let allPods: K8sPodList = try await client.listPods(nodeName: "")
+                let allPods = try await client.listPods()
                 podCount = allPods.items.filter { $0.status?.phase == "Running" }.count
             } catch { /* pod count remains 0 */ }
 
@@ -235,11 +280,71 @@ final class KubernetesViewModel {
     }
 
     private func loadWorkloads(_ client: KubernetesAPIClient) async {
+        do { deployments = try await client.listDeployments().items }
+        catch { Log.error("Deployments: \(error.localizedDescription)") }
+        do { daemonSets = try await client.listDaemonSets().items }
+        catch { Log.error("DaemonSets: \(error.localizedDescription)") }
+        do { statefulSets = try await client.listStatefulSets().items }
+        catch { Log.error("StatefulSets: \(error.localizedDescription)") }
+        do { cronJobs = try await client.listCronJobs().items }
+        catch { Log.error("CronJobs: \(error.localizedDescription)") }
+    }
+
+    private func loadNetworking(_ client: KubernetesAPIClient) async {
+        do { services = try await client.listServices().items }
+        catch { Log.error("Services: \(error.localizedDescription)") }
+        do { ingresses = try await client.listIngresses().items }
+        catch { Log.error("Ingresses: \(error.localizedDescription)") }
+        do { namespaces = try await client.listNamespaces().items }
+        catch { Log.error("Namespaces: \(error.localizedDescription)") }
+    }
+
+    private func loadStorage(_ client: KubernetesAPIClient) async {
+        do { pvcs = try await client.listPVCs().items }
+        catch { Log.error("PVCs: \(error.localizedDescription)") }
+        do { pvs = try await client.listPVs().items }
+        catch { Log.error("PVs: \(error.localizedDescription)") }
+    }
+
+    func civoVolumeIdForPVC(_ pvc: K8sPVC) -> String? {
+        guard let pvName = pvc.volumeName else { return nil }
+        return pvs.first(where: { $0.name == pvName })?.civoVolumeId
+    }
+
+    func restartPod(namespace: String, name: String, nodeName: String) async {
+        guard let client = k8sClient else { return }
         do {
-            deployments = try await client.listDeployments().items
+            try await client.deletePod(namespace: namespace, pod: name)
+            try? await Task.sleep(for: .seconds(1))
+            await loadPods(nodeName: nodeName)
         } catch {
-            Log.error("Load deployments failed: \(error.localizedDescription)")
+            k8sError = error.localizedDescription
         }
+    }
+
+    func scaleDeployment(namespace: String, name: String, replicas: Int) async {
+        guard let client = k8sClient else { return }
+        do {
+            try await client.scaleDeployment(namespace: namespace, name: name, replicas: replicas)
+            showSuccess = true
+            if let c = k8sClient { await loadWorkloads(c) }
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
+    // MARK: - Namespace filter
+
+    var selectedNamespace: String?
+
+    var filteredDeployments: [K8sDeployment] {
+        guard let ns = selectedNamespace, ns != "All" else { return deployments }
+        return deployments.filter { $0.namespace == ns }
+    }
+
+    var filteredServices: [K8sService] {
+        guard let ns = selectedNamespace, ns != "All" else { return services }
+        return services.filter { $0.namespace == ns }
     }
 
     func loadPods(nodeName: String) async {

@@ -11,7 +11,7 @@ struct K8sPod: Codable, Identifiable, Sendable {
 
     var id: String { metadata.uid ?? metadata.name ?? "unknown" }
     var name: String { metadata.name ?? "unknown" }
-    var namespace: String { spec?.namespace ?? metadata.labels?["namespace"] ?? "default" }
+    var namespace: String { metadata.namespace ?? "default" }
 }
 
 struct K8sPodStatus: Codable, Sendable {

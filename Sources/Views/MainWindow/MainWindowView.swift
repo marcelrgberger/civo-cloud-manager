@@ -12,6 +12,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case databases = "Databases"
     case volumes = "Volumes"
     case objectStores = "Object Stores"
+    case credentials = "Credentials"
     case regions = "Regions"
     case about = "About"
 
@@ -30,8 +31,28 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .databases: return "cylinder.split.1x2"
         case .volumes: return "cylinder"
         case .objectStores: return "tray.2"
+        case .credentials: return "key.horizontal"
         case .regions: return "map"
         case .about: return "info.circle"
+        }
+    }
+
+    var iconColor: Color {
+        switch self {
+        case .dashboard: return .blue
+        case .instances: return .green
+        case .sshKeys: return .orange
+        case .clusters: return .blue
+        case .networks: return .green
+        case .firewalls: return .red
+        case .loadBalancers: return .indigo
+        case .domains: return .teal
+        case .databases: return .purple
+        case .volumes: return .orange
+        case .objectStores: return .cyan
+        case .credentials: return .yellow
+        case .regions: return .mint
+        case .about: return .secondary
         }
     }
 
@@ -41,7 +62,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .instances, .sshKeys: return .compute
         case .clusters: return .kubernetes
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
-        case .databases, .volumes, .objectStores: return .storage
+        case .databases, .volumes, .objectStores, .credentials: return .storage
         case .regions: return .account
         case .about: return .account
         }
@@ -101,8 +122,13 @@ struct MainWindowView: View {
             ForEach(SidebarCategory.allCases, id: \.self) { category in
                 Section(category.rawValue) {
                     ForEach(category.sections) { section in
-                        Label(section.rawValue, systemImage: section.icon)
-                            .tag(section)
+                        Label {
+                            Text(section.rawValue)
+                        } icon: {
+                            Image(systemName: section.icon)
+                                .foregroundStyle(section.iconColor)
+                        }
+                        .tag(section)
                     }
                 }
             }
@@ -138,6 +164,8 @@ struct MainWindowView: View {
             VolumeListView(vm: volumeVM)
         case .objectStores:
             ObjectStoreListView(vm: volumeVM)
+        case .credentials:
+            CredentialListView(vm: volumeVM)
         case .regions:
             RegionListView(vm: regionVM)
         case .about:

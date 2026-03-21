@@ -15,6 +15,18 @@ final class CivoInstanceService: Sendable {
         try await api.put(path: "/instances/\(id)", body: body)
     }
 
+    func stopInstance(_ id: String) async throws {
+        let _: CivoResult = try await api.put(path: "/instances/\(id)/stop", body: [:])
+    }
+
+    func startInstance(_ id: String) async throws {
+        let _: CivoResult = try await api.put(path: "/instances/\(id)/start", body: [:])
+    }
+
+    func rebootInstance(_ id: String) async throws {
+        let _: CivoResult = try await api.post(path: "/instances/\(id)/soft_reboots", body: [:])
+    }
+
     func removeInstance(_ id: String) async throws {
         try await api.delete(path: "/instances/\(id)")
     }

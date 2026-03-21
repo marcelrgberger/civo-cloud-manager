@@ -54,14 +54,14 @@ struct HelpView: View {
                             .font(.system(size: 4))
                             .foregroundStyle(.secondary)
                             .padding(.top, 6)
-                        Text(item)
+                        Text(LocalizedStringKey(item))
                             .font(.callout)
                     }
                 }
             }
             .padding(4)
         } label: {
-            Label(section.title, systemImage: section.icon)
+            Label(LocalizedStringKey(section.title), systemImage: section.icon)
                 .font(.headline)
         }
     }
@@ -94,13 +94,28 @@ struct HelpSection {
             "Quota gauges show usage vs. limits (RAM and DB RAM displayed in GB).",
             "'Request Change' opens a form to request quota limit adjustments.",
         ]),
+        HelpSection(title: "Compute & Instances", icon: "desktopcomputer", items: [
+            "Click an instance to see CPU, RAM, Disk specs, IPs, initial password, and tags.",
+            "Initial password has a show/hide toggle for security.",
+            "Right-click an instance to Stop, Start, or Reboot it via the context menu.",
+            "Add SSH keys by pasting the public key.",
+        ]),
         HelpSection(title: "Kubernetes", icon: "helm", items: [
             "Click a cluster to see details: version, API endpoint, conditions, node pools, apps.",
-            "'Connect to Kubernetes API' loads live metrics, events, and deployments.",
+            "The K8s API connects automatically when you select a cluster (no manual button needed).",
+            "An animated progress view shows 5 connection steps: firewall, kubeconfig, certificates, API server, metrics.",
             "The app auto-opens port 6443 on the cluster firewall for your IP.",
+            "Use the Namespace filter picker to show only deployments and services in a specific namespace.",
+            "Workloads (Deployments, DaemonSets, StatefulSets, CronJobs) are in a collapsible section.",
+            "Networking (Services, Ingresses) and Storage (PVCs, PVs) are also collapsible.",
+            "Scale deployments up or down directly from the cluster detail view.",
+            "Events show relative timestamps like '2m ago' or '1h ago'.",
+            "PVCs show linked Civo Volume IDs. PVs list capacity and Civo Volume ID.",
             "Click a node name to see CPU, Memory, Pods capacity, conditions, and system info.",
             "'View Pods on this Node' shows all pods with status and restart count.",
+            "Right-click a pod and select 'Restart Pod' to delete and restart it.",
             "Click a pod to view its logs (scrollable, auto-scroll toggle, refresh).",
+            "Toggle 'Auto-Refresh' to have pod logs update every 3 seconds automatically.",
             "'Save Kubeconfig' exports the kubeconfig as a .yaml file.",
             "Node pool labels can be edited (add/remove) via the Edit button.",
         ]),
@@ -112,17 +127,37 @@ struct HelpSection {
             "Expand a domain to see DNS records. Add, edit, or delete records inline.",
             "Load balancers show algorithm, IPs, traffic policy, and backend list.",
         ]),
+        HelpSection(title: "Database Credentials", icon: "lock.shield", items: [
+            "Click a database to see its detail view with connection info, config, and credentials.",
+            "The username is displayed directly in the Credentials section.",
+            "The password is protected — tap the eye icon to reveal it via Touch ID or system password.",
+            "Authentication uses the system's LocalAuthentication framework (same as unlocking your Mac).",
+        ]),
+        HelpSection(title: "Credential Management", icon: "key.horizontal", items: [
+            "The 'Credentials' section in the sidebar (under Storage & Data) manages Object Store credentials.",
+            "View all credentials with access key ID and status.",
+            "Secret access keys are hidden by default — reveal them via Touch ID or system password.",
+            "Create new credentials by entering a name and clicking 'Create'.",
+            "Delete credentials via right-click context menu (requires typing the name to confirm).",
+            "Hover over a credential row for a visual animation (key icon rotation + orange highlight).",
+            "When creating a new Object Store, you can pick from existing credentials.",
+        ]),
         HelpSection(title: "Storage & Data", icon: "cylinder.split.1x2", items: [
-            "Click a database to see connection info (host, port, DNS), config, and network.",
+            "Click a database to see connection info (host, port, DNS), credentials, config, and network.",
             "Click a volume to see attachment status, size, mountpoint, and bootable flag.",
             "'Cleanup Available' deletes all volumes with status 'available' (requires typing DELETE ALL DATA).",
-            "Click an object store to see credentials (access key, secret key), config, and resize.",
+            "Click an object store to see its credentials, endpoint, config, and resize option.",
             "Object store size can be changed via the stepper in the detail view.",
+            "Credentials (access key ID, secret access key) come from a linked credential via the Civo API.",
+            "Click 'Browse Files' in the object store detail view to open the S3 file browser.",
         ]),
-        HelpSection(title: "Compute", icon: "desktopcomputer", items: [
-            "Click an instance to see CPU, RAM, Disk specs, IPs, initial password, and tags.",
-            "Initial password has a show/hide toggle for security.",
-            "Add SSH keys by pasting the public key.",
+        HelpSection(title: "S3 File Browser", icon: "folder.fill", items: [
+            "Browse files and folders inside any object store with assigned credentials.",
+            "Breadcrumb navigation shows your current path. Click any breadcrumb to jump back.",
+            "Click a folder to navigate into it. Use the back button to go up one level.",
+            "Files show their name, size, and a contextual icon based on file type.",
+            "Right-click any file and select 'Download' to save it to your Mac via a save dialog.",
+            "The browser uses S3-compatible API access with AWS Signature V4 authentication.",
         ]),
         HelpSection(title: "Deleting Resources", icon: "trash", items: [
             "All delete operations require typing the exact resource name to confirm.",

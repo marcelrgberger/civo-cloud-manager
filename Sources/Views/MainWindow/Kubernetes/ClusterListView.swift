@@ -115,7 +115,7 @@ struct ClusterListView: View {
 
         let panel = NSSavePanel()
         panel.nameFieldStringValue = "\(cluster.name)-kubeconfig.yaml"
-        panel.allowedContentTypes = [.yaml]
+        panel.allowedContentTypes = [.text, .data]
         panel.canCreateDirectories = true
 
         if panel.runModal() == .OK, let url = panel.url {

@@ -32,21 +32,28 @@ struct ClusterDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
-                if vm.isK8sConnected, let metrics = vm.clusterMetrics {
+                if let metrics = vm.clusterMetrics {
                     liveMetricsRow(metrics)
                 } else {
                     statsRow
                 }
-                if !vm.isK8sConnected {
-                    connectButton
+                if let k8sError = vm.k8sError {
+                    ErrorBanner(message: k8sError)
+                }
+                if vm.isLoadingK8s && !vm.isK8sConnected {
+                    K8sConnectingView()
                 }
                 infoSection
-                if !vm.events.isEmpty {
-                    eventsSection
+                if !vm.events.isEmpty { eventsSection }
+                if vm.isK8sConnected && !vm.namespaces.isEmpty {
+                    namespaceFilterPicker
                 }
-                if !vm.deployments.isEmpty {
+                if !vm.deployments.isEmpty || !vm.daemonSets.isEmpty || !vm.statefulSets.isEmpty {
                     workloadsSection
                 }
+                if !vm.services.isEmpty || !vm.ingresses.isEmpty { networkingSection }
+                if !vm.pvcs.isEmpty { storageSection }
+                if !vm.namespaces.isEmpty { namespacesSection }
                 conditionsSection
                 nodePoolsSection
                 applicationsSection
@@ -155,39 +162,25 @@ struct ClusterDetailView: View {
         .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.05 + 0.1), value: appeared)
     }
 
-    // MARK: - Connect
+    // MARK: - Namespace Filter
 
-    private var connectButton: some View {
-        Button {
-            Task { await vm.connectToCluster(cluster.id) }
-        } label: {
-            HStack {
-                Image(systemName: "link.circle")
-                    .foregroundStyle(.blue)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Connect to Kubernetes API")
-                        .font(.headline)
-                    Text("Load live metrics, events, and workloads")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                if vm.isLoadingK8s {
-                    ProgressView().controlSize(.small)
-                } else {
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.secondary)
+    private var namespaceFilterPicker: some View {
+        HStack {
+            Text("Filter by Namespace:")
+                .font(.caption).foregroundStyle(.secondary)
+            Picker("", selection: Binding(
+                get: { vm.selectedNamespace ?? "All" },
+                set: { vm.selectedNamespace = $0 == "All" ? nil : $0 }
+            )) {
+                Text("All").tag("All")
+                ForEach(vm.namespaces) { ns in
+                    Text(ns.name).tag(ns.name)
                 }
             }
-            .padding(14)
-            .background(.blue.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .frame(width: 200)
         }
-        .buttonStyle(.plain)
-        .help("Connect to cluster for live metrics and pod management")
-        .disabled(vm.isLoadingK8s || cluster.status != "Active")
         .opacity(appeared ? 1 : 0)
-        .animation(.easeOut(duration: 0.3).delay(0.15), value: appeared)
+        .animation(.easeOut(duration: 0.3).delay(0.18), value: appeared)
     }
 
     // MARK: - Live Metrics
@@ -264,6 +257,10 @@ struct ClusterDetailView: View {
                             }
                         }
                         Spacer()
+                        if let ts = event.lastTimestamp {
+                            Text(relativeTime(ts))
+                                .font(.caption2).foregroundStyle(.tertiary)
+                        }
                     }
                     .padding(.vertical, 2)
                     .modifier(StaggeredAppear(index: index))
@@ -275,31 +272,218 @@ struct ClusterDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
     }
 
+    private func relativeTime(_ iso: String) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        guard let date = formatter.date(from: iso) ?? ISO8601DateFormatter().date(from: iso) else { return iso }
+        let interval = Date().timeIntervalSince(date)
+        if interval < 60 { return "\(Int(interval))s ago" }
+        if interval < 3600 { return "\(Int(interval / 60))m ago" }
+        if interval < 86400 { return "\(Int(interval / 3600))h ago" }
+        return "\(Int(interval / 86400))d ago"
+    }
+
     // MARK: - Workloads
 
     private var workloadsSection: some View {
-        GroupBox("Deployments (\(vm.deployments.count))") {
+        GroupBox("Workloads") {
             VStack(spacing: 4) {
-                ForEach(Array(vm.deployments.enumerated()), id: \.element.id) { index, deploy in
-                    HStack(spacing: 8) {
-                        Image(systemName: deploy.isHealthy ? "checkmark.circle.fill" : "xmark.circle.fill")
-                            .font(.caption)
-                            .foregroundStyle(deploy.isHealthy ? .green : .red)
-                        Text(deploy.name)
-                            .font(.caption.weight(.medium))
-                        Spacer()
-                        Text("\(deploy.readyReplicas)/\(deploy.desiredReplicas) ready")
-                            .font(.caption2.monospaced())
-                            .foregroundStyle(deploy.isHealthy ? Color.secondary : Color.red)
+                if !vm.deployments.isEmpty {
+                    DisclosureGroup("Deployments (\(vm.filteredDeployments.count))") {
+                        ForEach(vm.filteredDeployments) { d in
+                            workloadRow(d.name, ready: d.readyReplicas, desired: d.desiredReplicas, healthy: d.isHealthy, ns: d.namespace)
+                        }
                     }
-                    .padding(.vertical, 2)
-                    .modifier(StaggeredAppear(index: index))
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.daemonSets.isEmpty {
+                    DisclosureGroup("DaemonSets (\(vm.daemonSets.count))") {
+                        ForEach(vm.daemonSets) { d in
+                            workloadRow(d.name, ready: d.ready, desired: d.desired, healthy: d.isHealthy, ns: d.namespace)
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.statefulSets.isEmpty {
+                    DisclosureGroup("StatefulSets (\(vm.statefulSets.count))") {
+                        ForEach(vm.statefulSets) { s in
+                            workloadRow(s.name, ready: s.readyReplicas, desired: s.desiredReplicas, healthy: s.isHealthy, ns: s.namespace)
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.cronJobs.isEmpty {
+                    DisclosureGroup("CronJobs (\(vm.cronJobs.count))") {
+                        ForEach(vm.cronJobs) { cj in
+                            HStack(spacing: 8) {
+                                Image(systemName: "clock.arrow.circlepath")
+                                    .font(.caption).foregroundStyle(.blue)
+                                Text(cj.name).font(.caption.weight(.medium))
+                                Spacer()
+                                Text(cj.schedule).font(.caption2.monospaced()).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .font(.caption.weight(.medium))
                 }
             }
             .padding(8)
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.22), value: appeared)
+    }
+
+    private func workloadRow(_ name: String, ready: Int, desired: Int, healthy: Bool, ns: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: healthy ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .font(.caption).foregroundStyle(healthy ? .green : .red)
+            Text(name).font(.caption.weight(.medium))
+            Text(ns).font(.caption2).foregroundStyle(.tertiary)
+            Spacer()
+            Text("\(ready)/\(desired)").font(.caption2.monospaced())
+                .foregroundStyle(healthy ? Color.secondary : Color.red)
+        }
+    }
+
+    // MARK: - Networking
+
+    private var networkingSection: some View {
+        GroupBox("Networking") {
+            VStack(spacing: 4) {
+                if !vm.services.isEmpty {
+                    DisclosureGroup("Services (\(vm.filteredServices.count))") {
+                        ForEach(vm.filteredServices) { svc in
+                            HStack(spacing: 8) {
+                                Image(systemName: svc.type == "LoadBalancer" ? "arrow.triangle.branch" : "network")
+                                    .font(.caption).foregroundStyle(.blue)
+                                Text(svc.name).font(.caption.weight(.medium))
+                                Text(svc.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                Spacer()
+                                Text(svc.type).font(.caption2)
+                                    .padding(.horizontal, 5).padding(.vertical, 1)
+                                    .background(.blue.opacity(0.1)).clipShape(Capsule())
+                                if let ports = svc.spec?.ports {
+                                    Text(ports.map { "\($0.port ?? 0)" }.joined(separator: ","))
+                                        .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.ingresses.isEmpty {
+                    DisclosureGroup("Ingresses (\(vm.ingresses.count))") {
+                        ForEach(vm.ingresses) { ing in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(ing.name).font(.caption.weight(.medium))
+                                if let rules = ing.spec?.rules {
+                                    ForEach(Array(rules.enumerated()), id: \.offset) { _, rule in
+                                        if let host = rule.host {
+                                            HStack(spacing: 4) {
+                                                Image(systemName: "globe").font(.caption2).foregroundStyle(.green)
+                                                Text(host).font(.caption2.monospaced()).textSelection(.enabled)
+                                                if let tls = ing.spec?.tls, tls.contains(where: { $0.hosts?.contains(host) == true }) {
+                                                    Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
+                                                    if let secretName = tls.first(where: { $0.hosts?.contains(host) == true })?.secretName {
+                                                        Text(secretName).font(.caption2).foregroundStyle(.tertiary)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.vertical, 2)
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.24), value: appeared)
+    }
+
+    // MARK: - Storage
+
+    private var storageSection: some View {
+        GroupBox("Storage") {
+            VStack(spacing: 4) {
+                DisclosureGroup("Persistent Volume Claims (\(vm.pvcs.count))") {
+                    ForEach(vm.pvcs) { pvc in
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack(spacing: 8) {
+                                Image(systemName: pvc.phase == "Bound" ? "cylinder.fill" : "cylinder")
+                                    .font(.caption).foregroundStyle(pvc.phase == "Bound" ? .green : .orange)
+                                Text(pvc.name).font(.caption.weight(.medium))
+                                Text(pvc.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                Spacer()
+                                Text(pvc.capacity).font(.caption2.monospaced())
+                                StatusBadge(status: pvc.phase)
+                            }
+                            if let civoId = vm.civoVolumeIdForPVC(pvc) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "link")
+                                        .font(.caption2).foregroundStyle(.blue)
+                                    Text("Civo Volume:")
+                                        .font(.caption2).foregroundStyle(.secondary)
+                                    Text(civoId)
+                                        .font(.caption2.monospaced()).foregroundStyle(.blue)
+                                        .textSelection(.enabled)
+                                }
+                                .padding(.leading, 24)
+                            }
+                        }
+                        .padding(.vertical, 1)
+                    }
+                }
+                .font(.caption.weight(.medium))
+
+                if !vm.pvs.isEmpty {
+                    DisclosureGroup("Persistent Volumes (\(vm.pvs.count))") {
+                        ForEach(vm.pvs) { pv in
+                            HStack(spacing: 8) {
+                                Image(systemName: "externaldrive.connected.to.line.below")
+                                    .font(.caption).foregroundStyle(.blue)
+                                Text(pv.name).font(.caption.weight(.medium)).lineLimit(1)
+                                Spacer()
+                                Text(pv.capacity).font(.caption2.monospaced())
+                                if let civoId = pv.civoVolumeId {
+                                    Text(civoId.prefix(8) + "...")
+                                        .font(.caption2.monospaced()).foregroundStyle(.tertiary)
+                                }
+                                StatusBadge(status: pv.status?.phase ?? "—")
+                            }
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.26), value: appeared)
+    }
+
+    // MARK: - Namespaces
+
+    private var namespacesSection: some View {
+        GroupBox("Namespaces (\(vm.namespaces.count))") {
+            VStack(spacing: 4) {
+                ForEach(vm.namespaces) { ns in
+                    HStack(spacing: 8) {
+                        Image(systemName: "folder").font(.caption).foregroundStyle(.blue)
+                        Text(ns.name).font(.caption.weight(.medium))
+                        Spacer()
+                        StatusBadge(status: ns.phase)
+                    }
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.28), value: appeared)
     }
 
     // MARK: - Info
@@ -439,20 +623,23 @@ struct ClusterDetailView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text("Labels")
+                    Text("Node Labels")
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Button {
-                        editingLabelsPool = pool
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
-                            .font(.caption)
+                    if vm.isK8sConnected {
+                        Button {
+                            editingLabelsPool = pool
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                                .font(.caption)
+                        }
+                        .buttonStyle(.borderless)
                     }
-                    .buttonStyle(.borderless)
                 }
-                if let labels = pool.labels, !labels.isEmpty {
-                    ForEach(Array(labels.sorted(by: { $0.key < $1.key })), id: \.key) { key, value in
+                let nodeLabels = labelsForPool(pool)
+                if !nodeLabels.isEmpty {
+                    ForEach(Array(nodeLabels.sorted(by: { $0.key < $1.key })), id: \.key) { key, value in
                         Text("\(key)=\(value)")
                             .font(.caption2.monospaced())
                             .padding(.horizontal, 6)
@@ -460,8 +647,12 @@ struct ClusterDetailView: View {
                             .background(.blue.opacity(0.1))
                             .clipShape(Capsule())
                     }
+                } else if vm.isK8sConnected {
+                    Text("No custom labels")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
                 } else {
-                    Text("No labels")
+                    Text("Connect to K8s API to view labels")
                         .font(.caption)
                         .foregroundStyle(.tertiary)
                 }
@@ -487,6 +678,24 @@ struct ClusterDetailView: View {
         }
         .padding(.vertical, 8)
         .padding(.leading, 28)
+    }
+
+    private func labelsForPool(_ pool: CivoNodePool) -> [String: String] {
+        guard let instanceNames = pool.instanceNames else { return [:] }
+        // Find K8s nodes matching this pool's instances and collect their labels
+        var allLabels: [String: String] = [:]
+        let systemPrefixes = ["beta.kubernetes.io", "kubernetes.io", "node.kubernetes.io", "k3s.io"]
+        for name in instanceNames {
+            if let node = vm.k8sNodes.first(where: { $0.name == name }),
+               let labels = node.metadata.labels {
+                for (key, value) in labels {
+                    if !systemPrefixes.contains(where: { key.hasPrefix($0) }) {
+                        allLabels[key] = value
+                    }
+                }
+            }
+        }
+        return allLabels
     }
 
     private func poolInfoRow(_ label: String, _ value: String) -> some View {

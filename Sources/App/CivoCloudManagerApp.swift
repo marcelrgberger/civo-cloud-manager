@@ -32,6 +32,7 @@ struct CivoCloudManagerApp: App {
         .commands {
             CommandGroup(replacing: .help) {
                 Button("Civo Cloud Manager Help") {
+                    NSApp.activate(ignoringOtherApps: true)
                     openWindow(id: "help")
                 }
                 .keyboardShortcut("?", modifiers: .command)

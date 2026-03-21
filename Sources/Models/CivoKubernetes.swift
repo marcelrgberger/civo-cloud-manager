@@ -22,6 +22,7 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
     let pools: [CivoNodePool]?
     let installedApplications: [CivoK8sApp]?
     let conditions: [CivoK8sCondition]?
+    let kubeconfig: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name, version, status, ready, pools, conditions
@@ -39,6 +40,7 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
         case cniPlugin = "cni_plugin"
         case createdAt = "created_at"
         case installedApplications = "installed_applications"
+        case kubeconfig
     }
 }
 

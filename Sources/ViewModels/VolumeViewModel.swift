@@ -10,6 +10,7 @@ final class VolumeViewModel {
 
     var selectedVolume: CivoVolume?
     var selectedObjectStore: CivoObjectStore?
+    var browsingObjectStore: CivoObjectStore?
     var isCreatingVolume = false
     var isCreatingObjectStore = false
     var isSaving = false
@@ -17,6 +18,8 @@ final class VolumeViewModel {
     var showSuccess = false
 
     var availableNetworks: [CivoNetwork] = []
+    var credentials: [CivoObjectStoreCredential] = []
+    var isCreatingCredential = false
 
     private let volumeService = CivoVolumeService()
     private let objectStoreService = CivoObjectStoreService()
@@ -30,9 +33,11 @@ final class VolumeViewModel {
         do {
             async let vols = volumeService.listVolumes()
             async let stores = objectStoreService.listObjectStores()
+            async let creds = objectStoreService.listCredentials()
 
             volumes = try await vols
             objectStores = try await stores
+            credentials = try await creds
         } catch {
             self.error = error.localizedDescription
             Log.error("Storage refresh failed: \(error.localizedDescription)")
@@ -137,6 +142,37 @@ final class VolumeViewModel {
     func removeObjectStore(_ name: String) async {
         do {
             try await objectStoreService.removeObjectStore(name)
+            await refresh()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func credentialForStore(_ store: CivoObjectStore) -> CivoObjectStoreCredential? {
+        guard let credId = store.credentialId else { return nil }
+        return credentials.first(where: { $0.id == credId })
+    }
+
+    func createCredential(_ name: String) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            _ = try await objectStoreService.createCredential(["name": name])
+            isCreatingCredential = false
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = error.localizedDescription
+            return false
+        }
+    }
+
+    func removeCredential(_ id: String) async {
+        do {
+            try await objectStoreService.removeCredential(id)
             await refresh()
         } catch {
             self.error = error.localizedDescription
