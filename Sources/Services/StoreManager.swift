@@ -16,7 +16,11 @@ final class StoreManager {
     var error: String?
 
     var isFullAccessUnlocked: Bool {
-        purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
+        #if DEBUG
+        return true
+        #else
+        return purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
+        #endif
     }
 
     private var updateTask: Task<Void, Never>?

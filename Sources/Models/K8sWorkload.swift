@@ -10,7 +10,7 @@ struct K8sDeployment: Codable, Identifiable, Sendable {
 
     var id: String { metadata.uid ?? metadata.name ?? "unknown" }
     var name: String { metadata.name ?? "unknown" }
-    var namespace: String { metadata.labels?["namespace"] ?? "default" }
+    var namespace: String { metadata.namespace ?? "default" }
 
     var readyReplicas: Int { status?.readyReplicas ?? 0 }
     var desiredReplicas: Int { status?.replicas ?? 0 }

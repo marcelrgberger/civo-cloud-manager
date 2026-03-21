@@ -100,6 +100,7 @@ final class KubernetesViewModel {
             await loadClusterData()
         } catch {
             k8sError = error.localizedDescription
+            await autoCloseFirewall()
         }
     }
 
@@ -204,7 +205,7 @@ final class KubernetesViewModel {
             // Count all running pods
             var podCount = 0
             do {
-                let allPods: K8sPodList = try await client.listPods(nodeName: "")
+                let allPods = try await client.listPods()
                 podCount = allPods.items.filter { $0.status?.phase == "Running" }.count
             } catch { /* pod count remains 0 */ }
 

@@ -1,29 +1,27 @@
 import Foundation
 import Security
 
-final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelegate {
+final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     private let server: String
-    private let session: URLSession
-    private let identity: SecIdentity
     private let caCert: SecCertificate
+    private let clientCert: SecCertificate
+    private let clientKey: SecKey
 
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
 
-        guard let ca = SecCertificateCreateWithData(nil, credentials.caCertData as CFData) else {
-            throw K8sAPIError.invalidCertificate("CA certificate")
+        guard let ca = SecCertificateCreateWithData(nil, credentials.caCertDER as CFData) else {
+            throw K8sAPIError.invalidCertificate("CA certificate: invalid DER data")
         }
         self.caCert = ca
 
-        self.identity = try Self.createIdentity(
-            certData: credentials.clientCertData,
-            keyData: credentials.clientKeyData
-        )
+        guard let cert = SecCertificateCreateWithData(nil, credentials.clientCertDER as CFData) else {
+            throw K8sAPIError.invalidCertificate("Client certificate: invalid DER data")
+        }
+        self.clientCert = cert
 
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 30
-        config.timeoutIntervalForResource = 60
-        self.session = URLSession(configuration: config)
+        self.clientKey = try Self.importPrivateKey(credentials.clientKeyPEM)
+
         super.init()
     }
 
@@ -37,9 +35,11 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         try await get("/api/v1/nodes/\(name)")
     }
 
-    func listPods(nodeName: String) async throws -> K8sPodList {
-        let query = "spec.nodeName=\(nodeName)"
-        return try await get("/api/v1/pods?fieldSelector=\(query)")
+    func listPods(nodeName: String? = nil) async throws -> K8sPodList {
+        if let nodeName, !nodeName.isEmpty {
+            return try await get("/api/v1/pods?fieldSelector=spec.nodeName=\(nodeName)")
+        }
+        return try await get("/api/v1/pods")
     }
 
     func getPodLogs(namespace: String, pod: String, tailLines: Int = 200) async throws -> String {
@@ -65,81 +65,163 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
     // MARK: - HTTP
 
     private func get<T: Decodable>(_ path: String) async throws -> T {
-        let url = URL(string: "\(server)\(path)")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-
-        let delegate = K8sSessionDelegate(identity: identity, caCert: caCert)
-        let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-        defer { session.invalidateAndCancel() }
-
-        let (data, response) = try await session.data(for: request)
-
-        guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
-            let msg = String(data: data, encoding: .utf8) ?? "Unknown"
-            throw K8sAPIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, msg)
-        }
-
+        let (data, _) = try await execute(path)
         return try JSONDecoder().decode(T.self, from: data)
     }
 
     private func getRaw(_ path: String) async throws -> String {
-        let url = URL(string: "\(server)\(path)")!
+        let (data, _) = try await execute(path)
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+
+    private func execute(_ path: String) async throws -> (Data, HTTPURLResponse) {
+        guard let url = URL(string: "\(server)\(path)") else {
+            throw K8sAPIError.invalidCertificate("Invalid URL: \(server)\(path)")
+        }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.timeoutInterval = 30
 
-        let delegate = K8sSessionDelegate(identity: identity, caCert: caCert)
-        let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
+        let delegate = K8sSessionDelegate(
+            caCert: caCert,
+            clientCert: clientCert,
+            clientKey: clientKey
+        )
+        let session = URLSession(configuration: .ephemeral, delegate: delegate, delegateQueue: nil)
         defer { session.invalidateAndCancel() }
 
         let (data, response) = try await session.data(for: request)
 
-        guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
+        guard let http = response as? HTTPURLResponse else {
+            throw K8sAPIError.httpError(0, "Invalid response")
+        }
+        guard (200...299).contains(http.statusCode) else {
             let msg = String(data: data, encoding: .utf8) ?? "Unknown"
-            throw K8sAPIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, msg)
+            throw K8sAPIError.httpError(http.statusCode, msg)
         }
 
-        return String(data: data, encoding: .utf8) ?? ""
+        return (data, http)
     }
 
-    // MARK: - Identity
+    // MARK: - Private Key Import
 
-    private static func createIdentity(certData: Data, keyData: Data) throws -> SecIdentity {
-        guard let cert = SecCertificateCreateWithData(nil, certData as CFData) else {
-            throw K8sAPIError.invalidCertificate("client certificate")
+    private static func importPrivateKey(_ pemData: Data) throws -> SecKey {
+        guard let pemString = String(data: pemData, encoding: .utf8) else {
+            throw K8sAPIError.invalidCertificate("Private key: invalid encoding")
         }
 
-        // Import private key
-        let keyDict: [String: Any] = [
-            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
-            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
-            kSecAttrKeySizeInBits as String: 2048,
+        // Strip PEM headers and decode to DER
+        let stripped = pemString
+            .components(separatedBy: "\n")
+            .filter { !$0.hasPrefix("-----") }
+            .joined()
+
+        guard let derData = Data(base64Encoded: stripped, options: .ignoreUnknownCharacters) else {
+            throw K8sAPIError.invalidCertificate("Private key: base64 decode failed")
+        }
+
+        // Try EC key first (k3s uses EC), then RSA
+        let keyTypes: [(SecAttrKeyType: CFString, name: String)] = [
+            (kSecAttrKeyTypeECSECPrimeRandom, "EC"),
+            (kSecAttrKeyTypeRSA, "RSA"),
         ]
-        var error: Unmanaged<CFError>?
-        guard let privateKey = SecKeyCreateWithData(keyData as CFData, keyDict as CFDictionary, &error) else {
-            throw K8sAPIError.invalidCertificate("private key: \(error?.takeRetainedValue().localizedDescription ?? "unknown")")
+
+        for keyType in keyTypes {
+            let attrs: [String: Any] = [
+                kSecAttrKeyType as String: keyType.SecAttrKeyType,
+                kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
+            ]
+            var error: Unmanaged<CFError>?
+            if let key = SecKeyCreateWithData(derData as CFData, attrs as CFDictionary, &error) {
+                return key
+            }
         }
 
-        // Add cert and key to keychain temporarily
-        let certAddQuery: [String: Any] = [
+        // Fallback: use SecItemImport for PKCS#8 wrapped keys
+        var items: CFArray?
+        var format = SecExternalFormat.formatUnknown
+        var type = SecExternalItemType.itemTypePrivateKey
+        let status = SecItemImport(
+            derData as CFData,
+            nil,
+            &format,
+            &type,
+            [],
+            nil,
+            nil,
+            &items
+        )
+
+        if status == errSecSuccess, let arr = items as? [Any], let key = arr.first {
+            return (key as! SecKey)
+        }
+
+        throw K8sAPIError.invalidCertificate("Private key: unsupported format (tried EC, RSA, PKCS#8)")
+    }
+}
+
+// MARK: - Session Delegate
+
+final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
+    private let caCert: SecCertificate
+    private let clientCert: SecCertificate
+    private let clientKey: SecKey
+
+    init(caCert: SecCertificate, clientCert: SecCertificate, clientKey: SecKey) {
+        self.caCert = caCert
+        self.clientCert = clientCert
+        self.clientKey = clientKey
+    }
+
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge) async
+        -> (URLSession.AuthChallengeDisposition, URLCredential?)
+    {
+        let method = challenge.protectionSpace.authenticationMethod
+
+        if method == NSURLAuthenticationMethodServerTrust,
+           let serverTrust = challenge.protectionSpace.serverTrust
+        {
+            SecTrustSetAnchorCertificates(serverTrust, [caCert] as CFArray)
+            SecTrustSetAnchorCertificatesOnly(serverTrust, true)
+            return (.useCredential, URLCredential(trust: serverTrust))
+        }
+
+        if method == NSURLAuthenticationMethodClientCertificate {
+            // Create identity from cert + key using keychain
+            let credential = try? createClientCredential()
+            if let credential {
+                return (.useCredential, credential)
+            }
+            return (.cancelAuthenticationChallenge, nil)
+        }
+
+        return (.performDefaultHandling, nil)
+    }
+
+    private func createClientCredential() throws -> URLCredential {
+        // Add cert to keychain temporarily
+        let certLabel = "civo-k8s-tmp-\(UUID().uuidString)"
+        let certQuery: [String: Any] = [
             kSecClass as String: kSecClassCertificate,
-            kSecValueRef as String: cert,
-            kSecAttrLabel as String: "civo-k8s-client-cert",
+            kSecValueRef as String: clientCert,
+            kSecAttrLabel as String: certLabel,
         ]
-        SecItemDelete(certAddQuery as CFDictionary)
-        SecItemAdd(certAddQuery as CFDictionary, nil)
+        SecItemDelete(certQuery as CFDictionary)
+        SecItemAdd(certQuery as CFDictionary, nil)
 
-        let keyAddQuery: [String: Any] = [
+        // Add key to keychain temporarily
+        let keyLabel = "civo-k8s-key-\(UUID().uuidString)"
+        let keyQuery: [String: Any] = [
             kSecClass as String: kSecClassKey,
-            kSecValueRef as String: privateKey,
-            kSecAttrLabel as String: "civo-k8s-client-key",
-            kSecAttrApplicationTag as String: "de.berger-rosenstock.CivoCloudManager.k8s".data(using: .utf8)!,
+            kSecValueRef as String: clientKey,
+            kSecAttrLabel as String: keyLabel,
+            kSecAttrApplicationTag as String: "de.berger-rosenstock.k8s".data(using: .utf8)!,
         ]
-        SecItemDelete(keyAddQuery as CFDictionary)
-        SecItemAdd(keyAddQuery as CFDictionary, nil)
+        SecItemDelete(keyQuery as CFDictionary)
+        SecItemAdd(keyQuery as CFDictionary, nil)
 
-        // Get identity
+        // Find identity
         let identityQuery: [String: Any] = [
             kSecClass as String: kSecClassIdentity,
             kSecReturnRef as String: true,
@@ -147,44 +229,20 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         ]
         var result: CFTypeRef?
         let status = SecItemCopyMatching(identityQuery as CFDictionary, &result)
+
+        // Cleanup temporary items
+        SecItemDelete(certQuery as CFDictionary)
+        SecItemDelete(keyQuery as CFDictionary)
+
         guard status == errSecSuccess, let identity = result else {
-            throw K8sAPIError.invalidCertificate("Could not create identity (status: \(status))")
+            throw K8sAPIError.invalidCertificate("Could not create identity from cert+key")
         }
 
-        return (identity as! SecIdentity)
-    }
-}
-
-// MARK: - Session Delegate
-
-final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
-    private let identity: SecIdentity
-    private let caCert: SecCertificate
-
-    init(identity: SecIdentity, caCert: SecCertificate) {
-        self.identity = identity
-        self.caCert = caCert
-    }
-
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
-        let method = challenge.protectionSpace.authenticationMethod
-
-        if method == NSURLAuthenticationMethodServerTrust,
-           let serverTrust = challenge.protectionSpace.serverTrust {
-            SecTrustSetAnchorCertificates(serverTrust, [caCert] as CFArray)
-            SecTrustSetAnchorCertificatesOnly(serverTrust, true)
-            return (.useCredential, URLCredential(trust: serverTrust))
-        }
-
-        if method == NSURLAuthenticationMethodClientCertificate {
-            return (.useCredential, URLCredential(
-                identity: identity,
-                certificates: nil,
-                persistence: .forSession
-            ))
-        }
-
-        return (.performDefaultHandling, nil)
+        return URLCredential(
+            identity: identity as! SecIdentity,
+            certificates: [clientCert],
+            persistence: .forSession
+        )
     }
 }
 

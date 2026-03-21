@@ -40,6 +40,9 @@ struct ClusterDetailView: View {
                 if !vm.isK8sConnected {
                     connectButton
                 }
+                if let k8sError = vm.k8sError {
+                    ErrorBanner(message: k8sError)
+                }
                 infoSection
                 if !vm.events.isEmpty {
                     eventsSection
@@ -185,7 +188,7 @@ struct ClusterDetailView: View {
         }
         .buttonStyle(.plain)
         .help("Connect to cluster for live metrics and pod management")
-        .disabled(vm.isLoadingK8s || cluster.status != "Active")
+        .disabled(vm.isLoadingK8s || cluster.status.lowercased() != "active")
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.15), value: appeared)
     }
