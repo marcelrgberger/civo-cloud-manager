@@ -89,6 +89,17 @@ th { font-weight: 600; }
 </ul>
 <p>Pour cr&eacute;er : cliquez sur <strong>+</strong>. Configurez le nom, le plugin CNI, la taille des nodes, le nombre de nodes, le r&eacute;seau et les apps du marketplace.</p>
 
+<h3>Se connecter &agrave; l'API Kubernetes</h3>
+<p>Dans la vue d&eacute;taill&eacute;e du cluster, cliquez sur <strong>Se connecter &agrave; l'API Kubernetes</strong> pour acc&eacute;der aux donn&eacute;es en direct depuis l'API Kubernetes :</p>
+<ul>
+<li><strong>Jauges CPU et M&eacute;moire</strong> &mdash; jauges circulaires en pourcentage montrant l'utilisation des ressources du cluster en temps r&eacute;el (n&eacute;cessite metrics-server install&eacute; sur le cluster).</li>
+<li><strong>Nombre de Pods et Sant&eacute; des Nodes</strong> &mdash; indicateurs en direct de l'&eacute;tat du cluster.</li>
+<li><strong>&Eacute;v&eacute;nements r&eacute;cents</strong> &mdash; &eacute;v&eacute;nements du cluster avec avertissements surlign&eacute;s en orange.</li>
+<li><strong>Deployments</strong> &mdash; charges de travail montrant les r&eacute;plicas pr&ecirc;tes vs. souhait&eacute;es.</li>
+</ul>
+<p>Si metrics-server n'est pas install&eacute; sur le cluster, l'app affiche des statistiques statiques du cluster depuis l'API Civo.</p>
+<p class="tip">Lors de la connexion &agrave; l'API Kubernetes, l'app ouvre automatiquement le port 6443 sur le firewall du cluster pour votre IP actuelle. La r&egrave;gle est &eacute;tiquet&eacute;e <code>civo-cloud-&lt;hostname&gt;-k8s-api</code> et est automatiquement supprim&eacute;e lorsque vous quittez la vue du cluster.</p>
+
 <h3>D&eacute;tails du Node (API K8s)</h3>
 <p>Cliquez sur le <strong>nom d'un node</strong> dans un node pool pour vous connecter directement &agrave; l'API Kubernetes et voir les informations d&eacute;taill&eacute;es du node :</p>
 <ul>
@@ -153,11 +164,14 @@ th { font-weight: 600; }
 <p><strong>Nettoyer les disponibles</strong> &mdash; bouton dans la barre d'outils pour supprimer en masse tous les volumes avec le statut &laquo; disponible &raquo;. N&eacute;cessite de saisir <code>DELETE ALL DATA</code> pour confirmer.</p>
 
 <h3>Object Stores</h3>
-<p>Affichez les object stores avec endpoint et taille maximale. Faites un clic droit pour :</p>
+<p>Cliquez sur un object store pour ouvrir sa <strong>vue d&eacute;taill&eacute;e</strong> montrant :</p>
 <ul>
-<li><strong>Afficher les identifiants</strong> &mdash; affiche l'access key ID et le secret access key (s&eacute;lectionnable pour copier).</li>
-<li><strong>Supprimer</strong> &mdash; supprime d&eacute;finitivement l'object store.</li>
+<li><strong>Identifiants</strong> &mdash; endpoint, URL du bucket, access key et secret key (tous s&eacute;lectionnables pour copier).</li>
+<li><strong>Configuration</strong> &mdash; taille maximale, r&eacute;gion, date de cr&eacute;ation et statut.</li>
+<li><strong>Redimensionner</strong> &mdash; stepper pour modifier la taille maximale. Les modifications sont soumises via PUT &agrave; l'API Civo.</li>
 </ul>
+<p>Faites un clic droit sur un object store dans la liste pour le supprimer.</p>
+<p class="tip">Les identifiants (access key et secret key) proviennent directement de la ressource object store elle-m&ecirc;me, pas d'un endpoint s&eacute;par&eacute;.</p>
 
 <h2 id="account">Compte</h2>
 <h3>R&eacute;gions</h3>
@@ -185,6 +199,7 @@ th { font-weight: 600; }
 <li>Les cartes de ressources du tableau de bord sont cliquables &mdash; naviguez vers n'importe quelle section en un clic.</li>
 <li>Les r&egrave;gles de firewall cr&eacute;&eacute;es par cette app sont &eacute;tiquet&eacute;es <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> et seules les r&egrave;gles de cette app sont g&eacute;r&eacute;es.</li>
 <li>Le flux de d&eacute;tail Kubernetes : Liste des Clusters &rarr; D&eacute;tail du Cluster &rarr; D&eacute;tail du Node &rarr; Liste des Pods &rarr; Logs des Pods.</li>
+<li>Lors de la connexion &agrave; l'API Kubernetes, le port 6443 est automatiquement ouvert et ferm&eacute; pour votre IP &mdash; aucune configuration manuelle du firewall n&eacute;cessaire.</li>
 </ul>
 
 </body>
