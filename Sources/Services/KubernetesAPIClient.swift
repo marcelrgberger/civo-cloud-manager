@@ -12,7 +12,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
 
-        // Import CA cert
+        // Import CA cert from PEM via SecItemImport
         var caItems: CFArray?
         var caFormat = SecExternalFormat.formatPEMSequence
         var caType = SecExternalItemType.itemTypeCertificate
@@ -22,16 +22,16 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         }
         self.caCert = ca
 
-        // Create PKCS#12 from cert+key via openssl, then import identity
-        self.identity = try Self.createIdentityViaPKCS12(
-            certPEM: credentials.clientCertPEM,
-            keyPEM: credentials.clientKeyPEM
-        )
+        // Create identity from PEM cert + key using Security.framework only
+        self.identity = try Self.createIdentity(certPEM: credentials.clientCertPEM, keyPEM: credentials.clientKeyPEM)
 
         super.init()
     }
 
     deinit {
+        // Cleanup keychain items
+        SecItemDelete([kSecClass as String: kSecClassCertificate, kSecAttrLabel as String: "civo-k8s-client"] as CFDictionary)
+        SecItemDelete([kSecClass as String: kSecClassKey, kSecAttrLabel as String: "civo-k8s-client"] as CFDictionary)
         session.invalidateAndCancel()
     }
 
@@ -131,55 +131,64 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         completionHandler(.performDefaultHandling, nil)
     }
 
-    // MARK: - PKCS#12 Identity Creation
+    // MARK: - Identity via Security.framework (no openssl)
 
-    private static func createIdentityViaPKCS12(certPEM: Data, keyPEM: Data) throws -> SecIdentity {
-        let tmpDir = FileManager.default.temporaryDirectory.appendingPathComponent("civo-k8s-p12-\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: tmpDir) }
+    private static func createIdentity(certPEM: Data, keyPEM: Data) throws -> SecIdentity {
+        let tag = "civo-k8s-client"
 
-        let certPath = tmpDir.appendingPathComponent("cert.pem")
-        let keyPath = tmpDir.appendingPathComponent("key.pem")
-        let p12Path = tmpDir.appendingPathComponent("client.p12")
-        let password = UUID().uuidString
-
-        try certPEM.write(to: certPath)
-        try keyPEM.write(to: keyPath)
-
-        // Create PKCS#12 via openssl
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/openssl")
-        process.arguments = [
-            "pkcs12", "-export",
-            "-out", p12Path.path,
-            "-inkey", keyPath.path,
-            "-in", certPath.path,
-            "-passout", "pass:\(password)",
-        ]
-        process.standardOutput = FileHandle.nullDevice
-        process.standardError = FileHandle.nullDevice
-
-        try process.run()
-        process.waitUntilExit()
-
-        guard process.terminationStatus == 0 else {
-            throw K8sAPIError.invalidCertificate("openssl pkcs12 failed: exit \(process.terminationStatus)")
+        // Import client certificate from PEM
+        var certItems: CFArray?
+        var certFormat = SecExternalFormat.formatPEMSequence
+        var certType = SecExternalItemType.itemTypeCertificate
+        let certStatus = SecItemImport(certPEM as CFData, nil, &certFormat, &certType, [], nil, nil, &certItems)
+        guard certStatus == errSecSuccess, let certs = certItems as? [SecCertificate], let clientCert = certs.first else {
+            throw K8sAPIError.invalidCertificate("Client cert PEM import failed: \(certStatus)")
         }
 
-        // Import PKCS#12
-        let p12Data = try Data(contentsOf: p12Path)
-        var items: CFArray?
-        let status = SecPKCS12Import(
-            p12Data as CFData,
-            [kSecImportExportPassphrase as String: password] as CFDictionary,
-            &items
-        )
+        // Import private key from PEM via SecItemImport with OpenSSL format
+        var keyItems: CFArray?
+        var keyFormat = SecExternalFormat.formatOpenSSL
+        var keyType = SecExternalItemType.itemTypePrivateKey
+        let keyStatus = SecItemImport(keyPEM as CFData, nil, &keyFormat, &keyType, [], nil, nil, &keyItems)
+        guard keyStatus == errSecSuccess, let keys = keyItems as? [Any], let privateKey = keys.first else {
+            throw K8sAPIError.invalidCertificate("Key PEM import failed: \(keyStatus)")
+        }
 
-        guard status == errSecSuccess,
-              let dicts = items as? [[String: Any]],
-              let dict = dicts.first,
-              let identity = dict[kSecImportItemIdentity as String] else {
-            throw K8sAPIError.invalidCertificate("PKCS#12 import failed: \(status)")
+        // Cleanup any previous entries
+        SecItemDelete([kSecClass as String: kSecClassCertificate, kSecAttrLabel as String: tag] as CFDictionary)
+        SecItemDelete([kSecClass as String: kSecClassKey, kSecAttrLabel as String: tag] as CFDictionary)
+
+        // Add certificate to keychain
+        let addCertStatus = SecItemAdd([
+            kSecClass as String: kSecClassCertificate,
+            kSecValueRef as String: clientCert,
+            kSecAttrLabel as String: tag,
+        ] as CFDictionary, nil)
+        guard addCertStatus == errSecSuccess || addCertStatus == errSecDuplicateItem else {
+            throw K8sAPIError.invalidCertificate("Keychain cert add failed: \(addCertStatus)")
+        }
+
+        // Add private key to keychain
+        let addKeyStatus = SecItemAdd([
+            kSecClass as String: kSecClassKey,
+            kSecValueRef as String: privateKey,
+            kSecAttrLabel as String: tag,
+        ] as CFDictionary, nil)
+        guard addKeyStatus == errSecSuccess || addKeyStatus == errSecDuplicateItem else {
+            throw K8sAPIError.invalidCertificate("Keychain key add failed: \(addKeyStatus)")
+        }
+
+        // Find matching identity (cert + key pair)
+        var identityRef: CFTypeRef?
+        let findStatus = SecItemCopyMatching([
+            kSecClass as String: kSecClassIdentity,
+            kSecAttrLabel as String: tag,
+            kSecReturnRef as String: true,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+        ] as CFDictionary, &identityRef)
+
+        guard findStatus == errSecSuccess, let identity = identityRef else {
+            throw K8sAPIError.invalidCertificate("Identity not found after import: \(findStatus)")
         }
 
         return (identity as! SecIdentity)
