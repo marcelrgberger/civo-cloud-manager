@@ -87,11 +87,15 @@ final class KubernetesViewModel {
             return
         }
 
-        // Auto-connect to K8s API in background
+        // Auto-connect to K8s API — cancel previous connection first
+        connectTask?.cancel()
         if selectedCluster?.status.lowercased() == "active" {
-            Task { await connectToCluster(id) }
+            let clusterId = id
+            connectTask = Task { await connectToCluster(clusterId) }
         }
     }
+
+    private var connectTask: Task<Void, Never>?
 
     // MARK: - K8s API (via kubeconfig + auto-firewall)
 
@@ -100,10 +104,21 @@ final class KubernetesViewModel {
         k8sError = nil
         defer { isLoadingK8s = false }
 
+        // Fetch cluster detail fresh to avoid race with selectedCluster
+        let cluster: CivoKubernetesCluster
+        do {
+            cluster = try await service.showCluster(clusterId)
+        } catch {
+            k8sError = error.localizedDescription
+            return
+        }
+
+        // Verify this is still the selected cluster
+        guard selectedCluster?.id == clusterId else { return }
+
         var steps: [String] = []
         do {
-            // Step 1: Auto-open firewall
-            if let cluster = selectedCluster, let fwId = cluster.firewallId {
+            if let fwId = cluster.firewallId {
                 await autoOpenFirewall(firewallId: fwId, port: 6443)
                 steps.append("Firewall opened")
             } else {

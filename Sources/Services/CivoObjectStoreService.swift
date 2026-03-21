@@ -32,7 +32,7 @@ final class CivoObjectStoreService: Sendable {
     }
 
     func showCredential(_ id: String) async throws -> CivoObjectStoreCredential {
-        try await api.get(path: "/objectstores/credentials/\(id)")
+        try await api.get(path: "/objectstore/credentials/\(id)")
     }
 
     func createCredential(_ body: [String: Any]) async throws -> CivoObjectStoreCredential {
