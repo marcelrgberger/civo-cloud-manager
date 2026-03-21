@@ -6,6 +6,7 @@ struct CredentialListView: View {
     @State private var deleteTarget: CivoObjectStoreCredential?
     @State private var newCredName = ""
     @State private var revealedSecrets: Set<String> = []
+    @State private var listAppeared = false
 
     var body: some View {
         List {
@@ -14,10 +15,12 @@ struct CredentialListView: View {
             } else {
                 ForEach(Array(vm.credentials.enumerated()), id: \.element.id) { index, cred in
                     credentialRow(cred)
+                        .opacity(listAppeared ? 1 : 0)
+                        .offset(x: listAppeared ? 0 : -12)
+                        .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.06), value: listAppeared)
                         .contextMenu {
                             Button("Delete", role: .destructive) { deleteTarget = cred }
                         }
-                        .modifier(StaggeredAppear(index: index))
                 }
             }
 
@@ -40,7 +43,11 @@ struct CredentialListView: View {
             if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle("Object Store Credentials")
-        .task { await vm.refresh() }
+        .task {
+            listAppeared = false
+            await vm.refresh()
+            withAnimation { listAppeared = true }
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: {
