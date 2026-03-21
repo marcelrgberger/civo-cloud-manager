@@ -12,13 +12,13 @@ struct ObjectStoreListView: View {
 
     var body: some View {
         Group {
-            if let store = vm.browsingObjectStore {
+            if let store = vm.browsingObjectStore, let cred = vm.credentialForStore(store) {
                 ObjectStoreBrowserView(
                     store: store,
                     s3Client: S3Client(
                         endpoint: store.objectstoreEndpoint ?? "objectstore.\(CivoConfig.shared.region).civo.com",
-                        accessKey: store.accessKeyId ?? "",
-                        secretKey: store.secretAccessKey ?? "",
+                        accessKey: cred.accessKeyId ?? "",
+                        secretKey: cred.secretAccessKeyId ?? "",
                         region: CivoConfig.shared.region
                     )
                 ) {

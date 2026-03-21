@@ -35,6 +35,24 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         }
     }
 
+    var iconColor: Color {
+        switch self {
+        case .dashboard: return .blue
+        case .instances: return .green
+        case .sshKeys: return .orange
+        case .clusters: return .blue
+        case .networks: return .green
+        case .firewalls: return .red
+        case .loadBalancers: return .indigo
+        case .domains: return .teal
+        case .databases: return .purple
+        case .volumes: return .orange
+        case .objectStores: return .cyan
+        case .regions: return .mint
+        case .about: return .secondary
+        }
+    }
+
     var category: SidebarCategory {
         switch self {
         case .dashboard: return .overview
@@ -101,8 +119,13 @@ struct MainWindowView: View {
             ForEach(SidebarCategory.allCases, id: \.self) { category in
                 Section(category.rawValue) {
                     ForEach(category.sections) { section in
-                        Label(section.rawValue, systemImage: section.icon)
-                            .tag(section)
+                        Label {
+                            Text(section.rawValue)
+                        } icon: {
+                            Image(systemName: section.icon)
+                                .foregroundStyle(section.iconColor)
+                        }
+                        .tag(section)
                     }
                 }
             }

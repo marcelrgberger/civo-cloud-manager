@@ -10,6 +10,7 @@
 		006CAF2263F5372123A10957 /* K8sPodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC475DE643C954678BD26AD /* K8sPodListView.swift */; };
 		008FF41156D6FD2F10DF32E8 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E926C81BAC9B489A4A6CF /* ErrorBanner.swift */; };
 		0261F17C269DF770F38751FB /* ObjectStoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F5D90D7A08D4235B08375 /* ObjectStoreDetailView.swift */; };
+		029288A99F7F4243ACEF1081 /* CivoObjectStoreCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B6868A3DCFDF2FD4EB6940 /* CivoObjectStoreCredential.swift */; };
 		030D3EB1E368E8EE0EDDE2E1 /* FirewallDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE494996C31EA1F2277C85E8 /* FirewallDetailView.swift */; };
 		03175E40119BCDEDF60A1CF4 /* StaggeredAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */; };
 		06471893C03891741C390881 /* CivoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F22F7A31F8EC23B4CD44E /* CivoNetwork.swift */; };
@@ -181,6 +182,7 @@
 		8DC6D9CA22D5C3BA1B85D99F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		8ECEECB8E6EDEA2F7E3DA302 /* CreateObjectStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObjectStoreView.swift; sourceTree = "<group>"; };
 		90AFB11033C6124929DDC148 /* QuotaGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
+		93B6868A3DCFDF2FD4EB6940 /* CivoObjectStoreCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreCredential.swift; sourceTree = "<group>"; };
 		94F9EC147708D73711161AE0 /* CivoVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoVolume.swift; sourceTree = "<group>"; };
 		959602569F06A8B06B21ED24 /* K8sNodeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sNodeDetailView.swift; sourceTree = "<group>"; };
 		9782313EE7E0BFC06659F3A8 /* K8sNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sNetworking.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				CB0C963DEE47447DB55ED2A0 /* CivoLoadBalancer.swift */,
 				D33F22F7A31F8EC23B4CD44E /* CivoNetwork.swift */,
 				4112A2183F0F82E271E7CBEB /* CivoObjectStore.swift */,
+				93B6868A3DCFDF2FD4EB6940 /* CivoObjectStoreCredential.swift */,
 				B1597B9E26FE112E2374B929 /* CivoQuota.swift */,
 				7126A77B7B656502483F1E79 /* CivoRegion.swift */,
 				B50FD50818CE1B57EE2438DE /* CivoSize.swift */,
@@ -607,6 +610,7 @@
 				06471893C03891741C390881 /* CivoNetwork.swift in Sources */,
 				6A716F6B87A5AC593E9E4265 /* CivoNetworkService.swift in Sources */,
 				E525F85C14EA5B002BD6E623 /* CivoObjectStore.swift in Sources */,
+				029288A99F7F4243ACEF1081 /* CivoObjectStoreCredential.swift in Sources */,
 				F12B54BD020BB39BFB84A7D1 /* CivoObjectStoreService.swift in Sources */,
 				BD1AFC04EF1D8B2E0277F790 /* CivoQuota.swift in Sources */,
 				D624EA1463D080282A186412 /* CivoQuotaService.swift in Sources */,
