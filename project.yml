@@ -35,6 +35,7 @@ settings:
     INFOPLIST_FILE: CivoCloudManager/Info.plist
     CODE_SIGN_ENTITLEMENTS: CivoCloudManager/CivoCloudManager.entitlements
     SWIFT_EMIT_LOC_STRINGS: "YES"
+    LOCALIZATION_PREFERS_STRING_CATALOGS: "YES"
 
 targets:
   CivoCloudManager:
@@ -44,10 +45,18 @@ targets:
       - path: Sources
         excludes:
           - Info.plist
-          - Localizable.xcstrings
       - path: CivoCloudManager/Assets.xcassets
     resources:
       - path: CivoCloudManager/Localizable.xcstrings
+        buildPhase: resources
+      - path: CivoCloudManager/en.lproj/InfoPlist.strings
+      - path: CivoCloudManager/de.lproj/InfoPlist.strings
+      - path: CivoCloudManager/es.lproj/InfoPlist.strings
+      - path: CivoCloudManager/fr.lproj/InfoPlist.strings
+      - path: CivoCloudManager/it.lproj/InfoPlist.strings
+      - path: CivoCloudManager/nl.lproj/InfoPlist.strings
+      - path: CivoCloudManager/pl.lproj/InfoPlist.strings
+      - path: CivoCloudManager/pt.lproj/InfoPlist.strings
       - path: CivoCloudManager/PrivacyInfo.xcprivacy
       - path: CivoCloudManager/CivoCloudManager.help
     settings:
