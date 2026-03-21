@@ -179,25 +179,28 @@ struct ClusterDetailView: View {
     private var nodePoolsSection: some View {
         GroupBox("Node Pools") {
             if let pools = cluster.pools, !pools.isEmpty {
-                VStack(spacing: 8) {
+                VStack(spacing: 4) {
                     ForEach(Array(pools.enumerated()), id: \.element.id) { index, pool in
-                        HStack {
-                            Image(systemName: "square.stack.3d.up")
-                                .foregroundStyle(.blue)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(pool.id)
-                                    .font(.subheadline.weight(.medium))
-                                    .lineLimit(1)
-                                Text("\(pool.count ?? 0) node(s) — \(pool.size ?? "unknown")")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                        DisclosureGroup {
+                            nodePoolDetail(pool)
+                        } label: {
+                            HStack {
+                                Image(systemName: "square.stack.3d.up")
+                                    .foregroundStyle(.blue)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(pool.id)
+                                        .font(.subheadline.weight(.medium))
+                                        .lineLimit(1)
+                                    Text("\(pool.count ?? 0) node(s) — \(pool.size ?? "unknown")")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                Text("\(pool.count ?? 0)")
+                                    .font(.system(.title3, design: .rounded).bold())
+                                    .foregroundStyle(.blue)
                             }
-                            Spacer()
-                            Text("\(pool.count ?? 0)")
-                                .font(.system(.title3, design: .rounded).bold())
-                                .foregroundStyle(.blue)
                         }
-                        .padding(.vertical, 2)
                         .modifier(StaggeredAppear(index: index))
                     }
                 }
@@ -210,6 +213,82 @@ struct ClusterDetailView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.3), value: appeared)
+    }
+
+    private func nodePoolDetail(_ pool: CivoNodePool) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                poolInfoRow("Pool ID", pool.id)
+                poolInfoRow("Size", pool.size ?? "—")
+                poolInfoRow("Node Count", "\(pool.count ?? 0)")
+                poolInfoRow("Public IPs", pool.publicIPNodePool == true ? "Yes" : "No")
+            }
+
+            if let names = pool.instanceNames, !names.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Instances")
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    ForEach(Array(names.enumerated()), id: \.offset) { _, name in
+                        HStack(spacing: 6) {
+                            Image(systemName: "desktopcomputer")
+                                .font(.caption)
+                                .foregroundStyle(.blue)
+                            Text(name)
+                                .font(.caption.monospaced())
+                                .textSelection(.enabled)
+                        }
+                    }
+                }
+            }
+
+            if let labels = pool.labels, !labels.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Labels")
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    ForEach(Array(labels.sorted(by: { $0.key < $1.key })), id: \.key) { key, value in
+                        Text("\(key)=\(value)")
+                            .font(.caption2.monospaced())
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(.blue.opacity(0.1))
+                            .clipShape(Capsule())
+                    }
+                }
+            }
+
+            if let taints = pool.taints, !taints.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Taints")
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(.secondary)
+                    ForEach(Array(taints.enumerated()), id: \.offset) { _, taint in
+                        HStack(spacing: 4) {
+                            Text("\(taint.key ?? "")=\(taint.value ?? ""):\(taint.effect ?? "")")
+                                .font(.caption2.monospaced())
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(.orange.opacity(0.1))
+                                .clipShape(Capsule())
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.leading, 28)
+    }
+
+    private func poolInfoRow(_ label: String, _ value: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(label)
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+            Text(value)
+                .font(.caption)
+                .textSelection(.enabled)
+        }
     }
 
     // MARK: - Apps

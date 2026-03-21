@@ -48,11 +48,21 @@ struct CivoNodePool: Codable, Identifiable, Sendable {
     let count: Int?
     let size: String?
     let instanceNames: [String]?
+    let publicIPNodePool: Bool?
+    let labels: [String: String]?
+    let taints: [CivoNodeTaint]?
 
     enum CodingKeys: String, CodingKey {
-        case id, count, size
+        case id, count, size, labels, taints
         case instanceNames = "instance_names"
+        case publicIPNodePool = "public_ip_node_pool"
     }
+}
+
+struct CivoNodeTaint: Codable, Sendable {
+    let key: String?
+    let value: String?
+    let effect: String?
 }
 
 struct CivoK8sApp: Codable, Identifiable, Sendable {
