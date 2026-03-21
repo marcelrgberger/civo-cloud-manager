@@ -47,6 +47,7 @@ struct DeleteConfirmationSheet: View {
                 Button("Delete Permanently", role: .destructive) { onConfirm() }
                     .disabled(!isConfirmed)
                     .keyboardShortcut(.defaultAction)
+                    .help("Permanently removes this resource and all its data")
             }
         }
         .padding(30)

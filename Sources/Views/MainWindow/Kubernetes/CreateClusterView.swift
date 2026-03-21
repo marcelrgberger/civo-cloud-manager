@@ -18,6 +18,7 @@ struct CreateClusterView: View {
                 Picker("CNI Plugin", selection: $cniPlugin) {
                     ForEach(cniOptions, id: \.self) { Text($0) }
                 }
+                .help("Network plugin for pod communication")
             }
 
             Section("Node Pool") {
@@ -27,7 +28,9 @@ struct CreateClusterView: View {
                         Text(s.displayName).tag(s.name)
                     }
                 }
+                .help("Instance type for compute resources")
                 Stepper("Nodes: \(nodeCount)", value: $nodeCount, in: 1...10)
+                    .help("Number of worker nodes")
             }
 
             Section("Networking") {

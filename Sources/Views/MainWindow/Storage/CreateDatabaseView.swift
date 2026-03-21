@@ -26,7 +26,9 @@ struct CreateDatabaseView: View {
                         Text(s.displayName).tag(s.name)
                     }
                 }
+                .help("Instance type for compute resources")
                 Stepper("Nodes: \(nodes)", value: $nodes, in: 1...3)
+                    .help("Number of database replicas")
             }
 
             Section("Networking") {

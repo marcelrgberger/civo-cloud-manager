@@ -23,6 +23,7 @@ struct LoadBalancerListView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .help("Reload data from API")
                     .disabled(vm.isLoading)
             }
         }

@@ -17,10 +17,10 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Quota increase request** — "Request Change" button opens form with steppers for all quota limits, sends PUT /quota
 - **Clickable resource cards** — navigate directly to any resource section
 - **Full CRUD** — create, view, and delete resources across all categories
-- **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps, direct K8s API access for node details and pod logs
+- **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps, direct K8s API access for node details, pod logs, live metrics, events, and workloads
 - **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config
 - **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers; drill-down into firewall rules (view, create, delete)
-- **Storage** — create volumes and object stores with size configuration; view object store credentials (access key, secret key)
+- **Storage** — create volumes and object stores with size configuration; click object store for detail view with credentials, config, and resize
 - **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys
 - **Regions** — view available regions, switch active region
 - **Safe deletion** — all destructive operations require typing the resource name to confirm (DeleteConfirmationSheet)
@@ -30,12 +30,25 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 
 ### Kubernetes Deep Integration
 - **Direct K8s API access** — downloads kubeconfig from Civo API, parses certificates, connects directly to the Kubernetes API using client certificate auth via Security.framework
+- **"Connect to Kubernetes API" button** — in the cluster detail view, click to connect and view live cluster data
+- **Live metrics** — circular CPU and Memory gauges (percentage) when metrics-server is available, with pod count and node health indicators
+- **Cluster events** — recent events with warnings highlighted in orange
+- **Workloads** — deployments with ready/desired replica status
+- **Graceful fallback** — static stats shown when metrics-server is not installed on the cluster
+- **Auto-firewall for K8s API** — automatically opens port 6443 for your current IP when connecting to a cluster's Kubernetes API, and closes the rule when navigating back
 - **Node details** — click a node name in a pool to see CPU, Memory, Pods capacity vs allocatable, conditions (Ready, MemoryPressure, DiskPressure, PIDPressure), addresses, and system info (OS, architecture, container runtime, kubelet version)
 - **Pod list** — view all pods on a node with status badges, namespace, ready count, and restart count
 - **Pod logs** — scrollable monospaced log output with auto-scroll toggle and refresh
 - **Save Kubeconfig** — toolbar button exports the cluster kubeconfig as a .yaml file via NSSavePanel
 - **Editable node pool labels** — add and remove labels on node pools via PUT
 - **Multi-level navigation** — Cluster List → Cluster Detail → Node Detail → Pod List → Pod Logs with spring move+opacity transitions
+
+### Object Store Detail View
+- **Click an object store** to open its detail view showing:
+  - **Credentials** — endpoint, bucket URL, access key, and secret key (all selectable for copying)
+  - **Configuration** — max size, region, created date, status
+  - **Resize** — stepper to change max size, submitted via PUT /objectstores/:id
+- Credentials come from the object store resource itself (`owner_info.access_key_id`, `owner_info.secret_access_key`)
 
 ### Monetization
 - **Free tier** — menu bar firewall management
@@ -125,9 +138,9 @@ The sidebar is organized into categories:
 |----------|----------|------|
 | **Overview** | Dashboard (quota gauges, clickable resource cards, quota change request) | Request Change |
 | **Compute** | Instances, SSH Keys | Create, Delete |
-| **Kubernetes** | Clusters (detail view for pools, apps, conditions, K8s node details, pod logs) | Create, Delete |
+| **Kubernetes** | Clusters (detail view for pools, apps, conditions, live metrics, events, workloads, K8s node details, pod logs) | Create, Delete |
 | **Networking** | Networks, Firewalls (with rule drill-down), Load Balancers, Domains | Create, Edit (DNS records, firewall rules), Delete |
-| **Storage & Data** | Databases, Volumes, Object Stores | Create, Delete, Show Credentials |
+| **Storage & Data** | Databases, Volumes, Object Stores (with detail view, credentials, resize) | Create, Delete, Resize |
 | **Account** | Regions | Switch |
 
 **Each resource view provides:**
@@ -141,7 +154,7 @@ The sidebar is organized into categories:
 
 **Network delete** skips the default network — only non-default networks can be deleted.
 
-**Object store credentials** — context menu "Show Credentials" opens a sheet displaying access_key_id and secret_access_key as selectable text.
+**Object store detail view** — click an object store to see its detail view with credentials (endpoint, bucket URL, access key, secret key as selectable text), configuration (max size, region, created, status), and a resize section with stepper to change max size via PUT /objectstores/:id.
 
 **Firewall rule drill-down** — click a firewall to see all its rules. Each rule shows protocol, ports, CIDR, direction (ingress/egress), and action (allow/deny) with color-coded badges. Add new rules via "+" toolbar button, delete rules via context menu with name confirmation.
 
@@ -173,8 +186,24 @@ Click a cluster in the list to see:
 - Health conditions (ControlPlaneReady, WorkerNodesReady, ClusterVersionSync)
 - Node pools (count, size per pool)
 - Installed applications (cert-manager, ingress-nginx, etc.)
+- **"Connect to Kubernetes API" button** — connects to the cluster's K8s API for live data:
+  - **CPU and Memory gauges** — circular percentage gauges (requires metrics-server)
+  - **Pod count and Node health** indicators
+  - **Recent cluster events** — warnings highlighted in orange
+  - **Deployments** — ready/desired replica status
+  - **Graceful fallback** — static cluster stats shown when metrics-server is not installed
 - **Save Kubeconfig** toolbar button — exports the kubeconfig as a .yaml file
 - Delete button (with confirmation)
+
+### Auto-Firewall for Kubernetes API
+
+When you click "Connect to Kubernetes API" in the cluster detail view, the app automatically:
+1. Detects your current public IP via IPDetector
+2. Opens port 6443 on the cluster's firewall for your IP
+3. Labels the rule `civo-cloud-<hostname>-k8s-api`
+4. Closes the firewall rule automatically when you navigate back from the cluster
+
+This uses the existing IPDetector and CivoFirewallService infrastructure.
 
 ### Kubernetes Node Details
 
@@ -258,6 +287,8 @@ graph TB
     I --> SZ[CivoSizeService]
     I --> KP[KubeconfigParser]
     I --> KA[KubernetesAPIClient]
+    I --> P
+    I --> Q
     J --> T[CivoDatabaseService]
     J --> S6
     J --> P
@@ -399,6 +430,39 @@ classDiagram
         +K8sContainerStatus[] containerStatuses
     }
 
+    class K8sClusterMetrics {
+        +Double cpuUsagePercent
+        +Double memoryUsagePercent
+        +Int podCount
+        +Int nodeCount
+    }
+
+    class K8sNodeMetrics {
+        +String name
+        +String cpuUsage
+        +String memoryUsage
+    }
+
+    class K8sEvent {
+        +String type
+        +String reason
+        +String message
+        +K8sObjectReference involvedObject
+        +String? lastTimestamp
+    }
+
+    class K8sDeployment {
+        +String name
+        +String namespace
+        +K8sDeploymentStatus status
+    }
+
+    class K8sDeploymentStatus {
+        +Int replicas
+        +Int readyReplicas
+        +Int availableReplicas
+    }
+
     class CivoDatabase {
         +String id
         +String name
@@ -426,6 +490,13 @@ classDiagram
         +String id
         +String name
         +Int? maxSize
+        +CivoOwnerInfo? ownerInfo
+        +String? bucketURL
+        +String? region
+        +String? createdAt
+    }
+
+    class CivoOwnerInfo {
         +String? accessKeyId
         +String? secretAccessKey
     }
@@ -489,6 +560,10 @@ classDiagram
     K8sNode --> K8sNodeSystemInfo
     K8sPod --> K8sPodStatus
     K8sPodStatus --> K8sContainerStatus
+    K8sClusterMetrics --> K8sNodeMetrics
+    K8sDeployment --> K8sDeploymentStatus
+    K8sEvent --> K8sObjectReference
+    CivoObjectStore --> CivoOwnerInfo
     CivoQuota --> QuotaItem
     FirewallStatus --> ManagedFirewall
     CivoDomain --> CivoDomainRecord
@@ -521,6 +596,15 @@ classDiagram
         +getNode(name) K8sNode
         +getPods(nodeName) K8sPod[]
         +getPodLogs(namespace, name) String
+        +getMetrics() K8sClusterMetrics
+        +getEvents() K8sEvent[]
+        +getDeployments() K8sDeployment[]
+    }
+
+    class K8sMetricsParser {
+        +parseNodeMetrics(data) K8sNodeMetrics[]
+        +parsePodMetrics(data) K8sPodMetrics[]
+        +computeClusterMetrics() K8sClusterMetrics
     }
 
     class CivoConfig {
@@ -543,7 +627,7 @@ classDiagram
     class CivoDatabaseService { +listDatabases(); +createDatabase(body); +removeDatabase(id) }
     class CivoNetworkService { +listNetworks(); +createNetwork(body); +updateNetwork(id, body); +removeNetwork(id) }
     class CivoVolumeService { +listVolumes(); +createVolume(body); +removeVolume(id) }
-    class CivoObjectStoreService { +listObjectStores(); +createObjectStore(body); +removeObjectStore(id) }
+    class CivoObjectStoreService { +listObjectStores(); +createObjectStore(body); +updateObjectStore(id, body); +removeObjectStore(id) }
     class CivoLoadBalancerService { +listLoadBalancers(); +removeLoadBalancer(id) }
     class CivoInstanceService { +listInstances(); +createInstance(body); +updateInstance(id, body); +removeInstance(id) }
     class CivoSSHKeyService { +listSSHKeys(); +createSSHKey(body); +removeSSHKey(id) }
@@ -567,6 +651,7 @@ classDiagram
     CivoSizeService --> CivoAPIClient
     KubeconfigParser ..> CivoKubernetesService : parses kubeconfig from
     KubernetesAPIClient ..> KubeconfigParser : uses parsed certs
+    K8sMetricsParser ..> KubernetesAPIClient : parses metrics from
 ```
 
 ### Data Flow — Menu Bar Firewall
@@ -673,14 +758,20 @@ sequenceDiagram
     LV->>LV: Show SuccessOverlay (1.5s)
 ```
 
-### Data Flow — Kubernetes Detail
+### Data Flow — Kubernetes Detail with Live Metrics
 
 ```mermaid
 sequenceDiagram
     participant U as User
     participant CL as ClusterListView
+    participant CD as ClusterDetailView
     participant VM as KubernetesViewModel
+    participant F as CivoFirewallService
+    participant IP as IPDetector
     participant API as api.civo.com
+    participant KP as KubeconfigParser
+    participant KA as KubernetesAPIClient
+    participant K8S as K8s API Server
 
     U->>CL: Select cluster
     CL->>VM: loadClusterDetail(id)
@@ -688,14 +779,36 @@ sequenceDiagram
     API-->>VM: CivoKubernetesCluster (pools, apps, conditions)
     VM-->>CL: Show ClusterDetailView
 
-    U->>CL: Click "Delete" → Confirmation
-    CL->>VM: removeCluster(id)
-    VM->>API: DELETE /kubernetes/clusters/{id}?region=fra1
-    alt Success
-        VM-->>CL: Navigate back
-    else Failure
-        VM-->>CL: Show error banner
+    U->>CD: Click "Connect to Kubernetes API"
+    CD->>VM: connectToK8sAPI(clusterId)
+    VM->>IP: Detect public IP
+    IP-->>VM: 85.214.x.x
+    VM->>F: openAccess(firewallId, 6443, ip, "civo-cloud-<hostname>-k8s-api")
+    F->>API: POST /firewalls/{id}/rules
+    VM->>API: GET /kubernetes/clusters/{id}/kubeconfig
+    API-->>VM: kubeconfig YAML
+    VM->>KP: parse(yaml)
+    KP-->>VM: server URL, CA cert, client cert, client key
+    VM->>KA: init(serverURL, certs)
+
+    par Metrics
+        KA->>K8S: GET /apis/metrics.k8s.io/v1beta1/nodes
+        K8S-->>KA: K8sNodeMetrics[]
+    and Events
+        KA->>K8S: GET /api/v1/events
+        K8S-->>KA: K8sEvent[]
+    and Workloads
+        KA->>K8S: GET /apis/apps/v1/deployments
+        K8S-->>KA: K8sDeployment[]
     end
+
+    KA-->>VM: K8sClusterMetrics, events, deployments
+    VM-->>CD: Show live gauges, events, workloads
+
+    U->>CD: Navigate back
+    CD->>VM: disconnectFromK8sAPI()
+    VM->>F: closeAccess(firewallId, ruleId)
+    F->>API: DELETE /firewalls/{id}/rules/{ruleId}
 ```
 
 ### Data Flow — Kubernetes API Access (Node Details & Pod Logs)
@@ -759,6 +872,7 @@ graph LR
         CO --> SK[SSHKeyListView]
         KU --> CL[ClusterListView]
         CL -->|drill-down| CD[ClusterDetailView]
+        CD -->|connect K8s API| LM[Live Metrics/Events/Workloads]
         CD -->|click node| ND[K8sNodeDetailView]
         ND -->|view pods| PL[K8sPodListView]
         PL -->|click pod| PLG[PodLogView]
@@ -770,6 +884,7 @@ graph LR
         ST --> DBL[DatabaseListView]
         ST --> VL[VolumeListView]
         ST --> OL[ObjectStoreListView]
+        OL -->|drill-down| OD[ObjectStoreDetailView]
         AC --> RL[RegionListView]
     end
 
@@ -794,9 +909,11 @@ graph LR
 
     style DA fill:#2563EB,color:#fff
     style CD fill:#10B981,color:#fff
+    style LM fill:#059669,color:#fff
     style ND fill:#059669,color:#fff
     style PL fill:#047857,color:#fff
     style PLG fill:#065F46,color:#fff
+    style OD fill:#7C3AED,color:#fff
     style QE fill:#F59E0B,color:#fff
     style EL fill:#F59E0B,color:#fff
 ```
@@ -822,7 +939,7 @@ Some Civo API endpoints return paginated objects, others return plain arrays:
 | `/instances` | GET, POST | Paginated `{items:[]}` | Yes |
 | `/instances/:id` | PUT, DELETE | Single `{}` | Yes |
 | `/objectstores` | GET, POST | Paginated `{items:[]}` | Yes |
-| `/objectstores/:id` | DELETE | Single `{}` | Yes |
+| `/objectstores/:id` | PUT, DELETE | Single `{}` | Yes |
 | `/firewalls` | GET, POST | Array `[]` | Yes |
 | `/firewalls/:id` | DELETE | — | Yes |
 | `/firewalls/:id/rules` | GET, POST | Array `[]` | Yes |
@@ -932,10 +1049,13 @@ civo-cloud-manager/
 │   │   ├── CivoKubernetes.swift                # Cluster, NodePool, App, Condition
 │   │   ├── K8sNode.swift                       # K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
 │   │   ├── K8sPod.swift                        # K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
+│   │   ├── K8sMetrics.swift                    # K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
+│   │   ├── K8sEvent.swift                      # K8sEvent, K8sObjectReference
+│   │   ├── K8sWorkload.swift                   # K8sDeployment, K8sDeploymentStatus
 │   │   ├── CivoDatabase.swift
 │   │   ├── CivoNetwork.swift
 │   │   ├── CivoVolume.swift
-│   │   ├── CivoObjectStore.swift               # + accessKeyId, secretAccessKey fields
+│   │   ├── CivoObjectStore.swift               # + ownerInfo (accessKeyId, secretAccessKey), bucketURL, region, createdAt
 │   │   ├── CivoLoadBalancer.swift
 │   │   ├── CivoInstance.swift
 │   │   ├── CivoSSHKey.swift
@@ -951,11 +1071,11 @@ civo-cloud-manager/
 │   │   ├── CivoQuotaService.swift              # GET /quota + PUT /quota (change request)
 │   │   ├── CivoKubernetesService.swift         # List, show, create, update, delete + kubeconfig
 │   │   ├── KubeconfigParser.swift              # Parse kubeconfig YAML → server URL, CA cert, client cert, client key
-│   │   ├── KubernetesAPIClient.swift           # Direct K8s API — nodes, pods, logs via client cert auth
+│   │   ├── KubernetesAPIClient.swift           # Direct K8s API — nodes, pods, logs, metrics, events, deployments via client cert auth
 │   │   ├── CivoDatabaseService.swift           # List, create, delete
 │   │   ├── CivoNetworkService.swift            # List, create, update, delete (removeNetwork)
 │   │   ├── CivoVolumeService.swift             # List, create, delete
-│   │   ├── CivoObjectStoreService.swift        # List, create, delete
+│   │   ├── CivoObjectStoreService.swift        # List, create, update (resize), delete
 │   │   ├── CivoLoadBalancerService.swift       # List, delete
 │   │   ├── CivoInstanceService.swift           # List, create, update, delete
 │   │   ├── CivoSSHKeyService.swift             # List, create, delete
@@ -966,10 +1086,10 @@ civo-cloud-manager/
 │   │   └── StoreManager.swift                 # StoreKit 2 IAP ($14.99 lifetime)
 │   ├── ViewModels/
 │   │   ├── DashboardViewModel.swift
-│   │   ├── KubernetesViewModel.swift           # + create/update, form data, K8s API (nodes, pods, logs)
+│   │   ├── KubernetesViewModel.swift           # + create/update, form data, K8s API (nodes, pods, logs, metrics, events, workloads), auto-firewall
 │   │   ├── DatabaseViewModel.swift             # + create, form data
 │   │   ├── NetworkViewModel.swift              # + create network/firewall, update, delete network/firewall/LB
-│   │   ├── VolumeViewModel.swift               # + create volume/object store, cleanup unused
+│   │   ├── VolumeViewModel.swift               # + create volume/object store, cleanup unused, resize object store
 │   │   ├── InstanceViewModel.swift             # + create instance/SSH key, form data
 │   │   ├── DomainViewModel.swift               # + create/update domain/record
 │   │   └── RegionViewModel.swift
@@ -988,7 +1108,7 @@ civo-cloud-manager/
 │   │   │   │   └── CreateSSHKeyView.swift       # Form: name, public key
 │   │   │   ├── Kubernetes/
 │   │   │   │   ├── ClusterListView.swift        # + toolbar, sheet, overlay
-│   │   │   │   ├── ClusterDetailView.swift      # Pools, apps, conditions, save kubeconfig
+│   │   │   │   ├── ClusterDetailView.swift      # Pools, apps, conditions, save kubeconfig, Connect to K8s API, live metrics/events/workloads
 │   │   │   │   ├── CreateClusterView.swift      # Form: name, CNI, nodes, apps
 │   │   │   │   ├── K8sNodeDetailView.swift      # Node resources, conditions, addresses, system info
 │   │   │   │   ├── K8sPodListView.swift         # Pods on a node with status, namespace, restarts
@@ -1007,8 +1127,11 @@ civo-cloud-manager/
 │   │   │   │   └── CreateDNSRecordView.swift    # Form: type, name, value, TTL
 │   │   │   ├── Storage/
 │   │   │   │   ├── DatabaseListView.swift       # + toolbar, sheet, overlay
+│   │   │   │   ├── DatabaseDetailView.swift     # Connection details, config, network/firewall
 │   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
-│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay, show credentials
+│   │   │   │   ├── VolumeDetailView.swift       # Attachment status, mountpoint, size
+│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay
+│   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize (PUT /objectstores/:id)
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
 │   │   │   │   └── CreateObjectStoreView.swift  # Form: name, max size

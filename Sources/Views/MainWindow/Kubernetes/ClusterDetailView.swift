@@ -57,11 +57,13 @@ struct ClusterDetailView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button("Back", systemImage: "chevron.left") { onBack() }
+                    .help("Return to list")
             }
             ToolbarItem(placement: .destructiveAction) {
                 Button("Delete", systemImage: "trash", role: .destructive) {
                     showDeleteConfirmation = true
                 }
+                .help("Delete this cluster")
             }
         }
         .sheet(isPresented: Binding(get: { editingLabelsPool != nil }, set: { if !$0 { editingLabelsPool = nil } })) {
@@ -182,6 +184,7 @@ struct ClusterDetailView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .buttonStyle(.plain)
+        .help("Connect to cluster for live metrics and pod management")
         .disabled(vm.isLoadingK8s || cluster.status != "Active")
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.15), value: appeared)
@@ -305,9 +308,12 @@ struct ClusterDetailView: View {
         GroupBox("Cluster Info") {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 infoRow("API Endpoint", cluster.apiEndpoint ?? "—")
+                    .help("Kubernetes API server address")
                 infoRow("Master IP", cluster.masterIp ?? "—")
+                    .help("Control plane IP address")
                 infoRow("DNS", cluster.dnsEntry ?? "—")
                 infoRow("CNI Plugin", cluster.cniPlugin ?? "—")
+                    .help("Container Network Interface")
                 infoRow("Node Size", cluster.targetNodesSize ?? "—")
                 infoRow("Created", cluster.createdAt ?? "—")
             }

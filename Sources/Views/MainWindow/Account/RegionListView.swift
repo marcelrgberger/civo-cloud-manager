@@ -65,6 +65,7 @@ struct RegionListView: View {
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
+                .help("Reload data from API")
                 .disabled(vm.isLoading)
             }
         }

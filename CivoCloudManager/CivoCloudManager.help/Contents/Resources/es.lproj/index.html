@@ -89,6 +89,17 @@ th { font-weight: 600; }
 </ul>
 <p>Para crear: haga clic en <strong>+</strong>. Configure nombre, plugin CNI, tama&ntilde;o de node, n&uacute;mero de nodes, red y apps del marketplace.</p>
 
+<h3>Conectar a la API de Kubernetes</h3>
+<p>En la vista de detalle del cluster, haga clic en <strong>Conectar a la API de Kubernetes</strong> para acceder a datos en vivo directamente desde la API de Kubernetes:</p>
+<ul>
+<li><strong>Indicadores de CPU y Memoria</strong> &mdash; indicadores circulares de porcentaje mostrando el uso de recursos del cluster en tiempo real (requiere metrics-server instalado en el cluster).</li>
+<li><strong>Conteo de Pods y Salud de Nodes</strong> &mdash; indicadores en vivo del estado del cluster.</li>
+<li><strong>Eventos recientes</strong> &mdash; eventos del cluster con advertencias resaltadas en naranja.</li>
+<li><strong>Deployments</strong> &mdash; cargas de trabajo mostrando r&eacute;plicas listas vs. deseadas.</li>
+</ul>
+<p>Si metrics-server no est&aacute; instalado en el cluster, la app muestra estad&iacute;sticas est&aacute;ticas del cluster desde la API de Civo.</p>
+<p class="tip">Al conectar a la API de Kubernetes, la app abre autom&aacute;ticamente el puerto 6443 en el firewall del cluster para su IP actual. La regla se etiqueta como <code>civo-cloud-&lt;hostname&gt;-k8s-api</code> y se elimina autom&aacute;ticamente al volver atr&aacute;s desde el cluster.</p>
+
 <h3>Detalles del Node (K8s API)</h3>
 <p>Haga clic en el <strong>nombre de un node</strong> en un node pool para conectarse directamente a la API de Kubernetes y ver informaci&oacute;n detallada del node:</p>
 <ul>
@@ -153,11 +164,14 @@ th { font-weight: 600; }
 <p><strong>Limpiar disponibles</strong> &mdash; bot&oacute;n en la barra de herramientas para eliminar masivamente todos los volumes con estado &laquo;disponible&raquo;. Requiere escribir <code>DELETE ALL DATA</code> para confirmar.</p>
 
 <h3>Object Stores</h3>
-<p>Ver object stores con endpoint y tama&ntilde;o m&aacute;ximo. Haga clic derecho para:</p>
+<p>Haga clic en un object store para abrir su <strong>vista de detalle</strong> mostrando:</p>
 <ul>
-<li><strong>Mostrar credenciales</strong> &mdash; muestra el access key ID y el secret access key (seleccionable para copiar).</li>
-<li><strong>Eliminar</strong> &mdash; elimina permanentemente el object store.</li>
+<li><strong>Credenciales</strong> &mdash; endpoint, URL del bucket, access key y secret key (todo seleccionable para copiar).</li>
+<li><strong>Configuraci&oacute;n</strong> &mdash; tama&ntilde;o m&aacute;ximo, regi&oacute;n, fecha de creaci&oacute;n y estado.</li>
+<li><strong>Redimensionar</strong> &mdash; stepper para cambiar el tama&ntilde;o m&aacute;ximo. Los cambios se env&iacute;an mediante PUT a la API de Civo.</li>
 </ul>
+<p>Haga clic derecho en un object store en la lista para eliminarlo.</p>
+<p class="tip">Las credenciales (access key y secret key) provienen directamente del recurso object store, no de un endpoint separado.</p>
 
 <h2 id="account">Cuenta</h2>
 <h3>Regiones</h3>
@@ -185,6 +199,7 @@ th { font-weight: 600; }
 <li>Las tarjetas de recursos del dashboard son clicables &mdash; navegue a cualquier secci&oacute;n con un clic.</li>
 <li>Las reglas de firewall creadas por esta app est&aacute;n etiquetadas como <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> y solo se gestionan las reglas de esta app.</li>
 <li>El flujo de detalle de Kubernetes: Lista de Clusters &rarr; Detalle del Cluster &rarr; Detalle del Node &rarr; Lista de Pods &rarr; Logs de Pods.</li>
+<li>Al conectar a la API de Kubernetes, el puerto 6443 se abre y cierra autom&aacute;ticamente para su IP &mdash; no se necesita configuraci&oacute;n manual del firewall.</li>
 </ul>
 
 </body>

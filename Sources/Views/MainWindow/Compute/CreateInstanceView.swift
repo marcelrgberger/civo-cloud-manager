@@ -20,6 +20,7 @@ struct CreateInstanceView: View {
                         Text(s.displayName).tag(s.name)
                     }
                 }
+                .help("Instance type for compute resources")
                 Picker("Disk Image", selection: $diskImage) {
                     Text("Select an image").tag("")
                     ForEach(vm.availableDiskImages) { img in

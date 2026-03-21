@@ -21,6 +21,7 @@ struct InstanceDetailView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button("Back", systemImage: "chevron.left") { onBack() }
+                    .help("Return to list")
             }
         }
         .onAppear {

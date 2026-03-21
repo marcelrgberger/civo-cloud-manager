@@ -26,9 +26,11 @@ struct SSHKeyListView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreatingSSHKey = true } label: { Label("Add", systemImage: "plus") }
+                    .help("Create new SSH key")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .help("Reload data from API")
                     .disabled(vm.isLoading)
             }
         }

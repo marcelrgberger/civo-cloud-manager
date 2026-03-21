@@ -23,9 +23,11 @@ struct InstanceListView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreatingInstance = true } label: { Label("Add", systemImage: "plus") }
+                    .help("Create new instance")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .help("Reload data from API")
                     .disabled(vm.isLoading)
             }
         }

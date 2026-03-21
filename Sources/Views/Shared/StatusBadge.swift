@@ -23,11 +23,24 @@ struct StatusBadge: View {
         .background(color.opacity(0.12))
         .foregroundStyle(color)
         .clipShape(Capsule())
+        .help(statusDescription)
     }
 
     private var isPending: Bool {
         let lower = status.lowercased()
         return lower == "building" || lower == "pending" || lower == "creating"
+    }
+
+    private var statusDescription: String {
+        let lower = status.lowercased()
+        if lower == "active" || lower == "ready" || lower == "available" || lower == "true" {
+            return "Resource is running normally"
+        }
+        if isPending { return "Resource is being provisioned" }
+        if lower == "error" || lower == "failed" || lower == "false" {
+            return "Resource encountered an error"
+        }
+        return "Current status: \(status)"
     }
 
     private var color: Color {

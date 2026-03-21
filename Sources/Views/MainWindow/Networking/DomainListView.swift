@@ -140,6 +140,7 @@ struct DomainListView: View {
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
+                .help("Create new domain")
             }
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -147,6 +148,7 @@ struct DomainListView: View {
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
+                .help("Reload data from API")
                 .disabled(vm.isLoading)
             }
         }

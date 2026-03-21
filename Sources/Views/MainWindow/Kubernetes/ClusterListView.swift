@@ -51,13 +51,16 @@ struct ClusterListView: View {
                     } label: {
                         Label("Save Kubeconfig", systemImage: "arrow.down.doc")
                     }
+                    .help("Export kubeconfig as YAML file")
                 }
             }
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreating = true } label: { Label("Add", systemImage: "plus") }
+                    .help("Create new cluster")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .help("Reload data from API")
                     .disabled(vm.isLoading)
             }
         }

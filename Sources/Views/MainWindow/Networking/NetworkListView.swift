@@ -38,11 +38,13 @@ struct NetworkListView: View {
                 Button { vm.isCreatingNetwork = true } label: {
                     Label("Add", systemImage: "plus")
                 }
+                .help("Create new network")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
+                .help("Reload data from API")
                 .disabled(vm.isLoading)
             }
         }

@@ -38,7 +38,7 @@ CivoAPIClient (shared singleton)
 ├── GET  /quota, /kubernetes/clusters, /databases, /firewalls, /sizes, /disk_images, ...
 ├── GET  /kubernetes/clusters/:id/kubeconfig → KubeconfigParser → KubernetesAPIClient
 ├── POST /kubernetes/clusters, /databases, /instances, /firewalls, /volumes, /objectstores, /sshkeys, /dns, /dns/:id/records
-├── PUT  /kubernetes/clusters/:id, /instances/:id, /networks/:id, /dns/:id, /dns/:id/records/:id, /quota
+├── PUT  /kubernetes/clusters/:id, /instances/:id, /networks/:id, /dns/:id, /dns/:id/records/:id, /quota, /objectstores/:id
 ├── DELETE /kubernetes/clusters/{id}, /databases/{id}, /instances/{id}, /networks/{id}, /firewalls/{id}, ...
 └── Bearer token auth via CivoConfig (Keychain + UserDefaults)
 
@@ -46,6 +46,9 @@ KubernetesAPIClient (per-cluster, ephemeral)
 ├── GET /api/v1/nodes/{name} → K8sNode (capacity, conditions, addresses, systemInfo)
 ├── GET /api/v1/pods?fieldSelector=spec.nodeName={name} → K8sPod[]
 ├── GET /api/v1/namespaces/{ns}/pods/{name}/log → log text
+├── GET /apis/metrics.k8s.io/v1beta1/nodes → K8sNodeMetrics[] (live CPU/Memory)
+├── GET /api/v1/events → K8sEvent[] (cluster events, warnings)
+├── GET /apis/apps/v1/deployments → K8sDeployment[] (workloads with replica status)
 └── Client certificate auth via Security.framework (certs from KubeconfigParser)
 
 DashboardView (clickable cards → sidebar navigation)
@@ -61,9 +64,16 @@ Create Views (11 sheet forms)
 └── All use .formStyle(.grouped), Cancel + Create toolbar
 
 Drill-Down Views
-├── Kubernetes: ClusterListView → ClusterDetailView → K8sNodeDetailView → K8sPodListView → PodLogView
+├── Kubernetes: ClusterListView → ClusterDetailView (+ live metrics/events/workloads) → K8sNodeDetailView → K8sPodListView → PodLogView
+├── Object Stores: ObjectStoreListView → ObjectStoreDetailView (credentials, config, resize)
 ├── Firewalls: FirewallListView → FirewallDetailView (rule list, add/delete rules)
 └── Labels: ClusterDetailView → EditLabelsView (add/remove node pool labels)
+
+Auto-Firewall for K8s API
+├── Opens port 6443 for user's current IP when "Connect to Kubernetes API" is clicked
+├── Uses IPDetector + CivoFirewallService
+├── Rule labeled civo-cloud-<hostname>-k8s-api
+└── Auto-closes the rule when navigating back from cluster
 
 Delete Support
 ├── All resources use DeleteConfirmationSheet (requires typing resource name)
@@ -82,6 +92,8 @@ Animations
 
 **K8s API flow:** Click node name → ViewModel → CivoKubernetesService.getKubeconfig(id) → KubeconfigParser.parse(yaml) → KubernetesAPIClient(serverURL, certs) → GET /api/v1/nodes/{name} → K8sNode → K8sNodeDetailView.
 
+**K8s live metrics flow:** Click "Connect to Kubernetes API" → auto-open port 6443 via CivoFirewallService → download kubeconfig → KubernetesAPIClient → GET metrics, events, deployments → show circular CPU/Memory gauges, events list, deployments table. Navigate back → auto-close firewall rule.
+
 **Create flow:** "+" toolbar button → sheet with Form → ViewModel.create(body) → Service.create(body) → POST → dismiss sheet → show SuccessOverlay → refresh list.
 
 **Delete flow:** Context menu "Delete" → DeleteConfirmationSheet (type resource name to confirm) → ViewModel.remove(id) → Service.remove(id) → DELETE → refresh list.
@@ -90,7 +102,7 @@ Animations
 
 **Firewall rule flow:** Click firewall → FirewallDetailView shows rules → "+" opens CreateRuleView → delete via context menu with name confirmation.
 
-**Object store credentials flow:** Context menu "Show Credentials" → sheet displaying endpoint, access_key_id, secret_access_key as selectable text.
+**Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from ownerInfo.accessKeyId/secretAccessKey), bucket URL, endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id.
 
 **Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh).
 
@@ -98,8 +110,11 @@ Animations
 
 - **CivoAPIClient** — singleton HTTP client. Methods: `get()`, `getPaginatedList()`, `getArray()`, `post()`, `put()`, `delete()`.
 - **KubeconfigParser** — parses kubeconfig YAML, extracts server URL, CA certificate, client certificate, and client key. Returns structured data for KubernetesAPIClient.
-- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via Security.framework. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`.
+- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via Security.framework. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`, `getMetrics()`, `getEvents()`, `getDeployments()`.
+- **K8sMetricsParser** — parses metrics-server responses into K8sNodeMetrics/K8sPodMetrics, computes K8sClusterMetrics with CPU/Memory percentages.
 - **Multi-level K8s navigation** — ClusterListView → ClusterDetailView → K8sNodeDetailView → K8sPodListView → PodLogView, all with spring move+opacity transitions.
+- **Live K8s metrics** — circular CPU and Memory gauges in ClusterDetailView when connected to K8s API. Graceful fallback to static stats when metrics-server is not installed.
+- **Auto-firewall for K8s API** — automatically opens port 6443 for user's current IP when "Connect to Kubernetes API" is clicked, closes when navigating back. Rule labeled `civo-cloud-<hostname>-k8s-api`.
 - **CivoConfig** — stores API key (Keychain) and region (UserDefaults). Read by services on every request.
 - **Service per resource domain** — each `Civo*Service` wraps API calls for one resource type with list/create/update/delete methods.
 - **CivoSizeService** — fetches available sizes (GET /sizes) and disk images (GET /disk_images) for create form pickers. All sizes shown without type filtering.
@@ -112,7 +127,8 @@ Animations
 - **DeleteConfirmationSheet** — shared component for all destructive operations. Requires typing the exact resource name to enable the delete button. Used by all list views.
 - **Context menu delete** — all resource list views have "Delete" in context menu, opening DeleteConfirmationSheet.
 - **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
-- **Object store credentials** — fetched from GET /objectstores/credentials; context menu "Show Credentials" displays them in a sheet.
+- **Object store credentials** — come from the object store resource itself via `ownerInfo.accessKeyId` and `ownerInfo.secretAccessKey`. ObjectStoreDetailView shows credentials, config, and resize section.
+- **Object store resize** — ObjectStoreDetailView has a stepper to change max size, submitted via PUT /objectstores/:id.
 - **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
 - **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
 - **Spring transitions** — sidebar→detail uses spring + opacity; drill-downs use move+opacity spring.
@@ -122,25 +138,33 @@ Animations
 ## Code Layout
 
 - `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 18 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod; CivoObjectStore has accessKeyId/secretAccessKey)
+- `Sources/Models/` — 21 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload; CivoObjectStore has ownerInfo with accessKeyId/secretAccessKey, bucketURL, region, createdAt)
   - `K8sNode.swift` — K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
   - `K8sPod.swift` — K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
+  - `K8sMetrics.swift` — K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
+  - `K8sEvent.swift` — K8sEvent, K8sObjectReference
+  - `K8sWorkload.swift` — K8sDeployment, K8sDeploymentStatus
 - `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, IPDetector
   - `KubeconfigParser.swift` — parses kubeconfig YAML → server URL, CA cert, client cert, client key
-  - `KubernetesAPIClient.swift` — direct K8s API client using client certificate auth via Security.framework
+  - `KubernetesAPIClient.swift` — direct K8s API client using client certificate auth via Security.framework. Supports nodes, pods, logs, metrics, events, deployments.
   - `CivoKubernetesService` — list, show, create, update, delete + getKubeconfig(id)
   - `CivoNetworkService` — list, create, update, delete (removeNetwork)
   - `CivoFirewallService` — list, create, delete (removeFirewall), rule CRUD, status checks
   - `CivoQuotaService` — GET /quota, PUT /quota (updateQuota)
+  - `CivoObjectStoreService` — list, create, update (resize via PUT /objectstores/:id), delete
   - `CivoLoadBalancerService` — list, delete (removeLoadBalancer)
 - `Sources/ViewModels/` — 8 @Observable @MainActor view models with CRUD state
 - `Sources/Views/` — MenuBarView, AppState, OnboardingView
 - `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 11 create/edit views + QuotaEditView
 - `Sources/Views/MainWindow/QuotaEditView.swift` — quota increase request form with steppers for all limits
+- `Sources/Views/MainWindow/Kubernetes/ClusterDetailView.swift` — cluster info, conditions, pools, apps, kubeconfig save, "Connect to Kubernetes API" button for live metrics/events/workloads, auto-firewall
 - `Sources/Views/MainWindow/Kubernetes/K8sNodeDetailView.swift` — node resource cards (CPU, Memory, Pods), conditions, addresses, system info
 - `Sources/Views/MainWindow/Kubernetes/K8sPodListView.swift` — pods on a node with status badge, namespace, ready count, restart count
 - `Sources/Views/MainWindow/Kubernetes/PodLogView.swift` — scrollable monospaced log output with auto-scroll toggle and refresh
 - `Sources/Views/MainWindow/Kubernetes/EditLabelsView.swift` — add/remove labels on node pools
+- `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (endpoint, bucket URL, access key, secret key), config (max size, region, created, status), resize section with stepper
+- `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, config, network/firewall
+- `Sources/Views/MainWindow/Storage/VolumeDetailView.swift` — attachment status, mountpoint, size
 - `Sources/Views/MainWindow/Networking/FirewallDetailView.swift` — rule list with badges, add/delete
 - `Sources/Views/MainWindow/Networking/CreateRuleView.swift` — form for firewall rules
 - `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, StaggeredAppear, PaywallView

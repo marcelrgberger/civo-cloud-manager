@@ -23,6 +23,7 @@ struct DashboardView: View {
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
+                .help("Reload data from API")
                 .disabled(vm.isLoading)
             }
         }
@@ -116,6 +117,7 @@ struct DashboardView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .buttonStyle(.plain)
+        .help("Click to view \(title.lowercased())")
         .scaleEffect(hoveredCard == target ? 1.02 : 1.0)
         .animation(.easeOut(duration: 0.15), value: hoveredCard)
         .onHover { isHovered in
@@ -138,6 +140,7 @@ struct DashboardView: View {
                 } label: {
                     Label("Request Change", systemImage: "arrow.up.arrow.down")
                 }
+                .help("Request a quota limit change")
                 .buttonStyle(.bordered)
                 .controlSize(.small)
             }

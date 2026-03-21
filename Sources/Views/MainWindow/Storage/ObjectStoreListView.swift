@@ -23,9 +23,11 @@ struct ObjectStoreListView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreatingObjectStore = true } label: { Label("Add", systemImage: "plus") }
+                    .help("Create new object store")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
+                    .help("Reload data from API")
                     .disabled(vm.isLoading)
             }
         }

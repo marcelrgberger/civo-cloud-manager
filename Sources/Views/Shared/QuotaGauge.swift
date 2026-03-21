@@ -25,6 +25,7 @@ struct QuotaGauge: View {
                 }
             }
             .frame(width: 56, height: 56)
+            .help("\(item.usage) of \(item.limit) used")
 
             HStack(spacing: 3) {
                 Image(systemName: item.icon)

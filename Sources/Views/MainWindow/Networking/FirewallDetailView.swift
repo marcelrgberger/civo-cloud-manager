@@ -30,16 +30,19 @@ struct FirewallDetailView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button("Back", systemImage: "chevron.left") { onBack() }
+                    .help("Return to list")
             }
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreatingRule = true } label: {
                     Label("Add Rule", systemImage: "plus")
                 }
+                .help("Create new rule")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.loadRules(firewall.id) } } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
+                .help("Reload data from API")
                 .disabled(vm.isLoading)
             }
         }
@@ -85,12 +88,14 @@ struct FirewallDetailView: View {
                         .padding(.vertical, 2)
                         .background(rule.direction == "ingress" ? Color.blue.opacity(0.15) : Color.orange.opacity(0.15))
                         .clipShape(Capsule())
+                        .help("Traffic direction")
                     Text(rule.action ?? "—")
                         .font(.caption)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(rule.action == "allow" ? Color.green.opacity(0.15) : Color.red.opacity(0.15))
                         .clipShape(Capsule())
+                        .help("Rule action")
                 }
                 HStack(spacing: 8) {
                     if let cidr = rule.cidr {
