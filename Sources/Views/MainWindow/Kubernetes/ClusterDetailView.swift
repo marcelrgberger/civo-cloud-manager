@@ -41,12 +41,7 @@ struct ClusterDetailView: View {
                     ErrorBanner(message: k8sError)
                 }
                 if vm.isLoadingK8s && !vm.isK8sConnected {
-                    HStack(spacing: 8) {
-                        ProgressView().controlSize(.small)
-                        Text("Connecting to Kubernetes API...")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+                    K8sConnectingView()
                 }
                 infoSection
                 if !vm.events.isEmpty { eventsSection }
