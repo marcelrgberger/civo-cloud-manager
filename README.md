@@ -18,9 +18,9 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Clickable resource cards** — navigate directly to any resource section
 - **Full CRUD** — create, view, and delete resources across all categories
 - **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps, direct K8s API access for node details, pod logs, live metrics, events, and workloads
-- **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config
+- **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config; detail view shows credentials (username visible, password protected by Touch ID / system password via LAContext)
 - **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers; drill-down into firewall rules (view, create, delete)
-- **Storage** — create volumes and object stores with size configuration; click object store for detail view with credentials, config, resize, and S3 file browser
+- **Storage** — create volumes and object stores with size configuration; click object store for detail view with credentials, config, resize, and S3 file browser; dedicated Credentials sidebar section for managing Object Store credentials (create, delete, Touch ID-protected secret keys)
 - **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys; stop, start, and reboot instances via right-click context menu
 - **Regions** — view available regions, switch active region
 - **Safe deletion** — all destructive operations require typing the resource name to confirm (DeleteConfirmationSheet)
@@ -47,6 +47,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Storage section (collapsible)** — PVCs and PVs in a collapsible DisclosureGroup
 - **Save Kubeconfig** — toolbar button exports the cluster kubeconfig as a .yaml file via NSSavePanel
 - **Editable node pool labels** — add and remove labels on node pools via PUT
+- **K8s connecting animation** — animated progress overlay with 5 steps (firewall, kubeconfig, certificates, API server, metrics), rotating helm icon with pulsing blue circle, green checkmark spring animation on completion
 - **Multi-level navigation** — Cluster List → Cluster Detail → Node Detail → Pod List → Pod Logs with spring move+opacity transitions
 
 ### Object Store Detail View
@@ -66,6 +67,27 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - Show individual credential via `GET /objectstores/credentials/:id`
 - Model: `CivoObjectStoreCredential` (id, name, accessKeyId, secretAccessKeyId, status, suspended)
 
+### Database Credentials
+- **Username** — displayed directly in the database detail view
+- **Password** — protected by Touch ID or system password via `LAContext.evaluatePolicy(.deviceOwnerAuthentication)` (async)
+- Authentication prompt: "Reveal database password"
+- CivoDatabase model includes `username` and `password` fields from the Civo API
+
+### Credential Management (Sidebar)
+- **Dedicated sidebar entry** — "Credentials" under Storage & Data category with yellow `key.horizontal` icon
+- **CredentialListView** — lists all Object Store credentials, inline creation form, context menu delete with name confirmation
+- **Secret key protection** — secret access keys are hidden by default, revealed via Touch ID / system password (`LAContext` async)
+- **Hover animation** — credential rows animate on hover (key icon rotation + orange background highlight)
+- **Staggered spring animation** — list rows appear with 60ms stagger delay, fade+slide from left
+- **Credential picker** — when creating a new Object Store, credentials can be selected from the existing list
+
+### K8s Connecting Animation
+- **K8sConnectingView** — animated progress overlay shown while connecting to a cluster's Kubernetes API
+- **5 sequential steps:** open firewall, fetch kubeconfig, import certificates, connect to API server, load metrics & workloads
+- **Rotating helm icon** with pulsing blue circle background (`easeInOut` repeat animation)
+- **Green checkmark** with spring animation on each completed step
+- **Ultra-thin material background** with rounded rectangle clip shape
+
 ### S3 File Browser
 - **Browse files directly** in any object store with assigned credentials
 - **S3Client** — native S3-compatible client using AWS Signature V4 signing via CryptoKit (HMAC-SHA256)
@@ -82,7 +104,8 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - Each sidebar section has a distinct icon color for visual clarity:
   - Dashboard (blue), Instances (green), SSH Keys (orange), Kubernetes (blue)
   - Networks (green), Firewalls (red), Load Balancers (indigo), Domains (teal)
-  - Databases (purple), Volumes (orange), Object Stores (cyan), Regions (mint)
+  - Databases (purple), Volumes (orange), Object Stores (cyan), Credentials (yellow)
+  - Regions (mint), About (secondary)
 
 ### Monetization
 - **Free tier** — menu bar firewall management
@@ -100,7 +123,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **App Sandbox** — network client entitlement
 - **Keychain** — API key stored securely in macOS Keychain
 - **StoreKit 2** — modern in-app purchase with transaction listener
-- **Zero dependencies** — only Apple frameworks (SwiftUI, CryptoKit, Security, Foundation, os)
+- **Zero dependencies** — only Apple frameworks (SwiftUI, CryptoKit, Security, LocalAuthentication, Foundation, os)
 - **Swift 6 strict concurrency** — all types Sendable
 
 ## Requirements
@@ -175,7 +198,7 @@ The sidebar is organized into categories:
 | **Compute** | Instances (stop/start/reboot via context menu), SSH Keys | Create, Delete, Stop, Start, Reboot |
 | **Kubernetes** | Clusters (detail view for pools, apps, conditions, live metrics, events, workloads with scaling, K8s node details, pod logs with auto-refresh, pod restart, namespace filter, PVC-Volume linking) | Create, Delete, Scale, Restart |
 | **Networking** | Networks, Firewalls (with rule drill-down), Load Balancers, Domains | Create, Edit (DNS records, firewall rules), Delete |
-| **Storage & Data** | Databases, Volumes, Object Stores (detail view, credentials, resize, S3 file browser) | Create, Delete, Resize, Browse, Download |
+| **Storage & Data** | Databases (detail with credentials via Touch ID), Volumes, Object Stores (detail view, credentials, resize, S3 file browser), Credentials (manage Object Store credentials) | Create, Delete, Resize, Browse, Download |
 | **Account** | Regions | Switch |
 
 **Each resource view provides:**
@@ -527,6 +550,8 @@ classDiagram
         +String? software
         +String? publicIpv4
         +Int? port
+        +String? username
+        +String? password
     }
 
     class CivoNetwork {
@@ -988,6 +1013,7 @@ graph LR
         ST --> OL[ObjectStoreListView]
         OL -->|drill-down| OD[ObjectStoreDetailView]
         OD -->|browse files| OB[ObjectStoreBrowserView]
+        ST --> CRL[CredentialListView]
         AC --> RL[RegionListView]
     end
 
@@ -1018,6 +1044,7 @@ graph LR
     style PLG fill:#065F46,color:#fff
     style OD fill:#7C3AED,color:#fff
     style OB fill:#F59E0B,color:#fff
+    style CRL fill:#EAB308,color:#fff
     style QE fill:#F59E0B,color:#fff
     style EL fill:#F59E0B,color:#fff
 ```
@@ -1133,6 +1160,7 @@ Tests cover:
 | Localization | String Catalog — 8 languages |
 | Login | SMAppService |
 | Logging | os.Logger (privacy: .private) |
+| Biometrics | LocalAuthentication (Touch ID / password for secrets) |
 | Dependencies | None (Apple frameworks only) |
 
 ---
@@ -1241,12 +1269,13 @@ civo-cloud-manager/
 │   │   │   │   └── CreateDNSRecordView.swift    # Form: type, name, value, TTL
 │   │   │   ├── Storage/
 │   │   │   │   ├── DatabaseListView.swift       # + toolbar, sheet, overlay
-│   │   │   │   ├── DatabaseDetailView.swift     # Connection details, config, network/firewall
+│   │   │   │   ├── DatabaseDetailView.swift     # Connection details, credentials (Touch ID), config, network/firewall
 │   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
 │   │   │   │   ├── VolumeDetailView.swift       # Attachment status, mountpoint, size
 │   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay
 │   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize, browse files button
 │   │   │   │   ├── ObjectStoreBrowserView.swift # S3 file browser — breadcrumbs, folders, files, download
+│   │   │   │   ├── CredentialListView.swift     # Object Store credentials — list, create, delete, Touch ID secrets
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
 │   │   │   │   └── CreateObjectStoreView.swift  # Form: name, max size
@@ -1261,6 +1290,7 @@ civo-cloud-manager/
 │   │       ├── SuccessOverlay.swift             # Green checkmark, spring auto-dismiss
 │   │       ├── DeleteConfirmationSheet.swift   # Name-match confirmation for deletes
 │   │       ├── StaggeredAppear.swift           # ViewModifier for staggered row animations
+│   │       ├── K8sConnectingView.swift        # Animated K8s connection progress (5 steps, rotating helm, pulsing circle)
 │   │       └── PaywallView.swift              # Buy-once paywall + ToS/Privacy links
 │   └── Utilities/
 │       └── Logger.swift

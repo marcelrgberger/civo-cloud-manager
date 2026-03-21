@@ -12,7 +12,7 @@ open CivoCloudManager.xcodeproj        # Open Xcode project, Cmd+R
 xcodegen generate                      # Regenerate .xcodeproj from project.yml
 ```
 
-No external dependencies — only Apple frameworks (SwiftUI, ServiceManagement, Foundation, os, Security, CryptoKit).
+No external dependencies — only Apple frameworks (SwiftUI, ServiceManagement, Foundation, os, Security, CryptoKit, LocalAuthentication).
 
 ## What This Is
 
@@ -77,8 +77,10 @@ Create Views (11 sheet forms)
 └── All use .formStyle(.grouped), Cancel + Create toolbar
 
 Drill-Down Views
-├── Kubernetes: ClusterListView → ClusterDetailView (auto-connect K8s API, live metrics/events, collapsible workloads/networking/storage, namespace filter, deployment scaling, PVC-Volume linking) → K8sNodeDetailView → K8sPodListView (pod restart) → PodLogView (auto-refresh)
+├── Kubernetes: ClusterListView → ClusterDetailView (auto-connect K8s API with K8sConnectingView animation, live metrics/events, collapsible workloads/networking/storage, namespace filter, deployment scaling, PVC-Volume linking) → K8sNodeDetailView → K8sPodListView (pod restart) → PodLogView (auto-refresh)
 ├── Object Stores: ObjectStoreListView → ObjectStoreDetailView (credentials via credential_id, config, resize) → ObjectStoreBrowserView (S3 file browser with breadcrumbs, folders, download)
+├── Credentials: CredentialListView (list, create, delete Object Store credentials, Touch ID-protected secrets, hover animation)
+├── Databases: DatabaseListView → DatabaseDetailView (credentials section with Touch ID-protected password via LAContext)
 ├── Firewalls: FirewallListView → FirewallDetailView (rule list, add/delete rules)
 └── Labels: ClusterDetailView → EditLabelsView (add/remove node pool labels)
 
@@ -98,6 +100,8 @@ Animations
 ├── Dashboard cards spring from bottom with index delay
 ├── Sidebar→detail: spring + opacity content transition
 ├── Drill-down: move+opacity spring transitions (multi-level K8s navigation)
+├── K8sConnectingView: rotating helm icon, pulsing blue circle, 5-step progress with green checkmark springs
+├── CredentialListView: hover animation (key icon rotation + orange background), staggered spring (60ms delay)
 └── SuccessOverlay: spring scale entry/exit
 ```
 
@@ -148,20 +152,23 @@ Animations
 - **DeleteConfirmationSheet** — shared component for all destructive operations. Requires typing the exact resource name to enable the delete button. Used by all list views.
 - **Context menu delete** — all resource list views have "Delete" in context menu, opening DeleteConfirmationSheet.
 - **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
-- **Object store credentials** — managed separately via `/objectstore/credentials` (paginated). Each object store links to a credential via `ownerInfo.credentialId`. CivoObjectStoreCredential has `accessKeyId` and `secretAccessKeyId`. ObjectStoreDetailView shows credentials, config, resize section, and "Browse Files" button.
+- **Object store credentials** — managed separately via `/objectstore/credentials` (paginated). Each object store links to a credential via `ownerInfo.credentialId`. CivoObjectStoreCredential has `accessKeyId` and `secretAccessKeyId`. ObjectStoreDetailView shows credentials, config, resize section, and "Browse Files" button. CredentialListView in sidebar provides dedicated management (list, create, delete) with Touch ID-protected secret keys and hover animations.
+- **Database credentials** — CivoDatabase has `username` and `password` fields. DatabaseDetailView shows a "Credentials" section: username is visible, password is protected by Touch ID / system password via `LAContext.evaluatePolicy(.deviceOwnerAuthentication)` async.
+- **Touch ID / biometric auth** — uses `LAContext` from LocalAuthentication framework with async `evaluatePolicy` (no DispatchQueue). Used in DatabaseDetailView (password reveal), CredentialListView (secret key reveal), and ObjectStoreDetailView (secret key reveal).
+- **K8s connecting animation** — K8sConnectingView (in Views/Shared/) shows animated 5-step progress while connecting to K8s API: firewall, kubeconfig, certificates, API server, metrics. Rotating helm icon with pulsing blue circle, green checkmark spring on completion.
 - **Object store resize** — ObjectStoreDetailView has a stepper to change max size, submitted via PUT /objectstores/:id.
 - **S3 file browser** — ObjectStoreBrowserView uses S3Client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2 with prefix/delimiter for folder navigation, breadcrumb path, folder drill-down, file icons by extension, right-click download via NSSavePanel. S3XMLParser handles ListBucketResult XML responses.
-- **Colored sidebar icons** — each SidebarSection has an `iconColor` property for distinct visual identification (blue, green, red, purple, orange, cyan, teal, indigo, mint).
+- **Colored sidebar icons** — each SidebarSection has an `iconColor` property for distinct visual identification: Dashboard (blue), Instances (green), SSH Keys (orange), Kubernetes (blue), Networks (green), Firewalls (red), Load Balancers (indigo), Domains (teal), Databases (purple), Volumes (orange), Object Stores (cyan), Credentials (yellow), Regions (mint), About (secondary).
 - **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
 - **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
 - **Spring transitions** — sidebar→detail uses spring + opacity; drill-downs use move+opacity spring.
-- **Save Kubeconfig** — toolbar button in ClusterDetailView exports kubeconfig as .yaml file via NSSavePanel.
+- **Save Kubeconfig** — toolbar button in ClusterDetailView exports kubeconfig as .yaml file via NSSavePanel with .text content type.
 - **Editable node pool labels** — EditLabelsView allows add/remove labels on node pools, submitted via PUT to CivoKubernetesService.updateCluster.
 
 ## Code Layout
 
 - `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 23 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage, CivoObjectStoreCredential; CivoObjectStore has ownerInfo with accessKeyId/credentialId)
+- `Sources/Models/` — 23 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage, CivoObjectStoreCredential; CivoObjectStore has ownerInfo with accessKeyId/credentialId; CivoDatabase has username/password)
   - `K8sNode.swift` — K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
   - `K8sPod.swift` — K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
   - `K8sMetrics.swift` — K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
@@ -189,11 +196,12 @@ Animations
 - `Sources/Views/MainWindow/Kubernetes/EditLabelsView.swift` — add/remove labels on node pools
 - `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (from linked credential via credential_id), endpoint, config (max size, region, status), resize section with stepper, "Browse Files" button
 - `Sources/Views/MainWindow/Storage/ObjectStoreBrowserView.swift` — S3 file browser with breadcrumb navigation, folder drill-down, file icons, right-click download via NSSavePanel
-- `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, config, network/firewall
+- `Sources/Views/MainWindow/Storage/CredentialListView.swift` — Object Store credentials: list, create, delete, Touch ID-protected secret keys, hover animation, staggered spring
+- `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, credentials (username + Touch ID-protected password via LAContext), config, network/firewall
 - `Sources/Views/MainWindow/Storage/VolumeDetailView.swift` — attachment status, mountpoint, size
 - `Sources/Views/MainWindow/Networking/FirewallDetailView.swift` — rule list with badges, add/delete
 - `Sources/Views/MainWindow/Networking/CreateRuleView.swift` — form for firewall rules
-- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, StaggeredAppear, PaywallView
+- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, StaggeredAppear, K8sConnectingView, PaywallView
 - `Sources/Utilities/` — Logger (os.Logger)
 - `Tests/` — 21 model decoding tests
 - `CivoCloudManager/` — Xcode project support (Info.plist, Entitlements, Assets)
@@ -221,6 +229,13 @@ Use `api.getPaginatedList()` or `api.getArray()` accordingly.
 - `CivoAPIError` — noAPIKey, noRegion, httpError, decodingError, networkError
 - `IPDetectorError` — noIPReturned, invalidIP, allProvidersFailed, privateIP, ipv6NotSupported
 - `S3Error` — invalidURL, invalidResponse, httpError
+
+## Important Implementation Notes
+
+- **Touch ID / LAContext** — always use `try await context.evaluatePolicy()` (async). Never use DispatchQueue-based callbacks as they crash under strict concurrency.
+- **Network cancelled errors** — suppress `URLError.cancelled` errors when a popover or view closes during an in-flight request. Do not show these in ErrorBanner.
+- **S3 Signature V4** — query parameters must be sorted alphabetically before signing. Use path-style URLs for Civo Object Store (not virtual-hosted).
+- **Kubeconfig export** — use `.text` as the UTType content type for NSSavePanel, not `.yaml`.
 
 ## Concurrency Model
 

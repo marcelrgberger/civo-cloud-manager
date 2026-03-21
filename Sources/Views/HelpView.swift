@@ -103,6 +103,7 @@ struct HelpSection {
         HelpSection(title: "Kubernetes", icon: "helm", items: [
             "Click a cluster to see details: version, API endpoint, conditions, node pools, apps.",
             "The K8s API connects automatically when you select a cluster (no manual button needed).",
+            "An animated progress view shows 5 connection steps: firewall, kubeconfig, certificates, API server, metrics.",
             "The app auto-opens port 6443 on the cluster firewall for your IP.",
             "Use the Namespace filter picker to show only deployments and services in a specific namespace.",
             "Workloads (Deployments, DaemonSets, StatefulSets, CronJobs) are in a collapsible section.",
@@ -126,8 +127,23 @@ struct HelpSection {
             "Expand a domain to see DNS records. Add, edit, or delete records inline.",
             "Load balancers show algorithm, IPs, traffic policy, and backend list.",
         ]),
+        HelpSection(title: "Database Credentials", icon: "lock.shield", items: [
+            "Click a database to see its detail view with connection info, config, and credentials.",
+            "The username is displayed directly in the Credentials section.",
+            "The password is protected — tap the eye icon to reveal it via Touch ID or system password.",
+            "Authentication uses the system's LocalAuthentication framework (same as unlocking your Mac).",
+        ]),
+        HelpSection(title: "Credential Management", icon: "key.horizontal", items: [
+            "The 'Credentials' section in the sidebar (under Storage & Data) manages Object Store credentials.",
+            "View all credentials with access key ID and status.",
+            "Secret access keys are hidden by default — reveal them via Touch ID or system password.",
+            "Create new credentials by entering a name and clicking 'Create'.",
+            "Delete credentials via right-click context menu (requires typing the name to confirm).",
+            "Hover over a credential row for a visual animation (key icon rotation + orange highlight).",
+            "When creating a new Object Store, you can pick from existing credentials.",
+        ]),
         HelpSection(title: "Storage & Data", icon: "cylinder.split.1x2", items: [
-            "Click a database to see connection info (host, port, DNS), config, and network.",
+            "Click a database to see connection info (host, port, DNS), credentials, config, and network.",
             "Click a volume to see attachment status, size, mountpoint, and bootable flag.",
             "'Cleanup Available' deletes all volumes with status 'available' (requires typing DELETE ALL DATA).",
             "Click an object store to see its credentials, endpoint, config, and resize option.",
