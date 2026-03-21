@@ -62,6 +62,38 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         try await get("/apis/apps/v1/deployments")
     }
 
+    func listDaemonSets() async throws -> K8sDaemonSetList {
+        try await get("/apis/apps/v1/daemonsets")
+    }
+
+    func listStatefulSets() async throws -> K8sStatefulSetList {
+        try await get("/apis/apps/v1/statefulsets")
+    }
+
+    func listCronJobs() async throws -> K8sCronJobList {
+        try await get("/apis/batch/v1/cronjobs")
+    }
+
+    func listServices() async throws -> K8sServiceList {
+        try await get("/api/v1/services")
+    }
+
+    func listIngresses() async throws -> K8sIngressList {
+        try await get("/apis/networking.k8s.io/v1/ingresses")
+    }
+
+    func listNamespaces() async throws -> K8sNamespaceList {
+        try await get("/api/v1/namespaces")
+    }
+
+    func listPVCs() async throws -> K8sPVCList {
+        try await get("/api/v1/persistentvolumeclaims")
+    }
+
+    func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics {
+        try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)")
+    }
+
     // MARK: - HTTP
 
     private func get<T: Decodable>(_ path: String) async throws -> T {

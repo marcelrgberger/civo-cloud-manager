@@ -26,11 +26,18 @@ final class KubernetesViewModel {
     var k8sError: String?
     var isK8sConnected = false
 
-    // Metrics + Events + Workloads
+    // Metrics + Events + Workloads + Networking + Storage
     var clusterMetrics: K8sClusterMetrics?
     var nodeMetrics: [K8sNodeMetrics] = []
     var events: [K8sEvent] = []
     var deployments: [K8sDeployment] = []
+    var daemonSets: [K8sDaemonSet] = []
+    var statefulSets: [K8sStatefulSet] = []
+    var cronJobs: [K8sCronJob] = []
+    var services: [K8sService] = []
+    var ingresses: [K8sIngress] = []
+    var namespaces: [K8sNamespace] = []
+    var pvcs: [K8sPVC] = []
     var metricsAvailable = true
 
     // Auto-firewall state
@@ -76,6 +83,12 @@ final class KubernetesViewModel {
             selectedCluster = try await service.showCluster(id)
         } catch {
             self.error = error.localizedDescription
+            return
+        }
+
+        // Auto-connect to K8s API in background
+        if selectedCluster?.status.lowercased() == "active" {
+            Task { await connectToCluster(id) }
         }
     }
 
@@ -116,6 +129,13 @@ final class KubernetesViewModel {
         nodeMetrics = []
         events = []
         deployments = []
+        daemonSets = []
+        statefulSets = []
+        cronJobs = []
+        services = []
+        ingresses = []
+        namespaces = []
+        pvcs = []
 
         await autoCloseFirewall()
     }
@@ -165,11 +185,13 @@ final class KubernetesViewModel {
 
         await loadNodes()
 
-        // Load metrics, events, workloads concurrently
+        // Load everything concurrently
         async let m: () = loadMetrics(client)
         async let e: () = loadEvents(client)
         async let w: () = loadWorkloads(client)
-        _ = await (m, e, w)
+        async let n: () = loadNetworking(client)
+        async let s: () = loadStorage(client)
+        _ = await (m, e, w, n, s)
     }
 
     func loadNodes() async {
@@ -236,11 +258,29 @@ final class KubernetesViewModel {
     }
 
     private func loadWorkloads(_ client: KubernetesAPIClient) async {
-        do {
-            deployments = try await client.listDeployments().items
-        } catch {
-            Log.error("Load deployments failed: \(error.localizedDescription)")
-        }
+        async let d = { try await client.listDeployments().items }()
+        async let ds = { try await client.listDaemonSets().items }()
+        async let ss = { try await client.listStatefulSets().items }()
+        async let cj = { try await client.listCronJobs().items }()
+
+        deployments = (try? await d) ?? []
+        daemonSets = (try? await ds) ?? []
+        statefulSets = (try? await ss) ?? []
+        cronJobs = (try? await cj) ?? []
+    }
+
+    private func loadNetworking(_ client: KubernetesAPIClient) async {
+        async let svc = { try await client.listServices().items }()
+        async let ing = { try await client.listIngresses().items }()
+        async let ns = { try await client.listNamespaces().items }()
+
+        services = (try? await svc) ?? []
+        ingresses = (try? await ing) ?? []
+        namespaces = (try? await ns) ?? []
+    }
+
+    private func loadStorage(_ client: KubernetesAPIClient) async {
+        pvcs = (try? await client.listPVCs().items) ?? []
     }
 
     func loadPods(nodeName: String) async {

@@ -32,24 +32,30 @@ struct ClusterDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
-                if vm.isK8sConnected, let metrics = vm.clusterMetrics {
+                if let metrics = vm.clusterMetrics {
                     liveMetricsRow(metrics)
                 } else {
                     statsRow
                 }
-                if !vm.isK8sConnected {
-                    connectButton
-                }
                 if let k8sError = vm.k8sError {
                     ErrorBanner(message: k8sError)
                 }
-                infoSection
-                if !vm.events.isEmpty {
-                    eventsSection
+                if vm.isLoadingK8s && !vm.isK8sConnected {
+                    HStack(spacing: 8) {
+                        ProgressView().controlSize(.small)
+                        Text("Connecting to Kubernetes API...")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
-                if !vm.deployments.isEmpty {
+                infoSection
+                if !vm.events.isEmpty { eventsSection }
+                if !vm.deployments.isEmpty || !vm.daemonSets.isEmpty || !vm.statefulSets.isEmpty {
                     workloadsSection
                 }
+                if !vm.services.isEmpty || !vm.ingresses.isEmpty { networkingSection }
+                if !vm.pvcs.isEmpty { storageSection }
+                if !vm.namespaces.isEmpty { namespacesSection }
                 conditionsSection
                 nodePoolsSection
                 applicationsSection
@@ -158,40 +164,7 @@ struct ClusterDetailView: View {
         .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.05 + 0.1), value: appeared)
     }
 
-    // MARK: - Connect
-
-    private var connectButton: some View {
-        Button {
-            Task { await vm.connectToCluster(cluster.id) }
-        } label: {
-            HStack {
-                Image(systemName: "link.circle")
-                    .foregroundStyle(.blue)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Connect to Kubernetes API")
-                        .font(.headline)
-                    Text("Load live metrics, events, and workloads")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                Spacer()
-                if vm.isLoadingK8s {
-                    ProgressView().controlSize(.small)
-                } else {
-                    Image(systemName: "chevron.right")
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .padding(14)
-            .background(.blue.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-        }
-        .buttonStyle(.plain)
-        .help("Connect to cluster for live metrics and pod management")
-        .disabled(vm.isLoadingK8s || cluster.status.lowercased() != "active")
-        .opacity(appeared ? 1 : 0)
-        .animation(.easeOut(duration: 0.3).delay(0.15), value: appeared)
-    }
+    // Connect button removed — K8s API connects automatically in background
 
     // MARK: - Live Metrics
 
@@ -281,28 +254,160 @@ struct ClusterDetailView: View {
     // MARK: - Workloads
 
     private var workloadsSection: some View {
-        GroupBox("Deployments (\(vm.deployments.count))") {
-            VStack(spacing: 4) {
-                ForEach(Array(vm.deployments.enumerated()), id: \.element.id) { index, deploy in
-                    HStack(spacing: 8) {
-                        Image(systemName: deploy.isHealthy ? "checkmark.circle.fill" : "xmark.circle.fill")
-                            .font(.caption)
-                            .foregroundStyle(deploy.isHealthy ? .green : .red)
-                        Text(deploy.name)
-                            .font(.caption.weight(.medium))
-                        Spacer()
-                        Text("\(deploy.readyReplicas)/\(deploy.desiredReplicas) ready")
-                            .font(.caption2.monospaced())
-                            .foregroundStyle(deploy.isHealthy ? Color.secondary : Color.red)
+        GroupBox("Workloads") {
+            VStack(alignment: .leading, spacing: 8) {
+                if !vm.deployments.isEmpty {
+                    Text("Deployments (\(vm.deployments.count))")
+                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                    ForEach(vm.deployments) { d in
+                        workloadRow(d.name, ready: d.readyReplicas, desired: d.desiredReplicas, healthy: d.isHealthy, ns: d.namespace)
                     }
-                    .padding(.vertical, 2)
-                    .modifier(StaggeredAppear(index: index))
+                }
+                if !vm.daemonSets.isEmpty {
+                    Text("DaemonSets (\(vm.daemonSets.count))")
+                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                    ForEach(vm.daemonSets) { d in
+                        workloadRow(d.name, ready: d.ready, desired: d.desired, healthy: d.isHealthy, ns: d.namespace)
+                    }
+                }
+                if !vm.statefulSets.isEmpty {
+                    Text("StatefulSets (\(vm.statefulSets.count))")
+                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                    ForEach(vm.statefulSets) { s in
+                        workloadRow(s.name, ready: s.readyReplicas, desired: s.desiredReplicas, healthy: s.isHealthy, ns: s.namespace)
+                    }
+                }
+                if !vm.cronJobs.isEmpty {
+                    Text("CronJobs (\(vm.cronJobs.count))")
+                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                    ForEach(vm.cronJobs) { cj in
+                        HStack(spacing: 8) {
+                            Image(systemName: "clock.arrow.circlepath")
+                                .font(.caption).foregroundStyle(.blue)
+                            Text(cj.name).font(.caption.weight(.medium))
+                            Spacer()
+                            Text(cj.schedule).font(.caption2.monospaced()).foregroundStyle(.secondary)
+                        }
+                    }
                 }
             }
             .padding(8)
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.22), value: appeared)
+    }
+
+    private func workloadRow(_ name: String, ready: Int, desired: Int, healthy: Bool, ns: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: healthy ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .font(.caption).foregroundStyle(healthy ? .green : .red)
+            Text(name).font(.caption.weight(.medium))
+            Text(ns).font(.caption2).foregroundStyle(.tertiary)
+            Spacer()
+            Text("\(ready)/\(desired)").font(.caption2.monospaced())
+                .foregroundStyle(healthy ? Color.secondary : Color.red)
+        }
+    }
+
+    // MARK: - Networking
+
+    private var networkingSection: some View {
+        GroupBox("Networking") {
+            VStack(alignment: .leading, spacing: 8) {
+                if !vm.services.isEmpty {
+                    Text("Services (\(vm.services.count))")
+                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                    ForEach(vm.services) { svc in
+                        HStack(spacing: 8) {
+                            Image(systemName: svc.type == "LoadBalancer" ? "arrow.triangle.branch" : "network")
+                                .font(.caption).foregroundStyle(.blue)
+                            Text(svc.name).font(.caption.weight(.medium))
+                            Text(svc.namespace).font(.caption2).foregroundStyle(.tertiary)
+                            Spacer()
+                            Text(svc.type).font(.caption2)
+                                .padding(.horizontal, 5).padding(.vertical, 1)
+                                .background(.blue.opacity(0.1)).clipShape(Capsule())
+                            if let ports = svc.spec?.ports {
+                                Text(ports.map { "\($0.port ?? 0)" }.joined(separator: ","))
+                                    .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                }
+                if !vm.ingresses.isEmpty {
+                    Text("Ingresses (\(vm.ingresses.count))")
+                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        .padding(.top, 4)
+                    ForEach(vm.ingresses) { ing in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(ing.name).font(.caption.weight(.medium))
+                            if let rules = ing.spec?.rules {
+                                ForEach(Array(rules.enumerated()), id: \.offset) { _, rule in
+                                    if let host = rule.host {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "globe").font(.caption2).foregroundStyle(.green)
+                                            Text(host).font(.caption2.monospaced())
+                                            if ing.spec?.tls != nil {
+                                                Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.24), value: appeared)
+    }
+
+    // MARK: - Storage
+
+    private var storageSection: some View {
+        GroupBox("Persistent Volume Claims (\(vm.pvcs.count))") {
+            VStack(spacing: 4) {
+                ForEach(vm.pvcs) { pvc in
+                    HStack(spacing: 8) {
+                        Image(systemName: pvc.phase == "Bound" ? "cylinder.fill" : "cylinder")
+                            .font(.caption).foregroundStyle(pvc.phase == "Bound" ? .green : .orange)
+                        Text(pvc.name).font(.caption.weight(.medium))
+                        Text(pvc.namespace).font(.caption2).foregroundStyle(.tertiary)
+                        Spacer()
+                        Text(pvc.capacity).font(.caption2.monospaced())
+                        StatusBadge(status: pvc.phase)
+                    }
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.26), value: appeared)
+    }
+
+    // MARK: - Namespaces
+
+    private var namespacesSection: some View {
+        GroupBox("Namespaces (\(vm.namespaces.count))") {
+            VStack(spacing: 4) {
+                ForEach(vm.namespaces) { ns in
+                    HStack(spacing: 8) {
+                        Image(systemName: "folder").font(.caption).foregroundStyle(.blue)
+                        Text(ns.name).font(.caption.weight(.medium))
+                        Spacer()
+                        StatusBadge(status: ns.phase)
+                    }
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.28), value: appeared)
     }
 
     // MARK: - Info
