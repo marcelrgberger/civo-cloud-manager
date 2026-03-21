@@ -20,7 +20,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps, direct K8s API access for node details, pod logs, live metrics, events, and workloads
 - **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config
 - **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers; drill-down into firewall rules (view, create, delete)
-- **Storage** — create volumes and object stores with size configuration; click object store for detail view with credentials, config, and resize
+- **Storage** — create volumes and object stores with size configuration; click object store for detail view with credentials, config, resize, and S3 file browser
 - **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys; stop, start, and reboot instances via right-click context menu
 - **Regions** — view available regions, switch active region
 - **Safe deletion** — all destructive operations require typing the resource name to confirm (DeleteConfirmationSheet)
@@ -51,10 +51,38 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 
 ### Object Store Detail View
 - **Click an object store** to open its detail view showing:
-  - **Credentials** — endpoint, bucket URL, access key, and secret key (all selectable for copying)
-  - **Configuration** — max size, region, created date, status
+  - **Credentials** — access key ID and secret access key from the linked credential (via `credential_id`), plus endpoint
+  - **Configuration** — max size, region, status
   - **Resize** — stepper to change max size, submitted via PUT /objectstores/:id
-- Credentials come from the object store resource itself (`owner_info.access_key_id`, `owner_info.secret_access_key`)
+  - **Browse Files** — opens the S3 file browser for the object store
+- Credentials are managed separately via the Civo Object Store Credentials API (`/objectstore/credentials`)
+- Each object store links to a credential via `credential_id` in `owner_info`
+
+### Object Store Credentials
+- **Dedicated credentials management** — credentials are fetched from `GET /objectstore/credentials` (paginated)
+- Each credential has `access_key_id` and `secret_access_key_id`
+- Create new credentials via `POST /objectstore/credentials`
+- Delete credentials via `DELETE /objectstore/credentials/:id`
+- Show individual credential via `GET /objectstores/credentials/:id`
+- Model: `CivoObjectStoreCredential` (id, name, accessKeyId, secretAccessKeyId, status, suspended)
+
+### S3 File Browser
+- **Browse files directly** in any object store with assigned credentials
+- **S3Client** — native S3-compatible client using AWS Signature V4 signing via CryptoKit (HMAC-SHA256)
+- **ListObjects v2** — lists objects and folders using prefix/delimiter for folder navigation
+- **Breadcrumb navigation** — clickable path components for quick folder traversal
+- **Folder drill-down** — click folders to navigate deeper, back button to go up
+- **File icons** — contextual icons based on file extension (images, PDFs, archives, text, media, etc.)
+- **Download files** — right-click any file and select "Download" to save via NSSavePanel
+- **HeadObject** — retrieves file metadata (size, content type)
+- **XML response parsing** — custom `S3XMLParser` parses S3 `ListBucketResult` XML responses
+- Flow: Object Store List → Object Store Detail → Browse Files (ObjectStoreBrowserView)
+
+### Colored Sidebar Icons
+- Each sidebar section has a distinct icon color for visual clarity:
+  - Dashboard (blue), Instances (green), SSH Keys (orange), Kubernetes (blue)
+  - Networks (green), Firewalls (red), Load Balancers (indigo), Domains (teal)
+  - Databases (purple), Volumes (orange), Object Stores (cyan), Regions (mint)
 
 ### Monetization
 - **Free tier** — menu bar firewall management
@@ -67,11 +95,12 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 
 ### Architecture
 - **Native HTTP API** — connects directly to `api.civo.com/v2`, no CLI required
-- **Direct Kubernetes API** — connects to K8s clusters using PKCS#12 client certificate auth (SecPKCS12Import), no kubectl needed
+- **Direct Kubernetes API** — connects to K8s clusters using PKCS#12 client certificate auth via `/usr/bin/openssl` (pre-installed on macOS) + `SecPKCS12Import`, no kubectl needed
+- **S3-compatible file browser** — native S3 client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256), no AWS SDK dependency
 - **App Sandbox** — network client entitlement
 - **Keychain** — API key stored securely in macOS Keychain
 - **StoreKit 2** — modern in-app purchase with transaction listener
-- **Zero dependencies** — only Apple frameworks
+- **Zero dependencies** — only Apple frameworks (SwiftUI, CryptoKit, Security, Foundation, os)
 - **Swift 6 strict concurrency** — all types Sendable
 
 ## Requirements
@@ -146,7 +175,7 @@ The sidebar is organized into categories:
 | **Compute** | Instances (stop/start/reboot via context menu), SSH Keys | Create, Delete, Stop, Start, Reboot |
 | **Kubernetes** | Clusters (detail view for pools, apps, conditions, live metrics, events, workloads with scaling, K8s node details, pod logs with auto-refresh, pod restart, namespace filter, PVC-Volume linking) | Create, Delete, Scale, Restart |
 | **Networking** | Networks, Firewalls (with rule drill-down), Load Balancers, Domains | Create, Edit (DNS records, firewall rules), Delete |
-| **Storage & Data** | Databases, Volumes, Object Stores (with detail view, credentials, resize) | Create, Delete, Resize |
+| **Storage & Data** | Databases, Volumes, Object Stores (detail view, credentials, resize, S3 file browser) | Create, Delete, Resize, Browse, Download |
 | **Account** | Regions | Switch |
 
 **Each resource view provides:**
@@ -160,7 +189,7 @@ The sidebar is organized into categories:
 
 **Network delete** skips the default network — only non-default networks can be deleted.
 
-**Object store detail view** — click an object store to see its detail view with credentials (endpoint, bucket URL, access key, secret key as selectable text), configuration (max size, region, created, status), and a resize section with stepper to change max size via PUT /objectstores/:id.
+**Object store detail view** — click an object store to see its detail view with credentials (access key ID, secret access key from linked credential, endpoint as selectable text), configuration (max size, region, status), a resize section with stepper to change max size via PUT /objectstores/:id, and a "Browse Files" button to open the S3 file browser.
 
 **Firewall rule drill-down** — click a firewall to see all its rules. Each rule shows protocol, ports, CIDR, direction (ingress/egress), and action (allow/deny) with color-coded badges. Add new rules via "+" toolbar button, delete rules via context menu with name confirmation.
 
@@ -308,6 +337,7 @@ graph TB
     K --> V[CivoLoadBalancerService]
     L --> W[CivoVolumeService]
     L --> X[CivoObjectStoreService]
+    L --> S3[S3Client]
     L --> S6
     M --> Y[CivoInstanceService]
     M --> Z[CivoSSHKeyService]
@@ -333,14 +363,17 @@ graph TB
 
     AC -->|HTTPS| AD["api.civo.com/v2"]
     KA -->|HTTPS + mTLS| AK["K8s API Server"]
+    S3 -->|HTTPS + SigV4| S3E["Civo Object Store (S3)"]
     Q -->|HTTPS| AE["ipify.org"]
 
     style AD fill:#7C3AED,color:#fff
     style AE fill:#0EA5E9,color:#fff
     style AK fill:#326CE5,color:#fff
+    style S3E fill:#F59E0B,color:#fff
     style F fill:#2563EB,color:#fff
     style KP fill:#10B981,color:#fff
     style KA fill:#10B981,color:#fff
+    style S3 fill:#F59E0B,color:#fff
 ```
 
 ### Class Diagram — Models
@@ -520,9 +553,30 @@ classDiagram
         +String? createdAt
     }
 
-    class CivoOwnerInfo {
+    class CivoObjectStoreOwner {
         +String? accessKeyId
-        +String? secretAccessKey
+        +String? credentialId
+        +String? name
+    }
+
+    class CivoObjectStoreCredential {
+        +String id
+        +String? name
+        +String? accessKeyId
+        +String? secretAccessKeyId
+        +String? status
+        +Bool? suspended
+    }
+
+    class S3ListResult {
+        +S3Object[] objects
+        +String[] commonPrefixes
+    }
+
+    class S3Object {
+        +String key
+        +Int size
+        +String lastModified
     }
 
     class CivoLoadBalancer {
@@ -589,7 +643,9 @@ classDiagram
     K8sEvent --> K8sObjectReference
     K8sPV --> K8sPVSpec
     K8sPVSpec --> K8sCSISource
-    CivoObjectStore --> CivoOwnerInfo
+    CivoObjectStore --> CivoObjectStoreOwner
+    CivoObjectStore ..> CivoObjectStoreCredential : credential_id
+    S3ListResult --> S3Object
     CivoQuota --> QuotaItem
     FirewallStatus --> ManagedFirewall
     CivoDomain --> CivoDomainRecord
@@ -657,7 +713,17 @@ classDiagram
     class CivoDatabaseService { +listDatabases(); +createDatabase(body); +removeDatabase(id) }
     class CivoNetworkService { +listNetworks(); +createNetwork(body); +updateNetwork(id, body); +removeNetwork(id) }
     class CivoVolumeService { +listVolumes(); +createVolume(body); +removeVolume(id) }
-    class CivoObjectStoreService { +listObjectStores(); +createObjectStore(body); +updateObjectStore(id, body); +removeObjectStore(id) }
+    class CivoObjectStoreService { +listObjectStores(); +showObjectStore(id); +createObjectStore(body); +updateObjectStore(id, body); +removeObjectStore(id); +listCredentials(); +showCredential(id); +createCredential(body); +removeCredential(id) }
+
+    class S3Client {
+        +String endpoint
+        +String accessKey
+        +String secretKey
+        +String region
+        +listObjects(bucket, prefix, delimiter) S3ListResult
+        +downloadObject(bucket, key) Data
+        +headObject(bucket, key) (size, contentType)
+    }
     class CivoLoadBalancerService { +listLoadBalancers(); +removeLoadBalancer(id) }
     class CivoInstanceService { +listInstances(); +createInstance(body); +updateInstance(id, body); +removeInstance(id); +stopInstance(id); +startInstance(id); +rebootInstance(id) }
     class CivoSSHKeyService { +listSSHKeys(); +createSSHKey(body); +removeSSHKey(id) }
@@ -682,6 +748,7 @@ classDiagram
     KubeconfigParser ..> CivoKubernetesService : parses kubeconfig from
     KubernetesAPIClient ..> KubeconfigParser : uses parsed certs
     K8sMetricsParser ..> KubernetesAPIClient : parses metrics from
+    S3Client ..> CivoObjectStoreService : uses credentials from
 ```
 
 ### Data Flow — Menu Bar Firewall
@@ -920,6 +987,7 @@ graph LR
         ST --> VL[VolumeListView]
         ST --> OL[ObjectStoreListView]
         OL -->|drill-down| OD[ObjectStoreDetailView]
+        OD -->|browse files| OB[ObjectStoreBrowserView]
         AC --> RL[RegionListView]
     end
 
@@ -949,6 +1017,7 @@ graph LR
     style PL fill:#047857,color:#fff
     style PLG fill:#065F46,color:#fff
     style OD fill:#7C3AED,color:#fff
+    style OB fill:#F59E0B,color:#fff
     style QE fill:#F59E0B,color:#fff
     style EL fill:#F59E0B,color:#fff
 ```
@@ -978,6 +1047,9 @@ Some Civo API endpoints return paginated objects, others return plain arrays:
 | `/instances/:id/reboot` | PUT | Single `{}` | Yes |
 | `/objectstores` | GET, POST | Paginated `{items:[]}` | Yes |
 | `/objectstores/:id` | PUT, DELETE | Single `{}` | Yes |
+| `/objectstore/credentials` | GET, POST | Paginated `{items:[]}` | Yes |
+| `/objectstore/credentials/:id` | DELETE | — | Yes |
+| `/objectstores/credentials/:id` | GET | Single `{}` | Yes |
 | `/firewalls` | GET, POST | Array `[]` | Yes |
 | `/firewalls/:id` | DELETE | — | Yes |
 | `/firewalls/:id/rules` | GET, POST | Array `[]` | Yes |

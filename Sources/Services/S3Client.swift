@@ -46,8 +46,10 @@ final class S3Client: Sendable {
     }
 
     private func rawRequest(method: String, bucket: String, path: String, query: String = "") async throws -> (Data, HTTPURLResponse) {
-        let host = "\(bucket).\(endpoint.replacingOccurrences(of: "https://", with: ""))"
-        let urlString = "https://\(host)\(path)\(query.isEmpty ? "" : "?\(query)")"
+        // Path-style URL (Civo uses path-style, not virtual-hosted)
+        let host = endpoint.replacingOccurrences(of: "https://", with: "")
+        let fullPath = "/\(bucket)\(path)"
+        let urlString = "https://\(host)\(fullPath)\(query.isEmpty ? "" : "?\(query)")"
         guard let url = URL(string: urlString) else {
             throw S3Error.invalidURL(urlString)
         }
@@ -71,7 +73,7 @@ final class S3Client: Sendable {
         // AWS Signature V4
         let signedHeaders = "host;x-amz-content-sha256;x-amz-date"
         let canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(sha256("".data(using: .utf8)!))\nx-amz-date:\(amzDate)\n"
-        let canonicalRequest = "\(method)\n\(path)\n\(query)\n\(canonicalHeaders)\n\(signedHeaders)\n\(sha256("".data(using: .utf8)!))"
+        let canonicalRequest = "\(method)\n\(fullPath)\n\(query)\n\(canonicalHeaders)\n\(signedHeaders)\n\(sha256("".data(using: .utf8)!))"
 
         let scope = "\(dateStamp)/\(region)/s3/aws4_request"
         let stringToSign = "AWS4-HMAC-SHA256\n\(amzDate)\n\(scope)\n\(sha256(canonicalRequest.data(using: .utf8)!))"
