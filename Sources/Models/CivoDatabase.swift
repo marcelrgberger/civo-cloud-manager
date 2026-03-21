@@ -14,14 +14,17 @@ struct CivoDatabase: Codable, Identifiable, Sendable {
     let firewallId: String?
     let networkId: String?
     let dnsEntry: String?
+    let createdAt: String?
+    let region: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, status, software, size, nodes, port
+        case id, name, status, software, size, nodes, port, region
         case softwareVersion = "software_version"
         case publicIpv4 = "public_ipv4"
         case privateIpv4 = "private_ipv4"
         case firewallId = "firewall_id"
         case networkId = "network_id"
         case dnsEntry = "dns_entry"
+        case createdAt = "created_at"
     }
 }

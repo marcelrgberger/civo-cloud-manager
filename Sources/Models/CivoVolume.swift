@@ -10,12 +10,17 @@ struct CivoVolume: Codable, Identifiable, Sendable {
     let clusterId: String?
     let networkId: String?
 
+    let createdAt: String?
+    let region: String?
+    let bootable: Bool?
+
     enum CodingKeys: String, CodingKey {
-        case id, name, status, mountpoint
+        case id, name, status, mountpoint, region, bootable
         case sizeGb = "size_gb"
         case instanceId = "instance_id"
         case clusterId = "cluster_id"
         case networkId = "network_id"
+        case createdAt = "created_at"
     }
 
     var sizeDisplay: String {

@@ -5,24 +5,20 @@ struct DatabaseListView: View {
     @State private var deleteTarget: CivoDatabase?
 
     var body: some View {
-        List {
-            if vm.databases.isEmpty && !vm.isLoading {
-                EmptyStateView(icon: "cylinder.split.1x2", title: "No Databases", message: "No databases found in your account.")
-            } else {
-                ForEach(Array(vm.databases.enumerated()), id: \.element.id) { index, db in
-                    databaseRow(db)
-                        .modifier(StaggeredAppear(index: index))
-                        .contextMenu {
-                            Button("Delete", role: .destructive) { deleteTarget = db }
-                        }
+        Group {
+            if let db = vm.selectedDatabase {
+                DatabaseDetailView(db: db) {
+                    withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
+                        vm.selectedDatabase = nil
+                    }
                 }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+            } else {
+                databaseList
+                    .transition(.move(edge: .leading).combined(with: .opacity))
             }
         }
-        .animation(.easeOut, value: vm.databases.map(\.id))
-        .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
-        }
-        .navigationTitle("Databases")
+        .animation(.spring(duration: 0.3, bounce: 0.1), value: vm.selectedDatabase?.id)
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -33,11 +29,37 @@ struct DatabaseListView: View {
                     .disabled(vm.isLoading)
             }
         }
-        .overlay { if vm.isLoading && vm.databases.isEmpty { ProgressView("Loading databases...") } }
         .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreating) {
             CreateDatabaseView(vm: vm).frame(minWidth: 500, minHeight: 400)
         }
+    }
+
+    private var databaseList: some View {
+        List {
+            if vm.databases.isEmpty && !vm.isLoading {
+                EmptyStateView(icon: "cylinder.split.1x2", title: "No Databases", message: "No databases found in your account.")
+            } else {
+                ForEach(Array(vm.databases.enumerated()), id: \.element.id) { index, db in
+                    Button {
+                        vm.selectedDatabase = db
+                    } label: {
+                        databaseRow(db)
+                    }
+                    .buttonStyle(.plain)
+                    .modifier(StaggeredAppear(index: index))
+                    .contextMenu {
+                        Button("Delete", role: .destructive) { deleteTarget = db }
+                    }
+                }
+            }
+        }
+        .animation(.easeOut, value: vm.databases.map(\.id))
+        .safeAreaInset(edge: .top) {
+            if let error = vm.error { ErrorBanner(message: error) }
+        }
+        .navigationTitle("Databases")
+        .overlay { if vm.isLoading && vm.databases.isEmpty { ProgressView("Loading databases...") } }
         .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
                 DeleteConfirmationSheet(resourceType: "Database", resourceName: target.name, onConfirm: {

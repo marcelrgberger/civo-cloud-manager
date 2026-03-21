@@ -17,6 +17,7 @@ final class NetworkViewModel {
     var showSuccess = false
 
     var selectedFirewall: CivoFirewall?
+    var selectedLoadBalancer: CivoLoadBalancer?
     var rules: [CivoRule] = []
 
     private let networkService = CivoNetworkService()

@@ -8,6 +8,7 @@ final class InstanceViewModel {
     var isLoading = false
     var error: String?
 
+    var selectedInstance: CivoInstance?
     var isCreatingInstance = false
     var isCreatingSSHKey = false
     var isSaving = false

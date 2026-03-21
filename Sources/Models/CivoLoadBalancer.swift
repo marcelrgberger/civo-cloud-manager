@@ -12,6 +12,8 @@ struct CivoLoadBalancer: Codable, Identifiable, Sendable {
     let backends: String?
     let externalTrafficPolicy: String?
 
+    let createdAt: String?
+
     enum CodingKeys: String, CodingKey {
         case id, name, algorithm, state
         case backends = "Backends"
@@ -20,6 +22,7 @@ struct CivoLoadBalancer: Codable, Identifiable, Sendable {
         case clusterId = "cluster_id"
         case firewallId = "firewall_id"
         case externalTrafficPolicy = "external_traffic_policy"
+        case createdAt = "created_at"
     }
 
     // Backends is a comma-separated string

@@ -7,6 +7,7 @@ final class DatabaseViewModel {
     var isLoading = false
     var error: String?
 
+    var selectedDatabase: CivoDatabase?
     var isCreating = false
     var isSaving = false
     var saveError: String?

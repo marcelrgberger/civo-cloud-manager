@@ -8,6 +8,7 @@ final class VolumeViewModel {
     var isLoading = false
     var error: String?
 
+    var selectedVolume: CivoVolume?
     var isCreatingVolume = false
     var isCreatingObjectStore = false
     var isSaving = false

@@ -5,11 +5,33 @@ struct ClusterDetailView: View {
     @Bindable var vm: KubernetesViewModel
     let onBack: () -> Void
     @State private var showDeleteConfirmation = false
+    @State private var appeared = false
+
+    private var totalNodes: Int {
+        cluster.pools?.reduce(0) { $0 + ($1.count ?? 0) } ?? cluster.numTargetNodes ?? 0
+    }
+
+    private var healthyConditions: Int {
+        cluster.conditions?.filter(\.isHealthy).count ?? 0
+    }
+
+    private var totalConditions: Int {
+        cluster.conditions?.count ?? 0
+    }
+
+    private var appCount: Int {
+        cluster.installedApplications?.count ?? 0
+    }
+
+    private var poolCount: Int {
+        cluster.pools?.count ?? 0
+    }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
+                statsRow
                 infoSection
                 conditionsSection
                 nodePoolsSection
@@ -37,43 +59,98 @@ struct ClusterDetailView: View {
                 showDeleteConfirmation = false
             }, onCancel: { showDeleteConfirmation = false })
         }
+        .onAppear {
+            withAnimation(.spring(duration: 0.4, bounce: 0.15)) {
+                appeared = true
+            }
+        }
     }
+
+    // MARK: - Header
 
     private var header: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(cluster.name)
                     .font(.largeTitle.bold())
-                Text(cluster.clusterType ?? "k3s")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 8) {
+                    Text(cluster.clusterType ?? "k3s")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    if let version = cluster.kubernetesVersion ?? cluster.version {
+                        Text(version)
+                            .font(.caption.monospaced())
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(.blue.opacity(0.1))
+                            .clipShape(Capsule())
+                    }
+                }
             }
             Spacer()
             StatusBadge(status: cluster.status)
         }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : -10)
     }
+
+    // MARK: - Stats
+
+    private var statsRow: some View {
+        HStack(spacing: 16) {
+            statCard("Nodes", value: "\(totalNodes)", icon: "square.stack.3d.up", color: .blue, index: 0)
+            statCard("Pools", value: "\(poolCount)", icon: "rectangle.3.group", color: .purple, index: 1)
+            statCard("Health", value: "\(healthyConditions)/\(totalConditions)", icon: "heart.fill", color: healthyConditions == totalConditions ? .green : .orange, index: 2)
+            statCard("Apps", value: "\(appCount)", icon: "app.badge.checkmark", color: .indigo, index: 3)
+        }
+    }
+
+    private func statCard(_ title: String, value: String, icon: String, color: Color, index: Int) -> some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.title2)
+                .foregroundStyle(color)
+            Text(value)
+                .font(.system(.title2, design: .rounded).bold())
+                .contentTransition(.numericText())
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(12)
+        .background(.quaternary.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 10)
+        .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.05 + 0.1), value: appeared)
+    }
+
+    // MARK: - Info
 
     private var infoSection: some View {
         GroupBox("Cluster Info") {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                infoRow("Version", cluster.kubernetesVersion ?? cluster.version ?? "—")
                 infoRow("API Endpoint", cluster.apiEndpoint ?? "—")
                 infoRow("Master IP", cluster.masterIp ?? "—")
                 infoRow("DNS", cluster.dnsEntry ?? "—")
                 infoRow("CNI Plugin", cluster.cniPlugin ?? "—")
-                infoRow("Target Nodes", "\(cluster.numTargetNodes ?? 0)")
                 infoRow("Node Size", cluster.targetNodesSize ?? "—")
                 infoRow("Created", cluster.createdAt ?? "—")
             }
             .padding(8)
         }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
     }
+
+    // MARK: - Conditions
 
     private var conditionsSection: some View {
         GroupBox("Conditions") {
             if let conditions = cluster.conditions, !conditions.isEmpty {
                 VStack(spacing: 6) {
-                    ForEach(Array(conditions.enumerated()), id: \.offset) { _, condition in
+                    ForEach(Array(conditions.enumerated()), id: \.offset) { index, condition in
                         HStack {
                             Image(systemName: condition.isHealthy ? "checkmark.circle.fill" : "xmark.circle.fill")
                                 .foregroundStyle(condition.isHealthy ? .green : .red)
@@ -83,6 +160,7 @@ struct ClusterDetailView: View {
                             StatusBadge(status: condition.status ?? "Unknown")
                         }
                         .padding(.vertical, 2)
+                        .modifier(StaggeredAppear(index: index))
                     }
                 }
                 .padding(8)
@@ -92,26 +170,35 @@ struct ClusterDetailView: View {
                     .padding(8)
             }
         }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.25), value: appeared)
     }
+
+    // MARK: - Node Pools
 
     private var nodePoolsSection: some View {
         GroupBox("Node Pools") {
             if let pools = cluster.pools, !pools.isEmpty {
                 VStack(spacing: 8) {
-                    ForEach(pools) { pool in
+                    ForEach(Array(pools.enumerated()), id: \.element.id) { index, pool in
                         HStack {
                             Image(systemName: "square.stack.3d.up")
                                 .foregroundStyle(.blue)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(pool.id)
                                     .font(.subheadline.weight(.medium))
+                                    .lineLimit(1)
                                 Text("\(pool.count ?? 0) node(s) — \(pool.size ?? "unknown")")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
+                            Text("\(pool.count ?? 0)")
+                                .font(.system(.title3, design: .rounded).bold())
+                                .foregroundStyle(.blue)
                         }
                         .padding(.vertical, 2)
+                        .modifier(StaggeredAppear(index: index))
                     }
                 }
                 .padding(8)
@@ -121,13 +208,17 @@ struct ClusterDetailView: View {
                     .padding(8)
             }
         }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.3), value: appeared)
     }
 
+    // MARK: - Apps
+
     private var applicationsSection: some View {
-        GroupBox("Installed Applications") {
+        GroupBox("Installed Applications (\(appCount))") {
             if let apps = cluster.installedApplications, !apps.isEmpty {
                 VStack(spacing: 6) {
-                    ForEach(Array(apps.enumerated()), id: \.offset) { _, app in
+                    ForEach(Array(apps.enumerated()), id: \.offset) { index, app in
                         HStack {
                             Image(systemName: "app.badge.checkmark")
                                 .foregroundStyle(.purple)
@@ -143,6 +234,7 @@ struct ClusterDetailView: View {
                             Spacer()
                         }
                         .padding(.vertical, 2)
+                        .modifier(StaggeredAppear(index: index))
                     }
                 }
                 .padding(8)
@@ -152,6 +244,8 @@ struct ClusterDetailView: View {
                     .padding(8)
             }
         }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.35), value: appeared)
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {
