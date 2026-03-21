@@ -926,7 +926,7 @@
 				E7F056EA672FF27E44B7036E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		739F79394D4454C26250FC1F /* Build configuration list for PBXNativeTarget "CivoCloudManager" */ = {
 			isa = XCConfigurationList;
@@ -935,7 +935,7 @@
 				51CA093C9904A097FCB39536 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		81EAE49F676D247D810DA7BF /* Build configuration list for PBXNativeTarget "CivoCloudManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -944,7 +944,7 @@
 				D55E6F9B09F76487C493497C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

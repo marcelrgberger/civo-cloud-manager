@@ -54,14 +54,14 @@ struct HelpView: View {
                             .font(.system(size: 4))
                             .foregroundStyle(.secondary)
                             .padding(.top, 6)
-                        Text(item)
+                        Text(LocalizedStringKey(item))
                             .font(.callout)
                     }
                 }
             }
             .padding(4)
         } label: {
-            Label(section.title, systemImage: section.icon)
+            Label(LocalizedStringKey(section.title), systemImage: section.icon)
                 .font(.headline)
         }
     }
