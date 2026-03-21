@@ -99,25 +99,39 @@ final class KubernetesViewModel {
         k8sError = nil
         defer { isLoadingK8s = false }
 
+        var steps: [String] = []
         do {
+            // Step 1: Auto-open firewall
             if let cluster = selectedCluster, let fwId = cluster.firewallId {
                 await autoOpenFirewall(firewallId: fwId, port: 6443)
+                steps.append("Firewall opened")
+            } else {
+                steps.append("No firewall ID")
             }
 
+            // Step 2: Get kubeconfig
             let yaml = try await service.getKubeconfig(clusterId)
+            steps.append("Kubeconfig: \(yaml.count) chars")
+
+            // Step 3: Parse kubeconfig
             let creds = try KubeconfigParser.parse(yaml)
+            steps.append("Parsed: server=\(creds.server), CA=\(creds.caCertDER.count)b, cert=\(creds.clientCertDER.count)b, key=\(creds.clientKeyPEM.count)b")
+
+            // Step 4: Create client
             let client = try KubernetesAPIClient(credentials: creds)
+            steps.append("Client created")
             k8sClient = client
 
-            // Test connection with a simple API call
+            // Step 5: Test connection
             let nodeList = try await client.listNodes()
             k8sNodes = nodeList.items
             isK8sConnected = true
-            Log.info("Connected to K8s API at \(creds.server) — \(k8sNodes.count) nodes")
+            steps.append("Connected: \(k8sNodes.count) nodes")
 
             await loadClusterData()
         } catch {
-            k8sError = error.localizedDescription
+            steps.append("FAILED: \(error.localizedDescription)")
+            k8sError = steps.joined(separator: " → ")
             await autoCloseFirewall()
         }
     }
