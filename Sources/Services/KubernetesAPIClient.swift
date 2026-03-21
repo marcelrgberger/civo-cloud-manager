@@ -11,7 +11,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         self.server = credentials.server
 
         guard let ca = SecCertificateCreateWithData(nil, credentials.caCertDER as CFData) else {
-            throw K8sAPIError.invalidCertificate("CA certificate: invalid DER data")
+            throw K8sAPIError.invalidCertificate("CA certificate: DER \(credentials.caCertDER.count) bytes, first=\(credentials.caCertDER.first.map { String(format: "0x%02X", $0) } ?? "nil")")
         }
         self.caCert = ca
 
