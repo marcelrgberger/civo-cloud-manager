@@ -60,11 +60,10 @@ enum KubeconfigParser {
         }
 
         let base64Content = pemString
-            .replacingOccurrences(of: header, with: "")
-            .replacingOccurrences(of: footer, with: "")
-            .replacingOccurrences(of: "\n", with: "")
-            .replacingOccurrences(of: "\r", with: "")
-            .trimmingCharacters(in: .whitespaces)
+            .components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty && !$0.hasPrefix("-----") }
+            .joined()
 
         guard let der = Data(base64Encoded: base64Content, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("PEM to DER conversion failed for \(label)")
