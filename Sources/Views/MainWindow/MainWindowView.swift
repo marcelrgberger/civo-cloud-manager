@@ -13,6 +13,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case volumes = "Volumes"
     case objectStores = "Object Stores"
     case regions = "Regions"
+    case about = "About"
 
     var id: String { rawValue }
 
@@ -30,6 +31,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .volumes: return "cylinder"
         case .objectStores: return "tray.2"
         case .regions: return "map"
+        case .about: return "info.circle"
         }
     }
 
@@ -41,6 +43,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
         case .databases, .volumes, .objectStores: return .storage
         case .regions: return .account
+        case .about: return .account
         }
     }
 }
@@ -137,6 +140,8 @@ struct MainWindowView: View {
             ObjectStoreListView(vm: volumeVM)
         case .regions:
             RegionListView(vm: regionVM)
+        case .about:
+            AboutView()
         }
     }
 }

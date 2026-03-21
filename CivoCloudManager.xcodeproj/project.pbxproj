@@ -81,6 +81,7 @@
 		E083AC17B80D72EBCFC34EB1 /* QuotaGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AFB11033C6124929DDC148 /* QuotaGauge.swift */; };
 		E525F85C14EA5B002BD6E623 /* CivoObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4112A2183F0F82E271E7CBEB /* CivoObjectStore.swift */; };
 		E5388F0CB662114DDAF8DC19 /* CivoKubernetesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F837BF987709F6BEA39F3C88 /* CivoKubernetesService.swift */; };
+		E6175547DC2B2360805B4B21 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5BA6C9A7542257FDEF713B /* AboutView.swift */; };
 		E6900C48A13E3D8C2C0765E5 /* CivoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE7C413C7255C79928DCA7C /* CivoDatabase.swift */; };
 		E7AEBD59D7DAD41EEB63398A /* CreateVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687EAC653A96B641C285D432 /* CreateVolumeView.swift */; };
 		EAC2A7063623ABD779657772 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC6D9CA22D5C3BA1B85D99F /* DashboardViewModel.swift */; };
@@ -144,6 +145,7 @@
 		7DA2E1B972D924B14F3CD51B /* CivoFirewallService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoFirewallService.swift; sourceTree = "<group>"; };
 		81AEBC33E74A811E3130B06D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88855424117BE031BBC65710 /* InstanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceViewModel.swift; sourceTree = "<group>"; };
+		8B5BA6C9A7542257FDEF713B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		8DC6D9CA22D5C3BA1B85D99F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		8ECEECB8E6EDEA2F7E3DA302 /* CreateObjectStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObjectStoreView.swift; sourceTree = "<group>"; };
 		90AFB11033C6124929DDC148 /* QuotaGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		0A6EB52D0EFC0F1BA3A38028 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				8B5BA6C9A7542257FDEF713B /* AboutView.swift */,
 				A40A98847C67D8B0FF6AD3AD /* RegionListView.swift */,
 			);
 			path = Account;
@@ -520,6 +523,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6175547DC2B2360805B4B21 /* AboutView.swift in Sources */,
 				60EC72EBF2EC71F8DAC3C87A /* AppState.swift in Sources */,
 				7ED6A368F04214AFBA5C5860 /* CivoAPIClient.swift in Sources */,
 				16A4B49151D57D5417DD04EF /* CivoAccessLabel.swift in Sources */,
