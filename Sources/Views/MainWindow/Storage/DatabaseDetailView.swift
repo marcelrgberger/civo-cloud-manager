@@ -1,14 +1,17 @@
 import SwiftUI
+import LocalAuthentication
 
 struct DatabaseDetailView: View {
     let db: CivoDatabase
     let onBack: () -> Void
     @State private var appeared = false
+    @State private var passwordRevealed = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
+                credentialsSection
                 connectionSection
                 configSection
                 networkSection
@@ -99,6 +102,48 @@ struct DatabaseDetailView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
+    }
+
+    private var credentialsSection: some View {
+        GroupBox("Credentials") {
+            VStack(alignment: .leading, spacing: 10) {
+                infoRow("Username", db.username ?? "—")
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Password").font(.caption).foregroundStyle(.secondary)
+                        if passwordRevealed {
+                            Text(db.password ?? "—")
+                                .font(.subheadline.monospaced())
+                                .textSelection(.enabled)
+                        } else {
+                            Text(String(repeating: "*", count: 20))
+                                .font(.subheadline.monospaced())
+                        }
+                    }
+                    Spacer()
+                    Button {
+                        if passwordRevealed {
+                            passwordRevealed = false
+                        } else {
+                            let context = LAContext()
+                            var error: NSError?
+                            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+                                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal database password") { success, _ in
+                                    DispatchQueue.main.async { passwordRevealed = success }
+                                }
+                            }
+                        }
+                    } label: {
+                        Image(systemName: passwordRevealed ? "eye.slash" : "eye")
+                            .font(.caption)
+                    }
+                    .buttonStyle(.borderless)
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.08), value: appeared)
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {
