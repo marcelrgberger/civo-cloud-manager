@@ -9,8 +9,9 @@ struct DatabaseListView: View {
             if vm.databases.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "cylinder.split.1x2", title: "No Databases", message: "No databases found in your account.")
             } else {
-                ForEach(vm.databases) { db in
+                ForEach(Array(vm.databases.enumerated()), id: \.element.id) { index, db in
                     databaseRow(db)
+                        .modifier(StaggeredAppear(index: index))
                         .contextMenu {
                             Button("Delete", role: .destructive) { deleteTarget = db }
                         }

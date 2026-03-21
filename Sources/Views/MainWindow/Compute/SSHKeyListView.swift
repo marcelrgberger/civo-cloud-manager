@@ -9,8 +9,8 @@ struct SSHKeyListView: View {
             if vm.sshKeys.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "key", title: "No SSH Keys", message: "No SSH keys found in your account.")
             } else {
-                ForEach(vm.sshKeys) { key in
-                    ResourceListRow(icon: "key", name: key.name, subtitle: key.fingerprint)
+                ForEach(Array(vm.sshKeys.enumerated()), id: \.element.id) { index, key in
+                    ResourceListRow(icon: "key", name: key.name, subtitle: key.fingerprint, index: index)
                         .contextMenu {
                             Button("Delete", role: .destructive) { deleteTarget = key }
                         }

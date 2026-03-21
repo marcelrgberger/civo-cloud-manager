@@ -9,12 +9,13 @@ struct LoadBalancerListView: View {
             if vm.loadBalancers.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "arrow.triangle.branch", title: "No Load Balancers", message: "No load balancers found in your account.")
             } else {
-                ForEach(vm.loadBalancers) { lb in
+                ForEach(Array(vm.loadBalancers.enumerated()), id: \.element.id) { index, lb in
                     ResourceListRow(
                         icon: "arrow.triangle.branch",
                         name: lb.name,
                         subtitle: "\(lb.algorithm ?? "—") — \(lb.publicIp ?? "no public IP") — \(lb.backendList.count) backends",
-                        status: lb.state
+                        status: lb.state,
+                        index: index
                     )
                     .contextMenu {
                         Button("Delete", role: .destructive) {

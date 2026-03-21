@@ -7,12 +7,17 @@ struct ClusterListView: View {
         Group {
             if let cluster = vm.selectedCluster {
                 ClusterDetailView(cluster: cluster, vm: vm) {
-                    vm.selectedCluster = nil
+                    withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
+                        vm.selectedCluster = nil
+                    }
                 }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
             } else {
                 clusterList
+                    .transition(.move(edge: .leading).combined(with: .opacity))
             }
         }
+        .animation(.spring(duration: 0.3, bounce: 0.1), value: vm.selectedCluster?.id)
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -45,7 +50,7 @@ struct ClusterListView: View {
             if vm.clusters.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "helm", title: "No Clusters", message: "No Kubernetes clusters found in your account.")
             } else {
-                ForEach(vm.clusters) { cluster in
+                ForEach(Array(vm.clusters.enumerated()), id: \.element.id) { index, cluster in
                     Button {
                         Task { await vm.loadClusterDetail(cluster.id) }
                     } label: {
@@ -53,7 +58,8 @@ struct ClusterListView: View {
                             icon: "helm",
                             name: cluster.name,
                             subtitle: "\(cluster.clusterType ?? "k3s") — \(cluster.numTargetNodes ?? 0) nodes",
-                            status: cluster.status
+                            status: cluster.status,
+                            index: index
                         )
                     }
                     .buttonStyle(.plain)

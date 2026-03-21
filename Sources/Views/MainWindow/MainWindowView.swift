@@ -77,7 +77,8 @@ struct MainWindowView: View {
                     sidebar
                 } detail: {
                     detailView
-                        .animation(.easeOut(duration: 0.2), value: selection)
+                        .contentTransition(.opacity)
+                        .animation(.spring(duration: 0.3, bounce: 0.1), value: selection)
                 }
             } else {
                 PaywallView()

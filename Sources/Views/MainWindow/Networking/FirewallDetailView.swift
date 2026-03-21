@@ -11,8 +11,8 @@ struct FirewallDetailView: View {
             if vm.rules.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "shield.slash", title: "No Rules", message: "No firewall rules configured.")
             } else {
-                ForEach(vm.rules) { rule in
-                    ruleRow(rule)
+                ForEach(Array(vm.rules.enumerated()), id: \.element.id) { index, rule in
+                    ruleRow(rule, index: index)
                         .contextMenu {
                             Button("Delete", role: .destructive) {
                                 deleteTarget = rule
@@ -68,7 +68,7 @@ struct FirewallDetailView: View {
         }
     }
 
-    private func ruleRow(_ rule: CivoRule) -> some View {
+    private func ruleRow(_ rule: CivoRule, index: Int) -> some View {
         HStack(spacing: 12) {
             Image(systemName: rule.action == "allow" ? "checkmark.shield" : "xmark.shield")
                 .font(.title3)
@@ -107,6 +107,7 @@ struct FirewallDetailView: View {
             Spacer()
         }
         .padding(.vertical, 4)
+        .modifier(StaggeredAppear(index: index))
     }
 
     private func portDisplay(_ rule: CivoRule) -> String {

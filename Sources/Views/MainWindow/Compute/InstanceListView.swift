@@ -9,12 +9,13 @@ struct InstanceListView: View {
             if vm.instances.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "desktopcomputer", title: "No Instances", message: "No compute instances found in your account.")
             } else {
-                ForEach(vm.instances) { inst in
+                ForEach(Array(vm.instances.enumerated()), id: \.element.id) { index, inst in
                     ResourceListRow(
                         icon: "desktopcomputer",
                         name: inst.name,
                         subtitle: [inst.size, inst.publicIp].compactMap { $0 }.joined(separator: " — "),
-                        status: inst.status
+                        status: inst.status,
+                        index: index
                     )
                     .contextMenu {
                         Button("Delete", role: .destructive) { deleteTarget = inst }

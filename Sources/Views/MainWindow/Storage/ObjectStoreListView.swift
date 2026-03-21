@@ -14,12 +14,13 @@ struct ObjectStoreListView: View {
             if vm.objectStores.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "tray.2", title: "No Object Stores", message: "No object stores found in your account.")
             } else {
-                ForEach(vm.objectStores) { store in
+                ForEach(Array(vm.objectStores.enumerated()), id: \.element.id) { index, store in
                     ResourceListRow(
                         icon: "tray.2",
                         name: store.name,
                         subtitle: "\(store.maxSizeDisplay) max — \(store.objectstoreEndpoint ?? "")",
-                        status: store.status
+                        status: store.status,
+                        index: index
                     )
                     .contextMenu {
                         Button("Show Credentials") {

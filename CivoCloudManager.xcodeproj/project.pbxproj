@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		008FF41156D6FD2F10DF32E8 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E926C81BAC9B489A4A6CF /* ErrorBanner.swift */; };
 		030D3EB1E368E8EE0EDDE2E1 /* FirewallDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE494996C31EA1F2277C85E8 /* FirewallDetailView.swift */; };
+		03175E40119BCDEDF60A1CF4 /* StaggeredAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */; };
 		06471893C03891741C390881 /* CivoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F22F7A31F8EC23B4CD44E /* CivoNetwork.swift */; };
 		06646DCE38F5CCC8EFF8202D /* ObjectStoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05E15BCB23C10E4B4E14F11 /* ObjectStoreListView.swift */; };
 		0891940B5F7D8079787F48D1 /* CivoRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126A77B7B656502483F1E79 /* CivoRegion.swift */; };
@@ -108,6 +109,7 @@
 		25A9268C07EC0589C576AC19 /* CivoInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoInstance.swift; sourceTree = "<group>"; };
 		26C1EADCBB722A2063BEFE0F /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
 		2A18DCBFC2A79CA314A5C09E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredAppear.swift; sourceTree = "<group>"; };
 		343445235851034C3DC49579 /* DomainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListView.swift; sourceTree = "<group>"; };
 		394D4BE2B10B10EE1565C333 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3AE7C413C7255C79928DCA7C /* CivoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				4FA24C620CC32B347D0C1F4D /* PaywallView.swift */,
 				90AFB11033C6124929DDC148 /* QuotaGauge.swift */,
 				638C6D6389A9BAE2388F1EA0 /* ResourceListRow.swift */,
+				2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */,
 				D3323BF3E6B4C74A20FC8288 /* StatusBadge.swift */,
 				573C9845C32B46E9605DB19B /* SuccessOverlay.swift */,
 			);
@@ -592,6 +595,7 @@
 				57708DF578C420C911D33150 /* RegionViewModel.swift in Sources */,
 				8064B3657059DB672B6CFEE0 /* ResourceListRow.swift in Sources */,
 				940458154EA7E2730A6B477E /* SSHKeyListView.swift in Sources */,
+				03175E40119BCDEDF60A1CF4 /* StaggeredAppear.swift in Sources */,
 				08B4B8D7860A4262CFF7625E /* StatusBadge.swift in Sources */,
 				41D376B88A4542E314959D82 /* StoreManager.swift in Sources */,
 				9CB896D3236DF2336757F25F /* SuccessOverlay.swift in Sources */,

@@ -16,10 +16,10 @@ struct SuccessOverlay: View {
             .background(.ultraThickMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .shadow(radius: 10)
-            .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            .transition(.opacity.combined(with: .scale(scale: 0.7, anchor: .center)))
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    withAnimation(.easeOut(duration: 0.3)) {
+                    withAnimation(.spring(duration: 0.3, bounce: 0.15)) {
                         isPresented = false
                     }
                 }

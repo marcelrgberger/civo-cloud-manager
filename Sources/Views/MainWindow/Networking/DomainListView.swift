@@ -113,11 +113,11 @@ struct DomainListView: View {
             if vm.domains.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "globe", title: "No Domains", message: "No domains found in your account.")
             } else {
-                ForEach(vm.domains) { domain in
+                ForEach(Array(vm.domains.enumerated()), id: \.element.id) { index, domain in
                     DisclosureGroup {
                         DomainRecordsSection(vm: vm, domain: domain)
                     } label: {
-                        ResourceListRow(icon: "globe", name: domain.name)
+                        ResourceListRow(icon: "globe", name: domain.name, index: index)
                     }
                     .contextMenu {
                         Button("Delete", role: .destructive) {

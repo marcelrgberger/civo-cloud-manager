@@ -9,12 +9,13 @@ struct NetworkListView: View {
             if vm.networks.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "point.3.connected.trianglepath.dotted", title: "No Networks", message: "No networks found in your account.")
             } else {
-                ForEach(vm.networks) { net in
+                ForEach(Array(vm.networks.enumerated()), id: \.element.id) { index, net in
                     ResourceListRow(
                         icon: "point.3.connected.trianglepath.dotted",
                         name: net.displayName,
                         subtitle: "Region: \(net.region ?? "—")\(net.isDefault == true ? " — Default" : "")",
-                        status: net.status
+                        status: net.status,
+                        index: index
                     )
                     .contextMenu {
                         if net.isDefault != true {

@@ -8,12 +8,17 @@ struct FirewallListView: View {
         Group {
             if let firewall = vm.selectedFirewall {
                 FirewallDetailView(firewall: firewall, vm: vm) {
-                    vm.selectedFirewall = nil
+                    withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
+                        vm.selectedFirewall = nil
+                    }
                 }
+                .transition(.move(edge: .trailing).combined(with: .opacity))
             } else {
                 firewallList
+                    .transition(.move(edge: .leading).combined(with: .opacity))
             }
         }
+        .animation(.spring(duration: 0.3, bounce: 0.1), value: vm.selectedFirewall?.id)
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -40,14 +45,15 @@ struct FirewallListView: View {
             if vm.firewalls.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "shield", title: "No Firewalls", message: "No firewalls found in your account.")
             } else {
-                ForEach(vm.firewalls) { fw in
+                ForEach(Array(vm.firewalls.enumerated()), id: \.element.id) { index, fw in
                     Button {
                         vm.selectedFirewall = fw
                     } label: {
                         ResourceListRow(
                             icon: "shield",
                             name: fw.name,
-                            subtitle: "\(fw.rulesCountInt) rules"
+                            subtitle: "\(fw.rulesCountInt) rules",
+                            index: index
                         )
                     }
                     .buttonStyle(.plain)
