@@ -140,13 +140,13 @@ struct CredentialListView: View {
             revealedSecrets.remove(id)
             return
         }
-        let context = LAContext()
-        var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key") { success, _ in
-                DispatchQueue.main.async {
-                    if success { revealedSecrets.insert(id) }
-                }
+        Task {
+            let context = LAContext()
+            do {
+                let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key")
+                if success { revealedSecrets.insert(id) }
+            } catch {
+                // User cancelled or auth failed
             }
         }
     }

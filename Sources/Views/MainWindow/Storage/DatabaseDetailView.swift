@@ -125,13 +125,7 @@ struct DatabaseDetailView: View {
                         if passwordRevealed {
                             passwordRevealed = false
                         } else {
-                            let context = LAContext()
-                            var error: NSError?
-                            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-                                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal database password") { success, _ in
-                                    DispatchQueue.main.async { passwordRevealed = success }
-                                }
-                            }
+                            Task { await authenticateAndReveal() }
                         }
                     } label: {
                         Image(systemName: passwordRevealed ? "eye.slash" : "eye")
@@ -144,6 +138,16 @@ struct DatabaseDetailView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.08), value: appeared)
+    }
+
+    private func authenticateAndReveal() async {
+        let context = LAContext()
+        do {
+            let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal database password")
+            passwordRevealed = success
+        } catch {
+            // User cancelled or auth failed
+        }
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {

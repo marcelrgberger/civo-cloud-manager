@@ -164,13 +164,13 @@ struct ObjectStoreDetailView: View {
             secretRevealed = false
             return
         }
-        let context = LAContext()
-        var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key") { success, _ in
-                DispatchQueue.main.async {
-                    secretRevealed = success
-                }
+        Task {
+            let context = LAContext()
+            do {
+                let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key")
+                secretRevealed = success
+            } catch {
+                // User cancelled or auth failed
             }
         }
     }
