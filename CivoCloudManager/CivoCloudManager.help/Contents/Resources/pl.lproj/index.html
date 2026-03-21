@@ -89,19 +89,30 @@ th { font-weight: 600; }
 </ul>
 <p>Aby utworzy&#x107;: kliknij <strong>+</strong>. Skonfiguruj nazw&#x119;, plugin CNI, rozmiar node, liczb&#x119; node'&oacute;w, sie&#x107; i aplikacje z marketplace.</p>
 
-<h3>Szczeg&oacute;&#x142;y Node (K8s API)</h3>
-<p>Kliknij <strong>nazw&#x119; node</strong> w node pool, aby po&#x142;&#x105;czy&#x107; si&#x119; bezpo&#x15B;rednio z API Kubernetes i zobaczy&#x107; szczeg&oacute;&#x142;owe informacje o node:</p>
+<h3>Po&#x142;&#x105;cz z API Kubernetes</h3>
+<p>W widoku szczeg&oacute;&#x142;&oacute;w klastra kliknij <strong>Po&#x142;&#x105;cz z API Kubernetes</strong>, aby uzyska&#x107; dost&#x119;p do danych na &#x17C;ywo bezpo&#x15B;rednio z API Kubernetes:</p>
 <ul>
-<li><strong>Karty zasob&oacute;w</strong> &mdash; CPU, Memory i Pods pokazuj&#x105;ce pojemno&#x15B;&#x107; vs. warto&#x15B;ci alokowane.</li>
+<li><strong>Wska&#x17A;niki CPU i pami&#x119;ci</strong> &mdash; okr&#x105;g&#x142;e wska&#x17A;niki procentowe pokazuj&#x105;ce wykorzystanie zasob&oacute;w klastra w czasie rzeczywistym (wymaga metrics-server zainstalowanego na klastrze).</li>
+<li><strong>Liczba Pod&oacute;w i zdrowie Node'&oacute;w</strong> &mdash; wska&#x17A;niki na &#x17C;ywo stanu klastra.</li>
+<li><strong>Ostatnie zdarzenia</strong> &mdash; zdarzenia klastra z ostrze&#x17C;eniami pod&#x15B;wietlonymi na pomara&#x144;czowo.</li>
+<li><strong>Deployments</strong> &mdash; obci&#x105;&#x17C;enia robocze pokazuj&#x105;ce gotowe vs. po&#x17C;&#x105;dane repliki.</li>
+</ul>
+<p>Je&#x15B;li metrics-server nie jest zainstalowany na klastrze, aplikacja wy&#x15B;wietla statyczne statystyki klastra z API Civo.</p>
+<p class="tip">Podczas &#x142;&#x105;czenia z API Kubernetes aplikacja automatycznie otwiera port 6443 w firewallu klastra dla Twojego aktualnego IP. Regu&#x142;a jest oznaczona jako <code>civo-cloud-&lt;hostname&gt;-k8s-api</code> i jest automatycznie usuwana po powr&oacute;cie z widoku klastra.</p>
+
+<h3>Szczeg&oacute;&#x142;y Node (K8s API)</h3>
+<p>Kliknij <strong>nazw&#x119; node'a</strong> w node pool, aby po&#x142;&#x105;czy&#x107; si&#x119; bezpo&#x15B;rednio z API Kubernetes i zobaczy&#x107; szczeg&oacute;&#x142;owe informacje o node:</p>
+<ul>
+<li><strong>Karty zasob&oacute;w</strong> &mdash; CPU, Memory i Pods pokazuj&#x105;ce pojemno&#x15B;&#x107; vs. warto&#x15B;ci przydzielalne.</li>
 <li><strong>Warunki</strong> &mdash; Ready, MemoryPressure, DiskPressure, PIDPressure ze wska&#x17A;nikami zdrowia.</li>
 <li><strong>Adresy</strong> &mdash; InternalIP i Hostname.</li>
 <li><strong>Info o systemie</strong> &mdash; System operacyjny, Architektura, Container Runtime, Wersja Kubelet.</li>
-<li><strong>Poka&#x17C; Pods na tym Node</strong> &mdash; przycisk do zobaczenia wszystkich pod&oacute;w dzia&#x142;aj&#x105;cych na tym node.</li>
+<li><strong>Poka&#x17C; Pody na tym Node</strong> &mdash; przycisk do wy&#x15B;wietlenia wszystkich pod&oacute;w dzia&#x142;aj&#x105;cych na tym node.</li>
 </ul>
-<p class="tip">Aplikacja pobiera kubeconfig z API Civo, wyodr&#x119;bnia certyfikaty i &#x142;&#x105;czy si&#x119; bezpo&#x15B;rednio z API Kubernetes, u&#x17C;ywaj&#x105;c uwierzytelniania certyfikatem klienta. Nie jest potrzebny kubectl ani &#x17C;adne zewn&#x119;trzne narz&#x119;dzia.</p>
+<p class="tip">Aplikacja pobiera kubeconfig z API Civo, wyodr&#x119;bnia certyfikaty i &#x142;&#x105;czy si&#x119; bezpo&#x15B;rednio z API Kubernetes przy u&#x17C;yciu uwierzytelniania certyfikatem klienta. Nie jest potrzebny kubectl ani &#x17C;adne zewn&#x119;trzne narz&#x119;dzia.</p>
 
 <h3>Lista Pod&oacute;w</h3>
-<p>Z widoku szczeg&oacute;&#x142;&oacute;w node kliknij <strong>Poka&#x17C; Pods na tym Node</strong>, aby zobaczy&#x107; wszystkie pody na tym node. Ka&#x17C;dy pod pokazuje:</p>
+<p>W widoku szczeg&oacute;&#x142;&oacute;w node'a kliknij <strong>Poka&#x17C; Pody na tym Node</strong>, aby zobaczy&#x107; wszystkie pody na tym node. Ka&#x17C;dy pod pokazuje:</p>
 <ul>
 <li>Badge statusu (Running, Pending, Failed itp.)</li>
 <li>Namespace</li>
@@ -110,11 +121,11 @@ th { font-weight: 600; }
 </ul>
 
 <h3>Logi Pod&oacute;w</h3>
-<p>Kliknij pod na li&#x15B;cie pod&oacute;w, aby zobaczy&#x107; jego logi:</p>
+<p>Kliknij pod w li&#x15B;cie pod&oacute;w, aby zobaczy&#x107; jego logi:</p>
 <ul>
-<li>Przewijalne wyj&#x15B;cie log&oacute;w w czcionce monospace</li>
+<li>Przewijalna wyj&#x15B;cie log&oacute;w w czcionce monospace</li>
 <li><strong>Prze&#x142;&#x105;cznik auto-scroll</strong> &mdash; automatycznie przewija do najnowszych wpis&oacute;w log&oacute;w</li>
-<li><strong>Przycisk od&#x15B;wie&#x17C;</strong> &mdash; prze&#x142;adowuje najnowsze logi</li>
+<li><strong>Przycisk od&#x15B;wie&#x17C;</strong> &mdash; przeladowuje najnowsze logi</li>
 <li>Nag&#x142;&oacute;wek poda z nazw&#x105;, namespace i statusem</li>
 </ul>
 
@@ -153,11 +164,14 @@ th { font-weight: 600; }
 <p><strong>Wyczy&#x15B;&#x107; dost&#x119;pne</strong> &mdash; przycisk na pasku narz&#x119;dzi do masowego usuwania wszystkich wolumen&oacute;w ze statusem &bdquo;dost&#x119;pny&rdquo;. Wymaga wpisania <code>DELETE ALL DATA</code> w celu potwierdzenia.</p>
 
 <h3>Object Stores</h3>
-<p>Przegl&#x105;daj object stores z endpointem i maksymalnym rozmiarem. Kliknij prawym przyciskiem, aby:</p>
+<p>Kliknij object store, aby otworzy&#x107; jego <strong>widok szczeg&oacute;&#x142;owy</strong> pokazuj&#x105;cy:</p>
 <ul>
-<li><strong>Poka&#x17C; dane uwierzytelniaj&#x105;ce</strong> &mdash; wy&#x15B;wietla access key ID i secret access key (mo&#x17C;na zaznaczy&#x107; do skopiowania).</li>
-<li><strong>Usu&#x144;</strong> &mdash; trwale usuwa object store.</li>
+<li><strong>Dane uwierzytelniaj&#x105;ce</strong> &mdash; endpoint, URL bucketa, access key i secret key (wszystkie do zaznaczenia i skopiowania).</li>
+<li><strong>Konfiguracja</strong> &mdash; maksymalny rozmiar, region, data utworzenia i status.</li>
+<li><strong>Zmie&#x144; rozmiar</strong> &mdash; stepper do zmiany maksymalnego rozmiaru. Zmiany s&#x105; wysy&#x142;ane przez PUT do API Civo.</li>
 </ul>
+<p>Kliknij prawym przyciskiem na object store w li&#x15B;cie, aby go usun&#x105;&#x107;.</p>
+<p class="tip">Dane uwierzytelniaj&#x105;ce (access key i secret key) pochodz&#x105; bezpo&#x15B;rednio z zasobu object store, a nie z oddzielnego endpointu.</p>
 
 <h2 id="account">Konto</h2>
 <h3>Regiony</h3>
@@ -184,7 +198,8 @@ th { font-weight: 600; }
 <li>Aplikacja automatycznie od&#x15B;wie&#x17C;a status firewalla co 60 sekund.</li>
 <li>Karty zasob&oacute;w na dashboardzie s&#x105; klikalne &mdash; przejd&#x17A; do dowolnej sekcji jednym klikni&#x119;ciem.</li>
 <li>Regu&#x142;y firewalla utworzone przez t&#x119; aplikacj&#x119; s&#x105; oznaczone jako <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> i tylko regu&#x142;y tej aplikacji s&#x105; zarz&#x105;dzane.</li>
-<li>Przep&#x142;yw szczeg&oacute;&#x142;&oacute;w Kubernetes: Lista klastr&oacute;w &rarr; Szczeg&oacute;&#x142;y klastra &rarr; Szczeg&oacute;&#x142;y node &rarr; Lista pod&oacute;w &rarr; Logi pod&oacute;w.</li>
+<li>Przep&#x142;yw szczeg&oacute;&#x142;&oacute;w Kubernetes: Lista klastr&oacute;w &rarr; Szczeg&oacute;&#x142;y klastra &rarr; Szczeg&oacute;&#x142;y Node &rarr; Lista Pod&oacute;w &rarr; Logi Pod&oacute;w.</li>
+<li>Podczas &#x142;&#x105;czenia z API Kubernetes port 6443 jest automatycznie otwierany i zamykany dla Twojego IP &mdash; nie jest potrzebna r&#x119;czna konfiguracja firewalla.</li>
 </ul>
 
 </body>

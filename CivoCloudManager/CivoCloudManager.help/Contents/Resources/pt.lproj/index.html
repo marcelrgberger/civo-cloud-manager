@@ -89,8 +89,19 @@ th { font-weight: 600; }
 </ul>
 <p>Para criar: clique em <strong>+</strong>. Configure nome, plugin CNI, tamanho do node, n&uacute;mero de nodes, rede e apps do marketplace.</p>
 
-<h3>Detalhes do Node (API K8s)</h3>
-<p>Clique no <strong>nome de um node</strong> em um node pool para conectar-se diretamente &agrave; API Kubernetes e ver informa&ccedil;&otilde;es detalhadas do node:</p>
+<h3>Conectar &agrave; API do Kubernetes</h3>
+<p>Na visualiza&ccedil;&atilde;o detalhada do cluster, clique em <strong>Conectar &agrave; API do Kubernetes</strong> para acessar dados ao vivo diretamente da API do Kubernetes:</p>
+<ul>
+<li><strong>Indicadores de CPU e Mem&oacute;ria</strong> &mdash; indicadores circulares de porcentagem mostrando o uso de recursos do cluster em tempo real (requer metrics-server instalado no cluster).</li>
+<li><strong>Contagem de Pods e Sa&uacute;de dos Nodes</strong> &mdash; indicadores ao vivo do estado do cluster.</li>
+<li><strong>Eventos recentes</strong> &mdash; eventos do cluster com avisos destacados em laranja.</li>
+<li><strong>Deployments</strong> &mdash; cargas de trabalho mostrando r&eacute;plicas prontas vs. desejadas.</li>
+</ul>
+<p>Se o metrics-server n&atilde;o estiver instalado no cluster, o app mostra estat&iacute;sticas est&aacute;ticas do cluster da API Civo.</p>
+<p class="tip">Ao conectar &agrave; API do Kubernetes, o app abre automaticamente a porta 6443 no firewall do cluster para seu IP atual. A regra &eacute; rotulada como <code>civo-cloud-&lt;hostname&gt;-k8s-api</code> e &eacute; removida automaticamente ao voltar da visualiza&ccedil;&atilde;o do cluster.</p>
+
+<h3>Detalhes do Node (K8s API)</h3>
+<p>Clique no <strong>nome de um node</strong> em um node pool para conectar diretamente &agrave; API do Kubernetes e ver informa&ccedil;&otilde;es detalhadas do node:</p>
 <ul>
 <li><strong>Cart&otilde;es de recursos</strong> &mdash; CPU, Memory e Pods mostrando capacidade vs. valores aloc&aacute;veis.</li>
 <li><strong>Condi&ccedil;&otilde;es</strong> &mdash; Ready, MemoryPressure, DiskPressure, PIDPressure com indicadores de sa&uacute;de.</li>
@@ -98,10 +109,10 @@ th { font-weight: 600; }
 <li><strong>Info do sistema</strong> &mdash; Sistema operacional, Arquitetura, Container Runtime, Vers&atilde;o do Kubelet.</li>
 <li><strong>Ver Pods neste Node</strong> &mdash; bot&atilde;o para ver todos os pods em execu&ccedil;&atilde;o nesse node.</li>
 </ul>
-<p class="tip">O app baixa a kubeconfig da API Civo, extrai os certificados e conecta-se diretamente &agrave; API Kubernetes usando autentica&ccedil;&atilde;o por certificado de cliente. N&atilde;o &eacute; necess&aacute;rio kubectl nem ferramentas externas.</p>
+<p class="tip">O app baixa a kubeconfig da API Civo, extrai os certificados e conecta diretamente &agrave; API do Kubernetes usando autentica&ccedil;&atilde;o por certificado de cliente. N&atilde;o &eacute; necess&aacute;rio kubectl nem ferramentas externas.</p>
 
 <h3>Lista de Pods</h3>
-<p>Na visualiza&ccedil;&atilde;o de detalhes do node, clique em <strong>Ver Pods neste Node</strong> para ver todos os pods nesse node. Cada pod mostra:</p>
+<p>Na visualiza&ccedil;&atilde;o detalhada do node, clique em <strong>Ver Pods neste Node</strong> para ver todos os pods nesse node. Cada pod mostra:</p>
 <ul>
 <li>Badge de status (Running, Pending, Failed, etc.)</li>
 <li>Namespace</li>
@@ -113,8 +124,8 @@ th { font-weight: 600; }
 <p>Clique em um pod na lista de pods para ver seus logs:</p>
 <ul>
 <li>Sa&iacute;da de logs rol&aacute;vel em fonte monoespa&ccedil;ada</li>
-<li><strong>Bot&atilde;o auto-scroll</strong> &mdash; rola automaticamente para as entradas de log mais recentes</li>
-<li><strong>Bot&atilde;o atualizar</strong> &mdash; recarrega os logs mais recentes</li>
+<li><strong>Bot&atilde;o de auto-scroll</strong> &mdash; rola automaticamente para as entradas de log mais recentes</li>
+<li><strong>Bot&atilde;o de atualizar</strong> &mdash; recarrega os &uacute;ltimos logs</li>
 <li>Cabe&ccedil;alho do pod com nome, namespace e status</li>
 </ul>
 
@@ -153,11 +164,14 @@ th { font-weight: 600; }
 <p><strong>Limpar dispon&iacute;veis</strong> &mdash; bot&atilde;o na barra de ferramentas para excluir em massa todos os volumes com status &ldquo;dispon&iacute;vel&rdquo;. Requer digitar <code>DELETE ALL DATA</code> para confirmar.</p>
 
 <h3>Object Stores</h3>
-<p>Visualize object stores com endpoint e tamanho m&aacute;ximo. Clique com o bot&atilde;o direito para:</p>
+<p>Clique em um object store para abrir sua <strong>visualiza&ccedil;&atilde;o detalhada</strong> mostrando:</p>
 <ul>
-<li><strong>Mostrar credenciais</strong> &mdash; exibe o access key ID e o secret access key (selecion&aacute;vel para copiar).</li>
-<li><strong>Excluir</strong> &mdash; remove permanentemente o object store.</li>
+<li><strong>Credenciais</strong> &mdash; endpoint, URL do bucket, access key e secret key (todos selecion&aacute;veis para copiar).</li>
+<li><strong>Configura&ccedil;&atilde;o</strong> &mdash; tamanho m&aacute;ximo, regi&atilde;o, data de cria&ccedil;&atilde;o e status.</li>
+<li><strong>Redimensionar</strong> &mdash; stepper para alterar o tamanho m&aacute;ximo. As altera&ccedil;&otilde;es s&atilde;o enviadas via PUT para a API Civo.</li>
 </ul>
+<p>Clique com o bot&atilde;o direito em um object store na lista para exclu&iacute;-lo.</p>
+<p class="tip">As credenciais (access key e secret key) vem diretamente do recurso object store, n&atilde;o de um endpoint separado.</p>
 
 <h2 id="account">Conta</h2>
 <h3>Regi&otilde;es</h3>
@@ -184,7 +198,8 @@ th { font-weight: 600; }
 <li>O app atualiza automaticamente o status do firewall a cada 60 segundos.</li>
 <li>Os cart&otilde;es de recursos do dashboard s&atilde;o clic&aacute;veis &mdash; navegue para qualquer se&ccedil;&atilde;o com um clique.</li>
 <li>As regras de firewall criadas por este app s&atilde;o rotuladas como <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> e apenas as regras deste app s&atilde;o gerenciadas.</li>
-<li>O fluxo de detalhes Kubernetes: Lista de Clusters &rarr; Detalhe do Cluster &rarr; Detalhe do Node &rarr; Lista de Pods &rarr; Logs de Pods.</li>
+<li>O fluxo de detalhes do Kubernetes: Lista de Clusters &rarr; Detalhe do Cluster &rarr; Detalhe do Node &rarr; Lista de Pods &rarr; Logs de Pods.</li>
+<li>Ao conectar &agrave; API do Kubernetes, a porta 6443 &eacute; automaticamente aberta e fechada para seu IP &mdash; nenhuma configura&ccedil;&atilde;o manual de firewall necess&aacute;ria.</li>
 </ul>
 
 </body>
