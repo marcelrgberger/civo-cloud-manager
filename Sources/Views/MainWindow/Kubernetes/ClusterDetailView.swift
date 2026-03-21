@@ -442,20 +442,23 @@ struct ClusterDetailView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text("Labels")
+                    Text("Node Labels")
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Button {
-                        editingLabelsPool = pool
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
-                            .font(.caption)
+                    if vm.isK8sConnected {
+                        Button {
+                            editingLabelsPool = pool
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                                .font(.caption)
+                        }
+                        .buttonStyle(.borderless)
                     }
-                    .buttonStyle(.borderless)
                 }
-                if let labels = pool.labels, !labels.isEmpty {
-                    ForEach(Array(labels.sorted(by: { $0.key < $1.key })), id: \.key) { key, value in
+                let nodeLabels = labelsForPool(pool)
+                if !nodeLabels.isEmpty {
+                    ForEach(Array(nodeLabels.sorted(by: { $0.key < $1.key })), id: \.key) { key, value in
                         Text("\(key)=\(value)")
                             .font(.caption2.monospaced())
                             .padding(.horizontal, 6)
@@ -463,8 +466,12 @@ struct ClusterDetailView: View {
                             .background(.blue.opacity(0.1))
                             .clipShape(Capsule())
                     }
+                } else if vm.isK8sConnected {
+                    Text("No custom labels")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
                 } else {
-                    Text("No labels")
+                    Text("Connect to K8s API to view labels")
                         .font(.caption)
                         .foregroundStyle(.tertiary)
                 }
@@ -490,6 +497,24 @@ struct ClusterDetailView: View {
         }
         .padding(.vertical, 8)
         .padding(.leading, 28)
+    }
+
+    private func labelsForPool(_ pool: CivoNodePool) -> [String: String] {
+        guard let instanceNames = pool.instanceNames else { return [:] }
+        // Find K8s nodes matching this pool's instances and collect their labels
+        var allLabels: [String: String] = [:]
+        let systemPrefixes = ["beta.kubernetes.io", "kubernetes.io", "node.kubernetes.io", "k3s.io"]
+        for name in instanceNames {
+            if let node = vm.k8sNodes.first(where: { $0.name == name }),
+               let labels = node.metadata.labels {
+                for (key, value) in labels {
+                    if !systemPrefixes.contains(where: { key.hasPrefix($0) }) {
+                        allLabels[key] = value
+                    }
+                }
+            }
+        }
+        return allLabels
     }
 
     private func poolInfoRow(_ label: String, _ value: String) -> some View {
