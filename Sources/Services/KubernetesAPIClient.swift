@@ -105,15 +105,12 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.timeoutInterval = 30
 
-        // Use curl-style approach: write certs to temp files, use URLSession with trust-all delegate
         let identity = try createIdentity()
-        let delegate = K8sSessionDelegate(identity: identity, caCertDER: caCertDER)
-        let config = URLSessionConfiguration.ephemeral
-        config.tlsMinimumSupportedProtocolVersion = .TLSv12
-        let session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+        let delegate = K8sTaskDelegate(identity: identity, caCertDER: caCertDER)
+        let session = URLSession(configuration: .ephemeral)
         defer { session.invalidateAndCancel() }
 
-        let (data, response) = try await session.data(for: request)
+        let (data, response) = try await session.data(for: request, delegate: delegate)
 
         guard let http = response as? HTTPURLResponse else {
             throw K8sAPIError.httpError(0, "Invalid response")
@@ -224,9 +221,9 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     }
 }
 
-// MARK: - Session Delegate
+// MARK: - Task Delegate
 
-final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
+final class K8sTaskDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
     private let identity: SecIdentity
     private let caCertDER: Data
 
@@ -237,33 +234,30 @@ final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendabl
 
     func urlSession(
         _ session: URLSession,
-        didReceive challenge: URLAuthenticationChallenge,
-        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
-    ) {
+        task: URLSessionTask,
+        didReceive challenge: URLAuthenticationChallenge
+    ) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
         let method = challenge.protectionSpace.authenticationMethod
 
         if method == NSURLAuthenticationMethodServerTrust,
            let serverTrust = challenge.protectionSpace.serverTrust
         {
-            // Trust the server using our CA cert
             if let caCert = SecCertificateCreateWithData(nil, caCertDER as CFData) {
                 SecTrustSetAnchorCertificates(serverTrust, [caCert] as CFArray)
                 SecTrustSetAnchorCertificatesOnly(serverTrust, true)
             }
-            completionHandler(.useCredential, URLCredential(trust: serverTrust))
-            return
+            return (.useCredential, URLCredential(trust: serverTrust))
         }
 
         if method == NSURLAuthenticationMethodClientCertificate {
-            completionHandler(.useCredential, URLCredential(
+            return (.useCredential, URLCredential(
                 identity: identity,
                 certificates: nil,
                 persistence: .forSession
             ))
-            return
         }
 
-        completionHandler(.performDefaultHandling, nil)
+        return (.performDefaultHandling, nil)
     }
 }
 
