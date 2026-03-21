@@ -29,7 +29,7 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - Error banners on every view
 
 ### Kubernetes Deep Integration
-- **Direct K8s API access via PKCS#12** — downloads kubeconfig from Civo API, parses certificates, imports client cert via `SecPKCS12Import` (openssl PKCS#12), connects directly to the Kubernetes API using client certificate auth via Security.framework. NSAllowsArbitraryLoads enabled for self-signed certs on IP addresses.
+- **Direct K8s API access via PKCS#12** — downloads kubeconfig from Civo API, parses certificates, creates PKCS#12 bundle from PEM cert+key via `/usr/bin/openssl` (pre-installed on every Mac), imports identity via `SecPKCS12Import`, connects directly to the Kubernetes API using client certificate auth via Security.framework. NSAllowsArbitraryLoads enabled for self-signed certs on IP addresses.
 - **Auto-connect on cluster selection** — K8s API connection is established lazily when a cluster is selected (no manual "Connect" button needed)
 - **Live metrics** — circular CPU and Memory gauges (percentage) when metrics-server is available, with pod count and node health indicators
 - **Cluster events** — recent events with relative timestamps ("2m ago", "1h ago"), warnings highlighted in orange
@@ -1124,7 +1124,8 @@ Tests cover:
 | UI | SwiftUI (MenuBarExtra, Window, NavigationSplitView) |
 | Platform | macOS 15+ |
 | API | Civo REST API v2 via URLSession |
-| Kubernetes API | Direct K8s API via client certificate auth (Security.framework) |
+| Kubernetes API | Direct K8s API via client certificate auth (openssl PKCS#12 + Security.framework) |
+| S3 API | S3-compatible object store access via AWS Signature V4 (CryptoKit) |
 | IP Detection | ipify.org + ifconfig.me + icanhazip.com |
 | Secrets | macOS Keychain (API key) |
 | Persistence | UserDefaults (settings) |
@@ -1166,7 +1167,8 @@ civo-cloud-manager/
 │   │   ├── CivoDatabase.swift
 │   │   ├── CivoNetwork.swift
 │   │   ├── CivoVolume.swift
-│   │   ├── CivoObjectStore.swift               # + ownerInfo (accessKeyId, secretAccessKey), bucketURL, region, createdAt
+│   │   ├── CivoObjectStore.swift               # + ownerInfo (accessKeyId, credentialId), objectstoreEndpoint
+│   │   ├── CivoObjectStoreCredential.swift    # Credential model (accessKeyId, secretAccessKeyId, status, suspended)
 │   │   ├── CivoLoadBalancer.swift
 │   │   ├── CivoInstance.swift
 │   │   ├── CivoSSHKey.swift
@@ -1186,7 +1188,8 @@ civo-cloud-manager/
 │   │   ├── CivoDatabaseService.swift           # List, create, delete
 │   │   ├── CivoNetworkService.swift            # List, create, update, delete (removeNetwork)
 │   │   ├── CivoVolumeService.swift             # List, create, delete
-│   │   ├── CivoObjectStoreService.swift        # List, create, update (resize), delete
+│   │   ├── CivoObjectStoreService.swift        # List, show, create, update (resize), delete + credential CRUD
+│   │   ├── S3Client.swift                     # S3-compatible client — AWS Signature V4 via CryptoKit, ListObjects v2, GetObject, HeadObject, XML parsing
 │   │   ├── CivoLoadBalancerService.swift       # List, delete
 │   │   ├── CivoInstanceService.swift           # List, create, update, delete, stop, start, reboot
 │   │   ├── CivoSSHKeyService.swift             # List, create, delete
@@ -1242,7 +1245,8 @@ civo-cloud-manager/
 │   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
 │   │   │   │   ├── VolumeDetailView.swift       # Attachment status, mountpoint, size
 │   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay
-│   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize (PUT /objectstores/:id)
+│   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize, browse files button
+│   │   │   │   ├── ObjectStoreBrowserView.swift # S3 file browser — breadcrumbs, folders, files, download
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
 │   │   │   │   └── CreateObjectStoreView.swift  # Form: name, max size

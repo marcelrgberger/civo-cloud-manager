@@ -1,4 +1,5 @@
 import SwiftUI
+import LocalAuthentication
 
 struct ObjectStoreDetailView: View {
     let store: CivoObjectStore
@@ -7,6 +8,7 @@ struct ObjectStoreDetailView: View {
     @State private var appeared = false
     @State private var newSize: Int
     @State private var isResizing = false
+    @State private var secretRevealed = false
 
     private var credential: CivoObjectStoreCredential? {
         vm.credentialForStore(store)
@@ -84,7 +86,24 @@ struct ObjectStoreDetailView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     infoRow("Credential Name", cred.displayName)
                     infoRow("Access Key ID", cred.accessKeyId ?? "—")
-                    infoRow("Secret Access Key", cred.secretAccessKeyId ?? "—")
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Secret Access Key").font(.caption).foregroundStyle(.secondary)
+                            if secretRevealed {
+                                Text(cred.secretAccessKeyId ?? "—").font(.subheadline.monospaced()).textSelection(.enabled)
+                            } else {
+                                Text(String(repeating: "*", count: 20)).font(.subheadline.monospaced())
+                            }
+                        }
+                        Spacer()
+                        Button {
+                            authenticateToRevealSecret()
+                        } label: {
+                            Image(systemName: secretRevealed ? "eye.slash" : "eye")
+                                .font(.caption)
+                        }
+                        .buttonStyle(.borderless)
+                    }
                     infoRow("Endpoint", store.objectstoreEndpoint ?? "—")
                 }
                 .padding(8)
@@ -138,6 +157,22 @@ struct ObjectStoreDetailView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
+    }
+
+    private func authenticateToRevealSecret() {
+        if secretRevealed {
+            secretRevealed = false
+            return
+        }
+        let context = LAContext()
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key") { success, _ in
+                DispatchQueue.main.async {
+                    secretRevealed = success
+                }
+            }
+        }
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {

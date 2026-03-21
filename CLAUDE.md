@@ -12,7 +12,7 @@ open CivoCloudManager.xcodeproj        # Open Xcode project, Cmd+R
 xcodegen generate                      # Regenerate .xcodeproj from project.yml
 ```
 
-No external dependencies — only Apple frameworks (SwiftUI, ServiceManagement, Foundation, os, Security).
+No external dependencies — only Apple frameworks (SwiftUI, ServiceManagement, Foundation, os, Security, CryptoKit).
 
 ## What This Is
 
@@ -32,14 +32,14 @@ A native macOS app for Civo Cloud. Menu bar for quick-access firewall management
 CivoCloudManagerApp (@main)
 ├── MenuBarExtra → MenuBarView → AppState → CivoFirewallService + IPDetector
 ├── Window("onboarding") → OnboardingView → AppState
-└── Window("main") → MainWindowView → 8 ViewModels → 15 Services → CivoAPIClient + KubernetesAPIClient
+└── Window("main") → MainWindowView → 8 ViewModels → 16 Services → CivoAPIClient + KubernetesAPIClient + S3Client
 
 CivoAPIClient (shared singleton)
 ├── GET  /quota, /kubernetes/clusters, /databases, /firewalls, /sizes, /disk_images, ...
 ├── GET  /kubernetes/clusters/:id/kubeconfig → KubeconfigParser → KubernetesAPIClient
-├── POST /kubernetes/clusters, /databases, /instances, /firewalls, /volumes, /objectstores, /sshkeys, /dns, /dns/:id/records
+├── POST /kubernetes/clusters, /databases, /instances, /firewalls, /volumes, /objectstores, /objectstore/credentials, /sshkeys, /dns, /dns/:id/records
 ├── PUT  /kubernetes/clusters/:id, /instances/:id, /networks/:id, /dns/:id, /dns/:id/records/:id, /quota, /objectstores/:id
-├── DELETE /kubernetes/clusters/{id}, /databases/{id}, /instances/{id}, /networks/{id}, /firewalls/{id}, ...
+├── DELETE /kubernetes/clusters/{id}, /databases/{id}, /instances/{id}, /networks/{id}, /firewalls/{id}, /objectstore/credentials/{id}, ...
 └── Bearer token auth via CivoConfig (Keychain + UserDefaults)
 
 KubernetesAPIClient (per-cluster, ephemeral)
