@@ -255,43 +255,44 @@ struct ClusterDetailView: View {
 
     private var workloadsSection: some View {
         GroupBox("Workloads") {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(spacing: 4) {
                 if !vm.deployments.isEmpty {
-                    Text("Deployments (\(vm.deployments.count))")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                    ForEach(vm.deployments) { d in
-                        workloadRow(d.name, ready: d.readyReplicas, desired: d.desiredReplicas, healthy: d.isHealthy, ns: d.namespace)
-                    }
-                }
-                if !vm.daemonSets.isEmpty {
-                    Text("DaemonSets (\(vm.daemonSets.count))")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                        .padding(.top, 4)
-                    ForEach(vm.daemonSets) { d in
-                        workloadRow(d.name, ready: d.ready, desired: d.desired, healthy: d.isHealthy, ns: d.namespace)
-                    }
-                }
-                if !vm.statefulSets.isEmpty {
-                    Text("StatefulSets (\(vm.statefulSets.count))")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                        .padding(.top, 4)
-                    ForEach(vm.statefulSets) { s in
-                        workloadRow(s.name, ready: s.readyReplicas, desired: s.desiredReplicas, healthy: s.isHealthy, ns: s.namespace)
-                    }
-                }
-                if !vm.cronJobs.isEmpty {
-                    Text("CronJobs (\(vm.cronJobs.count))")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                        .padding(.top, 4)
-                    ForEach(vm.cronJobs) { cj in
-                        HStack(spacing: 8) {
-                            Image(systemName: "clock.arrow.circlepath")
-                                .font(.caption).foregroundStyle(.blue)
-                            Text(cj.name).font(.caption.weight(.medium))
-                            Spacer()
-                            Text(cj.schedule).font(.caption2.monospaced()).foregroundStyle(.secondary)
+                    DisclosureGroup("Deployments (\(vm.deployments.count))") {
+                        ForEach(vm.deployments) { d in
+                            workloadRow(d.name, ready: d.readyReplicas, desired: d.desiredReplicas, healthy: d.isHealthy, ns: d.namespace)
                         }
                     }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.daemonSets.isEmpty {
+                    DisclosureGroup("DaemonSets (\(vm.daemonSets.count))") {
+                        ForEach(vm.daemonSets) { d in
+                            workloadRow(d.name, ready: d.ready, desired: d.desired, healthy: d.isHealthy, ns: d.namespace)
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.statefulSets.isEmpty {
+                    DisclosureGroup("StatefulSets (\(vm.statefulSets.count))") {
+                        ForEach(vm.statefulSets) { s in
+                            workloadRow(s.name, ready: s.readyReplicas, desired: s.desiredReplicas, healthy: s.isHealthy, ns: s.namespace)
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.cronJobs.isEmpty {
+                    DisclosureGroup("CronJobs (\(vm.cronJobs.count))") {
+                        ForEach(vm.cronJobs) { cj in
+                            HStack(spacing: 8) {
+                                Image(systemName: "clock.arrow.circlepath")
+                                    .font(.caption).foregroundStyle(.blue)
+                                Text(cj.name).font(.caption.weight(.medium))
+                                Spacer()
+                                Text(cj.schedule).font(.caption2.monospaced()).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .font(.caption.weight(.medium))
                 }
             }
             .padding(8)
@@ -316,49 +317,54 @@ struct ClusterDetailView: View {
 
     private var networkingSection: some View {
         GroupBox("Networking") {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(spacing: 4) {
                 if !vm.services.isEmpty {
-                    Text("Services (\(vm.services.count))")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                    ForEach(vm.services) { svc in
-                        HStack(spacing: 8) {
-                            Image(systemName: svc.type == "LoadBalancer" ? "arrow.triangle.branch" : "network")
-                                .font(.caption).foregroundStyle(.blue)
-                            Text(svc.name).font(.caption.weight(.medium))
-                            Text(svc.namespace).font(.caption2).foregroundStyle(.tertiary)
-                            Spacer()
-                            Text(svc.type).font(.caption2)
-                                .padding(.horizontal, 5).padding(.vertical, 1)
-                                .background(.blue.opacity(0.1)).clipShape(Capsule())
-                            if let ports = svc.spec?.ports {
-                                Text(ports.map { "\($0.port ?? 0)" }.joined(separator: ","))
-                                    .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                    DisclosureGroup("Services (\(vm.services.count))") {
+                        ForEach(vm.services) { svc in
+                            HStack(spacing: 8) {
+                                Image(systemName: svc.type == "LoadBalancer" ? "arrow.triangle.branch" : "network")
+                                    .font(.caption).foregroundStyle(.blue)
+                                Text(svc.name).font(.caption.weight(.medium))
+                                Text(svc.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                Spacer()
+                                Text(svc.type).font(.caption2)
+                                    .padding(.horizontal, 5).padding(.vertical, 1)
+                                    .background(.blue.opacity(0.1)).clipShape(Capsule())
+                                if let ports = svc.spec?.ports {
+                                    Text(ports.map { "\($0.port ?? 0)" }.joined(separator: ","))
+                                        .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                                }
                             }
                         }
                     }
+                    .font(.caption.weight(.medium))
                 }
                 if !vm.ingresses.isEmpty {
-                    Text("Ingresses (\(vm.ingresses.count))")
-                        .font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                        .padding(.top, 4)
-                    ForEach(vm.ingresses) { ing in
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(ing.name).font(.caption.weight(.medium))
-                            if let rules = ing.spec?.rules {
-                                ForEach(Array(rules.enumerated()), id: \.offset) { _, rule in
-                                    if let host = rule.host {
-                                        HStack(spacing: 4) {
-                                            Image(systemName: "globe").font(.caption2).foregroundStyle(.green)
-                                            Text(host).font(.caption2.monospaced())
-                                            if ing.spec?.tls != nil {
-                                                Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
+                    DisclosureGroup("Ingresses (\(vm.ingresses.count))") {
+                        ForEach(vm.ingresses) { ing in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(ing.name).font(.caption.weight(.medium))
+                                if let rules = ing.spec?.rules {
+                                    ForEach(Array(rules.enumerated()), id: \.offset) { _, rule in
+                                        if let host = rule.host {
+                                            HStack(spacing: 4) {
+                                                Image(systemName: "globe").font(.caption2).foregroundStyle(.green)
+                                                Text(host).font(.caption2.monospaced()).textSelection(.enabled)
+                                                if let tls = ing.spec?.tls, tls.contains(where: { $0.hosts?.contains(host) == true }) {
+                                                    Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
+                                                    if let secretName = tls.first(where: { $0.hosts?.contains(host) == true })?.secretName {
+                                                        Text(secretName).font(.caption2).foregroundStyle(.tertiary)
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                            .padding(.vertical, 2)
                         }
                     }
+                    .font(.caption.weight(.medium))
                 }
             }
             .padding(8)
