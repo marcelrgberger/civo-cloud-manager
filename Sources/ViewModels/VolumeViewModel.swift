@@ -10,6 +10,7 @@ final class VolumeViewModel {
 
     var selectedVolume: CivoVolume?
     var selectedObjectStore: CivoObjectStore?
+    var browsingObjectStore: CivoObjectStore?
     var isCreatingVolume = false
     var isCreatingObjectStore = false
     var isSaving = false

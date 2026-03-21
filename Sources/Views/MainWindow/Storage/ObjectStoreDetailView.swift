@@ -7,6 +7,7 @@ struct ObjectStoreDetailView: View {
     @State private var appeared = false
     @State private var newSize: Int
     @State private var isResizing = false
+    @State private var showBrowser = false
 
     init(store: CivoObjectStore, vm: VolumeViewModel, onBack: @escaping () -> Void) {
         self.store = store
@@ -19,6 +20,7 @@ struct ObjectStoreDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
+                browseFilesButton
                 credentialsSection
                 configSection
                 resizeSection
@@ -35,6 +37,34 @@ struct ObjectStoreDetailView: View {
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
         }
+    }
+
+    private var browseFilesButton: some View {
+        Button {
+            vm.browsingObjectStore = store
+        } label: {
+            HStack {
+                Image(systemName: "folder.fill")
+                    .foregroundStyle(.blue)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Browse Files")
+                        .font(.headline)
+                    Text("Navigate folders, view and download files")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.secondary)
+            }
+            .padding(14)
+            .background(.blue.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .buttonStyle(.plain)
+        .disabled(store.accessKeyId == nil || store.secretAccessKey == nil)
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.05), value: appeared)
     }
 
     private var header: some View {
