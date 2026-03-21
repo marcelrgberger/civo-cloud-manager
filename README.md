@@ -19,11 +19,12 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - **Full CRUD** — create, view, and delete resources across all categories
 - **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps
 - **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config
-- **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers via context menu with confirmation
-- **Storage** — create volumes and object stores with size configuration; bulk-delete unused volumes via toolbar button; view object store credentials (endpoint, access key, secret key)
+- **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers; drill-down into firewall rules (view, create, delete)
+- **Storage** — create volumes and object stores with size configuration; view object store credentials (access key, secret key)
 - **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys
 - **Regions** — view available regions, switch active region
 - **Safe deletion** — all destructive operations require typing the resource name to confirm (DeleteConfirmationSheet)
+- **Smooth animations** — staggered list row appearance, spring transitions between views, animated dashboard cards
 - Success overlay animation after create/edit operations
 - Error banners on every view
 
@@ -115,8 +116,8 @@ The sidebar is organized into categories:
 | **Overview** | Dashboard (quota gauges, clickable resource cards, quota change request) | Request Change |
 | **Compute** | Instances, SSH Keys | Create, Delete |
 | **Kubernetes** | Clusters (detail view for pools, apps, conditions) | Create, Delete |
-| **Networking** | Networks, Firewalls, Load Balancers, Domains | Create, Edit (DNS records), Delete |
-| **Storage & Data** | Databases, Volumes, Object Stores | Create, Delete, Show Credentials, Cleanup Unused |
+| **Networking** | Networks, Firewalls (with rule drill-down), Load Balancers, Domains | Create, Edit (DNS records, firewall rules), Delete |
+| **Storage & Data** | Databases, Volumes, Object Stores | Create, Delete, Show Credentials |
 | **Account** | Regions | Switch |
 
 **Each resource view provides:**
@@ -130,9 +131,9 @@ The sidebar is organized into categories:
 
 **Network delete** skips the default network — only non-default networks can be deleted.
 
-**Object store credentials** — context menu "Show Credentials" opens a sheet displaying endpoint, access_key_id, and secret_access_key as selectable text.
+**Object store credentials** — context menu "Show Credentials" opens a sheet displaying access_key_id and secret_access_key as selectable text.
 
-**Volume cleanup** — toolbar button to bulk-delete all volumes not attached to any instance or cluster, with confirmation dialog.
+**Firewall rule drill-down** — click a firewall to see all its rules. Each rule shows protocol, ports, CIDR, direction (ingress/egress), and action (allow/deny) with color-coded badges. Add new rules via "+" toolbar button, delete rules via context menu with name confirmation.
 
 **Quota increase request** — "Request Change" button in the quota section opens a form with steppers for all quota limits, submits via PUT /quota.
 
@@ -623,6 +624,7 @@ graph LR
         CL -->|drill-down| CD[ClusterDetailView]
         NE --> NL[NetworkListView]
         NE --> FL[FirewallListView]
+        FL -->|drill-down| FD[FirewallDetailView]
         NE --> LB[LoadBalancerListView]
         NE --> DL[DomainListView]
         ST --> DBL[DatabaseListView]
@@ -637,6 +639,7 @@ graph LR
         CL -.->|"+"| CC[CreateClusterView]
         NL -.->|"+"| CN[CreateNetworkView]
         FL -.->|"+"| CF[CreateFirewallView]
+        FD -.->|"+"| CR[CreateRuleView]
         DL -.->|"+"| CDO[CreateDomainView]
         DL -.->|"+"| CDR[CreateDNSRecordView]
         DBL -.->|"+"| CDB[CreateDatabaseView]
@@ -838,7 +841,9 @@ civo-cloud-manager/
 │   │   │   │   └── CreateClusterView.swift      # Form: name, CNI, nodes, apps
 │   │   │   ├── Networking/
 │   │   │   │   ├── NetworkListView.swift        # + toolbar, sheet, overlay, context delete
-│   │   │   │   ├── FirewallListView.swift       # + toolbar, sheet, overlay, context delete
+│   │   │   │   ├── FirewallListView.swift       # + drill-down to FirewallDetailView
+│   │   │   │   ├── FirewallDetailView.swift     # Rule list with add/delete
+│   │   │   │   ├── CreateRuleView.swift         # Form: protocol, ports, CIDR, direction, action
 │   │   │   │   ├── LoadBalancerListView.swift   # + context delete
 │   │   │   │   ├── DomainListView.swift         # + inline records, edit, delete
 │   │   │   │   ├── CreateNetworkView.swift      # Form: label, CIDR
@@ -847,7 +852,7 @@ civo-cloud-manager/
 │   │   │   │   └── CreateDNSRecordView.swift    # Form: type, name, value, TTL
 │   │   │   ├── Storage/
 │   │   │   │   ├── DatabaseListView.swift       # + toolbar, sheet, overlay
-│   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay, cleanup unused
+│   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
 │   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay, show credentials
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
@@ -860,8 +865,9 @@ civo-cloud-manager/
 │   │       ├── ResourceListRow.swift
 │   │       ├── EmptyStateView.swift
 │   │       ├── ErrorBanner.swift
-│   │       ├── SuccessOverlay.swift             # Green checkmark, auto-dismiss
+│   │       ├── SuccessOverlay.swift             # Green checkmark, spring auto-dismiss
 │   │       ├── DeleteConfirmationSheet.swift   # Name-match confirmation for deletes
+│   │       ├── StaggeredAppear.swift           # ViewModifier for staggered row animations
 │   │       └── PaywallView.swift              # Buy-once paywall + ToS/Privacy links
 │   └── Utilities/
 │       └── Logger.swift

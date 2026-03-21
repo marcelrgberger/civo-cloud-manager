@@ -45,19 +45,28 @@ DashboardView (clickable cards → sidebar navigation)
 ├── Binding to sidebar selection
 └── QuotaEditView (quota increase request form via PUT /quota)
 
-Create Views (10 sheet forms)
+Create Views (11 sheet forms)
 ├── Simple: Firewall, Network, Domain, SSHKey, Volume, ObjectStore
 ├── Complex: Database, Instance, Kubernetes Cluster
 ├── DNS Record (with edit support)
+├── Firewall Rule (protocol, ports, CIDR, direction, action)
 └── All use .formStyle(.grouped), Cancel + Create toolbar
 
+Drill-Down Views
+├── Kubernetes: ClusterListView → ClusterDetailView (pools, apps, conditions)
+└── Firewalls: FirewallListView → FirewallDetailView (rule list, add/delete rules)
+
 Delete Support
-├── Networks (context menu, skips default network)
-├── Firewalls (context menu with confirmation)
-├── Load Balancers (context menu with confirmation)
-├── Volumes (individual + bulk cleanup of unused)
-├── All resources: Instances, SSH Keys, Databases, Domains, Object Stores
-└── All use DeleteConfirmationSheet (requires typing resource name to confirm)
+├── All resources use DeleteConfirmationSheet (requires typing resource name)
+├── Networks (skips default), Firewalls, Load Balancers, Firewall Rules
+└── Instances, SSH Keys, Databases, Domains, Volumes, Object Stores
+
+Animations
+├── Staggered list rows (30ms delay per row, fade+slide)
+├── Dashboard cards spring from bottom with index delay
+├── Sidebar→detail: spring + opacity content transition
+├── Drill-down: move+opacity spring transitions
+└── SuccessOverlay: spring scale entry/exit
 ```
 
 **Key data flow:** User action → ViewModel method → Service → CivoAPIClient (URLSession) → decode JSON → update @Observable state → SwiftUI reacts.
@@ -68,7 +77,7 @@ Delete Support
 
 **Quota change flow:** "Request Change" button → QuotaEditView sheet with steppers → ViewModel.updateQuota(body) → CivoQuotaService.updateQuota(body) → PUT /quota.
 
-**Volume cleanup flow:** Toolbar "Cleanup Unused" button → confirmation dialog listing unattached volumes → bulk delete all → refresh list.
+**Firewall rule flow:** Click firewall → FirewallDetailView shows rules → "+" opens CreateRuleView → delete via context menu with name confirmation.
 
 **Object store credentials flow:** Context menu "Show Credentials" → sheet displaying endpoint, access_key_id, secret_access_key as selectable text.
 
@@ -87,8 +96,10 @@ Delete Support
 - **DeleteConfirmationSheet** — shared component for all destructive operations. Requires typing the exact resource name to enable the delete button. Used by all list views.
 - **Context menu delete** — all resource list views have "Delete" in context menu, opening DeleteConfirmationSheet.
 - **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
-- **Volume cleanup** — toolbar button to bulk-delete volumes not attached to any instance/cluster, with confirmation listing affected volumes.
-- **Object store credentials** — CivoObjectStore model includes accessKeyId and secretAccessKey; context menu "Show Credentials" displays them in a sheet.
+- **Object store credentials** — fetched from GET /objectstores/credentials; context menu "Show Credentials" displays them in a sheet.
+- **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
+- **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
+- **Spring transitions** — sidebar→detail uses spring + opacity; drill-downs use move+opacity spring.
 
 ## Code Layout
 
@@ -101,9 +112,11 @@ Delete Support
   - `CivoLoadBalancerService` — list, delete (removeLoadBalancer)
 - `Sources/ViewModels/` — 8 @Observable @MainActor view models with CRUD state
 - `Sources/Views/` — MenuBarView, AppState, OnboardingView
-- `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 10 create/edit views + QuotaEditView
+- `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 11 create/edit views + QuotaEditView
 - `Sources/Views/MainWindow/QuotaEditView.swift` — quota increase request form with steppers for all limits
-- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, PaywallView
+- `Sources/Views/MainWindow/Networking/FirewallDetailView.swift` — rule list with badges, add/delete
+- `Sources/Views/MainWindow/Networking/CreateRuleView.swift` — form for firewall rules
+- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, StaggeredAppear, PaywallView
 - `Sources/Utilities/` — Logger (os.Logger)
 - `Tests/` — 21 model decoding tests
 - `CivoCloudManager/` — Xcode project support (Info.plist, Entitlements, Assets)
