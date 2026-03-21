@@ -54,8 +54,8 @@ targets:
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
         NSHumanReadableCopyright: "Copyright © 2026 Marcel R. G. Berger. All rights reserved."
         LSApplicationCategoryType: "public.app-category.utilities"
-        CFBundleHelpBookFolder: "CivoCloudManager.help"
-        CFBundleHelpBookName: "de.berger-rosenstock.CivoCloudManager.help"
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
         CFBundleDevelopmentRegion: en
         CFBundleLocalizations:
           - en
