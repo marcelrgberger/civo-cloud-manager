@@ -46,10 +46,15 @@ KubernetesAPIClient (per-cluster, ephemeral)
 ├── GET /api/v1/nodes/{name} → K8sNode (capacity, conditions, addresses, systemInfo)
 ├── GET /api/v1/pods?fieldSelector=spec.nodeName={name} → K8sPod[]
 ├── GET /api/v1/namespaces/{ns}/pods/{name}/log → log text
+├── DELETE /api/v1/namespaces/{ns}/pods/{name} → restart pod
 ├── GET /apis/metrics.k8s.io/v1beta1/nodes → K8sNodeMetrics[] (live CPU/Memory)
 ├── GET /api/v1/events → K8sEvent[] (cluster events, warnings)
 ├── GET /apis/apps/v1/deployments → K8sDeployment[] (workloads with replica status)
-└── Client certificate auth via Security.framework (certs from KubeconfigParser)
+├── PATCH /apis/apps/v1/namespaces/{ns}/deployments/{name}/scale → scale deployment
+├── GET /api/v1/persistentvolumeclaims → K8sPVC[]
+├── GET /api/v1/persistentvolumes → K8sPV[] (capacity, Civo Volume ID via CSI volumeHandle)
+├── Client certificate auth via PKCS#12 (SecPKCS12Import) + Security.framework
+└── execute() supports configurable HTTP method and body
 
 DashboardView (clickable cards → sidebar navigation)
 ├── Resource cards with hover scale animation
@@ -64,13 +69,13 @@ Create Views (11 sheet forms)
 └── All use .formStyle(.grouped), Cancel + Create toolbar
 
 Drill-Down Views
-├── Kubernetes: ClusterListView → ClusterDetailView (+ live metrics/events/workloads) → K8sNodeDetailView → K8sPodListView → PodLogView
+├── Kubernetes: ClusterListView → ClusterDetailView (auto-connect K8s API, live metrics/events, collapsible workloads/networking/storage, namespace filter, deployment scaling, PVC-Volume linking) → K8sNodeDetailView → K8sPodListView (pod restart) → PodLogView (auto-refresh)
 ├── Object Stores: ObjectStoreListView → ObjectStoreDetailView (credentials, config, resize)
 ├── Firewalls: FirewallListView → FirewallDetailView (rule list, add/delete rules)
 └── Labels: ClusterDetailView → EditLabelsView (add/remove node pool labels)
 
 Auto-Firewall for K8s API
-├── Opens port 6443 for user's current IP when "Connect to Kubernetes API" is clicked
+├── Opens port 6443 for user's current IP automatically when cluster is selected (lazy auto-connect)
 ├── Uses IPDetector + CivoFirewallService
 ├── Rule labeled civo-cloud-<hostname>-k8s-api
 └── Auto-closes the rule when navigating back from cluster
@@ -90,9 +95,9 @@ Animations
 
 **Key data flow:** User action → ViewModel method → Service → CivoAPIClient (URLSession) → decode JSON → update @Observable state → SwiftUI reacts.
 
-**K8s API flow:** Click node name → ViewModel → CivoKubernetesService.getKubeconfig(id) → KubeconfigParser.parse(yaml) → KubernetesAPIClient(serverURL, certs) → GET /api/v1/nodes/{name} → K8sNode → K8sNodeDetailView.
+**K8s API flow:** Click node name → ViewModel → CivoKubernetesService.getKubeconfig(id) → KubeconfigParser.parse(yaml) → KubernetesAPIClient(serverURL, certs via PKCS#12) → GET /api/v1/nodes/{name} → K8sNode → K8sNodeDetailView.
 
-**K8s live metrics flow:** Click "Connect to Kubernetes API" → auto-open port 6443 via CivoFirewallService → download kubeconfig → KubernetesAPIClient → GET metrics, events, deployments → show circular CPU/Memory gauges, events list, deployments table. Navigate back → auto-close firewall rule.
+**K8s live metrics flow:** Select cluster → auto-open port 6443 via CivoFirewallService → download kubeconfig → KubernetesAPIClient → GET metrics, events, deployments, PVCs, PVs → show circular CPU/Memory gauges, events (relative time), collapsible workloads/networking/storage, namespace filter. Navigate back → auto-close firewall rule.
 
 **Create flow:** "+" toolbar button → sheet with Form → ViewModel.create(body) → Service.create(body) → POST → dismiss sheet → show SuccessOverlay → refresh list.
 
@@ -104,17 +109,25 @@ Animations
 
 **Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from ownerInfo.accessKeyId/secretAccessKey), bucket URL, endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id.
 
-**Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh).
+**Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView (right-click → "Restart Pod") → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh, auto-refresh 3s timer).
 
 ## Key Patterns
 
 - **CivoAPIClient** — singleton HTTP client. Methods: `get()`, `getPaginatedList()`, `getArray()`, `post()`, `put()`, `delete()`.
 - **KubeconfigParser** — parses kubeconfig YAML, extracts server URL, CA certificate, client certificate, and client key. Returns structured data for KubernetesAPIClient.
-- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via Security.framework. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`, `getMetrics()`, `getEvents()`, `getDeployments()`.
+- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via PKCS#12 (`SecPKCS12Import`) + Security.framework. NSAllowsArbitraryLoads for self-signed certs on IP addresses. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`, `deletePod(namespace, name)`, `scaleDeployment(namespace, name, replicas)`, `listPVs()`, `getMetrics()`, `getEvents()`, `getDeployments()`. Generic `execute(path, method, body)` supports any HTTP method.
 - **K8sMetricsParser** — parses metrics-server responses into K8sNodeMetrics/K8sPodMetrics, computes K8sClusterMetrics with CPU/Memory percentages.
 - **Multi-level K8s navigation** — ClusterListView → ClusterDetailView → K8sNodeDetailView → K8sPodListView → PodLogView, all with spring move+opacity transitions.
 - **Live K8s metrics** — circular CPU and Memory gauges in ClusterDetailView when connected to K8s API. Graceful fallback to static stats when metrics-server is not installed.
-- **Auto-firewall for K8s API** — automatically opens port 6443 for user's current IP when "Connect to Kubernetes API" is clicked, closes when navigating back. Rule labeled `civo-cloud-<hostname>-k8s-api`.
+- **Auto-connect K8s API** — K8s API connection established lazily when cluster is selected (no manual "Connect" button). Auto-opens port 6443 for user's current IP, closes when navigating back. Rule labeled `civo-cloud-<hostname>-k8s-api`.
+- **Namespace filter** — `selectedNamespace` in KubernetesViewModel filters deployments and services via `filteredDeployments`/`filteredServices` computed properties.
+- **Collapsible sections** — Workloads (Deployments, DaemonSets, StatefulSets, CronJobs), Networking (Services, Ingresses), and Storage (PVCs, PVs) use DisclosureGroup.
+- **Deployment scaling** — scale deployments via Kubernetes PATCH to `/scale` subresource.
+- **Pod restart** — right-click "Restart Pod" deletes the pod via KubernetesAPIClient.deletePod().
+- **Pod log auto-refresh** — toggle enables a 3-second timer to re-fetch logs automatically.
+- **Relative event timestamps** — events show "2m ago", "1h ago" instead of absolute times.
+- **PVC-Volume linking** — PVCs show linked Civo Volume ID by resolving PV's CSI volumeHandle. PVs listed with capacity.
+- **Instance actions** — stop, start, and reboot instances via CivoInstanceService and right-click context menu.
 - **CivoConfig** — stores API key (Keychain) and region (UserDefaults). Read by services on every request.
 - **Service per resource domain** — each `Civo*Service` wraps API calls for one resource type with list/create/update/delete methods.
 - **CivoSizeService** — fetches available sizes (GET /sizes) and disk images (GET /disk_images) for create form pickers. All sizes shown without type filtering.
@@ -138,15 +151,16 @@ Animations
 ## Code Layout
 
 - `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 21 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload; CivoObjectStore has ownerInfo with accessKeyId/secretAccessKey, bucketURL, region, createdAt)
+- `Sources/Models/` — 22 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage; CivoObjectStore has ownerInfo with accessKeyId/secretAccessKey, bucketURL, region, createdAt)
   - `K8sNode.swift` — K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
   - `K8sPod.swift` — K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
   - `K8sMetrics.swift` — K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
   - `K8sEvent.swift` — K8sEvent, K8sObjectReference
   - `K8sWorkload.swift` — K8sDeployment, K8sDeploymentStatus
+  - `K8sStorage.swift` — K8sPV, K8sPVSpec, K8sCSISource
 - `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, IPDetector
   - `KubeconfigParser.swift` — parses kubeconfig YAML → server URL, CA cert, client cert, client key
-  - `KubernetesAPIClient.swift` — direct K8s API client using client certificate auth via Security.framework. Supports nodes, pods, logs, metrics, events, deployments.
+  - `KubernetesAPIClient.swift` — direct K8s API client using PKCS#12 client certificate auth via Security.framework. Supports nodes, pods, logs, metrics, events, deployments, PVs, deletePod, scaleDeployment. Generic execute() supports configurable HTTP method and body.
   - `CivoKubernetesService` — list, show, create, update, delete + getKubeconfig(id)
   - `CivoNetworkService` — list, create, update, delete (removeNetwork)
   - `CivoFirewallService` — list, create, delete (removeFirewall), rule CRUD, status checks
@@ -160,7 +174,7 @@ Animations
 - `Sources/Views/MainWindow/Kubernetes/ClusterDetailView.swift` — cluster info, conditions, pools, apps, kubeconfig save, "Connect to Kubernetes API" button for live metrics/events/workloads, auto-firewall
 - `Sources/Views/MainWindow/Kubernetes/K8sNodeDetailView.swift` — node resource cards (CPU, Memory, Pods), conditions, addresses, system info
 - `Sources/Views/MainWindow/Kubernetes/K8sPodListView.swift` — pods on a node with status badge, namespace, ready count, restart count
-- `Sources/Views/MainWindow/Kubernetes/PodLogView.swift` — scrollable monospaced log output with auto-scroll toggle and refresh
+- `Sources/Views/MainWindow/Kubernetes/PodLogView.swift` — scrollable monospaced log output with auto-scroll toggle, refresh, and auto-refresh (3s timer)
 - `Sources/Views/MainWindow/Kubernetes/EditLabelsView.swift` — add/remove labels on node pools
 - `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (endpoint, bucket URL, access key, secret key), config (max size, region, created, status), resize section with stepper
 - `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, config, network/firewall
@@ -197,4 +211,4 @@ Use `api.getPaginatedList()` or `api.getArray()` accordingly.
 
 ## Concurrency Model
 
-Swift 6 strict concurrency. All model types are Sendable. ViewModels are @Observable @MainActor. CivoAPIClient is Sendable (uses URLSession). KubernetesAPIClient is Sendable (uses URLSession with client certificate delegate). CivoConfig is @unchecked Sendable (reads/writes UserDefaults which is thread-safe). ViewModel create/update methods use `sending` parameter modifier for `[String: Any]` body dicts to avoid data race errors when crossing actor boundaries.
+Swift 6 strict concurrency. All model types are Sendable. ViewModels are @Observable @MainActor. CivoAPIClient is Sendable (uses URLSession). KubernetesAPIClient is Sendable (uses URLSession with PKCS#12 client certificate delegate via SecPKCS12Import). CivoConfig is @unchecked Sendable (reads/writes UserDefaults which is thread-safe). ViewModel create/update methods use `sending` parameter modifier for `[String: Any]` body dicts to avoid data race errors when crossing actor boundaries.
