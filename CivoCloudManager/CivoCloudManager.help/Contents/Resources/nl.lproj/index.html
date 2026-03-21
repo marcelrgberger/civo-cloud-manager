@@ -85,8 +85,38 @@ th { font-weight: 600; }
 <li><strong>Node Pools</strong> &mdash; klik om uit te vouwen en pool-ID, grootte, aantal nodes, openbare IP's, instantienamen, labels en taints te zien.</li>
 <li><strong>Labels</strong> &mdash; klik op <strong>Bewerken</strong> om labels van een node pool toe te voegen, te verwijderen of te wijzigen.</li>
 <li><strong>Ge&iuml;nstalleerde applicaties</strong> &mdash; cert-manager, ingress-nginx, enz.</li>
+<li><strong>Kubeconfig opslaan</strong> &mdash; werkbalkknop om de kubeconfig te exporteren als .yaml-bestand.</li>
 </ul>
 <p>Om te maken: klik op <strong>+</strong>. Configureer naam, CNI-plugin, node-grootte, aantal nodes, netwerk en marketplace-apps.</p>
+
+<h3>Node-details (K8s API)</h3>
+<p>Klik op een <strong>node-naam</strong> in een node pool om rechtstreeks verbinding te maken met de Kubernetes API en gedetailleerde node-informatie te zien:</p>
+<ul>
+<li><strong>Resourcekaarten</strong> &mdash; CPU, Memory en Pods met capaciteit vs. toewijsbare waarden.</li>
+<li><strong>Condities</strong> &mdash; Ready, MemoryPressure, DiskPressure, PIDPressure met gezondheidsindicatoren.</li>
+<li><strong>Adressen</strong> &mdash; InternalIP en Hostname.</li>
+<li><strong>Systeeminfo</strong> &mdash; Besturingssysteem, Architectuur, Container Runtime, Kubelet-versie.</li>
+<li><strong>Pods op deze Node bekijken</strong> &mdash; knop om alle pods te zien die op die node draaien.</li>
+</ul>
+<p class="tip">De app downloadt de kubeconfig van de Civo API, extraheert de certificaten en maakt rechtstreeks verbinding met de Kubernetes API via clientcertificaat-authenticatie. Geen kubectl of externe tools nodig.</p>
+
+<h3>Podlijst</h3>
+<p>Klik vanuit de node-detailweergave op <strong>Pods op deze Node bekijken</strong> om alle pods op die node te zien. Elke pod toont:</p>
+<ul>
+<li>Statusbadge (Running, Pending, Failed, enz.)</li>
+<li>Namespace</li>
+<li>Aantal gereedstaande containers</li>
+<li>Aantal herstartten</li>
+</ul>
+
+<h3>Pod-logs</h3>
+<p>Klik op een pod in de podlijst om de logs te bekijken:</p>
+<ul>
+<li>Scrollbare loguitvoer in monospace-lettertype</li>
+<li><strong>Auto-scroll schakelaar</strong> &mdash; scrollt automatisch naar de nieuwste logvermeldingen</li>
+<li><strong>Vernieuwen-knop</strong> &mdash; herlaadt de nieuwste logs</li>
+<li>Pod-header met naam, namespace en status</li>
+</ul>
 
 <h2 id="networking">Netwerk</h2>
 <h3>Netwerken</h3>
@@ -154,6 +184,7 @@ th { font-weight: 600; }
 <li>De app vernieuwt de firewallstatus automatisch elke 60 seconden.</li>
 <li>Dashboard-resourcekaarten zijn klikbaar &mdash; navigeer met &eacute;&eacute;n klik naar elke sectie.</li>
 <li>Firewallregels die door deze app zijn aangemaakt, zijn gelabeld als <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> en alleen de regels van deze app worden beheerd.</li>
+<li>De Kubernetes-drill-downstroom: Clusterlijst &rarr; Clusterdetail &rarr; Nodedetail &rarr; Podlijst &rarr; Podlogs.</li>
 </ul>
 
 </body>

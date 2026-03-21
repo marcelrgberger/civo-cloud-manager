@@ -9,6 +9,7 @@ final class VolumeViewModel {
     var error: String?
 
     var selectedVolume: CivoVolume?
+    var selectedObjectStore: CivoObjectStore?
     var isCreatingVolume = false
     var isCreatingObjectStore = false
     var isSaving = false
@@ -104,6 +105,30 @@ final class VolumeViewModel {
         do {
             try await volumeService.removeVolume(id)
             await refresh()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func updateObjectStoreSize(_ id: String, newSize: Int) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            _ = try await objectStoreService.updateObjectStore(id, body: ["max_size_gb": newSize])
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = error.localizedDescription
+            return false
+        }
+    }
+
+    func loadObjectStoreDetail(_ id: String) async {
+        do {
+            selectedObjectStore = try await objectStoreService.showObjectStore(id)
         } catch {
             self.error = error.localizedDescription
         }

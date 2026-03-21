@@ -7,12 +7,16 @@ final class CivoObjectStoreService: Sendable {
         try await api.getPaginatedList(path: "/objectstores")
     }
 
+    func showObjectStore(_ id: String) async throws -> CivoObjectStore {
+        try await api.get(path: "/objectstores/\(id)")
+    }
+
     func createObjectStore(_ body: [String: Any]) async throws -> CivoObjectStore {
         try await api.post(path: "/objectstores", body: body)
     }
 
-    func getCredentials() async throws -> CivoObjectStoreCredential {
-        try await api.get(path: "/objectstores/credentials")
+    func updateObjectStore(_ id: String, body: [String: Any]) async throws -> CivoObjectStore {
+        try await api.put(path: "/objectstores/\(id)", body: body)
     }
 
     func removeObjectStore(_ id: String) async throws {

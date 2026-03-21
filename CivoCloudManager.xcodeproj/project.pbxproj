@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		006CAF2263F5372123A10957 /* K8sPodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC475DE643C954678BD26AD /* K8sPodListView.swift */; };
 		008FF41156D6FD2F10DF32E8 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E926C81BAC9B489A4A6CF /* ErrorBanner.swift */; };
+		0261F17C269DF770F38751FB /* ObjectStoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205F5D90D7A08D4235B08375 /* ObjectStoreDetailView.swift */; };
 		030D3EB1E368E8EE0EDDE2E1 /* FirewallDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE494996C31EA1F2277C85E8 /* FirewallDetailView.swift */; };
 		03175E40119BCDEDF60A1CF4 /* StaggeredAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */; };
 		06471893C03891741C390881 /* CivoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F22F7A31F8EC23B4CD44E /* CivoNetwork.swift */; };
@@ -124,6 +125,7 @@
 		0BA1601CC9CA2AD690820E4D /* K8sWorkload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sWorkload.swift; sourceTree = "<group>"; };
 		13B6A98A93B60ACFD5B5354B /* EditLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLabelsView.swift; sourceTree = "<group>"; };
 		1FC6BE2A34C7AF48F9B97D83 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		205F5D90D7A08D4235B08375 /* ObjectStoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectStoreDetailView.swift; sourceTree = "<group>"; };
 		248F9370DB9AFDE5384DD165 /* K8sPod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sPod.swift; sourceTree = "<group>"; };
 		25A9268C07EC0589C576AC19 /* CivoInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoInstance.swift; sourceTree = "<group>"; };
 		26C1EADCBB722A2063BEFE0F /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				687EAC653A96B641C285D432 /* CreateVolumeView.swift */,
 				FB0CF2A289D90763A13510BF /* DatabaseDetailView.swift */,
 				0ACE5A8AC44CA21C03A15081 /* DatabaseListView.swift */,
+				205F5D90D7A08D4235B08375 /* ObjectStoreDetailView.swift */,
 				B05E15BCB23C10E4B4E14F11 /* ObjectStoreListView.swift */,
 				6E08631142CB0C98D4FC9824 /* VolumeDetailView.swift */,
 				5AE6614CD8BC20D066C5B05F /* VolumeListView.swift */,
@@ -648,6 +651,7 @@
 				8F902984DEC9371847A89140 /* MenuBarView.swift in Sources */,
 				7D216DF7D015810A3E3C4B16 /* NetworkListView.swift in Sources */,
 				8F1982940667E9078D6E4262 /* NetworkViewModel.swift in Sources */,
+				0261F17C269DF770F38751FB /* ObjectStoreDetailView.swift in Sources */,
 				06646DCE38F5CCC8EFF8202D /* ObjectStoreListView.swift in Sources */,
 				9BCE43A7AD935BCDDD5CCF55 /* OnboardingView.swift in Sources */,
 				68AC75A2F8C9E88D4BFC6FFC /* PaywallView.swift in Sources */,
