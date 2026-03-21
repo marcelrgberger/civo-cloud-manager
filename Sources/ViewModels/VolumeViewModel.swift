@@ -80,7 +80,7 @@ final class VolumeViewModel {
     }
 
     var unusedVolumes: [CivoVolume] {
-        volumes.filter { $0.instanceId == nil && $0.clusterId == nil }
+        volumes.filter { $0.status?.lowercased() == "available" }
     }
 
     func cleanupUnusedVolumes() async {
