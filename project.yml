@@ -2,7 +2,7 @@ name: CivoCloudManager
 options:
   bundleIdPrefix: de.berger-rosenstock
   deploymentTarget:
-    macOS: "15.0"
+    macOS: "26.0"
   xcodeVersion: "16.2"
   createIntermediateGroups: true
   generateEmptyDirectories: true
@@ -10,7 +10,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "6.0"
-    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
     SWIFT_STRICT_CONCURRENCY: complete
     MARKETING_VERSION: "2.0.0"
     CURRENT_PROJECT_VERSION: "18"
