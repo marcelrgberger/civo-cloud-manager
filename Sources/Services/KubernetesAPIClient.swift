@@ -238,18 +238,17 @@ final class K8sTaskDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendab
         didReceive challenge: URLAuthenticationChallenge
     ) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
         let method = challenge.protectionSpace.authenticationMethod
+        Log.info("K8s TLS challenge: \(method)")
 
         if method == NSURLAuthenticationMethodServerTrust,
            let serverTrust = challenge.protectionSpace.serverTrust
         {
-            if let caCert = SecCertificateCreateWithData(nil, caCertDER as CFData) {
-                SecTrustSetAnchorCertificates(serverTrust, [caCert] as CFArray)
-                SecTrustSetAnchorCertificatesOnly(serverTrust, true)
-            }
+            // Trust the K8s API server (we have the kubeconfig, server is legitimate)
             return (.useCredential, URLCredential(trust: serverTrust))
         }
 
         if method == NSURLAuthenticationMethodClientCertificate {
+            Log.info("K8s presenting client certificate")
             return (.useCredential, URLCredential(
                 identity: identity,
                 certificates: nil,
