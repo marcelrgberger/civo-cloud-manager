@@ -85,8 +85,38 @@ th { font-weight: 600; }
 <li><strong>Node Pools</strong> &mdash; cliquez pour d&eacute;velopper et voir l'ID du pool, la taille, le nombre de nodes, les IPs publiques, les noms d'instance, les labels et les taints.</li>
 <li><strong>Labels</strong> &mdash; cliquez sur <strong>Modifier</strong> pour ajouter, supprimer ou modifier les labels d'un node pool.</li>
 <li><strong>Applications install&eacute;es</strong> &mdash; cert-manager, ingress-nginx, etc.</li>
+<li><strong>Sauvegarder Kubeconfig</strong> &mdash; bouton dans la barre d'outils pour exporter la kubeconfig en fichier .yaml.</li>
 </ul>
 <p>Pour cr&eacute;er : cliquez sur <strong>+</strong>. Configurez le nom, le plugin CNI, la taille des nodes, le nombre de nodes, le r&eacute;seau et les apps du marketplace.</p>
+
+<h3>D&eacute;tails du Node (API K8s)</h3>
+<p>Cliquez sur le <strong>nom d'un node</strong> dans un node pool pour vous connecter directement &agrave; l'API Kubernetes et voir les informations d&eacute;taill&eacute;es du node :</p>
+<ul>
+<li><strong>Cartes de ressources</strong> &mdash; CPU, Memory et Pods montrant la capacit&eacute; vs. les valeurs allouables.</li>
+<li><strong>Conditions</strong> &mdash; Ready, MemoryPressure, DiskPressure, PIDPressure avec indicateurs de sant&eacute;.</li>
+<li><strong>Adresses</strong> &mdash; InternalIP et Hostname.</li>
+<li><strong>Info syst&egrave;me</strong> &mdash; Syst&egrave;me d'exploitation, Architecture, Container Runtime, Version Kubelet.</li>
+<li><strong>Voir les Pods sur ce Node</strong> &mdash; bouton pour voir tous les pods ex&eacute;cut&eacute;s sur ce node.</li>
+</ul>
+<p class="tip">L'app t&eacute;l&eacute;charge la kubeconfig depuis l'API Civo, extrait les certificats et se connecte directement &agrave; l'API Kubernetes en utilisant l'authentification par certificat client. Aucun kubectl ni outil externe n'est n&eacute;cessaire.</p>
+
+<h3>Liste des Pods</h3>
+<p>Depuis la vue d&eacute;taill&eacute;e du node, cliquez sur <strong>Voir les Pods sur ce Node</strong> pour voir tous les pods sur ce node. Chaque pod affiche :</p>
+<ul>
+<li>Badge de statut (Running, Pending, Failed, etc.)</li>
+<li>Namespace</li>
+<li>Nombre de conteneurs pr&ecirc;ts</li>
+<li>Nombre de red&eacute;marrages</li>
+</ul>
+
+<h3>Logs des Pods</h3>
+<p>Cliquez sur un pod dans la liste des pods pour voir ses logs :</p>
+<ul>
+<li>Sortie de logs d&eacute;filable en police monospace</li>
+<li><strong>Bouton auto-scroll</strong> &mdash; d&eacute;file automatiquement vers les derni&egrave;res entr&eacute;es de log</li>
+<li><strong>Bouton actualiser</strong> &mdash; recharge les derniers logs</li>
+<li>En-t&ecirc;te du pod avec nom, namespace et statut</li>
+</ul>
 
 <h2 id="networking">R&eacute;seau</h2>
 <h3>R&eacute;seaux</h3>
@@ -154,6 +184,7 @@ th { font-weight: 600; }
 <li>L'app actualise automatiquement le statut des firewalls toutes les 60 secondes.</li>
 <li>Les cartes de ressources du tableau de bord sont cliquables &mdash; naviguez vers n'importe quelle section en un clic.</li>
 <li>Les r&egrave;gles de firewall cr&eacute;&eacute;es par cette app sont &eacute;tiquet&eacute;es <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> et seules les r&egrave;gles de cette app sont g&eacute;r&eacute;es.</li>
+<li>Le flux de d&eacute;tail Kubernetes : Liste des Clusters &rarr; D&eacute;tail du Cluster &rarr; D&eacute;tail du Node &rarr; Liste des Pods &rarr; Logs des Pods.</li>
 </ul>
 
 </body>

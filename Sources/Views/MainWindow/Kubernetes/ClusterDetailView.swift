@@ -32,8 +32,21 @@ struct ClusterDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
-                statsRow
+                if vm.isK8sConnected, let metrics = vm.clusterMetrics {
+                    liveMetricsRow(metrics)
+                } else {
+                    statsRow
+                }
+                if !vm.isK8sConnected {
+                    connectButton
+                }
                 infoSection
+                if !vm.events.isEmpty {
+                    eventsSection
+                }
+                if !vm.deployments.isEmpty {
+                    workloadsSection
+                }
                 conditionsSection
                 nodePoolsSection
                 applicationsSection
@@ -138,6 +151,152 @@ struct ClusterDetailView: View {
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : 10)
         .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.05 + 0.1), value: appeared)
+    }
+
+    // MARK: - Connect
+
+    private var connectButton: some View {
+        Button {
+            Task { await vm.connectToCluster(cluster.id) }
+        } label: {
+            HStack {
+                Image(systemName: "link.circle")
+                    .foregroundStyle(.blue)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Connect to Kubernetes API")
+                        .font(.headline)
+                    Text("Load live metrics, events, and workloads")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                if vm.isLoadingK8s {
+                    ProgressView().controlSize(.small)
+                } else {
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .padding(14)
+            .background(.blue.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .buttonStyle(.plain)
+        .disabled(vm.isLoadingK8s || cluster.status != "Active")
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.15), value: appeared)
+    }
+
+    // MARK: - Live Metrics
+
+    private func liveMetricsRow(_ metrics: K8sClusterMetrics) -> some View {
+        HStack(spacing: 16) {
+            liveGauge("CPU", percent: metrics.cpuPercent,
+                      detail: String(format: "%.1f / %.1f cores", metrics.cpuUsage, metrics.cpuCapacity),
+                      color: metrics.cpuPercent > 0.8 ? .red : metrics.cpuPercent > 0.6 ? .orange : .blue, index: 0)
+            liveGauge("Memory", percent: metrics.memoryPercent,
+                      detail: String(format: "%.0f / %.0f MB", metrics.memoryUsageMB, metrics.memoryCapacityMB),
+                      color: metrics.memoryPercent > 0.8 ? .red : metrics.memoryPercent > 0.6 ? .orange : .purple, index: 1)
+            statCard("Pods", value: "\(metrics.podCount)/\(metrics.podCapacity)", icon: "square.grid.2x2",
+                     color: .orange, index: 2)
+            statCard("Nodes", value: "\(metrics.healthyNodes)/\(metrics.nodeCount)", icon: "square.stack.3d.up",
+                     color: metrics.healthyNodes == metrics.nodeCount ? .green : .red, index: 3)
+        }
+    }
+
+    private func liveGauge(_ title: String, percent: Double, detail: String, color: Color, index: Int) -> some View {
+        VStack(spacing: 6) {
+            ZStack {
+                Circle()
+                    .stroke(Color.secondary.opacity(0.2), lineWidth: 6)
+                Circle()
+                    .trim(from: 0, to: min(percent, 1.0))
+                    .stroke(color, style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+                Text("\(Int(percent * 100))%")
+                    .font(.system(.caption, design: .rounded).bold())
+            }
+            .frame(width: 48, height: 48)
+            Text(title)
+                .font(.caption.bold())
+            Text(detail)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(12)
+        .background(.quaternary.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 10)
+        .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.05 + 0.1), value: appeared)
+    }
+
+    // MARK: - Events
+
+    private var eventsSection: some View {
+        GroupBox("Recent Events (\(vm.events.count))") {
+            VStack(spacing: 4) {
+                ForEach(Array(vm.events.prefix(15).enumerated()), id: \.element.id) { index, event in
+                    HStack(spacing: 8) {
+                        Image(systemName: event.isWarning ? "exclamationmark.triangle.fill" : "info.circle.fill")
+                            .font(.caption)
+                            .foregroundStyle(event.isWarning ? .orange : .secondary)
+                        VStack(alignment: .leading, spacing: 1) {
+                            HStack(spacing: 4) {
+                                Text(event.reason ?? "—")
+                                    .font(.caption.weight(.medium))
+                                if let obj = event.involvedObject {
+                                    Text("\(obj.kind ?? "")/\(obj.name ?? "")")
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            if let msg = event.message {
+                                Text(msg)
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                            }
+                        }
+                        Spacer()
+                    }
+                    .padding(.vertical, 2)
+                    .modifier(StaggeredAppear(index: index))
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
+    }
+
+    // MARK: - Workloads
+
+    private var workloadsSection: some View {
+        GroupBox("Deployments (\(vm.deployments.count))") {
+            VStack(spacing: 4) {
+                ForEach(Array(vm.deployments.enumerated()), id: \.element.id) { index, deploy in
+                    HStack(spacing: 8) {
+                        Image(systemName: deploy.isHealthy ? "checkmark.circle.fill" : "xmark.circle.fill")
+                            .font(.caption)
+                            .foregroundStyle(deploy.isHealthy ? .green : .red)
+                        Text(deploy.name)
+                            .font(.caption.weight(.medium))
+                        Spacer()
+                        Text("\(deploy.readyReplicas)/\(deploy.desiredReplicas) ready")
+                            .font(.caption2.monospaced())
+                            .foregroundStyle(deploy.isHealthy ? Color.secondary : Color.red)
+                    }
+                    .padding(.vertical, 2)
+                    .modifier(StaggeredAppear(index: index))
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.22), value: appeared)
     }
 
     // MARK: - Info

@@ -30,10 +30,9 @@ struct ClusterListView: View {
                 .transition(.move(edge: .trailing).combined(with: .opacity))
             } else if let cluster = vm.selectedCluster {
                 ClusterDetailView(cluster: cluster, vm: vm) {
+                    Task { await vm.disconnectFromCluster() }
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
                         vm.selectedCluster = nil
-                        vm.k8sNodes = []
-                        vm.k8sError = nil
                     }
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))

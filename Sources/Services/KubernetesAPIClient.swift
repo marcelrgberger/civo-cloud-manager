@@ -46,6 +46,22 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(pod)/log?tailLines=\(tailLines)")
     }
 
+    func getNodeMetrics() async throws -> K8sNodeMetricsList {
+        try await get("/apis/metrics.k8s.io/v1beta1/nodes")
+    }
+
+    func getPodMetrics(nodeName: String) async throws -> K8sPodMetricsList {
+        try await get("/apis/metrics.k8s.io/v1beta1/pods?fieldSelector=spec.nodeName=\(nodeName)")
+    }
+
+    func listEvents(limit: Int = 50) async throws -> K8sEventList {
+        try await get("/api/v1/events?limit=\(limit)")
+    }
+
+    func listDeployments() async throws -> K8sDeploymentList {
+        try await get("/apis/apps/v1/deployments")
+    }
+
     // MARK: - HTTP
 
     private func get<T: Decodable>(_ path: String) async throws -> T {

@@ -8,13 +8,11 @@ final class KubernetesViewModel {
     var isLoading = false
     var error: String?
 
-    // Create/Edit state
     var isCreating = false
     var isSaving = false
     var saveError: String?
     var showSuccess = false
 
-    // Form picker data
     var availableNetworks: [CivoNetwork] = []
     var availableSizes: [CivoSize] = []
 
@@ -26,10 +24,24 @@ final class KubernetesViewModel {
     var selectedPod: K8sPod?
     var isLoadingK8s = false
     var k8sError: String?
+    var isK8sConnected = false
+
+    // Metrics + Events + Workloads
+    var clusterMetrics: K8sClusterMetrics?
+    var nodeMetrics: [K8sNodeMetrics] = []
+    var events: [K8sEvent] = []
+    var deployments: [K8sDeployment] = []
+    var metricsAvailable = true
+
+    // Auto-firewall state
+    private var autoCreatedRuleId: String?
+    private var autoFirewallId: String?
 
     private let service = CivoKubernetesService()
     private let networkService = CivoNetworkService()
     private let sizeService = CivoSizeService()
+    private let firewallService = CivoFirewallService()
+    private let ipDetector = IPDetector()
     private var k8sClient: KubernetesAPIClient?
 
     func refresh() async {
@@ -41,7 +53,6 @@ final class KubernetesViewModel {
             clusters = try await service.listClusters()
         } catch {
             self.error = error.localizedDescription
-            Log.error("Kubernetes list failed: \(error.localizedDescription)")
         }
     }
 
@@ -65,11 +76,10 @@ final class KubernetesViewModel {
             selectedCluster = try await service.showCluster(id)
         } catch {
             self.error = error.localizedDescription
-            Log.error("Kubernetes show failed: \(error.localizedDescription)")
         }
     }
 
-    // MARK: - K8s API (via kubeconfig)
+    // MARK: - K8s API (via kubeconfig + auto-firewall)
 
     func connectToCluster(_ clusterId: String) async {
         isLoadingK8s = true
@@ -77,30 +87,158 @@ final class KubernetesViewModel {
         defer { isLoadingK8s = false }
 
         do {
+            if let cluster = selectedCluster, let fwId = cluster.firewallId {
+                await autoOpenFirewall(firewallId: fwId, port: 6443)
+            }
+
             let yaml = try await service.getKubeconfig(clusterId)
             let creds = try KubeconfigParser.parse(yaml)
             k8sClient = try KubernetesAPIClient(credentials: creds)
+            isK8sConnected = true
             Log.info("Connected to K8s API at \(creds.server)")
+
+            await loadClusterData()
         } catch {
             k8sError = error.localizedDescription
-            Log.error("K8s connect failed: \(error.localizedDescription)")
         }
     }
 
-    func loadNodes() async {
-        guard let client = k8sClient else {
-            k8sError = "Not connected to cluster"
-            return
-        }
-        isLoadingK8s = true
-        k8sError = nil
-        defer { isLoadingK8s = false }
+    func disconnectFromCluster() async {
+        k8sClient = nil
+        isK8sConnected = false
+        k8sNodes = []
+        selectedNode = nil
+        nodePods = []
+        podLog = nil
+        selectedPod = nil
+        clusterMetrics = nil
+        nodeMetrics = []
+        events = []
+        deployments = []
 
+        await autoCloseFirewall()
+    }
+
+    private func autoOpenFirewall(firewallId: String, port: Int) async {
         do {
-            let list = try await client.listNodes()
-            k8sNodes = list.items
+            let ip = try await ipDetector.detectIP()
+            let label = "\(CivoAccessLabel.prefix)\(CivoAccessLabel.hostname)-k8s-api"
+            let cidr = "\(ip)/32"
+
+            let rules = try await firewallService.getRulesForFirewall(firewallId)
+            let existing = rules.first {
+                $0.cidr == cidr && ($0.startPort == "\(port)" || $0.ports == "\(port)")
+            }
+
+            if existing == nil {
+                try await firewallService.createRule(
+                    firewallId: firewallId,
+                    startPort: String(port),
+                    cidr: cidr,
+                    label: label
+                )
+                let updatedRules = try await firewallService.getRulesForFirewall(firewallId)
+                autoCreatedRuleId = updatedRules.first { $0.label == label && $0.cidr == cidr }?.id
+                autoFirewallId = firewallId
+                Log.info("Auto-opened firewall for K8s API port \(port)")
+            }
         } catch {
-            k8sError = error.localizedDescription
+            Log.error("Auto-open firewall failed: \(error.localizedDescription)")
+        }
+    }
+
+    private func autoCloseFirewall() async {
+        guard let ruleId = autoCreatedRuleId, let fwId = autoFirewallId else { return }
+        do {
+            try await firewallService.deleteRule(firewallId: fwId, ruleId: ruleId)
+            Log.info("Auto-closed K8s API firewall rule")
+        } catch {
+            Log.error("Auto-close firewall failed: \(error.localizedDescription)")
+        }
+        autoCreatedRuleId = nil
+        autoFirewallId = nil
+    }
+
+    func loadClusterData() async {
+        guard let client = k8sClient else { return }
+
+        await loadNodes()
+
+        // Load metrics, events, workloads concurrently
+        async let m: () = loadMetrics(client)
+        async let e: () = loadEvents(client)
+        async let w: () = loadWorkloads(client)
+        _ = await (m, e, w)
+    }
+
+    func loadNodes() async {
+        guard let client = k8sClient else { return }
+        do {
+            k8sNodes = try await client.listNodes().items
+        } catch {
+            Log.error("Load nodes failed: \(error.localizedDescription)")
+        }
+    }
+
+    private func loadMetrics(_ client: KubernetesAPIClient) async {
+        do {
+            let metrics = try await client.getNodeMetrics()
+            nodeMetrics = metrics.items
+
+            var cpuUsage = 0.0, cpuCap = 0.0, memUsage = 0.0, memCap = 0.0
+            var podCap = 0
+
+            for node in k8sNodes {
+                if let cap = node.status?.capacity {
+                    cpuCap += K8sMetricsParser.parseCPU(cap.cpu ?? "0")
+                    memCap += K8sMetricsParser.parseMemoryMB(cap.memory ?? "0")
+                    podCap += Int(cap.pods ?? "0") ?? 0
+                }
+            }
+
+            for m in metrics.items {
+                cpuUsage += K8sMetricsParser.parseCPU(m.usage?.cpu ?? "0")
+                memUsage += K8sMetricsParser.parseMemoryMB(m.usage?.memory ?? "0")
+            }
+
+            // Count all running pods
+            var podCount = 0
+            do {
+                let allPods: K8sPodList = try await client.listPods(nodeName: "")
+                podCount = allPods.items.filter { $0.status?.phase == "Running" }.count
+            } catch { /* pod count remains 0 */ }
+
+            let healthyNodes = k8sNodes.filter {
+                $0.status?.conditions?.first(where: { $0.type == "Ready" })?.status == "True"
+            }.count
+
+            clusterMetrics = K8sClusterMetrics(
+                cpuUsage: cpuUsage, cpuCapacity: cpuCap,
+                memoryUsageMB: memUsage, memoryCapacityMB: memCap,
+                podCount: podCount, podCapacity: podCap,
+                nodeCount: k8sNodes.count, healthyNodes: healthyNodes
+            )
+            metricsAvailable = true
+        } catch {
+            metricsAvailable = false
+            Log.info("Metrics-server not available")
+        }
+    }
+
+    private func loadEvents(_ client: KubernetesAPIClient) async {
+        do {
+            let list = try await client.listEvents(limit: 30)
+            events = list.items.sorted { ($0.lastTimestamp ?? "") > ($1.lastTimestamp ?? "") }
+        } catch {
+            Log.error("Load events failed: \(error.localizedDescription)")
+        }
+    }
+
+    private func loadWorkloads(_ client: KubernetesAPIClient) async {
+        do {
+            deployments = try await client.listDeployments().items
+        } catch {
+            Log.error("Load deployments failed: \(error.localizedDescription)")
         }
     }
 
@@ -111,8 +249,7 @@ final class KubernetesViewModel {
         defer { isLoadingK8s = false }
 
         do {
-            let list = try await client.listPods(nodeName: nodeName)
-            nodePods = list.items
+            nodePods = try await client.listPods(nodeName: nodeName).items
         } catch {
             k8sError = error.localizedDescription
         }
@@ -132,61 +269,33 @@ final class KubernetesViewModel {
     }
 
     func saveKubeconfig(_ clusterId: String) async -> String? {
-        do {
-            return try await service.getKubeconfig(clusterId)
-        } catch {
-            self.error = error.localizedDescription
-            return nil
-        }
+        do { return try await service.getKubeconfig(clusterId) }
+        catch { self.error = error.localizedDescription; return nil }
     }
 
     // MARK: - CRUD
 
     func createCluster(_ body: sending [String: Any]) async -> Bool {
-        isSaving = true
-        saveError = nil
-        defer { isSaving = false }
-
+        isSaving = true; saveError = nil; defer { isSaving = false }
         do {
             _ = try await service.createCluster(body)
-            isCreating = false
-            showSuccess = true
-            await refresh()
-            return true
-        } catch {
-            saveError = error.localizedDescription
-            return false
-        }
+            isCreating = false; showSuccess = true; await refresh(); return true
+        } catch { saveError = error.localizedDescription; return false }
     }
 
     func updateCluster(_ id: String, body: sending [String: Any]) async -> Bool {
-        isSaving = true
-        saveError = nil
-        defer { isSaving = false }
-
+        isSaving = true; saveError = nil; defer { isSaving = false }
         do {
             _ = try await service.updateCluster(id, body: body)
-            showSuccess = true
-            await refresh()
-            return true
-        } catch {
-            saveError = error.localizedDescription
-            return false
-        }
+            showSuccess = true; await refresh(); return true
+        } catch { saveError = error.localizedDescription; return false }
     }
 
     func removeCluster(_ id: String) async -> Bool {
-        isLoading = true
-        error = nil
-        defer { isLoading = false }
-
+        isLoading = true; error = nil; defer { isLoading = false }
         do {
             try await service.removeCluster(id)
-            await refresh()
-            return true
-        } catch {
-            self.error = error.localizedDescription
-            return false
-        }
+            await refresh(); return true
+        } catch { self.error = error.localizedDescription; return false }
     }
 }

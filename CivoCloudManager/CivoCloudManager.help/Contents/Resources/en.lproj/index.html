@@ -85,8 +85,38 @@ th { font-weight: 600; }
 <li><strong>Node Pools</strong> &mdash; click to expand and see pool ID, size, node count, public IPs, instance names, labels, and taints.</li>
 <li><strong>Labels</strong> &mdash; click <strong>Edit</strong> to add, remove, or modify labels on a node pool.</li>
 <li><strong>Installed Applications</strong> &mdash; cert-manager, ingress-nginx, etc.</li>
+<li><strong>Save Kubeconfig</strong> &mdash; toolbar button to export the cluster kubeconfig as a .yaml file.</li>
 </ul>
 <p>To create: click <strong>+</strong>. Configure name, CNI plugin, node size, node count, network, and marketplace apps.</p>
+
+<h3>Node Details (K8s API)</h3>
+<p>Click a <strong>node name</strong> in a node pool to connect directly to the Kubernetes API and see detailed node information:</p>
+<ul>
+<li><strong>Resource Cards</strong> &mdash; CPU, Memory, and Pods showing capacity vs. allocatable values.</li>
+<li><strong>Conditions</strong> &mdash; Ready, MemoryPressure, DiskPressure, PIDPressure with health indicators.</li>
+<li><strong>Addresses</strong> &mdash; InternalIP and Hostname.</li>
+<li><strong>System Info</strong> &mdash; Operating System, Architecture, Container Runtime, Kubelet Version.</li>
+<li><strong>View Pods on this Node</strong> &mdash; button to see all pods running on that node.</li>
+</ul>
+<p class="tip">The app downloads the kubeconfig from the Civo API, extracts certificates, and connects directly to the Kubernetes API using client certificate authentication. No kubectl or external tools are needed.</p>
+
+<h3>Pod List</h3>
+<p>From the node detail view, click <strong>View Pods on this Node</strong> to see all pods running on that node. Each pod shows:</p>
+<ul>
+<li>Status badge (Running, Pending, Failed, etc.)</li>
+<li>Namespace</li>
+<li>Ready container count</li>
+<li>Restart count</li>
+</ul>
+
+<h3>Pod Logs</h3>
+<p>Click a pod in the pod list to view its logs:</p>
+<ul>
+<li>Scrollable monospaced log output</li>
+<li><strong>Auto-scroll toggle</strong> &mdash; automatically scrolls to the latest log entries</li>
+<li><strong>Refresh button</strong> &mdash; reload the latest logs</li>
+<li>Pod header showing name, namespace, and status</li>
+</ul>
 
 <h2 id="networking">Networking</h2>
 <h3>Networks</h3>
@@ -154,6 +184,7 @@ th { font-weight: 600; }
 <li>The app auto-refreshes firewall status every 60 seconds.</li>
 <li>Dashboard resource cards are clickable &mdash; navigate to any section with one click.</li>
 <li>Firewall rules created by this app are labeled <code>civo-cloud-&lt;hostname&gt;-&lt;firewall&gt;</code> and only this app's rules are managed.</li>
+<li>The Kubernetes drill-down flow goes: Cluster List &rarr; Cluster Detail &rarr; Node Detail &rarr; Pod List &rarr; Pod Logs.</li>
 </ul>
 
 </body>
