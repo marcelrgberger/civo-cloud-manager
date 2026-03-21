@@ -115,6 +115,8 @@
 		F24BDD807CDC0525D5BF3D7B /* VolumeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E08631142CB0C98D4FC9824 /* VolumeDetailView.swift */; };
 		F598AA3CD45406EED61EFD6C /* CreateInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353A2AD351F106200317D37 /* CreateInstanceView.swift */; };
 		FB906C15123E6D7852E79705 /* CivoSSHKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */; };
+		F2A50DECACA040538DAEE6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FCBDE78E34604F48BEC8FD10 /* InfoPlist.strings */; };
+		87041736E44348EBA142F348 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A39597434D2C42619B8B50AE /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,7 +168,7 @@
 		653BFE15133D119B968E37B8 /* DatabaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseViewModel.swift; sourceTree = "<group>"; };
 		687EAC653A96B641C285D432 /* CreateVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateVolumeView.swift; sourceTree = "<group>"; };
 		6BA77A6541807F3782C44765 /* ClusterListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterListView.swift; sourceTree = "<group>"; };
-		6C191E11AFCE5B8892016D98 /* CivoCloudManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = CivoCloudManager.app; path = "Civo Cloud Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C191E11AFCE5B8892016D98 /* CivoCloudManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CivoCloudManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E08631142CB0C98D4FC9824 /* VolumeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeDetailView.swift; sourceTree = "<group>"; };
 		6FA837F23D57CC0B4BE97C85 /* CreateNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNetworkView.swift; sourceTree = "<group>"; };
 		7126A77B7B656502483F1E79 /* CivoRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoRegion.swift; sourceTree = "<group>"; };
@@ -228,7 +230,7 @@
 		D9D35C4A592BD0FCEB7C3650 /* K8sNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sNode.swift; sourceTree = "<group>"; };
 		DF33732A8EBD49037593BF59 /* DeleteConfirmationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationSheet.swift; sourceTree = "<group>"; };
 		E3D1C5AD1EE7EA8AD87BF60E /* LoadBalancerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalancerDetailView.swift; sourceTree = "<group>"; };
-		EA5232B575D10CB2EB4ED7C0 /* CivoCloudManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = CivoCloudManagerTests.xctest; path = "Civo Cloud Manager.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA5232B575D10CB2EB4ED7C0 /* CivoCloudManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CivoCloudManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE494996C31EA1F2277C85E8 /* FirewallDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallDetailView.swift; sourceTree = "<group>"; };
 		EF772687EC5E14C580B3E54F /* FirewallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
 		F113A37E7EAD44865E9A109F /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
@@ -238,7 +240,34 @@
 		FA4C210104DCC1379337CF6C /* KubeconfigParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KubeconfigParser.swift; sourceTree = "<group>"; };
 		FB0CF2A289D90763A13510BF /* DatabaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseDetailView.swift; sourceTree = "<group>"; };
 		FC651DD74FA16D0BC0D705B3 /* CivoQuotaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoQuotaService.swift; sourceTree = "<group>"; };
+		6A82A3214D7A43A388233676 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = CivoCloudManager/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		4F67F626A0AB46EBAE77D60F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = CivoCloudManager/de.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		331F7C357F8141EDB8E8DE1C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = CivoCloudManager/es.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		57ED73147159420994B33046 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = CivoCloudManager/fr.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		A4AF78FD49FA4B8AB3B802EE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = CivoCloudManager/it.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		015B8AD7B194494D9C5AFD79 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = CivoCloudManager/nl.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		C3ECB6960677436E90C2191E /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = CivoCloudManager/pl.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		63439DC894C94AFAA982A8AA /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = CivoCloudManager/pt.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		A39597434D2C42619B8B50AE /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = CivoCloudManager/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXVariantGroup section */
+		FCBDE78E34604F48BEC8FD10 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6A82A3214D7A43A388233676 /* en */,
+				4F67F626A0AB46EBAE77D60F /* de */,
+				331F7C357F8141EDB8E8DE1C /* es */,
+				57ED73147159420994B33046 /* fr */,
+				A4AF78FD49FA4B8AB3B802EE /* it */,
+				015B8AD7B194494D9C5AFD79 /* nl */,
+				C3ECB6960677436E90C2191E /* pl */,
+				63439DC894C94AFAA982A8AA /* pt */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin PBXGroup section */
 		0A6EB52D0EFC0F1BA3A38028 /* Account */ = {
@@ -370,6 +399,8 @@
 		688293C757A7801CCECA154F /* CivoCloudManager */ = {
 			isa = PBXGroup;
 			children = (
+				FCBDE78E34604F48BEC8FD10 /* InfoPlist.strings */,
+				A39597434D2C42619B8B50AE /* Localizable.xcstrings */,
 				81AEBC33E74A811E3130B06D /* Assets.xcassets */,
 			);
 			path = CivoCloudManager;
@@ -583,6 +614,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A50DECACA040538DAEE6BB /* InfoPlist.strings in Resources */,
+				87041736E44348EBA142F348 /* Localizable.xcstrings in Resources */,
 				ECD0912063E527904ED42F43 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
