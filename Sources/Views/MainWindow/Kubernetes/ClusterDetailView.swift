@@ -50,6 +50,9 @@ struct ClusterDetailView: View {
                 }
                 infoSection
                 if !vm.events.isEmpty { eventsSection }
+                if vm.isK8sConnected && !vm.namespaces.isEmpty {
+                    namespaceFilterPicker
+                }
                 if !vm.deployments.isEmpty || !vm.daemonSets.isEmpty || !vm.statefulSets.isEmpty {
                     workloadsSection
                 }
@@ -164,7 +167,26 @@ struct ClusterDetailView: View {
         .animation(.spring(duration: 0.4, bounce: 0.15).delay(Double(index) * 0.05 + 0.1), value: appeared)
     }
 
-    // Connect button removed — K8s API connects automatically in background
+    // MARK: - Namespace Filter
+
+    private var namespaceFilterPicker: some View {
+        HStack {
+            Text("Filter by Namespace:")
+                .font(.caption).foregroundStyle(.secondary)
+            Picker("", selection: Binding(
+                get: { vm.selectedNamespace ?? "All" },
+                set: { vm.selectedNamespace = $0 == "All" ? nil : $0 }
+            )) {
+                Text("All").tag("All")
+                ForEach(vm.namespaces) { ns in
+                    Text(ns.name).tag(ns.name)
+                }
+            }
+            .frame(width: 200)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.18), value: appeared)
+    }
 
     // MARK: - Live Metrics
 
@@ -240,6 +262,10 @@ struct ClusterDetailView: View {
                             }
                         }
                         Spacer()
+                        if let ts = event.lastTimestamp {
+                            Text(relativeTime(ts))
+                                .font(.caption2).foregroundStyle(.tertiary)
+                        }
                     }
                     .padding(.vertical, 2)
                     .modifier(StaggeredAppear(index: index))
@@ -251,14 +277,25 @@ struct ClusterDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
     }
 
+    private func relativeTime(_ iso: String) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        guard let date = formatter.date(from: iso) ?? ISO8601DateFormatter().date(from: iso) else { return iso }
+        let interval = Date().timeIntervalSince(date)
+        if interval < 60 { return "\(Int(interval))s ago" }
+        if interval < 3600 { return "\(Int(interval / 60))m ago" }
+        if interval < 86400 { return "\(Int(interval / 3600))h ago" }
+        return "\(Int(interval / 86400))d ago"
+    }
+
     // MARK: - Workloads
 
     private var workloadsSection: some View {
         GroupBox("Workloads") {
             VStack(spacing: 4) {
                 if !vm.deployments.isEmpty {
-                    DisclosureGroup("Deployments (\(vm.deployments.count))") {
-                        ForEach(vm.deployments) { d in
+                    DisclosureGroup("Deployments (\(vm.filteredDeployments.count))") {
+                        ForEach(vm.filteredDeployments) { d in
                             workloadRow(d.name, ready: d.readyReplicas, desired: d.desiredReplicas, healthy: d.isHealthy, ns: d.namespace)
                         }
                     }
@@ -319,8 +356,8 @@ struct ClusterDetailView: View {
         GroupBox("Networking") {
             VStack(spacing: 4) {
                 if !vm.services.isEmpty {
-                    DisclosureGroup("Services (\(vm.services.count))") {
-                        ForEach(vm.services) { svc in
+                    DisclosureGroup("Services (\(vm.filteredServices.count))") {
+                        ForEach(vm.filteredServices) { svc in
                             HStack(spacing: 8) {
                                 Image(systemName: svc.type == "LoadBalancer" ? "arrow.triangle.branch" : "network")
                                     .font(.caption).foregroundStyle(.blue)

@@ -48,6 +48,13 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
     func getPodLogs(namespace: String, pod: String, tailLines: Int = 200) async throws -> String {
         try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(pod)/log?tailLines=\(tailLines)")
     }
+    func deletePod(namespace: String, pod: String) async throws {
+        _ = try await execute("/api/v1/namespaces/\(namespace)/pods/\(pod)", method: "DELETE")
+    }
+    func scaleDeployment(namespace: String, name: String, replicas: Int) async throws {
+        let body = "{\"spec\":{\"replicas\":\(replicas)}}"
+        _ = try await execute("/apis/apps/v1/namespaces/\(namespace)/deployments/\(name)/scale", method: "PATCH", body: body, contentType: "application/merge-patch+json")
+    }
     func getNodeMetrics() async throws -> K8sNodeMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/nodes") }
     func getPodMetrics(nodeName: String) async throws -> K8sPodMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/pods?fieldSelector=spec.nodeName=\(nodeName)") }
     func listEvents(limit: Int = 50) async throws -> K8sEventList { try await get("/api/v1/events?limit=\(limit)") }
@@ -74,14 +81,16 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         return String(data: data, encoding: .utf8) ?? ""
     }
 
-    private func execute(_ path: String) async throws -> Data {
+    private func execute(_ path: String, method: String = "GET", body: String? = nil, contentType: String = "application/json") async throws -> Data {
         guard let url = URL(string: "\(server)\(path)") else {
             throw K8sAPIError.httpError(0, "Invalid URL")
         }
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 15
+        if let body { request.httpBody = body.data(using: .utf8) }
 
         let (data, response) = try await session.data(for: request)
 

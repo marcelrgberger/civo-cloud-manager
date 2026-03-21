@@ -56,6 +56,14 @@ struct InstanceListView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
+                        if inst.status?.lowercased() == "active" {
+                            Button("Stop") { Task { await vm.stopInstance(inst.id) } }
+                            Button("Reboot") { Task { await vm.rebootInstance(inst.id) } }
+                        }
+                        if inst.status?.lowercased() == "shutoff" {
+                            Button("Start") { Task { await vm.startInstance(inst.id) } }
+                        }
+                        Divider()
                         Button("Delete", role: .destructive) { deleteTarget = inst }
                     }
                 }

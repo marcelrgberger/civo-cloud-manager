@@ -92,6 +92,21 @@ final class InstanceViewModel {
         }
     }
 
+    func stopInstance(_ id: String) async {
+        do { try await instanceService.stopInstance(id); showSuccess = true; await refresh() }
+        catch { self.error = error.localizedDescription }
+    }
+
+    func startInstance(_ id: String) async {
+        do { try await instanceService.startInstance(id); showSuccess = true; await refresh() }
+        catch { self.error = error.localizedDescription }
+    }
+
+    func rebootInstance(_ id: String) async {
+        do { try await instanceService.rebootInstance(id); showSuccess = true; await refresh() }
+        catch { self.error = error.localizedDescription }
+    }
+
     func removeInstance(_ id: String) async {
         do {
             try await instanceService.removeInstance(id)

@@ -157,6 +157,7 @@ final class KubernetesViewModel {
         namespaces = []
         pvcs = []
         pvs = []
+        selectedNamespace = nil
 
         await autoCloseFirewall()
     }
@@ -308,6 +309,42 @@ final class KubernetesViewModel {
     func civoVolumeIdForPVC(_ pvc: K8sPVC) -> String? {
         guard let pvName = pvc.volumeName else { return nil }
         return pvs.first(where: { $0.name == pvName })?.civoVolumeId
+    }
+
+    func restartPod(namespace: String, name: String, nodeName: String) async {
+        guard let client = k8sClient else { return }
+        do {
+            try await client.deletePod(namespace: namespace, pod: name)
+            try? await Task.sleep(for: .seconds(1))
+            await loadPods(nodeName: nodeName)
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
+    func scaleDeployment(namespace: String, name: String, replicas: Int) async {
+        guard let client = k8sClient else { return }
+        do {
+            try await client.scaleDeployment(namespace: namespace, name: name, replicas: replicas)
+            showSuccess = true
+            if let c = k8sClient { await loadWorkloads(c) }
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
+    // MARK: - Namespace filter
+
+    var selectedNamespace: String?
+
+    var filteredDeployments: [K8sDeployment] {
+        guard let ns = selectedNamespace, ns != "All" else { return deployments }
+        return deployments.filter { $0.namespace == ns }
+    }
+
+    var filteredServices: [K8sService] {
+        guard let ns = selectedNamespace, ns != "All" else { return services }
+        return services.filter { $0.namespace == ns }
     }
 
     func loadPods(nodeName: String) async {

@@ -15,15 +15,17 @@ struct K8sPodListView: View {
                     Button {
                         vm.selectedPod = pod
                         Task {
-                            await vm.loadPodLog(
-                                namespace: pod.metadata.labels?["namespace"] ?? "default",
-                                pod: pod.name
-                            )
+                            await vm.loadPodLog(namespace: pod.namespace, pod: pod.name)
                         }
                     } label: {
                         podRow(pod, index: index)
                     }
                     .buttonStyle(.plain)
+                    .contextMenu {
+                        Button("Restart Pod") {
+                            Task { await vm.restartPod(namespace: pod.namespace, name: pod.name, nodeName: nodeName) }
+                        }
+                    }
                 }
             }
         }
