@@ -1,22 +1,221 @@
-Copyright (c) 2025-2026 Marcel R. G. Berger / Berger & Rosenstock GbR.
-All rights reserved.
+END USER LICENSE AGREEMENT
 
-This software is proprietary and confidential. The source code is provided
-for reference purposes only and may not be copied, modified, merged,
-published, distributed, sublicensed, or sold without the express written
-permission of the copyright holder.
+Last Updated: March 21, 2026
+Effective Date: March 21, 2026
 
-The software is distributed exclusively through the Apple App Store under
-the Apple Licensed Application End User License Agreement (EULA).
+This End User License Agreement ("Agreement" or "EULA") is a legally binding contract between you ("User", "you", or "your") and Marcel R. G. Berger, operating as Berger & Rosenstock GbR ("Licensor", "we", "us", or "our"), governing your use of the Civo Cloud Manager application ("Application" or "App").
 
-Unauthorized reproduction or distribution of this software, or any portion
-of it, may result in civil and criminal penalties, and will be prosecuted
-to the maximum extent possible under the law.
+This Agreement supplements the Apple Standard End User License Agreement available at https://www.apple.com/legal/internet-services/itunes/dev/stdeula/ ("Apple EULA"). In the event of a conflict between this Agreement and the Apple EULA, the terms of this Agreement shall prevail to the extent permitted by applicable law.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
-OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+BY DOWNLOADING, INSTALLING, OR USING THE APPLICATION, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT DOWNLOAD, INSTALL, OR USE THE APPLICATION.
+
+
+1. DEFINITIONS
+
+1.1 "Application" means the Civo Cloud Manager software application, including all updates, patches, modifications, enhancements, and documentation provided by the Licensor.
+
+1.2 "Subscription" means the paid recurring license that grants access to premium features of the Application as described in Section 4.
+
+1.3 "Content" means any data, text, configurations, or information you create, upload, manage, or access through the Application.
+
+1.4 "Third-Party Services" means external services accessed through the Application, including but not limited to Civo Cloud (api.civo.com) and Kubernetes API servers.
+
+1.5 "Authorized Device" means an Apple macOS device that you own or control and on which the Application is installed in accordance with this Agreement.
+
+1.6 "Personal Data" has the meaning given to it under the General Data Protection Regulation (EU) 2016/679, and includes "personal information" as defined under the California Consumer Privacy Act, "personal data" under the UK Data Protection Act 2018, and equivalent terms under other applicable data protection laws.
+
+
+2. LICENSE GRANT
+
+2.1 Subject to the terms of this Agreement, the Licensor grants you a limited, non-exclusive, non-transferable, revocable license to download, install, and use the Application on Authorized Devices for your personal or internal business purposes.
+
+2.2 The Application may be used under Apple's Family Sharing feature, subject to Apple's terms and conditions.
+
+2.3 The free tier of the Application provides limited functionality (menu bar firewall management). Full functionality requires an active Subscription as described in Section 4.
+
+2.4 This license does not grant you any rights to use the Application for the benefit of third parties, including but not limited to managed service providers offering the Application as part of their services, unless expressly authorized in writing by the Licensor.
+
+
+3. RESTRICTIONS
+
+3.1 You shall not, and shall not permit any third party to:
+   (a) copy, modify, adapt, translate, or create derivative works based on the Application;
+   (b) reverse engineer, disassemble, decompile, or otherwise attempt to derive the source code of the Application;
+   (c) rent, lease, lend, sell, sublicense, distribute, or otherwise transfer the Application to any third party;
+   (d) remove, alter, or obscure any proprietary notices, labels, or marks on the Application;
+   (e) use the Application to develop a competing product or service;
+   (f) use the Application in any manner that violates applicable laws, regulations, or third-party rights;
+   (g) circumvent, disable, or interfere with any security, authentication, or licensing features of the Application;
+   (h) use automated means, including bots, scrapers, or crawlers, to access or interact with the Application beyond its intended functionality.
+
+3.2 EXCEPTION FOR EU USERS: Notwithstanding Section 3.1(b), nothing in this Agreement shall restrict your rights under Articles 5 and 6 of EU Directive 2009/24/EC (as implemented in national law), including the right to decompile the Application to the extent necessary to achieve interoperability with independently created software, provided that: (i) the information necessary to achieve interoperability has not been made readily available to you; (ii) decompilation is performed only on the parts of the Application necessary to achieve interoperability; and (iii) the information obtained is not used for purposes other than achieving interoperability or shared with third parties.
+
+
+4. SUBSCRIPTION AND PAYMENT
+
+4.1 The Application offers premium features through a one-time in-app purchase ("Full Access") at the price displayed in the Apple App Store at the time of purchase.
+
+4.2 All payments are processed exclusively through Apple's App Store payment system. The Licensor does not collect, store, or process any payment information directly.
+
+4.3 Pricing may vary by region and is subject to change. Any price changes will apply to new purchases only.
+
+4.4 Refund requests must be directed to Apple in accordance with Apple's refund policy at https://support.apple.com/en-us/HT204084. The Licensor does not process refunds directly.
+
+4.5 Apple offer codes may be redeemed within the Application or through the App Store, subject to Apple's terms for promotional codes.
+
+
+5. INTELLECTUAL PROPERTY
+
+5.1 The Application, including all intellectual property rights therein, is and shall remain the exclusive property of the Licensor. This Agreement does not transfer any ownership rights to you.
+
+5.2 "Civo Cloud Manager", the application icon, and all associated logos and trade dress are trademarks or registered trademarks of Marcel R. G. Berger / Berger & Rosenstock GbR. You may not use these marks without prior written consent.
+
+5.3 "Civo" is a trademark of Civo Ltd. The Application is an independent product and is not affiliated with, endorsed by, or sponsored by Civo Ltd.
+
+5.4 If you provide any feedback, suggestions, ideas, or improvements regarding the Application ("Feedback"), you hereby grant the Licensor a perpetual, irrevocable, worldwide, royalty-free license to use, modify, and incorporate such Feedback into the Application without any obligation to you.
+
+5.5 You retain all rights, title, and interest in your Content. The Application does not transmit your Content to the Licensor. Your Content is transmitted directly to third-party services (e.g., Civo Cloud) in accordance with their respective terms of service and privacy policies.
+
+
+6. PRIVACY AND DATA PROTECTION
+
+6.1 ZERO DATA COLLECTION: The Application does not collect, transmit, or store any Personal Data on servers operated by the Licensor. All data processing occurs locally on your device or directly between your device and third-party services you choose to connect to.
+
+6.2 LOCAL STORAGE: The Application stores configuration data (API keys, preferences) locally on your device using macOS Keychain (encrypted) and UserDefaults. This data never leaves your device except when transmitted directly to third-party APIs at your explicit direction.
+
+6.3 THIRD-PARTY SERVICES: The Application communicates directly with:
+   (a) Civo Cloud API (api.civo.com) -- using your API key, for cloud resource management;
+   (b) Kubernetes API servers -- using kubeconfig credentials, for cluster management;
+   (c) IP detection services (ipify.org, ifconfig.me, icanhazip.com) -- to detect your public IPv4 address for firewall rule management.
+   These communications are initiated solely by your actions and are subject to the respective privacy policies of these services.
+
+6.4 GDPR COMPLIANCE (EU/EEA): As the Application does not collect or process Personal Data, the Licensor does not act as a data controller or data processor under Regulation (EU) 2016/679.
+
+6.5 UK GDPR COMPLIANCE: The Licensor complies with the UK General Data Protection Regulation as incorporated into UK law by the Data Protection Act 2018.
+
+6.6 CCPA/CPRA COMPLIANCE (California, USA): The Application does not sell, share, or disclose personal information as defined under the California Consumer Privacy Act and the California Privacy Rights Act.
+
+6.7 LGPD COMPLIANCE (Brazil): The Application complies with Lei Geral de Protecao de Dados (Law No. 13,709/2018).
+
+6.8 PIPEDA COMPLIANCE (Canada): The Application complies with the Personal Information Protection and Electronic Documents Act.
+
+6.9 APPI COMPLIANCE (Japan): The Application complies with the Act on the Protection of Personal Information (Act No. 57 of 2003, as amended).
+
+6.10 PIPA COMPLIANCE (South Korea): The Application complies with the Personal Information Protection Act (Act No. 10465).
+
+6.11 PDPA COMPLIANCE (Singapore/Thailand): The Application complies with the Personal Data Protection Acts of Singapore and Thailand.
+
+6.12 PIPL COMPLIANCE (China): The Application complies with the Personal Information Protection Law of the People's Republic of China.
+
+6.13 COPPA COMPLIANCE (USA): The Application is not directed at children under the age of 13. We do not knowingly collect personal information from children.
+
+6.14 For the complete privacy policy, please refer to PRIVACY.md or visit https://marcelrgberger.com/privacy.
+
+
+7. DISCLAIMER OF WARRANTIES
+
+7.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE APPLICATION IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+
+7.2 THE LICENSOR DOES NOT WARRANT THAT THE APPLICATION WILL BE UNINTERRUPTED, ERROR-FREE, SECURE, OR FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.
+
+7.3 THE APPLICATION MANAGES CLOUD INFRASTRUCTURE. THE LICENSOR IS NOT RESPONSIBLE FOR ANY DATA LOSS, SERVICE INTERRUPTIONS, SECURITY BREACHES, OR INFRASTRUCTURE DAMAGE RESULTING FROM THE USE OF THE APPLICATION.
+
+7.4 CONSUMER PROTECTION EXCEPTIONS:
+   (a) FOR EU CONSUMERS: Nothing in this Section shall exclude or limit any warranty rights under the EU Consumer Rights Directive (2011/83/EU) or the EU Consumer Sales Directive (2019/771).
+   (b) FOR AUSTRALIAN CONSUMERS: Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law (Schedule 2 of the Competition and Consumer Act 2010).
+   (c) FOR UK CONSUMERS: Nothing in this Section shall exclude or limit your statutory rights under the Consumer Rights Act 2015.
+   (d) FOR NEW ZEALAND CONSUMERS: Nothing in this Agreement excludes rights under the Consumer Guarantees Act 1993.
+
+
+8. LIMITATION OF LIABILITY
+
+8.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES.
+
+8.2 THE LICENSOR'S TOTAL AGGREGATE LIABILITY SHALL NOT EXCEED THE TOTAL AMOUNT YOU HAVE PAID FOR THE APPLICATION IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.
+
+8.3 NOTHING IN THIS AGREEMENT SHALL LIMIT OR EXCLUDE LIABILITY FOR: (a) DEATH OR PERSONAL INJURY CAUSED BY NEGLIGENCE; (b) FRAUD OR FRAUDULENT MISREPRESENTATION; (c) ANY LIABILITY THAT CANNOT BE LIMITED OR EXCLUDED BY APPLICABLE LAW.
+
+
+9. INDEMNIFICATION
+
+9.1 You agree to indemnify, defend, and hold harmless the Licensor from and against any claims, damages, losses, liabilities, costs, or expenses arising from: (a) your use of the Application; (b) your violation of this Agreement; (c) your violation of any applicable law; or (d) your violation of any third-party rights.
+
+9.2 CONSUMER PROTECTION EXCEPTION: This indemnification obligation shall not apply to the extent prohibited by mandatory consumer protection laws in your jurisdiction.
+
+
+10. TERMINATION
+
+10.1 This Agreement is effective until terminated. You may terminate at any time by uninstalling the Application.
+
+10.2 The Licensor may terminate this Agreement immediately if you breach any term.
+
+10.3 Upon termination, all rights and licenses granted shall immediately cease.
+
+10.4 SURVIVAL: Sections 5, 6, 7, 8, 9, 11, 12, and 13 survive termination.
+
+
+11. EXPORT COMPLIANCE
+
+11.1 You represent and warrant that you are not located in an embargoed country or listed on any prohibited party list.
+
+11.2 The Application uses standard HTTPS encryption. No proprietary encryption algorithms are implemented.
+
+
+12. GOVERNING LAW AND DISPUTE RESOLUTION
+
+12.1 This Agreement is governed by the laws of the Federal Republic of Germany.
+
+12.2 EU ONLINE DISPUTE RESOLUTION: https://ec.europa.eu/consumers/odr
+
+12.3 EU CONSUMER PROTECTION: If you are an EU consumer, you also enjoy the mandatory protections of your country of habitual residence.
+
+12.4 JURISDICTION-SPECIFIC EXCEPTIONS:
+   (a) FOR AUSTRALIAN USERS: Australian Consumer Law applies where applicable.
+   (b) FOR UK USERS: UK consumer protection laws apply; English courts have non-exclusive jurisdiction.
+   (c) FOR JAPANESE USERS: The Consumer Contract Act applies where it provides greater protection.
+
+12.5 Disputes shall be submitted to the courts of Berlin, Germany, subject to consumer protection exceptions above.
+
+
+13. GENERAL PROVISIONS
+
+13.1 SEVERABILITY: Invalid provisions shall be modified to the minimum extent necessary.
+
+13.2 FORCE MAJEURE: The Licensor is not liable for failures beyond reasonable control.
+
+13.3 ASSIGNMENT: You may not assign this Agreement without written consent.
+
+13.4 MODIFICATIONS: Material changes communicated at least thirty (30) days in advance.
+
+13.5 ENTIRE AGREEMENT: This Agreement and the Apple EULA constitute the entire agreement.
+
+13.6 LANGUAGE: The English version prevails in case of inconsistency.
+
+13.7 NO THIRD-PARTY BENEFICIARIES: Except as provided in Section 14.
+
+
+14. APPLE APP STORE TERMS
+
+14.1 This Agreement supplements the Apple Standard EULA.
+
+14.2 This Agreement is between you and the Licensor, not Apple.
+
+14.3 Apple has no obligation to furnish maintenance and support services.
+
+14.4 Apple's warranty liability is limited to refunding the purchase price.
+
+14.5 Apple is not responsible for any claims relating to the Application.
+
+14.6 The Licensor is solely responsible for intellectual property infringement claims.
+
+14.7 Apple and its subsidiaries are third-party beneficiaries of this Agreement.
+
+
+15. CONTACT INFORMATION
+
+Marcel R. G. Berger
+Berger & Rosenstock GbR
+Email: hello@marcelrgberger.com
+Web: https://berger-rosenstock.de
+
+Copyright (c) 2026 Marcel R. G. Berger / Berger & Rosenstock GbR. All rights reserved.
