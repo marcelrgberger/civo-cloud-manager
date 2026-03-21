@@ -50,7 +50,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .databases: return .purple
         case .volumes: return .orange
         case .objectStores: return .cyan
-        case .credentials: return .orange
+        case .credentials: return .yellow
         case .regions: return .mint
         case .about: return .secondary
         }
