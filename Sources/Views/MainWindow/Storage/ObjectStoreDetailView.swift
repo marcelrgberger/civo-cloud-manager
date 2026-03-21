@@ -80,7 +80,7 @@ struct ObjectStoreDetailView: View {
         GroupBox("Details") {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 infoRow("Max Size", store.maxSizeDisplay)
-                infoRow("Region", store.region ?? "—")
+                infoRow("Region", CivoConfig.shared.region)
                 infoRow("Created", store.createdAt ?? "—")
                 infoRow("Status", store.status ?? "—")
             }
