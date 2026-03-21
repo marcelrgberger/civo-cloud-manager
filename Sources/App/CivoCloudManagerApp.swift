@@ -29,5 +29,20 @@ struct CivoCloudManagerApp: App {
         }
         .defaultSize(width: 1100, height: 700)
         .defaultPosition(.center)
+        .commands {
+            CommandGroup(replacing: .help) {
+                Button("Civo Cloud Manager Help") {
+                    NSApp.activate(ignoringOtherApps: true)
+                    openWindow(id: "help")
+                }
+                .keyboardShortcut("?", modifiers: .command)
+            }
+        }
+
+        Window("Civo Cloud Manager Help", id: "help") {
+            HelpView()
+        }
+        .defaultSize(width: 650, height: 700)
+        .defaultPosition(.center)
     }
 }
