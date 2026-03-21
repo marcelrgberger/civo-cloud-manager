@@ -5,29 +5,15 @@ struct FirewallListView: View {
     @State private var deleteTarget: CivoFirewall?
 
     var body: some View {
-        List {
-            if vm.firewalls.isEmpty && !vm.isLoading {
-                EmptyStateView(icon: "shield", title: "No Firewalls", message: "No firewalls found in your account.")
-            } else {
-                ForEach(vm.firewalls) { fw in
-                    ResourceListRow(
-                        icon: "shield",
-                        name: fw.name,
-                        subtitle: "\(fw.rulesCountInt) rules"
-                    )
-                    .contextMenu {
-                        Button("Delete", role: .destructive) {
-                            deleteTarget = fw
-                        }
-                    }
+        Group {
+            if let firewall = vm.selectedFirewall {
+                FirewallDetailView(firewall: firewall, vm: vm) {
+                    vm.selectedFirewall = nil
                 }
+            } else {
+                firewallList
             }
         }
-        .animation(.easeOut, value: vm.firewalls.map(\.id))
-        .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
-        }
-        .navigationTitle("Firewalls")
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
@@ -42,13 +28,44 @@ struct FirewallListView: View {
                 .disabled(vm.isLoading)
             }
         }
-        .overlay {
-            if vm.isLoading && vm.firewalls.isEmpty { ProgressView("Loading firewalls...") }
-        }
         .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
         .sheet(isPresented: $vm.isCreatingFirewall) {
             CreateFirewallView(vm: vm)
                 .frame(minWidth: 400, minHeight: 200)
+        }
+    }
+
+    private var firewallList: some View {
+        List {
+            if vm.firewalls.isEmpty && !vm.isLoading {
+                EmptyStateView(icon: "shield", title: "No Firewalls", message: "No firewalls found in your account.")
+            } else {
+                ForEach(vm.firewalls) { fw in
+                    Button {
+                        vm.selectedFirewall = fw
+                    } label: {
+                        ResourceListRow(
+                            icon: "shield",
+                            name: fw.name,
+                            subtitle: "\(fw.rulesCountInt) rules"
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .contextMenu {
+                        Button("Delete", role: .destructive) {
+                            deleteTarget = fw
+                        }
+                    }
+                }
+            }
+        }
+        .animation(.easeOut, value: vm.firewalls.map(\.id))
+        .safeAreaInset(edge: .top) {
+            if let error = vm.error { ErrorBanner(message: error) }
+        }
+        .navigationTitle("Firewalls")
+        .overlay {
+            if vm.isLoading && vm.firewalls.isEmpty { ProgressView("Loading firewalls...") }
         }
         .sheet(isPresented: Binding(
             get: { deleteTarget != nil },

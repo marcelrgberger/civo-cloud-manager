@@ -35,7 +35,7 @@ extension CivoFirewall: Decodable {
 // MARK: - Rule
 
 /// Represents a single firewall rule.
-struct CivoRule: Sendable {
+struct CivoRule: Identifiable, Sendable {
     let id: String
     let label: String?
     let cidr: String?

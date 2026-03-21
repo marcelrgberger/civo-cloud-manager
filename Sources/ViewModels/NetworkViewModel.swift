@@ -11,9 +11,13 @@ final class NetworkViewModel {
 
     var isCreatingNetwork = false
     var isCreatingFirewall = false
+    var isCreatingRule = false
     var isSaving = false
     var saveError: String?
     var showSuccess = false
+
+    var selectedFirewall: CivoFirewall?
+    var rules: [CivoRule] = []
 
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
@@ -93,6 +97,44 @@ final class NetworkViewModel {
         do {
             try await loadBalancerService.removeLoadBalancer(id)
             await refresh()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func loadRules(_ firewallId: String) async {
+        isLoading = true
+        error = nil
+        defer { isLoading = false }
+
+        do {
+            rules = try await firewallService.getRulesForFirewall(firewallId)
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    func createRule(_ firewallId: String, body: sending [String: Any]) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            try await firewallService.createRuleFromBody(firewallId: firewallId, body: body)
+            isCreatingRule = false
+            showSuccess = true
+            await loadRules(firewallId)
+            return true
+        } catch {
+            saveError = error.localizedDescription
+            return false
+        }
+    }
+
+    func deleteRule(_ firewallId: String, ruleId: String) async {
+        do {
+            try await firewallService.deleteRule(firewallId: firewallId, ruleId: ruleId)
+            await loadRules(firewallId)
         } catch {
             self.error = error.localizedDescription
         }

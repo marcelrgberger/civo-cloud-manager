@@ -46,6 +46,13 @@ final class CivoFirewallService: Sendable {
         )
     }
 
+    func createRuleFromBody(firewallId: String, body: [String: Any]) async throws {
+        let _: CivoRule = try await api.post(
+            path: "/firewalls/\(firewallId)/rules",
+            body: body
+        )
+    }
+
     func deleteRule(firewallId: String, ruleId: String) async throws {
         try await api.delete(path: "/firewalls/\(firewallId)/rules/\(ruleId)")
     }
