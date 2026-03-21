@@ -64,17 +64,28 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
             throw K8sAPIError.invalidCertificate("Keychain key add: \(addKeyStatus)")
         }
 
-        // Find identity
+        // Find identity matching our label
         var identityRef: CFTypeRef?
         let findStatus = SecItemCopyMatching([
             kSecClass as String: kSecClassIdentity,
+            kSecAttrLabel as String: tag,
             kSecReturnRef as String: true,
             kSecMatchLimit as String: kSecMatchLimitOne,
         ] as CFDictionary, &identityRef)
-        guard findStatus == errSecSuccess, let id = identityRef else {
-            throw K8sAPIError.invalidCertificate("Identity not found: \(findStatus)")
+
+        if findStatus == errSecSuccess, let id = identityRef {
+            self.identity = (id as! SecIdentity)
+        } else {
+            // Fallback: try without label filter
+            var anyRef: CFTypeRef?
+            let anyStatus = SecItemCopyMatching([
+                kSecClass as String: kSecClassIdentity,
+                kSecReturnRef as String: true,
+                kSecMatchLimit as String: kSecMatchLimitAll,
+            ] as CFDictionary, &anyRef)
+            let count = (anyRef as? [Any])?.count ?? 0
+            throw K8sAPIError.invalidCertificate("Identity not found with label '\(tag)': \(findStatus). Total identities in keychain: \(count) (status: \(anyStatus))")
         }
-        self.identity = (id as! SecIdentity)
 
         super.init()
     }
@@ -157,6 +168,7 @@ final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendabl
         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
     ) {
         let method = challenge.protectionSpace.authenticationMethod
+        Log.info("K8s delegate called: \(method)")
 
         if method == NSURLAuthenticationMethodServerTrust,
            let trust = challenge.protectionSpace.serverTrust
