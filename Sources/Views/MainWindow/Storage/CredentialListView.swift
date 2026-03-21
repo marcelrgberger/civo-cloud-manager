@@ -66,6 +66,8 @@ struct CredentialListView: View {
         }
     }
 
+    @State private var hoveredCredId: String?
+
     private func credentialRow(_ cred: CivoObjectStoreCredential) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
@@ -73,6 +75,8 @@ struct CredentialListView: View {
                     .font(.title3)
                     .foregroundStyle(.orange)
                     .frame(width: 28)
+                    .rotationEffect(.degrees(hoveredCredId == cred.id ? -15 : 0))
+                    .animation(.spring(duration: 0.3, bounce: 0.4), value: hoveredCredId)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(cred.displayName)
                         .font(.body.weight(.medium))
@@ -111,6 +115,17 @@ struct CredentialListView: View {
             .padding(.leading, 38)
         }
         .padding(.vertical, 4)
+        .padding(.horizontal, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(hoveredCredId == cred.id ? Color.orange.opacity(0.05) : Color.clear)
+        )
+        .onHover { isHovered in
+            withAnimation(.easeOut(duration: 0.15)) {
+                hoveredCredId = isHovered ? cred.id : nil
+            }
+        }
+        .animation(.easeOut(duration: 0.2), value: revealedSecrets.contains(cred.id))
     }
 
     private func toggleSecret(_ id: String) {

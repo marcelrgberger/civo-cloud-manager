@@ -46,7 +46,6 @@ final class S3Client: Sendable {
     }
 
     private func rawRequest(method: String, bucket: String, path: String, query: String = "") async throws -> (Data, HTTPURLResponse) {
-        // Path-style URL (Civo uses path-style, not virtual-hosted)
         let host = endpoint.replacingOccurrences(of: "https://", with: "")
         let fullPath = "/\(bucket)\(path)"
         let urlString = "https://\(host)\(fullPath)\(query.isEmpty ? "" : "?\(query)")"
@@ -63,17 +62,25 @@ final class S3Client: Sendable {
         dateFormatter.dateFormat = "yyyyMMdd"
         let dateStamp = dateFormatter.string(from: now)
 
+        let payloadHash = sha256(Data())
+
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.setValue(host, forHTTPHeaderField: "Host")
         request.setValue(amzDate, forHTTPHeaderField: "x-amz-date")
-        request.setValue(sha256("".data(using: .utf8)!), forHTTPHeaderField: "x-amz-content-sha256")
+        request.setValue(payloadHash, forHTTPHeaderField: "x-amz-content-sha256")
         request.timeoutInterval = 30
+
+        // Canonical query string: params sorted by key
+        let canonicalQuery = query.components(separatedBy: "&")
+            .filter { !$0.isEmpty }
+            .sorted()
+            .joined(separator: "&")
 
         // AWS Signature V4
         let signedHeaders = "host;x-amz-content-sha256;x-amz-date"
-        let canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(sha256("".data(using: .utf8)!))\nx-amz-date:\(amzDate)\n"
-        let canonicalRequest = "\(method)\n\(fullPath)\n\(query)\n\(canonicalHeaders)\n\(signedHeaders)\n\(sha256("".data(using: .utf8)!))"
+        let canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
+        let canonicalRequest = "\(method)\n\(fullPath)\n\(canonicalQuery)\n\(canonicalHeaders)\n\(signedHeaders)\n\(payloadHash)"
 
         let scope = "\(dateStamp)/\(region)/s3/aws4_request"
         let stringToSign = "AWS4-HMAC-SHA256\n\(amzDate)\n\(scope)\n\(sha256(canonicalRequest.data(using: .utf8)!))"
