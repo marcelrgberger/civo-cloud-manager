@@ -1,29 +1,43 @@
 import Foundation
 import Security
 
-final class KubernetesAPIClient: NSObject, @unchecked Sendable {
+final class KubernetesAPIClient: @unchecked Sendable {
     private let server: String
-    private let caCertDER: Data
-    private let clientCertDER: Data
-    private let clientKeyPEM: Data
+    private let caCertPath: String
+    private let clientCertPath: String
+    private let clientKeyPath: String
 
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
-        self.caCertDER = credentials.caCertDER
-        self.clientCertDER = credentials.clientCertDER
-        self.clientKeyPEM = credentials.clientKeyPEM
-        super.init()
+
+        // Write certs to temp files for curl
+        let tmpDir = FileManager.default.temporaryDirectory.appendingPathComponent("civo-k8s-\(ProcessInfo.processInfo.processIdentifier)")
+        try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
+
+        let caPath = tmpDir.appendingPathComponent("ca.pem")
+        let certPath = tmpDir.appendingPathComponent("client.pem")
+        let keyPath = tmpDir.appendingPathComponent("client-key.pem")
+
+        // Convert DER back to PEM for curl
+        try Self.writePEM(credentials.caCertDER, label: "CERTIFICATE", to: caPath)
+        try Self.writePEM(credentials.clientCertDER, label: "CERTIFICATE", to: certPath)
+        try credentials.clientKeyPEM.write(to: keyPath)
+
+        self.caCertPath = caPath.path
+        self.clientCertPath = certPath.path
+        self.clientKeyPath = keyPath.path
+    }
+
+    deinit {
+        // Cleanup temp files
+        let tmpDir = URL(fileURLWithPath: caCertPath).deletingLastPathComponent()
+        try? FileManager.default.removeItem(at: tmpDir)
     }
 
     // MARK: - K8s API
 
-    func listNodes() async throws -> K8sNodeList {
-        try await get("/api/v1/nodes")
-    }
-
-    func getNode(_ name: String) async throws -> K8sNode {
-        try await get("/api/v1/nodes/\(name)")
-    }
+    func listNodes() async throws -> K8sNodeList { try await get("/api/v1/nodes") }
+    func getNode(_ name: String) async throws -> K8sNode { try await get("/api/v1/nodes/\(name)") }
 
     func listPods(nodeName: String? = nil) async throws -> K8sPodList {
         if let nodeName, !nodeName.isEmpty {
@@ -36,227 +50,83 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(pod)/log?tailLines=\(tailLines)")
     }
 
-    func getNodeMetrics() async throws -> K8sNodeMetricsList {
-        try await get("/apis/metrics.k8s.io/v1beta1/nodes")
-    }
+    func getNodeMetrics() async throws -> K8sNodeMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/nodes") }
+    func getPodMetrics(nodeName: String) async throws -> K8sPodMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/pods?fieldSelector=spec.nodeName=\(nodeName)") }
+    func listEvents(limit: Int = 50) async throws -> K8sEventList { try await get("/api/v1/events?limit=\(limit)") }
+    func listDeployments() async throws -> K8sDeploymentList { try await get("/apis/apps/v1/deployments") }
+    func listDaemonSets() async throws -> K8sDaemonSetList { try await get("/apis/apps/v1/daemonsets") }
+    func listStatefulSets() async throws -> K8sStatefulSetList { try await get("/apis/apps/v1/statefulsets") }
+    func listCronJobs() async throws -> K8sCronJobList { try await get("/apis/batch/v1/cronjobs") }
+    func listServices() async throws -> K8sServiceList { try await get("/api/v1/services") }
+    func listIngresses() async throws -> K8sIngressList { try await get("/apis/networking.k8s.io/v1/ingresses") }
+    func listNamespaces() async throws -> K8sNamespaceList { try await get("/api/v1/namespaces") }
+    func listPVCs() async throws -> K8sPVCList { try await get("/api/v1/persistentvolumeclaims") }
+    func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics { try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)") }
 
-    func getPodMetrics(nodeName: String) async throws -> K8sPodMetricsList {
-        try await get("/apis/metrics.k8s.io/v1beta1/pods?fieldSelector=spec.nodeName=\(nodeName)")
-    }
-
-    func listEvents(limit: Int = 50) async throws -> K8sEventList {
-        try await get("/api/v1/events?limit=\(limit)")
-    }
-
-    func listDeployments() async throws -> K8sDeploymentList {
-        try await get("/apis/apps/v1/deployments")
-    }
-
-    func listDaemonSets() async throws -> K8sDaemonSetList {
-        try await get("/apis/apps/v1/daemonsets")
-    }
-
-    func listStatefulSets() async throws -> K8sStatefulSetList {
-        try await get("/apis/apps/v1/statefulsets")
-    }
-
-    func listCronJobs() async throws -> K8sCronJobList {
-        try await get("/apis/batch/v1/cronjobs")
-    }
-
-    func listServices() async throws -> K8sServiceList {
-        try await get("/api/v1/services")
-    }
-
-    func listIngresses() async throws -> K8sIngressList {
-        try await get("/apis/networking.k8s.io/v1/ingresses")
-    }
-
-    func listNamespaces() async throws -> K8sNamespaceList {
-        try await get("/api/v1/namespaces")
-    }
-
-    func listPVCs() async throws -> K8sPVCList {
-        try await get("/api/v1/persistentvolumeclaims")
-    }
-
-    func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics {
-        try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)")
-    }
-
-    // MARK: - HTTP
+    // MARK: - HTTP via curl
 
     private func get<T: Decodable>(_ path: String) async throws -> T {
-        let (data, _) = try await execute(path)
+        let data = try await execute(path)
         return try JSONDecoder().decode(T.self, from: data)
     }
 
     private func getRaw(_ path: String) async throws -> String {
-        let (data, _) = try await execute(path)
+        let data = try await execute(path)
         return String(data: data, encoding: .utf8) ?? ""
     }
 
-    private func execute(_ path: String) async throws -> (Data, HTTPURLResponse) {
-        guard let url = URL(string: "\(server)\(path)") else {
-            throw K8sAPIError.invalidCertificate("Invalid URL: \(server)\(path)")
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.timeoutInterval = 30
+    private func execute(_ path: String) async throws -> Data {
+        let url = "\(server)\(path)"
 
-        let identity = try createIdentity()
-        let delegate = K8sTaskDelegate(identity: identity, caCertDER: caCertDER)
-        let session = URLSession(configuration: .ephemeral)
-        defer { session.invalidateAndCancel() }
+        return try await withCheckedThrowingContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async { [caCertPath, clientCertPath, clientKeyPath] in
+                let process = Process()
+                process.executableURL = URL(fileURLWithPath: "/usr/bin/curl")
+                process.arguments = [
+                    "-s", "--fail-with-body",
+                    "--cacert", caCertPath,
+                    "--cert", clientCertPath,
+                    "--key", clientKeyPath,
+                    "-H", "Accept: application/json",
+                    "--max-time", "30",
+                    url,
+                ]
 
-        let (data, response) = try await session.data(for: request, delegate: delegate)
+                let pipe = Pipe()
+                let errorPipe = Pipe()
+                process.standardOutput = pipe
+                process.standardError = errorPipe
 
-        guard let http = response as? HTTPURLResponse else {
-            throw K8sAPIError.httpError(0, "Invalid response")
-        }
-        guard (200...299).contains(http.statusCode) else {
-            let msg = String(data: data, encoding: .utf8) ?? "Unknown"
-            throw K8sAPIError.httpError(http.statusCode, msg)
-        }
+                do {
+                    try process.run()
+                    process.waitUntilExit()
 
-        return (data, http)
-    }
+                    let data = pipe.fileHandleForReading.readDataToEndOfFile()
 
-    // MARK: - Identity Creation
-
-    private func createIdentity() throws -> SecIdentity {
-        // Create cert
-        guard let cert = SecCertificateCreateWithData(nil, clientCertDER as CFData) else {
-            throw K8sAPIError.invalidCertificate("Client certificate: invalid DER (\(clientCertDER.count) bytes)")
-        }
-
-        // Import private key
-        let key = try Self.importPrivateKey(clientKeyPEM)
-
-        // Add to keychain to create identity
-        let tag = "de.berger-rosenstock.CivoCloudManager.k8s-\(ProcessInfo.processInfo.processIdentifier)".data(using: .utf8)!
-
-        // Clean up any previous entries with this tag
-        SecItemDelete([
-            kSecClass as String: kSecClassCertificate,
-            kSecAttrLabel as String: "civo-k8s-client",
-        ] as CFDictionary)
-        SecItemDelete([
-            kSecClass as String: kSecClassKey,
-            kSecAttrApplicationTag as String: tag,
-        ] as CFDictionary)
-
-        // Add certificate
-        let certStatus = SecItemAdd([
-            kSecClass as String: kSecClassCertificate,
-            kSecValueRef as String: cert,
-            kSecAttrLabel as String: "civo-k8s-client",
-        ] as CFDictionary, nil)
-        guard certStatus == errSecSuccess || certStatus == errSecDuplicateItem else {
-            throw K8sAPIError.invalidCertificate("Keychain cert add failed: \(certStatus)")
-        }
-
-        // Add private key
-        let keyStatus = SecItemAdd([
-            kSecClass as String: kSecClassKey,
-            kSecValueRef as String: key,
-            kSecAttrApplicationTag as String: tag,
-        ] as CFDictionary, nil)
-        guard keyStatus == errSecSuccess || keyStatus == errSecDuplicateItem else {
-            throw K8sAPIError.invalidCertificate("Keychain key add failed: \(keyStatus)")
-        }
-
-        // Find identity
-        var identityRef: CFTypeRef?
-        let findStatus = SecItemCopyMatching([
-            kSecClass as String: kSecClassIdentity,
-            kSecReturnRef as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-        ] as CFDictionary, &identityRef)
-
-        guard findStatus == errSecSuccess, let identity = identityRef else {
-            throw K8sAPIError.invalidCertificate("Identity not found: \(findStatus)")
-        }
-
-        return (identity as! SecIdentity)
-    }
-
-    private static func importPrivateKey(_ pemData: Data) throws -> SecKey {
-        guard let pemString = String(data: pemData, encoding: .utf8) else {
-            throw K8sAPIError.invalidCertificate("Private key: invalid encoding")
-        }
-
-        let stripped = pemString
-            .components(separatedBy: "\n")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty && !$0.hasPrefix("-----") }
-            .joined()
-
-        guard let derData = Data(base64Encoded: stripped, options: .ignoreUnknownCharacters) else {
-            throw K8sAPIError.invalidCertificate("Private key: base64 decode failed")
-        }
-
-        // Try EC first (k3s uses EC), then RSA
-        for keyType in [kSecAttrKeyTypeECSECPrimeRandom, kSecAttrKeyTypeRSA] {
-            var error: Unmanaged<CFError>?
-            if let key = SecKeyCreateWithData(derData as CFData, [
-                kSecAttrKeyType as String: keyType,
-                kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
-            ] as CFDictionary, &error) {
-                return key
+                    if process.terminationStatus == 0 {
+                        continuation.resume(returning: data)
+                    } else {
+                        let errData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                        let errMsg = String(data: errData, encoding: .utf8) ?? ""
+                        let bodyMsg = String(data: data, encoding: .utf8) ?? ""
+                        continuation.resume(throwing: K8sAPIError.httpError(
+                            Int(process.terminationStatus),
+                            "curl exit \(process.terminationStatus): \(bodyMsg) \(errMsg)".trimmingCharacters(in: .whitespaces)
+                        ))
+                    }
+                } catch {
+                    continuation.resume(throwing: K8sAPIError.httpError(0, "curl failed: \(error.localizedDescription)"))
+                }
             }
         }
-
-        // Fallback: SecItemImport
-        var items: CFArray?
-        var format = SecExternalFormat.formatUnknown
-        var type = SecExternalItemType.itemTypePrivateKey
-        let status = SecItemImport(derData as CFData, nil, &format, &type, [], nil, nil, &items)
-        if status == errSecSuccess, let arr = items as? [Any], let key = arr.first {
-            return (key as! SecKey)
-        }
-
-        throw K8sAPIError.invalidCertificate("Private key import failed (EC/RSA/PKCS#8)")
-    }
-}
-
-// MARK: - Task Delegate
-
-final class K8sTaskDelegate: NSObject, URLSessionTaskDelegate, @unchecked Sendable {
-    private let identity: SecIdentity
-    private let caCertDER: Data
-
-    init(identity: SecIdentity, caCertDER: Data) {
-        self.identity = identity
-        self.caCertDER = caCertDER
     }
 
-    func urlSession(
-        _ session: URLSession,
-        task: URLSessionTask,
-        didReceive challenge: URLAuthenticationChallenge
-    ) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
-        let method = challenge.protectionSpace.authenticationMethod
-        Log.info("K8s TLS challenge: \(method)")
+    // MARK: - PEM Helpers
 
-        if method == NSURLAuthenticationMethodServerTrust,
-           let serverTrust = challenge.protectionSpace.serverTrust
-        {
-            // Trust the K8s API server (we have the kubeconfig, server is legitimate)
-            return (.useCredential, URLCredential(trust: serverTrust))
-        }
-
-        if method == NSURLAuthenticationMethodClientCertificate {
-            Log.info("K8s presenting client certificate")
-            return (.useCredential, URLCredential(
-                identity: identity,
-                certificates: nil,
-                persistence: .forSession
-            ))
-        }
-
-        return (.performDefaultHandling, nil)
+    private static func writePEM(_ derData: Data, label: String, to url: URL) throws {
+        let base64 = derData.base64EncodedString(options: .lineLength76Characters)
+        let pem = "-----BEGIN \(label)-----\n\(base64)\n-----END \(label)-----\n"
+        try pem.write(to: url, atomically: true, encoding: .utf8)
     }
 }
 
