@@ -58,7 +58,6 @@ targets:
       - path: CivoCloudManager/pl.lproj/InfoPlist.strings
       - path: CivoCloudManager/pt.lproj/InfoPlist.strings
       - path: CivoCloudManager/PrivacyInfo.xcprivacy
-      - path: CivoCloudManager/CivoCloudManager.help
     settings:
       base:
         LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
