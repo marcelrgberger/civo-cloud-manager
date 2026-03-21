@@ -12,6 +12,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case databases = "Databases"
     case volumes = "Volumes"
     case objectStores = "Object Stores"
+    case credentials = "Credentials"
     case regions = "Regions"
     case about = "About"
 
@@ -30,6 +31,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .databases: return "cylinder.split.1x2"
         case .volumes: return "cylinder"
         case .objectStores: return "tray.2"
+        case .credentials: return "key.horizontal"
         case .regions: return "map"
         case .about: return "info.circle"
         }
@@ -48,6 +50,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .databases: return .purple
         case .volumes: return .orange
         case .objectStores: return .cyan
+        case .credentials: return .orange
         case .regions: return .mint
         case .about: return .secondary
         }
@@ -59,7 +62,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .instances, .sshKeys: return .compute
         case .clusters: return .kubernetes
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
-        case .databases, .volumes, .objectStores: return .storage
+        case .databases, .volumes, .objectStores, .credentials: return .storage
         case .regions: return .account
         case .about: return .account
         }
@@ -161,6 +164,8 @@ struct MainWindowView: View {
             VolumeListView(vm: volumeVM)
         case .objectStores:
             ObjectStoreListView(vm: volumeVM)
+        case .credentials:
+            CredentialListView(vm: volumeVM)
         case .regions:
             RegionListView(vm: regionVM)
         case .about:

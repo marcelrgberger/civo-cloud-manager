@@ -53,8 +53,16 @@ KubernetesAPIClient (per-cluster, ephemeral)
 ├── PATCH /apis/apps/v1/namespaces/{ns}/deployments/{name}/scale → scale deployment
 ├── GET /api/v1/persistentvolumeclaims → K8sPVC[]
 ├── GET /api/v1/persistentvolumes → K8sPV[] (capacity, Civo Volume ID via CSI volumeHandle)
-├── Client certificate auth via PKCS#12 (SecPKCS12Import) + Security.framework
+├── Client certificate auth via PKCS#12 (/usr/bin/openssl + SecPKCS12Import) + Security.framework
 └── execute() supports configurable HTTP method and body
+
+S3Client (per-store, ephemeral)
+├── ListObjects v2 (prefix/delimiter folder navigation)
+├── GetObject (file download)
+├── HeadObject (file metadata)
+├── AWS Signature V4 signing via CryptoKit (HMAC-SHA256)
+├── S3XMLParser for ListBucketResult XML responses
+└── ObjectStoreBrowserView with breadcrumb navigation, folder drill-down, download via NSSavePanel
 
 DashboardView (clickable cards → sidebar navigation)
 ├── Resource cards with hover scale animation
@@ -70,7 +78,7 @@ Create Views (11 sheet forms)
 
 Drill-Down Views
 ├── Kubernetes: ClusterListView → ClusterDetailView (auto-connect K8s API, live metrics/events, collapsible workloads/networking/storage, namespace filter, deployment scaling, PVC-Volume linking) → K8sNodeDetailView → K8sPodListView (pod restart) → PodLogView (auto-refresh)
-├── Object Stores: ObjectStoreListView → ObjectStoreDetailView (credentials, config, resize)
+├── Object Stores: ObjectStoreListView → ObjectStoreDetailView (credentials via credential_id, config, resize) → ObjectStoreBrowserView (S3 file browser with breadcrumbs, folders, download)
 ├── Firewalls: FirewallListView → FirewallDetailView (rule list, add/delete rules)
 └── Labels: ClusterDetailView → EditLabelsView (add/remove node pool labels)
 
@@ -107,7 +115,7 @@ Animations
 
 **Firewall rule flow:** Click firewall → FirewallDetailView shows rules → "+" opens CreateRuleView → delete via context menu with name confirmation.
 
-**Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from ownerInfo.accessKeyId/secretAccessKey), bucket URL, endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id.
+**Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from linked CivoObjectStoreCredential via credential_id), endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id. "Browse Files" button opens ObjectStoreBrowserView → S3Client (AWS SigV4) → ListObjects v2 → folder navigation → right-click download via NSSavePanel.
 
 **Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView (right-click → "Restart Pod") → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh, auto-refresh 3s timer).
 
@@ -115,7 +123,7 @@ Animations
 
 - **CivoAPIClient** — singleton HTTP client. Methods: `get()`, `getPaginatedList()`, `getArray()`, `post()`, `put()`, `delete()`.
 - **KubeconfigParser** — parses kubeconfig YAML, extracts server URL, CA certificate, client certificate, and client key. Returns structured data for KubernetesAPIClient.
-- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via PKCS#12 (`SecPKCS12Import`) + Security.framework. NSAllowsArbitraryLoads for self-signed certs on IP addresses. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`, `deletePod(namespace, name)`, `scaleDeployment(namespace, name, replicas)`, `listPVs()`, `getMetrics()`, `getEvents()`, `getDeployments()`. Generic `execute(path, method, body)` supports any HTTP method.
+- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via PKCS#12 (`/usr/bin/openssl` creates PKCS#12 from PEM cert+key, `SecPKCS12Import` for identity creation) + Security.framework. openssl is pre-installed on every Mac. NSAllowsArbitraryLoads for self-signed certs on IP addresses. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`, `deletePod(namespace, name)`, `scaleDeployment(namespace, name, replicas)`, `listPVs()`, `getMetrics()`, `getEvents()`, `getDeployments()`. Generic `execute(path, method, body)` supports any HTTP method.
 - **K8sMetricsParser** — parses metrics-server responses into K8sNodeMetrics/K8sPodMetrics, computes K8sClusterMetrics with CPU/Memory percentages.
 - **Multi-level K8s navigation** — ClusterListView → ClusterDetailView → K8sNodeDetailView → K8sPodListView → PodLogView, all with spring move+opacity transitions.
 - **Live K8s metrics** — circular CPU and Memory gauges in ClusterDetailView when connected to K8s API. Graceful fallback to static stats when metrics-server is not installed.
@@ -140,8 +148,10 @@ Animations
 - **DeleteConfirmationSheet** — shared component for all destructive operations. Requires typing the exact resource name to enable the delete button. Used by all list views.
 - **Context menu delete** — all resource list views have "Delete" in context menu, opening DeleteConfirmationSheet.
 - **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
-- **Object store credentials** — come from the object store resource itself via `ownerInfo.accessKeyId` and `ownerInfo.secretAccessKey`. ObjectStoreDetailView shows credentials, config, and resize section.
+- **Object store credentials** — managed separately via `/objectstore/credentials` (paginated). Each object store links to a credential via `ownerInfo.credentialId`. CivoObjectStoreCredential has `accessKeyId` and `secretAccessKeyId`. ObjectStoreDetailView shows credentials, config, resize section, and "Browse Files" button.
 - **Object store resize** — ObjectStoreDetailView has a stepper to change max size, submitted via PUT /objectstores/:id.
+- **S3 file browser** — ObjectStoreBrowserView uses S3Client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2 with prefix/delimiter for folder navigation, breadcrumb path, folder drill-down, file icons by extension, right-click download via NSSavePanel. S3XMLParser handles ListBucketResult XML responses.
+- **Colored sidebar icons** — each SidebarSection has an `iconColor` property for distinct visual identification (blue, green, red, purple, orange, cyan, teal, indigo, mint).
 - **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
 - **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
 - **Spring transitions** — sidebar→detail uses spring + opacity; drill-downs use move+opacity spring.
@@ -151,21 +161,22 @@ Animations
 ## Code Layout
 
 - `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 22 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage; CivoObjectStore has ownerInfo with accessKeyId/secretAccessKey, bucketURL, region, createdAt)
+- `Sources/Models/` — 23 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage, CivoObjectStoreCredential; CivoObjectStore has ownerInfo with accessKeyId/credentialId)
   - `K8sNode.swift` — K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
   - `K8sPod.swift` — K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
   - `K8sMetrics.swift` — K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
   - `K8sEvent.swift` — K8sEvent, K8sObjectReference
   - `K8sWorkload.swift` — K8sDeployment, K8sDeploymentStatus
   - `K8sStorage.swift` — K8sPV, K8sPVSpec, K8sCSISource
-- `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, IPDetector
+- `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, S3Client, IPDetector
   - `KubeconfigParser.swift` — parses kubeconfig YAML → server URL, CA cert, client cert, client key
-  - `KubernetesAPIClient.swift` — direct K8s API client using PKCS#12 client certificate auth via Security.framework. Supports nodes, pods, logs, metrics, events, deployments, PVs, deletePod, scaleDeployment. Generic execute() supports configurable HTTP method and body.
+  - `KubernetesAPIClient.swift` — direct K8s API client using PKCS#12 client certificate auth (/usr/bin/openssl + SecPKCS12Import) via Security.framework. Supports nodes, pods, logs, metrics, events, deployments, PVs, deletePod, scaleDeployment. Generic execute() supports configurable HTTP method and body.
+  - `S3Client.swift` — S3-compatible client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2, GetObject, HeadObject, S3XMLParser for XML responses.
   - `CivoKubernetesService` — list, show, create, update, delete + getKubeconfig(id)
   - `CivoNetworkService` — list, create, update, delete (removeNetwork)
   - `CivoFirewallService` — list, create, delete (removeFirewall), rule CRUD, status checks
   - `CivoQuotaService` — GET /quota, PUT /quota (updateQuota)
-  - `CivoObjectStoreService` — list, create, update (resize via PUT /objectstores/:id), delete
+  - `CivoObjectStoreService` — list, show, create, update (resize via PUT /objectstores/:id), delete + credential CRUD (list, show, create, delete via /objectstore/credentials)
   - `CivoLoadBalancerService` — list, delete (removeLoadBalancer)
 - `Sources/ViewModels/` — 8 @Observable @MainActor view models with CRUD state
 - `Sources/Views/` — MenuBarView, AppState, OnboardingView
@@ -176,7 +187,8 @@ Animations
 - `Sources/Views/MainWindow/Kubernetes/K8sPodListView.swift` — pods on a node with status badge, namespace, ready count, restart count
 - `Sources/Views/MainWindow/Kubernetes/PodLogView.swift` — scrollable monospaced log output with auto-scroll toggle, refresh, and auto-refresh (3s timer)
 - `Sources/Views/MainWindow/Kubernetes/EditLabelsView.swift` — add/remove labels on node pools
-- `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (endpoint, bucket URL, access key, secret key), config (max size, region, created, status), resize section with stepper
+- `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (from linked credential via credential_id), endpoint, config (max size, region, status), resize section with stepper, "Browse Files" button
+- `Sources/Views/MainWindow/Storage/ObjectStoreBrowserView.swift` — S3 file browser with breadcrumb navigation, folder drill-down, file icons, right-click download via NSSavePanel
 - `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, config, network/firewall
 - `Sources/Views/MainWindow/Storage/VolumeDetailView.swift` — attachment status, mountpoint, size
 - `Sources/Views/MainWindow/Networking/FirewallDetailView.swift` — rule list with badges, add/delete
@@ -189,7 +201,7 @@ Animations
 ## Civo API Response Formats
 
 Critical: the API uses TWO different list formats:
-- **Paginated:** Kubernetes, Databases, Instances, Object Stores → `{"page":1,"items":[...]}`
+- **Paginated:** Kubernetes, Databases, Instances, Object Stores, Object Store Credentials → `{"page":1,"items":[...]}`
 - **Plain array:** Firewalls, Rules, Volumes, Load Balancers, Networks, Regions, SSH Keys, DNS, Sizes, Disk Images → `[...]`
 - **Plain text:** Kubeconfig → YAML string (GET /kubernetes/clusters/:id/kubeconfig)
 
@@ -208,7 +220,8 @@ Use `api.getPaginatedList()` or `api.getArray()` accordingly.
 
 - `CivoAPIError` — noAPIKey, noRegion, httpError, decodingError, networkError
 - `IPDetectorError` — noIPReturned, invalidIP, allProvidersFailed, privateIP, ipv6NotSupported
+- `S3Error` — invalidURL, invalidResponse, httpError
 
 ## Concurrency Model
 
-Swift 6 strict concurrency. All model types are Sendable. ViewModels are @Observable @MainActor. CivoAPIClient is Sendable (uses URLSession). KubernetesAPIClient is Sendable (uses URLSession with PKCS#12 client certificate delegate via SecPKCS12Import). CivoConfig is @unchecked Sendable (reads/writes UserDefaults which is thread-safe). ViewModel create/update methods use `sending` parameter modifier for `[String: Any]` body dicts to avoid data race errors when crossing actor boundaries.
+Swift 6 strict concurrency. All model types are Sendable. ViewModels are @Observable @MainActor. CivoAPIClient is Sendable (uses URLSession). KubernetesAPIClient is Sendable (uses URLSession with PKCS#12 client certificate delegate via SecPKCS12Import). S3Client is Sendable (uses URLSession.shared). CivoConfig is @unchecked Sendable (reads/writes UserDefaults which is thread-safe). ViewModel create/update methods use `sending` parameter modifier for `[String: Any]` body dicts to avoid data race errors when crossing actor boundaries.

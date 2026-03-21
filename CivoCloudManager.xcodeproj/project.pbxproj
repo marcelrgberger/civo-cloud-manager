@@ -105,6 +105,7 @@
 		E6175547DC2B2360805B4B21 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5BA6C9A7542257FDEF713B /* AboutView.swift */; };
 		E6900C48A13E3D8C2C0765E5 /* CivoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE7C413C7255C79928DCA7C /* CivoDatabase.swift */; };
 		E7AEBD59D7DAD41EEB63398A /* CreateVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687EAC653A96B641C285D432 /* CreateVolumeView.swift */; };
+		EA9977D2AAE772395CF8F8A4 /* CredentialListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3550A8E48290C62C5FF1AFA3 /* CredentialListView.swift */; };
 		EAC2A7063623ABD779657772 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC6D9CA22D5C3BA1B85D99F /* DashboardViewModel.swift */; };
 		EBE92405BBFCAB6EEB4DCDD4 /* CreateDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DD154D2B5A3DFBA340E87F /* CreateDatabaseView.swift */; };
 		ECD0912063E527904ED42F43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81AEBC33E74A811E3130B06D /* Assets.xcassets */; };
@@ -138,6 +139,7 @@
 		2A18DCBFC2A79CA314A5C09E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredAppear.swift; sourceTree = "<group>"; };
 		343445235851034C3DC49579 /* DomainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListView.swift; sourceTree = "<group>"; };
+		3550A8E48290C62C5FF1AFA3 /* CredentialListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
 		394D4BE2B10B10EE1565C333 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		3AE7C413C7255C79928DCA7C /* CivoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
 		3DDBA7D898CA6DBFB09B03EA /* CivoAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoAPIClient.swift; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				B3DD154D2B5A3DFBA340E87F /* CreateDatabaseView.swift */,
 				8ECEECB8E6EDEA2F7E3DA302 /* CreateObjectStoreView.swift */,
 				687EAC653A96B641C285D432 /* CreateVolumeView.swift */,
+				3550A8E48290C62C5FF1AFA3 /* CredentialListView.swift */,
 				FB0CF2A289D90763A13510BF /* DatabaseDetailView.swift */,
 				0ACE5A8AC44CA21C03A15081 /* DatabaseListView.swift */,
 				C8291D7E7F9E7713D8CA13C8 /* ObjectStoreBrowserView.swift */,
@@ -635,6 +638,7 @@
 				D9A4E93467AE0249BF6483F7 /* CreateRuleView.swift in Sources */,
 				7757AD8818E017E73DD1BEDB /* CreateSSHKeyView.swift in Sources */,
 				E7AEBD59D7DAD41EEB63398A /* CreateVolumeView.swift in Sources */,
+				EA9977D2AAE772395CF8F8A4 /* CredentialListView.swift in Sources */,
 				3807D13E58B2B9098AA596D7 /* DashboardView.swift in Sources */,
 				EAC2A7063623ABD779657772 /* DashboardViewModel.swift in Sources */,
 				CE29AD0B222ABC5FFE602209 /* DatabaseDetailView.swift in Sources */,
