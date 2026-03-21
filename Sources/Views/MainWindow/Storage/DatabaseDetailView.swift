@@ -83,7 +83,7 @@ struct DatabaseDetailView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 infoRow("Size", db.size ?? "—")
                 infoRow("Nodes", db.nodes.map(String.init) ?? "—")
-                infoRow("Region", db.region ?? "—")
+                infoRow("Region", db.region ?? CivoConfig.shared.region)
                 infoRow("Created", db.createdAt ?? "—")
             }
             .padding(8)
