@@ -265,6 +265,10 @@ final class AppState {
             )
             lastRefresh = Date()
             self.error = nil
+        } catch is CancellationError {
+            return
+        } catch let urlError as URLError where urlError.code == .cancelled {
+            return
         } catch {
             self.error = error.localizedDescription
         }
