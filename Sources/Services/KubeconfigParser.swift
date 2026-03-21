@@ -2,8 +2,8 @@ import Foundation
 
 struct KubeconfigCredentials: Sendable {
     let server: String
-    let caCertDER: Data
-    let clientCertDER: Data
+    let caCertPEM: Data
+    let clientCertPEM: Data
     let clientKeyPEM: Data
 }
 
@@ -22,53 +22,23 @@ enum KubeconfigParser {
             throw KubeconfigError.missingField("client-key-data")
         }
 
-        // Base64 decode → PEM text
-        guard let caRaw = Data(base64Encoded: caB64, options: .ignoreUnknownCharacters) else {
+        // Base64 decode → PEM text (keep as-is for curl)
+        guard let caPEM = Data(base64Encoded: caB64, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("certificate-authority-data")
         }
-        guard let certRaw = Data(base64Encoded: certB64, options: .ignoreUnknownCharacters) else {
+        guard let certPEM = Data(base64Encoded: certB64, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("client-certificate-data")
         }
-        guard let keyRaw = Data(base64Encoded: keyB64, options: .ignoreUnknownCharacters) else {
+        guard let keyPEM = Data(base64Encoded: keyB64, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("client-key-data")
         }
 
-        // Convert PEM → DER for certificates
-        let caDER = try pemToDER(caRaw, label: "CERTIFICATE")
-        let certDER = try pemToDER(certRaw, label: "CERTIFICATE")
-
         return KubeconfigCredentials(
             server: server,
-            caCertDER: caDER,
-            clientCertDER: certDER,
-            clientKeyPEM: keyRaw
+            caCertPEM: caPEM,
+            clientCertPEM: certPEM,
+            clientKeyPEM: keyPEM
         )
-    }
-
-    private static func pemToDER(_ data: Data, label: String) throws -> Data {
-        guard let pemString = String(data: data, encoding: .utf8) else {
-            // Already DER
-            return data
-        }
-
-        let header = "-----BEGIN \(label)-----"
-        let footer = "-----END \(label)-----"
-
-        guard pemString.contains(header) else {
-            // Not PEM, assume DER
-            return data
-        }
-
-        let base64Content = pemString
-            .components(separatedBy: "\n")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty && !$0.hasPrefix("-----") }
-            .joined()
-
-        guard let der = Data(base64Encoded: base64Content, options: .ignoreUnknownCharacters) else {
-            throw KubeconfigError.invalidBase64("PEM to DER conversion failed for \(label)")
-        }
-        return der
     }
 
     private static func extractValue(_ yaml: String, key: String) -> String? {

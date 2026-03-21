@@ -10,7 +10,7 @@ final class KubernetesAPIClient: @unchecked Sendable {
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
 
-        // Write certs to temp files for curl
+        // Write PEM certs to temp files for curl
         let tmpDir = FileManager.default.temporaryDirectory.appendingPathComponent("civo-k8s-\(ProcessInfo.processInfo.processIdentifier)")
         try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
 
@@ -18,9 +18,8 @@ final class KubernetesAPIClient: @unchecked Sendable {
         let certPath = tmpDir.appendingPathComponent("client.pem")
         let keyPath = tmpDir.appendingPathComponent("client-key.pem")
 
-        // Convert DER back to PEM for curl
-        try Self.writePEM(credentials.caCertDER, label: "CERTIFICATE", to: caPath)
-        try Self.writePEM(credentials.clientCertDER, label: "CERTIFICATE", to: certPath)
+        try credentials.caCertPEM.write(to: caPath)
+        try credentials.clientCertPEM.write(to: certPath)
         try credentials.clientKeyPEM.write(to: keyPath)
 
         self.caCertPath = caPath.path
@@ -121,13 +120,6 @@ final class KubernetesAPIClient: @unchecked Sendable {
         }
     }
 
-    // MARK: - PEM Helpers
-
-    private static func writePEM(_ derData: Data, label: String, to url: URL) throws {
-        let base64 = derData.base64EncodedString(options: .lineLength76Characters)
-        let pem = "-----BEGIN \(label)-----\n\(base64)\n-----END \(label)-----\n"
-        try pem.write(to: url, atomically: true, encoding: .utf8)
-    }
 }
 
 // MARK: - Errors

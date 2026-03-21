@@ -115,7 +115,7 @@ final class KubernetesViewModel {
 
             // Step 3: Parse kubeconfig
             let creds = try KubeconfigParser.parse(yaml)
-            steps.append("Parsed: server=\(creds.server), CA=\(creds.caCertDER.count)b, cert=\(creds.clientCertDER.count)b, key=\(creds.clientKeyPEM.count)b")
+            steps.append("Parsed: server=\(creds.server), CA=\(creds.caCertPEM.count)b, cert=\(creds.clientCertPEM.count)b, key=\(creds.clientKeyPEM.count)b")
 
             // Step 4: Create client
             let client = try KubernetesAPIClient(credentials: creds)
