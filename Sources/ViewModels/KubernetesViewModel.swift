@@ -106,9 +106,14 @@ final class KubernetesViewModel {
 
             let yaml = try await service.getKubeconfig(clusterId)
             let creds = try KubeconfigParser.parse(yaml)
-            k8sClient = try KubernetesAPIClient(credentials: creds)
+            let client = try KubernetesAPIClient(credentials: creds)
+            k8sClient = client
+
+            // Test connection with a simple API call
+            let nodeList = try await client.listNodes()
+            k8sNodes = nodeList.items
             isK8sConnected = true
-            Log.info("Connected to K8s API at \(creds.server)")
+            Log.info("Connected to K8s API at \(creds.server) — \(k8sNodes.count) nodes")
 
             await loadClusterData()
         } catch {
@@ -258,29 +263,28 @@ final class KubernetesViewModel {
     }
 
     private func loadWorkloads(_ client: KubernetesAPIClient) async {
-        async let d = { try await client.listDeployments().items }()
-        async let ds = { try await client.listDaemonSets().items }()
-        async let ss = { try await client.listStatefulSets().items }()
-        async let cj = { try await client.listCronJobs().items }()
-
-        deployments = (try? await d) ?? []
-        daemonSets = (try? await ds) ?? []
-        statefulSets = (try? await ss) ?? []
-        cronJobs = (try? await cj) ?? []
+        do { deployments = try await client.listDeployments().items }
+        catch { Log.error("Deployments: \(error.localizedDescription)") }
+        do { daemonSets = try await client.listDaemonSets().items }
+        catch { Log.error("DaemonSets: \(error.localizedDescription)") }
+        do { statefulSets = try await client.listStatefulSets().items }
+        catch { Log.error("StatefulSets: \(error.localizedDescription)") }
+        do { cronJobs = try await client.listCronJobs().items }
+        catch { Log.error("CronJobs: \(error.localizedDescription)") }
     }
 
     private func loadNetworking(_ client: KubernetesAPIClient) async {
-        async let svc = { try await client.listServices().items }()
-        async let ing = { try await client.listIngresses().items }()
-        async let ns = { try await client.listNamespaces().items }()
-
-        services = (try? await svc) ?? []
-        ingresses = (try? await ing) ?? []
-        namespaces = (try? await ns) ?? []
+        do { services = try await client.listServices().items }
+        catch { Log.error("Services: \(error.localizedDescription)") }
+        do { ingresses = try await client.listIngresses().items }
+        catch { Log.error("Ingresses: \(error.localizedDescription)") }
+        do { namespaces = try await client.listNamespaces().items }
+        catch { Log.error("Namespaces: \(error.localizedDescription)") }
     }
 
     private func loadStorage(_ client: KubernetesAPIClient) async {
-        pvcs = (try? await client.listPVCs().items) ?? []
+        do { pvcs = try await client.listPVCs().items }
+        catch { Log.error("PVCs: \(error.localizedDescription)") }
     }
 
     func loadPods(nodeName: String) async {
