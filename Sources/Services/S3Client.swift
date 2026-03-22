@@ -58,12 +58,11 @@ final class S3Client: Sendable {
     }
 
     func downloadObject(bucket: String, key: String) async throws -> Data {
-        let path = "/" + key.components(separatedBy: "/").map { uriEncode($0) }.joined(separator: "/")
-        return try await request(method: "GET", bucket: bucket, path: path)
+        return try await request(method: "GET", bucket: bucket, path: "/\(key)")
     }
 
     func headObject(bucket: String, key: String) async throws -> (size: Int, contentType: String) {
-        let path = "/" + key.components(separatedBy: "/").map { uriEncode($0) }.joined(separator: "/")
+        let path = "/\(key)"
         let (_, response) = try await rawRequest(method: "HEAD", bucket: bucket, path: path)
         let size = Int(response.value(forHTTPHeaderField: "Content-Length") ?? "0") ?? 0
         let contentType = response.value(forHTTPHeaderField: "Content-Type") ?? "application/octet-stream"
@@ -79,8 +78,12 @@ final class S3Client: Sendable {
 
     private func rawRequest(method: String, bucket: String, path: String, query: String = "") async throws -> (Data, HTTPURLResponse) {
         let host = endpoint.replacingOccurrences(of: "https://", with: "")
-        let fullPath = "/\(bucket)\(path)"
-        let urlString = "https://\(host)\(fullPath)\(query.isEmpty ? "" : "?\(query)")"
+        let rawPath = "/\(bucket)\(path)"
+        // Encode path for the HTTP URL (preserve /)
+        let encodedPath = rawPath.components(separatedBy: "/")
+            .map { $0.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? $0 }
+            .joined(separator: "/")
+        let urlString = "https://\(host)\(encodedPath)\(query.isEmpty ? "" : "?\(query)")"
         guard let url = URL(string: urlString) else {
             throw S3Error.invalidURL(urlString)
         }
@@ -103,8 +106,8 @@ final class S3Client: Sendable {
         request.setValue(payloadHash, forHTTPHeaderField: "x-amz-content-sha256")
         request.timeoutInterval = 30
 
-        // Canonical URI: path-encode each segment
-        let canonicalURI = fullPath.components(separatedBy: "/")
+        // Canonical URI: SigV4-encode each path segment
+        let canonicalURI = rawPath.components(separatedBy: "/")
             .map { uriEncode($0) }
             .joined(separator: "/")
 
@@ -231,7 +234,7 @@ enum S3XMLParser {
 
     private static func extractXMLValue(_ xml: String, tag: String) -> String? {
         let pattern = "<\(tag)>(.*?)</\(tag)>"
-        guard let regex = try? NSRegularExpression(pattern: pattern),
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators),
               let match = regex.firstMatch(in: xml, range: NSRange(xml.startIndex..., in: xml)),
               let range = Range(match.range(at: 1), in: xml) else { return nil }
         return String(xml[range])
