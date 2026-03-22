@@ -17,21 +17,28 @@ final class S3Client: Sendable {
     // MARK: - S3 Operations
 
     func listObjects(bucket: String, prefix: String = "", delimiter: String = "/") async throws -> S3ListResult {
-        var query = "delimiter=\(delimiter)&list-type=2"
+        var queryParams = [
+            ("delimiter", delimiter),
+            ("list-type", "2")
+        ]
         if !prefix.isEmpty {
-            query += "&prefix=\(prefix.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? prefix)"
+            queryParams.append(("prefix", prefix))
         }
+        let query = queryParams
+            .sorted { $0.0 < $1.0 }
+            .map { "\(uriEncode($0.0))=\(uriEncode($0.1))" }
+            .joined(separator: "&")
         let data = try await request(method: "GET", bucket: bucket, path: "/", query: query)
         return try S3XMLParser.parseListResult(data)
     }
 
     func downloadObject(bucket: String, key: String) async throws -> Data {
-        let path = "/\(key.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? key)"
+        let path = "/" + key.components(separatedBy: "/").map { uriEncode($0) }.joined(separator: "/")
         return try await request(method: "GET", bucket: bucket, path: path)
     }
 
     func headObject(bucket: String, key: String) async throws -> (size: Int, contentType: String) {
-        let path = "/\(key.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? key)"
+        let path = "/" + key.components(separatedBy: "/").map { uriEncode($0) }.joined(separator: "/")
         let (_, response) = try await rawRequest(method: "HEAD", bucket: bucket, path: path)
         let size = Int(response.value(forHTTPHeaderField: "Content-Length") ?? "0") ?? 0
         let contentType = response.value(forHTTPHeaderField: "Content-Type") ?? "application/octet-stream"
@@ -71,16 +78,18 @@ final class S3Client: Sendable {
         request.setValue(payloadHash, forHTTPHeaderField: "x-amz-content-sha256")
         request.timeoutInterval = 30
 
-        // Canonical query string: params sorted by key
-        let canonicalQuery = query.components(separatedBy: "&")
-            .filter { !$0.isEmpty }
-            .sorted()
-            .joined(separator: "&")
+        // Canonical URI: path-encode each segment
+        let canonicalURI = fullPath.components(separatedBy: "/")
+            .map { uriEncode($0) }
+            .joined(separator: "/")
+
+        // Canonical query string (already sorted and encoded by caller)
+        let canonicalQuery = query
 
         // AWS Signature V4
         let signedHeaders = "host;x-amz-content-sha256;x-amz-date"
         let canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
-        let canonicalRequest = "\(method)\n\(fullPath)\n\(canonicalQuery)\n\(canonicalHeaders)\n\(signedHeaders)\n\(payloadHash)"
+        let canonicalRequest = "\(method)\n\(canonicalURI)\n\(canonicalQuery)\n\(canonicalHeaders)\n\(signedHeaders)\n\(payloadHash)"
 
         let scope = "\(dateStamp)/\(region)/s3/aws4_request"
         let stringToSign = "AWS4-HMAC-SHA256\n\(amzDate)\n\(scope)\n\(sha256(canonicalRequest.data(using: .utf8)!))"
@@ -99,6 +108,14 @@ final class S3Client: Sendable {
             throw S3Error.httpError(http.statusCode, msg)
         }
         return (data, http)
+    }
+
+    // MARK: - URI Encoding (AWS SigV4 compliant)
+
+    private func uriEncode(_ string: String) -> String {
+        var allowed = CharacterSet.alphanumerics
+        allowed.insert(charactersIn: "-._~")
+        return string.addingPercentEncoding(withAllowedCharacters: allowed) ?? string
     }
 
     // MARK: - Crypto helpers
