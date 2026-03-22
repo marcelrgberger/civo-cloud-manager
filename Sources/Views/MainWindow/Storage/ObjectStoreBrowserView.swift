@@ -199,7 +199,7 @@ struct ObjectStoreBrowserView: View {
     // MARK: - Double-Click (primaryAction)
 
     private func handleDoubleClick(_ items: Set<String>) {
-        guard let item = items.first else { return }
+        guard items.count == 1, let item = items.first else { return }
         if folders.contains(item) {
             navigateToFolder(item)
         } else if let obj = objects.first(where: { $0.key == item }) {
@@ -320,18 +320,23 @@ struct ObjectStoreBrowserView: View {
 
     private func downloadSingleFile(_ object: S3Object) async {
         do {
-            let data = try await s3Client.downloadObject(bucket: store.name, key: object.key)
-
-            await MainActor.run {
+            let url = await MainActor.run { () -> URL? in
                 let panel = NSSavePanel()
                 panel.nameFieldStringValue = object.name
                 panel.canCreateDirectories = true
-
-                if panel.runModal() == .OK, let url = panel.url {
-                    try? data.write(to: url)
-                }
+                return panel.runModal() == .OK ? panel.url : nil
             }
+            guard let url else { return }
+
+            isDownloading = true
+            downloadProgress = "Downloading \(object.name)..."
+            let data = try await s3Client.downloadObject(bucket: store.name, key: object.key)
+            try data.write(to: url)
+            isDownloading = false
+            downloadProgress = ""
         } catch {
+            isDownloading = false
+            downloadProgress = ""
             self.error = error.localizedDescription
         }
     }
