@@ -33,16 +33,28 @@ final class S3Client: Sendable {
     }
 
     func listAllObjects(bucket: String, prefix: String) async throws -> [S3Object] {
-        var queryParams = [
-            ("list-type", "2"),
-            ("prefix", prefix)
-        ]
-        let query = queryParams
-            .sorted { $0.0 < $1.0 }
-            .map { "\(uriEncode($0.0))=\(uriEncode($0.1))" }
-            .joined(separator: "&")
-        let data = try await request(method: "GET", bucket: bucket, path: "/", query: query)
-        return try S3XMLParser.parseListResult(data).objects
+        var allObjects: [S3Object] = []
+        var continuationToken: String?
+
+        repeat {
+            var queryParams = [
+                ("list-type", "2"),
+                ("prefix", prefix)
+            ]
+            if let token = continuationToken {
+                queryParams.append(("continuation-token", token))
+            }
+            let query = queryParams
+                .sorted { $0.0 < $1.0 }
+                .map { "\(uriEncode($0.0))=\(uriEncode($0.1))" }
+                .joined(separator: "&")
+            let data = try await request(method: "GET", bucket: bucket, path: "/", query: query)
+            let parsed = try S3XMLParser.parseListResult(data)
+            allObjects.append(contentsOf: parsed.objects)
+            continuationToken = parsed.nextContinuationToken
+        } while continuationToken != nil
+
+        return allObjects
     }
 
     func downloadObject(bucket: String, key: String) async throws -> Data {
@@ -155,6 +167,7 @@ final class S3Client: Sendable {
 struct S3ListResult: Sendable {
     let objects: [S3Object]
     let commonPrefixes: [String]
+    let nextContinuationToken: String?
 }
 
 struct S3Object: Identifiable, Sendable {
@@ -210,7 +223,10 @@ enum S3XMLParser {
             prefixes.append(prefix)
         }
 
-        return S3ListResult(objects: objects, commonPrefixes: prefixes)
+        // Parse pagination token
+        let nextToken = extractXMLValue(xml, tag: "NextContinuationToken")
+
+        return S3ListResult(objects: objects, commonPrefixes: prefixes, nextContinuationToken: nextToken)
     }
 
     private static func extractXMLValue(_ xml: String, tag: String) -> String? {
