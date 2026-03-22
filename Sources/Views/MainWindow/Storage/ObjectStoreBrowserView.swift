@@ -31,21 +31,14 @@ struct ObjectStoreBrowserView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button("Back", systemImage: "chevron.left") {
-                    if pathHistory.count > 1 {
-                        pathHistory.removeLast()
-                        currentPrefix = pathHistory.last ?? ""
-                        selection.removeAll()
-                        Task { await loadContents() }
-                    } else {
-                        onBack()
-                    }
+                    navigateBack()
                 }
             }
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task { await downloadSelection() }
                 } label: {
-                    Label(downloadButtonLabel, systemImage: "arrow.down.circle")
+                    Label(selection.isEmpty ? "Download" : "Download (\(selection.count))", systemImage: "arrow.down.circle")
                 }
                 .disabled(selection.isEmpty || isDownloading)
                 .help("Download selected files and folders")
@@ -65,20 +58,13 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
-    private var downloadButtonLabel: String {
-        selection.isEmpty ? "Download" : "Download (\(selection.count))"
-    }
-
     // MARK: - Breadcrumbs
 
     private var breadcrumbs: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
                 Button {
-                    currentPrefix = ""
-                    pathHistory = [""]
-                    selection.removeAll()
-                    Task { await loadContents() }
+                    navigateToRoot()
                 } label: {
                     Label(store.name, systemImage: "tray.2")
                         .font(.caption.weight(.medium))
@@ -118,26 +104,26 @@ struct ObjectStoreBrowserView: View {
             } else if objects.isEmpty && folders.isEmpty {
                 EmptyStateView(icon: "folder", title: "Empty", message: "No files or folders at this location.")
             } else {
-                Section("Folders") {
-                    ForEach(Array(folders.enumerated()), id: \.element) { index, folder in
-                        folderRow(folder, index: index)
-                            .tag(folder)
-                    }
+                ForEach(folders, id: \.self) { folder in
+                    folderRow(folder)
+                        .tag(folder)
                 }
-                .collapsible(false)
-
-                Section("Files") {
-                    ForEach(Array(objects.enumerated()), id: \.element.id) { index, object in
-                        fileRow(object, index: index)
-                            .tag(object.key)
-                    }
+                ForEach(objects) { object in
+                    fileRow(object)
+                        .tag(object.key)
                 }
-                .collapsible(false)
             }
+        }
+        .contextMenu(forSelectionType: String.self) { items in
+            contextMenuItems(for: items)
+        } primaryAction: { items in
+            handleDoubleClick(items)
         }
     }
 
-    private func folderRow(_ folder: String, index: Int) -> some View {
+    // MARK: - Rows (plain views, no buttons or nested context menus)
+
+    private func folderRow(_ folder: String) -> some View {
         HStack(spacing: 10) {
             Image(systemName: "folder.fill")
                 .font(.title3)
@@ -146,35 +132,14 @@ struct ObjectStoreBrowserView: View {
             Text(folderName(folder))
                 .font(.body.weight(.medium))
             Spacer()
-            Button {
-                currentPrefix = folder
-                pathHistory.append(folder)
-                selection.removeAll()
-                Task { await loadContents() }
-            } label: {
-                Image(systemName: "chevron.right")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-            }
-            .buttonStyle(.borderless)
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
         }
         .padding(.vertical, 4)
-        .contextMenu {
-            Button("Open Folder") {
-                currentPrefix = folder
-                pathHistory.append(folder)
-                selection.removeAll()
-                Task { await loadContents() }
-            }
-            Button("Download Folder Contents") {
-                selection = [folder]
-                Task { await downloadSelection() }
-            }
-        }
-        .modifier(StaggeredAppear(index: index))
     }
 
-    private func fileRow(_ object: S3Object, index: Int) -> some View {
+    private func fileRow(_ object: S3Object) -> some View {
         HStack(spacing: 10) {
             Image(systemName: fileIcon(object.name))
                 .font(.title3)
@@ -190,12 +155,83 @@ struct ObjectStoreBrowserView: View {
             Spacer()
         }
         .padding(.vertical, 4)
-        .contextMenu {
-            Button("Download") {
-                Task { await downloadSingleFile(object) }
+    }
+
+    // MARK: - Context Menu (single, on List level)
+
+    @ViewBuilder
+    private func contextMenuItems(for items: Set<String>) -> some View {
+        if items.isEmpty {
+            EmptyView()
+        } else if items.count == 1, let item = items.first {
+            if folders.contains(item) {
+                Button {
+                    navigateToFolder(item)
+                } label: {
+                    Label("Open", systemImage: "folder")
+                }
+                Divider()
+                Button {
+                    selection = [item]
+                    Task { await downloadSelection() }
+                } label: {
+                    Label("Download Folder", systemImage: "arrow.down.circle")
+                }
+            } else {
+                Button {
+                    if let obj = objects.first(where: { $0.key == item }) {
+                        Task { await downloadSingleFile(obj) }
+                    }
+                } label: {
+                    Label("Download", systemImage: "arrow.down.circle")
+                }
+            }
+        } else {
+            Button {
+                selection = items
+                Task { await downloadSelection() }
+            } label: {
+                Label("Download \(items.count) Items", systemImage: "arrow.down.circle")
             }
         }
-        .modifier(StaggeredAppear(index: index + folders.count))
+    }
+
+    // MARK: - Double-Click (primaryAction)
+
+    private func handleDoubleClick(_ items: Set<String>) {
+        guard let item = items.first else { return }
+        if folders.contains(item) {
+            navigateToFolder(item)
+        } else if let obj = objects.first(where: { $0.key == item }) {
+            Task { await downloadSingleFile(obj) }
+        }
+    }
+
+    // MARK: - Navigation
+
+    private func navigateToFolder(_ folder: String) {
+        currentPrefix = folder
+        pathHistory.append(folder)
+        selection.removeAll()
+        Task { await loadContents() }
+    }
+
+    private func navigateToRoot() {
+        currentPrefix = ""
+        pathHistory = [""]
+        selection.removeAll()
+        Task { await loadContents() }
+    }
+
+    private func navigateBack() {
+        if pathHistory.count > 1 {
+            pathHistory.removeLast()
+            currentPrefix = pathHistory.last ?? ""
+            selection.removeAll()
+            Task { await loadContents() }
+        } else {
+            onBack()
+        }
     }
 
     // MARK: - Download Bar
