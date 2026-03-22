@@ -58,11 +58,12 @@ KubernetesAPIClient (per-cluster, ephemeral)
 
 S3Client (per-store, ephemeral)
 ├── ListObjects v2 (prefix/delimiter folder navigation)
+├── ListAllObjects (recursive listing without delimiter)
 ├── GetObject (file download)
 ├── HeadObject (file metadata)
-├── AWS Signature V4 signing via CryptoKit (HMAC-SHA256)
+├── AWS Signature V4 signing via CryptoKit (HMAC-SHA256, SigV4-compliant URI encoding)
 ├── S3XMLParser for ListBucketResult XML responses
-└── ObjectStoreBrowserView with breadcrumb navigation, folder drill-down, download via NSSavePanel
+└── ObjectStoreBrowserView with breadcrumb navigation, multi-select, folder download, progress bar
 
 DashboardView (clickable cards → sidebar navigation)
 ├── Resource cards with hover scale animation
@@ -119,7 +120,7 @@ Animations
 
 **Firewall rule flow:** Click firewall → FirewallDetailView shows rules → "+" opens CreateRuleView → delete via context menu with name confirmation.
 
-**Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from linked CivoObjectStoreCredential via credential_id), endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id. "Browse Files" button opens ObjectStoreBrowserView → S3Client (AWS SigV4) → ListObjects v2 → folder navigation → right-click download via NSSavePanel.
+**Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from linked CivoObjectStoreCredential via credential_id), endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id. "Browse Files" button opens ObjectStoreBrowserView → S3Client (AWS SigV4) → ListObjects v2 → folder navigation → multi-select download.
 
 **Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView (right-click → "Restart Pod") → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh, auto-refresh 3s timer).
 
@@ -157,7 +158,7 @@ Animations
 - **Touch ID / biometric auth** — uses `LAContext` from LocalAuthentication framework with async `evaluatePolicy` (no DispatchQueue). Used in DatabaseDetailView (password reveal), CredentialListView (secret key reveal), and ObjectStoreDetailView (secret key reveal).
 - **K8s connecting animation** — K8sConnectingView (in Views/Shared/) shows animated 5-step progress while connecting to K8s API: firewall, kubeconfig, certificates, API server, metrics. Rotating helm icon with pulsing blue circle, green checkmark spring on completion.
 - **Object store resize** — ObjectStoreDetailView has a stepper to change max size, submitted via PUT /objectstores/:id.
-- **S3 file browser** — ObjectStoreBrowserView uses S3Client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2 with prefix/delimiter for folder navigation, breadcrumb path, folder drill-down, file icons by extension, right-click download via NSSavePanel. S3XMLParser handles ListBucketResult XML responses.
+- **S3 file browser** — ObjectStoreBrowserView uses S3Client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2 with prefix/delimiter for folder navigation, breadcrumb path, folder drill-down, file icons by extension. Multi-select (Cmd+Click/Shift+Click) with native List selection. Single file → NSSavePanel, multiple files/folders → NSOpenPanel folder picker with recursive download preserving folder structure. Download progress bar. Double-click navigates into folders or downloads files. S3XMLParser handles ListBucketResult XML responses.
 - **Colored sidebar icons** — each SidebarSection has an `iconColor` property for distinct visual identification: Dashboard (blue), Instances (green), SSH Keys (orange), Kubernetes (blue), Networks (green), Firewalls (red), Load Balancers (indigo), Domains (teal), Databases (purple), Volumes (orange), Object Stores (cyan), Credentials (yellow), Regions (mint), About (secondary).
 - **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
 - **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
