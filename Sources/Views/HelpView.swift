@@ -154,10 +154,15 @@ struct HelpSection {
         HelpSection(title: "S3 File Browser", icon: "folder.fill", items: [
             "Browse files and folders inside any object store with assigned credentials.",
             "Breadcrumb navigation shows your current path. Click any breadcrumb to jump back.",
-            "Click a folder to navigate into it. Use the back button to go up one level.",
+            "Click a folder to navigate into it. Double-click a file to download it directly.",
             "Files show their name, size, and a contextual icon based on file type.",
-            "Right-click any file and select 'Download' to save it to your Mac via a save dialog.",
-            "The browser uses S3-compatible API access with AWS Signature V4 authentication.",
+            "Select multiple files and folders with Cmd+Click or Shift+Click.",
+            "Right-click selected items and choose 'Download' to save them.",
+            "Single file download: a save dialog lets you choose the filename and location.",
+            "Multiple files or folders: a folder picker lets you choose the target directory. Files are saved with their original folder structure.",
+            "Folder download recursively downloads all files inside the folder.",
+            "A progress bar shows the current download status (e.g. 'Downloading 3/12: path/file.txt').",
+            "Use the Download button in the toolbar to download all selected items.",
         ]),
         HelpSection(title: "Deleting Resources", icon: "trash", items: [
             "All delete operations require typing the exact resource name to confirm.",

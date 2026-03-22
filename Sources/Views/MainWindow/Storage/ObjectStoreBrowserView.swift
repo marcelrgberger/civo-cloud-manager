@@ -10,15 +10,22 @@ struct ObjectStoreBrowserView: View {
     @State private var objects: [S3Object] = []
     @State private var folders: [String] = []
     @State private var isLoading = false
+    @State private var isDownloading = false
+    @State private var downloadProgress = ""
     @State private var error: String?
     @State private var pathHistory: [String] = [""]
     @State private var appeared = false
+    @State private var selection: Set<String> = []
 
     var body: some View {
         VStack(spacing: 0) {
             breadcrumbs
             Divider()
             fileList
+            if isDownloading {
+                Divider()
+                downloadBar
+            }
         }
         .navigationTitle(store.name)
         .toolbar {
@@ -27,11 +34,21 @@ struct ObjectStoreBrowserView: View {
                     if pathHistory.count > 1 {
                         pathHistory.removeLast()
                         currentPrefix = pathHistory.last ?? ""
+                        selection.removeAll()
                         Task { await loadContents() }
                     } else {
                         onBack()
                     }
                 }
+            }
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    Task { await downloadSelected() }
+                } label: {
+                    Label("Download", systemImage: "arrow.down.circle")
+                }
+                .disabled(selection.isEmpty || isDownloading)
+                .help("Download selected files and folders")
             }
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -48,12 +65,15 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
+    // MARK: - Breadcrumbs
+
     private var breadcrumbs: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
                 Button {
                     currentPrefix = ""
                     pathHistory = [""]
+                    selection.removeAll()
                     Task { await loadContents() }
                 } label: {
                     Label(store.name, systemImage: "tray.2")
@@ -70,6 +90,7 @@ struct ObjectStoreBrowserView: View {
                         let newPrefix = parts[0...index].joined(separator: "/") + "/"
                         currentPrefix = newPrefix
                         pathHistory = [""] + (0...index).map { parts[0...$0].joined(separator: "/") + "/" }
+                        selection.removeAll()
                         Task { await loadContents() }
                     }
                     .font(.caption.weight(.medium))
@@ -82,8 +103,10 @@ struct ObjectStoreBrowserView: View {
         .background(.quaternary.opacity(0.3))
     }
 
+    // MARK: - File List
+
     private var fileList: some View {
-        List {
+        List(selection: $selection) {
             if isLoading && objects.isEmpty && folders.isEmpty {
                 ProgressView("Loading...")
             } else if let error {
@@ -91,58 +114,95 @@ struct ObjectStoreBrowserView: View {
             } else if objects.isEmpty && folders.isEmpty {
                 EmptyStateView(icon: "folder", title: "Empty", message: "No files or folders at this location.")
             } else {
-                // Folders
                 ForEach(Array(folders.enumerated()), id: \.element) { index, folder in
-                    Button {
-                        currentPrefix = folder
-                        pathHistory.append(folder)
-                        Task { await loadContents() }
-                    } label: {
-                        HStack(spacing: 10) {
-                            Image(systemName: "folder.fill")
-                                .font(.title3)
-                                .foregroundStyle(.blue)
-                                .frame(width: 28)
-                            Text(folderName(folder))
-                                .font(.body.weight(.medium))
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundStyle(.tertiary)
-                        }
-                        .padding(.vertical, 4)
-                    }
-                    .buttonStyle(.plain)
-                    .modifier(StaggeredAppear(index: index))
+                    folderRow(folder, index: index)
+                        .tag(folder)
                 }
 
-                // Files
                 ForEach(Array(objects.enumerated()), id: \.element.id) { index, object in
-                    HStack(spacing: 10) {
-                        Image(systemName: fileIcon(object.name))
-                            .font(.title3)
-                            .foregroundStyle(.secondary)
-                            .frame(width: 28)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(object.name)
-                                .font(.body.weight(.medium))
-                            Text(object.sizeDisplay)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
+                    fileRow(object, index: index)
+                        .tag(object.key)
+                }
+            }
+        }
+        .contextMenu(forSelectionType: String.self) { items in
+            if items.isEmpty {
+                // Background context menu
+            } else {
+                Button("Download \(items.count == 1 ? "Item" : "\(items.count) Items")") {
+                    selection = items
+                    Task { await downloadSelected() }
+                }
+            }
+        } primaryAction: { items in
+            // Double-click: navigate into folder or download file
+            if let item = items.first {
+                if folders.contains(item) {
+                    currentPrefix = item
+                    pathHistory.append(item)
+                    selection.removeAll()
+                    Task { await loadContents() }
+                } else {
+                    if let object = objects.first(where: { $0.key == item }) {
+                        Task { await downloadSingleFile(object) }
                     }
-                    .padding(.vertical, 4)
-                    .contextMenu {
-                        Button("Download") {
-                            Task { await downloadFile(object) }
-                        }
-                    }
-                    .modifier(StaggeredAppear(index: index + folders.count))
                 }
             }
         }
     }
+
+    private func folderRow(_ folder: String, index: Int) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: "folder.fill")
+                .font(.title3)
+                .foregroundStyle(.blue)
+                .frame(width: 28)
+            Text(folderName(folder))
+                .font(.body.weight(.medium))
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
+        }
+        .padding(.vertical, 4)
+        .modifier(StaggeredAppear(index: index))
+    }
+
+    private func fileRow(_ object: S3Object, index: Int) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: fileIcon(object.name))
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .frame(width: 28)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(object.name)
+                    .font(.body.weight(.medium))
+                Text(object.sizeDisplay)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+        }
+        .padding(.vertical, 4)
+        .modifier(StaggeredAppear(index: index + folders.count))
+    }
+
+    // MARK: - Download Bar
+
+    private var downloadBar: some View {
+        HStack(spacing: 8) {
+            ProgressView()
+                .controlSize(.small)
+            Text(downloadProgress)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 6)
+    }
+
+    // MARK: - Data Loading
 
     private func loadContents() async {
         isLoading = true
@@ -158,7 +218,60 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
-    private func downloadFile(_ object: S3Object) async {
+    // MARK: - Download
+
+    private func downloadSelected() async {
+        let selectedFolders = selection.filter { folders.contains($0) }
+        let selectedFiles = selection.compactMap { key in objects.first { $0.key == key } }
+
+        if selectedFolders.isEmpty && selectedFiles.count == 1, let file = selectedFiles.first {
+            await downloadSingleFile(file)
+            return
+        }
+
+        guard let targetDir = pickFolder() else { return }
+
+        isDownloading = true
+        defer {
+            isDownloading = false
+            downloadProgress = ""
+        }
+
+        do {
+            var allFiles: [(key: String, relativeTo: String)] = []
+
+            for folder in selectedFolders {
+                downloadProgress = "Listing \(folderName(folder))..."
+                let contents = try await s3Client.listAllObjects(bucket: store.name, prefix: folder)
+                for obj in contents {
+                    allFiles.append((key: obj.key, relativeTo: currentPrefix))
+                }
+            }
+
+            for file in selectedFiles {
+                allFiles.append((key: file.key, relativeTo: currentPrefix))
+            }
+
+            for (index, file) in allFiles.enumerated() {
+                let relativePath = String(file.key.dropFirst(file.relativeTo.count))
+                downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
+
+                let data = try await s3Client.downloadObject(bucket: store.name, key: file.key)
+
+                let fileURL = targetDir.appendingPathComponent(relativePath)
+                let dir = fileURL.deletingLastPathComponent()
+                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                try data.write(to: fileURL)
+            }
+
+            downloadProgress = "Done — \(allFiles.count) files downloaded"
+            try? await Task.sleep(for: .seconds(2))
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func downloadSingleFile(_ object: S3Object) async {
         do {
             let data = try await s3Client.downloadObject(bucket: store.name, key: object.key)
 
@@ -175,6 +288,20 @@ struct ObjectStoreBrowserView: View {
             self.error = error.localizedDescription
         }
     }
+
+    @MainActor
+    private func pickFolder() -> URL? {
+        let panel = NSOpenPanel()
+        panel.title = "Choose download location"
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+
+        return panel.runModal() == .OK ? panel.url : nil
+    }
+
+    // MARK: - Helpers
 
     private func folderName(_ prefix: String) -> String {
         let trimmed = prefix.hasSuffix("/") ? String(prefix.dropLast()) : prefix
