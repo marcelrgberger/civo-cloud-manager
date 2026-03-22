@@ -40,8 +40,10 @@ struct AboutView: View {
                     .frame(width: 200)
 
                 VStack(spacing: 8) {
-                    Link("Privacy Policy", destination: URL(string: "https://marcelrgberger.com/privacy")!)
-                    Link("Terms of Use", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                    Link("Privacy Policy", destination: URL(string: "https://berger-rosenstock.de/data-protection")!)
+                    Link("Terms of Use", destination: URL(string: "https://civo-cloud-manager.app/terms")!)
+                    Link("Imprint", destination: URL(string: "https://berger-rosenstock.de/imprint")!)
+                    Link("Website", destination: URL(string: "https://civo-cloud-manager.app")!)
                 }
                 .font(.caption)
                 .foregroundStyle(.blue)

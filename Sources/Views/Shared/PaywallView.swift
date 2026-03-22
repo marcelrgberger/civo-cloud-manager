@@ -165,9 +165,9 @@ struct PaywallView: View {
 
     private var legalLinks: some View {
         HStack(spacing: 16) {
-            Link("Terms of Use", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+            Link("Terms of Use", destination: URL(string: "https://civo-cloud-manager.app/terms")!)
             Text("·").foregroundStyle(.tertiary)
-            Link("Privacy Policy", destination: URL(string: "https://marcelrgberger.com/privacy")!)
+            Link("Privacy Policy", destination: URL(string: "https://berger-rosenstock.de/data-protection")!)
         }
         .font(.caption2)
         .foregroundStyle(.tertiary)
