@@ -32,6 +32,19 @@ final class S3Client: Sendable {
         return try S3XMLParser.parseListResult(data)
     }
 
+    func listAllObjects(bucket: String, prefix: String) async throws -> [S3Object] {
+        var queryParams = [
+            ("list-type", "2"),
+            ("prefix", prefix)
+        ]
+        let query = queryParams
+            .sorted { $0.0 < $1.0 }
+            .map { "\(uriEncode($0.0))=\(uriEncode($0.1))" }
+            .joined(separator: "&")
+        let data = try await request(method: "GET", bucket: bucket, path: "/", query: query)
+        return try S3XMLParser.parseListResult(data).objects
+    }
+
     func downloadObject(bucket: String, key: String) async throws -> Data {
         let path = "/" + key.components(separatedBy: "/").map { uriEncode($0) }.joined(separator: "/")
         return try await request(method: "GET", bucket: bucket, path: path)
