@@ -43,9 +43,9 @@ struct ObjectStoreBrowserView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
-                    Task { await downloadSelected() }
+                    Task { await downloadSelection() }
                 } label: {
-                    Label("Download", systemImage: "arrow.down.circle")
+                    Label(downloadButtonLabel, systemImage: "arrow.down.circle")
                 }
                 .disabled(selection.isEmpty || isDownloading)
                 .help("Download selected files and folders")
@@ -63,6 +63,10 @@ struct ObjectStoreBrowserView: View {
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
         }
+    }
+
+    private var downloadButtonLabel: String {
+        selection.isEmpty ? "Download" : "Download (\(selection.count))"
     }
 
     // MARK: - Breadcrumbs
@@ -114,39 +118,21 @@ struct ObjectStoreBrowserView: View {
             } else if objects.isEmpty && folders.isEmpty {
                 EmptyStateView(icon: "folder", title: "Empty", message: "No files or folders at this location.")
             } else {
-                ForEach(Array(folders.enumerated()), id: \.element) { index, folder in
-                    folderRow(folder, index: index)
-                        .tag(folder)
-                }
-
-                ForEach(Array(objects.enumerated()), id: \.element.id) { index, object in
-                    fileRow(object, index: index)
-                        .tag(object.key)
-                }
-            }
-        }
-        .contextMenu(forSelectionType: String.self) { items in
-            if items.isEmpty {
-                // Background context menu
-            } else {
-                Button("Download \(items.count == 1 ? "Item" : "\(items.count) Items")") {
-                    selection = items
-                    Task { await downloadSelected() }
-                }
-            }
-        } primaryAction: { items in
-            // Double-click: navigate into folder or download file
-            if let item = items.first {
-                if folders.contains(item) {
-                    currentPrefix = item
-                    pathHistory.append(item)
-                    selection.removeAll()
-                    Task { await loadContents() }
-                } else {
-                    if let object = objects.first(where: { $0.key == item }) {
-                        Task { await downloadSingleFile(object) }
+                Section("Folders") {
+                    ForEach(Array(folders.enumerated()), id: \.element) { index, folder in
+                        folderRow(folder, index: index)
+                            .tag(folder)
                     }
                 }
+                .collapsible(false)
+
+                Section("Files") {
+                    ForEach(Array(objects.enumerated()), id: \.element.id) { index, object in
+                        fileRow(object, index: index)
+                            .tag(object.key)
+                    }
+                }
+                .collapsible(false)
             }
         }
     }
@@ -160,11 +146,31 @@ struct ObjectStoreBrowserView: View {
             Text(folderName(folder))
                 .font(.body.weight(.medium))
             Spacer()
-            Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+            Button {
+                currentPrefix = folder
+                pathHistory.append(folder)
+                selection.removeAll()
+                Task { await loadContents() }
+            } label: {
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
+            .buttonStyle(.borderless)
         }
         .padding(.vertical, 4)
+        .contextMenu {
+            Button("Open Folder") {
+                currentPrefix = folder
+                pathHistory.append(folder)
+                selection.removeAll()
+                Task { await loadContents() }
+            }
+            Button("Download Folder Contents") {
+                selection = [folder]
+                Task { await downloadSelection() }
+            }
+        }
         .modifier(StaggeredAppear(index: index))
     }
 
@@ -184,6 +190,11 @@ struct ObjectStoreBrowserView: View {
             Spacer()
         }
         .padding(.vertical, 4)
+        .contextMenu {
+            Button("Download") {
+                Task { await downloadSingleFile(object) }
+            }
+        }
         .modifier(StaggeredAppear(index: index + folders.count))
     }
 
@@ -220,7 +231,7 @@ struct ObjectStoreBrowserView: View {
 
     // MARK: - Download
 
-    private func downloadSelected() async {
+    private func downloadSelection() async {
         let selectedFolders = selection.filter { folders.contains($0) }
         let selectedFiles = selection.compactMap { key in objects.first { $0.key == key } }
 
