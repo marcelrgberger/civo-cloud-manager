@@ -39,7 +39,19 @@ final class KubernetesViewModel {
     var namespaces: [K8sNamespace] = []
     var pvcs: [K8sPVC] = []
     var pvs: [K8sPV] = []
+    var configMaps: [K8sConfigMap] = []
+    var secrets: [K8sSecret] = []
     var metricsAvailable = true
+
+    // Pod restart alert tracking
+    private var previousRestartCounts: [String: Int] = [:]
+    private var initialLoadComplete = false
+    private let notificationService = NotificationService.shared
+
+    // Metrics history (circular buffer, max 30 data points)
+    var cpuHistory: [Double] = []
+    var memoryHistory: [Double] = []
+    private let maxHistoryCount = 30
 
     // Auto-firewall state
     private var autoCreatedRuleId: String?
@@ -172,7 +184,13 @@ final class KubernetesViewModel {
         namespaces = []
         pvcs = []
         pvs = []
+        configMaps = []
+        secrets = []
         selectedNamespace = nil
+        cpuHistory = []
+        memoryHistory = []
+        previousRestartCounts = [:]
+        initialLoadComplete = false
 
         await autoCloseFirewall()
     }
@@ -228,7 +246,9 @@ final class KubernetesViewModel {
         async let w: () = loadWorkloads(client)
         async let n: () = loadNetworking(client)
         async let s: () = loadStorage(client)
-        _ = await (m, e, w, n, s)
+        async let c: () = loadConfig(client)
+        async let p: () = checkPodRestarts(client)
+        _ = await (m, e, w, n, s, c, p)
     }
 
     func loadNodes() async {
@@ -279,6 +299,14 @@ final class KubernetesViewModel {
                 nodeCount: k8sNodes.count, healthyNodes: healthyNodes
             )
             metricsAvailable = true
+
+            // Append to history (circular buffer)
+            let cpuPct = cpuCap > 0 ? (cpuUsage / cpuCap) * 100 : 0
+            let memPct = memCap > 0 ? (memUsage / memCap) * 100 : 0
+            cpuHistory.append(cpuPct)
+            memoryHistory.append(memPct)
+            if cpuHistory.count > maxHistoryCount { cpuHistory.removeFirst() }
+            if memoryHistory.count > maxHistoryCount { memoryHistory.removeFirst() }
         } catch {
             metricsAvailable = false
             Log.info("Metrics-server not available")
@@ -337,6 +365,17 @@ final class KubernetesViewModel {
         }
     }
 
+    func restartDeployment(namespace: String, name: String) async {
+        guard let client = k8sClient else { return }
+        do {
+            try await client.restartDeployment(namespace: namespace, name: name)
+            showSuccess = true
+            if let c = k8sClient { await loadWorkloads(c) }
+        } catch {
+            k8sError = error.localizedDescription
+        }
+    }
+
     func scaleDeployment(namespace: String, name: String, replicas: Int) async {
         guard let client = k8sClient else { return }
         do {
@@ -360,6 +399,80 @@ final class KubernetesViewModel {
     var filteredServices: [K8sService] {
         guard let ns = selectedNamespace, ns != "All" else { return services }
         return services.filter { $0.namespace == ns }
+    }
+
+    var filteredIngresses: [K8sIngress] {
+        guard let ns = selectedNamespace, ns != "All" else { return ingresses }
+        return ingresses.filter { $0.namespace == ns }
+    }
+
+    var filteredConfigMaps: [K8sConfigMap] {
+        guard let ns = selectedNamespace, ns != "All" else { return configMaps }
+        return configMaps.filter { $0.namespace == ns }
+    }
+
+    var filteredSecrets: [K8sSecret] {
+        guard let ns = selectedNamespace, ns != "All" else { return secrets }
+        return secrets.filter { $0.namespace == ns }
+    }
+
+    // MARK: - ConfigMaps & Secrets
+
+    private func loadConfig(_ client: KubernetesAPIClient) async {
+        do { configMaps = try await client.listConfigMaps().items }
+        catch { Log.error("ConfigMaps: \(error.localizedDescription)") }
+        do { secrets = try await client.listSecrets().items }
+        catch { Log.error("Secrets: \(error.localizedDescription)") }
+    }
+
+    func getSecretData(namespace: String, name: String) async -> [String: String] {
+        guard let client = k8sClient else { return [:] }
+        do {
+            let secret = try await client.getSecret(namespace: namespace, name: name)
+            var decoded: [String: String] = [:]
+            for (key, value) in secret.data ?? [:] {
+                if let data = Data(base64Encoded: value),
+                   let str = String(data: data, encoding: .utf8) {
+                    decoded[key] = str
+                } else {
+                    decoded[key] = "(binary data)"
+                }
+            }
+            return decoded
+        } catch {
+            Log.error("Get secret data failed: \(error.localizedDescription)")
+            return [:]
+        }
+    }
+
+    // MARK: - Pod Restart Alerts
+
+    private func checkPodRestarts(_ client: KubernetesAPIClient) async {
+        do {
+            let allPods = try await client.listPods()
+            var newCounts: [String: Int] = [:]
+
+            for pod in allPods.items {
+                let podId = pod.id
+                let totalRestarts = pod.status?.containerStatuses?.reduce(0) { $0 + ($1.restartCount ?? 0) } ?? 0
+                newCounts[podId] = totalRestarts
+
+                // Only notify after initial load (not on first connection)
+                if initialLoadComplete, let previous = previousRestartCounts[podId], totalRestarts > previous {
+                    let increase = totalRestarts - previous
+                    notificationService.sendAlert(
+                        title: "Pod Restart Detected",
+                        body: "\(pod.name) in \(pod.namespace) restarted \(increase) time\(increase == 1 ? "" : "s") (total: \(totalRestarts))"
+                    )
+                    Log.warning("Pod \(pod.name) in \(pod.namespace) restart count increased by \(increase) to \(totalRestarts)")
+                }
+            }
+
+            previousRestartCounts = newCounts
+            if !initialLoadComplete { initialLoadComplete = true }
+        } catch {
+            Log.error("Check pod restarts failed: \(error.localizedDescription)")
+        }
     }
 
     func loadPods(nodeName: String) async {
