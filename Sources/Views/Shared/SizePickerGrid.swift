@@ -60,8 +60,10 @@ struct SizePickerGrid: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(size.niceName ?? size.displayName)
                             .font(.caption.bold())
+                            .lineLimit(1)
                         SizeCard(size: size, isSelected: selectedSize == size.name)
                     }
+                    .frame(maxWidth: .infinity)
                     .onTapGesture {
                         selectedSize = size.name
                     }
@@ -114,7 +116,7 @@ private struct SizeCard: View {
             }
         }
         .padding(10)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: 70, alignment: .leading)
         .background(isSelected ? Color.accentColor.opacity(0.08) : Color.secondary.opacity(0.04))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
