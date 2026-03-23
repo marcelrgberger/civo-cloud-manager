@@ -1,7 +1,7 @@
 import SwiftUI
-import AppKit
+import UniformTypeIdentifiers
 
-// MARK: - Browser Item (unified model for Table)
+// MARK: - Browser Item
 
 struct BrowserItem: Identifiable, Hashable, Sendable {
     let id: String
@@ -34,8 +34,24 @@ struct BrowserItem: Identifiable, Hashable, Sendable {
         }
     }
 
-    var iconColor: Color {
-        isFolder ? .blue : .secondary
+    var iconColor: Color { isFolder ? .blue : .secondary }
+}
+
+// MARK: - File Document for .fileExporter
+
+struct S3DownloadedFile: FileDocument {
+    static var readableContentTypes: [UTType] { [.data] }
+
+    var data: Data
+
+    init(data: Data) { self.data = data }
+
+    init(configuration: ReadConfiguration) throws {
+        data = configuration.file.regularFileContents ?? Data()
+    }
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: data)
     }
 }
 
@@ -54,6 +70,11 @@ struct ObjectStoreBrowserView: View {
     @State private var error: String?
     @State private var pathHistory: [String] = [""]
     @State private var selection: Set<String> = []
+
+    // Single file export via SwiftUI .fileExporter
+    @State private var exportDocument: S3DownloadedFile?
+    @State private var exportFileName = ""
+    @State private var showExporter = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -90,7 +111,7 @@ struct ObjectStoreBrowserView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
-                    startDownloadSelected()
+                    startDownload()
                 } label: {
                     Label(
                         selection.isEmpty ? "Download" : "Download (\(selection.count))",
@@ -109,6 +130,17 @@ struct ObjectStoreBrowserView: View {
             }
         }
         .task { await loadContents() }
+        .fileExporter(
+            isPresented: $showExporter,
+            document: exportDocument,
+            contentType: .data,
+            defaultFilename: exportFileName
+        ) { result in
+            exportDocument = nil
+            if case .failure(let err) = result {
+                error = err.localizedDescription
+            }
+        }
     }
 
     // MARK: - Breadcrumbs
@@ -173,17 +205,9 @@ struct ObjectStoreBrowserView: View {
         }
         .contextMenu(forSelectionType: String.self) { selected in
             if !selected.isEmpty {
-                let folders = selected.filter { id in items.first { $0.id == id }?.isFolder == true }
-                let files = selected.filter { id in items.first { $0.id == id }?.isFolder == false }
-
-                if folders.count == 1, files.isEmpty, let folderId = folders.first {
-                    Button("Open Folder") { navigateToFolder(folderId) }
-                    Divider()
-                }
-
                 Button("Download \(selected.count == 1 ? "Item" : "\(selected.count) Items")") {
                     selection = selected
-                    startDownloadSelected()
+                    startDownload()
                 }
             }
         } primaryAction: { selected in
@@ -192,7 +216,8 @@ struct ObjectStoreBrowserView: View {
             if item.isFolder {
                 navigateToFolder(item.key)
             } else {
-                startSingleDownload(item)
+                selection = selected
+                startDownload()
             }
         }
         .tableStyle(.bordered(alternatesRowBackgrounds: true))
@@ -242,11 +267,9 @@ struct ObjectStoreBrowserView: View {
 
         do {
             let result = try await s3Client.listObjects(bucket: store.name, prefix: currentPrefix)
-
             var browserItems: [BrowserItem] = []
             for prefix in result.commonPrefixes {
-                let name = folderName(prefix)
-                browserItems.append(BrowserItem(id: prefix, name: name, isFolder: true, size: 0, key: prefix))
+                browserItems.append(BrowserItem(id: prefix, name: folderName(prefix), isFolder: true, size: 0, key: prefix))
             }
             for obj in result.objects {
                 browserItems.append(BrowserItem(id: obj.key, name: obj.name, isFolder: false, size: obj.size, key: obj.key))
@@ -259,216 +282,92 @@ struct ObjectStoreBrowserView: View {
 
     // MARK: - Download
 
-    private func startSingleDownload(_ item: BrowserItem) {
-        let bucketName = store.name
-        let client = s3Client
-        let fileName = item.name
-        let fileKey = item.key
-
-        isDownloading = true
-        downloadProgress = "Downloading \(fileName)..."
-
-        Task {
-            do {
-                let data = try await client.downloadObject(bucket: bucketName, key: fileKey)
-
-                // Save to temp file first, then show panel via DispatchQueue
-                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + "_" + fileName)
-                try data.write(to: tempURL)
-
-                DispatchQueue.main.async { [self] in
-                    downloadProgress = "Download complete — choose save location..."
-                    NSApp.activate(ignoringOtherApps: true)
-
-                    let panel = NSSavePanel()
-                    panel.nameFieldStringValue = fileName
-                    panel.canCreateDirectories = true
-
-                    if panel.runModal() == .OK, let url = panel.url {
-                        let accessed = url.startAccessingSecurityScopedResource()
-                        do {
-                            if FileManager.default.fileExists(atPath: url.path) {
-                                try FileManager.default.removeItem(at: url)
-                            }
-                            try FileManager.default.moveItem(at: tempURL, to: url)
-                        } catch {
-                            self.error = "Save failed: \(error.localizedDescription)"
-                        }
-                        if accessed { url.stopAccessingSecurityScopedResource() }
-                    } else {
-                        try? FileManager.default.removeItem(at: tempURL)
-                    }
-
-                    isDownloading = false
-                    downloadProgress = ""
-                }
-            } catch {
-                DispatchQueue.main.async { [self] in
-                    self.error = error.localizedDescription
-                    isDownloading = false
-                    downloadProgress = ""
-                }
-            }
-        }
-    }
-
-    private func startFolderDownload(_ item: BrowserItem) {
-        let bucketName = store.name
-        let client = s3Client
-        let folderKey = item.key
-        let prefix = currentPrefix
-
-        isDownloading = true
-        downloadProgress = "Listing folder contents..."
-
-        Task {
-            do {
-                let allFiles = try await client.listAllObjects(bucket: bucketName, prefix: folderKey)
-
-                DispatchQueue.main.async { [self] in
-                    downloadProgress = "Found \(allFiles.count) files — choose save location..."
-                    NSApp.activate(ignoringOtherApps: true)
-
-                    let panel = NSOpenPanel()
-                    panel.title = "Choose download location"
-                    panel.canChooseFiles = false
-                    panel.canChooseDirectories = true
-                    panel.canCreateDirectories = true
-                    panel.allowsMultipleSelection = false
-
-                    guard panel.runModal() == .OK, let targetDir = panel.url else {
-                        isDownloading = false
-                        downloadProgress = ""
-                        return
-                    }
-
-                    Task {
-                        let accessed = targetDir.startAccessingSecurityScopedResource()
-                        defer { if accessed { targetDir.stopAccessingSecurityScopedResource() } }
-
-                        do {
-                            for (index, file) in allFiles.enumerated() {
-                                let relativePath = String(file.key.dropFirst(prefix.count))
-                                await MainActor.run {
-                                    downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
-                                }
-                                let data = try await client.downloadObject(bucket: bucketName, key: file.key)
-                                let fileURL = targetDir.appendingPathComponent(relativePath)
-                                let dir = fileURL.deletingLastPathComponent()
-                                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                                try data.write(to: fileURL)
-                            }
-                            await MainActor.run {
-                                downloadProgress = "Done — \(allFiles.count) files saved"
-                            }
-                            try? await Task.sleep(for: .seconds(2))
-                        } catch {
-                            await MainActor.run {
-                                self.error = error.localizedDescription
-                            }
-                        }
-
-                        await MainActor.run {
-                            isDownloading = false
-                            downloadProgress = ""
-                        }
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async { [self] in
-                    self.error = error.localizedDescription
-                    isDownloading = false
-                    downloadProgress = ""
-                }
-            }
-        }
-    }
-
-    private func startDownloadSelected() {
+    private func startDownload() {
         let selectedItems = selection.compactMap { id in items.first { $0.id == id } }
+        guard !selectedItems.isEmpty else { return }
 
+        // Single file: download and show native SwiftUI file exporter
         if selectedItems.count == 1, let item = selectedItems.first, !item.isFolder {
-            startSingleDownload(item)
+            downloadSingleFile(item)
             return
         }
 
-        // Multiple items or folders: collect all files, then pick target dir
-        let bucketName = store.name
-        let client = s3Client
-        let prefix = currentPrefix
-        let selectedFolders = selectedItems.filter(\.isFolder).map(\.key)
-        let selectedFileKeys = selectedItems.filter { !$0.isFolder }.map(\.key)
+        // Multiple items or folders: download all to temp, then zip or reveal
+        downloadMultiple(selectedItems)
+    }
 
+    private func downloadSingleFile(_ item: BrowserItem) {
         isDownloading = true
-        downloadProgress = "Preparing download..."
+        downloadProgress = "Downloading \(item.name)..."
 
         Task {
             do {
-                var allFiles: [(key: String, relativeTo: String)] = []
-
-                for folderKey in selectedFolders {
-                    await MainActor.run { downloadProgress = "Listing folder contents..." }
-                    let contents = try await client.listAllObjects(bucket: bucketName, prefix: folderKey)
-                    for obj in contents {
-                        allFiles.append((key: obj.key, relativeTo: prefix))
-                    }
-                }
-
-                for fileKey in selectedFileKeys {
-                    allFiles.append((key: fileKey, relativeTo: prefix))
-                }
-
-                DispatchQueue.main.async { [self] in
-                    downloadProgress = "\(allFiles.count) files ready — choose save location..."
-                    NSApp.activate(ignoringOtherApps: true)
-
-                    let panel = NSOpenPanel()
-                    panel.title = "Choose download location"
-                    panel.canChooseFiles = false
-                    panel.canChooseDirectories = true
-                    panel.canCreateDirectories = true
-                    panel.allowsMultipleSelection = false
-
-                    guard panel.runModal() == .OK, let targetDir = panel.url else {
-                        isDownloading = false
-                        downloadProgress = ""
-                        return
-                    }
-
-                    Task {
-                        let accessed = targetDir.startAccessingSecurityScopedResource()
-                        defer { if accessed { targetDir.stopAccessingSecurityScopedResource() } }
-
-                        do {
-                            for (index, file) in allFiles.enumerated() {
-                                let relativePath = String(file.key.dropFirst(file.relativeTo.count))
-                                await MainActor.run {
-                                    downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
-                                }
-                                let data = try await client.downloadObject(bucket: bucketName, key: file.key)
-                                let fileURL = targetDir.appendingPathComponent(relativePath)
-                                let dir = fileURL.deletingLastPathComponent()
-                                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                                try data.write(to: fileURL)
-                            }
-                            await MainActor.run { downloadProgress = "Done — \(allFiles.count) files saved" }
-                            try? await Task.sleep(for: .seconds(2))
-                        } catch {
-                            await MainActor.run { self.error = error.localizedDescription }
-                        }
-
-                        await MainActor.run {
-                            isDownloading = false
-                            downloadProgress = ""
-                        }
-                    }
-                }
+                let data = try await s3Client.downloadObject(bucket: store.name, key: item.key)
+                exportDocument = S3DownloadedFile(data: data)
+                exportFileName = item.name
+                isDownloading = false
+                downloadProgress = ""
+                showExporter = true
             } catch {
-                DispatchQueue.main.async { [self] in
-                    self.error = error.localizedDescription
-                    isDownloading = false
-                    downloadProgress = ""
+                self.error = error.localizedDescription
+                isDownloading = false
+                downloadProgress = ""
+            }
+        }
+    }
+
+    private func downloadMultiple(_ selectedItems: [BrowserItem]) {
+        let folders = selectedItems.filter(\.isFolder).map(\.key)
+        let files = selectedItems.filter { !$0.isFolder }.map(\.key)
+        let bucketName = store.name
+        let client = s3Client
+        let prefix = currentPrefix
+
+        isDownloading = true
+        downloadProgress = "Preparing..."
+
+        Task {
+            do {
+                // Collect all file keys
+                var allKeys: [String] = []
+
+                for folderKey in folders {
+                    downloadProgress = "Listing folder contents..."
+                    let contents = try await client.listAllObjects(bucket: bucketName, prefix: folderKey)
+                    allKeys.append(contentsOf: contents.map(\.key))
                 }
+                allKeys.append(contentsOf: files)
+
+                // Download all to temp directory
+                let tempDir = FileManager.default.temporaryDirectory
+                    .appendingPathComponent("s3-download-\(UUID().uuidString)")
+                try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+                for (index, key) in allKeys.enumerated() {
+                    let relativePath = String(key.dropFirst(prefix.count))
+                    downloadProgress = "Downloading \(index + 1)/\(allKeys.count): \(relativePath)"
+
+                    let data = try await client.downloadObject(bucket: bucketName, key: key)
+
+                    let fileURL = tempDir.appendingPathComponent(relativePath)
+                    try FileManager.default.createDirectory(
+                        at: fileURL.deletingLastPathComponent(),
+                        withIntermediateDirectories: true
+                    )
+                    try data.write(to: fileURL)
+                }
+
+                // Reveal in Finder
+                downloadProgress = "Done — \(allKeys.count) files downloaded"
+                NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: tempDir.path)
+
+                try? await Task.sleep(for: .seconds(2))
+                isDownloading = false
+                downloadProgress = ""
+            } catch {
+                self.error = error.localizedDescription
+                isDownloading = false
+                downloadProgress = ""
             }
         }
     }
