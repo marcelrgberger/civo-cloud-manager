@@ -68,6 +68,7 @@
 		849F1001F3533C269F0FD391 /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B022376D3CE5DDD6EE9505B /* FirewallRule.swift */; };
 		8501A40C1C4F69688AFB8418 /* CreateObjectStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEECB8E6EDEA2F7E3DA302 /* CreateObjectStoreView.swift */; };
 		85B98A84C6531A1C3BAF3D1C /* CivoCloudManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77C55AD8BDAD5DEE1E1F5D7 /* CivoCloudManagerApp.swift */; };
+		8767DA7B2CC37FF1E24DDA08 /* PodExecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09051DCB7F9EFDBCF15C245B /* PodExecView.swift */; };
 		887F766F77ABC1811C9695FE /* CivoInstanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAE20BBC6F3E08B5DC3AB21 /* CivoInstanceService.swift */; };
 		8A5B3EA42F09B6F200E28B20 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394D4BE2B10B10EE1565C333 /* Logger.swift */; };
 		8C2F81C2B70472E419B7483E /* K8sNodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959602569F06A8B06B21ED24 /* K8sNodeDetailView.swift */; };
@@ -139,6 +140,7 @@
 
 /* Begin PBXFileReference section */
 		00D54A3F3664EE4588C918D4 /* CivoKubernetes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoKubernetes.swift; sourceTree = "<group>"; };
+		09051DCB7F9EFDBCF15C245B /* PodExecView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodExecView.swift; sourceTree = "<group>"; };
 		0ACE5A8AC44CA21C03A15081 /* DatabaseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListView.swift; sourceTree = "<group>"; };
 		0BA1601CC9CA2AD690820E4D /* K8sWorkload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sWorkload.swift; sourceTree = "<group>"; };
 		13B6A98A93B60ACFD5B5354B /* EditLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLabelsView.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				13B6A98A93B60ACFD5B5354B /* EditLabelsView.swift */,
 				959602569F06A8B06B21ED24 /* K8sNodeDetailView.swift */,
 				AEC475DE643C954678BD26AD /* K8sPodListView.swift */,
+				09051DCB7F9EFDBCF15C245B /* PodExecView.swift */,
 				C72C6E4CFC1447539938DF01 /* PodLogView.swift */,
 			);
 			path = Kubernetes;
@@ -724,6 +727,7 @@
 				06646DCE38F5CCC8EFF8202D /* ObjectStoreListView.swift in Sources */,
 				9BCE43A7AD935BCDDD5CCF55 /* OnboardingView.swift in Sources */,
 				68AC75A2F8C9E88D4BFC6FFC /* PaywallView.swift in Sources */,
+				8767DA7B2CC37FF1E24DDA08 /* PodExecView.swift in Sources */,
 				74379EAEC4E40E799404A87E /* PodLogView.swift in Sources */,
 				2ADC636FDA97CE54DB83481E /* QuickSearchView.swift in Sources */,
 				73BFF2DEAFDD610E7403551A /* QuotaEditView.swift in Sources */,
