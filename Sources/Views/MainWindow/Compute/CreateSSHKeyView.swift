@@ -69,16 +69,13 @@ struct CreateSSHKeyView: View {
                         }
 
                         Button {
-                            openTerminalPrefilled(command)
+                            copyAndOpenTerminal(command)
                         } label: {
-                            Label("Open in Terminal", systemImage: "terminal")
+                            Label(copiedToClipboard ? "Copied — paste in Terminal (⌘V + Enter)" : "Copy & Open Terminal", systemImage: copiedToClipboard ? "checkmark.circle.fill" : "terminal")
                         }
                         .buttonStyle(.bordered)
                         .controlSize(.small)
-
-                        Text("Opens Terminal with the command ready — press Enter to execute.")
-                            .font(.caption2)
-                            .foregroundStyle(.tertiary)
+                        .tint(copiedToClipboard ? .green : nil)
 
                         Text("Click Create to upload the public key to Civo.")
                             .font(.caption2)
@@ -117,23 +114,13 @@ struct CreateSSHKeyView: View {
         }
     }
 
-    private func openTerminalPrefilled(_ command: String) {
-        // Opens Terminal.app with the command typed but NOT executed (no \n)
-        let escaped = command.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
-        let script = """
-        tell application "Terminal"
-            activate
-            do script ""
-            delay 0.3
-            tell application "System Events"
-                keystroke "\(escaped)"
-            end tell
-        end tell
-        """
-        if let appleScript = NSAppleScript(source: script) {
-            var error: NSDictionary?
-            appleScript.executeAndReturnError(&error)
-        }
+    @State private var copiedToClipboard = false
+
+    private func copyAndOpenTerminal(_ command: String) {
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(command, forType: .string)
+        copiedToClipboard = true
+        NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Applications/Utilities/Terminal.app"))
     }
 
     private func generateKey() {
