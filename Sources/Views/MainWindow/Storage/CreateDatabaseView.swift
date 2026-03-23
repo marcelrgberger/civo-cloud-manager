@@ -25,7 +25,7 @@ struct CreateDatabaseView: View {
             }
 
             Section("Select Size") {
-                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size)
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size, filterPrefix: "Database")
             }
 
             Section("Networking") {

@@ -3,10 +3,16 @@ import SwiftUI
 struct SizePickerGrid: View {
     let sizes: [CivoSize]
     @Binding var selectedSize: String
+    var filterPrefix: String? = nil // e.g. "Kubernetes", "Instance", "Database"
+
+    private var applicableSizes: [CivoSize] {
+        guard let prefix = filterPrefix else { return sizes }
+        return sizes.filter { ($0.type ?? "").localizedCaseInsensitiveContains(prefix) || ($0.name).contains(prefix.lowercased()) }
+    }
 
     private var sizeTypes: [String] {
-        let types = Set(sizes.compactMap(\.type))
-        let order = ["Instance", "Kubernetes", "Database", "Standard", "Performance", "CPU-Optimized", "RAM-Optimized", "GPU"]
+        let types = Set(applicableSizes.compactMap(\.type))
+        let order = ["Standard", "Performance", "CPU-Optimized", "CPU Optimized", "RAM-Optimized", "RAM Optimized", "GPU", "Instance", "Kubernetes", "Database"]
         return types.sorted { a, b in
             let ai = order.firstIndex(where: { a.localizedCaseInsensitiveContains($0) }) ?? 99
             let bi = order.firstIndex(where: { b.localizedCaseInsensitiveContains($0) }) ?? 99
@@ -21,7 +27,7 @@ struct SizePickerGrid: View {
     }
 
     private var filteredSizes: [CivoSize] {
-        sizes.filter { $0.type == activeType }
+        applicableSizes.filter { $0.type == activeType }
     }
 
     var body: some View {

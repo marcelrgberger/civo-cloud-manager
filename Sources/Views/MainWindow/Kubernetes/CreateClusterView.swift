@@ -27,7 +27,7 @@ struct CreateClusterView: View {
             }
 
             Section("Select Node Size") {
-                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $nodeSize)
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $nodeSize, filterPrefix: "Kubernetes")
             }
 
             Section("Networking") {

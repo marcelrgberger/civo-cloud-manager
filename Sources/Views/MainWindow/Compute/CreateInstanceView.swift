@@ -23,7 +23,7 @@ struct CreateInstanceView: View {
             }
 
             Section("Select Size") {
-                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size)
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size, filterPrefix: "Instance")
             }
 
             Section("Networking") {
