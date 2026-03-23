@@ -127,6 +127,7 @@
 		F12B54BD020BB39BFB84A7D1 /* CivoObjectStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3ADE762368128DFD4D303BF /* CivoObjectStoreService.swift */; };
 		F1F8E3F912DF7CA6A80BD80E /* IPDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913E5478362835EFF7620DC /* IPDetector.swift */; };
 		F24BDD807CDC0525D5BF3D7B /* VolumeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E08631142CB0C98D4FC9824 /* VolumeDetailView.swift */; };
+		F50DE0A8E824EBD466765B01 /* RateEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6BFD4B26BEFD715BE6F78 /* RateEditorView.swift */; };
 		F598AA3CD45406EED61EFD6C /* CreateInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353A2AD351F106200317D37 /* CreateInstanceView.swift */; };
 		FB906C15123E6D7852E79705 /* CivoSSHKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */; };
 /* End PBXBuildFile section */
@@ -205,6 +206,7 @@
 		81AEBC33E74A811E3130B06D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83C5831DA6F0BB7321DCB2FF /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		88855424117BE031BBC65710 /* InstanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceViewModel.swift; sourceTree = "<group>"; };
+		89A6BFD4B26BEFD715BE6F78 /* RateEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateEditorView.swift; sourceTree = "<group>"; };
 		8B5BA6C9A7542257FDEF713B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		8DC6D9CA22D5C3BA1B85D99F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		8ECEECB8E6EDEA2F7E3DA302 /* CreateObjectStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObjectStoreView.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				4413AF2496E5F73132915C3A /* DashboardView.swift */,
 				F113A37E7EAD44865E9A109F /* MainWindowView.swift */,
 				F433A006707610057BD0009F /* QuotaEditView.swift */,
+				89A6BFD4B26BEFD715BE6F78 /* RateEditorView.swift */,
 				0A6EB52D0EFC0F1BA3A38028 /* Account */,
 				4977AB13B20AA86BCA5AF1E8 /* Compute */,
 				591DAB97263BAD0650D40B23 /* Kubernetes */,
@@ -744,6 +747,7 @@
 				2ADC636FDA97CE54DB83481E /* QuickSearchView.swift in Sources */,
 				73BFF2DEAFDD610E7403551A /* QuotaEditView.swift in Sources */,
 				E083AC17B80D72EBCFC34EB1 /* QuotaGauge.swift in Sources */,
+				F50DE0A8E824EBD466765B01 /* RateEditorView.swift in Sources */,
 				D7BCE84ADCD95C32A59F5D29 /* RegionListView.swift in Sources */,
 				57708DF578C420C911D33150 /* RegionViewModel.swift in Sources */,
 				8064B3657059DB672B6CFEE0 /* ResourceListRow.swift in Sources */,

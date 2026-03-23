@@ -17,40 +17,89 @@ struct CivoCharge: Codable, Identifiable, Sendable {
     let previousChargeId: Int?
     let parentProductId: String?
 
-    // Civo pricing per hour (from civo.com/pricing, March 2026)
-    private static let hourlyRates: [String: Double] = [
-        // Databases
-        "database-g3.db.xsmall": 0.0595,
-        "database-g3.db.small": 0.119,
-        "database-g3.db.medium": 0.238,
-        "database-g3.db.large": 0.476,
-        "database-g3.db.xlarge": 0.952,
-        "database-g3.db.2xlarge": 1.904,
-        // K8s nodes (g4s)
-        "kube-node-g4s.kube.xsmall": 0.0069,
-        "kube-node-g4s.kube.small": 0.0137,
-        "kube-node-g4s.kube.medium": 0.0274,
-        "kube-node-g4s.kube.large": 0.0548,
-        "kube-node-g4s.kube.xlarge": 0.1096,
-        "kube-node-g4s.kube.2xlarge": 0.2192,
+    // MARK: - Pricing (user-editable, stored in UserDefaults)
+
+    static let defaultHourlyRates: [String: Double] = [
+        // Databases (0 additional nodes)
+        "database-g3.db.small": 0.059524,
+        "database-g3.db.medium": 0.119048,
+        "database-g3.db.large": 0.238095,
+        "database-g3.db.xlarge": 0.476190,
+        "database-g3.db.2xlarge": 0.952381,
+        // K8s Standard nodes (g4s)
+        "kube-node-g4s.kube.xsmall": 0.007440,
+        "kube-node-g4s.kube.small": 0.014881,
+        "kube-node-g4s.kube.medium": 0.029762,
+        "kube-node-g4s.kube.large": 0.059524,
+        // K8s Performance nodes
+        "kube-node-g4s.kube.small-perf": 0.119048,
+        "kube-node-g4s.kube.medium-perf": 0.238095,
+        "kube-node-g4s.kube.large-perf": 0.476190,
+        "kube-node-g4s.kube.xlarge-perf": 0.952381,
+        // K8s CPU Optimized
+        "kube-node-g4s.kube.small-cpu": 0.190476,
+        "kube-node-g4s.kube.medium-cpu": 0.380952,
+        "kube-node-g4s.kube.large-cpu": 0.761905,
+        "kube-node-g4s.kube.xlarge-cpu": 1.523810,
+        // K8s RAM Optimized
+        "kube-node-g4s.kube.small-ram": 0.107143,
+        "kube-node-g4s.kube.medium-ram": 0.214286,
+        "kube-node-g4s.kube.large-ram": 0.428571,
+        "kube-node-g4s.kube.xlarge-ram": 0.857143,
+        // Compute Standard
+        "instance-g3.xsmall": 0.007440,
+        "instance-g3.small": 0.014881,
+        "instance-g3.medium": 0.029762,
+        "instance-g3.large": 0.059524,
+        "instance-g3.xlarge": 0.119048,
+        "instance-g3.2xlarge": 0.238095,
         // Load Balancer
-        "loadbalancer": 0.0137,
-        // Volumes: $0.10/GB/month = $0.000137/GB/hour
-        // Object Store: $5/500GB/month
-        // IP: $3/month
+        "loadbalancer": 0.014881,
     ]
 
+    private static let ratesKey = "CivoHourlyRates"
+
+    static var hourlyRates: [String: Double] {
+        get {
+            if let data = UserDefaults.standard.data(forKey: ratesKey),
+               let rates = try? JSONDecoder().decode([String: Double].self, from: data) {
+                return rates
+            }
+            // First launch: seed with defaults
+            saveHourlyRates(defaultHourlyRates)
+            return defaultHourlyRates
+        }
+    }
+
+    static func saveHourlyRates(_ rates: [String: Double]) {
+        if let data = try? JSONEncoder().encode(rates) {
+            UserDefaults.standard.set(data, forKey: ratesKey)
+        }
+    }
+
+    static func resetToDefaultRates() {
+        saveHourlyRates(defaultHourlyRates)
+    }
+
     var estimatedHourlyCost: Double {
+        // Exact match
         if let rate = Self.hourlyRates[code] {
             return rate
         }
-        // Volume: per GB per hour
-        if code == "volume" {
-            return (sizeGb ?? 0) * 0.000137
+        // Fuzzy match: try matching the size suffix
+        for (key, rate) in Self.hourlyRates where code.contains(key.components(separatedBy: ".").last ?? "") {
+            // Only match if the prefix type also matches
+            if code.hasPrefix(key.components(separatedBy: "-").first ?? "") || code.hasPrefix(key.components(separatedBy: ".").first ?? "") {
+                return rate
+            }
         }
-        // Object Store: per GB per hour
-        if code == "objectstore" {
-            return (sizeGb ?? 0) * 0.0000149
+        // Volume: $0.11/GB/month = $0.000149/GB/hour
+        if code == "volume" || code.contains("volume") {
+            return (sizeGb ?? Double(size ?? 0)) * 0.000149
+        }
+        // Object Store: $0.01086/GB/month = $0.000015/GB/hour
+        if code == "objectstore" || code.contains("object") {
+            return (sizeGb ?? Double(size ?? 0)) * 0.000015
         }
         return 0
     }

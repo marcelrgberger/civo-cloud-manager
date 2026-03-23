@@ -10,6 +10,7 @@ struct CostDashboardView: View {
     @State private var isLoading = false
     @State private var error: String?
     @State private var period: ChargePeriod = .currentMonth
+    @State private var showRateEditor = false
 
     private let service = CivoChargesService()
 
@@ -126,9 +127,15 @@ struct CostDashboardView: View {
                     resourceBreakdown
                 }
 
-                Text("Costs estimated from Civo hourly rates × usage hours. Actual invoice may differ slightly.")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                HStack {
+                    Text("Costs estimated from hourly rates × usage hours.")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                    Spacer()
+                    Button("Edit Rates") { showRateEditor = true }
+                        .font(.caption2)
+                        .buttonStyle(.borderless)
+                }
             }
             .padding(20)
         }
@@ -143,6 +150,9 @@ struct CostDashboardView: View {
                 }
                 .disabled(isLoading)
             }
+        }
+        .sheet(isPresented: $showRateEditor) {
+            RateEditorView()
         }
     }
 
