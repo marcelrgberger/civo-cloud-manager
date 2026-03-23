@@ -68,29 +68,17 @@ struct CreateSSHKeyView: View {
                                 .padding(2)
                         }
 
-                        if moveCompleted {
-                            HStack(spacing: 6) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.green)
-                                Text("Private key moved to ~/.ssh/\(keyName)")
-                                    .font(.caption)
-                                    .foregroundStyle(.green)
-                            }
-                        } else {
-                            Button {
-                                moveKeyToSSH(command)
-                            } label: {
-                                Label("Move to ~/.ssh/", systemImage: "arrow.right.circle")
-                            }
-                            .buttonStyle(.bordered)
-                            .controlSize(.small)
+                        Button {
+                            openTerminalPrefilled(command)
+                        } label: {
+                            Label("Open in Terminal", systemImage: "terminal")
                         }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
 
-                        if let moveError {
-                            Text(moveError)
-                                .font(.caption2)
-                                .foregroundStyle(.red)
-                        }
+                        Text("Opens Terminal with the command ready — press Enter to execute.")
+                            .font(.caption2)
+                            .foregroundStyle(.tertiary)
 
                         Text("Click Create to upload the public key to Civo.")
                             .font(.caption2)
@@ -129,28 +117,22 @@ struct CreateSSHKeyView: View {
         }
     }
 
-    @State private var moveCompleted = false
-    @State private var moveError: String?
-
-    private func moveKeyToSSH(_ command: String) {
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", command]
-
-        let pipe = Pipe()
-        process.standardError = pipe
-
-        do {
-            try process.run()
-            process.waitUntilExit()
-            if process.terminationStatus == 0 {
-                moveCompleted = true
-            } else {
-                let err = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-                moveError = err.isEmpty ? "Move failed" : err
-            }
-        } catch {
-            moveError = error.localizedDescription
+    private func openTerminalPrefilled(_ command: String) {
+        // Opens Terminal.app with the command typed but NOT executed (no \n)
+        let escaped = command.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
+        let script = """
+        tell application "Terminal"
+            activate
+            do script ""
+            delay 0.3
+            tell application "System Events"
+                keystroke "\(escaped)"
+            end tell
+        end tell
+        """
+        if let appleScript = NSAppleScript(source: script) {
+            var error: NSDictionary?
+            appleScript.executeAndReturnError(&error)
         }
     }
 
