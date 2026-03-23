@@ -97,6 +97,80 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         _ = try await execute("/apis/apps/v1/namespaces/\(namespace)/deployments/\(name)", method: "PATCH", body: body, contentType: "application/strategic-merge-patch+json")
     }
 
+    // MARK: - Exec (command execution in pod via SPDY/WebSocket)
+
+    /// Runs a command in an ephemeral job, collects output via pod logs, then cleans up.
+    /// This works without WebSocket/SPDY support.
+    func runCommandInPod(namespace: String, image: String = "alpine:latest", command: [String]) async throws -> String {
+        let jobName = "civo-exec-\(UUID().uuidString.prefix(8).lowercased())"
+        let cmdJson = try JSONSerialization.data(withJSONObject: command)
+        let cmdStr = String(data: cmdJson, encoding: .utf8) ?? "[]"
+
+        let jobBody = """
+        {
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "metadata": {"name": "\(jobName)", "namespace": "\(namespace)"},
+            "spec": {
+                "backoffLimit": 0,
+                "ttlSecondsAfterFinished": 10,
+                "template": {
+                    "spec": {
+                        "restartPolicy": "Never",
+                        "containers": [{
+                            "name": "exec",
+                            "image": "\(image)",
+                            "command": \(cmdStr)
+                        }]
+                    }
+                }
+            }
+        }
+        """
+
+        // Create job
+        _ = try await execute(
+            "/apis/batch/v1/namespaces/\(namespace)/jobs",
+            method: "POST",
+            body: jobBody
+        )
+
+        // Wait for completion (poll every 2s, max 60s)
+        var output = ""
+        for _ in 0..<30 {
+            try await Task.sleep(for: .seconds(2))
+
+            // Check job status
+            let statusData = try await execute("/apis/batch/v1/namespaces/\(namespace)/jobs/\(jobName)")
+            if let statusJson = try? JSONSerialization.jsonObject(with: statusData) as? [String: Any],
+               let status = statusJson["status"] as? [String: Any] {
+                if status["succeeded"] as? Int == 1 {
+                    // Get pod name
+                    let podsData = try await execute("/api/v1/namespaces/\(namespace)/pods?labelSelector=job-name%3D\(jobName)")
+                    if let podsJson = try? JSONSerialization.jsonObject(with: podsData) as? [String: Any],
+                       let items = podsJson["items"] as? [[String: Any]],
+                       let podMeta = items.first?["metadata"] as? [String: Any],
+                       let podName = podMeta["name"] as? String {
+                        output = try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(podName)/log")
+                    }
+                    break
+                }
+                if status["failed"] as? Int ?? 0 > 0 {
+                    output = "Command failed"
+                    break
+                }
+            }
+        }
+
+        // Cleanup
+        _ = try? await execute(
+            "/apis/batch/v1/namespaces/\(namespace)/jobs/\(jobName)?propagationPolicy=Background",
+            method: "DELETE"
+        )
+
+        return output
+    }
+
     // MARK: - HTTP
 
     private func get<T: Decodable>(_ path: String) async throws -> T {

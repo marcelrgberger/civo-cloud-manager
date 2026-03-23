@@ -265,6 +265,15 @@ final class KubernetesViewModel {
         }
     }
 
+    func runCommand(namespace: String, command: [String]) async -> String {
+        guard let client = k8sClient else { return "Error: Not connected to K8s API" }
+        do {
+            return try await client.runCommandInPod(namespace: namespace, command: command)
+        } catch {
+            return "Error: \(error.localizedDescription)"
+        }
+    }
+
     private func isNetworkError(_ error: Error) -> Bool {
         if let urlError = error as? URLError {
             return [.cancelled, .timedOut, .cannotConnectToHost, .networkConnectionLost, .notConnectedToInternet]
