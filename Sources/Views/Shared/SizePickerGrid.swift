@@ -53,14 +53,18 @@ struct SizePickerGrid: View {
                 }
             }
 
-            let columns = [GridItem(.adaptive(minimum: 150, maximum: 200), spacing: 10)]
+            let columns = [GridItem(.adaptive(minimum: 180, maximum: 240), spacing: 10)]
 
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(filteredSizes) { size in
-                    SizeCard(size: size, isSelected: selectedSize == size.name)
-                        .onTapGesture {
-                            selectedSize = size.name
-                        }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(size.niceName ?? size.displayName)
+                            .font(.caption.bold())
+                        SizeCard(size: size, isSelected: selectedSize == size.name)
+                    }
+                    .onTapGesture {
+                        selectedSize = size.name
+                    }
                 }
             }
         }
@@ -71,70 +75,63 @@ private struct SizeCard: View {
     let size: CivoSize
     let isSelected: Bool
 
+    private var hourlyRate: Double? {
+        // Try exact match, then partial match on size name
+        let rates = CivoCharge.hourlyRates
+        if let rate = rates[size.name] { return rate }
+        // Match by looking for the size code in charge keys
+        for (key, rate) in rates {
+            if key.hasSuffix(size.name) || key.contains(size.name) { return rate }
+        }
+        return nil
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            // Header
-            VStack(alignment: .leading, spacing: 2) {
-                Text(size.name)
-                    .font(.caption.bold())
-                if let type = size.type {
-                    Text(type)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
+        VStack(alignment: .leading, spacing: 6) {
+            // Specs row
+            HStack(spacing: 12) {
+                specChip("\(size.effectiveCpu ?? 0) vCPU")
+                specChip(ramDisplay)
+                specChip("\(size.effectiveDisk ?? 0) GB NVMe")
             }
-
-            Divider()
-
-            // Specs
-            HStack(spacing: 0) {
-                specItem("CPU Cores", "\(size.effectiveCpu ?? 0)")
-                Spacer()
-                specItem("RAM", ramDisplay)
-            }
-
-            HStack(spacing: 0) {
-                specItem("NVMe", "\(size.effectiveDisk ?? 0) GB")
-                Spacer()
-                specItem("Transfer", "FREE")
-            }
-
-            Divider()
 
             // Price
-            if let rate = CivoCharge.hourlyRates[size.name] ?? CivoCharge.hourlyRates.first(where: { size.name.contains($0.key.components(separatedBy: "-").last ?? "") })?.value {
+            if let rate = hourlyRate {
                 HStack(alignment: .firstTextBaseline, spacing: 2) {
-                    Text("$\(rate, specifier: "%.6f")")
-                        .font(.system(.callout, design: .rounded).bold())
+                    Text("$\(rate, specifier: "%.2f")")
+                        .font(.system(.title3, design: .rounded).bold())
+                        .foregroundStyle(isSelected ? Color.accentColor : .primary)
                     Text("per hr")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
+
+                    Spacer()
+
+                    Text("~$\(rate * 730, specifier: "%.0f")/mo")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
                 }
             }
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(isSelected ? Color.accentColor.opacity(0.1) : Color.secondary.opacity(0.05))
+        .background(isSelected ? Color.accentColor.opacity(0.08) : Color.secondary.opacity(0.04))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(isSelected ? Color.accentColor : Color.secondary.opacity(0.2), lineWidth: isSelected ? 2 : 1)
+                .stroke(isSelected ? Color.accentColor : Color.secondary.opacity(0.15), lineWidth: isSelected ? 2 : 1)
         )
         .clipShape(RoundedRectangle(cornerRadius: 8))
+        .contentShape(Rectangle())
     }
 
     private var ramDisplay: String {
         guard let ram = size.effectiveRam else { return "0" }
-        return ram >= 1024 ? "\(ram / 1024) GB" : "\(ram) MB"
+        return ram >= 1024 ? "\(ram / 1024) GB RAM" : "\(ram) MB RAM"
     }
 
-    private func specItem(_ label: String, _ value: String) -> some View {
-        VStack(alignment: .leading, spacing: 1) {
-            Text(label)
-                .font(.system(size: 9))
-                .foregroundStyle(.tertiary)
-            Text(value)
-                .font(.caption.bold())
-        }
-        .frame(minWidth: 50, alignment: .leading)
+    private func specChip(_ text: String) -> some View {
+        Text(text)
+            .font(.caption2.weight(.medium))
+            .foregroundStyle(.secondary)
     }
 }
