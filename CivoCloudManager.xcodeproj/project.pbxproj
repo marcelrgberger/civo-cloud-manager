@@ -84,6 +84,7 @@
 		9BCE43A7AD935BCDDD5CCF55 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18DCBFC2A79CA314A5C09E /* OnboardingView.swift */; };
 		9CB896D3236DF2336757F25F /* SuccessOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573C9845C32B46E9605DB19B /* SuccessOverlay.swift */; };
 		9F1E590B9AE252D6F460C751 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D153508E97250EEF5A403AC4 /* InstanceListView.swift */; };
+		A21412F8EC297EC807CB1247 /* CostDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C2B1553A9712D3387F5579 /* CostDashboardView.swift */; };
 		A228854C670E707637939276 /* KubernetesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B16DE82F69BFB48DC655249 /* KubernetesViewModel.swift */; };
 		A502A6DAF6FE297CA711845B /* KubeconfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4C210104DCC1379337CF6C /* KubeconfigParser.swift */; };
 		A581A850D995B9CE821240AB /* ClusterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA77A6541807F3782C44765 /* ClusterListView.swift */; };
@@ -140,6 +141,7 @@
 		0ACE5A8AC44CA21C03A15081 /* DatabaseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseListView.swift; sourceTree = "<group>"; };
 		0BA1601CC9CA2AD690820E4D /* K8sWorkload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sWorkload.swift; sourceTree = "<group>"; };
 		13B6A98A93B60ACFD5B5354B /* EditLabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLabelsView.swift; sourceTree = "<group>"; };
+		14C2B1553A9712D3387F5579 /* CostDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostDashboardView.swift; sourceTree = "<group>"; };
 		182F9603167FFFC0947A39D7 /* IPPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPPreset.swift; sourceTree = "<group>"; };
 		1FC6BE2A34C7AF48F9B97D83 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		205F5D90D7A08D4235B08375 /* ObjectStoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectStoreDetailView.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 		64DAF0CB6B8507CF1F393615 /* MainWindow */ = {
 			isa = PBXGroup;
 			children = (
+				14C2B1553A9712D3387F5579 /* CostDashboardView.swift */,
 				4413AF2496E5F73132915C3A /* DashboardView.swift */,
 				F113A37E7EAD44865E9A109F /* MainWindowView.swift */,
 				F433A006707610057BD0009F /* QuotaEditView.swift */,
@@ -656,6 +659,7 @@
 				96F3EDB8E751E382EEEFFC1D /* CivoVolumeService.swift in Sources */,
 				B890A5AB4C1AABAC54BD74FD /* ClusterDetailView.swift in Sources */,
 				A581A850D995B9CE821240AB /* ClusterListView.swift in Sources */,
+				A21412F8EC297EC807CB1247 /* CostDashboardView.swift in Sources */,
 				D37963D29A026EDEBEA8B84C /* CreateClusterView.swift in Sources */,
 				7FDACB0599B205A95A50DCBE /* CreateDNSRecordView.swift in Sources */,
 				EBE92405BBFCAB6EEB4DCDD4 /* CreateDatabaseView.swift in Sources */,
