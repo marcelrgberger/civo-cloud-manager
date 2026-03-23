@@ -55,19 +55,28 @@ struct CreateSSHKeyView: View {
                                 .font(.caption.bold())
                         }
 
-                        Text("To use the key, move it to your SSH directory:")
+                        let command = "mv ~/Downloads/\(keyName) ~/.ssh/\(keyName) && chmod 600 ~/.ssh/\(keyName)"
+
+                        Text("Move it to your SSH directory:")
                             .font(.caption)
                             .foregroundStyle(.secondary)
 
-                        GroupBox {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("mv ~/Downloads/\(keyName) ~/.ssh/\(keyName)")
+                        HStack(spacing: 6) {
+                            GroupBox {
+                                Text(command)
                                     .font(.caption2.monospaced())
-                                Text("chmod 600 ~/.ssh/\(keyName)")
-                                    .font(.caption2.monospaced())
+                                    .textSelection(.enabled)
+                                    .padding(2)
                             }
-                            .textSelection(.enabled)
-                            .padding(4)
+                            Button {
+                                NSPasteboard.general.clearContents()
+                                NSPasteboard.general.setString(command, forType: .string)
+                                openTerminalWithCommand(command)
+                            } label: {
+                                Image(systemName: "doc.on.doc")
+                                    .help("Copy and open Terminal")
+                            }
+                            .buttonStyle(.borderless)
                         }
 
                         Text("Click Create to upload the public key to Civo.")
@@ -104,6 +113,14 @@ struct CreateSSHKeyView: View {
                 }
                 .disabled(name.isEmpty || publicKey.isEmpty || vm.isSaving)
             }
+        }
+    }
+
+    private func openTerminalWithCommand(_ command: String) {
+        let script = "tell application \"Terminal\"\nactivate\ndo script \"\(command.replacingOccurrences(of: "\"", with: "\\\""))\"\nend tell"
+        if let appleScript = NSAppleScript(source: script) {
+            var error: NSDictionary?
+            appleScript.executeAndReturnError(&error)
         }
     }
 
