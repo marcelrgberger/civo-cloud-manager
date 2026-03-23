@@ -2,6 +2,33 @@ import Foundation
 
 struct CivoChargesService: Sendable {
     private let api = CivoAPIClient.shared
+    private static let cacheKey = "CivoChargesCache"
+
+    // MARK: - Cache
+
+    private func cachedCharges(for key: String) -> [CivoCharge]? {
+        guard let data = UserDefaults.standard.data(forKey: "\(Self.cacheKey).\(key)"),
+              let charges = try? JSONDecoder().decode([CivoCharge].self, from: data) else { return nil }
+        return charges
+    }
+
+    private func cacheCharges(_ charges: [CivoCharge], for key: String) {
+        if let data = try? JSONEncoder().encode(charges) {
+            UserDefaults.standard.set(data, forKey: "\(Self.cacheKey).\(key)")
+        }
+    }
+
+    private func monthKey(from date: Date) -> String {
+        let cal = Calendar.current
+        let y = cal.component(.year, from: date)
+        let m = cal.component(.month, from: date)
+        return "\(y)-\(String(format: "%02d", m))"
+    }
+
+    private func isCurrentMonth(_ date: Date) -> Bool {
+        let cal = Calendar.current
+        return cal.isDate(date, equalTo: Date(), toGranularity: .month)
+    }
 
     /// Fetches charges for the given period. Civo API: GET /v2/charges?from=...&to=...
     func getCharges(from: Date, to: Date) async throws -> [CivoCharge] {
@@ -47,19 +74,31 @@ struct CivoChargesService: Sendable {
         throw CivoAPIError.decodingError("Charges API returned unexpected format. Check Console for details.")
     }
 
-    /// Fetches charges for the current month.
-    func getCurrentMonthCharges() async throws -> [CivoCharge] {
-        let now = Date()
-        let calendar = Calendar.current
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
-        return try await getCharges(from: startOfMonth, to: now)
-    }
+    /// Fetches charges for a month range. Uses cache for past months, live API for current month.
+    func getChargesForRange(from start: Date, to end: Date) async throws -> [CivoCharge] {
+        let cal = Calendar.current
+        var allCharges: [CivoCharge] = []
 
-    /// Fetches charges for the last 30 days.
-    func getLast30DaysCharges() async throws -> [CivoCharge] {
-        let now = Date()
-        let thirtyDaysAgo = Calendar.current.date(byAdding: .day, value: -30, to: now)!
-        return try await getCharges(from: thirtyDaysAgo, to: now)
+        // Build list of months to fetch
+        var cursor = cal.date(from: cal.dateComponents([.year, .month], from: start))!
+        while cursor < end {
+            let monthEnd = min(cal.date(byAdding: .month, value: 1, to: cursor)!, end)
+            let key = monthKey(from: cursor)
+
+            if !isCurrentMonth(cursor), let cached = cachedCharges(for: key) {
+                allCharges.append(contentsOf: cached)
+            } else {
+                let charges = try await getCharges(from: cursor, to: monthEnd)
+                if !isCurrentMonth(cursor) {
+                    cacheCharges(charges, for: key)
+                }
+                allCharges.append(contentsOf: charges)
+            }
+
+            cursor = cal.date(byAdding: .month, value: 1, to: cursor)!
+        }
+
+        return allCharges
     }
 
     /// Fetches invoices.

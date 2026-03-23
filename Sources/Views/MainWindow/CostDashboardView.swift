@@ -20,43 +20,23 @@ struct CostDashboardView: View {
         case lastQuarter = "Last Quarter"
         case thisYear = "This Year"
 
-        /// Returns monthly date ranges (max 31 days each) for the period
-        var monthlyRanges: [(from: Date, to: Date)] {
+        var dateRange: (from: Date, to: Date) {
             let now = Date()
             let cal = Calendar.current
-
             switch self {
             case .currentMonth:
                 let start = cal.date(from: cal.dateComponents([.year, .month], from: now))!
-                return [(start, now)]
+                return (start, now)
             case .lastMonth:
                 let startOfThisMonth = cal.date(from: cal.dateComponents([.year, .month], from: now))!
                 let startOfLastMonth = cal.date(byAdding: .month, value: -1, to: startOfThisMonth)!
-                return [(startOfLastMonth, startOfThisMonth)]
+                return (startOfLastMonth, startOfThisMonth)
             case .lastQuarter:
-                return (0..<3).reversed().compactMap { offset in
-                    let monthStart = cal.date(byAdding: .month, value: -offset, to: cal.date(from: cal.dateComponents([.year, .month], from: now))!)!
-                    let monthEnd: Date
-                    if offset == 0 {
-                        monthEnd = now
-                    } else {
-                        monthEnd = cal.date(byAdding: .month, value: 1, to: monthStart)!
-                    }
-                    return (monthStart, monthEnd)
-                }
+                let threeMonthsAgo = cal.date(byAdding: .month, value: -3, to: cal.date(from: cal.dateComponents([.year, .month], from: now))!)!
+                return (threeMonthsAgo, now)
             case .thisYear:
                 let startOfYear = cal.date(from: cal.dateComponents([.year], from: now))!
-                let currentMonth = cal.component(.month, from: now)
-                return (0..<currentMonth).map { offset in
-                    let monthStart = cal.date(byAdding: .month, value: offset, to: startOfYear)!
-                    let monthEnd: Date
-                    if offset == currentMonth - 1 {
-                        monthEnd = now
-                    } else {
-                        monthEnd = cal.date(byAdding: .month, value: offset + 1, to: startOfYear)!
-                    }
-                    return (monthStart, monthEnd)
-                }
+                return (startOfYear, now)
             }
         }
     }
@@ -329,16 +309,11 @@ struct CostDashboardView: View {
         error = nil
         defer { isLoading = false }
 
-        let ranges = period.monthlyRanges
+        let range = period.dateRange
         do {
             async let invoicesTask = service.getInvoices()
 
-            var allCharges: [CivoCharge] = []
-            for range in ranges {
-                let monthCharges = try await service.getCharges(from: range.from, to: range.to)
-                allCharges.append(contentsOf: monthCharges)
-            }
-            charges = allCharges
+            charges = try await service.getChargesForRange(from: range.from, to: range.to)
             invoices = (try? await invoicesTask) ?? []
         } catch {
             self.error = error.localizedDescription
