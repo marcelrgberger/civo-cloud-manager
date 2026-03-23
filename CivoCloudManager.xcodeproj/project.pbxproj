@@ -75,6 +75,7 @@
 		8F902984DEC9371847A89140 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4198C5C2FE783F0CEA1E28F /* MenuBarView.swift */; };
 		8FD8FBD20CEAD13DC2FE956C /* DatabaseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACE5A8AC44CA21C03A15081 /* DatabaseListView.swift */; };
 		900C84C2C79A7F17A60B42A6 /* CivoDiskImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70CFC3073652B2F484EBEB /* CivoDiskImage.swift */; };
+		92101182AD50135EC79CD64C /* HelmRelease.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E491B3DE025DB9649A89742 /* HelmRelease.swift */; };
 		922B5BC91F3F6D84EE61E31C /* InstanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88855424117BE031BBC65710 /* InstanceViewModel.swift */; };
 		933917D91224C642ED2FA013 /* CivoLoadBalancerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C1EADCBB722A2063BEFE0F /* CivoLoadBalancerService.swift */; };
 		93D416EEDB6125BFFEBE5818 /* DomainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343445235851034C3DC49579 /* DomainListView.swift */; };
@@ -166,6 +167,7 @@
 		4A37808DF7874B84C497B183 /* K8sEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sEvent.swift; sourceTree = "<group>"; };
 		4B022376D3CE5DDD6EE9505B /* FirewallRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
 		4B70CFC3073652B2F484EBEB /* CivoDiskImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoDiskImage.swift; sourceTree = "<group>"; };
+		4E491B3DE025DB9649A89742 /* HelmRelease.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelmRelease.swift; sourceTree = "<group>"; };
 		4FA24C620CC32B347D0C1F4D /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		51A68203D97D90CDCA97D376 /* CivoDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoDomain.swift; sourceTree = "<group>"; };
 		54ECEEC4D353BAACD362D46D /* CivoRegionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoRegionService.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */,
 				94F9EC147708D73711161AE0 /* CivoVolume.swift */,
 				4B022376D3CE5DDD6EE9505B /* FirewallRule.swift */,
+				4E491B3DE025DB9649A89742 /* HelmRelease.swift */,
 				182F9603167FFFC0947A39D7 /* IPPreset.swift */,
 				648D217EEDD44D69D88C357F /* K8sConfig.swift */,
 				4A37808DF7874B84C497B183 /* K8sEvent.swift */,
@@ -687,6 +690,7 @@
 				030D3EB1E368E8EE0EDDE2E1 /* FirewallDetailView.swift in Sources */,
 				2E20E461EA18DCC0965905A8 /* FirewallListView.swift in Sources */,
 				849F1001F3533C269F0FD391 /* FirewallRule.swift in Sources */,
+				92101182AD50135EC79CD64C /* HelmRelease.swift in Sources */,
 				C06C53CB9D6DCC206E9E137E /* HelpView.swift in Sources */,
 				F1F8E3F912DF7CA6A80BD80E /* IPDetector.swift in Sources */,
 				ECE12521C11AD261FC5F5C68 /* IPPreset.swift in Sources */,

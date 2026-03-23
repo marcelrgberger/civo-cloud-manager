@@ -84,6 +84,10 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         try await get("/api/v1/namespaces/\(namespace)/secrets/\(name)")
     }
 
+    func listHelmSecrets() async throws -> K8sSecretList {
+        try await get("/api/v1/secrets?labelSelector=owner%3Dhelm")
+    }
+
     /// Triggers a rollout restart by patching the deployment with a restart annotation (equivalent to `kubectl rollout restart`).
     func restartDeployment(namespace: String, name: String) async throws {
         let timestamp = ISO8601DateFormatter().string(from: Date())
