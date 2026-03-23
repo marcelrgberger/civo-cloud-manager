@@ -7,7 +7,6 @@ struct CostDashboardView: View {
     let volumeVM: VolumeViewModel
 
     @State private var charges: [CivoCharge] = []
-    @State private var invoices: [CivoInvoice] = []
     @State private var isLoading = false
     @State private var error: String?
     @State private var period: ChargePeriod = .currentMonth
@@ -127,9 +126,9 @@ struct CostDashboardView: View {
                     resourceBreakdown
                 }
 
-                if !invoices.isEmpty {
-                    invoiceSection
-                }
+                Text("Costs estimated from Civo hourly rates × usage hours. Actual invoice may differ slightly.")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
             }
             .padding(20)
         }
@@ -252,55 +251,7 @@ struct CostDashboardView: View {
         }
     }
 
-    // MARK: - Invoices
 
-    private var invoiceSection: some View {
-        GroupBox("Past Invoices") {
-            VStack(spacing: 2) {
-                ForEach(invoices.prefix(12)) { invoice in
-                    HStack(spacing: 10) {
-                        Image(systemName: "doc.text")
-                            .foregroundStyle(.blue)
-                            .frame(width: 20)
-                        VStack(alignment: .leading, spacing: 1) {
-                            Text(invoice.invoiceNumber ?? invoice.id)
-                                .font(.callout)
-                            Text(invoice.periodDisplay)
-                                .font(.caption2)
-                                .foregroundStyle(.tertiary)
-                        }
-                        Spacer()
-                        Text(invoice.statusDisplay)
-                            .font(.caption2)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(invoice.status == "paid" ? Color.green.opacity(0.15) : Color.orange.opacity(0.15))
-                            .foregroundStyle(invoice.status == "paid" ? .green : .orange)
-                            .clipShape(Capsule())
-                        if let total = invoice.total {
-                            Text("$\(total, specifier: "%.2f")")
-                                .font(.callout.monospacedDigit())
-                                .foregroundStyle(.secondary)
-                                .frame(width: 80, alignment: .trailing)
-                        }
-                    }
-                    .padding(.vertical, 4)
-                    Divider()
-                }
-
-                Link(destination: URL(string: "https://dashboard.civo.com/invoices")!) {
-                    HStack {
-                        Image(systemName: "arrow.up.right.square")
-                        Text("View & Download PDFs in Civo Dashboard")
-                    }
-                    .font(.caption)
-                    .foregroundStyle(.blue)
-                }
-                .padding(.top, 8)
-            }
-            .padding(4)
-        }
-    }
 
     // MARK: - Data
 
@@ -311,10 +262,7 @@ struct CostDashboardView: View {
 
         let range = period.dateRange
         do {
-            async let invoicesTask = service.getInvoices()
-
             charges = try await service.getChargesForRange(from: range.from, to: range.to)
-            invoices = (try? await invoicesTask) ?? []
         } catch {
             self.error = error.localizedDescription
         }

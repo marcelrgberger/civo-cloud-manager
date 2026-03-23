@@ -8,27 +8,6 @@ struct CivoCloudManagerApp: App {
     init() {
         StoreManager.shared.startListening()
         NotificationService.shared.requestPermission()
-        Task { await Self.checkForNewInvoices() }
-    }
-
-    private static func checkForNewInvoices() async {
-        guard CivoConfig.shared.hasAPIKey else { return }
-        do {
-            let invoices = try await CivoChargesService().getInvoices()
-            let lastKnownId = UserDefaults.standard.string(forKey: "lastKnownInvoiceId")
-            if let latest = invoices.first, latest.id != lastKnownId {
-                if lastKnownId != nil {
-                    let amount = latest.total.map { String(format: "$%.2f", $0) } ?? ""
-                    NotificationService.shared.sendAlert(
-                        title: "New Civo Invoice",
-                        body: "Invoice \(latest.invoiceNumber ?? latest.id) \(amount) is available."
-                    )
-                }
-                UserDefaults.standard.set(latest.id, forKey: "lastKnownInvoiceId")
-            }
-        } catch {
-            // Silent — don't block app launch for invoice check
-        }
     }
 
     var body: some Scene {
