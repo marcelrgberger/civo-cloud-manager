@@ -10,23 +10,41 @@ struct CivoChargesService: Sendable {
             URLQueryItem(name: "from", value: formatter.string(from: from)),
             URLQueryItem(name: "to", value: formatter.string(from: to)),
         ]
-        // Try to get raw response first for debugging, then decode
         let raw = try await api.getRaw(path: "/charges", queryItems: queryItems, regionRequired: false)
-        Log.info("Charges API raw response (first 500 chars): \(String(raw.prefix(500)))")
+        Log.info("Charges raw (\(raw.count) chars): \(String(raw.prefix(500)))")
 
-        guard let data = raw.data(using: .utf8) else { return [] }
+        guard let data = raw.data(using: .utf8), !raw.isEmpty else {
+            Log.error("Charges API: empty response")
+            return []
+        }
 
-        // Try decoding as array first, then as paginated
-        if let array = try? JSONDecoder().decode([CivoCharge].self, from: data) {
+        // Try array
+        do {
+            let array = try JSONDecoder().decode([CivoCharge].self, from: data)
+            Log.info("Charges decoded as array: \(array.count) items")
             return array
-        }
-        if let paginated = try? JSONDecoder().decode(PaginatedResponse<CivoCharge>.self, from: data) {
-            return paginated.items
+        } catch {
+            Log.info("Charges not array: \(error.localizedDescription)")
         }
 
-        // Last resort: try to decode the top-level keys
-        Log.error("Charges API: could not decode response")
-        return []
+        // Try paginated { items: [...] }
+        do {
+            let paginated = try JSONDecoder().decode(PaginatedResponse<CivoCharge>.self, from: data)
+            Log.info("Charges decoded as paginated: \(paginated.items.count) items")
+            return paginated.items
+        } catch {
+            Log.info("Charges not paginated: \(error.localizedDescription)")
+        }
+
+        // Try as wrapper with different key names
+        if let json = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
+            Log.info("Charges is array of dicts, first keys: \(json.first?.keys.sorted() ?? [])")
+        } else if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            Log.info("Charges is dict with keys: \(json.keys.sorted())")
+        }
+
+        Log.error("Charges API: could not decode - showing raw in error")
+        throw CivoAPIError.decodingError("Charges API returned unexpected format. Check Console for details.")
     }
 
     /// Fetches charges for the current month.
