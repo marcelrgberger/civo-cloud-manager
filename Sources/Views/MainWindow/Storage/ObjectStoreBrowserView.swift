@@ -172,32 +172,18 @@ struct ObjectStoreBrowserView: View {
             .width(60)
 
             TableColumn("") { item in
-                HStack(spacing: 4) {
-                    if item.isFolder {
-                        Button {
-                            navigateToFolder(item.key)
-                        } label: {
-                            Image(systemName: "arrow.right.circle")
-                                .foregroundStyle(.blue)
-                        }
-                        .buttonStyle(.borderless)
-                        .help("Open folder")
-                    }
+                if item.isFolder {
                     Button {
-                        if item.isFolder {
-                            startFolderDownload(item)
-                        } else {
-                            startSingleDownload(item)
-                        }
+                        navigateToFolder(item.key)
                     } label: {
-                        Image(systemName: "arrow.down.circle")
-                            .foregroundStyle(.secondary)
+                        Image(systemName: "arrow.right.circle")
+                            .foregroundStyle(.blue)
                     }
                     .buttonStyle(.borderless)
-                    .help("Download")
+                    .help("Open folder")
                 }
             }
-            .width(55)
+            .width(30)
         }
         .contextMenu(forSelectionType: String.self) { selected in
             if !selected.isEmpty {
@@ -414,78 +400,89 @@ struct ObjectStoreBrowserView: View {
 
     private func startDownloadSelected() {
         let selectedItems = selection.compactMap { id in items.first { $0.id == id } }
-        let selectedFolders = selectedItems.filter(\.isFolder)
-        let selectedFiles = selectedItems.filter { !$0.isFolder }
 
-        if selectedFolders.isEmpty && selectedFiles.count == 1, let file = selectedFiles.first {
-            startSingleDownload(file)
+        if selectedItems.count == 1, let item = selectedItems.first, !item.isFolder {
+            startSingleDownload(item)
             return
         }
 
-        NSApp.activate(ignoringOtherApps: true)
-
-        let panel = NSOpenPanel()
-        panel.title = "Choose download location"
-        panel.canChooseFiles = false
-        panel.canChooseDirectories = true
-        panel.canCreateDirectories = true
-        panel.allowsMultipleSelection = false
-        guard panel.runModal() == .OK, let targetDir = panel.url else { return }
-
+        // Multiple items or folders: collect all files, then pick target dir
         let bucketName = store.name
         let client = s3Client
         let prefix = currentPrefix
-        let folderKeys = selectedFolders.map(\.key)
-        let fileKeys = selectedFiles.map(\.key)
+        let selectedFolders = selectedItems.filter(\.isFolder).map(\.key)
+        let selectedFileKeys = selectedItems.filter { !$0.isFolder }.map(\.key)
 
         isDownloading = true
+        downloadProgress = "Preparing download..."
 
         Task {
-            let accessed = targetDir.startAccessingSecurityScopedResource()
-            defer { if accessed { targetDir.stopAccessingSecurityScopedResource() } }
-
             do {
                 var allFiles: [(key: String, relativeTo: String)] = []
 
-                for folderKey in folderKeys {
-                    await MainActor.run { downloadProgress = "Listing folder..." }
+                for folderKey in selectedFolders {
+                    await MainActor.run { downloadProgress = "Listing folder contents..." }
                     let contents = try await client.listAllObjects(bucket: bucketName, prefix: folderKey)
                     for obj in contents {
                         allFiles.append((key: obj.key, relativeTo: prefix))
                     }
                 }
 
-                for fileKey in fileKeys {
+                for fileKey in selectedFileKeys {
                     allFiles.append((key: fileKey, relativeTo: prefix))
                 }
 
-                for (index, file) in allFiles.enumerated() {
-                    let relativePath = String(file.key.dropFirst(file.relativeTo.count))
-                    await MainActor.run {
-                        downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
+                DispatchQueue.main.async { [self] in
+                    downloadProgress = "\(allFiles.count) files ready — choose save location..."
+                    NSApp.activate(ignoringOtherApps: true)
+
+                    let panel = NSOpenPanel()
+                    panel.title = "Choose download location"
+                    panel.canChooseFiles = false
+                    panel.canChooseDirectories = true
+                    panel.canCreateDirectories = true
+                    panel.allowsMultipleSelection = false
+
+                    guard panel.runModal() == .OK, let targetDir = panel.url else {
+                        isDownloading = false
+                        downloadProgress = ""
+                        return
                     }
 
-                    let data = try await client.downloadObject(bucket: bucketName, key: file.key)
+                    Task {
+                        let accessed = targetDir.startAccessingSecurityScopedResource()
+                        defer { if accessed { targetDir.stopAccessingSecurityScopedResource() } }
 
-                    let fileURL = targetDir.appendingPathComponent(relativePath)
-                    let dir = fileURL.deletingLastPathComponent()
-                    try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                    try data.write(to: fileURL)
-                }
+                        do {
+                            for (index, file) in allFiles.enumerated() {
+                                let relativePath = String(file.key.dropFirst(file.relativeTo.count))
+                                await MainActor.run {
+                                    downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
+                                }
+                                let data = try await client.downloadObject(bucket: bucketName, key: file.key)
+                                let fileURL = targetDir.appendingPathComponent(relativePath)
+                                let dir = fileURL.deletingLastPathComponent()
+                                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                                try data.write(to: fileURL)
+                            }
+                            await MainActor.run { downloadProgress = "Done — \(allFiles.count) files saved" }
+                            try? await Task.sleep(for: .seconds(2))
+                        } catch {
+                            await MainActor.run { self.error = error.localizedDescription }
+                        }
 
-                await MainActor.run {
-                    downloadProgress = "Done — \(allFiles.count) files saved"
+                        await MainActor.run {
+                            isDownloading = false
+                            downloadProgress = ""
+                        }
+                    }
                 }
-                try? await Task.sleep(for: .seconds(2))
             } catch {
-                await MainActor.run {
+                DispatchQueue.main.async { [self] in
                     self.error = error.localizedDescription
+                    isDownloading = false
+                    downloadProgress = ""
                 }
-            }
-
-            await MainActor.run {
-                isDownloading = false
-                downloadProgress = ""
             }
         }
     }
