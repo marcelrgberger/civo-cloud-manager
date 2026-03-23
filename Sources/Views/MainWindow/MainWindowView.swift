@@ -86,6 +86,7 @@ struct MainWindowView: View {
     @State private var store = StoreManager.shared
     @State private var selection: SidebarSection = .dashboard
     @State private var showSearch = false
+    @State private var showExport = false
     @State private var dashboardVM = DashboardViewModel()
     @State private var kubernetesVM = KubernetesViewModel()
     @State private var databaseVM = DatabaseViewModel()
@@ -117,9 +118,22 @@ struct MainWindowView: View {
                         domainVM: domainVM
                     )
                 }
+                .sheet(isPresented: $showExport) {
+                    ExportView(
+                        instanceVM: instanceVM,
+                        kubernetesVM: kubernetesVM,
+                        databaseVM: databaseVM,
+                        networkVM: networkVM,
+                        volumeVM: volumeVM,
+                        domainVM: domainVM
+                    )
+                }
                 .background {
                     Button("") { showSearch = true }
                         .keyboardShortcut("k", modifiers: .command)
+                        .hidden()
+                    Button("") { showExport = true }
+                        .keyboardShortcut("e", modifiers: [.command, .shift])
                         .hidden()
                 }
                 .overlay(alignment: .bottomTrailing) {

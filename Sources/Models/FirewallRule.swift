@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Firewall
 
 /// Represents a firewall from the Civo API.
-struct CivoFirewall: Identifiable, Sendable {
+struct CivoFirewall: Codable, Identifiable, Sendable {
     let id: String
     let name: String
     let rulesCount: String
@@ -11,7 +11,7 @@ struct CivoFirewall: Identifiable, Sendable {
     var rulesCountInt: Int { Int(rulesCount) ?? 0 }
 }
 
-extension CivoFirewall: Decodable {
+extension CivoFirewall {
     enum CodingKeys: String, CodingKey {
         case id, name
         case rulesCount = "rules_count"
@@ -35,7 +35,7 @@ extension CivoFirewall: Decodable {
 // MARK: - Rule
 
 /// Represents a single firewall rule.
-struct CivoRule: Identifiable, Sendable {
+struct CivoRule: Codable, Identifiable, Sendable {
     let id: String
     let label: String?
     let cidr: String?
@@ -46,7 +46,7 @@ struct CivoRule: Identifiable, Sendable {
     let action: String?
 }
 
-extension CivoRule: Decodable {
+extension CivoRule {
     enum CodingKeys: String, CodingKey {
         case id, label, cidr, ports, direction, action
         case startPort = "start_port"
