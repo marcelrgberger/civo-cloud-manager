@@ -41,6 +41,7 @@ final class KubernetesViewModel {
     var pvs: [K8sPV] = []
     var configMaps: [K8sConfigMap] = []
     var secrets: [K8sSecret] = []
+    var helmReleases: [HelmRelease] = []
     var metricsAvailable = true
 
     // Pod restart alert tracking
@@ -446,6 +447,40 @@ final class KubernetesViewModel {
         catch { Log.error("ConfigMaps: \(error.localizedDescription)") }
         do { secrets = try await client.listSecrets().items }
         catch { Log.error("Secrets: \(error.localizedDescription)") }
+        await loadHelmReleases(client)
+    }
+
+    private func loadHelmReleases(_ client: KubernetesAPIClient) async {
+        do {
+            let helmSecrets = try await client.listHelmSecrets().items
+            var releases: [String: HelmRelease] = [:]
+
+            for secret in helmSecrets {
+                let labels = secret.metadata.labels ?? [:]
+                guard let name = labels["name"],
+                      let status = labels["status"],
+                      let versionStr = labels["version"],
+                      let revision = Int(versionStr) else { continue }
+
+                let existing = releases[name]
+                if existing == nil || revision > existing!.revision {
+                    releases[name] = HelmRelease(
+                        name: name,
+                        namespace: secret.namespace,
+                        chart: labels["chart"] ?? "",
+                        version: labels["version"] ?? "",
+                        appVersion: labels["appVersion"] ?? "",
+                        status: status,
+                        revision: revision,
+                        updated: secret.metadata.creationTimestamp ?? ""
+                    )
+                }
+            }
+
+            helmReleases = Array(releases.values).sorted { $0.name < $1.name }
+        } catch {
+            Log.error("Helm releases: \(error.localizedDescription)")
+        }
     }
 
     func getSecretData(namespace: String, name: String) async -> [String: String] {
