@@ -172,20 +172,32 @@ struct ObjectStoreBrowserView: View {
             .width(60)
 
             TableColumn("") { item in
-                Button {
+                HStack(spacing: 4) {
                     if item.isFolder {
-                        navigateToFolder(item.key)
-                    } else {
-                        startSingleDownload(item)
+                        Button {
+                            navigateToFolder(item.key)
+                        } label: {
+                            Image(systemName: "arrow.right.circle")
+                                .foregroundStyle(.blue)
+                        }
+                        .buttonStyle(.borderless)
+                        .help("Open folder")
                     }
-                } label: {
-                    Image(systemName: item.isFolder ? "arrow.right.circle" : "arrow.down.circle")
-                        .foregroundStyle(item.isFolder ? .blue : .secondary)
+                    Button {
+                        if item.isFolder {
+                            startFolderDownload(item)
+                        } else {
+                            startSingleDownload(item)
+                        }
+                    } label: {
+                        Image(systemName: "arrow.down.circle")
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.borderless)
+                    .help("Download")
                 }
-                .buttonStyle(.borderless)
-                .help(item.isFolder ? "Open folder" : "Download file")
             }
-            .width(30)
+            .width(55)
         }
         .contextMenu(forSelectionType: String.self) { selected in
             if !selected.isEmpty {
@@ -288,7 +300,11 @@ struct ObjectStoreBrowserView: View {
             do {
                 let data = try await client.downloadObject(bucket: bucketName, key: fileKey)
 
-                await MainActor.run {
+                // Save to temp file first, then show panel via DispatchQueue
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + "_" + fileName)
+                try data.write(to: tempURL)
+
+                DispatchQueue.main.async { [self] in
                     downloadProgress = "Download complete — choose save location..."
                     NSApp.activate(ignoringOtherApps: true)
 
@@ -298,20 +314,96 @@ struct ObjectStoreBrowserView: View {
 
                     if panel.runModal() == .OK, let url = panel.url {
                         let accessed = url.startAccessingSecurityScopedResource()
-                        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
                         do {
-                            try data.write(to: url)
-                            downloadProgress = "Saved \(fileName)"
+                            if FileManager.default.fileExists(atPath: url.path) {
+                                try FileManager.default.removeItem(at: url)
+                            }
+                            try FileManager.default.moveItem(at: tempURL, to: url)
                         } catch {
                             self.error = "Save failed: \(error.localizedDescription)"
                         }
+                        if accessed { url.stopAccessingSecurityScopedResource() }
+                    } else {
+                        try? FileManager.default.removeItem(at: tempURL)
                     }
 
                     isDownloading = false
                     downloadProgress = ""
                 }
             } catch {
-                await MainActor.run {
+                DispatchQueue.main.async { [self] in
+                    self.error = error.localizedDescription
+                    isDownloading = false
+                    downloadProgress = ""
+                }
+            }
+        }
+    }
+
+    private func startFolderDownload(_ item: BrowserItem) {
+        let bucketName = store.name
+        let client = s3Client
+        let folderKey = item.key
+        let prefix = currentPrefix
+
+        isDownloading = true
+        downloadProgress = "Listing folder contents..."
+
+        Task {
+            do {
+                let allFiles = try await client.listAllObjects(bucket: bucketName, prefix: folderKey)
+
+                DispatchQueue.main.async { [self] in
+                    downloadProgress = "Found \(allFiles.count) files — choose save location..."
+                    NSApp.activate(ignoringOtherApps: true)
+
+                    let panel = NSOpenPanel()
+                    panel.title = "Choose download location"
+                    panel.canChooseFiles = false
+                    panel.canChooseDirectories = true
+                    panel.canCreateDirectories = true
+                    panel.allowsMultipleSelection = false
+
+                    guard panel.runModal() == .OK, let targetDir = panel.url else {
+                        isDownloading = false
+                        downloadProgress = ""
+                        return
+                    }
+
+                    Task {
+                        let accessed = targetDir.startAccessingSecurityScopedResource()
+                        defer { if accessed { targetDir.stopAccessingSecurityScopedResource() } }
+
+                        do {
+                            for (index, file) in allFiles.enumerated() {
+                                let relativePath = String(file.key.dropFirst(prefix.count))
+                                await MainActor.run {
+                                    downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
+                                }
+                                let data = try await client.downloadObject(bucket: bucketName, key: file.key)
+                                let fileURL = targetDir.appendingPathComponent(relativePath)
+                                let dir = fileURL.deletingLastPathComponent()
+                                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                                try data.write(to: fileURL)
+                            }
+                            await MainActor.run {
+                                downloadProgress = "Done — \(allFiles.count) files saved"
+                            }
+                            try? await Task.sleep(for: .seconds(2))
+                        } catch {
+                            await MainActor.run {
+                                self.error = error.localizedDescription
+                            }
+                        }
+
+                        await MainActor.run {
+                            isDownloading = false
+                            downloadProgress = ""
+                        }
+                    }
+                }
+            } catch {
+                DispatchQueue.main.async { [self] in
                     self.error = error.localizedDescription
                     isDownloading = false
                     downloadProgress = ""
