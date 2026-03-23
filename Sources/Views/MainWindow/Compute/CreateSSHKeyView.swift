@@ -46,35 +46,36 @@ struct CreateSSHKeyView: View {
                 }
 
                 if generatedPrivateKeyPath != nil {
+                    let keyName = name.replacingOccurrences(of: " ", with: "-").lowercased()
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundStyle(.green)
-                            Text("Key pair generated and shown in Finder")
+                            Text("Key pair saved to Downloads and shown in Finder")
                                 .font(.caption.bold())
                         }
 
-                        Text("Move the private key to ~/.ssh/ on your Mac:")
+                        Text("To use the key, move it to your SSH directory:")
                             .font(.caption)
                             .foregroundStyle(.secondary)
 
                         GroupBox {
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("mv ~/path/to/\(name.replacingOccurrences(of: " ", with: "-").lowercased()) ~/.ssh/")
+                                Text("mv ~/Downloads/\(keyName) ~/.ssh/\(keyName)")
                                     .font(.caption2.monospaced())
-                                Text("chmod 600 ~/.ssh/\(name.replacingOccurrences(of: " ", with: "-").lowercased())")
+                                Text("chmod 600 ~/.ssh/\(keyName)")
                                     .font(.caption2.monospaced())
                             }
                             .textSelection(.enabled)
                             .padding(4)
                         }
 
-                        Text("The public key will be uploaded to Civo when you click Create.")
+                        Text("Click Create to upload the public key to Civo.")
                             .font(.caption2)
                             .foregroundStyle(.tertiary)
                     }
                 } else {
-                    Text("Generates an Ed25519 key pair. The private key opens in Finder for you to move to ~/.ssh/. The public key is uploaded to Civo.")
+                    Text("Generates an Ed25519 key pair. Private key is saved to Downloads, public key is uploaded to Civo.")
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
@@ -109,19 +110,20 @@ struct CreateSSHKeyView: View {
     private func generateKey() {
         let sanitizedName = name.replacingOccurrences(of: " ", with: "-").lowercased()
 
-        // Use temp directory (sandbox-safe), then reveal in Finder
-        let tempDir = FileManager.default.temporaryDirectory
-            .appendingPathComponent("ssh-keys")
+        // Generate in temp, then move private key to Downloads
+        let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent("ssh-gen-\(UUID().uuidString)")
         let privateKeyPath = tempDir.appendingPathComponent(sanitizedName)
         let publicKeyPath = tempDir.appendingPathComponent("\(sanitizedName).pub")
+
+        guard let downloadsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
+            vm.saveError = "Could not access Downloads folder"
+            return
+        }
+        let downloadedKeyPath = downloadsDir.appendingPathComponent(sanitizedName)
 
         isGenerating = true
 
         try? FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
-
-        // Remove existing temp key if any
-        try? FileManager.default.removeItem(at: privateKeyPath)
-        try? FileManager.default.removeItem(at: publicKeyPath)
 
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/ssh-keygen")
@@ -141,17 +143,24 @@ struct CreateSSHKeyView: View {
             process.waitUntilExit()
 
             if process.terminationStatus == 0 {
-                try? FileManager.default.setAttributes(
-                    [.posixPermissions: 0o600],
-                    ofItemAtPath: privateKeyPath.path
-                )
-
+                // Read public key (stays in memory, uploaded to Civo)
                 let pubKey = try String(contentsOf: publicKeyPath, encoding: .utf8)
                 publicKey = pubKey.trimmingCharacters(in: .whitespacesAndNewlines)
-                generatedPrivateKeyPath = privateKeyPath.path
 
-                // Reveal private key in Finder so user can move to ~/.ssh/
-                NSWorkspace.shared.activateFileViewerSelecting([privateKeyPath, publicKeyPath])
+                // Move private key to Downloads
+                try? FileManager.default.removeItem(at: downloadedKeyPath)
+                try FileManager.default.moveItem(at: privateKeyPath, to: downloadedKeyPath)
+                try? FileManager.default.setAttributes(
+                    [.posixPermissions: 0o600],
+                    ofItemAtPath: downloadedKeyPath.path
+                )
+                generatedPrivateKeyPath = downloadedKeyPath.path
+
+                // Clean up temp (public key not needed as file)
+                try? FileManager.default.removeItem(at: tempDir)
+
+                // Show in Finder
+                NSWorkspace.shared.activateFileViewerSelecting([downloadedKeyPath])
             } else {
                 let output = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                 vm.saveError = "ssh-keygen failed: \(output)"
