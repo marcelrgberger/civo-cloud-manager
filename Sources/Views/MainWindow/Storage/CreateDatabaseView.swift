@@ -23,7 +23,7 @@ struct CreateDatabaseView: View {
                 Picker("Size", selection: $size) {
                     Text("Select a size").tag("")
                     ForEach(vm.availableSizes) { s in
-                        Text(s.displayName).tag(s.name)
+                        Text(s.detailLabel).tag(s.name)
                     }
                 }
                 .help("Instance type for compute resources")

@@ -27,4 +27,9 @@ struct CivoChargesService: Sendable {
         let thirtyDaysAgo = Calendar.current.date(byAdding: .day, value: -30, to: now)!
         return try await getCharges(from: thirtyDaysAgo, to: now)
     }
+
+    /// Fetches invoices.
+    func getInvoices() async throws -> [CivoInvoice] {
+        try await api.getArray(path: "/invoices", regionRequired: false)
+    }
 }

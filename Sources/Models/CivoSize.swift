@@ -18,4 +18,23 @@ struct CivoSize: Codable, Identifiable, Sendable {
         if let description, !description.isEmpty { return description }
         return name
     }
+
+    var specSummary: String {
+        var parts: [String] = []
+        if let cpu { parts.append("\(cpu) vCPU") }
+        if let ram {
+            if ram >= 1024 {
+                parts.append("\(ram / 1024) GB RAM")
+            } else {
+                parts.append("\(ram) MB RAM")
+            }
+        }
+        if let disk { parts.append("\(disk) GB Disk") }
+        return parts.joined(separator: " · ")
+    }
+
+    var detailLabel: String {
+        if specSummary.isEmpty { return displayName }
+        return "\(displayName)  —  \(specSummary)"
+    }
 }
