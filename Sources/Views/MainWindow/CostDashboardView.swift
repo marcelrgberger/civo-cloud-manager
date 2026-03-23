@@ -16,7 +16,29 @@ struct CostDashboardView: View {
 
     enum ChargePeriod: String, CaseIterable {
         case currentMonth = "This Month"
-        case last30Days = "Last 30 Days"
+        case lastMonth = "Last Month"
+        case lastQuarter = "Last Quarter"
+        case thisYear = "This Year"
+
+        var dateRange: (from: Date, to: Date) {
+            let now = Date()
+            let cal = Calendar.current
+            switch self {
+            case .currentMonth:
+                let start = cal.date(from: cal.dateComponents([.year, .month], from: now))!
+                return (start, now)
+            case .lastMonth:
+                let startOfThisMonth = cal.date(from: cal.dateComponents([.year, .month], from: now))!
+                let startOfLastMonth = cal.date(byAdding: .month, value: -1, to: startOfThisMonth)!
+                return (startOfLastMonth, startOfThisMonth)
+            case .lastQuarter:
+                let threeMonthsAgo = cal.date(byAdding: .month, value: -3, to: now)!
+                return (threeMonthsAgo, now)
+            case .thisYear:
+                let startOfYear = cal.date(from: cal.dateComponents([.year], from: now))!
+                return (startOfYear, now)
+            }
+        }
     }
 
     // MARK: - Computed
@@ -287,17 +309,11 @@ struct CostDashboardView: View {
         error = nil
         defer { isLoading = false }
 
-        let currentPeriod = period
+        let range = period.dateRange
         do {
             async let invoicesTask = service.getInvoices()
 
-            switch currentPeriod {
-            case .currentMonth:
-                charges = try await service.getCurrentMonthCharges()
-            case .last30Days:
-                charges = try await service.getLast30DaysCharges()
-            }
-
+            charges = try await service.getCharges(from: range.from, to: range.to)
             invoices = (try? await invoicesTask) ?? []
         } catch {
             self.error = error.localizedDescription
