@@ -170,20 +170,6 @@ struct ObjectStoreBrowserView: View {
                     .font(.callout)
             }
             .width(60)
-
-            TableColumn("") { item in
-                if item.isFolder {
-                    Button {
-                        navigateToFolder(item.key)
-                    } label: {
-                        Image(systemName: "arrow.right.circle")
-                            .foregroundStyle(.blue)
-                    }
-                    .buttonStyle(.borderless)
-                    .help("Open folder")
-                }
-            }
-            .width(30)
         }
         .contextMenu(forSelectionType: String.self) { selected in
             if !selected.isEmpty {
