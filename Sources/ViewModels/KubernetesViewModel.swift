@@ -75,6 +75,11 @@ final class KubernetesViewModel {
         } catch {
             self.error = error.localizedDescription
         }
+
+        // Also refresh K8s data if connected
+        if isK8sConnected {
+            await loadClusterData()
+        }
     }
 
     func loadFormData() async {
