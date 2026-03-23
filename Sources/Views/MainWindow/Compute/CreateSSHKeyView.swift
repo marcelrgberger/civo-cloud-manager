@@ -68,13 +68,29 @@ struct CreateSSHKeyView: View {
                                 .padding(2)
                         }
 
-                        Button {
-                            openTerminalWithCommand(command)
-                        } label: {
-                            Label("Move to ~/.ssh/", systemImage: "terminal")
+                        if moveCompleted {
+                            HStack(spacing: 6) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(.green)
+                                Text("Private key moved to ~/.ssh/\(keyName)")
+                                    .font(.caption)
+                                    .foregroundStyle(.green)
+                            }
+                        } else {
+                            Button {
+                                moveKeyToSSH(command)
+                            } label: {
+                                Label("Move to ~/.ssh/", systemImage: "arrow.right.circle")
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
                         }
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
+
+                        if let moveError {
+                            Text(moveError)
+                                .font(.caption2)
+                                .foregroundStyle(.red)
+                        }
 
                         Text("Click Create to upload the public key to Civo.")
                             .font(.caption2)
@@ -113,11 +129,28 @@ struct CreateSSHKeyView: View {
         }
     }
 
-    private func openTerminalWithCommand(_ command: String) {
-        let script = "tell application \"Terminal\"\nactivate\ndo script \"\(command.replacingOccurrences(of: "\"", with: "\\\""))\"\nend tell"
-        if let appleScript = NSAppleScript(source: script) {
-            var error: NSDictionary?
-            appleScript.executeAndReturnError(&error)
+    @State private var moveCompleted = false
+    @State private var moveError: String?
+
+    private func moveKeyToSSH(_ command: String) {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        process.arguments = ["-c", command]
+
+        let pipe = Pipe()
+        process.standardError = pipe
+
+        do {
+            try process.run()
+            process.waitUntilExit()
+            if process.terminationStatus == 0 {
+                moveCompleted = true
+            } else {
+                let err = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+                moveError = err.isEmpty ? "Move failed" : err
+            }
+        } catch {
+            moveError = error.localizedDescription
         }
     }
 
