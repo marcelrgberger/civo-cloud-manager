@@ -7,6 +7,7 @@ struct CivoCloudManagerApp: App {
 
     init() {
         StoreManager.shared.startListening()
+        NotificationService.shared.requestPermission()
     }
 
     var body: some Scene {

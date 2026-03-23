@@ -129,6 +129,36 @@ struct DashboardView: View {
         .animation(.easeOut(duration: 0.3), value: count)
     }
 
+    private var quotaWarningBanner: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ForEach(vm.quotaWarnings) { warning in
+                HStack(spacing: 6) {
+                    Image(systemName: warning.level == .critical ? "exclamationmark.triangle.fill" : "exclamationmark.circle.fill")
+                        .foregroundStyle(warning.level == .critical ? .red : .orange)
+                        .font(.caption)
+                    Text("\(warning.field): \(warning.usage)/\(warning.limit) (\(Int(warning.percentage * 100))%)")
+                        .font(.caption)
+                        .foregroundStyle(warning.level == .critical ? .red : .orange)
+                    if warning.level == .critical {
+                        Text("CRITICAL")
+                            .font(.caption2.bold())
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 1)
+                            .background(.red, in: Capsule())
+                    }
+                    Spacer()
+                }
+            }
+        }
+        .padding(10)
+        .background {
+            RoundedRectangle(cornerRadius: 8)
+                .fill(.orange.opacity(0.1))
+                .strokeBorder(.orange.opacity(0.3), lineWidth: 1)
+        }
+    }
+
     private func quotaSection(_ quota: CivoQuota) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -145,9 +175,21 @@ struct DashboardView: View {
                 .controlSize(.small)
             }
 
+            if !vm.quotaWarnings.isEmpty {
+                quotaWarningBanner
+            }
+
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 6), spacing: 20) {
                 ForEach(quota.items) { item in
                     QuotaGauge(item: item)
+                        .overlay(alignment: .topTrailing) {
+                            if let level = vm.warningLevel(for: item.id) {
+                                Image(systemName: level == .critical ? "exclamationmark.triangle.fill" : "exclamationmark.circle.fill")
+                                    .font(.caption2)
+                                    .foregroundStyle(level == .critical ? .red : .orange)
+                                    .offset(x: 4, y: -4)
+                            }
+                        }
                 }
             }
         }

@@ -85,6 +85,7 @@ enum SidebarCategory: String, CaseIterable {
 struct MainWindowView: View {
     @State private var store = StoreManager.shared
     @State private var selection: SidebarSection = .dashboard
+    @State private var showSearch = false
     @State private var dashboardVM = DashboardViewModel()
     @State private var kubernetesVM = KubernetesViewModel()
     @State private var databaseVM = DatabaseViewModel()
@@ -103,6 +104,33 @@ struct MainWindowView: View {
                     detailView
                         .contentTransition(.opacity)
                         .animation(.spring(duration: 0.3, bounce: 0.1), value: selection)
+                }
+                .sheet(isPresented: $showSearch) {
+                    QuickSearchView(
+                        isPresented: $showSearch,
+                        selection: $selection,
+                        instanceVM: instanceVM,
+                        kubernetesVM: kubernetesVM,
+                        databaseVM: databaseVM,
+                        networkVM: networkVM,
+                        volumeVM: volumeVM,
+                        domainVM: domainVM
+                    )
+                }
+                .background {
+                    Button("") { showSearch = true }
+                        .keyboardShortcut("k", modifiers: .command)
+                        .hidden()
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    // TEMP: paywall debug — remove after investigation
+                    Text(store.isDebugBuild ? "⚠️ DEBUG BUILD" : "✅ RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
+                        .font(.caption2.monospaced())
+                        .padding(4)
+                        .background(.black.opacity(0.7))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .padding(8)
                 }
             } else {
                 PaywallView()

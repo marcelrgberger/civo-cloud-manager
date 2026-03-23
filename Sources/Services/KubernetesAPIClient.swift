@@ -68,6 +68,30 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
     func listPVCs() async throws -> K8sPVCList { try await get("/api/v1/persistentvolumeclaims") }
     func listPVs() async throws -> K8sPVList { try await get("/api/v1/persistentvolumes") }
     func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics { try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)") }
+    func listConfigMaps(namespace: String? = nil) async throws -> K8sConfigMapList {
+        if let ns = namespace {
+            return try await get("/api/v1/namespaces/\(ns)/configmaps")
+        }
+        return try await get("/api/v1/configmaps")
+    }
+    func listSecrets(namespace: String? = nil) async throws -> K8sSecretList {
+        if let ns = namespace {
+            return try await get("/api/v1/namespaces/\(ns)/secrets")
+        }
+        return try await get("/api/v1/secrets")
+    }
+    func getSecret(namespace: String, name: String) async throws -> K8sSecret {
+        try await get("/api/v1/namespaces/\(namespace)/secrets/\(name)")
+    }
+
+    /// Triggers a rollout restart by patching the deployment with a restart annotation (equivalent to `kubectl rollout restart`).
+    func restartDeployment(namespace: String, name: String) async throws {
+        let timestamp = ISO8601DateFormatter().string(from: Date())
+        let body = """
+        {"spec":{"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"\(timestamp)"}}}}}
+        """
+        _ = try await execute("/apis/apps/v1/namespaces/\(namespace)/deployments/\(name)", method: "PATCH", body: body, contentType: "application/strategic-merge-patch+json")
+    }
 
     // MARK: - HTTP
 

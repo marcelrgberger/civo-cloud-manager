@@ -52,6 +52,7 @@ struct ClusterDetailView: View {
                     workloadsSection
                 }
                 if !vm.services.isEmpty || !vm.ingresses.isEmpty { networkingSection }
+                if !vm.configMaps.isEmpty || !vm.secrets.isEmpty { configSection }
                 if !vm.pvcs.isEmpty { storageSection }
                 if !vm.namespaces.isEmpty { namespacesSection }
                 conditionsSection
@@ -189,10 +190,12 @@ struct ClusterDetailView: View {
         HStack(spacing: 16) {
             liveGauge("CPU", percent: metrics.cpuPercent,
                       detail: String(format: "%.1f / %.1f cores", metrics.cpuUsage, metrics.cpuCapacity),
-                      color: metrics.cpuPercent > 0.8 ? .red : metrics.cpuPercent > 0.6 ? .orange : .blue, index: 0)
+                      color: metrics.cpuPercent > 0.8 ? .red : metrics.cpuPercent > 0.6 ? .orange : .blue, index: 0,
+                      history: vm.cpuHistory)
             liveGauge("Memory", percent: metrics.memoryPercent,
                       detail: String(format: "%.0f / %.0f MB", metrics.memoryUsageMB, metrics.memoryCapacityMB),
-                      color: metrics.memoryPercent > 0.8 ? .red : metrics.memoryPercent > 0.6 ? .orange : .purple, index: 1)
+                      color: metrics.memoryPercent > 0.8 ? .red : metrics.memoryPercent > 0.6 ? .orange : .purple, index: 1,
+                      history: vm.memoryHistory)
             statCard("Pods", value: "\(metrics.podCount)/\(metrics.podCapacity)", icon: "square.grid.2x2",
                      color: .orange, index: 2)
             statCard("Nodes", value: "\(metrics.healthyNodes)/\(metrics.nodeCount)", icon: "square.stack.3d.up",
@@ -200,7 +203,7 @@ struct ClusterDetailView: View {
         }
     }
 
-    private func liveGauge(_ title: String, percent: Double, detail: String, color: Color, index: Int) -> some View {
+    private func liveGauge(_ title: String, percent: Double, detail: String, color: Color, index: Int, history: [Double] = []) -> some View {
         VStack(spacing: 6) {
             ZStack {
                 Circle()
@@ -213,6 +216,10 @@ struct ClusterDetailView: View {
                     .font(.system(.caption, design: .rounded).bold())
             }
             .frame(width: 48, height: 48)
+            if history.count >= 2 {
+                SparklineView(data: history, color: color, height: 20)
+                    .padding(.horizontal, 4)
+            }
             Text(title)
                 .font(.caption.bold())
             Text(detail)
@@ -292,6 +299,13 @@ struct ClusterDetailView: View {
                     DisclosureGroup("Deployments (\(vm.filteredDeployments.count))") {
                         ForEach(vm.filteredDeployments) { d in
                             workloadRow(d.name, ready: d.readyReplicas, desired: d.desiredReplicas, healthy: d.isHealthy, ns: d.namespace)
+                                .contextMenu {
+                                    Button {
+                                        Task { await vm.restartDeployment(namespace: d.namespace, name: d.name) }
+                                    } label: {
+                                        Label("Restart Deployment", systemImage: "arrow.clockwise")
+                                    }
+                                }
                         }
                     }
                     .font(.caption.weight(.medium))
@@ -372,28 +386,96 @@ struct ClusterDetailView: View {
                     .font(.caption.weight(.medium))
                 }
                 if !vm.ingresses.isEmpty {
-                    DisclosureGroup("Ingresses (\(vm.ingresses.count))") {
-                        ForEach(vm.ingresses) { ing in
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(ing.name).font(.caption.weight(.medium))
+                    DisclosureGroup("Ingresses (\(vm.filteredIngresses.count))") {
+                        ForEach(vm.filteredIngresses) { ing in
+                            VStack(alignment: .leading, spacing: 6) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "arrow.triangle.swap")
+                                        .font(.caption).foregroundStyle(.indigo)
+                                    Text(ing.name).font(.caption.weight(.medium))
+                                    Text(ing.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                    Spacer()
+                                    if ing.spec?.tls != nil && !(ing.spec?.tls?.isEmpty ?? true) {
+                                        HStack(spacing: 2) {
+                                            Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
+                                            Text("TLS").font(.caption2.bold()).foregroundStyle(.green)
+                                        }
+                                        .padding(.horizontal, 5).padding(.vertical, 1)
+                                        .background(.green.opacity(0.1)).clipShape(Capsule())
+                                    } else {
+                                        HStack(spacing: 2) {
+                                            Image(systemName: "lock.open").font(.caption2).foregroundStyle(.orange)
+                                            Text("No TLS").font(.caption2).foregroundStyle(.orange)
+                                        }
+                                        .padding(.horizontal, 5).padding(.vertical, 1)
+                                        .background(.orange.opacity(0.1)).clipShape(Capsule())
+                                    }
+                                }
                                 if let rules = ing.spec?.rules {
                                     ForEach(Array(rules.enumerated()), id: \.offset) { _, rule in
-                                        if let host = rule.host {
-                                            HStack(spacing: 4) {
-                                                Image(systemName: "globe").font(.caption2).foregroundStyle(.green)
-                                                Text(host).font(.caption2.monospaced()).textSelection(.enabled)
-                                                if let tls = ing.spec?.tls, tls.contains(where: { $0.hosts?.contains(host) == true }) {
-                                                    Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
-                                                    if let secretName = tls.first(where: { $0.hosts?.contains(host) == true })?.secretName {
-                                                        Text(secretName).font(.caption2).foregroundStyle(.tertiary)
+                                        VStack(alignment: .leading, spacing: 3) {
+                                            if let host = rule.host {
+                                                HStack(spacing: 4) {
+                                                    Image(systemName: "globe").font(.caption2).foregroundStyle(.blue)
+                                                    let hasTLS = ing.spec?.tls?.contains(where: { $0.hosts?.contains(host) == true }) == true
+                                                    let scheme = hasTLS ? "https" : "http"
+                                                    let urlString = "\(scheme)://\(host)"
+                                                    if let url = URL(string: urlString) {
+                                                        Link(host, destination: url)
+                                                            .font(.caption2.monospaced())
+                                                            .foregroundStyle(.blue)
+                                                            .help("Open \(urlString) in browser")
+                                                    } else {
+                                                        Text(host).font(.caption2.monospaced()).textSelection(.enabled)
                                                     }
+                                                    if let tls = ing.spec?.tls, tls.contains(where: { $0.hosts?.contains(host) == true }) {
+                                                        Image(systemName: "lock.fill").font(.caption2).foregroundStyle(.green)
+                                                        if let secretName = tls.first(where: { $0.hosts?.contains(host) == true })?.secretName {
+                                                            Text(secretName).font(.caption2).foregroundStyle(.tertiary)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            if let paths = rule.http?.paths {
+                                                ForEach(Array(paths.enumerated()), id: \.offset) { _, path in
+                                                    HStack(spacing: 4) {
+                                                        Text(path.path ?? "/")
+                                                            .font(.caption2.monospaced())
+                                                            .foregroundStyle(.secondary)
+                                                        Image(systemName: "arrow.right").font(.caption2).foregroundStyle(.tertiary)
+                                                        if let svcName = path.backend?.service?.name {
+                                                            Text(svcName).font(.caption2.weight(.medium)).foregroundStyle(.blue)
+                                                        }
+                                                        if let port = path.backend?.service?.port {
+                                                            Text(":\(port.number.map { "\($0)" } ?? port.name ?? "—")")
+                                                                .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                                                        }
+                                                        if let pathType = path.pathType {
+                                                            Text(pathType).font(.caption2).foregroundStyle(.tertiary)
+                                                        }
+                                                    }
+                                                    .padding(.leading, 16)
                                                 }
                                             }
                                         }
                                     }
                                 }
+                                // Show TLS details
+                                if let tlsList = ing.spec?.tls, !tlsList.isEmpty {
+                                    ForEach(Array(tlsList.enumerated()), id: \.offset) { _, tls in
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "key.fill").font(.caption2).foregroundStyle(.green)
+                                            Text("Secret:").font(.caption2).foregroundStyle(.secondary)
+                                            Text(tls.secretName ?? "—").font(.caption2.monospaced()).foregroundStyle(.tertiary)
+                                            if let hosts = tls.hosts, !hosts.isEmpty {
+                                                Text("(\(hosts.joined(separator: ", ")))").font(.caption2).foregroundStyle(.tertiary)
+                                            }
+                                        }
+                                        .padding(.leading, 4)
+                                    }
+                                }
                             }
-                            .padding(.vertical, 2)
+                            .padding(.vertical, 3)
                         }
                     }
                     .font(.caption.weight(.medium))
@@ -403,6 +485,72 @@ struct ClusterDetailView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.24), value: appeared)
+    }
+
+    // MARK: - ConfigMaps & Secrets
+
+    private var configSection: some View {
+        GroupBox("Configuration") {
+            VStack(spacing: 4) {
+                if !vm.configMaps.isEmpty {
+                    DisclosureGroup("ConfigMaps (\(vm.filteredConfigMaps.count))") {
+                        ForEach(vm.filteredConfigMaps) { cm in
+                            VStack(alignment: .leading, spacing: 3) {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "doc.text")
+                                        .font(.caption).foregroundStyle(.teal)
+                                    Text(cm.name).font(.caption.weight(.medium))
+                                    Text(cm.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                    Spacer()
+                                    Text("\(cm.dataEntries.count) key\(cm.dataEntries.count == 1 ? "" : "s")")
+                                        .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                                }
+                                if !cm.dataEntries.isEmpty {
+                                    HStack(spacing: 4) {
+                                        ForEach(Array(cm.dataEntries.keys.sorted().prefix(5)), id: \.self) { key in
+                                            Text(key)
+                                                .font(.caption2.monospaced())
+                                                .padding(.horizontal, 4).padding(.vertical, 1)
+                                                .background(.teal.opacity(0.1)).clipShape(Capsule())
+                                        }
+                                        if cm.dataEntries.count > 5 {
+                                            Text("+\(cm.dataEntries.count - 5)")
+                                                .font(.caption2).foregroundStyle(.tertiary)
+                                        }
+                                    }
+                                    .padding(.leading, 24)
+                                }
+                            }
+                            .padding(.vertical, 1)
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+                if !vm.secrets.isEmpty {
+                    DisclosureGroup("Secrets (\(vm.filteredSecrets.count))") {
+                        ForEach(vm.filteredSecrets) { secret in
+                            HStack(spacing: 8) {
+                                Image(systemName: "key")
+                                    .font(.caption).foregroundStyle(.yellow)
+                                Text(secret.name).font(.caption.weight(.medium))
+                                Text(secret.namespace).font(.caption2).foregroundStyle(.tertiary)
+                                Spacer()
+                                Text(secret.secretType)
+                                    .font(.caption2)
+                                    .padding(.horizontal, 5).padding(.vertical, 1)
+                                    .background(.yellow.opacity(0.1)).clipShape(Capsule())
+                                Text("\(secret.dataKeys.count) key\(secret.dataKeys.count == 1 ? "" : "s")")
+                                    .font(.caption2.monospaced()).foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .font(.caption.weight(.medium))
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.25), value: appeared)
     }
 
     // MARK: - Storage
