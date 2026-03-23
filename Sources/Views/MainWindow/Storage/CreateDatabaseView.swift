@@ -20,15 +20,12 @@ struct CreateDatabaseView: View {
                     ForEach(softwareOptions, id: \.self) { Text($0) }
                 }
                 TextField("Version", text: $softwareVersion)
-                Picker("Size", selection: $size) {
-                    Text("Select a size").tag("")
-                    ForEach(vm.availableSizes) { s in
-                        Text(s.detailLabel).tag(s.name)
-                    }
-                }
-                .help("Instance type for compute resources")
                 Stepper("Nodes: \(nodes)", value: $nodes, in: 1...3)
                     .help("Number of database replicas")
+            }
+
+            Section("Select Size") {
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size)
             }
 
             Section("Networking") {

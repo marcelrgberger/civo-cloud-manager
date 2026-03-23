@@ -39,6 +39,7 @@
 		40A3C0CB4DF41A1CFE101E44 /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F9EC147708D73711161AE0 /* CivoVolume.swift */; };
 		41D376B88A4542E314959D82 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6BE2A34C7AF48F9B97D83 /* StoreManager.swift */; };
 		46B5E8FC4AD219109B5A0781 /* CivoChargesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3771E9C99E2B0FB0B3B5FBD /* CivoChargesService.swift */; };
+		477F5C828AC59FEFB600CDE5 /* SizePickerGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE4F02EF51079029F404F8 /* SizePickerGrid.swift */; };
 		486C37978449B6CA6F28CF1B /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F113A37E7EAD44865E9A109F /* MainWindowView.swift */; };
 		49C57A7D8C63E54ED797B7E2 /* K8sNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9782313EE7E0BFC06659F3A8 /* K8sNetworking.swift */; };
 		49E6752A303BBA9D25AAA3C0 /* LoadBalancerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D1C5AD1EE7EA8AD87BF60E /* LoadBalancerDetailView.swift */; };
@@ -157,6 +158,7 @@
 		26C1EADCBB722A2063BEFE0F /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
 		2A18DCBFC2A79CA314A5C09E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaggeredAppear.swift; sourceTree = "<group>"; };
+		2DFE4F02EF51079029F404F8 /* SizePickerGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePickerGrid.swift; sourceTree = "<group>"; };
 		343445235851034C3DC49579 /* DomainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainListView.swift; sourceTree = "<group>"; };
 		3550A8E48290C62C5FF1AFA3 /* CredentialListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
 		394D4BE2B10B10EE1565C333 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				B86616EC46C9A542CFC32F0C /* QuickSearchView.swift */,
 				90AFB11033C6124929DDC148 /* QuotaGauge.swift */,
 				638C6D6389A9BAE2388F1EA0 /* ResourceListRow.swift */,
+				2DFE4F02EF51079029F404F8 /* SizePickerGrid.swift */,
 				6309AEDEC86716F8C91297EF /* SparklineView.swift */,
 				2CACD7D2E2EEF45C9089CA15 /* StaggeredAppear.swift */,
 				D3323BF3E6B4C74A20FC8288 /* StatusBadge.swift */,
@@ -753,6 +756,7 @@
 				8064B3657059DB672B6CFEE0 /* ResourceListRow.swift in Sources */,
 				0ED000CC5D94403404DC7463 /* S3Client.swift in Sources */,
 				940458154EA7E2730A6B477E /* SSHKeyListView.swift in Sources */,
+				477F5C828AC59FEFB600CDE5 /* SizePickerGrid.swift in Sources */,
 				E43F15723167BE1B671A33DB /* SparklineView.swift in Sources */,
 				03175E40119BCDEDF60A1CF4 /* StaggeredAppear.swift in Sources */,
 				08B4B8D7860A4262CFF7625E /* StatusBadge.swift in Sources */,
