@@ -89,6 +89,7 @@
 		A581A850D995B9CE821240AB /* ClusterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA77A6541807F3782C44765 /* ClusterListView.swift */; };
 		A7E8C8D74E51158DC428AA51 /* CivoSSHKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC06DCAC0660D989A8B447 /* CivoSSHKeyService.swift */; };
 		B2C324418D3A276801635B68 /* CivoSizeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ECEBE287E1E1E25387C950 /* CivoSizeService.swift */; };
+		B2DCE8E5578876DB934C2033 /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC012CB10301F9C1A3D17DBC /* ExportView.swift */; };
 		B4438FF85101F9D3A50DE6D9 /* CivoRegionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54ECEEC4D353BAACD362D46D /* CivoRegionService.swift */; };
 		B6E1F591C05505B0ED166092 /* CivoInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A9268C07EC0589C576AC19 /* CivoInstance.swift */; };
 		B890A5AB4C1AABAC54BD74FD /* ClusterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694B3E2926B83DFAADABBB9 /* ClusterDetailView.swift */; };
@@ -231,6 +232,7 @@
 		C77C55AD8BDAD5DEE1E1F5D7 /* CivoCloudManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoCloudManagerApp.swift; sourceTree = "<group>"; };
 		C8291D7E7F9E7713D8CA13C8 /* ObjectStoreBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectStoreBrowserView.swift; sourceTree = "<group>"; };
 		CB0C963DEE47447DB55ED2A0 /* CivoLoadBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancer.swift; sourceTree = "<group>"; };
+		CC012CB10301F9C1A3D17DBC /* ExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
 		CFE806E4E9859BB153E37AFF /* CivoDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoDatabaseService.swift; sourceTree = "<group>"; };
 		D153508E97250EEF5A403AC4 /* InstanceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceListView.swift; sourceTree = "<group>"; };
 		D3323BF3E6B4C74A20FC8288 /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				DF33732A8EBD49037593BF59 /* DeleteConfirmationSheet.swift */,
 				C1D54B903278A16C0A7C3FCE /* EmptyStateView.swift */,
 				D36E926C81BAC9B489A4A6CF /* ErrorBanner.swift */,
+				CC012CB10301F9C1A3D17DBC /* ExportView.swift */,
 				3D1190253D5165292638B51A /* K8sConnectingView.swift */,
 				4FA24C620CC32B347D0C1F4D /* PaywallView.swift */,
 				B86616EC46C9A542CFC32F0C /* QuickSearchView.swift */,
@@ -676,6 +679,7 @@
 				77AF8FCDDB142EDCA6E6A281 /* EditLabelsView.swift in Sources */,
 				CB5E7E169DF7A64086D64483 /* EmptyStateView.swift in Sources */,
 				008FF41156D6FD2F10DF32E8 /* ErrorBanner.swift in Sources */,
+				B2DCE8E5578876DB934C2033 /* ExportView.swift in Sources */,
 				030D3EB1E368E8EE0EDDE2E1 /* FirewallDetailView.swift in Sources */,
 				2E20E461EA18DCC0965905A8 /* FirewallListView.swift in Sources */,
 				849F1001F3533C269F0FD391 /* FirewallRule.swift in Sources */,
