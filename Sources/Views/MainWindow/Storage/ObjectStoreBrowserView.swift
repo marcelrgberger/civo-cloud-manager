@@ -16,6 +16,11 @@ struct ObjectStoreBrowserView: View {
     @State private var pathHistory: [String] = [""]
     @State private var appeared = false
 
+    // Download trigger: set key, view reacts
+    @State private var downloadFileKey: String = ""
+    @State private var downloadFolderPath: String = ""
+    @State private var downloadCounter = 0
+
     var body: some View {
         VStack(spacing: 0) {
             breadcrumbs
@@ -24,6 +29,10 @@ struct ObjectStoreBrowserView: View {
             if isDownloading {
                 Divider()
                 downloadBar
+            }
+            if let error {
+                Divider()
+                ErrorBanner(message: error)
             }
         }
         .navigationTitle(store.name)
@@ -45,6 +54,17 @@ struct ObjectStoreBrowserView: View {
         .task { await loadContents() }
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
+        }
+        .onChange(of: downloadCounter) { _, _ in
+            if !downloadFileKey.isEmpty {
+                let key = downloadFileKey
+                downloadFileKey = ""
+                handleFileDownload(key: key)
+            } else if !downloadFolderPath.isEmpty {
+                let folder = downloadFolderPath
+                downloadFolderPath = ""
+                handleFolderDownload(folder: folder)
+            }
         }
     }
 
@@ -90,9 +110,7 @@ struct ObjectStoreBrowserView: View {
         List {
             if isLoading && objects.isEmpty && folders.isEmpty {
                 ProgressView("Loading...")
-            } else if let error {
-                ErrorBanner(message: error)
-            } else if objects.isEmpty && folders.isEmpty {
+            } else if objects.isEmpty && folders.isEmpty && !isLoading {
                 EmptyStateView(icon: "folder", title: "Empty", message: "No files or folders at this location.")
             } else {
                 ForEach(Array(folders.enumerated()), id: \.element) { index, folder in
@@ -117,10 +135,9 @@ struct ObjectStoreBrowserView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
-                        Button {
-                            Task { await downloadFolder(folder) }
-                        } label: {
-                            Label("Download Folder", systemImage: "arrow.down.circle")
+                        Button("Download Folder") {
+                            downloadFolderPath = folder
+                            downloadCounter += 1
                         }
                     }
                     .modifier(StaggeredAppear(index: index))
@@ -143,10 +160,9 @@ struct ObjectStoreBrowserView: View {
                     }
                     .padding(.vertical, 4)
                     .contextMenu {
-                        Button {
-                            Task { await downloadFile(object) }
-                        } label: {
-                            Label("Download", systemImage: "arrow.down.circle")
+                        Button("Download") {
+                            downloadFileKey = object.key
+                            downloadCounter += 1
                         }
                     }
                     .modifier(StaggeredAppear(index: index + folders.count))
@@ -198,74 +214,102 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
-    // MARK: - Download
+    // MARK: - Download Handlers (called from .onChange, synchronous on main thread)
 
-    private func downloadFile(_ object: S3Object) async {
-        // Small delay lets context menu fully dismiss
-        try? await Task.sleep(for: .milliseconds(300))
-
-        let url = await MainActor.run { () -> URL? in
-            NSApp.activate(ignoringOtherApps: true)
-            let panel = NSSavePanel()
-            panel.nameFieldStringValue = object.name
-            panel.canCreateDirectories = true
-            return panel.runModal() == .OK ? panel.url : nil
+    private func handleFileDownload(key: String) {
+        guard let object = objects.first(where: { $0.key == key }) else {
+            error = "File not found: \(key)"
+            return
         }
-        guard let url else { return }
+
+        NSApp.activate(ignoringOtherApps: true)
+
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = object.name
+        panel.canCreateDirectories = true
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+
+        let bucketName = store.name
+        let client = s3Client
 
         isDownloading = true
         downloadProgress = "Downloading \(object.name)..."
-        do {
-            let data = try await s3Client.downloadObject(bucket: store.name, key: object.key)
-            try data.write(to: url)
-        } catch {
-            self.error = error.localizedDescription
+
+        Task {
+            do {
+                let data = try await client.downloadObject(bucket: bucketName, key: object.key)
+
+                let accessed = url.startAccessingSecurityScopedResource()
+                defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+                try data.write(to: url)
+
+                await MainActor.run {
+                    isDownloading = false
+                    downloadProgress = ""
+                }
+            } catch {
+                await MainActor.run {
+                    self.error = error.localizedDescription
+                    isDownloading = false
+                    downloadProgress = ""
+                }
+            }
         }
-        isDownloading = false
-        downloadProgress = ""
     }
 
-    private func downloadFolder(_ folder: String) async {
-        try? await Task.sleep(for: .milliseconds(300))
+    private func handleFolderDownload(folder: String) {
+        NSApp.activate(ignoringOtherApps: true)
 
-        let targetDir = await MainActor.run { () -> URL? in
-            NSApp.activate(ignoringOtherApps: true)
-            let panel = NSOpenPanel()
-            panel.title = "Choose download location"
-            panel.canChooseFiles = false
-            panel.canChooseDirectories = true
-            panel.canCreateDirectories = true
-            panel.allowsMultipleSelection = false
-            return panel.runModal() == .OK ? panel.url : nil
-        }
-        guard let targetDir else { return }
+        let panel = NSOpenPanel()
+        panel.title = "Choose download location"
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+        guard panel.runModal() == .OK, let targetDir = panel.url else { return }
+
+        let bucketName = store.name
+        let client = s3Client
+        let prefix = currentPrefix
 
         isDownloading = true
-        defer {
-            isDownloading = false
-            downloadProgress = ""
-        }
 
-        do {
-            downloadProgress = "Listing \(folderName(folder))..."
-            let allFiles = try await s3Client.listAllObjects(bucket: store.name, prefix: folder)
+        Task {
+            let accessed = targetDir.startAccessingSecurityScopedResource()
+            defer { if accessed { targetDir.stopAccessingSecurityScopedResource() } }
 
-            for (index, file) in allFiles.enumerated() {
-                let relativePath = String(file.key.dropFirst(currentPrefix.count))
-                downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
+            do {
+                await MainActor.run { downloadProgress = "Listing \(folderName(folder))..." }
+                let allFiles = try await client.listAllObjects(bucket: bucketName, prefix: folder)
 
-                let data = try await s3Client.downloadObject(bucket: store.name, key: file.key)
+                for (index, file) in allFiles.enumerated() {
+                    let relativePath = String(file.key.dropFirst(prefix.count))
+                    await MainActor.run {
+                        downloadProgress = "Downloading \(index + 1)/\(allFiles.count): \(relativePath)"
+                    }
 
-                let fileURL = targetDir.appendingPathComponent(relativePath)
-                let dir = fileURL.deletingLastPathComponent()
-                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                try data.write(to: fileURL)
+                    let data = try await client.downloadObject(bucket: bucketName, key: file.key)
+
+                    let fileURL = targetDir.appendingPathComponent(relativePath)
+                    let dir = fileURL.deletingLastPathComponent()
+                    try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                    try data.write(to: fileURL)
+                }
+
+                await MainActor.run {
+                    downloadProgress = "Done — \(allFiles.count) files downloaded"
+                }
+                try? await Task.sleep(for: .seconds(2))
+            } catch {
+                await MainActor.run {
+                    self.error = error.localizedDescription
+                }
             }
 
-            downloadProgress = "Done — \(allFiles.count) files downloaded"
-            try? await Task.sleep(for: .seconds(2))
-        } catch {
-            self.error = error.localizedDescription
+            await MainActor.run {
+                isDownloading = false
+                downloadProgress = ""
+            }
         }
     }
 
