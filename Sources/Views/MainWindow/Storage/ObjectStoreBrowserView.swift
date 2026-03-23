@@ -222,28 +222,35 @@ struct ObjectStoreBrowserView: View {
             return
         }
 
-        NSApp.activate(ignoringOtherApps: true)
-
-        let panel = NSSavePanel()
-        panel.nameFieldStringValue = object.name
-        panel.canCreateDirectories = true
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-
         let bucketName = store.name
         let client = s3Client
+        let fileName = object.name
 
         isDownloading = true
-        downloadProgress = "Downloading \(object.name)..."
+        downloadProgress = "Downloading \(fileName)..."
 
         Task {
             do {
                 let data = try await client.downloadObject(bucket: bucketName, key: object.key)
 
-                let accessed = url.startAccessingSecurityScopedResource()
-                defer { if accessed { url.stopAccessingSecurityScopedResource() } }
-                try data.write(to: url)
-
                 await MainActor.run {
+                    downloadProgress = "Download complete — choose save location..."
+                    NSApp.activate(ignoringOtherApps: true)
+
+                    let panel = NSSavePanel()
+                    panel.nameFieldStringValue = fileName
+                    panel.canCreateDirectories = true
+
+                    if panel.runModal() == .OK, let url = panel.url {
+                        let accessed = url.startAccessingSecurityScopedResource()
+                        defer { if accessed { url.stopAccessingSecurityScopedResource() } }
+                        do {
+                            try data.write(to: url)
+                        } catch {
+                            self.error = "Failed to save: \(error.localizedDescription)"
+                        }
+                    }
+
                     isDownloading = false
                     downloadProgress = ""
                 }
