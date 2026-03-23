@@ -61,23 +61,20 @@ struct CreateSSHKeyView: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
 
-                        HStack(spacing: 6) {
-                            GroupBox {
-                                Text(command)
-                                    .font(.caption2.monospaced())
-                                    .textSelection(.enabled)
-                                    .padding(2)
-                            }
-                            Button {
-                                NSPasteboard.general.clearContents()
-                                NSPasteboard.general.setString(command, forType: .string)
-                                openTerminalWithCommand(command)
-                            } label: {
-                                Image(systemName: "doc.on.doc")
-                                    .help("Copy and open Terminal")
-                            }
-                            .buttonStyle(.borderless)
+                        GroupBox {
+                            Text(command)
+                                .font(.caption2.monospaced())
+                                .textSelection(.enabled)
+                                .padding(2)
                         }
+
+                        Button {
+                            openTerminalWithCommand(command)
+                        } label: {
+                            Label("Move to ~/.ssh/", systemImage: "terminal")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
 
                         Text("Click Create to upload the public key to Civo.")
                             .font(.caption2)
