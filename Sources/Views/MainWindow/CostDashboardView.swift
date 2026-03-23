@@ -6,185 +6,241 @@ struct CostDashboardView: View {
     let databaseVM: DatabaseViewModel
     let volumeVM: VolumeViewModel
 
-    private var costItems: [CostItem] {
-        var items: [CostItem] = []
+    @State private var charges: [CivoCharge] = []
+    @State private var isLoading = false
+    @State private var error: String?
+    @State private var period: ChargePeriod = .currentMonth
 
-        // Instances
-        for instance in instanceVM.instances {
-            let monthlyCost = estimateInstanceCost(cpuCores: instance.cpuCores ?? 0, ramMb: instance.ramMb ?? 0)
-            items.append(CostItem(
-                name: instance.hostname ?? instance.id,
-                type: "Instance",
-                icon: "desktopcomputer",
-                iconColor: .green,
-                monthlyCost: monthlyCost
-            ))
-        }
+    private let service = CivoChargesService()
 
-        // Kubernetes clusters (per node)
-        for cluster in kubernetesVM.clusters {
-            let nodeCount = cluster.pools?.reduce(0, { $0 + ($1.count ?? 0) }) ?? 0
-            let monthlyCost = estimateK8sCost(nodeCount: nodeCount, size: cluster.pools?.first?.size ?? "")
-            items.append(CostItem(
-                name: cluster.name ?? cluster.id,
-                type: "Kubernetes",
-                icon: "helm",
-                iconColor: .blue,
-                monthlyCost: monthlyCost
-            ))
-        }
-
-        // Databases
-        for db in databaseVM.databases {
-            let nodes = db.nodes ?? 1
-            let monthlyCost = Double(nodes) * 15.0
-            items.append(CostItem(
-                name: db.name ?? db.id,
-                type: "Database",
-                icon: "cylinder.split.1x2",
-                iconColor: .purple,
-                monthlyCost: monthlyCost
-            ))
-        }
-
-        // Volumes
-        for volume in volumeVM.volumes {
-            let sizeGb = volume.sizeGb ?? 0
-            let monthlyCost = Double(sizeGb) * 0.10
-            items.append(CostItem(
-                name: volume.name ?? volume.id,
-                type: "Volume",
-                icon: "cylinder",
-                iconColor: .orange,
-                monthlyCost: monthlyCost
-            ))
-        }
-
-        // Object Stores
-        for store in volumeVM.objectStores {
-            let maxSize = store.maxSize ?? 500
-            let monthlyCost = Double(maxSize) / 1000.0 * 5.0
-            items.append(CostItem(
-                name: store.name ?? store.id,
-                type: "Object Store",
-                icon: "tray.2",
-                iconColor: .cyan,
-                monthlyCost: monthlyCost
-            ))
-        }
-
-        return items.sorted { $0.monthlyCost > $1.monthlyCost }
+    enum ChargePeriod: String, CaseIterable {
+        case currentMonth = "This Month"
+        case last30Days = "Last 30 Days"
     }
 
-    private var totalMonthlyCost: Double {
-        costItems.reduce(0) { $0 + $1.monthlyCost }
+    // MARK: - Computed
+
+    private var totalCost: Double {
+        charges.reduce(0) { $0 + $1.totalCost }
     }
 
-    private var costByType: [(type: String, cost: Double, color: Color)] {
-        let grouped = Dictionary(grouping: costItems, by: \.type)
-        return grouped.map { (type: $0.key, cost: $0.value.reduce(0) { $0 + $1.monthlyCost }, color: $0.value.first?.iconColor ?? .gray) }
-            .sorted { $0.cost > $1.cost }
+    private var projectedMonthlyCost: Double {
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
+        let daysElapsed = max(calendar.dateComponents([.day], from: startOfMonth, to: now).day ?? 1, 1)
+        let daysInMonth = calendar.range(of: .day, in: .month, for: now)?.count ?? 30
+        return totalCost / Double(daysElapsed) * Double(daysInMonth)
     }
+
+    private var costByType: [(type: String, cost: Double, icon: String, color: Color)] {
+        let grouped = Dictionary(grouping: charges, by: \.resourceType)
+        return grouped.map { type, items in
+            let cost = items.reduce(0) { $0 + $1.totalCost }
+            let icon = items.first?.icon ?? "dollarsign.circle"
+            let color = items.first?.iconColor ?? .secondary
+            return (type: type, cost: cost, icon: icon, color: color)
+        }
+        .sorted { $0.cost > $1.cost }
+    }
+
+    private var costByResource: [(label: String, type: String, cost: Double, icon: String, color: Color, hours: Double)] {
+        let grouped = Dictionary(grouping: charges, by: \.label)
+        return grouped.map { label, items in
+            let cost = items.reduce(0) { $0 + $1.totalCost }
+            let hours = items.reduce(0) { $0 + $1.numHours }
+            let icon = items.first?.icon ?? "dollarsign.circle"
+            let color = items.first?.iconColor ?? .secondary
+            let type = items.first?.resourceType ?? "Other"
+            return (label: label, type: type, cost: cost, icon: icon, color: color, hours: hours)
+        }
+        .sorted { $0.cost > $1.cost }
+    }
+
+    // MARK: - Body
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Total
-                GroupBox {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Estimated Monthly Cost")
-                                .font(.subheadline)
+                periodPicker
+
+                if isLoading {
+                    ProgressView("Loading charges...")
+                        .frame(maxWidth: .infinity)
+                        .padding(40)
+                } else if let error {
+                    GroupBox {
+                        VStack(spacing: 8) {
+                            Image(systemName: "exclamationmark.triangle")
+                                .font(.title)
+                                .foregroundStyle(.orange)
+                            Text(error)
+                                .font(.callout)
                                 .foregroundStyle(.secondary)
-                            Text("$\(totalMonthlyCost, specifier: "%.2f") / month")
-                                .font(.title.bold())
-                        }
-                        Spacer()
-                        Image(systemName: "dollarsign.circle.fill")
-                            .font(.system(size: 40))
-                            .foregroundStyle(.green)
-                    }
-                }
-
-                // Breakdown by type
-                GroupBox("Cost by Resource Type") {
-                    VStack(spacing: 8) {
-                        ForEach(costByType, id: \.type) { item in
-                            HStack {
-                                Circle()
-                                    .fill(item.color)
-                                    .frame(width: 10, height: 10)
-                                Text(item.type)
-                                    .font(.callout)
-                                Spacer()
-                                Text("$\(item.cost, specifier: "%.2f")")
-                                    .font(.callout.monospacedDigit())
-                                    .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                            Button("Retry") {
+                                Task { await loadCharges() }
                             }
+                            .buttonStyle(.bordered)
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding()
                     }
-                    .padding(4)
-                }
-
-                // Individual resources
-                GroupBox("All Resources") {
-                    VStack(spacing: 2) {
-                        ForEach(costItems) { item in
-                            HStack(spacing: 10) {
-                                Image(systemName: item.icon)
-                                    .foregroundStyle(item.iconColor)
-                                    .frame(width: 20)
-                                VStack(alignment: .leading, spacing: 1) {
-                                    Text(item.name)
-                                        .font(.callout)
-                                    Text(item.type)
-                                        .font(.caption2)
-                                        .foregroundStyle(.tertiary)
-                                }
-                                Spacer()
-                                Text("$\(item.monthlyCost, specifier: "%.2f")/mo")
-                                    .font(.callout.monospacedDigit())
-                                    .foregroundStyle(.secondary)
-                            }
-                            .padding(.vertical, 4)
-                            Divider()
+                } else if charges.isEmpty {
+                    GroupBox {
+                        VStack(spacing: 8) {
+                            Image(systemName: "dollarsign.circle")
+                                .font(.title)
+                                .foregroundStyle(.secondary)
+                            Text("No charges for this period")
+                                .foregroundStyle(.secondary)
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding()
                     }
-                    .padding(4)
+                } else {
+                    totalCard
+                    typeBreakdown
+                    resourceBreakdown
                 }
-
-                Text("Estimates based on Civo standard pricing. Actual charges may vary.")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
             }
             .padding(20)
         }
-        .navigationTitle("Cost Estimate")
+        .navigationTitle("Costs")
+        .task { await loadCharges() }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    Task { await loadCharges() }
+                } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
+                .disabled(isLoading)
+            }
+        }
     }
 
-    // MARK: - Cost Estimation
+    // MARK: - Subviews
 
-    private func estimateInstanceCost(cpuCores: Int, ramMb: Int) -> Double {
-        // Civo pricing: roughly $5/mo per vCPU + $2.50/GB RAM
-        Double(cpuCores) * 5.0 + Double(ramMb) / 1024.0 * 2.50
+    private var periodPicker: some View {
+        Picker("Period", selection: $period) {
+            ForEach(ChargePeriod.allCases, id: \.self) { p in
+                Text(p.rawValue).tag(p)
+            }
+        }
+        .pickerStyle(.segmented)
+        .onChange(of: period) { _, _ in
+            Task { await loadCharges() }
+        }
     }
 
-    private func estimateK8sCost(nodeCount: Int, size: String) -> Double {
-        // Base K8s management fee + per-node cost
-        // Small nodes ~$10, medium ~$20, large ~$40
-        let perNode: Double
-        if size.contains("small") { perNode = 10.0 }
-        else if size.contains("large") || size.contains("xlarge") { perNode = 40.0 }
-        else { perNode = 20.0 }
-        return Double(nodeCount) * perNode
+    private var totalCard: some View {
+        GroupBox {
+            HStack(spacing: 24) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Actual (\(period.rawValue))")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Text("$\(totalCost, specifier: "%.2f")")
+                        .font(.system(.title, design: .rounded).bold())
+                }
+                if period == .currentMonth {
+                    Divider().frame(height: 40)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Projected (full month)")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                        Text("~$\(projectedMonthlyCost, specifier: "%.2f")")
+                            .font(.system(.title2, design: .rounded).bold())
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Spacer()
+                Image(systemName: "dollarsign.circle.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(.green)
+            }
+        }
     }
-}
 
-private struct CostItem: Identifiable {
-    let id = UUID()
-    let name: String
-    let type: String
-    let icon: String
-    let iconColor: Color
-    let monthlyCost: Double
+    private var typeBreakdown: some View {
+        GroupBox("By Resource Type") {
+            VStack(spacing: 8) {
+                ForEach(costByType, id: \.type) { item in
+                    HStack(spacing: 10) {
+                        Image(systemName: item.icon)
+                            .foregroundStyle(item.color)
+                            .frame(width: 20)
+                        Text(item.type)
+                            .font(.callout)
+                        Spacer()
+
+                        // Percentage bar
+                        if totalCost > 0 {
+                            GeometryReader { geo in
+                                RoundedRectangle(cornerRadius: 2)
+                                    .fill(item.color.opacity(0.3))
+                                    .frame(width: geo.size.width * item.cost / totalCost)
+                            }
+                            .frame(width: 60, height: 8)
+                        }
+
+                        Text("$\(item.cost, specifier: "%.2f")")
+                            .font(.callout.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                            .frame(width: 80, alignment: .trailing)
+                    }
+                }
+            }
+            .padding(4)
+        }
+    }
+
+    private var resourceBreakdown: some View {
+        GroupBox("By Resource") {
+            VStack(spacing: 2) {
+                ForEach(costByResource, id: \.label) { item in
+                    HStack(spacing: 10) {
+                        Image(systemName: item.icon)
+                            .foregroundStyle(item.color)
+                            .frame(width: 20)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(item.label)
+                                .font(.callout)
+                                .lineLimit(1)
+                            Text("\(item.type) — \(Int(item.hours))h")
+                                .font(.caption2)
+                                .foregroundStyle(.tertiary)
+                        }
+                        Spacer()
+                        Text("$\(item.cost, specifier: "%.2f")")
+                            .font(.callout.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                    Divider()
+                }
+            }
+            .padding(4)
+        }
+    }
+
+    // MARK: - Data
+
+    private func loadCharges() async {
+        isLoading = true
+        error = nil
+        defer { isLoading = false }
+
+        do {
+            switch period {
+            case .currentMonth:
+                charges = try await service.getCurrentMonthCharges()
+            case .last30Days:
+                charges = try await service.getLast30DaysCharges()
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
 }
