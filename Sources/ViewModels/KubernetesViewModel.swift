@@ -256,8 +256,31 @@ final class KubernetesViewModel {
         do {
             k8sNodes = try await client.listNodes().items
         } catch {
-            Log.error("Load nodes failed: \(error.localizedDescription)")
+            if isNetworkError(error) {
+                await reconnectIfNeeded()
+            } else {
+                Log.error("Load nodes failed: \(error.localizedDescription)")
+            }
         }
+    }
+
+    private func isNetworkError(_ error: Error) -> Bool {
+        if let urlError = error as? URLError {
+            return [.cancelled, .timedOut, .cannotConnectToHost, .networkConnectionLost, .notConnectedToInternet]
+                .contains(urlError.code)
+        }
+        return false
+    }
+
+    private var isReconnecting = false
+
+    private func reconnectIfNeeded() async {
+        guard !isReconnecting, let clusterId = selectedCluster?.id else { return }
+        isReconnecting = true
+        k8sError = "Reconnecting..."
+        Log.info("K8s connection lost, attempting reconnect")
+        await connectToCluster(clusterId)
+        isReconnecting = false
     }
 
     private func loadMetrics(_ client: KubernetesAPIClient) async {
