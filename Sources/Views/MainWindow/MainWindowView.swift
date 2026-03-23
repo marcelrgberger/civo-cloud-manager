@@ -13,6 +13,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case volumes = "Volumes"
     case objectStores = "Object Stores"
     case credentials = "Credentials"
+    case costs = "Cost Estimate"
     case regions = "Regions"
     case about = "About"
 
@@ -32,6 +33,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .volumes: return "cylinder"
         case .objectStores: return "tray.2"
         case .credentials: return "key.horizontal"
+        case .costs: return "dollarsign.circle"
         case .regions: return "map"
         case .about: return "info.circle"
         }
@@ -51,6 +53,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .volumes: return .orange
         case .objectStores: return .cyan
         case .credentials: return .yellow
+        case .costs: return .green
         case .regions: return .mint
         case .about: return .secondary
         }
@@ -63,6 +66,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .clusters: return .kubernetes
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
         case .databases, .volumes, .objectStores, .credentials: return .storage
+        case .costs: return .account
         case .regions: return .account
         case .about: return .account
         }
@@ -208,6 +212,13 @@ struct MainWindowView: View {
             ObjectStoreListView(vm: volumeVM)
         case .credentials:
             CredentialListView(vm: volumeVM)
+        case .costs:
+            CostDashboardView(
+                instanceVM: instanceVM,
+                kubernetesVM: kubernetesVM,
+                databaseVM: databaseVM,
+                volumeVM: volumeVM
+            )
         case .regions:
             RegionListView(vm: regionVM)
         case .about:
