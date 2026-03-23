@@ -51,6 +51,7 @@ struct ObjectStoreBrowserView: View {
     @State private var error: String?
     @State private var pathHistory: [String] = [""]
     @State private var selection: Set<String> = []
+    @State private var downloadTask: Task<Void, Never>?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -73,7 +74,7 @@ struct ObjectStoreBrowserView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
-                    Task { await download(selection: selection) }
+                    downloadTask = Task { await download(selection: selection) }
                 } label: {
                     Label(
                         selection.isEmpty ? "Download" : "Download (\(selection.count))",
@@ -151,7 +152,7 @@ struct ObjectStoreBrowserView: View {
         .contextMenu(forSelectionType: String.self) { selected in
             if !selected.isEmpty {
                 Button("Download \(selected.count == 1 ? "Item" : "\(selected.count) Items")") {
-                    Task { await download(selection: selected) }
+                    downloadTask = Task { await download(selection: selected) }
                 }
             }
         } primaryAction: { selected in
@@ -160,7 +161,7 @@ struct ObjectStoreBrowserView: View {
             if item.isFolder {
                 navigateToFolder(item.key)
             } else {
-                Task { await download(selection: selected) }
+                downloadTask = Task { await download(selection: selected) }
             }
         }
         .tableStyle(.bordered(alternatesRowBackgrounds: true))
@@ -173,6 +174,17 @@ struct ObjectStoreBrowserView: View {
             ProgressView().controlSize(.small)
             Text(downloadProgress).font(.caption).foregroundStyle(.secondary)
             Spacer()
+            Button {
+                downloadTask?.cancel()
+                downloadTask = nil
+                isDownloading = false
+                downloadProgress = ""
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.borderless)
+            .help("Cancel download")
         }
         .padding(.horizontal, 16).padding(.vertical, 6)
     }
@@ -265,6 +277,8 @@ struct ObjectStoreBrowserView: View {
             // Download all files
             var savedURLs: [URL] = []
             for (index, key) in fileKeys.enumerated() {
+                try Task.checkCancellation()
+
                 let relativePath = String(key.dropFirst(currentPrefix.count))
                 downloadProgress = "Downloading \(index + 1)/\(fileKeys.count): \(relativePath)"
 
@@ -285,6 +299,9 @@ struct ObjectStoreBrowserView: View {
             NSWorkspace.shared.activateFileViewerSelecting(savedURLs)
 
             try? await Task.sleep(for: .seconds(2))
+            isDownloading = false
+            downloadProgress = ""
+        } catch is CancellationError {
             isDownloading = false
             downloadProgress = ""
         } catch {
