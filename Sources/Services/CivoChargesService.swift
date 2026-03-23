@@ -10,7 +10,23 @@ struct CivoChargesService: Sendable {
             URLQueryItem(name: "from", value: formatter.string(from: from)),
             URLQueryItem(name: "to", value: formatter.string(from: to)),
         ]
-        return try await api.getArray(path: "/charges", queryItems: queryItems, regionRequired: false)
+        // Try to get raw response first for debugging, then decode
+        let raw = try await api.getRaw(path: "/charges", queryItems: queryItems, regionRequired: false)
+        Log.info("Charges API raw response (first 500 chars): \(String(raw.prefix(500)))")
+
+        guard let data = raw.data(using: .utf8) else { return [] }
+
+        // Try decoding as array first, then as paginated
+        if let array = try? JSONDecoder().decode([CivoCharge].self, from: data) {
+            return array
+        }
+        if let paginated = try? JSONDecoder().decode(PaginatedResponse<CivoCharge>.self, from: data) {
+            return paginated.items
+        }
+
+        // Last resort: try to decode the top-level keys
+        Log.error("Charges API: could not decode response")
+        return []
     }
 
     /// Fetches charges for the current month.
@@ -30,6 +46,10 @@ struct CivoChargesService: Sendable {
 
     /// Fetches invoices.
     func getInvoices() async throws -> [CivoInvoice] {
-        try await api.getArray(path: "/invoices", regionRequired: false)
+        do {
+            return try await api.getArray(path: "/invoices", regionRequired: false)
+        } catch {
+            return try await api.getPaginatedList(path: "/invoices", regionRequired: false)
+        }
     }
 }
