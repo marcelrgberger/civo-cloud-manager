@@ -43,7 +43,7 @@ final class DashboardViewModel {
         do {
             quota = try await quotaService.getQuota()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Dashboard quota fetch failed: \(error.localizedDescription)")
         }
 
@@ -55,22 +55,22 @@ final class DashboardViewModel {
         async let networks = networkService.listNetworks()
 
         do { clusterCount = try await clusters.count } catch {
-            warnings.append("Kubernetes: \(error.localizedDescription)")
+            if let msg = CivoAPIError.userMessage(error) { warnings.append("Kubernetes: \(msg)") }
         }
         do { databaseCount = try await databases.count } catch {
-            warnings.append("Databases: \(error.localizedDescription)")
+            if let msg = CivoAPIError.userMessage(error) { warnings.append("Databases: \(msg)") }
         }
         do { volumeCount = try await volumes.count } catch {
-            warnings.append("Volumes: \(error.localizedDescription)")
+            if let msg = CivoAPIError.userMessage(error) { warnings.append("Volumes: \(msg)") }
         }
         do { objectStoreCount = try await objectStores.count } catch {
-            warnings.append("Object Stores: \(error.localizedDescription)")
+            if let msg = CivoAPIError.userMessage(error) { warnings.append("Object Stores: \(msg)") }
         }
         do { loadBalancerCount = try await loadBalancers.count } catch {
-            warnings.append("Load Balancers: \(error.localizedDescription)")
+            if let msg = CivoAPIError.userMessage(error) { warnings.append("Load Balancers: \(msg)") }
         }
         do { networkCount = try await networks.count } catch {
-            warnings.append("Networks: \(error.localizedDescription)")
+            if let msg = CivoAPIError.userMessage(error) { warnings.append("Networks: \(msg)") }
         }
     }
 
@@ -171,7 +171,7 @@ final class DashboardViewModel {
             await refresh()
             return true
         } catch {
-            quotaSaveError = error.localizedDescription
+            quotaSaveError = CivoAPIError.userMessage(error)
             return false
         }
     }

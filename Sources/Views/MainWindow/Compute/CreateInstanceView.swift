@@ -14,19 +14,16 @@ struct CreateInstanceView: View {
         Form {
             Section("Instance Details") {
                 TextField("Hostname", text: $hostname)
-                Picker("Size", selection: $size) {
-                    Text("Select a size").tag("")
-                    ForEach(vm.availableSizes) { s in
-                        Text(s.displayName).tag(s.name)
-                    }
-                }
-                .help("Instance type for compute resources")
                 Picker("Disk Image", selection: $diskImage) {
                     Text("Select an image").tag("")
                     ForEach(vm.availableDiskImages) { img in
                         Text(img.displayName).tag(img.id)
                     }
                 }
+            }
+
+            Section("Select Size") {
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size, filterPrefix: "Instance")
             }
 
             Section("Networking") {

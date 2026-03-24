@@ -7,7 +7,7 @@ final class CivoSSHKeyService: Sendable {
         try await api.getArray(path: "/sshkeys", regionRequired: false)
     }
 
-    func createSSHKey(_ body: [String: Any]) async throws -> CivoSSHKey {
+    func createSSHKey(_ body: [String: Any]) async throws -> CivoResult {
         try await api.post(path: "/sshkeys", body: body, regionRequired: false)
     }
 

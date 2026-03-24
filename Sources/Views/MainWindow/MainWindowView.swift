@@ -14,6 +14,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case objectStores = "Object Stores"
     case credentials = "Credentials"
     case costs = "Cost Estimate"
+    case apiHealth = "API Health"
     case regions = "Regions"
     case about = "About"
 
@@ -34,6 +35,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .objectStores: return "tray.2"
         case .credentials: return "key.horizontal"
         case .costs: return "dollarsign.circle"
+        case .apiHealth: return "waveform.path.ecg"
         case .regions: return "map"
         case .about: return "info.circle"
         }
@@ -54,6 +56,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .objectStores: return .cyan
         case .credentials: return .yellow
         case .costs: return .green
+        case .apiHealth: return .pink
         case .regions: return .mint
         case .about: return .secondary
         }
@@ -67,6 +70,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
         case .databases, .volumes, .objectStores, .credentials: return .storage
         case .costs: return .account
+        case .apiHealth: return .account
         case .regions: return .account
         case .about: return .account
         }
@@ -140,9 +144,9 @@ struct MainWindowView: View {
                         .keyboardShortcut("e", modifiers: [.command, .shift])
                         .hidden()
                 }
+                #if DEBUG
                 .overlay(alignment: .bottomTrailing) {
-                    // TEMP: paywall debug — remove after investigation
-                    Text(store.isDebugBuild ? "⚠️ DEBUG BUILD" : "✅ RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
+                    Text(store.isDebugBuild ? "DEBUG BUILD" : "RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
                         .font(.caption2.monospaced())
                         .padding(4)
                         .background(.black.opacity(0.7))
@@ -150,6 +154,7 @@ struct MainWindowView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                         .padding(8)
                 }
+                #endif
             } else {
                 PaywallView()
             }
@@ -212,6 +217,8 @@ struct MainWindowView: View {
             ObjectStoreListView(vm: volumeVM)
         case .credentials:
             CredentialListView(vm: volumeVM)
+        case .apiHealth:
+            APIHealthView()
         case .costs:
             CostDashboardView(
                 instanceVM: instanceVM,
