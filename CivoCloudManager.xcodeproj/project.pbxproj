@@ -19,7 +19,6 @@
 		0891940B5F7D8079787F48D1 /* CivoRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126A77B7B656502483F1E79 /* CivoRegion.swift */; };
 		08B4B8D7860A4262CFF7625E /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3323BF3E6B4C74A20FC8288 /* StatusBadge.swift */; };
 		0ED000CC5D94403404DC7463 /* S3Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A342EFFACFBAAAAD02F7A63 /* S3Client.swift */; };
-		1055E428CB68F45593A688C5 /* CivoSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48FFCD09AADA0A1574D93CC /* CivoSnapshot.swift */; };
 		121BB582D60E9A0BDFB8F42A /* CivoInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4E732662FAB0B64BB45C8 /* CivoInvoice.swift */; };
 		1442C79F223261DA1D7E0742 /* CivoKubernetes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D54A3F3664EE4588C918D4 /* CivoKubernetes.swift */; };
 		16A4B49151D57D5417DD04EF /* CivoAccessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3FA8E68EFAB7F9D7F17DB /* CivoAccessLabel.swift */; };
@@ -45,7 +44,6 @@
 		49E6752A303BBA9D25AAA3C0 /* LoadBalancerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D1C5AD1EE7EA8AD87BF60E /* LoadBalancerDetailView.swift */; };
 		4D064A5E2C7EFB3DAADCFC42 /* APIDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F36B02AC6A60364AE432A2 /* APIDecodingTests.swift */; };
 		4ECC0D7D1868DC46BA53D13B /* CivoDomainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13CC3A95C64F87C3358E091 /* CivoDomainService.swift */; };
-		4FB22279FD2F18CE737C4B0A /* CivoSnapshotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA7CDEF8A136AE8B8B51DD7 /* CivoSnapshotService.swift */; };
 		50CC1333414E473DA2B768C0 /* ObjectStoreBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8291D7E7F9E7713D8CA13C8 /* ObjectStoreBrowserView.swift */; };
 		5705C830609B35C627F8AB9E /* K8sWorkload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA1601CC9CA2AD690820E4D /* K8sWorkload.swift */; };
 		57708DF578C420C911D33150 /* RegionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D289F006A4FFA354CB3192 /* RegionViewModel.swift */; };
@@ -220,7 +218,6 @@
 		9782313EE7E0BFC06659F3A8 /* K8sNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sNetworking.swift; sourceTree = "<group>"; };
 		9913E5478362835EFF7620DC /* IPDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPDetector.swift; sourceTree = "<group>"; };
 		9B16DE82F69BFB48DC655249 /* KubernetesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KubernetesViewModel.swift; sourceTree = "<group>"; };
-		9FA7CDEF8A136AE8B8B51DD7 /* CivoSnapshotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoSnapshotService.swift; sourceTree = "<group>"; };
 		A08AEC672FB4BD3EEFEA3C37 /* NetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
 		A08F0B1E76B15E58F9F28C1C /* DomainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainViewModel.swift; sourceTree = "<group>"; };
 		A0E5C0860BE63701AA61C24D /* CivoVolumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoVolumeService.swift; sourceTree = "<group>"; };
@@ -229,7 +226,6 @@
 		A3771E9C99E2B0FB0B3B5FBD /* CivoChargesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoChargesService.swift; sourceTree = "<group>"; };
 		A40A98847C67D8B0FF6AD3AD /* RegionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListView.swift; sourceTree = "<group>"; };
 		A4198C5C2FE783F0CEA1E28F /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
-		A48FFCD09AADA0A1574D93CC /* CivoSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoSnapshot.swift; sourceTree = "<group>"; };
 		A7846CCE4C3CA39B7C639889 /* CivoConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoConfig.swift; sourceTree = "<group>"; };
 		A81986CD2569C87EE6F3D13B /* CreateDNSRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDNSRecordView.swift; sourceTree = "<group>"; };
 		A934603B2B73C422F76F272E /* SSHKeyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHKeyListView.swift; sourceTree = "<group>"; };
@@ -318,7 +314,6 @@
 				FC651DD74FA16D0BC0D705B3 /* CivoQuotaService.swift */,
 				54ECEEC4D353BAACD362D46D /* CivoRegionService.swift */,
 				74ECEBE287E1E1E25387C950 /* CivoSizeService.swift */,
-				9FA7CDEF8A136AE8B8B51DD7 /* CivoSnapshotService.swift */,
 				ABCC06DCAC0660D989A8B447 /* CivoSSHKeyService.swift */,
 				A0E5C0860BE63701AA61C24D /* CivoVolumeService.swift */,
 				9913E5478362835EFF7620DC /* IPDetector.swift */,
@@ -517,7 +512,6 @@
 				B1597B9E26FE112E2374B929 /* CivoQuota.swift */,
 				7126A77B7B656502483F1E79 /* CivoRegion.swift */,
 				B50FD50818CE1B57EE2438DE /* CivoSize.swift */,
-				A48FFCD09AADA0A1574D93CC /* CivoSnapshot.swift */,
 				B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */,
 				94F9EC147708D73711161AE0 /* CivoVolume.swift */,
 				4B022376D3CE5DDD6EE9505B /* FirewallRule.swift */,
@@ -681,8 +675,6 @@
 				A7E8C8D74E51158DC428AA51 /* CivoSSHKeyService.swift in Sources */,
 				6F8D79DB1B54CC8D58503F73 /* CivoSize.swift in Sources */,
 				B2C324418D3A276801635B68 /* CivoSizeService.swift in Sources */,
-				1055E428CB68F45593A688C5 /* CivoSnapshot.swift in Sources */,
-				4FB22279FD2F18CE737C4B0A /* CivoSnapshotService.swift in Sources */,
 				40A3C0CB4DF41A1CFE101E44 /* CivoVolume.swift in Sources */,
 				96F3EDB8E751E382EEEFFC1D /* CivoVolumeService.swift in Sources */,
 				B890A5AB4C1AABAC54BD74FD /* ClusterDetailView.swift in Sources */,
