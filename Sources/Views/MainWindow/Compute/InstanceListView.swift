@@ -19,7 +19,13 @@ struct InstanceListView: View {
             }
         }
         .animation(.spring(duration: 0.3, bounce: 0.1), value: vm.selectedInstance?.id)
-        .task { await vm.refresh() }
+        .task {
+            await vm.refresh()
+            while vm.selectedInstanceIsBuilding {
+                try? await Task.sleep(for: .seconds(5))
+                await vm.refresh()
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreatingInstance = true } label: { Label("Add", systemImage: "plus") }

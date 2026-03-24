@@ -37,10 +37,21 @@ final class InstanceViewModel {
 
             instances = try await insts
             sshKeys = try await keys
+
+            // Update selectedInstance with fresh data
+            if let selected = selectedInstance,
+               let updated = instances.first(where: { $0.id == selected.id }) {
+                selectedInstance = updated
+            }
         } catch {
             self.error = error.localizedDescription
             Log.error("Instance refresh failed: \(error.localizedDescription)")
         }
+    }
+
+    var selectedInstanceIsBuilding: Bool {
+        guard let status = selectedInstance?.status?.lowercased() else { return false }
+        return status != "active" && status != "error"
     }
 
     func loadFormData() async {
