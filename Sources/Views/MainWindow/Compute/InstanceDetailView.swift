@@ -96,7 +96,7 @@ struct InstanceDetailView: View {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 infoRow("Public IP", instance.publicIp ?? "—")
                 infoRow("Private IP", instance.privateIp ?? "—")
-                infoRow("Region", instance.region ?? "—")
+                infoRow("Region", instance.region ?? CivoConfig.shared.region)
                 infoRow("Network ID", instance.networkId ?? "Default")
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Reverse DNS")
