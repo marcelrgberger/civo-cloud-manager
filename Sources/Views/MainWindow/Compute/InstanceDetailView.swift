@@ -220,6 +220,28 @@ struct InstanceDetailView: View {
         GroupBox("Actions & Metadata") {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 10) {
+                    if instance.status?.lowercased() == "active" {
+                        Button { Task { await vm.stopInstance(instance.id) } } label: {
+                            Label("Stop", systemImage: "stop.circle")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .tint(.orange)
+
+                        Button { Task { await vm.rebootInstance(instance.id) } } label: {
+                            Label("Reboot", systemImage: "arrow.clockwise.circle")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                    } else if instance.status?.lowercased() == "shutoff" {
+                        Button { Task { await vm.startInstance(instance.id) } } label: {
+                            Label("Start", systemImage: "play.circle")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .tint(.green)
+                    }
+
                     Button {
                         showResize = true
                         resizeTarget = instance.size ?? ""
@@ -228,6 +250,29 @@ struct InstanceDetailView: View {
                     }
                     .buttonStyle(.bordered)
                     .controlSize(.small)
+                }
+
+                // Activity log for this instance
+                let instanceLog = ActivityLog.shared.entries.filter { $0.resourceId == instance.id }
+                if !instanceLog.isEmpty {
+                    Divider()
+                    Text("Recent Activity")
+                        .font(.caption.bold())
+                        .foregroundStyle(.secondary)
+                    ForEach(instanceLog.prefix(5)) { entry in
+                        HStack(spacing: 8) {
+                            Image(systemName: entry.icon)
+                                .foregroundStyle(.secondary)
+                                .font(.caption)
+                                .frame(width: 16)
+                            Text(entry.action)
+                                .font(.caption)
+                            Spacer()
+                            Text(entry.timeAgo)
+                                .font(.caption2)
+                                .foregroundStyle(.tertiary)
+                        }
+                    }
                 }
 
                 Divider()

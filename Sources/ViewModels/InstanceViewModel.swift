@@ -105,32 +105,48 @@ final class InstanceViewModel {
     }
 
     func stopInstance(_ id: String) async {
-        do { try await instanceService.stopInstance(id); showSuccess = true; await refresh() }
-        catch { self.error = error.localizedDescription }
+        let name = instances.first { $0.id == id }?.name ?? id
+        do {
+            try await instanceService.stopInstance(id); showSuccess = true
+            ActivityLog.shared.log("Stopped", resourceType: "Instance", resourceName: name, resourceId: id)
+            await refresh()
+        } catch { self.error = error.localizedDescription }
     }
 
     func startInstance(_ id: String) async {
-        do { try await instanceService.startInstance(id); showSuccess = true; await refresh() }
-        catch { self.error = error.localizedDescription }
+        let name = instances.first { $0.id == id }?.name ?? id
+        do {
+            try await instanceService.startInstance(id); showSuccess = true
+            ActivityLog.shared.log("Started", resourceType: "Instance", resourceName: name, resourceId: id)
+            await refresh()
+        } catch { self.error = error.localizedDescription }
     }
 
     func rebootInstance(_ id: String) async {
-        do { try await instanceService.rebootInstance(id); showSuccess = true; await refresh() }
-        catch { self.error = error.localizedDescription }
+        let name = instances.first { $0.id == id }?.name ?? id
+        do {
+            try await instanceService.rebootInstance(id); showSuccess = true
+            ActivityLog.shared.log("Rebooted", resourceType: "Instance", resourceName: name, resourceId: id)
+            await refresh()
+        } catch { self.error = error.localizedDescription }
     }
 
     func updateInstance(_ id: String, reverseDns: String) async {
+        let name = instances.first { $0.id == id }?.name ?? id
         do {
             _ = try await instanceService.updateInstance(id, body: ["reverse_dns": reverseDns])
             showSuccess = true
+            ActivityLog.shared.log("Set Reverse DNS to \(reverseDns)", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
         } catch { self.error = error.localizedDescription }
     }
 
     func resizeInstance(_ id: String, size: String) async {
+        let name = instances.first { $0.id == id }?.name ?? id
         do {
             try await instanceService.resizeInstance(id, size: size)
             showSuccess = true
+            ActivityLog.shared.log("Resized to \(size)", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
         } catch { self.error = error.localizedDescription }
     }
