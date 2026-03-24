@@ -84,6 +84,7 @@
 		93D416EEDB6125BFFEBE5818 /* DomainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343445235851034C3DC49579 /* DomainListView.swift */; };
 		940458154EA7E2730A6B477E /* SSHKeyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A934603B2B73C422F76F272E /* SSHKeyListView.swift */; };
 		96F3EDB8E751E382EEEFFC1D /* CivoVolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E5C0860BE63701AA61C24D /* CivoVolumeService.swift */; };
+		987E9508228C7F0AD305C9C4 /* APIHealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4830574EB3DC78B0624BBB1B /* APIHealthView.swift */; };
 		9B8526A4DEF4DEFD5C20D6D6 /* VolumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4823C2B89DE27341D7B85742 /* VolumeViewModel.swift */; };
 		9BCE43A7AD935BCDDD5CCF55 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18DCBFC2A79CA314A5C09E /* OnboardingView.swift */; };
 		9CB896D3236DF2336757F25F /* SuccessOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573C9845C32B46E9605DB19B /* SuccessOverlay.swift */; };
@@ -169,6 +170,7 @@
 		44035D752A837BB13A3D559A /* CreateFirewallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFirewallView.swift; sourceTree = "<group>"; };
 		4413AF2496E5F73132915C3A /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		4823C2B89DE27341D7B85742 /* VolumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeViewModel.swift; sourceTree = "<group>"; };
+		4830574EB3DC78B0624BBB1B /* APIHealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHealthView.swift; sourceTree = "<group>"; };
 		48556827196128BC53DC0256 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
 		48F36B02AC6A60364AE432A2 /* APIDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDecodingTests.swift; sourceTree = "<group>"; };
 		49B4E732662FAB0B64BB45C8 /* CivoInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoInvoice.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				8B5BA6C9A7542257FDEF713B /* AboutView.swift */,
+				4830574EB3DC78B0624BBB1B /* APIHealthView.swift */,
 				A40A98847C67D8B0FF6AD3AD /* RegionListView.swift */,
 			);
 			path = Account;
@@ -640,6 +643,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				987E9508228C7F0AD305C9C4 /* APIHealthView.swift in Sources */,
 				E6175547DC2B2360805B4B21 /* AboutView.swift in Sources */,
 				A94F76733184B840EE8F7E86 /* ActivityLog.swift in Sources */,
 				60EC72EBF2EC71F8DAC3C87A /* AppState.swift in Sources */,
