@@ -628,6 +628,59 @@ classDiagram
         +Int? priority
     }
 
+    class K8sConfigMap {
+        +String name
+        +String namespace
+        +Map~String,String~ data
+    }
+
+    class K8sSecret {
+        +String name
+        +String namespace
+        +String type
+        +String[] dataKeys
+    }
+
+    class HelmRelease {
+        +String name
+        +String namespace
+        +String chart
+        +String version
+        +String status
+        +Int revision
+    }
+
+    class CivoCharge {
+        +String id
+        +String code
+        +String label
+        +Double numHours
+        +Double totalCost
+        +String resourceType
+    }
+
+    class IPPreset {
+        +String id
+        +String name
+        +String ip
+    }
+
+    class BrowserItem {
+        +String id
+        +String name
+        +Bool isFolder
+        +Int size
+        +String key
+    }
+
+    class ActivityEntry {
+        +String id
+        +Date timestamp
+        +String resourceType
+        +String action
+        +String timeAgo
+    }
+
     CivoKubernetesCluster --> CivoNodePool
     CivoKubernetesCluster --> CivoK8sApp
     CivoKubernetesCluster --> CivoK8sCondition
@@ -719,6 +772,7 @@ classDiagram
         +String secretKey
         +String region
         +listObjects(bucket, prefix, delimiter) S3ListResult
+        +listAllObjects(bucket, prefix) S3Object[]
         +downloadObject(bucket, key) Data
         +headObject(bucket, key) (size, contentType)
     }
@@ -729,6 +783,9 @@ classDiagram
     class CivoRegionService { +listRegions() }
     class CivoSizeService { +listSizes(); +listDiskImages() }
     class IPDetector { +detectIP() String }
+    class CivoChargesService { +getCharges() CivoCharge[]; +getChargesForRange(from, to) CivoCharge[] }
+    class NotificationService { +requestPermission(); +sendAlert(title, body) }
+    class ActivityLog { +log(entry); +clear(); +entries() ActivityEntry[] }
 
     CivoFirewallService --> CivoAPIClient
     CivoQuotaService --> CivoAPIClient
@@ -747,6 +804,7 @@ classDiagram
     KubernetesAPIClient ..> KubeconfigParser : uses parsed certs
     K8sMetricsParser ..> KubernetesAPIClient : parses metrics from
     S3Client ..> CivoObjectStoreService : uses credentials from
+    CivoChargesService --> CivoAPIClient
 ```
 
 ### Data Flow — Menu Bar Firewall
@@ -956,6 +1014,8 @@ graph LR
         KU[Kubernetes]
         NE[Networking]
         ST["Storage & Data"]
+        CE[Cost Estimate]
+        AH[API Health]
         AC[Account]
     end
 
@@ -973,9 +1033,11 @@ graph LR
         KU --> CL[ClusterListView]
         CL -->|drill-down| CD[ClusterDetailView]
         CD -->|auto-connect K8s API| LM["Live Metrics/Events/Workloads/Storage (collapsible, namespace filter)"]
+        CD -->|ConfigMap/Secret| CMS["ConfigMap/Secret Viewer"]
         CD -->|click node| ND[K8sNodeDetailView]
         ND -->|view pods| PL[K8sPodListView]
         PL -->|click pod| PLG[PodLogView]
+        PL -->|context menu exec| PE[PodExecView]
         NE --> NL[NetworkListView]
         NE --> FL[FirewallListView]
         FL -->|drill-down| FD[FirewallDetailView]
@@ -987,6 +1049,8 @@ graph LR
         OL -->|drill-down| OD[ObjectStoreDetailView]
         OD -->|browse files| OB[ObjectStoreBrowserView]
         ST --> CRL[CredentialListView]
+        CE --> CDV[CostDashboardView]
+        AH --> AHV[APIHealthView]
         AC --> RL[RegionListView]
     end
 
@@ -1020,6 +1084,10 @@ graph LR
     style CRL fill:#EAB308,color:#fff
     style QE fill:#F59E0B,color:#fff
     style EL fill:#F59E0B,color:#fff
+    style CDV fill:#6366F1,color:#fff
+    style AHV fill:#14B8A6,color:#fff
+    style CMS fill:#059669,color:#fff
+    style PE fill:#047857,color:#fff
 ```
 
 ---
