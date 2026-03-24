@@ -2,9 +2,12 @@ import SwiftUI
 
 struct InstanceDetailView: View {
     let instance: CivoInstance
+    @Bindable var vm: InstanceViewModel
     let onBack: () -> Void
     @State private var appeared = false
     @State private var showPassword = false
+    @State private var showResize = false
+    @State private var resizeTarget = ""
 
     var body: some View {
         ScrollView {
@@ -12,6 +15,7 @@ struct InstanceDetailView: View {
                 header
                 specsRow
                 networkSection
+                sshSection
                 securitySection
                 metadataSection
             }
@@ -21,11 +25,18 @@ struct InstanceDetailView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button("Back", systemImage: "chevron.left") { onBack() }
-                    .help("Return to list")
+            }
+            ToolbarItem(placement: .automatic) {
+                Button { Task { await vm.refresh() } } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
             }
         }
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
+        }
+        .sheet(isPresented: $showResize) {
+            resizeSheet
         }
     }
 
@@ -85,11 +96,51 @@ struct InstanceDetailView: View {
                 infoRow("Private IP", instance.privateIp ?? "—")
                 infoRow("Region", instance.region ?? "—")
                 infoRow("Network ID", instance.networkId ?? "Default")
+                if let reverseDns = instance.reverseDns, !reverseDns.isEmpty {
+                    infoRow("Reverse DNS", reverseDns)
+                }
             }
             .padding(8)
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
+    }
+
+    private var sshSection: some View {
+        GroupBox("SSH Access") {
+            VStack(alignment: .leading, spacing: 10) {
+                if let ip = instance.publicIp, !ip.isEmpty, ip != "—" {
+                    let user = instance.initialUser ?? "root"
+                    let sshCommand = "ssh \(user)@\(ip)"
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Connect via SSH")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text(sshCommand)
+                                .font(.subheadline.monospaced())
+                                .textSelection(.enabled)
+                        }
+                        Spacer()
+                        Button {
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(sshCommand, forType: .string)
+                        } label: {
+                            Image(systemName: "doc.on.doc")
+                        }
+                        .buttonStyle(.borderless)
+                        .help("Copy SSH command")
+                    }
+                } else {
+                    Text("SSH not available — waiting for public IP")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+            }
+            .padding(8)
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(.easeOut(duration: 0.3).delay(0.22), value: appeared)
     }
 
     private var securitySection: some View {
@@ -128,17 +179,65 @@ struct InstanceDetailView: View {
     }
 
     private var metadataSection: some View {
-        GroupBox("Metadata") {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                infoRow("Created", instance.createdAt ?? "—")
-                if let tags = instance.tags, !tags.isEmpty {
-                    infoRow("Tags", tags.joined(separator: ", "))
+        GroupBox("Actions & Metadata") {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 10) {
+                    Button {
+                        showResize = true
+                        resizeTarget = instance.size ?? ""
+                    } label: {
+                        Label("Resize", systemImage: "arrow.up.right.circle")
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                }
+
+                Divider()
+
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+                    infoRow("Instance ID", instance.id)
+                    infoRow("Created", instance.createdAt ?? "—")
+                    if let tags = instance.tags, !tags.isEmpty {
+                        infoRow("Tags", tags.joined(separator: ", "))
+                    }
                 }
             }
             .padding(8)
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.3), value: appeared)
+    }
+
+    // MARK: - Resize Sheet
+
+    private var resizeSheet: some View {
+        VStack(spacing: 16) {
+            Text("Resize Instance")
+                .font(.title2.bold())
+            Text("Select a new size. Instance will be rebooted.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            SizePickerGrid(sizes: vm.availableSizes, selectedSize: $resizeTarget, filterPrefix: "Instance")
+                .frame(maxHeight: 300)
+
+            HStack {
+                Button("Cancel") { showResize = false }
+                    .keyboardShortcut(.cancelAction)
+                Spacer()
+                Button("Resize") {
+                    Task {
+                        await vm.resizeInstance(instance.id, size: resizeTarget)
+                        showResize = false
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(resizeTarget.isEmpty || resizeTarget == instance.size)
+                .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(24)
+        .frame(width: 500)
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {

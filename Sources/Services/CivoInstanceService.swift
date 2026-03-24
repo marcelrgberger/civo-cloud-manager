@@ -27,6 +27,14 @@ final class CivoInstanceService: Sendable {
         let _: CivoResult = try await api.post(path: "/instances/\(id)/soft_reboots", body: [:])
     }
 
+    func resizeInstance(_ id: String, size: String) async throws {
+        let _: CivoResult = try await api.put(path: "/instances/\(id)/resize", body: ["size": size])
+    }
+
+    func setFirewall(_ instanceId: String, firewallId: String) async throws {
+        let _: CivoInstance = try await api.put(path: "/instances/\(instanceId)/firewall", body: ["firewall_id": firewallId])
+    }
+
     func removeInstance(_ id: String) async throws {
         try await api.delete(path: "/instances/\(id)")
     }

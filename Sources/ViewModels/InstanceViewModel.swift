@@ -25,6 +25,7 @@ final class InstanceViewModel {
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
     private let sizeService = CivoSizeService()
+    private let volumeService = CivoVolumeService()
 
     func refresh() async {
         isLoading = true
@@ -116,6 +117,30 @@ final class InstanceViewModel {
     func rebootInstance(_ id: String) async {
         do { try await instanceService.rebootInstance(id); showSuccess = true; await refresh() }
         catch { self.error = error.localizedDescription }
+    }
+
+    func resizeInstance(_ id: String, size: String) async {
+        do {
+            try await instanceService.resizeInstance(id, size: size)
+            showSuccess = true
+            await refresh()
+        } catch { self.error = error.localizedDescription }
+    }
+
+    func attachVolume(_ volumeId: String, instanceId: String) async {
+        do {
+            try await volumeService.attachVolume(volumeId, instanceId: instanceId)
+            showSuccess = true
+            await refresh()
+        } catch { self.error = error.localizedDescription }
+    }
+
+    func detachVolume(_ volumeId: String) async {
+        do {
+            try await volumeService.detachVolume(volumeId)
+            showSuccess = true
+            await refresh()
+        } catch { self.error = error.localizedDescription }
     }
 
     func removeInstance(_ id: String) async {

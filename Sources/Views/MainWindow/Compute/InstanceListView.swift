@@ -7,7 +7,7 @@ struct InstanceListView: View {
     var body: some View {
         Group {
             if let inst = vm.selectedInstance {
-                InstanceDetailView(instance: inst) {
+                InstanceDetailView(instance: inst, vm: vm) {
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
                         vm.selectedInstance = nil
                     }

@@ -17,6 +17,9 @@ struct CivoInstance: Codable, Identifiable, Sendable {
 
     let initialPassword: String?
     let privateIp: String?
+    let reverseDns: String?
+    let initialUser: String?
+    let sshKeyId: String?
 
     var name: String { hostname ?? id }
 
@@ -31,5 +34,8 @@ struct CivoInstance: Codable, Identifiable, Sendable {
         case networkId = "network_id"
         case createdAt = "created_at"
         case initialPassword = "initial_password"
+        case reverseDns = "reverse_dns"
+        case initialUser = "initial_user"
+        case sshKeyId = "ssh_key_id"
     }
 }
