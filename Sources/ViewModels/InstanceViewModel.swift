@@ -119,6 +119,14 @@ final class InstanceViewModel {
         catch { self.error = error.localizedDescription }
     }
 
+    func updateInstance(_ id: String, reverseDns: String) async {
+        do {
+            _ = try await instanceService.updateInstance(id, body: ["reverse_dns": reverseDns])
+            showSuccess = true
+            await refresh()
+        } catch { self.error = error.localizedDescription }
+    }
+
     func resizeInstance(_ id: String, size: String) async {
         do {
             try await instanceService.resizeInstance(id, size: size)

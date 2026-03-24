@@ -8,6 +8,8 @@ struct InstanceDetailView: View {
     @State private var showPassword = false
     @State private var showResize = false
     @State private var resizeTarget = ""
+    @State private var editingReverseDns = false
+    @State private var reverseDnsValue = ""
 
     var body: some View {
         ScrollView {
@@ -96,8 +98,44 @@ struct InstanceDetailView: View {
                 infoRow("Private IP", instance.privateIp ?? "—")
                 infoRow("Region", instance.region ?? "—")
                 infoRow("Network ID", instance.networkId ?? "Default")
-                if let reverseDns = instance.reverseDns, !reverseDns.isEmpty {
-                    infoRow("Reverse DNS", reverseDns)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Reverse DNS")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    if editingReverseDns {
+                        HStack(spacing: 6) {
+                            TextField("e.g. mail.example.com", text: $reverseDnsValue)
+                                .textFieldStyle(.roundedBorder)
+                                .font(.subheadline)
+                            Button("Save") {
+                                Task {
+                                    await vm.updateInstance(instance.id, reverseDns: reverseDnsValue)
+                                    editingReverseDns = false
+                                }
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.small)
+                            .disabled(reverseDnsValue.isEmpty)
+                            Button("Cancel") {
+                                editingReverseDns = false
+                            }
+                            .controlSize(.small)
+                        }
+                    } else {
+                        HStack {
+                            Text(instance.reverseDns ?? "Not set")
+                                .font(.subheadline)
+                                .foregroundStyle(instance.reverseDns != nil ? .primary : .tertiary)
+                            Button {
+                                reverseDnsValue = instance.reverseDns ?? ""
+                                editingReverseDns = true
+                            } label: {
+                                Image(systemName: "pencil")
+                                    .font(.caption)
+                            }
+                            .buttonStyle(.borderless)
+                        }
+                    }
                 }
             }
             .padding(8)
