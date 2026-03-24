@@ -141,11 +141,12 @@ struct APIHealthView: View {
 
         for (index, endpoint) in endpoints.enumerated() {
             let start = Date()
-            let statusCode = await checkEndpoint(path: endpoint.path)
+            let (statusCode, hasData) = await checkEndpoint(path: endpoint.path)
             let elapsed = Int(Date().timeIntervalSince(start) * 1000)
 
             results[index].statusCode = statusCode
             results[index].responseTime = elapsed
+            results[index].hasData = hasData
             results[index].checked = true
         }
 
@@ -153,22 +154,38 @@ struct APIHealthView: View {
         isChecking = false
     }
 
-    private func checkEndpoint(path: String) async -> Int {
+    private func checkEndpoint(path: String) async -> (status: Int, hasData: Bool) {
         let apiKey = CivoConfig.shared.apiKey
-        guard !apiKey.isEmpty else { return 0 }
+        guard !apiKey.isEmpty else { return (0, false) }
 
-        let urlString = "https://api.civo.com/v2\(path)"
-        guard let url = URL(string: urlString) else { return 0 }
+        let region = CivoConfig.shared.region
+        var urlString = "https://api.civo.com/v2\(path)"
+        if !path.contains("?") && !region.isEmpty {
+            urlString += "?region=\(region)"
+        } else if !region.isEmpty {
+            urlString += "&region=\(region)"
+        }
+        guard let url = URL(string: urlString) else { return (0, false) }
 
         var request = URLRequest(url: url)
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.timeoutInterval = 10
 
         do {
-            let (_, response) = try await URLSession.shared.data(for: request)
-            return (response as? HTTPURLResponse)?.statusCode ?? 0
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let code = (response as? HTTPURLResponse)?.statusCode ?? 0
+            let hasData: Bool
+            if let json = try? JSONSerialization.jsonObject(with: data) {
+                if let array = json as? [Any] { hasData = !array.isEmpty }
+                else if let dict = json as? [String: Any] {
+                    if let items = dict["items"] as? [Any] { hasData = !items.isEmpty }
+                    else { hasData = true }
+                }
+                else { hasData = false }
+            } else { hasData = data.count > 2 }
+            return (code, hasData)
         } catch {
-            return 0
+            return (0, false)
         }
     }
 }
@@ -179,6 +196,7 @@ private struct EndpointResult: Identifiable {
     let icon: String
     var statusCode: Int = 0
     var responseTime: Int = 0
+    var hasData = false
     var checked = false
 
     var isOk: Bool { (200...299).contains(statusCode) }

@@ -6,6 +6,21 @@ enum CivoAPIError: LocalizedError {
     case httpError(Int, String)
     case decodingError(String)
     case networkError(String)
+    case cancelled
+
+    /// Returns true if this error should be silently ignored (e.g. request cancelled during navigation)
+    static func isCancelled(_ error: Error) -> Bool {
+        if let urlError = error as? URLError, urlError.code == .cancelled { return true }
+        if let apiError = error as? CivoAPIError, case .cancelled = apiError { return true }
+        if error.localizedDescription.contains("cancelled") { return true }
+        return false
+    }
+
+    /// Returns the error description only if it should be shown to the user (filters cancelled)
+    static func userMessage(_ error: Error) -> String? {
+        if isCancelled(error) { return nil }
+        return error.localizedDescription
+    }
 
     var errorDescription: String? {
         switch self {
@@ -30,9 +45,11 @@ enum CivoAPIError: LocalizedError {
             }
         case .decodingError(let detail):
             return "Failed to parse API response: \(detail)"
+        case .cancelled:
+            return nil  // Never show cancelled errors
         case .networkError(let detail):
             if detail.contains("cancelled") {
-                return "Request cancelled."
+                return nil  // Suppress cancelled
             }
             if detail.contains("offline") || detail.contains("not connected") {
                 return "No internet connection. Check your network and try again."
