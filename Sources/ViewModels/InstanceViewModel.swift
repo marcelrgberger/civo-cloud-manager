@@ -45,7 +45,7 @@ final class InstanceViewModel {
                 selectedInstance = updated
             }
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Instance refresh failed: \(error.localizedDescription)")
         }
     }
@@ -82,7 +82,7 @@ final class InstanceViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -99,7 +99,7 @@ final class InstanceViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -110,7 +110,7 @@ final class InstanceViewModel {
             try await instanceService.stopInstance(id); showSuccess = true
             ActivityLog.shared.log("Stopped", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func startInstance(_ id: String) async {
@@ -119,7 +119,7 @@ final class InstanceViewModel {
             try await instanceService.startInstance(id); showSuccess = true
             ActivityLog.shared.log("Started", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func rebootInstance(_ id: String) async {
@@ -128,7 +128,7 @@ final class InstanceViewModel {
             try await instanceService.rebootInstance(id); showSuccess = true
             ActivityLog.shared.log("Rebooted", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func updateInstance(_ id: String, reverseDns: String) async {
@@ -138,7 +138,7 @@ final class InstanceViewModel {
             showSuccess = true
             ActivityLog.shared.log("Set Reverse DNS to \(reverseDns)", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func resizeInstance(_ id: String, size: String) async {
@@ -148,7 +148,7 @@ final class InstanceViewModel {
             showSuccess = true
             ActivityLog.shared.log("Resized to \(size)", resourceType: "Instance", resourceName: name, resourceId: id)
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func attachVolume(_ volumeId: String, instanceId: String) async {
@@ -156,7 +156,7 @@ final class InstanceViewModel {
             try await volumeService.attachVolume(volumeId, instanceId: instanceId)
             showSuccess = true
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func detachVolume(_ volumeId: String) async {
@@ -164,7 +164,7 @@ final class InstanceViewModel {
             try await volumeService.detachVolume(volumeId)
             showSuccess = true
             await refresh()
-        } catch { self.error = error.localizedDescription }
+        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     func removeInstance(_ id: String) async {
@@ -172,7 +172,7 @@ final class InstanceViewModel {
             try await instanceService.removeInstance(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -181,7 +181,7 @@ final class InstanceViewModel {
             try await sshKeyService.removeSSHKey(name)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 }

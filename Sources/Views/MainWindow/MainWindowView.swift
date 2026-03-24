@@ -144,9 +144,9 @@ struct MainWindowView: View {
                         .keyboardShortcut("e", modifiers: [.command, .shift])
                         .hidden()
                 }
+                #if DEBUG
                 .overlay(alignment: .bottomTrailing) {
-                    // TEMP: paywall debug — remove after investigation
-                    Text(store.isDebugBuild ? "⚠️ DEBUG BUILD" : "✅ RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
+                    Text(store.isDebugBuild ? "DEBUG BUILD" : "RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
                         .font(.caption2.monospaced())
                         .padding(4)
                         .background(.black.opacity(0.7))
@@ -154,6 +154,7 @@ struct MainWindowView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                         .padding(8)
                 }
+                #endif
             } else {
                 PaywallView()
             }

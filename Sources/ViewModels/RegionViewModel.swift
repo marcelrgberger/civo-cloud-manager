@@ -31,7 +31,7 @@ final class RegionViewModel {
         do {
             regions = try await service.listRegions()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Region list failed: \(error.localizedDescription)")
         }
     }

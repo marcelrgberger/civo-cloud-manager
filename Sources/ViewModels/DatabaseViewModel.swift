@@ -30,7 +30,7 @@ final class DatabaseViewModel {
         do {
             databases = try await service.listDatabases()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Database list failed: \(error.localizedDescription)")
         }
     }
@@ -60,7 +60,7 @@ final class DatabaseViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -74,7 +74,7 @@ final class DatabaseViewModel {
             try await service.removeDatabase(name)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 }

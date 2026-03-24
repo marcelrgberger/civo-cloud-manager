@@ -19,7 +19,6 @@
 		0891940B5F7D8079787F48D1 /* CivoRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7126A77B7B656502483F1E79 /* CivoRegion.swift */; };
 		08B4B8D7860A4262CFF7625E /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3323BF3E6B4C74A20FC8288 /* StatusBadge.swift */; };
 		0ED000CC5D94403404DC7463 /* S3Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A342EFFACFBAAAAD02F7A63 /* S3Client.swift */; };
-		121BB582D60E9A0BDFB8F42A /* CivoInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4E732662FAB0B64BB45C8 /* CivoInvoice.swift */; };
 		1442C79F223261DA1D7E0742 /* CivoKubernetes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D54A3F3664EE4588C918D4 /* CivoKubernetes.swift */; };
 		16A4B49151D57D5417DD04EF /* CivoAccessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3FA8E68EFAB7F9D7F17DB /* CivoAccessLabel.swift */; };
 		1EF1FA9F4EAE04DFC0EBB249 /* CreateDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C33D73BB48F9025EFF03B91 /* CreateDomainView.swift */; };
@@ -173,7 +172,6 @@
 		4830574EB3DC78B0624BBB1B /* APIHealthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHealthView.swift; sourceTree = "<group>"; };
 		48556827196128BC53DC0256 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
 		48F36B02AC6A60364AE432A2 /* APIDecodingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIDecodingTests.swift; sourceTree = "<group>"; };
-		49B4E732662FAB0B64BB45C8 /* CivoInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoInvoice.swift; sourceTree = "<group>"; };
 		4A37808DF7874B84C497B183 /* K8sEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sEvent.swift; sourceTree = "<group>"; };
 		4B022376D3CE5DDD6EE9505B /* FirewallRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
 		4B70CFC3073652B2F484EBEB /* CivoDiskImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoDiskImage.swift; sourceTree = "<group>"; };
@@ -506,7 +504,6 @@
 				4B70CFC3073652B2F484EBEB /* CivoDiskImage.swift */,
 				51A68203D97D90CDCA97D376 /* CivoDomain.swift */,
 				25A9268C07EC0589C576AC19 /* CivoInstance.swift */,
-				49B4E732662FAB0B64BB45C8 /* CivoInvoice.swift */,
 				00D54A3F3664EE4588C918D4 /* CivoKubernetes.swift */,
 				CB0C963DEE47447DB55ED2A0 /* CivoLoadBalancer.swift */,
 				D33F22F7A31F8EC23B4CD44E /* CivoNetwork.swift */,
@@ -661,7 +658,6 @@
 				D601F73C8E37A0033484EB7E /* CivoFirewallService.swift in Sources */,
 				B6E1F591C05505B0ED166092 /* CivoInstance.swift in Sources */,
 				887F766F77ABC1811C9695FE /* CivoInstanceService.swift in Sources */,
-				121BB582D60E9A0BDFB8F42A /* CivoInvoice.swift in Sources */,
 				1442C79F223261DA1D7E0742 /* CivoKubernetes.swift in Sources */,
 				E5388F0CB662114DDAF8DC19 /* CivoKubernetesService.swift in Sources */,
 				D864E9E98764261E0826B58D /* CivoLoadBalancer.swift in Sources */,

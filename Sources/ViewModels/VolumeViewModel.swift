@@ -39,7 +39,7 @@ final class VolumeViewModel {
             objectStores = try await stores
             credentials = try await creds
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Storage refresh failed: \(error.localizedDescription)")
         }
     }
@@ -64,7 +64,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -81,7 +81,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -98,7 +98,7 @@ final class VolumeViewModel {
                 try await volumeService.removeVolume(vol.id)
             } catch {
                 hadError = true
-                self.error = error.localizedDescription
+                self.error = CivoAPIError.userMessage(error)
                 Log.error("Failed to remove volume \(vol.name): \(error.localizedDescription)")
             }
         }
@@ -111,7 +111,7 @@ final class VolumeViewModel {
             try await volumeService.removeVolume(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -126,7 +126,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -135,7 +135,7 @@ final class VolumeViewModel {
         do {
             selectedObjectStore = try await objectStoreService.showObjectStore(id)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -144,7 +144,7 @@ final class VolumeViewModel {
             try await objectStoreService.removeObjectStore(name)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -165,7 +165,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -175,7 +175,7 @@ final class VolumeViewModel {
             try await objectStoreService.removeCredential(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 }

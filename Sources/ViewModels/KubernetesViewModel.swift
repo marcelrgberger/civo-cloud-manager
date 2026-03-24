@@ -73,7 +73,7 @@ final class KubernetesViewModel {
         do {
             clusters = try await service.listClusters()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
 
         // Also refresh K8s data if connected
@@ -101,7 +101,7 @@ final class KubernetesViewModel {
         do {
             selectedCluster = try await service.showCluster(id)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             return
         }
 
@@ -127,7 +127,7 @@ final class KubernetesViewModel {
         do {
             cluster = try await service.showCluster(clusterId)
         } catch {
-            k8sError = error.localizedDescription
+            k8sError = CivoAPIError.userMessage(error)
             return
         }
 
@@ -399,7 +399,7 @@ final class KubernetesViewModel {
             try? await Task.sleep(for: .seconds(1))
             await loadPods(nodeName: nodeName)
         } catch {
-            k8sError = error.localizedDescription
+            k8sError = CivoAPIError.userMessage(error)
         }
     }
 
@@ -410,7 +410,7 @@ final class KubernetesViewModel {
             showSuccess = true
             if let c = k8sClient { await loadWorkloads(c) }
         } catch {
-            k8sError = error.localizedDescription
+            k8sError = CivoAPIError.userMessage(error)
         }
     }
 
@@ -421,7 +421,7 @@ final class KubernetesViewModel {
             showSuccess = true
             if let c = k8sClient { await loadWorkloads(c) }
         } catch {
-            k8sError = error.localizedDescription
+            k8sError = CivoAPIError.userMessage(error)
         }
     }
 
@@ -556,7 +556,7 @@ final class KubernetesViewModel {
         do {
             nodePods = try await client.listPods(nodeName: nodeName).items
         } catch {
-            k8sError = error.localizedDescription
+            k8sError = CivoAPIError.userMessage(error)
         }
     }
 
@@ -569,13 +569,13 @@ final class KubernetesViewModel {
         do {
             podLog = try await client.getPodLogs(namespace: namespace, pod: pod)
         } catch {
-            k8sError = error.localizedDescription
+            k8sError = CivoAPIError.userMessage(error)
         }
     }
 
     func saveKubeconfig(_ clusterId: String) async -> String? {
         do { return try await service.getKubeconfig(clusterId) }
-        catch { self.error = error.localizedDescription; return nil }
+        catch { self.error = CivoAPIError.userMessage(error); return nil }
     }
 
     // MARK: - CRUD
@@ -585,7 +585,7 @@ final class KubernetesViewModel {
         do {
             _ = try await service.createCluster(body)
             isCreating = false; showSuccess = true; await refresh(); return true
-        } catch { saveError = error.localizedDescription; return false }
+        } catch { saveError = CivoAPIError.userMessage(error); return false }
     }
 
     func updateCluster(_ id: String, body: sending [String: Any]) async -> Bool {
@@ -593,7 +593,7 @@ final class KubernetesViewModel {
         do {
             _ = try await service.updateCluster(id, body: body)
             showSuccess = true; await refresh(); return true
-        } catch { saveError = error.localizedDescription; return false }
+        } catch { saveError = CivoAPIError.userMessage(error); return false }
     }
 
     func removeCluster(_ id: String) async -> Bool {
@@ -601,6 +601,6 @@ final class KubernetesViewModel {
         do {
             try await service.removeCluster(id)
             await refresh(); return true
-        } catch { self.error = error.localizedDescription; return false }
+        } catch { self.error = CivoAPIError.userMessage(error); return false }
     }
 }
