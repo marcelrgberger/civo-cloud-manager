@@ -11,6 +11,12 @@ struct InstanceDetailView: View {
     @State private var editingReverseDns = false
     @State private var reverseDnsValue = ""
 
+    private var sshKeyName: String {
+        guard let keyId = instance.sshKeyId else { return "" }
+        let name = vm.sshKeys.first(where: { $0.id == keyId })?.name ?? ""
+        return name.replacingOccurrences(of: " ", with: "-").lowercased()
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -149,7 +155,10 @@ struct InstanceDetailView: View {
             VStack(alignment: .leading, spacing: 10) {
                 if let ip = instance.publicIp, !ip.isEmpty, ip != "—" {
                     let user = instance.initialUser ?? "root"
-                    let sshCommand = "ssh \(user)@\(ip)"
+                    let keyName = instance.sshKeyId != nil ? sshKeyName : nil
+                    let sshCommand = keyName != nil
+                        ? "ssh -i ~/.ssh/\(keyName!) \(user)@\(ip)"
+                        : "ssh \(user)@\(ip)"
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Connect via SSH")
@@ -158,6 +167,15 @@ struct InstanceDetailView: View {
                             Text(sshCommand)
                                 .font(.subheadline.monospaced())
                                 .textSelection(.enabled)
+                            if keyName != nil {
+                                Text("Using SSH key: \(keyName!)")
+                                    .font(.caption2)
+                                    .foregroundStyle(.tertiary)
+                            } else {
+                                Text("No SSH key — use initial password")
+                                    .font(.caption2)
+                                    .foregroundStyle(.tertiary)
+                            }
                         }
                         Spacer()
                         Button {
