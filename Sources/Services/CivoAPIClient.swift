@@ -14,10 +14,32 @@ enum CivoAPIError: LocalizedError {
         case .noRegion:
             return "No region selected. Choose a region in Settings."
         case .httpError(let code, let message):
-            return "API error (\(code)): \(message)"
+            switch code {
+            case 401:
+                return "Authentication failed. Check your API key in Settings."
+            case 403:
+                return "Access denied. Your API key may not have permission for this action."
+            case 404:
+                return "Resource not found. It may have been deleted."
+            case 429:
+                return "Rate limit exceeded. Please wait a moment and try again."
+            case 500...599:
+                return "Civo is experiencing issues (HTTP \(code)). Please try again in a few minutes. Check status.civo.com for updates."
+            default:
+                return "API error (\(code)): \(message)"
+            }
         case .decodingError(let detail):
             return "Failed to parse API response: \(detail)"
         case .networkError(let detail):
+            if detail.contains("cancelled") {
+                return "Request cancelled."
+            }
+            if detail.contains("offline") || detail.contains("not connected") {
+                return "No internet connection. Check your network and try again."
+            }
+            if detail.contains("timed out") {
+                return "Request timed out. The Civo API may be slow. Try again."
+            }
             return "Network error: \(detail)"
         }
     }
