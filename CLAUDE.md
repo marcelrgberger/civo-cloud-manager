@@ -192,7 +192,9 @@ Animations
 - **Pod Exec** — PodExecView allows running commands in pods via KubernetesAPIClient.runCommandInPod().
 - **Ingress TLS** — K8sIngress model includes TLS information displayed in ClusterDetailView networking section.
 - **Deployment restart** — restart deployments via KubernetesAPIClient.restartDeployment() (annotation patch with current timestamp).
-- **Instance detail** — InstanceDetailView with resize, reverse DNS editing, volume attach/detach actions.
+- **Instance detail** — InstanceDetailView with resize, stop/start/reboot, reverse DNS editing (inline), SSH command with key path, volume attach/detach. Auto-refresh every 5s while building/provisioning.
+- **SSH key generation** — CreateSSHKeyView generates Ed25519 key pairs via /usr/bin/ssh-keygen. Private key saved to ~/Downloads, public key uploaded to Civo. "Move to ~/.ssh/" button copies command and opens Terminal.
+- **About system tools** — AboutView lists required macOS tools (/usr/bin/openssl, /usr/bin/ssh-keygen) with availability check.
 - **Keyboard shortcuts** — Cmd+K (QuickSearchView), Cmd+Shift+E (ExportView).
 - **Sidebar sections** — Dashboard, Instances, SSH Keys, Kubernetes, Networks, Firewalls, Load Balancers, Domains, Databases, Volumes, Object Stores, Credentials, Cost Estimate, API Health, Regions, About. Categorized into Overview, Compute, Kubernetes, Networking, Storage & Data, Account.
 - **Colored sidebar icons** — each SidebarSection has an `iconColor` property: Dashboard (blue), Instances (green), SSH Keys (orange), Kubernetes (blue), Networks (green), Firewalls (red), Load Balancers (indigo), Domains (teal), Databases (purple), Volumes (orange), Object Stores (cyan), Credentials (yellow), Cost Estimate (green), API Health (pink), Regions (mint), About (secondary).

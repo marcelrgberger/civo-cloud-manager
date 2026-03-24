@@ -8,110 +8,83 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - Open/close firewall rules for your current public IP with one click
 - Open All / Close All — bulk manage all configured firewalls
 - Per-firewall port configuration
+- **IP Presets** — save named IPs (Home, Office) for one-click firewall access
+- **Auto-close timer** — 15min, 30min, 1h, 2h, or unlimited; auto-closes rules on expiry
 - Auto-detect public IPv4 via ipify.org (3 fallback providers)
 - Auto-refresh every 60 seconds
-- Launch at Login via SMAppService
 
 ### Dashboard (Full Management)
-- **Quota overview** — circular gauges for all account limits (RAM/DB RAM in GB)
-- **Quota increase request** — "Request Change" button opens form with steppers for all quota limits, sends PUT /quota
+- **Quota overview** — circular gauges with warning badges at 80%/90% threshold
+- **Quota increase request** — form with steppers for all quota limits
 - **Clickable resource cards** — navigate directly to any resource section
+- **Quick Search (⌘K)** — search across all resources by name, keyboard navigation
+- **Export (⌘⇧E)** — export resources as JSON with secret redaction
 - **Full CRUD** — create, view, and delete resources across all categories
-- **Kubernetes** — create clusters (CNI, node pools, marketplace apps), drill-down to conditions, installed apps, direct K8s API access for node details, pod logs, live metrics, events, and workloads
-- **Databases** — create PostgreSQL/MySQL instances with size, nodes, networking config; detail view shows credentials (username visible, password protected by Touch ID / system password via LAContext)
-- **Networking** — create networks, firewalls, domains; add/edit/delete DNS records inline; delete networks (skips default), firewalls, and load balancers; drill-down into firewall rules (view, create, delete)
-- **Storage** — create volumes and object stores with size configuration; click object store for detail view with credentials, config, resize, and S3 file browser; dedicated Credentials sidebar section for managing Object Store credentials (create, delete, Touch ID-protected secret keys)
-- **Compute** — create instances (size, disk image, SSH key, firewall, tags), manage SSH keys; stop, start, and reboot instances via right-click context menu
-- **Regions** — view available regions, switch active region
-- **Safe deletion** — all destructive operations require typing the resource name to confirm (DeleteConfirmationSheet)
-- **Smooth animations** — staggered list row appearance, spring transitions between views, animated dashboard cards
-- Success overlay animation after create/edit operations
-- Error banners on every view
 
-### Kubernetes Deep Integration
-- **Direct K8s API access via PKCS#12** — downloads kubeconfig from Civo API, parses certificates, creates PKCS#12 bundle from PEM cert+key via `/usr/bin/openssl` (pre-installed on every Mac), imports identity via `SecPKCS12Import`, connects directly to the Kubernetes API using client certificate auth via Security.framework. NSAllowsArbitraryLoads enabled for self-signed certs on IP addresses.
-- **Auto-connect on cluster selection** — K8s API connection is established lazily when a cluster is selected (no manual "Connect" button needed)
-- **Live metrics** — circular CPU and Memory gauges (percentage) when metrics-server is available, with pod count and node health indicators
-- **Cluster events** — recent events with relative timestamps ("2m ago", "1h ago"), warnings highlighted in orange
-- **Workloads (collapsible)** — Deployments, DaemonSets, StatefulSets, and CronJobs in a collapsible DisclosureGroup with ready/desired replica status
-- **Networking (collapsible)** — Services and Ingresses in a collapsible DisclosureGroup
-- **Namespace filter** — picker in cluster detail to filter deployments and services by namespace
-- **Deployment scaling** — scale deployments up/down via Kubernetes PATCH scale subresource
-- **Graceful fallback** — static stats shown when metrics-server is not installed on the cluster
-- **Auto-firewall for K8s API** — automatically opens port 6443 for your current IP when connecting to a cluster's Kubernetes API, and closes the rule when navigating back
-- **Node details** — click a node name in a pool to see CPU, Memory, Pods capacity vs allocatable, conditions (Ready, MemoryPressure, DiskPressure, PIDPressure), addresses, and system info (OS, architecture, container runtime, kubelet version)
-- **Pod list** — view all pods on a node with status badges, namespace, ready count, and restart count
-- **Pod restart** — right-click a pod and select "Restart Pod" to delete and restart it
-- **Pod logs** — scrollable monospaced log output with auto-scroll toggle, refresh button, and auto-refresh toggle (3-second timer)
-- **PVC-Volume linking** — PVCs show linked Civo Volume ID via PV's CSI volumeHandle; PVs listed with capacity and Civo Volume ID
-- **Storage section (collapsible)** — PVCs and PVs in a collapsible DisclosureGroup
-- **Save Kubeconfig** — toolbar button exports the cluster kubeconfig as a .yaml file via NSSavePanel
-- **Editable node pool labels** — add and remove labels on node pools via PUT
-- **K8s connecting animation** — animated progress overlay with 5 steps (firewall, kubeconfig, certificates, API server, metrics), rotating helm icon with pulsing blue circle, green checkmark spring animation on completion
-- **Multi-level navigation** — Cluster List → Cluster Detail → Node Detail → Pod List → Pod Logs with spring move+opacity transitions
+### Compute
+- Create instances with **visual size picker grid** (CPU, RAM, NVMe, hourly price per card)
+- **Stop, Start, Reboot** from instance detail view
+- **Resize** — size picker grid in sheet
+- **SSH access** — correct `ssh -i ~/.ssh/key user@ip` command with copy button
+- **SSH key generation** — Ed25519 via /usr/bin/ssh-keygen, private key to ~/Downloads, public key uploaded to Civo
+- **Reverse DNS** — editable inline
+- **Activity log** — local history of all actions with timestamps
+- **Auto-refresh** while instance is building (every 5s)
+- Tags management
 
-### Object Store Detail View
-- **Click an object store** to open its detail view showing:
-  - **Credentials** — access key ID and secret access key from the linked credential (via `credential_id`), plus endpoint
-  - **Configuration** — max size, region, status
-  - **Resize** — stepper to change max size, submitted via PUT /objectstores/:id
-  - **Browse Files** — opens the S3 file browser for the object store
-- Credentials are managed separately via the Civo Object Store Credentials API (`/objectstore/credentials`)
-- Each object store links to a credential via `credential_id` in `owner_info`
+### Kubernetes
+- Create clusters with size picker grid (Standard, Performance, CPU/RAM Optimized tabs)
+- **Direct K8s API** via PKCS#12 client certificates
+- **Auto-connect** on cluster selection, auto-firewall for port 6443
+- **Auto-reconnect** when firewall closes
+- **Live metrics** — CPU/Memory gauges with **sparkline history charts**
+- **ConfigMap/Secret viewer** — list with namespace filter, base64-decoded values
+- **Helm releases** — detected from K8s secrets, shows chart version and status
+- **Deployment restart** — rollout restart via context menu
+- **Pod exec** — run commands in pods via terminal-like UI
+- **Pod restart alerts** — macOS notification when pod restarts increase
+- **Ingress detail** — TLS status, clickable host URLs, backend info
+- Events, workloads, networking, storage sections (collapsible)
+- Namespace filter, deployment scaling, PVC-Volume linking
+- Node detail, pod list, pod logs with auto-refresh
+- Save Kubeconfig, editable node pool labels
 
-### Object Store Credentials
-- **Dedicated credentials management** — credentials are fetched from `GET /objectstore/credentials` (paginated)
-- Each credential has `access_key_id` and `secret_access_key_id`
-- Create new credentials via `POST /objectstore/credentials`
-- Delete credentials via `DELETE /objectstore/credentials/:id`
-- Show individual credential via `GET /objectstores/credentials/:id`
-- Model: `CivoObjectStoreCredential` (id, name, accessKeyId, secretAccessKeyId, status, suspended)
+### Networking
+- Create networks, firewalls, domains
+- Add/edit/delete DNS records inline
+- Firewall rule drill-down (view, create, delete)
+- Delete networks (skips default), firewalls, load balancers
 
-### Database Credentials
-- **Username** — displayed directly in the database detail view
-- **Password** — protected by Touch ID or system password via `LAContext.evaluatePolicy(.deviceOwnerAuthentication)` (async)
-- Authentication prompt: "Reveal database password"
-- CivoDatabase model includes `username` and `password` fields from the Civo API
+### Storage & Data
+- Create databases with size picker grid
+- Database credentials (username visible, password via Touch ID)
+- Create volumes and object stores
+- **S3 file browser** — Table view, multi-select, download to temp + open in Finder
+- Object Store credentials management (Touch ID-protected)
 
-### Credential Management (Sidebar)
-- **Dedicated sidebar entry** — "Credentials" under Storage & Data category with yellow `key.horizontal` icon
-- **CredentialListView** — lists all Object Store credentials, inline creation form, context menu delete with name confirmation
-- **Secret key protection** — secret access keys are hidden by default, revealed via Touch ID / system password (`LAContext` async)
-- **Hover animation** — credential rows animate on hover (key icon rotation + orange background highlight)
-- **Staggered spring animation** — list rows appear with 60ms stagger delay, fade+slide from left
-- **Credential picker** — when creating a new Object Store, credentials can be selected from the existing list
+### Cost Estimate
+- **Actual charges** from Civo billing API
+- Period: This Month (+ projected), Last Month, Last Quarter, This Year
+- Breakdown by resource type and individual resource
+- **Editable hourly rates** for custom pricing
+- Past months cached locally
 
-### K8s Connecting Animation
-- **K8sConnectingView** — animated progress overlay shown while connecting to a cluster's Kubernetes API
-- **5 sequential steps:** open firewall, fetch kubeconfig, import certificates, connect to API server, load metrics & workloads
-- **Rotating helm icon** with pulsing blue circle background (`easeInOut` repeat animation)
-- **Green checkmark** with spring animation on each completed step
-- **Ultra-thin material background** with rounded rectangle clip shape
+### API Health
+- Tests all 16 Civo API endpoints with response time
+- Color-coded: green <200ms, orange <500ms, red >500ms
+- Animated status checks
 
-### S3 File Browser
-- **Browse files directly** in any object store with assigned credentials
-- **S3Client** — native S3-compatible client using AWS Signature V4 signing via CryptoKit (HMAC-SHA256)
-- **ListObjects v2** — lists objects and folders using prefix/delimiter for folder navigation
-- **Breadcrumb navigation** — clickable path components for quick folder traversal
-- **Folder drill-down** — click folders to navigate deeper, back button to go up
-- **File icons** — contextual icons based on file extension (images, PDFs, archives, text, media, etc.)
-- **Download files** — right-click any file and select "Download" to save via NSSavePanel
-- **HeadObject** — retrieves file metadata (size, content type)
-- **XML response parsing** — custom `S3XMLParser` parses S3 `ListBucketResult` XML responses
-- Flow: Object Store List → Object Store Detail → Browse Files (ObjectStoreBrowserView)
-
-### Colored Sidebar Icons
-- Each sidebar section has a distinct icon color for visual clarity:
-  - Dashboard (blue), Instances (green), SSH Keys (orange), Kubernetes (blue)
-  - Networks (green), Firewalls (red), Load Balancers (indigo), Domains (teal)
-  - Databases (purple), Volumes (orange), Object Stores (cyan), Credentials (yellow)
-  - Regions (mint), About (secondary)
+### Other
+- **Regions** — view all regions with resource counts
+- **Safe deletion** — type resource name to confirm
+- **Smooth animations** — staggered rows, spring transitions, sparklines
+- **User-friendly errors** — 500 → "Civo is experiencing issues", cancelled requests suppressed
+- **About** — system tools check (/usr/bin/openssl, /usr/bin/ssh-keygen)
 
 ### Monetization
 - **Free tier** — menu bar firewall management
 - **Full Access ($14.99)** — one-time purchase, unlocks dashboard + all resources
-- **Apple offer codes** — redeem codes generated in App Store Connect
-- **Family Sharing** enabled
+- **Family Sharing** enabled, Apple offer codes supported
 
 ### Localization
 - 8 languages: English, German, Spanish, French, Italian, Dutch, Polish, Portuguese
