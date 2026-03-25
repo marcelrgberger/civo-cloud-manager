@@ -36,9 +36,9 @@ struct SSHKeyListView: View {
                     keychainKeys = SSHKeychain.listKeys()
                     showKeychainKeys = true
                 } label: {
-                    Label("Keychain", systemImage: "key.icloud")
+                    Label("Backup", systemImage: "key.viewfinder")
                 }
-                .help("Recover private keys from Keychain")
+                .help("Recover backed up private keys")
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
@@ -67,14 +67,14 @@ struct SSHKeyListView: View {
     private var keychainSheet: some View {
         VStack(spacing: 16) {
             HStack {
-                Image(systemName: "key.icloud")
+                Image(systemName: "lock.shield")
                     .font(.title2)
                     .foregroundStyle(.blue)
-                Text("SSH Keys in Keychain")
+                Text("SSH Key Backup")
                     .font(.title2.bold())
             }
 
-            Text("Private keys backed up to your Keychain (synced via iCloud).")
+            Text("Private keys are encrypted and stored securely in the app.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
@@ -83,7 +83,7 @@ struct SSHKeyListView: View {
                     Image(systemName: "key.slash")
                         .font(.title)
                         .foregroundStyle(.tertiary)
-                    Text("No SSH keys in Keychain")
+                    Text("No backed up SSH keys")
                         .foregroundStyle(.secondary)
                     Text("Keys generated in the app are automatically backed up here.")
                         .font(.caption2)
