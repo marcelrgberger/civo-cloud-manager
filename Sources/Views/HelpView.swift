@@ -196,9 +196,12 @@ struct HelpSection {
         ]),
         HelpSection(title: "SSH Key Generation", icon: "key", items: [
             "Generate Ed25519 SSH key pairs directly from the app.",
-            "Private key saved to ~/Downloads, public key uploaded to Civo.",
-            "'Move to ~/.ssh/' button copies and runs the command in Terminal.",
+            "Private key saved to ~/Downloads and encrypted backup stored in the app.",
+            "Public key uploaded to Civo when you click Create.",
+            "'Move to ~/.ssh/' button copies the command and opens Terminal.",
             "SSH command with key path shown in instance detail view.",
+            "Backup button in SSH Keys toolbar: recover private keys from encrypted backup.",
+            "'Export to Downloads' restores a key from the app's backup storage.",
         ]),
         HelpSection(title: "Instance Management", icon: "desktopcomputer", items: [
             "Start, Stop, Reboot instances from the detail view.",

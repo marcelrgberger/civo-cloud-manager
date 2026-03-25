@@ -193,7 +193,7 @@ Animations
 - **Ingress TLS** — K8sIngress model includes TLS information displayed in ClusterDetailView networking section.
 - **Deployment restart** — restart deployments via KubernetesAPIClient.restartDeployment() (annotation patch with current timestamp).
 - **Instance detail** — InstanceDetailView with resize, stop/start/reboot, reverse DNS editing (inline), SSH command with key path, volume attach/detach. Auto-refresh every 5s while building/provisioning.
-- **SSH key generation** — CreateSSHKeyView generates Ed25519 key pairs via /usr/bin/ssh-keygen. Private key saved to ~/Downloads, public key uploaded to Civo. "Move to ~/.ssh/" button copies command and opens Terminal.
+- **SSH key generation** — CreateSSHKeyView generates Ed25519 key pairs via /usr/bin/ssh-keygen. Private key saved to ~/Downloads + encrypted backup in app storage (SSHKeychain using AES-GCM via CryptoKit). Public key uploaded to Civo. "Move to ~/.ssh/" button copies command and opens Terminal. Backup toolbar button in SSH Keys list recovers stored keys.
 - **About system tools** — AboutView lists required macOS tools (/usr/bin/openssl, /usr/bin/ssh-keygen) with availability check.
 - **Keyboard shortcuts** — Cmd+K (QuickSearchView), Cmd+Shift+E (ExportView).
 - **Sidebar sections** — Dashboard, Instances, SSH Keys, Kubernetes, Networks, Firewalls, Load Balancers, Domains, Databases, Volumes, Object Stores, Credentials, Cost Estimate, API Health, Regions, About. Categorized into Overview, Compute, Kubernetes, Networking, Storage & Data, Account.

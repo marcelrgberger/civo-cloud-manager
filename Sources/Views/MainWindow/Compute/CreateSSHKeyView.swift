@@ -163,10 +163,10 @@ struct CreateSSHKeyView: View {
                 let pubKey = try String(contentsOf: publicKeyPath, encoding: .utf8)
                 publicKey = pubKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
-                // Backup private key to Keychain
+                // Backup private key (encrypted in app storage)
                 let privateKeyData = try Data(contentsOf: privateKeyPath)
                 let saved = SSHKeychain.save(name: sanitizedName, privateKey: privateKeyData)
-                Log.info("SSH Keychain backup: \(saved ? "OK" : "FAILED") for '\(sanitizedName)' (\(privateKeyData.count) bytes)")
+                print("[SSHKeychain] Backup: \(saved ? "OK" : "FAILED") for '\(sanitizedName)' (\(privateKeyData.count) bytes)")
 
                 // Move private key to Downloads
                 try? FileManager.default.removeItem(at: downloadedKeyPath)

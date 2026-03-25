@@ -3,8 +3,8 @@ import SwiftUI
 struct SSHKeyListView: View {
     @Bindable var vm: InstanceViewModel
     @State private var deleteTarget: CivoSSHKey?
-    @State private var showKeychainKeys = false
-    @State private var keychainKeys: [String] = []
+    @State private var showBackup = false
+    @State private var backedUpKeys: [String] = []
     @State private var recoveredMessage: String?
 
     var body: some View {
@@ -33,8 +33,8 @@ struct SSHKeyListView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
-                    keychainKeys = SSHKeychain.listKeys()
-                    showKeychainKeys = true
+                    backedUpKeys = SSHKeychain.listKeys()
+                    showBackup = true
                 } label: {
                     Label("Backup", systemImage: "key.viewfinder")
                 }
@@ -51,8 +51,8 @@ struct SSHKeyListView: View {
         .sheet(isPresented: $vm.isCreatingSSHKey) {
             CreateSSHKeyView(vm: vm).frame(minWidth: 500, minHeight: 250)
         }
-        .sheet(isPresented: $showKeychainKeys) {
-            keychainSheet
+        .sheet(isPresented: $showBackup) {
+            backupSheet
         }
         .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
@@ -64,7 +64,7 @@ struct SSHKeyListView: View {
         }
     }
 
-    private var keychainSheet: some View {
+    private var backupSheet: some View {
         VStack(spacing: 16) {
             HStack {
                 Image(systemName: "lock.shield")
@@ -78,7 +78,7 @@ struct SSHKeyListView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            if keychainKeys.isEmpty {
+            if backedUpKeys.isEmpty {
                 VStack(spacing: 8) {
                     Image(systemName: "key.slash")
                         .font(.title)
@@ -92,7 +92,7 @@ struct SSHKeyListView: View {
                 .padding()
             } else {
                 List {
-                    ForEach(keychainKeys, id: \.self) { keyName in
+                    ForEach(backedUpKeys, id: \.self) { keyName in
                         HStack {
                             Image(systemName: "key.fill")
                                 .foregroundStyle(.orange)
@@ -119,7 +119,7 @@ struct SSHKeyListView: View {
                 }
             }
 
-            Button("Done") { showKeychainKeys = false }
+            Button("Done") { showBackup = false }
                 .keyboardShortcut(.cancelAction)
         }
         .padding(24)
@@ -128,7 +128,7 @@ struct SSHKeyListView: View {
 
     private func recoverKey(name: String) {
         guard let keyData = SSHKeychain.load(name: name) else {
-            recoveredMessage = "Could not read key from Keychain"
+            recoveredMessage = "Could not read key from backup"
             return
         }
         guard let downloadsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
