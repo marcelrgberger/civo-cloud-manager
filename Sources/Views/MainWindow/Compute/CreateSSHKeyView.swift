@@ -163,6 +163,10 @@ struct CreateSSHKeyView: View {
                 let pubKey = try String(contentsOf: publicKeyPath, encoding: .utf8)
                 publicKey = pubKey.trimmingCharacters(in: .whitespacesAndNewlines)
 
+                // Backup private key to Keychain (syncs via iCloud Keychain)
+                let privateKeyData = try Data(contentsOf: privateKeyPath)
+                SSHKeychain.save(name: sanitizedName, privateKey: privateKeyData)
+
                 // Move private key to Downloads
                 try? FileManager.default.removeItem(at: downloadedKeyPath)
                 try FileManager.default.moveItem(at: privateKeyPath, to: downloadedKeyPath)
