@@ -29,10 +29,12 @@ enum SSHKeychain {
         do {
             let sealed = try AES.GCM.seal(privateKey, using: encryptionKey)
             let combined = sealed.combined!
-            try combined.write(to: storageDir.appendingPathComponent(name))
+            let path = storageDir.appendingPathComponent(name)
+            try combined.write(to: path)
+            Log.info("SSHKeychain.save OK: \(path.path) (\(combined.count) bytes)")
             return true
         } catch {
-            Log.error("SSHKeychain.save failed for '\(name)': \(error.localizedDescription)")
+            Log.error("SSHKeychain.save FAILED for '\(name)': \(error.localizedDescription)")
             return false
         }
     }
@@ -53,8 +55,15 @@ enum SSHKeychain {
     }
 
     static func listKeys() -> [String] {
-        guard let files = try? FileManager.default.contentsOfDirectory(atPath: storageDir.path) else { return [] }
-        return files.filter { !$0.hasPrefix(".") }.sorted()
+        let dir = storageDir
+        Log.info("SSHKeychain.listKeys path: \(dir.path)")
+        guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir.path) else {
+            Log.error("SSHKeychain.listKeys: cannot read directory")
+            return []
+        }
+        let keys = files.filter { !$0.hasPrefix(".") }.sorted()
+        Log.info("SSHKeychain.listKeys: \(keys)")
+        return keys
     }
 
     static func exists(name: String) -> Bool {
