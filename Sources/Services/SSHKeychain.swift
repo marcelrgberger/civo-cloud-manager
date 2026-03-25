@@ -19,7 +19,13 @@ enum SSHKeychain {
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
         ]
 
-        return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
+        let status = SecItemAdd(query as CFDictionary, nil)
+        if status != errSecSuccess {
+            Log.error("SSHKeychain.save failed for '\(name)': OSStatus \(status)")
+        } else {
+            Log.info("SSHKeychain.save OK for '\(name)' (\(privateKey.count) bytes)")
+        }
+        return status == errSecSuccess
     }
 
     static func load(name: String) -> Data? {
@@ -56,10 +62,18 @@ enum SSHKeychain {
         ]
 
         var result: AnyObject?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-              let items = result as? [[String: Any]] else { return [] }
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        if status != errSecSuccess && status != errSecItemNotFound {
+            Log.error("SSHKeychain.listKeys failed: OSStatus \(status)")
+        }
+        guard status == errSecSuccess, let items = result as? [[String: Any]] else {
+            Log.info("SSHKeychain.listKeys: \(status == errSecItemNotFound ? "empty" : "error \(status)")")
+            return []
+        }
 
-        return items.compactMap { $0[kSecAttrAccount as String] as? String }.sorted()
+        let names = items.compactMap { $0[kSecAttrAccount as String] as? String }.sorted()
+        Log.info("SSHKeychain.listKeys: found \(names.count) keys: \(names)")
+        return names
     }
 
     /// Check if a key exists in the Keychain.
