@@ -8,9 +8,9 @@ enum SSHKeychain {
 
     /// Save a private key to the Keychain.
     /// Use data protection keychain for consistent save/load in sandbox
-    private static let useDataProtection: [String: Any] = [
-        kSecUseDataProtectionKeychain as String: true
-    ]
+    private static var useDataProtection: [String: Any] {
+        [kSecUseDataProtectionKeychain as String: true]
+    }
 
     static func save(name: String, privateKey: Data) -> Bool {
         delete(name: name)
