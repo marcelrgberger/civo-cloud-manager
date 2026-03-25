@@ -1,84 +1,63 @@
 import Foundation
-import Security
+import CryptoKit
 
-/// Stores and retrieves SSH private keys in the macOS Keychain.
-/// With iCloud Keychain enabled, keys sync across all Apple devices (E2E encrypted).
+/// Stores SSH private keys as encrypted files in the app's Application Support directory.
+/// Files are encrypted with a key derived from the machine's hardware UUID.
 enum SSHKeychain {
-    private static let service = "de.berger-rosenstock.CivoCloudManager.ssh"
+    private static var storageDir: URL {
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let dir = appSupport.appendingPathComponent("CivoCloudManager/ssh-keys")
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
 
-    /// Save a private key to the Keychain.
-    /// Use data protection keychain for consistent save/load in sandbox
-    private static var useDataProtection: [String: Any] {
-        [kSecUseDataProtectionKeychain as String: true]
+    private static var encryptionKey: SymmetricKey {
+        // Derive key from bundle ID + hardware UUID for basic protection
+        let seed = (Bundle.main.bundleIdentifier ?? "civo") + (hardwareUUID ?? "fallback")
+        let hash = SHA256.hash(data: Data(seed.utf8))
+        return SymmetricKey(data: hash)
+    }
+
+    private static var hardwareUUID: String? {
+        let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
+        defer { IOObjectRelease(service) }
+        guard let uuid = IORegistryEntryCreateCFProperty(service, "IOPlatformUUID" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? String else { return nil }
+        return uuid
     }
 
     static func save(name: String, privateKey: Data) -> Bool {
-        delete(name: name)
-
-        var query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: name,
-            kSecAttrLabel as String: "SSH Key: \(name)",
-            kSecValueData as String: privateKey,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-        ]
-        query.merge(useDataProtection) { _, new in new }
-
-        let status = SecItemAdd(query as CFDictionary, nil)
-        Log.info("SSHKeychain.save '\(name)': \(status == errSecSuccess ? "OK" : "FAILED (\(status))")")
-        return status == errSecSuccess
+        do {
+            let sealed = try AES.GCM.seal(privateKey, using: encryptionKey)
+            let combined = sealed.combined!
+            try combined.write(to: storageDir.appendingPathComponent(name))
+            return true
+        } catch {
+            Log.error("SSHKeychain.save failed for '\(name)': \(error.localizedDescription)")
+            return false
+        }
     }
 
     static func load(name: String) -> Data? {
-        var query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: name,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-        ]
-        query.merge(useDataProtection) { _, new in new }
-
-        var result: AnyObject?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess else { return nil }
-        return result as? Data
+        let path = storageDir.appendingPathComponent(name)
+        guard let combined = try? Data(contentsOf: path),
+              let sealed = try? AES.GCM.SealedBox(combined: combined),
+              let decrypted = try? AES.GCM.open(sealed, using: encryptionKey) else { return nil }
+        return decrypted
     }
 
     @discardableResult
     static func delete(name: String) -> Bool {
-        var query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: name,
-        ]
-        query.merge(useDataProtection) { _, new in new }
-        let status = SecItemDelete(query as CFDictionary)
-        return status == errSecSuccess || status == errSecItemNotFound
+        let path = storageDir.appendingPathComponent(name)
+        try? FileManager.default.removeItem(at: path)
+        return true
     }
 
     static func listKeys() -> [String] {
-        var query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecReturnAttributes as String: true,
-            kSecMatchLimit as String: kSecMatchLimitAll,
-        ]
-        query.merge(useDataProtection) { _, new in new }
-
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        Log.info("SSHKeychain.listKeys: status=\(status)")
-
-        guard status == errSecSuccess, let items = result as? [[String: Any]] else { return [] }
-
-        let names = items.compactMap { $0[kSecAttrAccount as String] as? String }.sorted()
-        Log.info("SSHKeychain.listKeys: found \(names)")
-        return names
+        guard let files = try? FileManager.default.contentsOfDirectory(atPath: storageDir.path) else { return [] }
+        return files.filter { !$0.hasPrefix(".") }.sorted()
     }
 
-    /// Check if a key exists in the Keychain.
     static func exists(name: String) -> Bool {
-        load(name: name) != nil
+        FileManager.default.fileExists(atPath: storageDir.appendingPathComponent(name).path)
     }
 }
