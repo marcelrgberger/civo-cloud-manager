@@ -73,6 +73,7 @@
 		887F766F77ABC1811C9695FE /* CivoInstanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFAE20BBC6F3E08B5DC3AB21 /* CivoInstanceService.swift */; };
 		8A5B3EA42F09B6F200E28B20 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394D4BE2B10B10EE1565C333 /* Logger.swift */; };
 		8C2F81C2B70472E419B7483E /* K8sNodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959602569F06A8B06B21ED24 /* K8sNodeDetailView.swift */; };
+		8E8E2AECA5EBDE130B43A647 /* SSHKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6112EAF62454B22555716367 /* SSHKeychain.swift */; };
 		8F1982940667E9078D6E4262 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08AEC672FB4BD3EEFEA3C37 /* NetworkViewModel.swift */; };
 		8F902984DEC9371847A89140 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4198C5C2FE783F0CEA1E28F /* MenuBarView.swift */; };
 		8FD8FBD20CEAD13DC2FE956C /* DatabaseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACE5A8AC44CA21C03A15081 /* DatabaseListView.swift */; };
@@ -185,6 +186,7 @@
 		5A342EFFACFBAAAAD02F7A63 /* S3Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Client.swift; sourceTree = "<group>"; };
 		5AE6614CD8BC20D066C5B05F /* VolumeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeListView.swift; sourceTree = "<group>"; };
 		60A3FA8E68EFAB7F9D7F17DB /* CivoAccessLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoAccessLabel.swift; sourceTree = "<group>"; };
+		6112EAF62454B22555716367 /* SSHKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSHKeychain.swift; sourceTree = "<group>"; };
 		6309AEDEC86716F8C91297EF /* SparklineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
 		638C6D6389A9BAE2388F1EA0 /* ResourceListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceListRow.swift; sourceTree = "<group>"; };
 		648D217EEDD44D69D88C357F /* K8sConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sConfig.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				48556827196128BC53DC0256 /* KubernetesAPIClient.swift */,
 				57BB88148A6F070AFE39B531 /* NotificationService.swift */,
 				5A342EFFACFBAAAAD02F7A63 /* S3Client.swift */,
+				6112EAF62454B22555716367 /* SSHKeychain.swift */,
 				1FC6BE2A34C7AF48F9B97D83 /* StoreManager.swift */,
 			);
 			path = Services;
@@ -752,6 +755,7 @@
 				8064B3657059DB672B6CFEE0 /* ResourceListRow.swift in Sources */,
 				0ED000CC5D94403404DC7463 /* S3Client.swift in Sources */,
 				940458154EA7E2730A6B477E /* SSHKeyListView.swift in Sources */,
+				8E8E2AECA5EBDE130B43A647 /* SSHKeychain.swift in Sources */,
 				477F5C828AC59FEFB600CDE5 /* SizePickerGrid.swift in Sources */,
 				E43F15723167BE1B671A33DB /* SparklineView.swift in Sources */,
 				03175E40119BCDEDF60A1CF4 /* StaggeredAppear.swift in Sources */,

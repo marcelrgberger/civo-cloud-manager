@@ -96,6 +96,7 @@ final class InstanceViewModel {
             _ = try await sshKeyService.createSSHKey(body)
             isCreatingSSHKey = false
             showSuccess = true
+            try? await Task.sleep(for: .seconds(1))
             await refresh()
             return true
         } catch {
