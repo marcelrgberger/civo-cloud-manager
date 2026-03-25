@@ -1,13 +1,31 @@
 import Foundation
 import Security
 
-final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelegate {
+/// Weak-referencing delegate proxy to avoid URLSession → KubernetesAPIClient retain cycle.
+/// URLSession retains its delegate strongly; using a proxy with a weak back-reference
+/// allows the client to be deallocated normally when no longer referenced.
+private final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
+    weak var client: KubernetesAPIClient?
+
+    func urlSession(
+        _ session: URLSession,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+        if let client {
+            client.handleChallenge(challenge, completionHandler: completionHandler)
+        } else {
+            completionHandler(.cancelAuthenticationChallenge, nil)
+        }
+    }
+}
+
+final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     private let server: String
-    private let identity: SecIdentity
-    private let caCert: SecCertificate
-    private lazy var session: URLSession = {
-        URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
-    }()
+    fileprivate let identity: SecIdentity
+    fileprivate let caCert: SecCertificate
+    private let session: URLSession
+    private let sessionDelegate: K8sSessionDelegate
 
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
@@ -25,14 +43,56 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         // Create identity from PEM cert + key using Security.framework only
         self.identity = try Self.createIdentity(certPEM: credentials.clientCertPEM, keyPEM: credentials.clientKeyPEM)
 
+        // Use a delegate proxy with weak back-reference to avoid retain cycle
+        let delegate = K8sSessionDelegate()
+        self.sessionDelegate = delegate
+        let config = URLSessionConfiguration.ephemeral
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 30
+        self.session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+
         super.init()
+        delegate.client = self
+    }
+
+    /// Invalidates the URLSession, cancelling all in-flight requests.
+    func invalidate() {
+        sessionDelegate.client = nil
+        session.invalidateAndCancel()
     }
 
     deinit {
-        // Cleanup keychain items
-        SecItemDelete([kSecClass as String: kSecClassCertificate, kSecAttrLabel as String: "civo-k8s-client"] as CFDictionary)
-        SecItemDelete([kSecClass as String: kSecClassKey, kSecAttrLabel as String: "civo-k8s-client"] as CFDictionary)
+        sessionDelegate.client = nil
         session.invalidateAndCancel()
+    }
+
+    // MARK: - Auth Challenge (called by delegate proxy)
+
+    fileprivate func handleChallenge(
+        _ challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+        let method = challenge.protectionSpace.authenticationMethod
+
+        if method == NSURLAuthenticationMethodServerTrust,
+           let trust = challenge.protectionSpace.serverTrust
+        {
+            SecTrustSetAnchorCertificates(trust, [caCert] as CFArray)
+            SecTrustSetAnchorCertificatesOnly(trust, true)
+            completionHandler(.useCredential, URLCredential(trust: trust))
+            return
+        }
+
+        if method == NSURLAuthenticationMethodClientCertificate {
+            completionHandler(.useCredential, URLCredential(
+                identity: identity,
+                certificates: nil,
+                persistence: .forSession
+            ))
+            return
+        }
+
+        completionHandler(.performDefaultHandling, nil)
     }
 
     // MARK: - K8s API
@@ -201,36 +261,6 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
             throw K8sAPIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, msg)
         }
         return data
-    }
-
-    // MARK: - URLSessionDelegate
-
-    func urlSession(
-        _ session: URLSession,
-        didReceive challenge: URLAuthenticationChallenge,
-        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
-    ) {
-        let method = challenge.protectionSpace.authenticationMethod
-
-        if method == NSURLAuthenticationMethodServerTrust,
-           let trust = challenge.protectionSpace.serverTrust
-        {
-            SecTrustSetAnchorCertificates(trust, [caCert] as CFArray)
-            SecTrustSetAnchorCertificatesOnly(trust, true)
-            completionHandler(.useCredential, URLCredential(trust: trust))
-            return
-        }
-
-        if method == NSURLAuthenticationMethodClientCertificate {
-            completionHandler(.useCredential, URLCredential(
-                identity: identity,
-                certificates: nil,
-                persistence: .forSession
-            ))
-            return
-        }
-
-        completionHandler(.performDefaultHandling, nil)
     }
 
     // MARK: - Identity via PKCS#12 (openssl)

@@ -151,7 +151,8 @@ final class KubernetesViewModel {
             let creds = try KubeconfigParser.parse(yaml)
             steps.append("Parsed: server=\(creds.server), CA=\(creds.caCertPEM.count)b, cert=\(creds.clientCertPEM.count)b, key=\(creds.clientKeyPEM.count)b")
 
-            // Step 4: Create client
+            // Step 4: Create client (invalidate previous to prevent session leak)
+            k8sClient?.invalidate()
             let client = try KubernetesAPIClient(credentials: creds)
             steps.append("Client created")
             k8sClient = client
@@ -171,6 +172,7 @@ final class KubernetesViewModel {
     }
 
     func disconnectFromCluster() async {
+        k8sClient?.invalidate()
         k8sClient = nil
         isK8sConnected = false
         k8sNodes = []
