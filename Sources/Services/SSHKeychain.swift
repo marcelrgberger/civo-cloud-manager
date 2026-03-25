@@ -31,10 +31,10 @@ enum SSHKeychain {
             let combined = sealed.combined!
             let path = storageDir.appendingPathComponent(name)
             try combined.write(to: path)
-            Log.info("SSHKeychain.save OK: \(path.path) (\(combined.count) bytes)")
+            print("[SSHKeychain] SAVE OK: \(path.path) (\(combined.count) bytes)")
             return true
         } catch {
-            Log.error("SSHKeychain.save FAILED for '\(name)': \(error.localizedDescription)")
+            print("[SSHKeychain] SAVE FAILED for '\(name)': \(error)")
             return false
         }
     }
@@ -56,13 +56,13 @@ enum SSHKeychain {
 
     static func listKeys() -> [String] {
         let dir = storageDir
-        Log.info("SSHKeychain.listKeys path: \(dir.path)")
+        print("[SSHKeychain] LIST path: \(dir.path)")
         guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir.path) else {
-            Log.error("SSHKeychain.listKeys: cannot read directory")
+            print("[SSHKeychain] LIST: cannot read directory")
             return []
         }
         let keys = files.filter { !$0.hasPrefix(".") }.sorted()
-        Log.info("SSHKeychain.listKeys: \(keys)")
+        print("[SSHKeychain] LIST found: \(keys)")
         return keys
     }
 
