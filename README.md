@@ -66,7 +66,9 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
   - Resume: recreates store with same name/credentials, restores files, cleans up vault
   - Live progress with file count, byte counters, and current file name
   - Vault auto-resizes (grows before pause, shrinks after resume)
-  - Verify-before-delete safety: file count comparison before removing original
+  - Parallel transfers (4 concurrent) for faster copy in both directions
+  - Verify-before-delete safety: key + size comparison before removing original
+  - Credential assignment dropdown if credential is missing on a recovered store
 
 ### Cost Estimate
 - **Actual charges** from Civo billing API

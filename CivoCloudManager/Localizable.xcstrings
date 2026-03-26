@@ -22599,6 +22599,58 @@
           }
         }
       }
+    },
+    "If a paused store is missing its credential, use 'Assign Credential' to select one before resuming.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If a paused store is missing its credential, use 'Assign Credential' to select one before resuming."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn einem pausierten Store die Credential fehlt, verwenden Sie 'Credential zuweisen', um eine auszuwählen, bevor Sie fortsetzen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si a un store pausado le falta su credencial, use 'Asignar credencial' para seleccionar una antes de reanudar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si un store en pause n'a pas d'identifiant, utilisez « Attribuer un identifiant » pour en sélectionner un avant de reprendre."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se a uno store in pausa manca la credenziale, usa 'Assegna credenziale' per selezionarne una prima di ripristinare."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als een gepauzeerde store geen credential heeft, gebruik dan 'Credential toewijzen' om er een te selecteren voordat u hervat."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeśli wstrzymanemu store brakuje poświadczenia, użyj 'Przypisz poświadczenie', aby wybrać jedno przed wznowieniem."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se um store pausado não tiver credencial, use 'Atribuir credencial' para selecionar uma antes de retomar."
+          }
+        }
+      }
     }
   },
   "version": "1.1"
