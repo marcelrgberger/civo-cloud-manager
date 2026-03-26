@@ -399,6 +399,32 @@ final class ObjectStorePauseService: Sendable {
         saveLocalManifest(manifest)
     }
 
+    func updatePausedStoreCredential(storeName: String, credentialId: String, accessKeyId: String?) async throws {
+        guard let vault = try await findVault(), let vaultCredId = vault.credentialId else {
+            throw PauseError.vaultNotFound
+        }
+        let cred = try await storeService.showCredential(vaultCredId)
+        guard let endpoint = vault.objectstoreEndpoint,
+              let ak = cred.accessKeyId, let sk = cred.secretAccessKeyId else {
+            throw PauseError.missingVaultCredentials
+        }
+        let client = S3Client(endpoint: endpoint, accessKey: ak, secretKey: sk)
+        var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
+        if let idx = manifest.stores.firstIndex(where: { $0.originalName == storeName }) {
+            let old = manifest.stores[idx]
+            manifest.stores[idx] = PausedObjectStore(
+                id: old.id, originalName: old.originalName, originalMaxSize: old.originalMaxSize,
+                credentialId: credentialId, accessKeyId: accessKeyId,
+                region: old.region, endpoint: old.endpoint, pausedAt: old.pausedAt,
+                fileCount: old.fileCount, totalSizeBytes: old.totalSizeBytes, vaultPrefix: old.vaultPrefix
+            )
+            let data = try JSONEncoder.pauseEncoder.encode(manifest)
+            try await client.uploadObject(bucket: vault.name, key: Self.manifestKey, data: data, contentType: "application/json")
+            saveLocalManifest(manifest)
+            Log.info("Updated credential for paused store '\(storeName)' to \(credentialId)")
+        }
+    }
+
     // MARK: - Local Fallback
 
     private static let localManifestKey = "CivoCloudManager.pausedStores"

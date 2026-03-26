@@ -283,4 +283,17 @@ final class VolumeViewModel {
         isResuming = false
         pauseProgress = nil
     }
+
+    func assignCredentialToPausedStore(_ paused: PausedObjectStore, credentialId: String, accessKeyId: String?) async {
+        do {
+            try await pauseService.updatePausedStoreCredential(
+                storeName: paused.originalName,
+                credentialId: credentialId,
+                accessKeyId: accessKeyId
+            )
+            await refresh()
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+        }
+    }
 }
