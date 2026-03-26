@@ -333,12 +333,17 @@ final class ObjectStorePauseService: Sendable {
             try verifyObjects(source: vaultObjects, copied: restoredObjects, prefix: paused.vaultPrefix)
         }
 
-        // 7. Delete vault folder
+        // 7. Mark as fully restored in vault
+        let restoredFlag = "\(paused.vaultPrefix).restored"
+        try await vaultClient.uploadObject(bucket: vault.name, key: restoredFlag, data: Data(), contentType: "text/plain")
+
+        // 8. Delete vault folder
         progress(PauseProgress(phase: .deleting, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Cleaning up vault...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
-        let keysToDelete = vaultObjects.map(\.key)
+        var keysToDelete = vaultObjects.map(\.key)
+        keysToDelete.append(restoredFlag)
         try await vaultClient.deleteObjects(bucket: vault.name, keys: keysToDelete)
 
-        // 8. Remove from manifest
+        // 9. Remove from manifest
         try await removePausedMetadata(vaultClient: vaultClient, vaultBucket: vault.name, pausedId: paused.id)
 
         // 9. Shrink vault if possible
@@ -381,18 +386,21 @@ final class ObjectStorePauseService: Sendable {
         let client = S3Client(endpoint: endpoint, accessKey: accessKey, secretKey: secretKey)
         var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
 
-        // Remove manifest entries for stores that are already active again
+        // Clean up manifest entries for fully restored stores (check .restored flag)
         let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
-        let staleEntries = manifest.stores.filter { activeStoreNames.contains($0.originalName) }
-        var repaired = !staleEntries.isEmpty
-        for stale in staleEntries {
-            manifest.stores.removeAll { $0.id == stale.id }
-            // Clean up vault folder if still present
-            let leftoverKeys = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix)
-            if !leftoverKeys.isEmpty {
-                try await client.deleteObjects(bucket: vault.name, keys: leftoverKeys.map(\.key))
+        var repaired = false
+        for stale in manifest.stores where activeStoreNames.contains(stale.originalName) {
+            let restoredFlag = "\(stale.vaultPrefix).restored"
+            let isFullyRestored = (try? await client.headObject(bucket: vault.name, key: restoredFlag)) != nil
+            if isFullyRestored {
+                // Fully restored — clean up vault folder and remove manifest entry
+                var keysToClean = (try? await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix))?.map(\.key) ?? []
+                keysToClean.append(restoredFlag)
+                try? await client.deleteObjects(bucket: vault.name, keys: keysToClean)
+                manifest.stores.removeAll { $0.id == stale.id }
+                repaired = true
+                Log.info("Cleaned up fully restored store: \(stale.originalName)")
             }
-            Log.info("Removed stale paused entry for active store: \(stale.originalName)")
         }
 
         // Repair: detect orphaned folders in vault not tracked in manifest
