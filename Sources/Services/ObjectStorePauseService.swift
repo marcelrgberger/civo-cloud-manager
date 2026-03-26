@@ -381,11 +381,23 @@ final class ObjectStorePauseService: Sendable {
         let client = S3Client(endpoint: endpoint, accessKey: accessKey, secretKey: secretKey)
         var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
 
+        // Remove manifest entries for stores that are already active again
+        let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
+        let staleEntries = manifest.stores.filter { activeStoreNames.contains($0.originalName) }
+        var repaired = !staleEntries.isEmpty
+        for stale in staleEntries {
+            manifest.stores.removeAll { $0.id == stale.id }
+            // Clean up vault folder if still present
+            let leftoverKeys = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix)
+            if !leftoverKeys.isEmpty {
+                try await client.deleteObjects(bucket: vault.name, keys: leftoverKeys.map(\.key))
+            }
+            Log.info("Removed stale paused entry for active store: \(stale.originalName)")
+        }
+
         // Repair: detect orphaned folders in vault not tracked in manifest
         let vaultContents = try await client.listObjects(bucket: vault.name, prefix: Self.pausedPrefix, delimiter: "/")
         let trackedPrefixes = Set(manifest.stores.map(\.vaultPrefix))
-        let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
-        var repaired = false
         for prefix in vaultContents.commonPrefixes {
             guard prefix != Self.pausedPrefix, !trackedPrefixes.contains(prefix) else { continue }
             // Orphaned folder — check if the original store still exists (cancelled pause)
