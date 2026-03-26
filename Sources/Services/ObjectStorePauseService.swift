@@ -350,8 +350,8 @@ final class ObjectStorePauseService: Sendable {
         let currentMax = vault.maxSize ?? Self.defaultVaultSize
         let needed = currentMax + additionalGB
         if needed > currentMax {
-            // Round up to nearest 250 GB
-            let newSize = ((needed + 249) / 250) * 250
+            // Round up to nearest 500 GB (Civo requires multiples of 500)
+            let newSize = ((needed + 499) / 500) * 500
             let _ = try await storeService.updateObjectStore(vault.id, body: ["max_size_gb": newSize])
             Log.info("Resized vault from \(currentMax) GB to \(newSize) GB")
         }
@@ -361,7 +361,8 @@ final class ObjectStorePauseService: Sendable {
         let remaining = try await vaultClient.listAllObjects(bucket: vault.name, prefix: Self.pausedPrefix)
         let usedBytes = remaining.reduce(0) { $0 + $1.size }
         let usedGB = usedBytes / (1024 * 1024 * 1024) + 1
-        let newSize = max(Self.defaultVaultSize, ((usedGB + 249) / 250) * 250)
+        // Round up to nearest 500 GB (Civo requires multiples of 500)
+        let newSize = max(Self.defaultVaultSize, ((usedGB + 499) / 500) * 500)
         let currentMax = vault.maxSize ?? Self.defaultVaultSize
         if newSize < currentMax {
             let _ = try await storeService.updateObjectStore(vault.id, body: ["max_size_gb": newSize])
