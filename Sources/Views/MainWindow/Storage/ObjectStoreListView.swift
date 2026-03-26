@@ -138,23 +138,55 @@ struct ObjectStoreListView: View {
 
                                 Spacer()
 
-                                Button {
-                                    resumeTarget = paused
-                                    vm.resumeObjectStore(paused)
-                                } label: {
-                                    Label("Resume", systemImage: "play.circle.fill")
-                                        .foregroundStyle(.green)
+                                if paused.credentialId != nil {
+                                    Button {
+                                        resumeTarget = paused
+                                        vm.resumeObjectStore(paused)
+                                    } label: {
+                                        Label("Resume", systemImage: "play.circle.fill")
+                                            .foregroundStyle(.green)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .help("Resume object store")
+                                } else {
+                                    Menu {
+                                        Section("Use Existing") {
+                                            ForEach(vm.credentials) { cred in
+                                                Button {
+                                                    Task {
+                                                        await vm.assignCredentialAndResume(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
+                                                    }
+                                                } label: {
+                                                    Text(cred.displayName)
+                                                }
+                                            }
+                                        }
+                                        Section {
+                                            Button {
+                                                Task {
+                                                    await vm.createCredentialAndResume(paused)
+                                                }
+                                            } label: {
+                                                Label("Create New", systemImage: "plus")
+                                            }
+                                        }
+                                    } label: {
+                                        Label("Resume", systemImage: "play.circle.fill")
+                                            .foregroundStyle(.orange)
+                                    }
+                                    .menuStyle(.borderlessButton)
+                                    .help("Select credential to resume")
                                 }
-                                .buttonStyle(.plain)
-                                .help("Resume object store")
                             }
                             .padding(.vertical, 4)
                             .contextMenu {
-                                Button {
-                                    resumeTarget = paused
-                                    vm.resumeObjectStore(paused)
-                                } label: {
-                                    Label("Resume", systemImage: "play.circle")
+                                if paused.credentialId != nil {
+                                    Button {
+                                        resumeTarget = paused
+                                        vm.resumeObjectStore(paused)
+                                    } label: {
+                                        Label("Resume", systemImage: "play.circle")
+                                    }
                                 }
                             }
                         }
