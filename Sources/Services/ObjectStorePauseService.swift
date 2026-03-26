@@ -375,6 +375,9 @@ final class ObjectStorePauseService: Sendable {
             try await client.uploadObject(bucket: vault.name, key: Self.manifestKey, data: data, contentType: "application/json")
         }
 
+        // Auto-shrink vault if oversized
+        try? await shrinkVaultIfPossible(vault: vault, vaultClient: client)
+
         saveLocalManifest(manifest)
         return manifest.stores
     }

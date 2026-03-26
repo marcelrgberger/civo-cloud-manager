@@ -90,36 +90,32 @@ struct ObjectStoreListView: View {
                 EmptyStateView(icon: "tray.2", title: "No Object Stores", message: "No object stores found in your account.")
             } else {
                 // Active stores
-                if !vm.visibleObjectStores.isEmpty {
-                    Section {
-                        ForEach(Array(vm.visibleObjectStores.enumerated()), id: \.element.id) { index, store in
+                ForEach(Array(vm.visibleObjectStores.enumerated()), id: \.element.id) { index, store in
+                    Button {
+                        Task { await vm.loadObjectStoreDetail(store.id) }
+                    } label: {
+                        ResourceListRow(
+                            icon: "tray.2",
+                            name: store.name,
+                            subtitle: "\(store.maxSizeDisplay) max — \(store.objectstoreEndpoint ?? "")",
+                            status: store.status,
+                            index: index
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .contextMenu {
+                        if vm.vaultEnabled {
                             Button {
-                                Task { await vm.loadObjectStoreDetail(store.id) }
+                                pauseTarget = store
+                                vm.pauseObjectStore(store)
                             } label: {
-                                ResourceListRow(
-                                    icon: "tray.2",
-                                    name: store.name,
-                                    subtitle: "\(store.maxSizeDisplay) max — \(store.objectstoreEndpoint ?? "")",
-                                    status: store.status,
-                                    index: index
-                                )
+                                Label("Pause", systemImage: "pause.circle")
                             }
-                            .buttonStyle(.plain)
-                            .contextMenu {
-                                if vm.vaultEnabled {
-                                    Button {
-                                        pauseTarget = store
-                                        vm.pauseObjectStore(store)
-                                    } label: {
-                                        Label("Pause", systemImage: "pause.circle")
-                                    }
-                                    .disabled(vm.isPausing || vm.isResuming)
-                                    Divider()
-                                }
-                                Button("Delete", role: .destructive) { deleteTarget = store }
-                                    .disabled(vm.isPausing || vm.isResuming)
-                            }
+                            .disabled(vm.isPausing || vm.isResuming)
+                            Divider()
                         }
+                        Button("Delete", role: .destructive) { deleteTarget = store }
+                            .disabled(vm.isPausing || vm.isResuming)
                     }
                 }
 
