@@ -143,7 +143,7 @@ final class ObjectStorePauseService: Sendable {
 
         // 4. Ensure vault has enough space
         let requiredGB = Int(totalBytes / (1024 * 1024 * 1024)) + 1
-        try await ensureVaultCapacity(vault: vault, additionalGB: requiredGB)
+        try await ensureVaultCapacity(vault: vault, additionalGB: requiredGB, vaultClient: vaultClient)
 
         // 5. Copy files to vault (parallel, max 4 concurrent)
         let vaultPrefix = "\(Self.pausedPrefix)\(store.name)/"
@@ -326,18 +326,55 @@ final class ObjectStorePauseService: Sendable {
     }
 
     func loadPausedStores() async throws -> [PausedObjectStore] {
-        guard let vault = try await findVault(), let cred = try await findVaultCredential() else {
-            // Also check local fallback
+        guard let vault = try await findVault() else {
             return loadLocalManifest().stores
         }
+        // Resolve credential via store's credential_id
+        guard let credId = vault.credentialId else {
+            return loadLocalManifest().stores
+        }
+        let cred = try await storeService.showCredential(credId)
         guard let endpoint = vault.objectstoreEndpoint,
               let accessKey = cred.accessKeyId,
               let secretKey = cred.secretAccessKeyId else {
             return loadLocalManifest().stores
         }
         let client = S3Client(endpoint: endpoint, accessKey: accessKey, secretKey: secretKey)
-        let manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
-        // Update local fallback
+        var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
+
+        // Repair: detect orphaned folders in vault not tracked in manifest
+        let vaultContents = try await client.listObjects(bucket: vault.name, prefix: Self.pausedPrefix, delimiter: "/")
+        let trackedPrefixes = Set(manifest.stores.map(\.vaultPrefix))
+        var repaired = false
+        for prefix in vaultContents.commonPrefixes {
+            guard prefix != Self.pausedPrefix, !trackedPrefixes.contains(prefix) else { continue }
+            // Orphaned folder — add to manifest
+            let storeName = prefix.dropFirst(Self.pausedPrefix.count).dropLast() // remove trailing /
+            let objects = try await client.listAllObjects(bucket: vault.name, prefix: prefix)
+            let totalBytes = Int64(objects.reduce(0) { $0 + $1.size })
+            let entry = PausedObjectStore(
+                id: UUID().uuidString,
+                originalName: String(storeName),
+                originalMaxSize: Self.defaultVaultSize,
+                credentialId: nil,
+                accessKeyId: nil,
+                region: CivoConfig.shared.region,
+                endpoint: endpoint,
+                pausedAt: Date(),
+                fileCount: objects.count,
+                totalSizeBytes: totalBytes,
+                vaultPrefix: prefix
+            )
+            manifest.stores.append(entry)
+            repaired = true
+            Log.warning("Recovered orphaned paused store: \(storeName) (\(objects.count) files)")
+        }
+
+        if repaired {
+            let data = try JSONEncoder.pauseEncoder.encode(manifest)
+            try await client.uploadObject(bucket: vault.name, key: Self.manifestKey, data: data, contentType: "application/json")
+        }
+
         saveLocalManifest(manifest)
         return manifest.stores
     }
@@ -377,12 +414,15 @@ final class ObjectStorePauseService: Sendable {
 
     // MARK: - Vault Capacity
 
-    private func ensureVaultCapacity(vault: CivoObjectStore, additionalGB: Int) async throws {
+    private func ensureVaultCapacity(vault: CivoObjectStore, additionalGB: Int, vaultClient: S3Client) async throws {
         let currentMax = vault.maxSize ?? Self.defaultVaultSize
-        let needed = currentMax + additionalGB
-        if needed > currentMax {
+        // Check actual usage in vault, not just max size
+        let existing = try await vaultClient.listAllObjects(bucket: vault.name, prefix: Self.pausedPrefix)
+        let usedGB = existing.reduce(0) { $0 + $1.size } / (1024 * 1024 * 1024)
+        let neededGB = usedGB + additionalGB
+        if neededGB >= currentMax {
             // Round up to nearest 500 GB (Civo requires multiples of 500)
-            let newSize = ((needed + 499) / 500) * 500
+            let newSize = ((neededGB + 500) / 500) * 500
             let _ = try await storeService.updateObjectStore(vault.id, body: ["max_size_gb": newSize])
             Log.info("Resized vault from \(currentMax) GB to \(newSize) GB")
         }
