@@ -7,6 +7,7 @@ struct PauseProgress: Sendable {
     let currentFileName: String
     let bytesCopied: Int64
     let bytesTotal: Int64
+    var copyStartTime: Date?
 
     enum Phase: String, Sendable {
         case preparing = "Preparing"
@@ -20,6 +21,20 @@ struct PauseProgress: Sendable {
     var fraction: Double {
         guard totalFiles > 0 else { return 0 }
         return Double(currentFile) / Double(totalFiles)
+    }
+
+    var estimatedTimeRemaining: String? {
+        guard phase == .copying, bytesCopied > 0, bytesTotal > bytesCopied,
+              let start = copyStartTime else { return nil }
+        let elapsed = Date().timeIntervalSince(start)
+        guard elapsed > 2 else { return nil }
+        let bytesPerSecond = Double(bytesCopied) / elapsed
+        guard bytesPerSecond > 0 else { return nil }
+        let remainingSeconds = Int(Double(bytesTotal - bytesCopied) / bytesPerSecond)
+        if remainingSeconds < 60 { return "~\(remainingSeconds)s remaining" }
+        let minutes = remainingSeconds / 60
+        if minutes < 60 { return "~\(minutes)m \(remainingSeconds % 60)s remaining" }
+        return "~\(minutes / 60)h \(minutes % 60)m remaining"
     }
 }
 
@@ -148,6 +163,7 @@ final class ObjectStorePauseService: Sendable {
         // 5. Copy files to vault (parallel, max 4 concurrent)
         let vaultPrefix = "\(Self.pausedPrefix)\(store.name)/"
         let pauseCounter = TransferCounter()
+        let pauseCopyStart = Date()
         try await withThrowingTaskGroup(of: Void.self) { group in
             var inflight = 0
             for object in allObjects {
@@ -161,7 +177,7 @@ final class ObjectStorePauseService: Sendable {
                     let data = try await sourceClient.downloadObject(bucket: store.name, key: object.key)
                     try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data)
                     let (files, bytes) = await pauseCounter.add(bytes: Int64(data.count))
-                    progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: object.key, bytesCopied: bytes, bytesTotal: totalBytes))
+                    progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: object.key, bytesCopied: bytes, bytesTotal: totalBytes, copyStartTime: pauseCopyStart))
                 }
                 inflight += 1
             }
@@ -272,6 +288,7 @@ final class ObjectStorePauseService: Sendable {
 
         // 5. Copy files back (parallel, max 4 concurrent)
         let resumeCounter = TransferCounter()
+        let resumeCopyStart = Date()
         try await withThrowingTaskGroup(of: Void.self) { group in
             var inflight = 0
             for object in vaultObjects {
@@ -287,7 +304,7 @@ final class ObjectStorePauseService: Sendable {
                     let data = try await vaultClient.downloadObject(bucket: vault.name, key: object.key)
                     try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data)
                     let (files, bytes) = await resumeCounter.add(bytes: Int64(data.count))
-                    progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: originalKey, bytesCopied: bytes, bytesTotal: totalBytes))
+                    progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: originalKey, bytesCopied: bytes, bytesTotal: totalBytes, copyStartTime: resumeCopyStart))
                 }
                 inflight += 1
             }

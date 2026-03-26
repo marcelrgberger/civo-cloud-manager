@@ -72,10 +72,19 @@ struct ObjectStorePauseView: View {
                     }
 
                     if progress.bytesTotal > 0 {
-                        Text("\(formatBytes(progress.bytesCopied)) / \(formatBytes(progress.bytesTotal))")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .monospacedDigit()
+                        HStack {
+                            Text("\(formatBytes(progress.bytesCopied)) / \(formatBytes(progress.bytesTotal))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .monospacedDigit()
+                            if let eta = progress.estimatedTimeRemaining {
+                                Spacer()
+                                Text(eta)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .monospacedDigit()
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, 4)
