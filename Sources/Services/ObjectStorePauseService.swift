@@ -220,18 +220,25 @@ final class ObjectStorePauseService: Sendable {
 
         let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey)
 
-        // 2. Recreate original store
+        // 2. Recreate original store (or use existing if already created from a prior attempt)
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Creating \(paused.originalName)...", bytesCopied: 0, bytesTotal: 0))
-        var body: [String: Any] = [
-            "name": paused.originalName,
-            "size": paused.originalMaxSize
-        ]
-        if let accessKeyId = paused.accessKeyId {
-            body["access_key_id"] = accessKeyId
+        let existingStores = try await storeService.listObjectStores()
+        let readyStore: CivoObjectStore
+        if let existing = existingStores.first(where: { $0.name == paused.originalName }) {
+            readyStore = existing
+            Log.info("Store '\(paused.originalName)' already exists, using existing")
+        } else {
+            var body: [String: Any] = [
+                "name": paused.originalName,
+                "size": paused.originalMaxSize
+            ]
+            if let accessKeyId = paused.accessKeyId {
+                body["access_key_id"] = accessKeyId
+            }
+            let newStore = try await storeService.createObjectStore(body)
+            try await waitForStoreReady(newStore.id)
+            readyStore = try await storeService.showObjectStore(newStore.id)
         }
-        let newStore = try await storeService.createObjectStore(body)
-        try await waitForStoreReady(newStore.id)
-        let readyStore = try await storeService.showObjectStore(newStore.id)
 
         // 3. Get the credential for the new store to build S3 client
         guard let destEndpoint = readyStore.objectstoreEndpoint else {
