@@ -205,11 +205,12 @@ final class ObjectStorePauseService: Sendable {
         _ paused: PausedObjectStore,
         progress: @Sendable @escaping (PauseProgress) -> Void
     ) async throws {
-        // 1. Get vault
+        // 1. Get vault — resolve credential via store's credential_id
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Connecting to vault...", bytesCopied: 0, bytesTotal: 0))
-        guard let vault = try await findVault(), let vaultCred = try await findVaultCredential() else {
+        guard let vault = try await findVault(), let credId = vault.credentialId else {
             throw PauseError.vaultNotFound
         }
+        let vaultCred = try await storeService.showCredential(credId)
 
         guard let vaultEndpoint = vault.objectstoreEndpoint,
               let vaultAccessKey = vaultCred.accessKeyId,
