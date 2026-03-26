@@ -210,6 +210,7 @@ struct ObjectStoreListView: View {
                         }
                         .buttonStyle(.bordered)
                         .controlSize(.small)
+                        .disabled(vm.isSaving)
                     }
                     .padding(10)
                     .background(.orange.opacity(0.05))
