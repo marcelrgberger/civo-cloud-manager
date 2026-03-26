@@ -44,7 +44,7 @@ final class ObjectStorePauseService: Sendable {
     private static let manifestKey = "paused/manifest.json"
     private static let pausedPrefix = "paused/"
     private static let defaultVaultSize = 500
-    private static let maxConcurrentTransfers = 4
+    private static let maxConcurrentTransfers = 8
 
     private let storeService = CivoObjectStoreService()
 
