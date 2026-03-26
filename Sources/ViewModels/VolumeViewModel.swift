@@ -54,7 +54,12 @@ final class VolumeViewModel {
 
             // Load paused stores
             if vaultEnabled {
-                pausedStores = (try? await pauseService.loadPausedStores()) ?? []
+                do {
+                    pausedStores = try await pauseService.loadPausedStores()
+                } catch {
+                    pauseError = CivoAPIError.userMessage(error)
+                    Log.error("Failed to load paused stores: \(error.localizedDescription)")
+                }
             }
         } catch {
             self.error = CivoAPIError.userMessage(error)

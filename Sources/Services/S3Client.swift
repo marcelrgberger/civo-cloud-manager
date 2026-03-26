@@ -267,7 +267,16 @@ enum S3XMLParser {
         guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators),
               let match = regex.firstMatch(in: xml, range: NSRange(xml.startIndex..., in: xml)),
               let range = Range(match.range(at: 1), in: xml) else { return nil }
-        return String(xml[range])
+        return decodeXMLEntities(String(xml[range]))
+    }
+
+    private static func decodeXMLEntities(_ string: String) -> String {
+        string
+            .replacingOccurrences(of: "&amp;", with: "&")
+            .replacingOccurrences(of: "&lt;", with: "<")
+            .replacingOccurrences(of: "&gt;", with: ">")
+            .replacingOccurrences(of: "&quot;", with: "\"")
+            .replacingOccurrences(of: "&apos;", with: "'")
     }
 }
 

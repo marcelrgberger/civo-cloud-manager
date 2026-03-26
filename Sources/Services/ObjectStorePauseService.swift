@@ -174,8 +174,9 @@ final class ObjectStorePauseService: Sendable {
                 group.addTask {
                     try Task.checkCancellation()
                     let destKey = "\(vaultPrefix)\(object.key)"
+                    let meta = try await sourceClient.headObject(bucket: store.name, key: object.key)
                     let data = try await sourceClient.downloadObject(bucket: store.name, key: object.key)
-                    try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data)
+                    try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data, contentType: meta.contentType)
                     let (files, bytes) = await pauseCounter.add(bytes: Int64(data.count))
                     progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: object.key, bytesCopied: bytes, bytesTotal: totalBytes, copyStartTime: pauseCopyStart))
                 }
@@ -241,6 +242,10 @@ final class ObjectStorePauseService: Sendable {
         let existingStores = try await storeService.listObjectStores()
         let readyStore: CivoObjectStore
         if let existing = existingStores.first(where: { $0.name == paused.originalName }) {
+            // Check if this is from a prior resume attempt (same credential) or user-created
+            if existing.credentialId != paused.credentialId && paused.credentialId != nil {
+                throw PauseError.storeExistsWithDifferentCredential(paused.originalName)
+            }
             readyStore = existing
             Log.info("Store '\(paused.originalName)' already exists, using existing")
         } else {
@@ -281,10 +286,18 @@ final class ObjectStorePauseService: Sendable {
 
         let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey)
 
-        // 4. List files in vault
+        // 4. List files in vault and validate against manifest
         let vaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
         let totalFiles = vaultObjects.count
         let totalBytes = Int64(vaultObjects.reduce(0) { $0 + $1.size })
+
+        // Validate vault contents match manifest metadata
+        if paused.fileCount > 0 && totalFiles == 0 {
+            throw PauseError.vaultDataMissing(paused.originalName)
+        }
+        if paused.fileCount > 0 && totalFiles < paused.fileCount {
+            Log.warning("Vault has \(totalFiles)/\(paused.fileCount) files for '\(paused.originalName)' — partial data")
+        }
 
         // 5. Copy files back (parallel, max 4 concurrent)
         let resumeCounter = TransferCounter()
@@ -301,8 +314,9 @@ final class ObjectStorePauseService: Sendable {
                 }
                 group.addTask {
                     try Task.checkCancellation()
+                    let meta = try await vaultClient.headObject(bucket: vault.name, key: object.key)
                     let data = try await vaultClient.downloadObject(bucket: vault.name, key: object.key)
-                    try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data)
+                    try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data, contentType: meta.contentType)
                     let (files, bytes) = await resumeCounter.add(bytes: Int64(data.count))
                     progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: originalKey, bytesCopied: bytes, bytesTotal: totalBytes, copyStartTime: resumeCopyStart))
                 }
@@ -370,11 +384,20 @@ final class ObjectStorePauseService: Sendable {
         // Repair: detect orphaned folders in vault not tracked in manifest
         let vaultContents = try await client.listObjects(bucket: vault.name, prefix: Self.pausedPrefix, delimiter: "/")
         let trackedPrefixes = Set(manifest.stores.map(\.vaultPrefix))
+        let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
         var repaired = false
         for prefix in vaultContents.commonPrefixes {
             guard prefix != Self.pausedPrefix, !trackedPrefixes.contains(prefix) else { continue }
-            // Orphaned folder — add to manifest
-            let storeName = prefix.dropFirst(Self.pausedPrefix.count).dropLast() // remove trailing /
+            // Orphaned folder — check if the original store still exists (cancelled pause)
+            let storeName = String(prefix.dropFirst(Self.pausedPrefix.count).dropLast()) // remove trailing /
+            if activeStoreNames.contains(storeName) {
+                // Store still active — this is leftover from a cancelled pause, clean up
+                let leftoverKeys = try await client.listAllObjects(bucket: vault.name, prefix: prefix)
+                try await client.deleteObjects(bucket: vault.name, keys: leftoverKeys.map(\.key))
+                repaired = true
+                Log.warning("Cleaned up leftover vault data for active store: \(storeName)")
+                continue
+            }
             let objects = try await client.listAllObjects(bucket: vault.name, prefix: prefix)
             let totalBytes = Int64(objects.reduce(0) { $0 + $1.size })
             let entry = PausedObjectStore(
@@ -498,16 +521,19 @@ final class ObjectStorePauseService: Sendable {
     // MARK: - Helpers
 
     /// Verifies that copied objects match source objects by key and size.
-    /// The `prefix` is stripped from copied keys before comparison.
+    /// The `prefix` is stripped from source keys before comparison.
     private func verifyObjects(source: [S3Object], copied: [S3Object], prefix: String) throws {
         guard copied.count == source.count else {
             throw PauseError.verificationFailed(expected: source.count, actual: copied.count)
         }
-        // Build lookup: original key → size
-        let sourceMap = Dictionary(uniqueKeysWithValues: source.map { ($0.key, $0.size) })
+        // Build lookup: strip prefix from source keys → size
+        let sourceMap = Dictionary(uniqueKeysWithValues: source.map { obj -> (String, Int) in
+            let key = obj.key.hasPrefix(prefix) ? String(obj.key.dropFirst(prefix.count)) : obj.key
+            return (key, obj.size)
+        })
         for obj in copied {
-            let originalKey = obj.key.hasPrefix(prefix) ? String(obj.key.dropFirst(prefix.count)) : obj.key
-            guard let expectedSize = sourceMap[originalKey] else {
+            let key = obj.key.hasPrefix(prefix) ? String(obj.key.dropFirst(prefix.count)) : obj.key
+            guard let expectedSize = sourceMap[key] else {
                 throw PauseError.verificationFailed(expected: source.count, actual: copied.count)
             }
             guard obj.size == expectedSize else {
@@ -545,6 +571,8 @@ enum PauseError: LocalizedError {
     case vaultNotFound
     case verificationFailed(expected: Int, actual: Int)
     case storeNotReady
+    case vaultDataMissing(String)
+    case storeExistsWithDifferentCredential(String)
 
     var errorDescription: String? {
         switch self {
@@ -553,6 +581,8 @@ enum PauseError: LocalizedError {
         case .vaultNotFound: return "Vault store not found. Please set up the vault first."
         case .verificationFailed(let expected, let actual): return "Verification failed: expected \(expected) files, found \(actual)"
         case .storeNotReady: return "Object store did not become ready in time"
+        case .vaultDataMissing(let name): return "No data found in vault for '\(name)'. The backup may be lost."
+        case .storeExistsWithDifferentCredential(let name): return "Store '\(name)' already exists with different credentials. Delete it first or use the existing store."
         }
     }
 }
