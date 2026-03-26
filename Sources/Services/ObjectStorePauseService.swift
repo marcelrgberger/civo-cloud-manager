@@ -125,8 +125,9 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingVaultCredentials
         }
 
-        let sourceClient = S3Client(endpoint: sourceEndpoint, accessKey: sourceAccessKey, secretKey: sourceSecretKey)
-        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey)
+        let region = CivoConfig.shared.region
+        let sourceClient = S3Client(endpoint: sourceEndpoint, accessKey: sourceAccessKey, secretKey: sourceSecretKey, region: region)
+        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey, region: region)
 
         // 3. List all files in source store
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Listing files...", bytesCopied: 0, bytesTotal: 0))
@@ -135,9 +136,7 @@ final class ObjectStorePauseService: Sendable {
         let totalBytes = Int64(allObjects.reduce(0) { $0 + $1.size })
 
         if totalFiles == 0 {
-            // Empty store — skip copy, delete first then save metadata
-            progress(PauseProgress(phase: .deleting, currentFile: 0, totalFiles: 0, currentFileName: store.name, bytesCopied: 0, bytesTotal: 0))
-            try await storeService.removeObjectStore(store.id)
+            // Empty store — save local fallback BEFORE delete for recovery
             let entry = PausedObjectStore(
                 id: UUID().uuidString,
                 originalName: store.name,
@@ -151,6 +150,12 @@ final class ObjectStorePauseService: Sendable {
                 totalSizeBytes: 0,
                 vaultPrefix: "\(Self.pausedPrefix)\(store.name)/"
             )
+            var localManifest = loadLocalManifest()
+            localManifest.stores.append(entry)
+            saveLocalManifest(localManifest)
+
+            progress(PauseProgress(phase: .deleting, currentFile: 0, totalFiles: 0, currentFileName: store.name, bytesCopied: 0, bytesTotal: 0))
+            try await storeService.removeObjectStore(store.id)
             try await savePausedMetadata(vaultClient: vaultClient, vaultBucket: vault.name, entry: entry)
             progress(PauseProgress(phase: .completed, currentFile: 0, totalFiles: 0, currentFileName: "", bytesCopied: 0, bytesTotal: 0))
             return
@@ -234,7 +239,7 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingVaultCredentials
         }
 
-        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey)
+        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey, region: CivoConfig.shared.region)
 
         // 2. Recreate original store (or use existing if already created from a prior attempt)
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Creating \(paused.originalName)...", bytesCopied: 0, bytesTotal: 0))
@@ -283,7 +288,7 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingCredentials
         }
 
-        let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey)
+        let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: CivoConfig.shared.region)
 
         // 4. List files in vault and validate against manifest
         let vaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
@@ -295,7 +300,7 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.vaultDataMissing(paused.originalName)
         }
         if paused.fileCount > 0 && totalFiles < paused.fileCount {
-            Log.warning("Vault has \(totalFiles)/\(paused.fileCount) files for '\(paused.originalName)' — partial data")
+            throw PauseError.vaultDataIncomplete(paused.originalName, expected: paused.fileCount, actual: totalFiles)
         }
 
         // 5. Copy files back (parallel, max 4 concurrent)
@@ -381,7 +386,7 @@ final class ObjectStorePauseService: Sendable {
               let secretKey = cred.secretAccessKeyId else {
             return loadLocalManifest().stores
         }
-        let client = S3Client(endpoint: endpoint, accessKey: accessKey, secretKey: secretKey)
+        let client = S3Client(endpoint: endpoint, accessKey: accessKey, secretKey: secretKey, region: CivoConfig.shared.region)
         var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
 
         // Clean up manifest entries for fully restored stores (check .restored flag)
@@ -473,7 +478,7 @@ final class ObjectStorePauseService: Sendable {
               let ak = cred.accessKeyId, let sk = cred.secretAccessKeyId else {
             throw PauseError.missingVaultCredentials
         }
-        let client = S3Client(endpoint: endpoint, accessKey: ak, secretKey: sk)
+        let client = S3Client(endpoint: endpoint, accessKey: ak, secretKey: sk, region: CivoConfig.shared.region)
         var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
         if let idx = manifest.stores.firstIndex(where: { $0.originalName == storeName }) {
             let old = manifest.stores[idx]
@@ -590,6 +595,7 @@ enum PauseError: LocalizedError {
     case verificationFailed(expected: Int, actual: Int)
     case storeNotReady
     case vaultDataMissing(String)
+    case vaultDataIncomplete(String, expected: Int, actual: Int)
     case storeExistsWithDifferentCredential(String)
 
     var errorDescription: String? {
@@ -600,6 +606,7 @@ enum PauseError: LocalizedError {
         case .verificationFailed(let expected, let actual): return "Verification failed: expected \(expected) files, found \(actual)"
         case .storeNotReady: return "Object store did not become ready in time"
         case .vaultDataMissing(let name): return "No data found in vault for '\(name)'. The backup may be lost."
+        case .vaultDataIncomplete(let name, let expected, let actual): return "Vault backup for '\(name)' is incomplete: \(actual)/\(expected) files. Resume aborted to protect data."
         case .storeExistsWithDifferentCredential(let name): return "Store '\(name)' already exists with different credentials. Delete it first or use the existing store."
         }
     }

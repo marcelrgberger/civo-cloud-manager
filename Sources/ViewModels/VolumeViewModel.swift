@@ -52,14 +52,12 @@ final class VolumeViewModel {
             // Check if vault exists
             vaultEnabled = objectStores.contains { $0.name == ObjectStorePauseService.vaultName }
 
-            // Load paused stores
-            if vaultEnabled {
-                do {
-                    pausedStores = try await pauseService.loadPausedStores()
-                } catch {
-                    pauseError = CivoAPIError.userMessage(error)
-                    Log.error("Failed to load paused stores: \(error.localizedDescription)")
-                }
+            // Load paused stores (also check local fallback if vault is missing)
+            do {
+                pausedStores = try await pauseService.loadPausedStores()
+            } catch {
+                pauseError = CivoAPIError.userMessage(error)
+                Log.error("Failed to load paused stores: \(error.localizedDescription)")
             }
         } catch {
             self.error = CivoAPIError.userMessage(error)
@@ -289,14 +287,27 @@ final class VolumeViewModel {
         pauseProgress = nil
     }
 
-    func assignCredentialToPausedStore(_ paused: PausedObjectStore, credentialId: String, accessKeyId: String?) async {
+    func assignCredentialAndResume(_ paused: PausedObjectStore, credentialId: String, accessKeyId: String?) async {
         do {
             try await pauseService.updatePausedStoreCredential(
                 storeName: paused.originalName,
                 credentialId: credentialId,
                 accessKeyId: accessKeyId
             )
-            await refresh()
+            // Reload to get updated paused store with credentialId
+            pausedStores = (try? await pauseService.loadPausedStores()) ?? []
+            if let updated = pausedStores.first(where: { $0.originalName == paused.originalName }) {
+                resumeObjectStore(updated)
+            }
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+        }
+    }
+
+    func createCredentialAndResume(_ paused: PausedObjectStore) async {
+        do {
+            let newCred = try await CivoObjectStoreService().createCredential(["name": paused.originalName])
+            await assignCredentialAndResume(paused, credentialId: newCred.id, accessKeyId: newCred.accessKeyId)
         } catch {
             pauseError = CivoAPIError.userMessage(error)
         }

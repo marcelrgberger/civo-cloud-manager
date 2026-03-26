@@ -44,8 +44,12 @@ struct ObjectStorePauseView: View {
             if let progress, progress.phase != .completed {
                 // Progress bar
                 VStack(spacing: 8) {
-                    ProgressView(value: progress.fraction)
-                        .tint(headerColor)
+                    ProgressView(value: progress.fraction) {
+                        Text("\(progress.currentFile) of \(progress.totalFiles) files")
+                            .hidden()
+                    }
+                    .tint(headerColor)
+                    .accessibilityLabel("\(progress.currentFile) of \(progress.totalFiles) files, \(Int(progress.fraction * 100)) percent")
 
                     HStack {
                         Text(progress.phase.rawValue)

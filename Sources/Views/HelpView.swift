@@ -157,7 +157,7 @@ struct HelpSection {
             "A progress sheet shows live file counts, byte counters, and the current file being copied.",
             "Enable the Pause feature by clicking 'Enable' in the banner at the top of the Object Store list.",
             "The vault ('civo-cloud-manager') auto-resizes as needed and shrinks after resume.",
-            "If a paused store is missing its credential, use 'Assign Credential' to select one before resuming.",
+            "If a paused store is missing its credential, the Resume button lets you select an existing credential or create a new one.",
         ]),
         HelpSection(title: "S3 File Browser", icon: "folder.fill", items: [
             "Browse files and folders in a Table view with Name and Size columns.",

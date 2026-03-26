@@ -150,23 +150,34 @@ struct ObjectStoreListView: View {
                                     .help("Resume object store")
                                 } else {
                                     Menu {
-                                        ForEach(vm.credentials) { cred in
-                                            Button(cred.displayName) {
-                                                Task {
-                                                    await vm.assignCredentialToPausedStore(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
+                                        Section("Use Existing") {
+                                            ForEach(vm.credentials) { cred in
+                                                Button {
+                                                    resumeTarget = paused
+                                                    Task {
+                                                        await vm.assignCredentialAndResume(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
+                                                    }
+                                                } label: {
+                                                    Text(cred.displayName)
                                                 }
                                             }
                                         }
-                                        Divider()
-                                        Button("Create New Credential") {
-                                            vm.isCreatingCredential = true
+                                        Section {
+                                            Button {
+                                                resumeTarget = paused
+                                                Task {
+                                                    await vm.createCredentialAndResume(paused)
+                                                }
+                                            } label: {
+                                                Label("Create New", systemImage: "plus")
+                                            }
                                         }
                                     } label: {
-                                        Label("Assign Credential", systemImage: "key.horizontal")
+                                        Label("Resume", systemImage: "play.circle.fill")
                                             .foregroundStyle(.orange)
                                     }
                                     .menuStyle(.borderlessButton)
-                                    .help("Assign a credential to resume this store")
+                                    .help("Select credential to resume")
                                 }
                             }
                             .padding(.vertical, 4)
@@ -177,16 +188,6 @@ struct ObjectStoreListView: View {
                                         vm.resumeObjectStore(paused)
                                     } label: {
                                         Label("Resume", systemImage: "play.circle")
-                                    }
-                                } else {
-                                    Menu("Assign Credential") {
-                                        ForEach(vm.credentials) { cred in
-                                            Button(cred.displayName) {
-                                                Task {
-                                                    await vm.assignCredentialToPausedStore(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
-                                                }
-                                            }
-                                        }
                                     }
                                 }
                             }
