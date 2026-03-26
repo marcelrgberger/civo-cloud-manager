@@ -174,9 +174,8 @@ final class ObjectStorePauseService: Sendable {
                 group.addTask {
                     try Task.checkCancellation()
                     let destKey = "\(vaultPrefix)\(object.key)"
-                    let meta = try await sourceClient.headObject(bucket: store.name, key: object.key)
                     let data = try await sourceClient.downloadObject(bucket: store.name, key: object.key)
-                    try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data, contentType: meta.contentType)
+                    try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data)
                     let (files, bytes) = await pauseCounter.add(bytes: Int64(data.count))
                     progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: object.key, bytesCopied: bytes, bytesTotal: totalBytes, copyStartTime: pauseCopyStart))
                 }
@@ -314,9 +313,8 @@ final class ObjectStorePauseService: Sendable {
                 }
                 group.addTask {
                     try Task.checkCancellation()
-                    let meta = try await vaultClient.headObject(bucket: vault.name, key: object.key)
                     let data = try await vaultClient.downloadObject(bucket: vault.name, key: object.key)
-                    try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data, contentType: meta.contentType)
+                    try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data)
                     let (files, bytes) = await resumeCounter.add(bytes: Int64(data.count))
                     progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: originalKey, bytesCopied: bytes, bytesTotal: totalBytes, copyStartTime: resumeCopyStart))
                 }
