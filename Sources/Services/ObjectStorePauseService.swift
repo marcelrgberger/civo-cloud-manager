@@ -29,6 +29,7 @@ final class ObjectStorePauseService: Sendable {
     private static let manifestKey = "paused/manifest.json"
     private static let pausedPrefix = "paused/"
     private static let defaultVaultSize = 500
+    private static let maxConcurrentTransfers = 4
 
     private let storeService = CivoObjectStoreService()
 
@@ -144,18 +145,29 @@ final class ObjectStorePauseService: Sendable {
         let requiredGB = Int(totalBytes / (1024 * 1024 * 1024)) + 1
         try await ensureVaultCapacity(vault: vault, additionalGB: requiredGB)
 
-        // 5. Copy files to vault
+        // 5. Copy files to vault (parallel, max 4 concurrent)
         let vaultPrefix = "\(Self.pausedPrefix)\(store.name)/"
-        var bytesCopied: Int64 = 0
-        for (index, object) in allObjects.enumerated() {
-            try Task.checkCancellation()
-            let destKey = "\(vaultPrefix)\(object.key)"
-            progress(PauseProgress(phase: .copying, currentFile: index + 1, totalFiles: totalFiles, currentFileName: object.key, bytesCopied: bytesCopied, bytesTotal: totalBytes))
-
-            let data = try await sourceClient.downloadObject(bucket: store.name, key: object.key)
-            try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data)
-            bytesCopied += Int64(data.count)
+        let pauseCounter = TransferCounter()
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            var inflight = 0
+            for object in allObjects {
+                if inflight >= Self.maxConcurrentTransfers {
+                    try await group.next()
+                    inflight -= 1
+                }
+                group.addTask {
+                    try Task.checkCancellation()
+                    let destKey = "\(vaultPrefix)\(object.key)"
+                    let data = try await sourceClient.downloadObject(bucket: store.name, key: object.key)
+                    try await vaultClient.uploadObject(bucket: vault.name, key: destKey, data: data)
+                    let (files, bytes) = await pauseCounter.add(bytes: Int64(data.count))
+                    progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: object.key, bytesCopied: bytes, bytesTotal: totalBytes))
+                }
+                inflight += 1
+            }
+            try await group.waitForAll()
         }
+        let bytesCopied = await pauseCounter.totalBytes
 
         // 6. Verify — compare keys and sizes, not just count
         progress(PauseProgress(phase: .verifying, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Verifying copy...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
@@ -250,20 +262,30 @@ final class ObjectStorePauseService: Sendable {
         let totalFiles = vaultObjects.count
         let totalBytes = Int64(vaultObjects.reduce(0) { $0 + $1.size })
 
-        // 5. Copy files back
-        var bytesCopied: Int64 = 0
-        for (index, object) in vaultObjects.enumerated() {
-            try Task.checkCancellation()
-            // Strip vault prefix to get original key
-            let originalKey = String(object.key.dropFirst(paused.vaultPrefix.count))
-            guard !originalKey.isEmpty else { continue }
+        // 5. Copy files back (parallel, max 4 concurrent)
+        let resumeCounter = TransferCounter()
+        try await withThrowingTaskGroup(of: Void.self) { group in
+            var inflight = 0
+            for object in vaultObjects {
+                let originalKey = String(object.key.dropFirst(paused.vaultPrefix.count))
+                guard !originalKey.isEmpty else { continue }
 
-            progress(PauseProgress(phase: .copying, currentFile: index + 1, totalFiles: totalFiles, currentFileName: originalKey, bytesCopied: bytesCopied, bytesTotal: totalBytes))
-
-            let data = try await vaultClient.downloadObject(bucket: vault.name, key: object.key)
-            try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data)
-            bytesCopied += Int64(data.count)
+                if inflight >= Self.maxConcurrentTransfers {
+                    try await group.next()
+                    inflight -= 1
+                }
+                group.addTask {
+                    try Task.checkCancellation()
+                    let data = try await vaultClient.downloadObject(bucket: vault.name, key: object.key)
+                    try await destClient.uploadObject(bucket: paused.originalName, key: originalKey, data: data)
+                    let (files, bytes) = await resumeCounter.add(bytes: Int64(data.count))
+                    progress(PauseProgress(phase: .copying, currentFile: files, totalFiles: totalFiles, currentFileName: originalKey, bytesCopied: bytes, bytesTotal: totalBytes))
+                }
+                inflight += 1
+            }
+            try await group.waitForAll()
         }
+        let bytesCopied = await resumeCounter.totalBytes
 
         // 6. Verify — compare keys and sizes
         progress(PauseProgress(phase: .verifying, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Verifying restore...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
@@ -411,6 +433,17 @@ final class ObjectStorePauseService: Sendable {
 }
 
 // MARK: - Errors
+
+private actor TransferCounter {
+    var fileCount = 0
+    var totalBytes: Int64 = 0
+
+    func add(bytes: Int64) -> (files: Int, bytes: Int64) {
+        fileCount += 1
+        totalBytes += bytes
+        return (fileCount, totalBytes)
+    }
+}
 
 enum PauseError: LocalizedError {
     case missingCredentials
