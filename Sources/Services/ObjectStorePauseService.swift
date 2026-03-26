@@ -45,9 +45,13 @@ final class ObjectStorePauseService: Sendable {
     }
 
     func setupVault() async throws -> (store: CivoObjectStore, credential: CivoObjectStoreCredential) {
-        // Check if vault already exists
-        if let vault = try await findVault(), let cred = try await findVaultCredential() {
-            return (vault, cred)
+        // Check if vault already exists — resolve credential via store's credential_id
+        if let vault = try await findVault() {
+            if let credId = vault.credentialId {
+                let cred = try await storeService.showCredential(credId)
+                return (vault, cred)
+            }
+            // Vault exists but no credential linked — fall through to create
         }
 
         // Create credential first
@@ -71,6 +75,11 @@ final class ObjectStorePauseService: Sendable {
             // Wait for vault to become ready
             try await waitForStoreReady(vault!.id)
             vault = try await storeService.showObjectStore(vault!.id)
+        }
+
+        // Resolve the actual credential linked to the store
+        if let credId = vault!.credentialId {
+            credential = try await storeService.showCredential(credId)
         }
 
         return (vault!, credential!)
