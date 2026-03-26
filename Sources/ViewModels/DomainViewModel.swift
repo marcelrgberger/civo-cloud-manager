@@ -25,7 +25,7 @@ final class DomainViewModel {
         do {
             domains = try await service.listDomains()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Domain list failed: \(error.localizedDescription)")
         }
     }
@@ -39,7 +39,7 @@ final class DomainViewModel {
         do {
             records = try await service.listRecords(domain)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -55,7 +55,7 @@ final class DomainViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -71,7 +71,7 @@ final class DomainViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -88,7 +88,7 @@ final class DomainViewModel {
             await loadRecords(for: domainId)
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -104,7 +104,7 @@ final class DomainViewModel {
             await loadRecords(for: domainId)
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -114,7 +114,7 @@ final class DomainViewModel {
             try await service.removeRecord(domainId, recordId: recordId)
             await loadRecords(for: domainId)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -123,7 +123,7 @@ final class DomainViewModel {
             try await service.removeDomain(name)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 }

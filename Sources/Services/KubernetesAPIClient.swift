@@ -1,13 +1,31 @@
 import Foundation
 import Security
 
-final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelegate {
+/// Weak-referencing delegate proxy to avoid URLSession → KubernetesAPIClient retain cycle.
+/// URLSession retains its delegate strongly; using a proxy with a weak back-reference
+/// allows the client to be deallocated normally when no longer referenced.
+private final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
+    weak var client: KubernetesAPIClient?
+
+    func urlSession(
+        _ session: URLSession,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+        if let client {
+            client.handleChallenge(challenge, completionHandler: completionHandler)
+        } else {
+            completionHandler(.cancelAuthenticationChallenge, nil)
+        }
+    }
+}
+
+final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     private let server: String
-    private let identity: SecIdentity
-    private let caCert: SecCertificate
-    private lazy var session: URLSession = {
-        URLSession(configuration: .ephemeral, delegate: self, delegateQueue: nil)
-    }()
+    fileprivate let identity: SecIdentity
+    fileprivate let caCert: SecCertificate
+    private let session: URLSession
+    private let sessionDelegate: K8sSessionDelegate
 
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
@@ -25,14 +43,56 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
         // Create identity from PEM cert + key using Security.framework only
         self.identity = try Self.createIdentity(certPEM: credentials.clientCertPEM, keyPEM: credentials.clientKeyPEM)
 
+        // Use a delegate proxy with weak back-reference to avoid retain cycle
+        let delegate = K8sSessionDelegate()
+        self.sessionDelegate = delegate
+        let config = URLSessionConfiguration.ephemeral
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 30
+        self.session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+
         super.init()
+        delegate.client = self
+    }
+
+    /// Invalidates the URLSession, cancelling all in-flight requests.
+    func invalidate() {
+        sessionDelegate.client = nil
+        session.invalidateAndCancel()
     }
 
     deinit {
-        // Cleanup keychain items
-        SecItemDelete([kSecClass as String: kSecClassCertificate, kSecAttrLabel as String: "civo-k8s-client"] as CFDictionary)
-        SecItemDelete([kSecClass as String: kSecClassKey, kSecAttrLabel as String: "civo-k8s-client"] as CFDictionary)
+        sessionDelegate.client = nil
         session.invalidateAndCancel()
+    }
+
+    // MARK: - Auth Challenge (called by delegate proxy)
+
+    fileprivate func handleChallenge(
+        _ challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+        let method = challenge.protectionSpace.authenticationMethod
+
+        if method == NSURLAuthenticationMethodServerTrust,
+           let trust = challenge.protectionSpace.serverTrust
+        {
+            SecTrustSetAnchorCertificates(trust, [caCert] as CFArray)
+            SecTrustSetAnchorCertificatesOnly(trust, true)
+            completionHandler(.useCredential, URLCredential(trust: trust))
+            return
+        }
+
+        if method == NSURLAuthenticationMethodClientCertificate {
+            completionHandler(.useCredential, URLCredential(
+                identity: identity,
+                certificates: nil,
+                persistence: .forSession
+            ))
+            return
+        }
+
+        completionHandler(.performDefaultHandling, nil)
     }
 
     // MARK: - K8s API
@@ -68,6 +128,108 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
     func listPVCs() async throws -> K8sPVCList { try await get("/api/v1/persistentvolumeclaims") }
     func listPVs() async throws -> K8sPVList { try await get("/api/v1/persistentvolumes") }
     func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics { try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)") }
+    func listConfigMaps(namespace: String? = nil) async throws -> K8sConfigMapList {
+        if let ns = namespace {
+            return try await get("/api/v1/namespaces/\(ns)/configmaps")
+        }
+        return try await get("/api/v1/configmaps")
+    }
+    func listSecrets(namespace: String? = nil) async throws -> K8sSecretList {
+        if let ns = namespace {
+            return try await get("/api/v1/namespaces/\(ns)/secrets")
+        }
+        return try await get("/api/v1/secrets")
+    }
+    func getSecret(namespace: String, name: String) async throws -> K8sSecret {
+        try await get("/api/v1/namespaces/\(namespace)/secrets/\(name)")
+    }
+
+    func listHelmSecrets() async throws -> K8sSecretList {
+        try await get("/api/v1/secrets?labelSelector=owner%3Dhelm")
+    }
+
+    /// Triggers a rollout restart by patching the deployment with a restart annotation (equivalent to `kubectl rollout restart`).
+    func restartDeployment(namespace: String, name: String) async throws {
+        let timestamp = ISO8601DateFormatter().string(from: Date())
+        let body = """
+        {"spec":{"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"\(timestamp)"}}}}}
+        """
+        _ = try await execute("/apis/apps/v1/namespaces/\(namespace)/deployments/\(name)", method: "PATCH", body: body, contentType: "application/strategic-merge-patch+json")
+    }
+
+    // MARK: - Exec (command execution in pod via SPDY/WebSocket)
+
+    /// Runs a command in an ephemeral job, collects output via pod logs, then cleans up.
+    /// This works without WebSocket/SPDY support.
+    func runCommandInPod(namespace: String, image: String = "alpine:latest", command: [String]) async throws -> String {
+        let jobName = "civo-exec-\(UUID().uuidString.prefix(8).lowercased())"
+        let cmdJson = try JSONSerialization.data(withJSONObject: command)
+        let cmdStr = String(data: cmdJson, encoding: .utf8) ?? "[]"
+
+        let jobBody = """
+        {
+            "apiVersion": "batch/v1",
+            "kind": "Job",
+            "metadata": {"name": "\(jobName)", "namespace": "\(namespace)"},
+            "spec": {
+                "backoffLimit": 0,
+                "ttlSecondsAfterFinished": 10,
+                "template": {
+                    "spec": {
+                        "restartPolicy": "Never",
+                        "containers": [{
+                            "name": "exec",
+                            "image": "\(image)",
+                            "command": \(cmdStr)
+                        }]
+                    }
+                }
+            }
+        }
+        """
+
+        // Create job
+        _ = try await execute(
+            "/apis/batch/v1/namespaces/\(namespace)/jobs",
+            method: "POST",
+            body: jobBody
+        )
+
+        // Wait for completion (poll every 2s, max 60s)
+        var output = ""
+        for _ in 0..<30 {
+            try await Task.sleep(for: .seconds(2))
+
+            // Check job status
+            let statusData = try await execute("/apis/batch/v1/namespaces/\(namespace)/jobs/\(jobName)")
+            if let statusJson = try? JSONSerialization.jsonObject(with: statusData) as? [String: Any],
+               let status = statusJson["status"] as? [String: Any] {
+                if status["succeeded"] as? Int == 1 {
+                    // Get pod name
+                    let podsData = try await execute("/api/v1/namespaces/\(namespace)/pods?labelSelector=job-name%3D\(jobName)")
+                    if let podsJson = try? JSONSerialization.jsonObject(with: podsData) as? [String: Any],
+                       let items = podsJson["items"] as? [[String: Any]],
+                       let podMeta = items.first?["metadata"] as? [String: Any],
+                       let podName = podMeta["name"] as? String {
+                        output = try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(podName)/log")
+                    }
+                    break
+                }
+                if status["failed"] as? Int ?? 0 > 0 {
+                    output = "Command failed"
+                    break
+                }
+            }
+        }
+
+        // Cleanup
+        _ = try? await execute(
+            "/apis/batch/v1/namespaces/\(namespace)/jobs/\(jobName)?propagationPolicy=Background",
+            method: "DELETE"
+        )
+
+        return output
+    }
 
     // MARK: - HTTP
 
@@ -99,36 +261,6 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable, URLSessionDelega
             throw K8sAPIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, msg)
         }
         return data
-    }
-
-    // MARK: - URLSessionDelegate
-
-    func urlSession(
-        _ session: URLSession,
-        didReceive challenge: URLAuthenticationChallenge,
-        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
-    ) {
-        let method = challenge.protectionSpace.authenticationMethod
-
-        if method == NSURLAuthenticationMethodServerTrust,
-           let trust = challenge.protectionSpace.serverTrust
-        {
-            SecTrustSetAnchorCertificates(trust, [caCert] as CFArray)
-            SecTrustSetAnchorCertificatesOnly(trust, true)
-            completionHandler(.useCredential, URLCredential(trust: trust))
-            return
-        }
-
-        if method == NSURLAuthenticationMethodClientCertificate {
-            completionHandler(.useCredential, URLCredential(
-                identity: identity,
-                certificates: nil,
-                persistence: .forSession
-            ))
-            return
-        }
-
-        completionHandler(.performDefaultHandling, nil)
     }
 
     // MARK: - Identity via PKCS#12 (openssl)

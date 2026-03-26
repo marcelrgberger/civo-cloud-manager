@@ -17,25 +17,72 @@ final class S3Client: Sendable {
     // MARK: - S3 Operations
 
     func listObjects(bucket: String, prefix: String = "", delimiter: String = "/") async throws -> S3ListResult {
-        var query = "delimiter=\(delimiter)&list-type=2"
+        var queryParams = [
+            ("delimiter", delimiter),
+            ("list-type", "2")
+        ]
         if !prefix.isEmpty {
-            query += "&prefix=\(prefix.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? prefix)"
+            queryParams.append(("prefix", prefix))
         }
+        let query = queryParams
+            .sorted { $0.0 < $1.0 }
+            .map { "\(uriEncode($0.0))=\(uriEncode($0.1))" }
+            .joined(separator: "&")
         let data = try await request(method: "GET", bucket: bucket, path: "/", query: query)
         return try S3XMLParser.parseListResult(data)
     }
 
+    func listAllObjects(bucket: String, prefix: String) async throws -> [S3Object] {
+        var allObjects: [S3Object] = []
+        var continuationToken: String?
+
+        repeat {
+            var queryParams = [
+                ("list-type", "2"),
+                ("prefix", prefix)
+            ]
+            if let token = continuationToken {
+                queryParams.append(("continuation-token", token))
+            }
+            let query = queryParams
+                .sorted { $0.0 < $1.0 }
+                .map { "\(uriEncode($0.0))=\(uriEncode($0.1))" }
+                .joined(separator: "&")
+            let data = try await request(method: "GET", bucket: bucket, path: "/", query: query)
+            let parsed = try S3XMLParser.parseListResult(data)
+            allObjects.append(contentsOf: parsed.objects)
+            continuationToken = parsed.nextContinuationToken
+        } while continuationToken != nil
+
+        return allObjects
+    }
+
     func downloadObject(bucket: String, key: String) async throws -> Data {
-        let path = "/\(key.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? key)"
-        return try await request(method: "GET", bucket: bucket, path: path)
+        return try await request(method: "GET", bucket: bucket, path: "/\(key)")
     }
 
     func headObject(bucket: String, key: String) async throws -> (size: Int, contentType: String) {
-        let path = "/\(key.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? key)"
+        let path = "/\(key)"
         let (_, response) = try await rawRequest(method: "HEAD", bucket: bucket, path: path)
         let size = Int(response.value(forHTTPHeaderField: "Content-Length") ?? "0") ?? 0
         let contentType = response.value(forHTTPHeaderField: "Content-Type") ?? "application/octet-stream"
         return (size, contentType)
+    }
+
+    func uploadObject(bucket: String, key: String, data: Data, contentType: String = "application/octet-stream") async throws {
+        let path = "/\(key)"
+        let _ = try await rawRequest(method: "PUT", bucket: bucket, path: path, body: data, contentType: contentType)
+    }
+
+    func deleteObject(bucket: String, key: String) async throws {
+        let path = "/\(key)"
+        let _ = try await rawRequest(method: "DELETE", bucket: bucket, path: path)
+    }
+
+    func deleteObjects(bucket: String, keys: [String]) async throws {
+        for key in keys {
+            try await deleteObject(bucket: bucket, key: key)
+        }
     }
 
     // MARK: - HTTP with AWS Signature V4
@@ -45,10 +92,14 @@ final class S3Client: Sendable {
         return data
     }
 
-    private func rawRequest(method: String, bucket: String, path: String, query: String = "") async throws -> (Data, HTTPURLResponse) {
+    private func rawRequest(method: String, bucket: String, path: String, query: String = "", body: Data? = nil, contentType: String? = nil) async throws -> (Data, HTTPURLResponse) {
         let host = endpoint.replacingOccurrences(of: "https://", with: "")
-        let fullPath = "/\(bucket)\(path)"
-        let urlString = "https://\(host)\(fullPath)\(query.isEmpty ? "" : "?\(query)")"
+        let rawPath = "/\(bucket)\(path)"
+        // Encode path for the HTTP URL (preserve /)
+        let encodedPath = rawPath.components(separatedBy: "/")
+            .map { $0.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? $0 }
+            .joined(separator: "/")
+        let urlString = "https://\(host)\(encodedPath)\(query.isEmpty ? "" : "?\(query)")"
         guard let url = URL(string: urlString) else {
             throw S3Error.invalidURL(urlString)
         }
@@ -62,7 +113,8 @@ final class S3Client: Sendable {
         dateFormatter.dateFormat = "yyyyMMdd"
         let dateStamp = dateFormatter.string(from: now)
 
-        let payloadHash = sha256(Data())
+        let payload = body ?? Data()
+        let payloadHash = sha256(payload)
 
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -71,16 +123,31 @@ final class S3Client: Sendable {
         request.setValue(payloadHash, forHTTPHeaderField: "x-amz-content-sha256")
         request.timeoutInterval = 30
 
-        // Canonical query string: params sorted by key
-        let canonicalQuery = query.components(separatedBy: "&")
-            .filter { !$0.isEmpty }
-            .sorted()
-            .joined(separator: "&")
+        if let body {
+            request.httpBody = body
+            request.setValue(contentType ?? "application/octet-stream", forHTTPHeaderField: "Content-Type")
+            request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
+        }
+
+        // Canonical URI: SigV4-encode each path segment
+        let canonicalURI = rawPath.components(separatedBy: "/")
+            .map { uriEncode($0) }
+            .joined(separator: "/")
+
+        // Canonical query string (already sorted and encoded by caller)
+        let canonicalQuery = query
 
         // AWS Signature V4
-        let signedHeaders = "host;x-amz-content-sha256;x-amz-date"
-        let canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
-        let canonicalRequest = "\(method)\n\(fullPath)\n\(canonicalQuery)\n\(canonicalHeaders)\n\(signedHeaders)\n\(payloadHash)"
+        let signedHeaders: String
+        let canonicalHeaders: String
+        if body != nil {
+            signedHeaders = "content-length;content-type;host;x-amz-content-sha256;x-amz-date"
+            canonicalHeaders = "content-length:\(payload.count)\ncontent-type:\(contentType ?? "application/octet-stream")\nhost:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
+        } else {
+            signedHeaders = "host;x-amz-content-sha256;x-amz-date"
+            canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
+        }
+        let canonicalRequest = "\(method)\n\(canonicalURI)\n\(canonicalQuery)\n\(canonicalHeaders)\n\(signedHeaders)\n\(payloadHash)"
 
         let scope = "\(dateStamp)/\(region)/s3/aws4_request"
         let stringToSign = "AWS4-HMAC-SHA256\n\(amzDate)\n\(scope)\n\(sha256(canonicalRequest.data(using: .utf8)!))"
@@ -99,6 +166,14 @@ final class S3Client: Sendable {
             throw S3Error.httpError(http.statusCode, msg)
         }
         return (data, http)
+    }
+
+    // MARK: - URI Encoding (AWS SigV4 compliant)
+
+    private func uriEncode(_ string: String) -> String {
+        var allowed = CharacterSet.alphanumerics
+        allowed.insert(charactersIn: "-._~")
+        return string.addingPercentEncoding(withAllowedCharacters: allowed) ?? string
     }
 
     // MARK: - Crypto helpers
@@ -125,6 +200,7 @@ final class S3Client: Sendable {
 struct S3ListResult: Sendable {
     let objects: [S3Object]
     let commonPrefixes: [String]
+    let nextContinuationToken: String?
 }
 
 struct S3Object: Identifiable, Sendable {
@@ -180,15 +256,27 @@ enum S3XMLParser {
             prefixes.append(prefix)
         }
 
-        return S3ListResult(objects: objects, commonPrefixes: prefixes)
+        // Parse pagination token
+        let nextToken = extractXMLValue(xml, tag: "NextContinuationToken")
+
+        return S3ListResult(objects: objects, commonPrefixes: prefixes, nextContinuationToken: nextToken)
     }
 
     private static func extractXMLValue(_ xml: String, tag: String) -> String? {
         let pattern = "<\(tag)>(.*?)</\(tag)>"
-        guard let regex = try? NSRegularExpression(pattern: pattern),
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators),
               let match = regex.firstMatch(in: xml, range: NSRange(xml.startIndex..., in: xml)),
               let range = Range(match.range(at: 1), in: xml) else { return nil }
-        return String(xml[range])
+        return decodeXMLEntities(String(xml[range]))
+    }
+
+    private static func decodeXMLEntities(_ string: String) -> String {
+        string
+            .replacingOccurrences(of: "&amp;", with: "&")
+            .replacingOccurrences(of: "&lt;", with: "<")
+            .replacingOccurrences(of: "&gt;", with: ">")
+            .replacingOccurrences(of: "&quot;", with: "\"")
+            .replacingOccurrences(of: "&apos;", with: "'")
     }
 }
 

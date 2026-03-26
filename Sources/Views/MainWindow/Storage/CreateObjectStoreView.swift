@@ -39,8 +39,9 @@ struct CreateObjectStoreView: View {
                 Button("Create") {
                     Task {
                         var body: [String: Any] = ["name": name, "size": maxSize]
-                        if !selectedCredentialId.isEmpty {
-                            body["access_key_id"] = selectedCredentialId
+                        if !selectedCredentialId.isEmpty,
+                           let cred = vm.credentials.first(where: { $0.id == selectedCredentialId }) {
+                            body["access_key_id"] = cred.accessKeyId ?? ""
                         }
                         _ = await vm.createObjectStore(body)
                     }

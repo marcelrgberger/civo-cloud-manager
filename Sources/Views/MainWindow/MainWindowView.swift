@@ -13,6 +13,8 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case volumes = "Volumes"
     case objectStores = "Object Stores"
     case credentials = "Credentials"
+    case costs = "Cost Estimate"
+    case apiHealth = "API Health"
     case regions = "Regions"
     case about = "About"
 
@@ -32,6 +34,8 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .volumes: return "cylinder"
         case .objectStores: return "tray.2"
         case .credentials: return "key.horizontal"
+        case .costs: return "dollarsign.circle"
+        case .apiHealth: return "waveform.path.ecg"
         case .regions: return "map"
         case .about: return "info.circle"
         }
@@ -51,6 +55,8 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .volumes: return .orange
         case .objectStores: return .cyan
         case .credentials: return .yellow
+        case .costs: return .green
+        case .apiHealth: return .pink
         case .regions: return .mint
         case .about: return .secondary
         }
@@ -63,6 +69,8 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .clusters: return .kubernetes
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
         case .databases, .volumes, .objectStores, .credentials: return .storage
+        case .costs: return .account
+        case .apiHealth: return .account
         case .regions: return .account
         case .about: return .account
         }
@@ -85,6 +93,8 @@ enum SidebarCategory: String, CaseIterable {
 struct MainWindowView: View {
     @State private var store = StoreManager.shared
     @State private var selection: SidebarSection = .dashboard
+    @State private var showSearch = false
+    @State private var showExport = false
     @State private var dashboardVM = DashboardViewModel()
     @State private var kubernetesVM = KubernetesViewModel()
     @State private var databaseVM = DatabaseViewModel()
@@ -104,6 +114,47 @@ struct MainWindowView: View {
                         .contentTransition(.opacity)
                         .animation(.spring(duration: 0.3, bounce: 0.1), value: selection)
                 }
+                .sheet(isPresented: $showSearch) {
+                    QuickSearchView(
+                        isPresented: $showSearch,
+                        selection: $selection,
+                        instanceVM: instanceVM,
+                        kubernetesVM: kubernetesVM,
+                        databaseVM: databaseVM,
+                        networkVM: networkVM,
+                        volumeVM: volumeVM,
+                        domainVM: domainVM
+                    )
+                }
+                .sheet(isPresented: $showExport) {
+                    ExportView(
+                        instanceVM: instanceVM,
+                        kubernetesVM: kubernetesVM,
+                        databaseVM: databaseVM,
+                        networkVM: networkVM,
+                        volumeVM: volumeVM,
+                        domainVM: domainVM
+                    )
+                }
+                .background {
+                    Button("") { showSearch = true }
+                        .keyboardShortcut("k", modifiers: .command)
+                        .hidden()
+                    Button("") { showExport = true }
+                        .keyboardShortcut("e", modifiers: [.command, .shift])
+                        .hidden()
+                }
+                #if DEBUG
+                .overlay(alignment: .bottomTrailing) {
+                    Text(store.isDebugBuild ? "DEBUG BUILD" : "RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
+                        .font(.caption2.monospaced())
+                        .padding(4)
+                        .background(.black.opacity(0.7))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .padding(8)
+                }
+                #endif
             } else {
                 PaywallView()
             }
@@ -166,6 +217,15 @@ struct MainWindowView: View {
             ObjectStoreListView(vm: volumeVM)
         case .credentials:
             CredentialListView(vm: volumeVM)
+        case .apiHealth:
+            APIHealthView()
+        case .costs:
+            CostDashboardView(
+                instanceVM: instanceVM,
+                kubernetesVM: kubernetesVM,
+                databaseVM: databaseVM,
+                volumeVM: volumeVM
+            )
         case .regions:
             RegionListView(vm: regionVM)
         case .about:
