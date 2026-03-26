@@ -153,6 +153,7 @@ struct ObjectStoreListView: View {
                                         Section("Use Existing") {
                                             ForEach(vm.credentials) { cred in
                                                 Button {
+                                                    resumeTarget = paused
                                                     Task {
                                                         await vm.assignCredentialAndResume(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
                                                     }
@@ -163,6 +164,7 @@ struct ObjectStoreListView: View {
                                         }
                                         Section {
                                             Button {
+                                                resumeTarget = paused
                                                 Task {
                                                     await vm.createCredentialAndResume(paused)
                                                 }

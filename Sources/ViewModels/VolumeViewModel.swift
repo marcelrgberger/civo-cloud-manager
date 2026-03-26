@@ -52,14 +52,12 @@ final class VolumeViewModel {
             // Check if vault exists
             vaultEnabled = objectStores.contains { $0.name == ObjectStorePauseService.vaultName }
 
-            // Load paused stores
-            if vaultEnabled {
-                do {
-                    pausedStores = try await pauseService.loadPausedStores()
-                } catch {
-                    pauseError = CivoAPIError.userMessage(error)
-                    Log.error("Failed to load paused stores: \(error.localizedDescription)")
-                }
+            // Load paused stores (also check local fallback if vault is missing)
+            do {
+                pausedStores = try await pauseService.loadPausedStores()
+            } catch {
+                pauseError = CivoAPIError.userMessage(error)
+                Log.error("Failed to load paused stores: \(error.localizedDescription)")
             }
         } catch {
             self.error = CivoAPIError.userMessage(error)
