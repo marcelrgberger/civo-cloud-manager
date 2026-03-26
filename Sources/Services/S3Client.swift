@@ -69,6 +69,22 @@ final class S3Client: Sendable {
         return (size, contentType)
     }
 
+    func uploadObject(bucket: String, key: String, data: Data, contentType: String = "application/octet-stream") async throws {
+        let path = "/\(key)"
+        let _ = try await rawRequest(method: "PUT", bucket: bucket, path: path, body: data, contentType: contentType)
+    }
+
+    func deleteObject(bucket: String, key: String) async throws {
+        let path = "/\(key)"
+        let _ = try await rawRequest(method: "DELETE", bucket: bucket, path: path)
+    }
+
+    func deleteObjects(bucket: String, keys: [String]) async throws {
+        for key in keys {
+            try await deleteObject(bucket: bucket, key: key)
+        }
+    }
+
     // MARK: - HTTP with AWS Signature V4
 
     private func request(method: String, bucket: String, path: String, query: String = "") async throws -> Data {
@@ -76,7 +92,7 @@ final class S3Client: Sendable {
         return data
     }
 
-    private func rawRequest(method: String, bucket: String, path: String, query: String = "") async throws -> (Data, HTTPURLResponse) {
+    private func rawRequest(method: String, bucket: String, path: String, query: String = "", body: Data? = nil, contentType: String? = nil) async throws -> (Data, HTTPURLResponse) {
         let host = endpoint.replacingOccurrences(of: "https://", with: "")
         let rawPath = "/\(bucket)\(path)"
         // Encode path for the HTTP URL (preserve /)
@@ -97,7 +113,8 @@ final class S3Client: Sendable {
         dateFormatter.dateFormat = "yyyyMMdd"
         let dateStamp = dateFormatter.string(from: now)
 
-        let payloadHash = sha256(Data())
+        let payload = body ?? Data()
+        let payloadHash = sha256(payload)
 
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -105,6 +122,12 @@ final class S3Client: Sendable {
         request.setValue(amzDate, forHTTPHeaderField: "x-amz-date")
         request.setValue(payloadHash, forHTTPHeaderField: "x-amz-content-sha256")
         request.timeoutInterval = 30
+
+        if let body {
+            request.httpBody = body
+            request.setValue(contentType ?? "application/octet-stream", forHTTPHeaderField: "Content-Type")
+            request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
+        }
 
         // Canonical URI: SigV4-encode each path segment
         let canonicalURI = rawPath.components(separatedBy: "/")
@@ -115,8 +138,15 @@ final class S3Client: Sendable {
         let canonicalQuery = query
 
         // AWS Signature V4
-        let signedHeaders = "host;x-amz-content-sha256;x-amz-date"
-        let canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
+        let signedHeaders: String
+        let canonicalHeaders: String
+        if body != nil {
+            signedHeaders = "content-length;content-type;host;x-amz-content-sha256;x-amz-date"
+            canonicalHeaders = "content-length:\(payload.count)\ncontent-type:\(contentType ?? "application/octet-stream")\nhost:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
+        } else {
+            signedHeaders = "host;x-amz-content-sha256;x-amz-date"
+            canonicalHeaders = "host:\(host)\nx-amz-content-sha256:\(payloadHash)\nx-amz-date:\(amzDate)\n"
+        }
         let canonicalRequest = "\(method)\n\(canonicalURI)\n\(canonicalQuery)\n\(canonicalHeaders)\n\(signedHeaders)\n\(payloadHash)"
 
         let scope = "\(dateStamp)/\(region)/s3/aws4_request"

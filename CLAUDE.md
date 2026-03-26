@@ -70,10 +70,22 @@ S3Client (per-store, ephemeral)
 ├── ListObjects v2 (prefix/delimiter folder navigation)
 ├── ListAllObjects (recursive listing without delimiter)
 ├── GetObject (file download)
+├── PutObject (file upload with SigV4 body signing)
+├── DeleteObject / DeleteObjects (file removal)
 ├── HeadObject (file metadata)
 ├── AWS Signature V4 signing via CryptoKit (HMAC-SHA256, SigV4-compliant URI encoding)
 ├── S3XMLParser for ListBucketResult XML responses
 └── ObjectStoreBrowserView with breadcrumb navigation, multi-select, folder download, progress bar
+
+ObjectStorePauseService (singleton)
+├── setupVault() → creates "civo-cloud-manager" Object Store + dedicated credentials (once)
+├── pauseStore(store, credential) → copy all files to vault → verify → delete original → save manifest
+├── resumeStore(paused) → recreate store → copy files back → verify → cleanup vault → shrink vault
+├── loadPausedStores() → read manifest from vault (paused/manifest.json) + local UserDefaults fallback
+├── Auto-resize vault before pause (grow) and after resume (shrink)
+├── Verify-before-delete: file count comparison before removing original
+├── Progress callbacks: phase, currentFile, totalFiles, bytes, currentFileName
+└── PausedStoreManifest stored as JSON in vault + UserDefaults backup
 
 DashboardView (clickable cards → sidebar navigation)
 ├── Resource cards with hover scale animation
@@ -134,6 +146,8 @@ Animations
 
 **Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from linked CivoObjectStoreCredential via credential_id), endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id. "Browse Files" button opens ObjectStoreBrowserView → S3Client (AWS SigV4) → ListObjects v2 → folder navigation → multi-select download.
 
+**Pause flow:** Context menu "Pause" → ObjectStorePauseService.pauseStore() → setup vault (if needed) → list all files via S3Client → auto-resize vault → copy files to vault (paused/{name}/) → verify file count → delete original store → save manifest. ObjectStorePauseView shows live progress. Resume: context menu "Resume" on paused store → recreate store with same name/credentials → copy files back → verify → cleanup vault folder → shrink vault.
+
 **Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView (right-click → "Restart Pod") → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh, auto-refresh 3s timer).
 
 ## Key Patterns
@@ -170,6 +184,7 @@ Animations
 - **Touch ID / biometric auth** — uses `LAContext` from LocalAuthentication framework with async `evaluatePolicy` (no DispatchQueue). Used in DatabaseDetailView (password reveal), CredentialListView (secret key reveal), and ObjectStoreDetailView (secret key reveal).
 - **K8s connecting animation** — K8sConnectingView (in Views/Shared/) shows animated 5-step progress while connecting to K8s API: firewall, kubeconfig, certificates, API server, metrics. Rotating helm icon with pulsing blue circle, green checkmark spring on completion.
 - **Object store resize** — ObjectStoreDetailView has a stepper to change max size, submitted via PUT /objectstores/:id.
+- **Object store pause/resume** — ObjectStorePauseService archives inactive Object Stores to a central "civo-cloud-manager" vault store to save costs. Pause: copy all files to vault (paused/{name}/) → verify → delete original. Resume: recreate store with same name/credentials → copy files back → verify → cleanup. Vault auto-resizes (grow before pause, shrink after resume). PausedStoreManifest stored as JSON in vault + UserDefaults fallback. ObjectStorePauseView shows live progress (phase, file count, bytes). Enable via banner in ObjectStoreListView. Vault store hidden from user-facing list via `visibleObjectStores`.
 - **S3 file browser** — ObjectStoreBrowserView uses S3Client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2 with prefix/delimiter for folder navigation, breadcrumb path, folder drill-down, file icons by extension. Multi-select (Cmd+Click/Shift+Click) with native List selection. Single file → NSSavePanel, multiple files/folders → NSOpenPanel folder picker with recursive download preserving folder structure. Download progress bar. Double-click navigates into folders or downloads files. S3XMLParser handles ListBucketResult XML responses.
 - **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
 - **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
@@ -203,7 +218,7 @@ Animations
 ## Code Layout
 
 - `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 27 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage, K8sNetworking, K8sConfig, CivoObjectStoreCredential, CivoCharge, IPPreset, FirewallRule, HelmRelease; CivoObjectStore has ownerInfo with accessKeyId/credentialId; CivoDatabase has username/password)
+- `Sources/Models/` — 28 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload, K8sStorage, K8sNetworking, K8sConfig, CivoObjectStoreCredential, CivoCharge, IPPreset, FirewallRule, HelmRelease, PausedObjectStore; CivoObjectStore has ownerInfo with accessKeyId/credentialId; CivoDatabase has username/password)
   - `K8sNode.swift` — K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
   - `K8sPod.swift` — K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
   - `K8sMetrics.swift` — K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
@@ -216,7 +231,8 @@ Animations
   - `IPPreset.swift` — IPPreset (saved firewall rule presets)
   - `FirewallRule.swift` — FirewallRule (custom rule model)
   - `CivoCharge.swift` — CivoCharge (cost/billing data)
-- `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, S3Client, IPDetector, NotificationService, ActivityLog, StoreManager, CivoChargesService
+  - `PausedObjectStore.swift` — PausedObjectStore, PausedStoreManifest (pause/resume metadata)
+- `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, S3Client, IPDetector, NotificationService, ActivityLog, StoreManager, CivoChargesService, ObjectStorePauseService
   - `KubeconfigParser.swift` — parses kubeconfig YAML → server URL, CA cert, client cert, client key
   - `KubernetesAPIClient.swift` — direct K8s API client using PKCS#12 client certificate auth (/usr/bin/openssl + SecPKCS12Import) via Security.framework. Supports nodes, pods, logs, metrics, events, deployments, daemonsets, statefulsets, cronjobs, services, ingresses, namespaces, configmaps, secrets, PVs, PVCs, deletePod, scaleDeployment, restartDeployment, runCommandInPod. Generic execute() supports configurable HTTP method and body.
   - `S3Client.swift` — S3-compatible client with AWS Signature V4 signing via CryptoKit (HMAC-SHA256). ListObjects v2, GetObject, HeadObject, S3XMLParser for XML responses.
@@ -230,6 +246,7 @@ Animations
   - `NotificationService` — macOS user notifications for pod restart alerts
   - `ActivityLog` — tracks user actions (instance start/stop/reboot, resize, etc.)
   - `StoreManager` — StoreKit 2 in-app purchase management, paywall state
+  - `ObjectStorePauseService` — pause/resume Object Stores via vault. setupVault(), pauseStore(), resumeStore(), loadPausedStores(). Auto-resize vault, verify-before-delete, manifest in vault + UserDefaults fallback
 - `Sources/ViewModels/` — 8 @Observable @MainActor view models with CRUD state
 - `Sources/Views/` — MenuBarView, AppState, OnboardingView
 - `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 11 create/edit views + QuotaEditView
@@ -247,6 +264,7 @@ Animations
 - `Sources/Views/MainWindow/Account/AboutView.swift` — app information and version
 - `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (from linked credential via credential_id), endpoint, config (max size, region, status), resize section with stepper, "Browse Files" button
 - `Sources/Views/MainWindow/Storage/ObjectStoreBrowserView.swift` — S3 file browser with breadcrumb navigation, folder drill-down, file icons, right-click download via NSSavePanel
+- `Sources/Views/MainWindow/Storage/ObjectStorePauseView.swift` — pause/resume progress sheet with animated icon, progress bar, file/byte counters, credential/vault info, cancel button
 - `Sources/Views/MainWindow/Storage/CredentialListView.swift` — Object Store credentials: list, create, delete, Touch ID-protected secret keys, hover animation, staggered spring
 - `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, credentials (username + Touch ID-protected password via LAContext), config, network/firewall
 - `Sources/Views/MainWindow/Storage/VolumeDetailView.swift` — attachment status, mountpoint, size

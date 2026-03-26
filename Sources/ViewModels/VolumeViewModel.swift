@@ -21,9 +21,19 @@ final class VolumeViewModel {
     var credentials: [CivoObjectStoreCredential] = []
     var isCreatingCredential = false
 
+    // Pause/Resume
+    var pausedStores: [PausedObjectStore] = []
+    var isPausing = false
+    var isResuming = false
+    var pauseProgress: PauseProgress?
+    var pauseError: String?
+    var vaultEnabled = false
+    var pausingTask: Task<Void, Never>?
+
     private let volumeService = CivoVolumeService()
     private let objectStoreService = CivoObjectStoreService()
     private let networkService = CivoNetworkService()
+    private let pauseService = ObjectStorePauseService()
 
     func refresh() async {
         isLoading = true
@@ -38,6 +48,14 @@ final class VolumeViewModel {
             volumes = try await vols
             objectStores = try await stores
             credentials = try await creds
+
+            // Check if vault exists
+            vaultEnabled = objectStores.contains { $0.name == ObjectStorePauseService.vaultName }
+
+            // Load paused stores
+            if vaultEnabled {
+                pausedStores = (try? await pauseService.loadPausedStores()) ?? []
+            }
         } catch {
             self.error = CivoAPIError.userMessage(error)
             Log.error("Storage refresh failed: \(error.localizedDescription)")
@@ -177,5 +195,92 @@ final class VolumeViewModel {
         } catch {
             self.error = CivoAPIError.userMessage(error)
         }
+    }
+
+    // MARK: - Pause / Resume
+
+    /// Stores visible to the user (excludes the vault store)
+    var visibleObjectStores: [CivoObjectStore] {
+        objectStores.filter { $0.name != ObjectStorePauseService.vaultName }
+    }
+
+    func setupVault() async -> Bool {
+        isSaving = true
+        pauseError = nil
+        defer { isSaving = false }
+
+        do {
+            let _ = try await pauseService.setupVault()
+            vaultEnabled = true
+            await refresh()
+            return true
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+            return false
+        }
+    }
+
+    func pauseObjectStore(_ store: CivoObjectStore) {
+        guard !isPausing && !isResuming else { return }
+        guard let credential = credentialForStore(store) else {
+            pauseError = "No credentials found for \(store.name)"
+            return
+        }
+        isPausing = true
+        pauseError = nil
+        pauseProgress = nil
+
+        pausingTask = Task {
+            do {
+                try await pauseService.pauseStore(store, credential: credential) { progress in
+                    Task { @MainActor [weak self] in
+                        self?.pauseProgress = progress
+                    }
+                }
+                isPausing = false
+                showSuccess = true
+                await refresh()
+            } catch is CancellationError {
+                isPausing = false
+                pauseProgress = nil
+            } catch {
+                isPausing = false
+                pauseError = CivoAPIError.userMessage(error)
+            }
+        }
+    }
+
+    func resumeObjectStore(_ paused: PausedObjectStore) {
+        guard !isPausing && !isResuming else { return }
+        isResuming = true
+        pauseError = nil
+        pauseProgress = nil
+
+        pausingTask = Task {
+            do {
+                try await pauseService.resumeStore(paused) { progress in
+                    Task { @MainActor [weak self] in
+                        self?.pauseProgress = progress
+                    }
+                }
+                isResuming = false
+                showSuccess = true
+                await refresh()
+            } catch is CancellationError {
+                isResuming = false
+                pauseProgress = nil
+            } catch {
+                isResuming = false
+                pauseError = CivoAPIError.userMessage(error)
+            }
+        }
+    }
+
+    func cancelPauseResume() {
+        pausingTask?.cancel()
+        pausingTask = nil
+        isPausing = false
+        isResuming = false
+        pauseProgress = nil
     }
 }

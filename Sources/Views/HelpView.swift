@@ -150,6 +150,13 @@ struct HelpSection {
             "Object store size can be changed via the stepper in the detail view.",
             "Credentials (access key ID, secret access key) come from a linked credential via the Civo API.",
             "Click 'Browse Files' in the object store detail view to open the S3 file browser.",
+            "**Pause/Resume**: Right-click an object store and select 'Pause' to archive it and save costs.",
+            "Pausing copies all files to a central vault store, verifies the copy, then deletes the original.",
+            "Paused stores appear in a separate section with an orange icon and a 'Resume' button.",
+            "Resuming recreates the store with the same name and credentials, then restores all files.",
+            "A progress sheet shows live file counts, byte counters, and the current file being copied.",
+            "Enable the Pause feature by clicking 'Enable' in the banner at the top of the Object Store list.",
+            "The vault ('civo-cloud-manager') auto-resizes as needed and shrinks after resume.",
         ]),
         HelpSection(title: "S3 File Browser", icon: "folder.fill", items: [
             "Browse files and folders in a Table view with Name and Size columns.",
