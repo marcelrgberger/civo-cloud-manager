@@ -61,6 +61,14 @@ A native macOS application for managing your **Civo Cloud** infrastructure. Menu
 - Create volumes and object stores
 - **S3 file browser** — Table view, multi-select, download to temp + open in Finder
 - Object Store credentials management (Touch ID-protected)
+- **Object Store Pause/Resume** — archive inactive stores to a central vault to save costs
+  - Pause: copies all files to a `civo-cloud-manager` vault store, verifies, then deletes original
+  - Resume: recreates store with same name/credentials, restores files, cleans up vault
+  - Live progress with file count, byte counters, and current file name
+  - Vault auto-resizes (grows before pause, shrinks after resume)
+  - Parallel transfers (4 concurrent) for faster copy in both directions
+  - Verify-before-delete safety: key + size comparison before removing original
+  - Credential assignment dropdown if credential is missing on a recovered store
 
 ### Cost Estimate
 - **Actual charges** from Civo billing API
@@ -171,7 +179,7 @@ The sidebar is organized into categories:
 | **Compute** | Instances (stop/start/reboot via context menu), SSH Keys | Create, Delete, Stop, Start, Reboot |
 | **Kubernetes** | Clusters (detail view for pools, apps, conditions, live metrics, events, workloads with scaling, K8s node details, pod logs with auto-refresh, pod restart, namespace filter, PVC-Volume linking) | Create, Delete, Scale, Restart |
 | **Networking** | Networks, Firewalls (with rule drill-down), Load Balancers, Domains | Create, Edit (DNS records, firewall rules), Delete |
-| **Storage & Data** | Databases (detail with credentials via Touch ID), Volumes, Object Stores (detail view, credentials, resize, S3 file browser), Credentials (manage Object Store credentials) | Create, Delete, Resize, Browse, Download |
+| **Storage & Data** | Databases (detail with credentials via Touch ID), Volumes, Object Stores (detail view, credentials, resize, S3 file browser, pause/resume), Credentials (manage Object Store credentials) | Create, Delete, Resize, Browse, Download, Pause, Resume |
 | **Account** | Regions | Switch |
 
 **Each resource view provides:**
@@ -186,6 +194,8 @@ The sidebar is organized into categories:
 **Network delete** skips the default network — only non-default networks can be deleted.
 
 **Object store detail view** — click an object store to see its detail view with credentials (access key ID, secret access key from linked credential, endpoint as selectable text), configuration (max size, region, status), a resize section with stepper to change max size via PUT /objectstores/:id, and a "Browse Files" button to open the S3 file browser.
+
+**Object store pause/resume** — right-click an object store and select "Pause" to archive it to a central `civo-cloud-manager` vault. All files are copied to the vault, verified, then the original store is deleted to save costs. Paused stores appear in a separate section with an orange pause icon. Click "Resume" to recreate the store and restore all files. A progress sheet shows live file/byte counters during copy. The vault auto-resizes as needed. Enable by clicking the "Enable" banner in the Object Store list.
 
 **Firewall rule drill-down** — click a firewall to see all its rules. Each rule shows protocol, ports, CIDR, direction (ingress/egress), and action (allow/deny) with color-coded badges. Add new rules via "+" toolbar button, delete rules via context menu with name confirmation.
 
@@ -335,6 +345,9 @@ graph TB
     L --> X[CivoObjectStoreService]
     L --> S3[S3Client]
     L --> S6
+    L --> PS[ObjectStorePauseService]
+    PS --> X
+    PS --> S3
     M --> Y[CivoInstanceService]
     M --> Z[CivoSSHKeyService]
     M --> S6
@@ -774,8 +787,20 @@ classDiagram
         +listObjects(bucket, prefix, delimiter) S3ListResult
         +listAllObjects(bucket, prefix) S3Object[]
         +downloadObject(bucket, key) Data
+        +uploadObject(bucket, key, data)
+        +deleteObject(bucket, key)
+        +deleteObjects(bucket, keys)
         +headObject(bucket, key) (size, contentType)
     }
+
+    class ObjectStorePauseService {
+        +setupVault() (CivoObjectStore, CivoObjectStoreCredential)
+        +pauseStore(store, credential, progress)
+        +resumeStore(paused, progress)
+        +loadPausedStores() PausedObjectStore[]
+        +findVault() CivoObjectStore?
+    }
+
     class CivoLoadBalancerService { +listLoadBalancers(); +removeLoadBalancer(id) }
     class CivoInstanceService { +listInstances(); +createInstance(body); +updateInstance(id, body); +removeInstance(id); +stopInstance(id); +startInstance(id); +rebootInstance(id) }
     class CivoSSHKeyService { +listSSHKeys(); +createSSHKey(body); +removeSSHKey(id) }
@@ -804,6 +829,8 @@ classDiagram
     KubernetesAPIClient ..> KubeconfigParser : uses parsed certs
     K8sMetricsParser ..> KubernetesAPIClient : parses metrics from
     S3Client ..> CivoObjectStoreService : uses credentials from
+    ObjectStorePauseService --> CivoObjectStoreService
+    ObjectStorePauseService --> S3Client
     CivoChargesService --> CivoAPIClient
 ```
 
@@ -1002,6 +1029,57 @@ sequenceDiagram
     CD->>KA: GET /api/v1/namespaces/{ns}/pods/{name}/log
     K8S-->>KA: log text
     KA-->>CD: Show PodLogView
+```
+
+### Data Flow — Object Store Pause/Resume
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant LV as ObjectStoreListView
+    participant VM as VolumeViewModel
+    participant PS as ObjectStorePauseService
+    participant OS as CivoObjectStoreService
+    participant S3S as S3Client (Source)
+    participant S3V as S3Client (Vault)
+    participant API as api.civo.com
+
+    U->>LV: Right-click → "Pause"
+    LV->>VM: pauseObjectStore(store)
+    VM->>PS: pauseStore(store, credential)
+
+    opt First-time setup
+        PS->>OS: createCredential("civo-cloud-manager-vault")
+        OS->>API: POST /objectstore/credentials
+        API-->>OS: Credential
+        PS->>OS: createObjectStore("civo-cloud-manager")
+        OS->>API: POST /objectstores
+        API-->>OS: Vault store
+        PS->>PS: waitForStoreReady()
+    end
+
+    PS->>S3S: listAllObjects(source)
+    S3S-->>PS: S3Object[] (file list)
+
+    opt Vault needs more space
+        PS->>OS: updateObjectStore(vault, newSize)
+        OS->>API: PUT /objectstores/{id}
+    end
+
+    loop Each file
+        PS->>S3S: downloadObject(source, key)
+        S3S-->>PS: Data
+        PS->>S3V: uploadObject(vault, "paused/{name}/"+key, data)
+        PS-->>VM: progress callback
+        VM-->>LV: Update ObjectStorePauseView
+    end
+
+    PS->>S3V: listAllObjects(vault, prefix) — verify
+    PS->>S3V: uploadObject(vault, manifest.json)
+    PS->>OS: removeObjectStore(sourceId)
+    OS->>API: DELETE /objectstores/{id}
+    PS-->>VM: completed
+    VM-->>LV: Dismiss sheet, show success
 ```
 
 ### Main Window Navigation
@@ -1258,7 +1336,8 @@ civo-cloud-manager/
 │   │   ├── CivoNetworkService.swift            # List, create, update, delete (removeNetwork)
 │   │   ├── CivoVolumeService.swift             # List, create, delete
 │   │   ├── CivoObjectStoreService.swift        # List, show, create, update (resize), delete + credential CRUD
-│   │   ├── S3Client.swift                     # S3-compatible client — AWS Signature V4 via CryptoKit, ListObjects v2, GetObject, HeadObject, XML parsing
+│   │   ├── S3Client.swift                     # S3-compatible client — AWS Signature V4 via CryptoKit, ListObjects v2, GetObject, PutObject, DeleteObject, HeadObject, XML parsing
+│   │   ├── ObjectStorePauseService.swift      # Pause/resume Object Stores — vault management, copy, verify, manifest
 │   │   ├── CivoLoadBalancerService.swift       # List, delete
 │   │   ├── CivoInstanceService.swift           # List, create, update, delete, stop, start, reboot
 │   │   ├── CivoSSHKeyService.swift             # List, create, delete
@@ -1272,7 +1351,7 @@ civo-cloud-manager/
 │   │   ├── KubernetesViewModel.swift           # + create/update, form data, K8s API (nodes, pods, logs, metrics, events, workloads, PVs), auto-firewall, restartPod, scaleDeployment, selectedNamespace, filteredDeployments/filteredServices
 │   │   ├── DatabaseViewModel.swift             # + create, form data
 │   │   ├── NetworkViewModel.swift              # + create network/firewall, update, delete network/firewall/LB
-│   │   ├── VolumeViewModel.swift               # + create volume/object store, cleanup unused, resize object store
+│   │   ├── VolumeViewModel.swift               # + create volume/object store, cleanup unused, resize, pause/resume object store
 │   │   ├── InstanceViewModel.swift             # + create instance/SSH key, form data
 │   │   ├── DomainViewModel.swift               # + create/update domain/record
 │   │   └── RegionViewModel.swift
@@ -1313,9 +1392,10 @@ civo-cloud-manager/
 │   │   │   │   ├── DatabaseDetailView.swift     # Connection details, credentials (Touch ID), config, network/firewall
 │   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
 │   │   │   │   ├── VolumeDetailView.swift       # Attachment status, mountpoint, size
-│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay
+│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay, pause/resume, vault status
 │   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize, browse files button
 │   │   │   │   ├── ObjectStoreBrowserView.swift # S3 file browser — breadcrumbs, folders, files, download
+│   │   │   │   ├── ObjectStorePauseView.swift   # Pause/resume progress sheet — animated, file/byte counters
 │   │   │   │   ├── CredentialListView.swift     # Object Store credentials — list, create, delete, Touch ID secrets
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
