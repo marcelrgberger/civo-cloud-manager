@@ -74,6 +74,7 @@ targets:
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
         NSHumanReadableCopyright: "Copyright © 2026 Marcel R. G. Berger. All rights reserved."
         LSApplicationCategoryType: "public.app-category.utilities"
+        ITSAppUsesNonExemptEncryption: false
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
         CFBundleDevelopmentRegion: en
