@@ -154,7 +154,12 @@ struct ObjectStoreListView: View {
                                         Section("Use Existing") {
                                             ForEach(vm.credentials) { cred in
                                                 Button {
-                                                    resumeTarget = paused
+                                                    resumeTarget = PausedObjectStore(
+                                                        id: paused.id, originalName: paused.originalName, originalMaxSize: paused.originalMaxSize,
+                                                        credentialId: cred.id, accessKeyId: cred.accessKeyId,
+                                                        region: paused.region, endpoint: paused.endpoint, pausedAt: paused.pausedAt,
+                                                        fileCount: paused.fileCount, totalSizeBytes: paused.totalSizeBytes, vaultPrefix: paused.vaultPrefix
+                                                    )
                                                     Task {
                                                         await vm.assignCredentialAndResume(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
                                                     }
