@@ -291,7 +291,10 @@ final class ObjectStorePauseService: Sendable {
         let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: CivoConfig.shared.region)
 
         // 4. List files in vault and validate against manifest
-        let vaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        let restoredFlag = "\(paused.vaultPrefix).restored"
+        let allVaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        // Filter out operational markers (.restored flag) — only data files
+        let vaultObjects = allVaultObjects.filter { $0.key != restoredFlag }
         let totalFiles = vaultObjects.count
         let totalBytes = Int64(vaultObjects.reduce(0) { $0 + $1.size })
 
@@ -336,20 +339,27 @@ final class ObjectStorePauseService: Sendable {
             try verifyObjects(source: vaultObjects, copied: restoredObjects, prefix: paused.vaultPrefix)
         }
 
-        // 7. Mark as fully restored in vault
-        let restoredFlag = "\(paused.vaultPrefix).restored"
+        // 7. Mark as fully restored in vault (safety flag for auto-recovery)
         try await vaultClient.uploadObject(bucket: vault.name, key: restoredFlag, data: Data(), contentType: "text/plain")
 
-        // 8. Delete vault folder
+        // 8. Delete vault data files (keep .restored flag as recovery marker)
         progress(PauseProgress(phase: .deleting, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Cleaning up vault...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
-        var keysToDelete = vaultObjects.map(\.key)
-        keysToDelete.append(restoredFlag)
-        try await vaultClient.deleteObjects(bucket: vault.name, keys: keysToDelete)
+        let keysToDelete = vaultObjects.map(\.key)
+        if !keysToDelete.isEmpty {
+            try await vaultClient.deleteObjects(bucket: vault.name, keys: keysToDelete)
+        }
 
-        // 9. Remove from manifest
+        // 9. Remove from manifest (safe: .restored flag still present for auto-recovery)
         try await removePausedMetadata(vaultClient: vaultClient, vaultBucket: vault.name, pausedId: paused.id)
 
-        // 9. Shrink vault if possible
+        // 10. Delete .restored flag (manifest already updated, flag no longer needed)
+        do {
+            try await vaultClient.deleteObject(bucket: vault.name, key: restoredFlag)
+        } catch {
+            Log.warning("Could not delete .restored flag for '\(paused.originalName)': \(error.localizedDescription)")
+        }
+
+        // 11. Shrink vault if possible
         progress(PauseProgress(phase: .resizing, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Optimizing vault size...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
         try await shrinkVaultIfPossible(vault: vault, vaultClient: vaultClient)
 
@@ -392,18 +402,48 @@ final class ObjectStorePauseService: Sendable {
         // Clean up manifest entries for fully restored stores (check .restored flag)
         let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
         var repaired = false
-        for stale in manifest.stores where activeStoreNames.contains(stale.originalName) {
+        var idsToRemove: Set<String> = []
+        let candidateStores = manifest.stores.filter { activeStoreNames.contains($0.originalName) }
+        for stale in candidateStores {
             let restoredFlag = "\(stale.vaultPrefix).restored"
             let isFullyRestored = (try? await client.headObject(bucket: vault.name, key: restoredFlag)) != nil
+
             if isFullyRestored {
-                // Fully restored — clean up vault folder and remove manifest entry
-                var keysToClean = (try? await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix))?.map(\.key) ?? []
-                keysToClean.append(restoredFlag)
-                try? await client.deleteObjects(bucket: vault.name, keys: keysToClean)
-                manifest.stores.removeAll { $0.id == stale.id }
+                // .restored flag present — clean up vault folder and remove manifest entry
+                var keysToClean: [String]
+                do {
+                    keysToClean = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix).map(\.key)
+                } catch {
+                    Log.warning("Vault listing failed for '\(stale.originalName)': \(error.localizedDescription)")
+                    keysToClean = []
+                }
+                if !keysToClean.contains(restoredFlag) {
+                    keysToClean.append(restoredFlag)
+                }
+                do {
+                    try await client.deleteObjects(bucket: vault.name, keys: keysToClean)
+                } catch {
+                    Log.warning("Vault cleanup failed for '\(stale.originalName)': \(error.localizedDescription)")
+                }
+                idsToRemove.insert(stale.id)
                 repaired = true
                 Log.info("Cleaned up fully restored store: \(stale.originalName)")
+            } else {
+                // No .restored flag — only clean if vault folder is verifiably empty (not a listing error)
+                do {
+                    let vaultFiles = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix)
+                    if vaultFiles.isEmpty {
+                        idsToRemove.insert(stale.id)
+                        repaired = true
+                        Log.info("Cleaned up restored store (empty vault folder): \(stale.originalName)")
+                    }
+                } catch {
+                    Log.warning("Could not verify vault contents for '\(stale.originalName)': \(error.localizedDescription)")
+                }
             }
+        }
+        if !idsToRemove.isEmpty {
+            manifest.stores.removeAll { idsToRemove.contains($0.id) }
         }
 
         // Repair: detect orphaned folders in vault not tracked in manifest
