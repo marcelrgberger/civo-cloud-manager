@@ -378,29 +378,42 @@ final class ObjectStorePauseService: Sendable {
             "name": paused.originalName,
             "size": paused.originalMaxSize
         ]
-        // Resolve access key: use stored value, or look up from credentialId
-        if let accessKeyId = paused.accessKeyId {
-            body["access_key_id"] = accessKeyId
-            Log.info("Resume: using stored accessKeyId=\(accessKeyId) for '\(paused.originalName)'")
-        } else if let credId = paused.credentialId {
-            Log.info("Resume: accessKeyId nil, looking up from credentialId=\(credId)")
-            let cred = try await storeService.showCredential(credId)
-            if let ak = cred.accessKeyId {
-                body["access_key_id"] = ak
-                Log.info("Resume: resolved accessKeyId=\(ak) from credential '\(cred.name ?? credId)'")
-            } else {
-                Log.error("Resume: credential \(credId) has no accessKeyId!")
-            }
+
+        let resolvedAccessKey = try await resolveAccessKey(for: paused)
+        if let ak = resolvedAccessKey {
+            body["access_key_id"] = ak
+            Log.info("Resume: resolved access_key_id=\(ak) for '\(paused.originalName)'")
         } else {
-            Log.error("Resume: BOTH accessKeyId and credentialId are nil for '\(paused.originalName)' — API will create new credential!")
+            Log.error("Resume: could not resolve access key for '\(paused.originalName)' — API will create new credential!")
         }
-        if let jsonData = try? JSONSerialization.data(withJSONObject: body),
-           let jsonStr = String(data: jsonData, encoding: .utf8) {
-            Log.info("Resume: creating store with body: \(jsonStr)")
-        }
+
         let newStore = try await storeService.createObjectStore(body)
         try await waitForStoreReady(newStore.id)
         return try await storeService.showObjectStore(newStore.id)
+    }
+
+    private func resolveAccessKey(for paused: PausedObjectStore) async throws -> String? {
+        // Strategy 1: Fetch fresh from API using credentialId
+        if let credId = paused.credentialId {
+            let cred = try await storeService.showCredential(credId)
+            if let ak = cred.accessKeyId {
+                Log.info("Resume: resolved via credentialId → '\(cred.name ?? credId)'")
+                return ak
+            }
+        }
+        // Strategy 2: Use stored accessKeyId as fallback
+        if let ak = paused.accessKeyId {
+            Log.info("Resume: using stored accessKeyId")
+            return ak
+        }
+        // Strategy 3: Search all credentials for one matching the store name
+        let allCreds = try await storeService.listCredentials()
+        if let match = allCreds.first(where: { $0.name == paused.originalName }) {
+            Log.info("Resume: matched credential by name '\(match.name ?? "")'")
+            return match.accessKeyId
+        }
+        Log.error("Resume: all 3 strategies failed — credentialId=\(paused.credentialId ?? "nil"), accessKeyId=\(paused.accessKeyId ?? "nil"), no name match")
+        return nil
     }
 
     // MARK: - Manifest
