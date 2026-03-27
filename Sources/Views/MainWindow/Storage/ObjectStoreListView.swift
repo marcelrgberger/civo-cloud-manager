@@ -5,6 +5,7 @@ struct ObjectStoreListView: View {
     @State private var deleteTarget: CivoObjectStore?
     @State private var pauseTarget: CivoObjectStore?
     @State private var resumeTarget: PausedObjectStore?
+    @State private var discardTarget: PausedObjectStore?
 
     private var navigationKey: String {
         if vm.browsingObjectStore != nil { return "browse" }
@@ -153,7 +154,12 @@ struct ObjectStoreListView: View {
                                         Section("Use Existing") {
                                             ForEach(vm.credentials) { cred in
                                                 Button {
-                                                    resumeTarget = paused
+                                                    resumeTarget = PausedObjectStore(
+                                                        id: paused.id, originalName: paused.originalName, originalMaxSize: paused.originalMaxSize,
+                                                        credentialId: cred.id, accessKeyId: cred.accessKeyId,
+                                                        region: paused.region, endpoint: paused.endpoint, pausedAt: paused.pausedAt,
+                                                        fileCount: paused.fileCount, totalSizeBytes: paused.totalSizeBytes, vaultPrefix: paused.vaultPrefix
+                                                    )
                                                     Task {
                                                         await vm.assignCredentialAndResume(paused, credentialId: cred.id, accessKeyId: cred.accessKeyId)
                                                     }
@@ -189,6 +195,12 @@ struct ObjectStoreListView: View {
                                     } label: {
                                         Label("Resume", systemImage: "play.circle")
                                     }
+                                }
+                                Divider()
+                                Button(role: .destructive) {
+                                    discardTarget = paused
+                                } label: {
+                                    Label("Discard Backup", systemImage: "trash")
                                 }
                             }
                         }
@@ -255,6 +267,14 @@ struct ObjectStoreListView: View {
                     Task { await vm.removeObjectStore(target.id) }
                     deleteTarget = nil
                 }, onCancel: { deleteTarget = nil })
+            }
+        }
+        .sheet(isPresented: Binding(get: { discardTarget != nil }, set: { if !$0 { discardTarget = nil } })) {
+            if let target = discardTarget {
+                DeleteConfirmationSheet(resourceType: "Paused Backup", resourceName: target.originalName, onConfirm: {
+                    Task { await vm.discardPausedStore(target) }
+                    discardTarget = nil
+                }, onCancel: { discardTarget = nil })
             }
         }
     }

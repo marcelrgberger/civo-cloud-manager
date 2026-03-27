@@ -134,8 +134,8 @@
 		F50DE0A8E824EBD466765B01 /* RateEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6BFD4B26BEFD715BE6F78 /* RateEditorView.swift */; };
 		F598AA3CD45406EED61EFD6C /* CreateInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7353A2AD351F106200317D37 /* CreateInstanceView.swift */; };
 		FB906C15123E6D7852E79705 /* CivoSSHKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27881E3736F77576EF5BF84 /* CivoSSHKey.swift */; };
-		6B891C4858D34D9C9A992549 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7AA2420DEA024E4A91EF2FD5 /* InfoPlist.strings */; };
-		8368CEB4E74A421DB0C1906C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F367DBDE07D2442B9B943A00 /* Localizable.xcstrings */; };
+		E94A047127AF47909254C22D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EF5AA5C7A2D445FFAFFE002E /* InfoPlist.strings */; };
+		1FC6479B827B4DFCAA050D68 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1CDC3502BEE243E6866B3496 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,29 +278,29 @@
 		FA4C210104DCC1379337CF6C /* KubeconfigParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KubeconfigParser.swift; sourceTree = "<group>"; };
 		FB0CF2A289D90763A13510BF /* DatabaseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseDetailView.swift; sourceTree = "<group>"; };
 		FC651DD74FA16D0BC0D705B3 /* CivoQuotaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CivoQuotaService.swift; sourceTree = "<group>"; };
-		F1D69F60D8294DD2B209F962 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = CivoCloudManager/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		F6F2DC2ED1D24C1F8BD3B9F3 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = CivoCloudManager/de.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		3809FC05108A4DA181262C08 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = CivoCloudManager/es.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		2AD4D89FF05D49548EAD99A2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = CivoCloudManager/fr.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		42EA07C0310A47999A6C1378 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = CivoCloudManager/it.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		AA4F6D28EE8D429EBB80556D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = CivoCloudManager/nl.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		D4313DB961694D38AD8700CD /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = CivoCloudManager/pl.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		A1906440D4DB42A1A49DFC91 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = CivoCloudManager/pt.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		F367DBDE07D2442B9B943A00 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = CivoCloudManager/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
+		0B00CB4902694A90BFE8DFEF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = CivoCloudManager/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		4B9A9A9A49FA42D8B1437381 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = CivoCloudManager/de.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		4247AD883A5A4960A042A9B3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = CivoCloudManager/es.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		60998CC21E574DA2A3560870 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = CivoCloudManager/fr.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		8D1CD647C490475382F27B71 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = CivoCloudManager/it.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		A3D20A3EECAD4C319E7CEAC7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = CivoCloudManager/nl.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		7C74F3463607483DB97DB3C9 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = CivoCloudManager/pl.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		5E35D638A75642898CF18803 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = CivoCloudManager/pt.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		1CDC3502BEE243E6866B3496 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = CivoCloudManager/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXVariantGroup section */
-		7AA2420DEA024E4A91EF2FD5 /* InfoPlist.strings */ = {
+		EF5AA5C7A2D445FFAFFE002E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				F1D69F60D8294DD2B209F962 /* en */,
-				F6F2DC2ED1D24C1F8BD3B9F3 /* de */,
-				3809FC05108A4DA181262C08 /* es */,
-				2AD4D89FF05D49548EAD99A2 /* fr */,
-				42EA07C0310A47999A6C1378 /* it */,
-				AA4F6D28EE8D429EBB80556D /* nl */,
-				D4313DB961694D38AD8700CD /* pl */,
-				A1906440D4DB42A1A49DFC91 /* pt */,
+				0B00CB4902694A90BFE8DFEF /* en */,
+				4B9A9A9A49FA42D8B1437381 /* de */,
+				4247AD883A5A4960A042A9B3 /* es */,
+				60998CC21E574DA2A3560870 /* fr */,
+				8D1CD647C490475382F27B71 /* it */,
+				A3D20A3EECAD4C319E7CEAC7 /* nl */,
+				7C74F3463607483DB97DB3C9 /* pl */,
+				5E35D638A75642898CF18803 /* pt */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -446,8 +446,8 @@
 		688293C757A7801CCECA154F /* CivoCloudManager */ = {
 			isa = PBXGroup;
 			children = (
-				7AA2420DEA024E4A91EF2FD5 /* InfoPlist.strings */,
-				F367DBDE07D2442B9B943A00 /* Localizable.xcstrings */,
+				EF5AA5C7A2D445FFAFFE002E /* InfoPlist.strings */,
+				1CDC3502BEE243E6866B3496 /* Localizable.xcstrings */,
 				81AEBC33E74A811E3130B06D /* Assets.xcassets */,
 			);
 			path = CivoCloudManager;
@@ -671,8 +671,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B891C4858D34D9C9A992549 /* InfoPlist.strings in Resources */,
-				8368CEB4E74A421DB0C1906C /* Localizable.xcstrings in Resources */,
+				E94A047127AF47909254C22D /* InfoPlist.strings in Resources */,
+				1FC6479B827B4DFCAA050D68 /* Localizable.xcstrings in Resources */,
 				ECD0912063E527904ED42F43 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

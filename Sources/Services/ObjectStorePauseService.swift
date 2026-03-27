@@ -246,23 +246,29 @@ final class ObjectStorePauseService: Sendable {
         let existingStores = try await storeService.listObjectStores()
         let readyStore: CivoObjectStore
         if let existing = existingStores.first(where: { $0.name == paused.originalName }) {
-            // Check if this is from a prior resume attempt (same credential) or user-created
-            if existing.credentialId != paused.credentialId && paused.credentialId != nil {
-                throw PauseError.storeExistsWithDifferentCredential(paused.originalName)
+            let credentialMismatch = existing.credentialId != paused.credentialId && paused.credentialId != nil
+            if credentialMismatch {
+                // Store exists with wrong credential — auto-replace if empty, error if has data
+                Log.warning("Store '\(paused.originalName)' exists with credential \(existing.credentialId ?? "nil"), expected \(paused.credentialId ?? "nil")")
+                let existingCred = try? await storeService.showCredential(existing.credentialId ?? "")
+                let existingEndpoint = existing.objectstoreEndpoint ?? ""
+                if let ak = existingCred?.accessKeyId, let sk = existingCred?.secretAccessKeyId, !existingEndpoint.isEmpty {
+                    let checkClient = S3Client(endpoint: existingEndpoint, accessKey: ak, secretKey: sk, region: CivoConfig.shared.region)
+                    let existingObjects = try await checkClient.listAllObjects(bucket: existing.name, prefix: "")
+                    if !existingObjects.isEmpty {
+                        throw PauseError.storeExistsWithDifferentCredential(paused.originalName)
+                    }
+                }
+                // Store is empty — safe to delete and recreate with correct credential
+                try await storeService.removeObjectStore(existing.id)
+                Log.info("Deleted empty store '\(paused.originalName)' with wrong credential, recreating")
+                readyStore = try await createStoreWithCredential(paused)
+            } else {
+                readyStore = existing
+                Log.info("Store '\(paused.originalName)' already exists, using existing")
             }
-            readyStore = existing
-            Log.info("Store '\(paused.originalName)' already exists, using existing")
         } else {
-            var body: [String: Any] = [
-                "name": paused.originalName,
-                "size": paused.originalMaxSize
-            ]
-            if let accessKeyId = paused.accessKeyId {
-                body["access_key_id"] = accessKeyId
-            }
-            let newStore = try await storeService.createObjectStore(body)
-            try await waitForStoreReady(newStore.id)
-            readyStore = try await storeService.showObjectStore(newStore.id)
+            readyStore = try await createStoreWithCredential(paused)
         }
 
         // 3. Get the credential for the new store to build S3 client
@@ -291,7 +297,10 @@ final class ObjectStorePauseService: Sendable {
         let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: CivoConfig.shared.region)
 
         // 4. List files in vault and validate against manifest
-        let vaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        let restoredFlag = "\(paused.vaultPrefix).restored"
+        let allVaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        // Filter out operational markers (.restored flag) — only data files
+        let vaultObjects = allVaultObjects.filter { $0.key != restoredFlag }
         let totalFiles = vaultObjects.count
         let totalBytes = Int64(vaultObjects.reduce(0) { $0 + $1.size })
 
@@ -336,25 +345,75 @@ final class ObjectStorePauseService: Sendable {
             try verifyObjects(source: vaultObjects, copied: restoredObjects, prefix: paused.vaultPrefix)
         }
 
-        // 7. Mark as fully restored in vault
-        let restoredFlag = "\(paused.vaultPrefix).restored"
+        // 7. Mark as fully restored in vault (safety flag for auto-recovery)
         try await vaultClient.uploadObject(bucket: vault.name, key: restoredFlag, data: Data(), contentType: "text/plain")
 
-        // 8. Delete vault folder
+        // 8. Delete vault data files (keep .restored flag as recovery marker)
         progress(PauseProgress(phase: .deleting, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Cleaning up vault...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
-        var keysToDelete = vaultObjects.map(\.key)
-        keysToDelete.append(restoredFlag)
-        try await vaultClient.deleteObjects(bucket: vault.name, keys: keysToDelete)
+        let keysToDelete = vaultObjects.map(\.key)
+        if !keysToDelete.isEmpty {
+            try await vaultClient.deleteObjects(bucket: vault.name, keys: keysToDelete)
+        }
 
-        // 9. Remove from manifest
+        // 9. Remove from manifest (safe: .restored flag still present for auto-recovery)
         try await removePausedMetadata(vaultClient: vaultClient, vaultBucket: vault.name, pausedId: paused.id)
 
-        // 9. Shrink vault if possible
+        // 10. Delete .restored flag (manifest already updated, flag no longer needed)
+        do {
+            try await vaultClient.deleteObject(bucket: vault.name, key: restoredFlag)
+        } catch {
+            Log.warning("Could not delete .restored flag for '\(paused.originalName)': \(error.localizedDescription)")
+        }
+
+        // 11. Shrink vault if possible
         progress(PauseProgress(phase: .resizing, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "Optimizing vault size...", bytesCopied: bytesCopied, bytesTotal: totalBytes))
         try await shrinkVaultIfPossible(vault: vault, vaultClient: vaultClient)
 
         progress(PauseProgress(phase: .completed, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "", bytesCopied: bytesCopied, bytesTotal: totalBytes))
         Log.info("Resumed object store '\(paused.originalName)': \(totalFiles) files restored")
+    }
+
+    private func createStoreWithCredential(_ paused: PausedObjectStore) async throws -> CivoObjectStore {
+        var body: [String: Any] = [
+            "name": paused.originalName,
+            "size": paused.originalMaxSize
+        ]
+
+        let resolvedAccessKey = try await resolveAccessKey(for: paused)
+        if let ak = resolvedAccessKey {
+            body["access_key_id"] = ak
+            Log.info("Resume: resolved access_key_id=\(ak) for '\(paused.originalName)'")
+        } else {
+            Log.error("Resume: could not resolve access key for '\(paused.originalName)' — API will create new credential!")
+        }
+
+        let newStore = try await storeService.createObjectStore(body)
+        try await waitForStoreReady(newStore.id)
+        return try await storeService.showObjectStore(newStore.id)
+    }
+
+    private func resolveAccessKey(for paused: PausedObjectStore) async throws -> String? {
+        // Strategy 1: Fetch fresh from API using credentialId
+        if let credId = paused.credentialId {
+            let cred = try await storeService.showCredential(credId)
+            if let ak = cred.accessKeyId {
+                Log.info("Resume: resolved via credentialId → '\(cred.name ?? credId)'")
+                return ak
+            }
+        }
+        // Strategy 2: Use stored accessKeyId as fallback
+        if let ak = paused.accessKeyId {
+            Log.info("Resume: using stored accessKeyId")
+            return ak
+        }
+        // Strategy 3: Search all credentials for one matching the store name
+        let allCreds = try await storeService.listCredentials()
+        if let match = allCreds.first(where: { $0.name == paused.originalName }) {
+            Log.info("Resume: matched credential by name '\(match.name ?? "")'")
+            return match.accessKeyId
+        }
+        Log.error("Resume: all 3 strategies failed — credentialId=\(paused.credentialId ?? "nil"), accessKeyId=\(paused.accessKeyId ?? "nil"), no name match")
+        return nil
     }
 
     // MARK: - Manifest
@@ -392,18 +451,48 @@ final class ObjectStorePauseService: Sendable {
         // Clean up manifest entries for fully restored stores (check .restored flag)
         let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
         var repaired = false
-        for stale in manifest.stores where activeStoreNames.contains(stale.originalName) {
+        var idsToRemove: Set<String> = []
+        let candidateStores = manifest.stores.filter { activeStoreNames.contains($0.originalName) }
+        for stale in candidateStores {
             let restoredFlag = "\(stale.vaultPrefix).restored"
             let isFullyRestored = (try? await client.headObject(bucket: vault.name, key: restoredFlag)) != nil
+
             if isFullyRestored {
-                // Fully restored — clean up vault folder and remove manifest entry
-                var keysToClean = (try? await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix))?.map(\.key) ?? []
-                keysToClean.append(restoredFlag)
-                try? await client.deleteObjects(bucket: vault.name, keys: keysToClean)
-                manifest.stores.removeAll { $0.id == stale.id }
+                // .restored flag present — clean up vault folder and remove manifest entry
+                var keysToClean: [String]
+                do {
+                    keysToClean = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix).map(\.key)
+                } catch {
+                    Log.warning("Vault listing failed for '\(stale.originalName)': \(error.localizedDescription)")
+                    keysToClean = []
+                }
+                if !keysToClean.contains(restoredFlag) {
+                    keysToClean.append(restoredFlag)
+                }
+                do {
+                    try await client.deleteObjects(bucket: vault.name, keys: keysToClean)
+                } catch {
+                    Log.warning("Vault cleanup failed for '\(stale.originalName)': \(error.localizedDescription)")
+                }
+                idsToRemove.insert(stale.id)
                 repaired = true
                 Log.info("Cleaned up fully restored store: \(stale.originalName)")
+            } else {
+                // No .restored flag — only clean if vault folder is verifiably empty (not a listing error)
+                do {
+                    let vaultFiles = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix)
+                    if vaultFiles.isEmpty {
+                        idsToRemove.insert(stale.id)
+                        repaired = true
+                        Log.info("Cleaned up restored store (empty vault folder): \(stale.originalName)")
+                    }
+                } catch {
+                    Log.warning("Could not verify vault contents for '\(stale.originalName)': \(error.localizedDescription)")
+                }
             }
+        }
+        if !idsToRemove.isEmpty {
+            manifest.stores.removeAll { idsToRemove.contains($0.id) }
         }
 
         // Repair: detect orphaned folders in vault not tracked in manifest
@@ -469,6 +558,35 @@ final class ObjectStorePauseService: Sendable {
         saveLocalManifest(manifest)
     }
 
+    func discardPausedStore(_ paused: PausedObjectStore) async throws {
+        guard let vault = try await findVault(), let vaultCredId = vault.credentialId else {
+            throw PauseError.vaultNotFound
+        }
+        let cred = try await storeService.showCredential(vaultCredId)
+        guard let endpoint = vault.objectstoreEndpoint,
+              let ak = cred.accessKeyId, let sk = cred.secretAccessKeyId else {
+            throw PauseError.missingVaultCredentials
+        }
+        let client = S3Client(endpoint: endpoint, accessKey: ak, secretKey: sk, region: CivoConfig.shared.region)
+
+        // Delete any remaining vault data for this store
+        let vaultFiles = try await client.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        if !vaultFiles.isEmpty {
+            try await client.deleteObjects(bucket: vault.name, keys: vaultFiles.map(\.key))
+        }
+        // Delete .restored flag if present
+        let restoredFlag = "\(paused.vaultPrefix).restored"
+        try? await client.deleteObject(bucket: vault.name, key: restoredFlag)
+
+        // Remove from manifest
+        try await removePausedMetadata(vaultClient: client, vaultBucket: vault.name, pausedId: paused.id)
+
+        // Shrink vault if possible
+        try? await shrinkVaultIfPossible(vault: vault, vaultClient: client)
+
+        Log.info("Discarded paused store '\(paused.originalName)'")
+    }
+
     func updatePausedStoreCredential(storeName: String, credentialId: String, accessKeyId: String?) async throws {
         guard let vault = try await findVault(), let vaultCredId = vault.credentialId else {
             throw PauseError.vaultNotFound
@@ -491,7 +609,7 @@ final class ObjectStorePauseService: Sendable {
             let data = try JSONEncoder.pauseEncoder.encode(manifest)
             try await client.uploadObject(bucket: vault.name, key: Self.manifestKey, data: data, contentType: "application/json")
             saveLocalManifest(manifest)
-            Log.info("Updated credential for paused store '\(storeName)' to \(credentialId)")
+            Log.info("Updated credential for paused store '\(storeName)': credentialId=\(credentialId), accessKeyId=\(accessKeyId ?? "nil")")
         }
     }
 

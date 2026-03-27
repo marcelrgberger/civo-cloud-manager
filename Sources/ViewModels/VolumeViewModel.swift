@@ -294,11 +294,24 @@ final class VolumeViewModel {
                 credentialId: credentialId,
                 accessKeyId: accessKeyId
             )
-            // Reload to get updated paused store with credentialId
-            pausedStores = (try? await pauseService.loadPausedStores()) ?? []
-            if let updated = pausedStores.first(where: { $0.originalName == paused.originalName }) {
-                resumeObjectStore(updated)
-            }
+            // Build updated paused store directly (do NOT call loadPausedStores which may auto-clean the entry)
+            let updated = PausedObjectStore(
+                id: paused.id, originalName: paused.originalName, originalMaxSize: paused.originalMaxSize,
+                credentialId: credentialId, accessKeyId: accessKeyId,
+                region: paused.region, endpoint: paused.endpoint, pausedAt: paused.pausedAt,
+                fileCount: paused.fileCount, totalSizeBytes: paused.totalSizeBytes, vaultPrefix: paused.vaultPrefix
+            )
+            resumeObjectStore(updated)
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+        }
+    }
+
+    func discardPausedStore(_ paused: PausedObjectStore) async {
+        do {
+            try await pauseService.discardPausedStore(paused)
+            showSuccess = true
+            await refresh()
         } catch {
             pauseError = CivoAPIError.userMessage(error)
         }
