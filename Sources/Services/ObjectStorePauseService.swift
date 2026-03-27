@@ -402,7 +402,9 @@ final class ObjectStorePauseService: Sendable {
         // Clean up manifest entries for fully restored stores (check .restored flag)
         let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
         var repaired = false
-        for stale in manifest.stores where activeStoreNames.contains(stale.originalName) {
+        var idsToRemove: Set<String> = []
+        let candidateStores = manifest.stores.filter { activeStoreNames.contains($0.originalName) }
+        for stale in candidateStores {
             let restoredFlag = "\(stale.vaultPrefix).restored"
             let isFullyRestored = (try? await client.headObject(bucket: vault.name, key: restoredFlag)) != nil
 
@@ -415,13 +417,15 @@ final class ObjectStorePauseService: Sendable {
                     Log.warning("Vault listing failed for '\(stale.originalName)': \(error.localizedDescription)")
                     keysToClean = []
                 }
-                keysToClean.append(restoredFlag)
+                if !keysToClean.contains(restoredFlag) {
+                    keysToClean.append(restoredFlag)
+                }
                 do {
                     try await client.deleteObjects(bucket: vault.name, keys: keysToClean)
                 } catch {
                     Log.warning("Vault cleanup failed for '\(stale.originalName)': \(error.localizedDescription)")
                 }
-                manifest.stores.removeAll { $0.id == stale.id }
+                idsToRemove.insert(stale.id)
                 repaired = true
                 Log.info("Cleaned up fully restored store: \(stale.originalName)")
             } else {
@@ -429,7 +433,7 @@ final class ObjectStorePauseService: Sendable {
                 do {
                     let vaultFiles = try await client.listAllObjects(bucket: vault.name, prefix: stale.vaultPrefix)
                     if vaultFiles.isEmpty {
-                        manifest.stores.removeAll { $0.id == stale.id }
+                        idsToRemove.insert(stale.id)
                         repaired = true
                         Log.info("Cleaned up restored store (empty vault folder): \(stale.originalName)")
                     }
@@ -437,6 +441,9 @@ final class ObjectStorePauseService: Sendable {
                     Log.warning("Could not verify vault contents for '\(stale.originalName)': \(error.localizedDescription)")
                 }
             }
+        }
+        if !idsToRemove.isEmpty {
+            manifest.stores.removeAll { idsToRemove.contains($0.id) }
         }
 
         // Repair: detect orphaned folders in vault not tracked in manifest
