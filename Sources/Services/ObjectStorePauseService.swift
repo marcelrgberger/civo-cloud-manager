@@ -509,6 +509,35 @@ final class ObjectStorePauseService: Sendable {
         saveLocalManifest(manifest)
     }
 
+    func discardPausedStore(_ paused: PausedObjectStore) async throws {
+        guard let vault = try await findVault(), let vaultCredId = vault.credentialId else {
+            throw PauseError.vaultNotFound
+        }
+        let cred = try await storeService.showCredential(vaultCredId)
+        guard let endpoint = vault.objectstoreEndpoint,
+              let ak = cred.accessKeyId, let sk = cred.secretAccessKeyId else {
+            throw PauseError.missingVaultCredentials
+        }
+        let client = S3Client(endpoint: endpoint, accessKey: ak, secretKey: sk, region: CivoConfig.shared.region)
+
+        // Delete any remaining vault data for this store
+        let vaultFiles = try await client.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        if !vaultFiles.isEmpty {
+            try await client.deleteObjects(bucket: vault.name, keys: vaultFiles.map(\.key))
+        }
+        // Delete .restored flag if present
+        let restoredFlag = "\(paused.vaultPrefix).restored"
+        try? await client.deleteObject(bucket: vault.name, key: restoredFlag)
+
+        // Remove from manifest
+        try await removePausedMetadata(vaultClient: client, vaultBucket: vault.name, pausedId: paused.id)
+
+        // Shrink vault if possible
+        try? await shrinkVaultIfPossible(vault: vault, vaultClient: client)
+
+        Log.info("Discarded paused store '\(paused.originalName)'")
+    }
+
     func updatePausedStoreCredential(storeName: String, credentialId: String, accessKeyId: String?) async throws {
         guard let vault = try await findVault(), let vaultCredId = vault.credentialId else {
             throw PauseError.vaultNotFound

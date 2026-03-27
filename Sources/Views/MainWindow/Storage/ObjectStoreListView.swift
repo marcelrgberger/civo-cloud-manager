@@ -5,6 +5,7 @@ struct ObjectStoreListView: View {
     @State private var deleteTarget: CivoObjectStore?
     @State private var pauseTarget: CivoObjectStore?
     @State private var resumeTarget: PausedObjectStore?
+    @State private var discardTarget: PausedObjectStore?
 
     private var navigationKey: String {
         if vm.browsingObjectStore != nil { return "browse" }
@@ -190,6 +191,12 @@ struct ObjectStoreListView: View {
                                         Label("Resume", systemImage: "play.circle")
                                     }
                                 }
+                                Divider()
+                                Button(role: .destructive) {
+                                    discardTarget = paused
+                                } label: {
+                                    Label("Discard Backup", systemImage: "trash")
+                                }
                             }
                         }
                     }
@@ -255,6 +262,14 @@ struct ObjectStoreListView: View {
                     Task { await vm.removeObjectStore(target.id) }
                     deleteTarget = nil
                 }, onCancel: { deleteTarget = nil })
+            }
+        }
+        .sheet(isPresented: Binding(get: { discardTarget != nil }, set: { if !$0 { discardTarget = nil } })) {
+            if let target = discardTarget {
+                DeleteConfirmationSheet(resourceType: "Paused Backup", resourceName: target.originalName, onConfirm: {
+                    Task { await vm.discardPausedStore(target) }
+                    discardTarget = nil
+                }, onCancel: { discardTarget = nil })
             }
         }
     }
