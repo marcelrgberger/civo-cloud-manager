@@ -381,11 +381,22 @@ final class ObjectStorePauseService: Sendable {
         // Resolve access key: use stored value, or look up from credentialId
         if let accessKeyId = paused.accessKeyId {
             body["access_key_id"] = accessKeyId
+            Log.info("Resume: using stored accessKeyId=\(accessKeyId) for '\(paused.originalName)'")
         } else if let credId = paused.credentialId {
+            Log.info("Resume: accessKeyId nil, looking up from credentialId=\(credId)")
             let cred = try await storeService.showCredential(credId)
             if let ak = cred.accessKeyId {
                 body["access_key_id"] = ak
+                Log.info("Resume: resolved accessKeyId=\(ak) from credential '\(cred.name ?? credId)'")
+            } else {
+                Log.error("Resume: credential \(credId) has no accessKeyId!")
             }
+        } else {
+            Log.error("Resume: BOTH accessKeyId and credentialId are nil for '\(paused.originalName)' — API will create new credential!")
+        }
+        if let jsonData = try? JSONSerialization.data(withJSONObject: body),
+           let jsonStr = String(data: jsonData, encoding: .utf8) {
+            Log.info("Resume: creating store with body: \(jsonStr)")
         }
         let newStore = try await storeService.createObjectStore(body)
         try await waitForStoreReady(newStore.id)
@@ -585,7 +596,7 @@ final class ObjectStorePauseService: Sendable {
             let data = try JSONEncoder.pauseEncoder.encode(manifest)
             try await client.uploadObject(bucket: vault.name, key: Self.manifestKey, data: data, contentType: "application/json")
             saveLocalManifest(manifest)
-            Log.info("Updated credential for paused store '\(storeName)' to \(credentialId)")
+            Log.info("Updated credential for paused store '\(storeName)': credentialId=\(credentialId), accessKeyId=\(accessKeyId ?? "nil")")
         }
     }
 
