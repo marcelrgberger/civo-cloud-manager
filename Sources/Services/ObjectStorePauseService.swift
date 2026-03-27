@@ -246,23 +246,29 @@ final class ObjectStorePauseService: Sendable {
         let existingStores = try await storeService.listObjectStores()
         let readyStore: CivoObjectStore
         if let existing = existingStores.first(where: { $0.name == paused.originalName }) {
-            // Check if this is from a prior resume attempt (same credential) or user-created
-            if existing.credentialId != paused.credentialId && paused.credentialId != nil {
-                throw PauseError.storeExistsWithDifferentCredential(paused.originalName)
+            let credentialMismatch = existing.credentialId != paused.credentialId && paused.credentialId != nil
+            if credentialMismatch {
+                // Store exists with wrong credential — auto-replace if empty, error if has data
+                Log.warning("Store '\(paused.originalName)' exists with credential \(existing.credentialId ?? "nil"), expected \(paused.credentialId ?? "nil")")
+                let existingCred = try? await storeService.showCredential(existing.credentialId ?? "")
+                let existingEndpoint = existing.objectstoreEndpoint ?? ""
+                if let ak = existingCred?.accessKeyId, let sk = existingCred?.secretAccessKeyId, !existingEndpoint.isEmpty {
+                    let checkClient = S3Client(endpoint: existingEndpoint, accessKey: ak, secretKey: sk, region: CivoConfig.shared.region)
+                    let existingObjects = try await checkClient.listAllObjects(bucket: existing.name, prefix: "")
+                    if !existingObjects.isEmpty {
+                        throw PauseError.storeExistsWithDifferentCredential(paused.originalName)
+                    }
+                }
+                // Store is empty — safe to delete and recreate with correct credential
+                try await storeService.removeObjectStore(existing.id)
+                Log.info("Deleted empty store '\(paused.originalName)' with wrong credential, recreating")
+                readyStore = try await createStoreWithCredential(paused)
+            } else {
+                readyStore = existing
+                Log.info("Store '\(paused.originalName)' already exists, using existing")
             }
-            readyStore = existing
-            Log.info("Store '\(paused.originalName)' already exists, using existing")
         } else {
-            var body: [String: Any] = [
-                "name": paused.originalName,
-                "size": paused.originalMaxSize
-            ]
-            if let accessKeyId = paused.accessKeyId {
-                body["access_key_id"] = accessKeyId
-            }
-            let newStore = try await storeService.createObjectStore(body)
-            try await waitForStoreReady(newStore.id)
-            readyStore = try await storeService.showObjectStore(newStore.id)
+            readyStore = try await createStoreWithCredential(paused)
         }
 
         // 3. Get the credential for the new store to build S3 client
@@ -365,6 +371,25 @@ final class ObjectStorePauseService: Sendable {
 
         progress(PauseProgress(phase: .completed, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "", bytesCopied: bytesCopied, bytesTotal: totalBytes))
         Log.info("Resumed object store '\(paused.originalName)': \(totalFiles) files restored")
+    }
+
+    private func createStoreWithCredential(_ paused: PausedObjectStore) async throws -> CivoObjectStore {
+        var body: [String: Any] = [
+            "name": paused.originalName,
+            "size": paused.originalMaxSize
+        ]
+        // Resolve access key: use stored value, or look up from credentialId
+        if let accessKeyId = paused.accessKeyId {
+            body["access_key_id"] = accessKeyId
+        } else if let credId = paused.credentialId {
+            let cred = try await storeService.showCredential(credId)
+            if let ak = cred.accessKeyId {
+                body["access_key_id"] = ak
+            }
+        }
+        let newStore = try await storeService.createObjectStore(body)
+        try await waitForStoreReady(newStore.id)
+        return try await storeService.showObjectStore(newStore.id)
     }
 
     // MARK: - Manifest
