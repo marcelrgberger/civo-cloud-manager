@@ -317,6 +317,16 @@ final class VolumeViewModel {
         }
     }
 
+    func discardPausedStore(_ paused: PausedObjectStore) async {
+        do {
+            try await pauseService.discardPausedStore(paused)
+            showSuccess = true
+            await refresh()
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+        }
+    }
+
     func createCredentialAndResume(_ paused: PausedObjectStore) async {
         do {
             let newCred = try await CivoObjectStoreService().createCredential(["name": paused.originalName])
