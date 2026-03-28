@@ -165,7 +165,7 @@ final class DashboardViewModel {
         defer { isSavingQuota = false }
 
         do {
-            _ = try await quotaService.requestQuotaChange(body)
+            try await quotaService.requestQuotaChange(body)
             isEditingQuota = false
             showSuccess = true
             await refresh()
