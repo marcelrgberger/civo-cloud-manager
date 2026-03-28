@@ -114,6 +114,7 @@ final class KubernetesViewModel {
     }
 
     private var connectTask: Task<Void, Never>?
+    private var dataLoadTask: Task<Void, Never>?
 
     // MARK: - K8s API (via kubeconfig + auto-firewall)
 
@@ -151,7 +152,9 @@ final class KubernetesViewModel {
             let creds = try KubeconfigParser.parse(yaml)
             steps.append("Parsed: server=\(creds.server), CA=\(creds.caCertPEM.count)b, cert=\(creds.clientCertPEM.count)b, key=\(creds.clientKeyPEM.count)b")
 
-            // Step 4: Create client (invalidate previous to prevent session leak)
+            // Step 4: Cancel in-flight data loads, then invalidate previous session
+            dataLoadTask?.cancel()
+            dataLoadTask = nil
             k8sClient?.invalidate()
             let client = try KubernetesAPIClient(credentials: creds)
             steps.append("Client created")
@@ -172,6 +175,8 @@ final class KubernetesViewModel {
     }
 
     func disconnectFromCluster() async {
+        dataLoadTask?.cancel()
+        dataLoadTask = nil
         k8sClient?.invalidate()
         k8sClient = nil
         isK8sConnected = false
@@ -244,9 +249,11 @@ final class KubernetesViewModel {
     }
 
     func loadClusterData() async {
-        guard let client = k8sClient else { return }
+        guard let client = k8sClient, !client.isInvalidated else { return }
 
         await loadNodes()
+
+        guard !client.isInvalidated, !Task.isCancelled else { return }
 
         // Load everything concurrently
         async let m: () = loadMetrics(client)
