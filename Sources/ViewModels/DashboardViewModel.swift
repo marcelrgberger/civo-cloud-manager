@@ -18,7 +18,9 @@ final class DashboardViewModel {
     var isSavingQuota = false
     var quotaSaveError: String?
     var showSuccess = false
+    var needsRefreshAfterQuotaEdit = false
 
+    private var refreshTask: Task<Void, Never>?
     private let quotaService = CivoQuotaService()
     private let kubernetesService = CivoKubernetesService()
     private let databaseService = CivoDatabaseService()
@@ -28,16 +30,18 @@ final class DashboardViewModel {
     private let networkService = CivoNetworkService()
 
     func refresh() async {
+        refreshTask?.cancel()
+        let task = Task { @MainActor in
+            await self.performRefresh()
+        }
+        refreshTask = task
+        await task.value
+    }
+
+    private func performRefresh() async {
         isLoading = true
         error = nil
         warnings = []
-        quota = nil
-        clusterCount = nil
-        databaseCount = nil
-        volumeCount = nil
-        objectStoreCount = nil
-        loadBalancerCount = nil
-        networkCount = nil
         defer { isLoading = false }
 
         do {
@@ -166,7 +170,7 @@ final class DashboardViewModel {
 
         do {
             try await quotaService.requestQuotaChange(body)
-            await refresh()
+            needsRefreshAfterQuotaEdit = true
             return true
         } catch {
             quotaSaveError = CivoAPIError.userMessage(error)

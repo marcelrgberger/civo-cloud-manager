@@ -304,7 +304,7 @@ final class CivoAPIClient: Sendable {
         request.httpMethod = method
         request.setValue("bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("*/*", forHTTPHeaderField: "Accept")
 
         if let body {
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
