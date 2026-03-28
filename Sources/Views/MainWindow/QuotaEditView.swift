@@ -18,6 +18,8 @@ struct QuotaEditView: View {
     @State private var dbRamGb: Int
     @State private var dbDiskGb: Int
 
+    @State private var submitted = false
+
     init(vm: DashboardViewModel, currentQuota: CivoQuota) {
         self.vm = vm
         self.currentQuota = currentQuota
@@ -36,7 +38,36 @@ struct QuotaEditView: View {
         _dbDiskGb = State(initialValue: currentQuota.databaseDiskGbLimit)
     }
 
+    private var changes: [(label: String, from: Int, to: Int)] {
+        var result: [(String, Int, Int)] = []
+        func check(_ label: String, old: Int, new: Int) {
+            if old != new { result.append((label, old, new)) }
+        }
+        check("Instances", old: currentQuota.instanceCountLimit, new: instanceCount)
+        check("CPU Cores", old: currentQuota.cpuCoreLimit, new: cpuCores)
+        check("RAM (GB)", old: currentQuota.ramMbLimit / 1024, new: ramGb)
+        check("Disk (GB)", old: currentQuota.diskGbLimit, new: diskGb)
+        check("Volumes", old: currentQuota.diskVolumeCountLimit, new: volumes)
+        check("Public IPs", old: currentQuota.publicIpAddressLimit, new: publicIps)
+        check("Networks", old: currentQuota.networkCountLimit, new: networks)
+        check("Load Balancers", old: currentQuota.loadbalancerCountLimit, new: loadBalancers)
+        check("Object Store (GB)", old: currentQuota.objectstoreGbLimit, new: objectStoreGb)
+        check("Database Count", old: currentQuota.databaseCountLimit, new: databases)
+        check("DB CPU Cores", old: currentQuota.databaseCpuCoreLimit, new: dbCpuCores)
+        check("DB RAM (GB)", old: currentQuota.databaseRamMbLimit / 1024, new: dbRamGb)
+        check("DB Disk (GB)", old: currentQuota.databaseDiskGbLimit, new: dbDiskGb)
+        return result
+    }
+
     var body: some View {
+        if submitted {
+            successView
+        } else {
+            formView
+        }
+    }
+
+    private var formView: some View {
         Form {
             Section("Compute") {
                 quotaRow("Instances", value: $instanceCount, step: 1)
@@ -79,9 +110,45 @@ struct QuotaEditView: View {
                 Button("Send Request") {
                     Task { await sendRequest() }
                 }
-                .disabled(vm.isSavingQuota)
+                .disabled(vm.isSavingQuota || changes.isEmpty)
             }
         }
+    }
+
+    private var successView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 48))
+                .foregroundStyle(.green)
+
+            Text("Quota Change Submitted")
+                .font(.headline)
+
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(changes, id: \.label) { change in
+                    HStack {
+                        Text(change.label)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Text("\(change.from)")
+                            .foregroundStyle(.secondary)
+                        Image(systemName: "arrow.right")
+                            .foregroundStyle(.secondary)
+                            .font(.caption)
+                        Text("\(change.to)")
+                            .fontWeight(.semibold)
+                    }
+                }
+            }
+            .padding()
+            .background(.quinary)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+            Button("Done") { vm.isEditingQuota = false }
+                .buttonStyle(.borderedProminent)
+        }
+        .padding(32)
+        .frame(minWidth: 400)
     }
 
     private func quotaRow(_ label: String, value: Binding<Int>, step: Int) -> some View {
@@ -104,6 +171,9 @@ struct QuotaEditView: View {
             "database_ram_mb_limit": dbRamGb * 1024,
             "database_disk_gb_limit": dbDiskGb,
         ]
-        _ = await vm.requestQuotaChange(body)
+        let success = await vm.requestQuotaChange(body)
+        if success {
+            withAnimation { submitted = true }
+        }
     }
 }

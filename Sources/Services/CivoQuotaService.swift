@@ -8,6 +8,6 @@ final class CivoQuotaService: Sendable {
     }
 
     func requestQuotaChange(_ body: [String: Any]) async throws {
-        let _: CivoResult = try await api.put(path: "/quota", body: body, regionRequired: false)
+        try await api.putDiscarding(path: "/quota", body: body, regionRequired: false)
     }
 }

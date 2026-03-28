@@ -166,8 +166,6 @@ final class DashboardViewModel {
 
         do {
             try await quotaService.requestQuotaChange(body)
-            isEditingQuota = false
-            showSuccess = true
             await refresh()
             return true
         } catch {
