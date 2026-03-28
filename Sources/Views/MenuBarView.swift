@@ -133,6 +133,12 @@ struct MenuBarView: View {
 
     // MARK: - Firewall Section
 
+    /// Firewalls grouped by region, ordered by region code.
+    private var firewallsByRegion: [(region: String, firewalls: [FirewallStatus])] {
+        let grouped = Dictionary(grouping: state.firewalls) { $0.managed.region }
+        return grouped.sorted { $0.key < $1.key }.map { (region: $0.key, firewalls: $0.value) }
+    }
+
     private var firewallSection: some View {
         VStack(spacing: 2) {
             if state.firewalls.isEmpty && !state.isLoading {
@@ -156,8 +162,21 @@ struct MenuBarView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             } else {
-                ForEach(state.firewalls) { fw in
-                    firewallRow(fw)
+                ForEach(firewallsByRegion, id: \.region) { group in
+                    HStack {
+                        Image(systemName: "mappin.circle.fill")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        Text(group.region.uppercased())
+                            .font(.caption2.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 6)
+                    ForEach(group.firewalls) { fw in
+                        firewallRow(fw)
+                    }
                 }
             }
         }
@@ -176,7 +195,7 @@ struct MenuBarView: View {
                 Text(fw.managed.name)
                     .font(.subheadline.weight(.medium))
                 HStack(spacing: 4) {
-                    Text("Port \(fw.managed.port)")
+                    Text(verbatim: "Port \(fw.managed.port)")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                     if let remaining = state.remainingMinutes(for: fw) {

@@ -1,18 +1,25 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 ## Build & Run
 
 ```bash
 swift build                            # Debug build (SPM)
-swift test                             # Run 21 decoding tests
-xcodegen generate                      # Regenerate .xcodeproj from project.yml
+swift test                             # Run all 21 decoding tests
+swift test --filter decodeQuota        # Run a single test by name
+xcodegen generate && bash scripts/post_xcodegen.sh  # Regenerate .xcodeproj (always run both)
 ```
 
-After `xcodegen generate`, always run `bash scripts/post_xcodegen.sh` for localization patching.
+For Xcode builds: `open CivoCloudManager.xcodeproj`, scheme `CivoCloudManager`, Cmd+R. Tests use Swift Testing framework (`@Test`, `#expect`), not XCTest.
+
+SPM build (`swift build`) embeds Info.plist via linker flags but does NOT include localization or assets — use Xcode for full app builds.
 
 ## What This Is
 
-Native macOS app (Swift 6, SwiftUI, macOS 15+) for Civo Cloud. Menu bar for firewall management, main window with full resource dashboard. Connects directly to Civo REST API v2 + Kubernetes API. Zero external dependencies.
+Native macOS app (Swift 6, SwiftUI, macOS 26+) for Civo Cloud. Menu bar for firewall management, main window with full resource dashboard. Connects directly to Civo REST API v2 + Kubernetes API. Zero external dependencies — only Apple frameworks (SwiftUI, CryptoKit, Security, LocalAuthentication, Foundation, os).
+
+Monetization: Free tier (menu bar firewall). Full Access ($14.99 one-time, StoreKit 2) unlocks dashboard. `PaywallView` gates protected views, `StoreManager` handles transactions.
 
 ## Architecture
 
@@ -61,7 +68,7 @@ Pause flow: pauseStore → copy to vault (4 parallel) → verify keys+sizes → 
 ## Code Layout
 
 ```
-Sources/App/          @main, 3 scenes
+Sources/App/          @main, 4 scenes (MenuBarExtra, onboarding, main, help)
 Sources/Models/       28 Codable Sendable types (Civo resources, K8s types, PausedObjectStore)
 Sources/Services/     CivoAPIClient, CivoConfig, 13 resource services, KubeconfigParser,
                       KubernetesAPIClient, S3Client, ObjectStorePauseService, IPDetector,
@@ -81,8 +88,9 @@ Sources/Views/        MenuBarView, AppState, OnboardingView, HelpView
                       K8sConnectingView, PaywallView, QuickSearchView, SparklineView,
                       ExportView, SizePickerGrid
 Sources/Utilities/    Logger (os.Logger)
-Tests/                21 model decoding tests
-CivoCloudManager/     Info.plist, Entitlements, Assets, Localizable.xcstrings (525 strings × 8 languages)
+Tests/                21 model decoding tests (Swift Testing, single file: APIDecodingTests.swift)
+CivoCloudManager/     Info.plist, Entitlements, Assets, Localizable.xcstrings (525 strings × 8 languages),
+                      StoreKit config, PrivacyInfo.xcprivacy, InfoPlist.strings (8 lprojs)
 ```
 
 ## Error Types
