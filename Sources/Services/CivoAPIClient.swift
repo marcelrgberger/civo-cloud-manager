@@ -184,6 +184,15 @@ final class CivoAPIClient: Sendable {
         try await execute("PUT", path: path, body: body, regionRequired: regionRequired)
     }
 
+    /// PUT with a JSON body, discarding the response body.
+    func putDiscarding(
+        path: String,
+        body: [String: Any],
+        regionRequired: Bool = true
+    ) async throws {
+        try await executeRaw("PUT", path: path, body: body, regionRequired: regionRequired)
+    }
+
     /// DELETE a resource.
     func delete(path: String, regionRequired: Bool = true) async throws {
         let _: CivoResult = try await execute("DELETE", path: path, regionRequired: regionRequired)
@@ -263,6 +272,59 @@ final class CivoAPIClient: Sendable {
         } catch {
             Log.error("Decoding error for \(path): \(error)")
             throw CivoAPIError.decodingError(error.localizedDescription)
+        }
+    }
+
+    /// Execute a request, returning raw Data without JSON decoding.
+    private func executeRaw(
+        _ method: String,
+        path: String,
+        queryItems: [URLQueryItem]? = nil,
+        body: [String: Any]? = nil,
+        regionRequired: Bool = true
+    ) async throws {
+        let apiKey = CivoConfig.shared.apiKey
+        guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
+
+        guard var components = URLComponents(string: "\(baseURL)\(path)") else {
+            throw CivoAPIError.networkError("Invalid API path: \(path)")
+        }
+        var items = queryItems ?? []
+        if regionRequired {
+            let region = CivoConfig.shared.region
+            guard !region.isEmpty else { throw CivoAPIError.noRegion }
+            items.append(URLQueryItem(name: "region", value: region))
+        }
+        if !items.isEmpty { components.queryItems = items }
+
+        guard let url = components.url else {
+            throw CivoAPIError.networkError("Invalid URL for path: \(path)")
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.setValue("bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("*/*", forHTTPHeaderField: "Accept")
+
+        if let body {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        }
+
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch {
+            throw CivoAPIError.networkError(error.localizedDescription)
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw CivoAPIError.networkError("Invalid response")
+        }
+
+        guard (200...299).contains(httpResponse.statusCode) else {
+            let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw CivoAPIError.httpError(httpResponse.statusCode, message)
         }
     }
 }
