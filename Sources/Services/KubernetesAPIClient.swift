@@ -26,6 +26,15 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     fileprivate let caCert: SecCertificate
     private let session: URLSession
     private let sessionDelegate: K8sSessionDelegate
+    private var _invalidated = false
+    private let lock = NSLock()
+
+    /// Whether this client's session has been invalidated. Requests will throw immediately.
+    var isInvalidated: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return _invalidated
+    }
 
     init(credentials: KubeconfigCredentials) throws {
         self.server = credentials.server
@@ -57,11 +66,17 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
 
     /// Invalidates the URLSession, cancelling all in-flight requests.
     func invalidate() {
+        lock.lock()
+        _invalidated = true
+        lock.unlock()
         sessionDelegate.client = nil
         session.invalidateAndCancel()
     }
 
     deinit {
+        lock.lock()
+        _invalidated = true
+        lock.unlock()
         sessionDelegate.client = nil
         session.invalidateAndCancel()
     }
@@ -244,6 +259,9 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     }
 
     private func execute(_ path: String, method: String = "GET", body: String? = nil, contentType: String = "application/json") async throws -> Data {
+        guard !isInvalidated else {
+            throw URLError(.cancelled)
+        }
         guard let url = URL(string: "\(server)\(path)") else {
             throw K8sAPIError.httpError(0, "Invalid URL")
         }
@@ -254,6 +272,9 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         request.timeoutInterval = 15
         if let body { request.httpBody = body.data(using: .utf8) }
 
+        guard !isInvalidated else {
+            throw URLError(.cancelled)
+        }
         let (data, response) = try await session.data(for: request)
 
         guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
