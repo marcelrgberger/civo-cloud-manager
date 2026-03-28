@@ -31,13 +31,6 @@ final class DashboardViewModel {
         isLoading = true
         error = nil
         warnings = []
-        quota = nil
-        clusterCount = nil
-        databaseCount = nil
-        volumeCount = nil
-        objectStoreCount = nil
-        loadBalancerCount = nil
-        networkCount = nil
         defer { isLoading = false }
 
         do {
