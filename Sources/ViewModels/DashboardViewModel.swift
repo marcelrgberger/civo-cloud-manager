@@ -166,7 +166,6 @@ final class DashboardViewModel {
 
         do {
             try await quotaService.requestQuotaChange(body)
-            await refresh()
             return true
         } catch {
             quotaSaveError = CivoAPIError.userMessage(error)

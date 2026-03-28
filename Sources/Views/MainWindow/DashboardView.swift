@@ -35,7 +35,9 @@ struct DashboardView: View {
         .overlay {
             SuccessOverlay(isPresented: $vm.showSuccess)
         }
-        .sheet(isPresented: $vm.isEditingQuota) {
+        .sheet(isPresented: $vm.isEditingQuota, onDismiss: {
+            Task { await vm.refresh() }
+        }) {
             if let quota = vm.quota {
                 QuotaEditView(vm: vm, currentQuota: quota)
                     .frame(minWidth: 500, minHeight: 500)
