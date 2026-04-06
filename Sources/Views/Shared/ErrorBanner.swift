@@ -10,6 +10,7 @@ struct ErrorBanner: View {
             Text(message)
                 .font(.caption)
                 .foregroundStyle(.red)
+                .textSelection(.enabled)
             Spacer()
         }
         .padding(10)

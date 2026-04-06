@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "XcodeBuildMCP": {
+      "command": "npx",
+      "args": ["-y", "xcodebuildmcp@latest", "mcp"]
+    },
+    "kubernetes": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-kubernetes"]
+    }
+  }
+}

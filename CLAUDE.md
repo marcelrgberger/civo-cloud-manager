@@ -1,200 +1,101 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build & Run
 
 ```bash
 swift build                            # Debug build (SPM)
-swift build -c release                 # Release build (SPM)
-swift test                             # Run 21 decoding tests
-open CivoCloudManager.xcodeproj        # Open Xcode project, Cmd+R
-xcodegen generate                      # Regenerate .xcodeproj from project.yml
+swift test                             # Run all 21 decoding tests
+swift test --filter decodeQuota        # Run a single test by name
+xcodegen generate && bash scripts/post_xcodegen.sh  # Regenerate .xcodeproj (always run both)
 ```
 
-No external dependencies — only Apple frameworks (SwiftUI, ServiceManagement, Foundation, os, Security).
+For Xcode builds: `open CivoCloudManager.xcodeproj`, scheme `CivoCloudManager`, Cmd+R. Tests use Swift Testing framework (`@Test`, `#expect`), not XCTest.
+
+SPM build (`swift build`) embeds Info.plist via linker flags but does NOT include localization or assets — use Xcode for full app builds.
 
 ## What This Is
 
-A native macOS app for Civo Cloud. Menu bar for quick-access firewall management, main window with full resource dashboard and CRUD. Connects directly to the Civo REST API v2 and Kubernetes API — no CLI dependency.
+Native macOS app (Swift 6, SwiftUI, macOS 26+) for Civo Cloud. Menu bar for firewall management, main window with full resource dashboard. Connects directly to Civo REST API v2 + Kubernetes API. Zero external dependencies — only Apple frameworks (SwiftUI, CryptoKit, Security, LocalAuthentication, Foundation, os).
 
-- **Swift 6.0**, strict concurrency (Sendable everywhere)
-- **macOS 15+** (Sequoia), macOS 26 (Tahoe) ready
-- **SwiftUI** with `MenuBarExtra` + 2 `Window` scenes + `NavigationSplitView`
-- **Zero external packages** — SPM with no dependencies
-- **Native HTTP API** — `CivoAPIClient` using URLSession, no CLI wrapping
-- **Direct Kubernetes API** — `KubernetesAPIClient` connects to K8s clusters using client certificate auth via Security.framework
-- **Full CRUD** — create, view, edit (DNS records), and delete for all resource types
+Monetization: Free tier (menu bar firewall). Full Access ($14.99 one-time, StoreKit 2) unlocks dashboard. `PaywallView` gates protected views, `StoreManager` handles transactions.
 
 ## Architecture
 
 ```
 CivoCloudManagerApp (@main)
 ├── MenuBarExtra → MenuBarView → AppState → CivoFirewallService + IPDetector
-├── Window("onboarding") → OnboardingView → AppState
-└── Window("main") → MainWindowView → 8 ViewModels → 15 Services → CivoAPIClient + KubernetesAPIClient
+├── Window("onboarding") → OnboardingView
+└── Window("main") → MainWindowView → 8 ViewModels → Services → CivoAPIClient + KubernetesAPIClient + S3Client
 
-CivoAPIClient (shared singleton)
-├── GET  /quota, /kubernetes/clusters, /databases, /firewalls, /sizes, /disk_images, ...
-├── GET  /kubernetes/clusters/:id/kubeconfig → KubeconfigParser → KubernetesAPIClient
-├── POST /kubernetes/clusters, /databases, /instances, /firewalls, /volumes, /objectstores, /sshkeys, /dns, /dns/:id/records
-├── PUT  /kubernetes/clusters/:id, /instances/:id, /networks/:id, /dns/:id, /dns/:id/records/:id, /quota, /objectstores/:id
-├── DELETE /kubernetes/clusters/{id}, /databases/{id}, /instances/{id}, /networks/{id}, /firewalls/{id}, ...
-└── Bearer token auth via CivoConfig (Keychain + UserDefaults)
-
-KubernetesAPIClient (per-cluster, ephemeral)
-├── GET /api/v1/nodes/{name} → K8sNode (capacity, conditions, addresses, systemInfo)
-├── GET /api/v1/pods?fieldSelector=spec.nodeName={name} → K8sPod[]
-├── GET /api/v1/namespaces/{ns}/pods/{name}/log → log text
-├── GET /apis/metrics.k8s.io/v1beta1/nodes → K8sNodeMetrics[] (live CPU/Memory)
-├── GET /api/v1/events → K8sEvent[] (cluster events, warnings)
-├── GET /apis/apps/v1/deployments → K8sDeployment[] (workloads with replica status)
-└── Client certificate auth via Security.framework (certs from KubeconfigParser)
-
-DashboardView (clickable cards → sidebar navigation)
-├── Resource cards with hover scale animation
-├── Binding to sidebar selection
-└── QuotaEditView (quota increase request form via PUT /quota)
-
-Create Views (11 sheet forms)
-├── Simple: Firewall, Network, Domain, SSHKey, Volume, ObjectStore
-├── Complex: Database, Instance, Kubernetes Cluster
-├── DNS Record (with edit support)
-├── Firewall Rule (protocol, ports, CIDR, direction, action)
-└── All use .formStyle(.grouped), Cancel + Create toolbar
-
-Drill-Down Views
-├── Kubernetes: ClusterListView → ClusterDetailView (+ live metrics/events/workloads) → K8sNodeDetailView → K8sPodListView → PodLogView
-├── Object Stores: ObjectStoreListView → ObjectStoreDetailView (credentials, config, resize)
-├── Firewalls: FirewallListView → FirewallDetailView (rule list, add/delete rules)
-└── Labels: ClusterDetailView → EditLabelsView (add/remove node pool labels)
-
-Auto-Firewall for K8s API
-├── Opens port 6443 for user's current IP when "Connect to Kubernetes API" is clicked
-├── Uses IPDetector + CivoFirewallService
-├── Rule labeled civo-cloud-<hostname>-k8s-api
-└── Auto-closes the rule when navigating back from cluster
-
-Delete Support
-├── All resources use DeleteConfirmationSheet (requires typing resource name)
-├── Networks (skips default), Firewalls, Load Balancers, Firewall Rules
-└── Instances, SSH Keys, Databases, Domains, Volumes, Object Stores
-
-Animations
-├── Staggered list rows (30ms delay per row, fade+slide)
-├── Dashboard cards spring from bottom with index delay
-├── Sidebar→detail: spring + opacity content transition
-├── Drill-down: move+opacity spring transitions (multi-level K8s navigation)
-└── SuccessOverlay: spring scale entry/exit
+Data flow: User → ViewModel → Service → CivoAPIClient (URLSession) → JSON → @Observable state → SwiftUI
+K8s flow: Cluster selected → auto-open port 6443 → kubeconfig → KubeconfigParser → KubernetesAPIClient (PKCS#12 mTLS) → K8s API
+S3 flow: ObjectStoreBrowserView → S3Client (AWS SigV4 via CryptoKit) → ListObjects/Get/Put/Delete
+Pause flow: pauseStore → copy to vault (4 parallel) → verify keys+sizes → delete original → manifest
 ```
 
-**Key data flow:** User action → ViewModel method → Service → CivoAPIClient (URLSession) → decode JSON → update @Observable state → SwiftUI reacts.
+## Key Services
 
-**K8s API flow:** Click node name → ViewModel → CivoKubernetesService.getKubeconfig(id) → KubeconfigParser.parse(yaml) → KubernetesAPIClient(serverURL, certs) → GET /api/v1/nodes/{name} → K8sNode → K8sNodeDetailView.
+- **CivoAPIClient** — singleton. `get()`, `getPaginatedList()`, `getArray()`, `post()`, `put()`, `delete()`. Bearer token via CivoConfig (Keychain + UserDefaults).
+- **KubernetesAPIClient** — per-cluster, ephemeral. PKCS#12 client cert auth via `/usr/bin/openssl` + `SecPKCS12Import`. Supports nodes, pods, logs, metrics, events, deployments, scaling, PVCs, configmaps, secrets, exec. `NSAllowsArbitraryLoads` for self-signed certs on IPs.
+- **S3Client** — per-store, ephemeral. AWS SigV4 signing (CryptoKit). ListObjects v2, Get, Put, Delete, Head. Path-style URLs. S3XMLParser with XML entity decoding.
+- **ObjectStorePauseService** — vault-based pause/resume. Copy files to `civo-cloud-manager` vault → verify → delete original. Resume recreates store with stored `credentialId`. `.restored` flag for safe cleanup. Manifest in vault JSON + UserDefaults fallback. 4 concurrent transfers.
 
-**K8s live metrics flow:** Click "Connect to Kubernetes API" → auto-open port 6443 via CivoFirewallService → download kubeconfig → KubernetesAPIClient → GET metrics, events, deployments → show circular CPU/Memory gauges, events list, deployments table. Navigate back → auto-close firewall rule.
+## Civo API Formats
 
-**Create flow:** "+" toolbar button → sheet with Form → ViewModel.create(body) → Service.create(body) → POST → dismiss sheet → show SuccessOverlay → refresh list.
+- **Paginated:** Kubernetes, Databases, Instances, Object Stores, Credentials → `{"page":1,"items":[...]}`
+- **Plain array:** Firewalls, Rules, Volumes, Load Balancers, Networks, Regions, SSH Keys, DNS, Sizes → `[...]`
+- **Plain text:** Kubeconfig → YAML string
 
-**Delete flow:** Context menu "Delete" → DeleteConfirmationSheet (type resource name to confirm) → ViewModel.remove(id) → Service.remove(id) → DELETE → refresh list.
+## JSON Quirks
 
-**Quota change flow:** "Request Change" button → QuotaEditView sheet with steppers → ViewModel.updateQuota(body) → CivoQuotaService.updateQuota(body) → PUT /quota.
-
-**Firewall rule flow:** Click firewall → FirewallDetailView shows rules → "+" opens CreateRuleView → delete via context menu with name confirmation.
-
-**Object store detail flow:** Click object store → ObjectStoreDetailView shows credentials (from ownerInfo.accessKeyId/secretAccessKey), bucket URL, endpoint, config, and resize section → stepper changes max size → PUT /objectstores/:id.
-
-**Pod logs flow:** K8sNodeDetailView → "View Pods on this Node" → K8sPodListView → click pod → PodLogView (scrollable monospaced logs, auto-scroll toggle, refresh).
+- `rules_count`: String or Int. `cidr`: String or Array. `region.current`: "Yes"/"No" string.
+- All quota fields are Strings. `loadbalancer.Backends` has capital B (CodingKey).
 
 ## Key Patterns
 
-- **CivoAPIClient** — singleton HTTP client. Methods: `get()`, `getPaginatedList()`, `getArray()`, `post()`, `put()`, `delete()`.
-- **KubeconfigParser** — parses kubeconfig YAML, extracts server URL, CA certificate, client certificate, and client key. Returns structured data for KubernetesAPIClient.
-- **KubernetesAPIClient** — per-cluster ephemeral client. Connects directly to K8s API server using client certificate auth via Security.framework. No kubectl or external tools needed. Methods: `getNodes()`, `getNode(name)`, `getPods(nodeName)`, `getPodLogs(namespace, name)`, `getMetrics()`, `getEvents()`, `getDeployments()`.
-- **K8sMetricsParser** — parses metrics-server responses into K8sNodeMetrics/K8sPodMetrics, computes K8sClusterMetrics with CPU/Memory percentages.
-- **Multi-level K8s navigation** — ClusterListView → ClusterDetailView → K8sNodeDetailView → K8sPodListView → PodLogView, all with spring move+opacity transitions.
-- **Live K8s metrics** — circular CPU and Memory gauges in ClusterDetailView when connected to K8s API. Graceful fallback to static stats when metrics-server is not installed.
-- **Auto-firewall for K8s API** — automatically opens port 6443 for user's current IP when "Connect to Kubernetes API" is clicked, closes when navigating back. Rule labeled `civo-cloud-<hostname>-k8s-api`.
-- **CivoConfig** — stores API key (Keychain) and region (UserDefaults). Read by services on every request.
-- **Service per resource domain** — each `Civo*Service` wraps API calls for one resource type with list/create/update/delete methods.
-- **CivoSizeService** — fetches available sizes (GET /sizes) and disk images (GET /disk_images) for create form pickers. All sizes shown without type filtering.
-- **ViewModel CRUD state** — each VM has `isCreating`, `isSaving`, `saveError`, `showSuccess` for managing create/edit flows.
-- **`sending` parameters** — all ViewModel create/update methods use `sending [String: Any]` to satisfy Swift 6 strict concurrency when passing bodies from @MainActor to nonisolated services.
-- **Rule ownership** — rules labeled `civo-cloud-<hostname>-<firewallname>`, app only touches its own.
-- **IP detection** — 3-provider fallback chain with IPv4 validation.
-- **Dashboard navigation** — resource cards accept `$selection` binding, clicking navigates to sidebar section.
-- **SuccessOverlay** — shared component, auto-dismiss after 1.5s with opacity+scale transition.
-- **DeleteConfirmationSheet** — shared component for all destructive operations. Requires typing the exact resource name to enable the delete button. Used by all list views.
-- **Context menu delete** — all resource list views have "Delete" in context menu, opening DeleteConfirmationSheet.
-- **Quota change request** — QuotaEditView with steppers for all quota limits, submits PUT /quota via CivoQuotaService.updateQuota.
-- **Object store credentials** — come from the object store resource itself via `ownerInfo.accessKeyId` and `ownerInfo.secretAccessKey`. ObjectStoreDetailView shows credentials, config, and resize section.
-- **Object store resize** — ObjectStoreDetailView has a stepper to change max size, submitted via PUT /objectstores/:id.
-- **Firewall rule drill-down** — click firewall → FirewallDetailView shows rules with badges → add/delete rules.
-- **StaggeredAppear** — shared ViewModifier for index-based delayed fade+slide animations on list rows.
-- **Spring transitions** — sidebar→detail uses spring + opacity; drill-downs use move+opacity spring.
-- **Save Kubeconfig** — toolbar button in ClusterDetailView exports kubeconfig as .yaml file via NSSavePanel.
-- **Editable node pool labels** — EditLabelsView allows add/remove labels on node pools, submitted via PUT to CivoKubernetesService.updateCluster.
+- **Concurrency** — Swift 6 strict. Models are Sendable. ViewModels are @Observable @MainActor. `sending [String: Any]` for body dicts crossing actor boundaries.
+- **Touch ID** — `LAContext.evaluatePolicy(.deviceOwnerAuthentication)` async. Never DispatchQueue callbacks.
+- **Auto-firewall** — K8s API auto-opens port 6443 on cluster select, auto-closes on navigate back. Rule: `civo-cloud-<hostname>-k8s-api`.
+- **Delete confirmation** — DeleteConfirmationSheet requires typing resource name. All resources.
+- **Credentials** — Object Store credentials via `/objectstore/credentials` (paginated). Linked via `ownerInfo.credentialId`. Touch ID-protected secrets.
+- **Pause/Resume** — `credential.id` saved in manifest (not `store.credentialId`). Vault auto-resizes in 500 GB increments. Orphaned folders auto-recovered. If credentialId missing, Resume shows credential picker.
+- **Cancelled requests** — suppress `URLError.cancelled` via `CivoAPIError.userMessage()`.
+- **S3 signing** — query params sorted before signing. Path-style URLs only.
+- **Kubeconfig export** — use `.text` UTType, not `.yaml`.
 
 ## Code Layout
 
-- `Sources/App/` — @main entry, 3 scene definitions
-- `Sources/Models/` — 21 Codable model types (includes CivoSize, CivoDiskImage, K8sNode, K8sPod, K8sMetrics, K8sEvent, K8sWorkload; CivoObjectStore has ownerInfo with accessKeyId/secretAccessKey, bucketURL, region, createdAt)
-  - `K8sNode.swift` — K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
-  - `K8sPod.swift` — K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
-  - `K8sMetrics.swift` — K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
-  - `K8sEvent.swift` — K8sEvent, K8sObjectReference
-  - `K8sWorkload.swift` — K8sDeployment, K8sDeploymentStatus
-- `Sources/Services/` — CivoAPIClient, CivoConfig, 13 resource services (includes CivoSizeService), KubeconfigParser, KubernetesAPIClient, IPDetector
-  - `KubeconfigParser.swift` — parses kubeconfig YAML → server URL, CA cert, client cert, client key
-  - `KubernetesAPIClient.swift` — direct K8s API client using client certificate auth via Security.framework. Supports nodes, pods, logs, metrics, events, deployments.
-  - `CivoKubernetesService` — list, show, create, update, delete + getKubeconfig(id)
-  - `CivoNetworkService` — list, create, update, delete (removeNetwork)
-  - `CivoFirewallService` — list, create, delete (removeFirewall), rule CRUD, status checks
-  - `CivoQuotaService` — GET /quota, PUT /quota (updateQuota)
-  - `CivoObjectStoreService` — list, create, update (resize via PUT /objectstores/:id), delete
-  - `CivoLoadBalancerService` — list, delete (removeLoadBalancer)
-- `Sources/ViewModels/` — 8 @Observable @MainActor view models with CRUD state
-- `Sources/Views/` — MenuBarView, AppState, OnboardingView
-- `Sources/Views/MainWindow/` — NavigationSplitView with categorized views + 11 create/edit views + QuotaEditView
-- `Sources/Views/MainWindow/QuotaEditView.swift` — quota increase request form with steppers for all limits
-- `Sources/Views/MainWindow/Kubernetes/ClusterDetailView.swift` — cluster info, conditions, pools, apps, kubeconfig save, "Connect to Kubernetes API" button for live metrics/events/workloads, auto-firewall
-- `Sources/Views/MainWindow/Kubernetes/K8sNodeDetailView.swift` — node resource cards (CPU, Memory, Pods), conditions, addresses, system info
-- `Sources/Views/MainWindow/Kubernetes/K8sPodListView.swift` — pods on a node with status badge, namespace, ready count, restart count
-- `Sources/Views/MainWindow/Kubernetes/PodLogView.swift` — scrollable monospaced log output with auto-scroll toggle and refresh
-- `Sources/Views/MainWindow/Kubernetes/EditLabelsView.swift` — add/remove labels on node pools
-- `Sources/Views/MainWindow/Storage/ObjectStoreDetailView.swift` — credentials (endpoint, bucket URL, access key, secret key), config (max size, region, created, status), resize section with stepper
-- `Sources/Views/MainWindow/Storage/DatabaseDetailView.swift` — connection details, config, network/firewall
-- `Sources/Views/MainWindow/Storage/VolumeDetailView.swift` — attachment status, mountpoint, size
-- `Sources/Views/MainWindow/Networking/FirewallDetailView.swift` — rule list with badges, add/delete
-- `Sources/Views/MainWindow/Networking/CreateRuleView.swift` — form for firewall rules
-- `Sources/Views/Shared/` — StatusBadge, QuotaGauge, ResourceListRow, EmptyStateView, ErrorBanner, SuccessOverlay, DeleteConfirmationSheet, StaggeredAppear, PaywallView
-- `Sources/Utilities/` — Logger (os.Logger)
-- `Tests/` — 21 model decoding tests
-- `CivoCloudManager/` — Xcode project support (Info.plist, Entitlements, Assets)
-
-## Civo API Response Formats
-
-Critical: the API uses TWO different list formats:
-- **Paginated:** Kubernetes, Databases, Instances, Object Stores → `{"page":1,"items":[...]}`
-- **Plain array:** Firewalls, Rules, Volumes, Load Balancers, Networks, Regions, SSH Keys, DNS, Sizes, Disk Images → `[...]`
-- **Plain text:** Kubeconfig → YAML string (GET /kubernetes/clusters/:id/kubeconfig)
-
-Use `api.getPaginatedList()` or `api.getArray()` accordingly.
-
-## Civo JSON Quirks
-
-- `rules_count` is **String or Int** (custom decoder handles both)
-- `cidr` can be **String or Array** (custom decoder handles both)
-- `region.current` is **String "Yes"/"No"** (not Bool)
-- All quota fields are **Strings** (not Int)
-- `database.nodes`, `database.port` are **Int**
-- `loadbalancer.Backends` has **capital B** (CodingKey maps it)
+```
+Sources/App/          @main, 4 scenes (MenuBarExtra, onboarding, main, help)
+Sources/Models/       28 Codable Sendable types (Civo resources, K8s types, PausedObjectStore)
+Sources/Services/     CivoAPIClient, CivoConfig, 13 resource services, KubeconfigParser,
+                      KubernetesAPIClient, S3Client, ObjectStorePauseService, IPDetector,
+                      NotificationService, ActivityLog, StoreManager, CivoChargesService
+Sources/ViewModels/   8 @Observable @MainActor VMs with CRUD state
+Sources/Views/        MenuBarView, AppState, OnboardingView, HelpView
+  MainWindow/         NavigationSplitView, DashboardView, 11 create forms, QuotaEditView,
+                      CostDashboardView, RateEditorView
+    Kubernetes/       ClusterDetail, NodeDetail, PodList, PodLog, PodExec, EditLabels
+    Compute/          InstanceDetail, SSHKeyList
+    Storage/          ObjectStoreDetail, ObjectStoreBrowser, ObjectStorePause,
+                      CredentialList, DatabaseDetail, VolumeDetail
+    Networking/       FirewallDetail, CreateRule, DomainList, LoadBalancerDetail
+    Account/          APIHealth, About, RegionList
+  Shared/             StatusBadge, QuotaGauge, ResourceListRow, EmptyState, ErrorBanner,
+                      SuccessOverlay, DeleteConfirmationSheet, StaggeredAppear,
+                      K8sConnectingView, PaywallView, QuickSearchView, SparklineView,
+                      ExportView, SizePickerGrid
+Sources/Utilities/    Logger (os.Logger)
+Tests/                21 model decoding tests (Swift Testing, single file: APIDecodingTests.swift)
+CivoCloudManager/     Info.plist, Entitlements, Assets, Localizable.xcstrings (525 strings × 8 languages),
+                      StoreKit config, PrivacyInfo.xcprivacy, InfoPlist.strings (8 lprojs)
+```
 
 ## Error Types
 
 - `CivoAPIError` — noAPIKey, noRegion, httpError, decodingError, networkError
 - `IPDetectorError` — noIPReturned, invalidIP, allProvidersFailed, privateIP, ipv6NotSupported
-
-## Concurrency Model
-
-Swift 6 strict concurrency. All model types are Sendable. ViewModels are @Observable @MainActor. CivoAPIClient is Sendable (uses URLSession). KubernetesAPIClient is Sendable (uses URLSession with client certificate delegate). CivoConfig is @unchecked Sendable (reads/writes UserDefaults which is thread-safe). ViewModel create/update methods use `sending` parameter modifier for `[String: Any]` body dicts to avoid data race errors when crossing actor boundaries.
+- `S3Error` — invalidURL, invalidResponse, httpError
+- `PauseError` — missingCredentials, vaultNotFound, verificationFailed, vaultDataMissing, vaultDataIncomplete, storeExistsWithDifferentCredential, storeNotReady

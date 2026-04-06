@@ -5,6 +5,7 @@ struct K8sPodListView: View {
     @Bindable var vm: KubernetesViewModel
     let onBack: () -> Void
     @State private var appeared = false
+    @State private var execPod: K8sPod?
 
     var body: some View {
         List {
@@ -15,15 +16,21 @@ struct K8sPodListView: View {
                     Button {
                         vm.selectedPod = pod
                         Task {
-                            await vm.loadPodLog(
-                                namespace: pod.metadata.labels?["namespace"] ?? "default",
-                                pod: pod.name
-                            )
+                            await vm.loadPodLog(namespace: pod.namespace, pod: pod.name)
                         }
                     } label: {
                         podRow(pod, index: index)
                     }
                     .buttonStyle(.plain)
+                    .contextMenu {
+                        Button("Execute Command") {
+                            execPod = pod
+                        }
+                        Divider()
+                        Button("Restart Pod") {
+                            Task { await vm.restartPod(namespace: pod.namespace, name: pod.name, nodeName: nodeName) }
+                        }
+                    }
                 }
             }
         }
@@ -46,6 +53,12 @@ struct K8sPodListView: View {
         }
         .overlay {
             if vm.isLoadingK8s && vm.nodePods.isEmpty { ProgressView("Loading pods...") }
+        }
+        .sheet(item: $execPod) { pod in
+            PodExecView(pod: pod, vm: vm) {
+                execPod = nil
+            }
+            .frame(minWidth: 600, minHeight: 400)
         }
     }
 

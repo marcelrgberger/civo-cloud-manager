@@ -38,7 +38,7 @@ final class NetworkViewModel {
             firewalls = try await fws
             loadBalancers = try await lbs
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Network refresh failed: \(error.localizedDescription)")
         }
     }
@@ -55,7 +55,7 @@ final class NetworkViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -71,7 +71,7 @@ final class NetworkViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -81,7 +81,7 @@ final class NetworkViewModel {
             try await networkService.removeNetwork(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -90,7 +90,7 @@ final class NetworkViewModel {
             try await firewallService.removeFirewall(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -99,7 +99,7 @@ final class NetworkViewModel {
             try await loadBalancerService.removeLoadBalancer(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -111,7 +111,7 @@ final class NetworkViewModel {
         do {
             rules = try await firewallService.getRulesForFirewall(firewallId)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -127,7 +127,7 @@ final class NetworkViewModel {
             await loadRules(firewallId)
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -137,7 +137,7 @@ final class NetworkViewModel {
             try await firewallService.deleteRule(firewallId: firewallId, ruleId: ruleId)
             await loadRules(firewallId)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -153,7 +153,7 @@ final class NetworkViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }

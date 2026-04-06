@@ -20,7 +20,11 @@ final class CivoKubernetesService: Sendable {
     }
 
     func getKubeconfig(_ id: String) async throws -> String {
-        try await api.getRaw(path: "/kubernetes/clusters/\(id)/kubeconfig")
+        let cluster: CivoKubernetesCluster = try await api.get(path: "/kubernetes/clusters/\(id)")
+        guard let kubeconfig = cluster.kubeconfig, !kubeconfig.isEmpty else {
+            throw CivoAPIError.decodingError("No kubeconfig available for this cluster")
+        }
+        return kubeconfig
     }
 
     func removeCluster(_ id: String) async throws {

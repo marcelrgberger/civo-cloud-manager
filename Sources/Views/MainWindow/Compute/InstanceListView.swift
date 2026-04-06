@@ -7,7 +7,7 @@ struct InstanceListView: View {
     var body: some View {
         Group {
             if let inst = vm.selectedInstance {
-                InstanceDetailView(instance: inst) {
+                InstanceDetailView(instance: inst, vm: vm) {
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
                         vm.selectedInstance = nil
                     }
@@ -19,7 +19,13 @@ struct InstanceListView: View {
             }
         }
         .animation(.spring(duration: 0.3, bounce: 0.1), value: vm.selectedInstance?.id)
-        .task { await vm.refresh() }
+        .task {
+            await vm.refresh()
+            while vm.selectedInstanceIsBuilding {
+                try? await Task.sleep(for: .seconds(5))
+                await vm.refresh()
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button { vm.isCreatingInstance = true } label: { Label("Add", systemImage: "plus") }
@@ -56,6 +62,14 @@ struct InstanceListView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
+                        if inst.status?.lowercased() == "active" {
+                            Button("Stop") { Task { await vm.stopInstance(inst.id) } }
+                            Button("Reboot") { Task { await vm.rebootInstance(inst.id) } }
+                        }
+                        if inst.status?.lowercased() == "shutoff" {
+                            Button("Start") { Task { await vm.startInstance(inst.id) } }
+                        }
+                        Divider()
                         Button("Delete", role: .destructive) { deleteTarget = inst }
                     }
                 }

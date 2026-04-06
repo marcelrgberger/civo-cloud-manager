@@ -212,8 +212,22 @@ struct OnboardingView: View {
             } else {
                 ScrollView {
                     VStack(spacing: 6) {
-                        ForEach(state.discoveredFirewalls) { fw in
-                            firewallSelectionRow(fw)
+                        let grouped = Dictionary(grouping: state.discoveredFirewalls) { $0.region }
+                        let sortedRegions = grouped.keys.sorted()
+                        ForEach(sortedRegions, id: \.self) { region in
+                            if sortedRegions.count > 1 {
+                                HStack {
+                                    Text(region.uppercased())
+                                        .font(.caption2.weight(.semibold))
+                                        .foregroundStyle(.tertiary)
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.top, 4)
+                            }
+                            ForEach(grouped[region] ?? []) { fw in
+                                firewallSelectionRow(fw)
+                            }
                         }
                     }
                     .padding(.vertical, 4)
@@ -258,7 +272,7 @@ struct OnboardingView: View {
                         Text("Port:")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        TextField("Port", value: portValue, format: .number)
+                        TextField("Port", value: portValue, format: .number.grouping(.never))
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 70)
                             .font(.caption.monospaced())
@@ -445,7 +459,8 @@ struct OnboardingView: View {
                     id: fw.id,
                     name: fw.name,
                     port: port,
-                    enabled: selected
+                    enabled: selected,
+                    region: fw.region
                 ))
         }
         state.managedFirewalls = managed

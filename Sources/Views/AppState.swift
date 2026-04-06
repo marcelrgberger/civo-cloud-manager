@@ -7,6 +7,7 @@ private enum UDKey {
     static let managedFirewalls = "CivoCloudManager.managedFirewalls"
     static let onboardingComplete = "CivoCloudManager.onboardingComplete"
     static let launchAtLogin = "CivoCloudManager.launchAtLogin"
+    static let ipPresets = "CivoCloudManager.ipPresets"
 }
 
 // MARK: - Setup state
@@ -38,6 +39,15 @@ final class AppState {
     // Discovered (not persisted)
     var discoveredFirewalls: [CivoFirewall] = []
     var availableRegions: [CivoRegion] = []
+
+    // IP Presets (persisted)
+    var ipPresets: [IPPreset] {
+        didSet { savePresets() }
+    }
+
+    // Auto-close timers: maps "firewallId:ruleId" to scheduled close time
+    var autoCloseTimers: [String: Date] = [:]
+    private var autoCloseTimer: Timer?
 
     // Persisted settings
     var managedFirewalls: [ManagedFirewall] {
@@ -122,6 +132,14 @@ final class AppState {
             self.managedFirewalls = []
         }
 
+        if let data = UserDefaults.standard.data(forKey: UDKey.ipPresets),
+            let decoded = try? JSONDecoder().decode([IPPreset].self, from: data)
+        {
+            self.ipPresets = decoded
+        } else {
+            self.ipPresets = []
+        }
+
         self.launchAtLogin = UserDefaults.standard.bool(forKey: UDKey.launchAtLogin)
         self.onboardingComplete = UserDefaults.standard.bool(forKey: UDKey.onboardingComplete)
     }
@@ -149,6 +167,138 @@ final class AppState {
             isRevertingLaunchAtLogin = false
             self.error = "Launch at login failed: \(error.localizedDescription)"
         }
+    }
+
+    // MARK: - IP Presets
+
+    private func savePresets() {
+        if let data = try? JSONEncoder().encode(ipPresets) {
+            UserDefaults.standard.set(data, forKey: UDKey.ipPresets)
+        }
+    }
+
+    func addPreset(name: String, ip: String) {
+        let preset = IPPreset(name: name, ip: ip)
+        ipPresets.append(preset)
+    }
+
+    func removePreset(id: UUID) {
+        ipPresets.removeAll { $0.id == id }
+    }
+
+    func openFirewallWithPreset(_ preset: IPPreset, firewall: ManagedFirewall) async {
+        guard !isLoading else { return }
+        isLoading = true
+        error = nil
+        defer { isLoading = false }
+
+        do {
+            let label = CivoAccessLabel.make(firewallName: firewall.name)
+            try await firewallService.openAccess(
+                firewallId: firewall.id,
+                port: firewall.port,
+                ip: preset.ip,
+                label: label,
+                region: firewall.region
+            )
+            try? await Task.sleep(for: .seconds(1))
+        } catch {
+            self.error = error.localizedDescription
+            return
+        }
+
+        await forceRefresh()
+    }
+
+    // MARK: - Auto-Close Timer
+
+    func openFirewallWithTimer(_ managed: ManagedFirewall, minutes: Int) async {
+        guard !isLoading else { return }
+        isLoading = true
+        error = nil
+        defer { isLoading = false }
+
+        do {
+            currentIP = try await ipDetector.detectIP()
+            let label = CivoAccessLabel.make(firewallName: managed.name)
+            try await firewallService.openAccess(
+                firewallId: managed.id,
+                port: managed.port,
+                ip: currentIP,
+                label: label,
+                region: managed.region
+            )
+            try? await Task.sleep(for: .seconds(1))
+        } catch {
+            self.error = error.localizedDescription
+            return
+        }
+
+        await forceRefresh()
+
+        // Find the rule that was just opened to register the timer
+        if let status = firewalls.first(where: { $0.id == managed.id }), let ruleId = status.ruleId {
+            let key = "\(managed.id):\(ruleId)"
+            autoCloseTimers[key] = Date().addingTimeInterval(Double(minutes * 60))
+            startAutoCloseTimer()
+        }
+    }
+
+    func startAutoCloseTimer() {
+        guard autoCloseTimer == nil else { return }
+        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                await self?.checkAutoCloseTimers()
+            }
+        }
+    }
+
+    private func checkAutoCloseTimers() async {
+        let now = Date()
+        var keysToRemove: [String] = []
+
+        for (key, closeTime) in autoCloseTimers where closeTime <= now {
+            let parts = key.split(separator: ":")
+            guard parts.count == 2 else {
+                keysToRemove.append(key)
+                continue
+            }
+            let firewallId = String(parts[0])
+            let ruleId = String(parts[1])
+
+            do {
+                try await firewallService.closeAccess(firewallId: firewallId, ruleId: ruleId)
+                keysToRemove.append(key)
+            } catch {
+                Log.error("Auto-close failed for \(key): \(error.localizedDescription)")
+                keysToRemove.append(key) // Remove even on failure to avoid infinite retries
+            }
+        }
+
+        for key in keysToRemove {
+            autoCloseTimers.removeValue(forKey: key)
+        }
+
+        if !keysToRemove.isEmpty {
+            try? await Task.sleep(for: .seconds(1))
+            await forceRefresh()
+        }
+
+        // Stop the timer if no more scheduled closures
+        if autoCloseTimers.isEmpty {
+            autoCloseTimer?.invalidate()
+            autoCloseTimer = nil
+        }
+    }
+
+    /// Returns the remaining minutes for an auto-close timer, if any, for the given firewall status.
+    func remainingMinutes(for status: FirewallStatus) -> Int? {
+        guard let ruleId = status.ruleId else { return nil }
+        let key = "\(status.managed.id):\(ruleId)"
+        guard let closeTime = autoCloseTimers[key] else { return nil }
+        let remaining = closeTime.timeIntervalSince(Date())
+        guard remaining > 0 else { return nil }
+        return Int(ceil(remaining / 60))
     }
 
     // MARK: - Setup & Onboarding
@@ -193,12 +343,29 @@ final class AppState {
     func discoverFirewalls() async {
         discoveredFirewalls = []
 
-        do {
-            discoveredFirewalls = try await firewallService.listFirewalls()
-        } catch {
-            self.error = error.localizedDescription
-            Log.error("Firewall discovery failed: \(error.localizedDescription)")
+        // Load regions first if not already loaded
+        if availableRegions.isEmpty {
+            await loadRegions()
         }
+
+        // Discover firewalls from all regions
+        let userRegion = CivoConfig.shared.region
+        var allFirewalls: [CivoFirewall] = []
+
+        for region in availableRegions {
+            CivoConfig.shared.region = region.code
+            do {
+                var regionFirewalls = try await firewallService.listFirewalls()
+                for i in regionFirewalls.indices {
+                    regionFirewalls[i].region = region.code
+                }
+                allFirewalls.append(contentsOf: regionFirewalls)
+            } catch {
+                Log.error("Firewall discovery failed for \(region.code): \(error.localizedDescription)")
+            }
+            CivoConfig.shared.region = userRegion
+        }
+        discoveredFirewalls = allFirewalls
     }
 
     func loadRegions() async {
@@ -231,8 +398,60 @@ final class AppState {
         }
 
         guard setupState == .ready else { return }
+        await syncManagedFirewalls()
         await refresh()
         startAutoRefresh()
+    }
+
+    /// Sync managed firewalls with all regions:
+    /// - Backfill region for existing entries that are missing it
+    /// - Auto-add firewalls from regions that weren't scanned before
+    /// - Remove firewalls that no longer exist in the API
+    private func syncManagedFirewalls() async {
+        await loadRegions()
+
+        let userRegion = CivoConfig.shared.region
+        var allFirewalls: [(fw: CivoFirewall, region: String)] = []
+        for region in availableRegions {
+            CivoConfig.shared.region = region.code
+            do {
+                let fws = try await firewallService.listFirewalls()
+                for fw in fws {
+                    allFirewalls.append((fw: fw, region: region.code))
+                }
+            } catch {
+                Log.error("Firewall sync failed for \(region.code): \(error.localizedDescription)")
+            }
+            CivoConfig.shared.region = userRegion
+        }
+
+        let existingIds = Set(managedFirewalls.map(\.id))
+        let apiIds = Set(allFirewalls.map(\.fw.id))
+        var updated = managedFirewalls
+
+        // Backfill region for existing entries
+        for i in updated.indices where updated[i].region.isEmpty {
+            if let match = allFirewalls.first(where: { $0.fw.id == updated[i].id }) {
+                updated[i].region = match.region
+            }
+        }
+
+        // Remove firewalls that no longer exist in API
+        updated.removeAll { !apiIds.contains($0.id) }
+
+        // Auto-add new firewalls from all regions (enabled by default, skip "default-*")
+        for (fw, region) in allFirewalls where !existingIds.contains(fw.id) {
+            let isDefault = fw.name.hasPrefix("default")
+            updated.append(ManagedFirewall(
+                id: fw.id,
+                name: fw.name,
+                port: 6443,
+                enabled: !isDefault,
+                region: region
+            ))
+        }
+
+        managedFirewalls = updated
     }
 
     func refresh() async {
@@ -258,16 +477,11 @@ final class AppState {
             return
         }
 
-        do {
-            firewalls = try await firewallService.getStatus(
-                managedFirewalls: enabledFirewalls,
-                currentIP: currentIP
-            )
-            lastRefresh = Date()
-            self.error = nil
-        } catch {
-            self.error = error.localizedDescription
-        }
+        firewalls = await firewallService.getStatus(
+            managedFirewalls: enabledFirewalls,
+            currentIP: currentIP
+        )
+        lastRefresh = Date()
     }
 
     func openFirewall(_ managed: ManagedFirewall) async {
@@ -283,7 +497,8 @@ final class AppState {
                 firewallId: managed.id,
                 port: managed.port,
                 ip: currentIP,
-                label: label
+                label: label,
+                region: managed.region
             )
             try? await Task.sleep(for: .seconds(1))
         } catch {
@@ -301,7 +516,7 @@ final class AppState {
         defer { isLoading = false }
 
         do {
-            try await firewallService.closeAccess(firewallId: status.managed.id, ruleId: ruleId)
+            try await firewallService.closeAccess(firewallId: status.managed.id, ruleId: ruleId, region: status.managed.region)
             try? await Task.sleep(for: .seconds(1))
         } catch {
             self.error = error.localizedDescription
@@ -328,7 +543,8 @@ final class AppState {
                         firewallId: managed.id,
                         port: managed.port,
                         ip: currentIP,
-                        label: label
+                        label: label,
+                        region: managed.region
                     )
                 }
             }
@@ -365,19 +581,20 @@ final class AppState {
     private func forceRefresh() async {
         error = nil
 
-        do {
-            if currentIP == "..." {
+        if currentIP == "..." {
+            do {
                 currentIP = try await ipDetector.detectIP()
+            } catch {
+                self.error = "IP detection failed: \(error.localizedDescription)"
+                return
             }
-            firewalls = try await firewallService.getStatus(
-                managedFirewalls: enabledFirewalls,
-                currentIP: currentIP
-            )
-            lastRefresh = Date()
-            self.error = nil
-        } catch {
-            self.error = error.localizedDescription
         }
+
+        firewalls = await firewallService.getStatus(
+            managedFirewalls: enabledFirewalls,
+            currentIP: currentIP
+        )
+        lastRefresh = Date()
     }
 
     // MARK: - Auto-refresh
@@ -399,5 +616,7 @@ final class AppState {
         refreshTimer = nil
         refreshTask?.cancel()
         refreshTask = nil
+        autoCloseTimer?.invalidate()
+        autoCloseTimer = nil
     }
 }

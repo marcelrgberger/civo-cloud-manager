@@ -15,8 +15,23 @@ final class StoreManager {
     var isLoading = false
     var error: String?
 
+    var isDebugBuild: Bool {
+        #if DEBUG
+        return true
+        #else
+        return false
+        #endif
+    }
+
     var isFullAccessUnlocked: Bool {
-        purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
+        #if DEBUG
+        Log.info("StoreManager: DEBUG mode — full access granted")
+        return true
+        #else
+        let unlocked = purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
+        Log.info("StoreManager: Release mode — unlocked=\(unlocked), purchasedIDs=\(purchasedProductIDs)")
+        return unlocked
+        #endif
     }
 
     private var updateTask: Task<Void, Never>?
@@ -100,9 +115,11 @@ final class StoreManager {
         var purchased: Set<String> = []
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result) {
+                Log.info("StoreManager: found entitlement: \(transaction.productID), env=\(transaction.environment.rawValue)")
                 purchased.insert(transaction.productID)
             }
         }
+        Log.info("StoreManager: refreshPurchaseStatus done — found \(purchased.count) entitlements: \(purchased)")
         purchasedProductIDs = purchased
     }
 

@@ -3,15 +3,17 @@ import Foundation
 // MARK: - Firewall
 
 /// Represents a firewall from the Civo API.
-struct CivoFirewall: Identifiable, Sendable {
+struct CivoFirewall: Codable, Identifiable, Sendable {
     let id: String
     let name: String
     let rulesCount: String
+    /// Region this firewall belongs to (set after decoding, not from API JSON).
+    var region: String = ""
 
     var rulesCountInt: Int { Int(rulesCount) ?? 0 }
 }
 
-extension CivoFirewall: Decodable {
+extension CivoFirewall {
     enum CodingKeys: String, CodingKey {
         case id, name
         case rulesCount = "rules_count"
@@ -35,7 +37,7 @@ extension CivoFirewall: Decodable {
 // MARK: - Rule
 
 /// Represents a single firewall rule.
-struct CivoRule: Identifiable, Sendable {
+struct CivoRule: Codable, Identifiable, Sendable {
     let id: String
     let label: String?
     let cidr: String?
@@ -46,7 +48,7 @@ struct CivoRule: Identifiable, Sendable {
     let action: String?
 }
 
-extension CivoRule: Decodable {
+extension CivoRule {
     enum CodingKeys: String, CodingKey {
         case id, label, cidr, ports, direction, action
         case startPort = "start_port"
@@ -81,6 +83,25 @@ struct ManagedFirewall: Codable, Identifiable, Sendable, Hashable {
     let name: String
     var port: Int
     var enabled: Bool
+    var region: String
+
+    init(id: String, name: String, port: Int, enabled: Bool, region: String) {
+        self.id = id
+        self.name = name
+        self.port = port
+        self.enabled = enabled
+        self.region = region
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        name = try c.decode(String.self, forKey: .name)
+        port = try c.decode(Int.self, forKey: .port)
+        enabled = try c.decode(Bool.self, forKey: .enabled)
+        // Backward compatibility: existing data may not have region — empty triggers migration
+        region = try c.decodeIfPresent(String.self, forKey: .region) ?? ""
+    }
 }
 
 // MARK: - Runtime status

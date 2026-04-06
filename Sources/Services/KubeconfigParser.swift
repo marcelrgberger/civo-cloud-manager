@@ -2,9 +2,9 @@ import Foundation
 
 struct KubeconfigCredentials: Sendable {
     let server: String
-    let caCertData: Data
-    let clientCertData: Data
-    let clientKeyData: Data
+    let caCertPEM: Data
+    let clientCertPEM: Data
+    let clientKeyPEM: Data
 }
 
 enum KubeconfigParser {
@@ -22,21 +22,22 @@ enum KubeconfigParser {
             throw KubeconfigError.missingField("client-key-data")
         }
 
-        guard let caData = Data(base64Encoded: caB64, options: .ignoreUnknownCharacters) else {
+        // Base64 decode → PEM text (keep as-is for curl)
+        guard let caPEM = Data(base64Encoded: caB64, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("certificate-authority-data")
         }
-        guard let certData = Data(base64Encoded: certB64, options: .ignoreUnknownCharacters) else {
+        guard let certPEM = Data(base64Encoded: certB64, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("client-certificate-data")
         }
-        guard let keyData = Data(base64Encoded: keyB64, options: .ignoreUnknownCharacters) else {
+        guard let keyPEM = Data(base64Encoded: keyB64, options: .ignoreUnknownCharacters) else {
             throw KubeconfigError.invalidBase64("client-key-data")
         }
 
         return KubeconfigCredentials(
             server: server,
-            caCertData: caData,
-            clientCertData: certData,
-            clientKeyData: keyData
+            caCertPEM: caPEM,
+            clientCertPEM: certPEM,
+            clientKeyPEM: keyPEM
         )
     }
 

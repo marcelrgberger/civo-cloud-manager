@@ -9,9 +9,13 @@ struct StaggeredAppear: ViewModifier {
             .opacity(appeared ? 1 : 0)
             .offset(x: appeared ? 0 : -8)
             .onAppear {
-                withAnimation(.easeOut(duration: 0.25).delay(Double(index) * 0.03)) {
+                appeared = false
+                withAnimation(.easeOut(duration: 0.3).delay(Double(index) * 0.04)) {
                     appeared = true
                 }
+            }
+            .onDisappear {
+                appeared = false
             }
     }
 }

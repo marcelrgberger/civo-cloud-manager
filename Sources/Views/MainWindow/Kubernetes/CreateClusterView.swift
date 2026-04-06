@@ -22,15 +22,12 @@ struct CreateClusterView: View {
             }
 
             Section("Node Pool") {
-                Picker("Node Size", selection: $nodeSize) {
-                    Text("Select a size").tag("")
-                    ForEach(vm.availableSizes) { s in
-                        Text(s.displayName).tag(s.name)
-                    }
-                }
-                .help("Instance type for compute resources")
                 Stepper("Nodes: \(nodeCount)", value: $nodeCount, in: 1...10)
                     .help("Number of worker nodes")
+            }
+
+            Section("Select Node Size") {
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $nodeSize, filterPrefix: "Kubernetes")
             }
 
             Section("Networking") {

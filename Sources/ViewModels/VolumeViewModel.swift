@@ -10,6 +10,7 @@ final class VolumeViewModel {
 
     var selectedVolume: CivoVolume?
     var selectedObjectStore: CivoObjectStore?
+    var browsingObjectStore: CivoObjectStore?
     var isCreatingVolume = false
     var isCreatingObjectStore = false
     var isSaving = false
@@ -17,10 +18,22 @@ final class VolumeViewModel {
     var showSuccess = false
 
     var availableNetworks: [CivoNetwork] = []
+    var credentials: [CivoObjectStoreCredential] = []
+    var isCreatingCredential = false
+
+    // Pause/Resume
+    var pausedStores: [PausedObjectStore] = []
+    var isPausing = false
+    var isResuming = false
+    var pauseProgress: PauseProgress?
+    var pauseError: String?
+    var vaultEnabled = false
+    var pausingTask: Task<Void, Never>?
 
     private let volumeService = CivoVolumeService()
     private let objectStoreService = CivoObjectStoreService()
     private let networkService = CivoNetworkService()
+    private let pauseService = ObjectStorePauseService()
 
     func refresh() async {
         isLoading = true
@@ -30,11 +43,24 @@ final class VolumeViewModel {
         do {
             async let vols = volumeService.listVolumes()
             async let stores = objectStoreService.listObjectStores()
+            async let creds = objectStoreService.listCredentials()
 
             volumes = try await vols
             objectStores = try await stores
+            credentials = try await creds
+
+            // Check if vault exists
+            vaultEnabled = objectStores.contains { $0.name == ObjectStorePauseService.vaultName }
+
+            // Load paused stores (also check local fallback if vault is missing)
+            do {
+                pausedStores = try await pauseService.loadPausedStores()
+            } catch {
+                pauseError = CivoAPIError.userMessage(error)
+                Log.error("Failed to load paused stores: \(error.localizedDescription)")
+            }
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
             Log.error("Storage refresh failed: \(error.localizedDescription)")
         }
     }
@@ -59,7 +85,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -76,7 +102,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -93,7 +119,7 @@ final class VolumeViewModel {
                 try await volumeService.removeVolume(vol.id)
             } catch {
                 hadError = true
-                self.error = error.localizedDescription
+                self.error = CivoAPIError.userMessage(error)
                 Log.error("Failed to remove volume \(vol.name): \(error.localizedDescription)")
             }
         }
@@ -106,7 +132,7 @@ final class VolumeViewModel {
             try await volumeService.removeVolume(id)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -121,7 +147,7 @@ final class VolumeViewModel {
             await refresh()
             return true
         } catch {
-            saveError = error.localizedDescription
+            saveError = CivoAPIError.userMessage(error)
             return false
         }
     }
@@ -130,7 +156,7 @@ final class VolumeViewModel {
         do {
             selectedObjectStore = try await objectStoreService.showObjectStore(id)
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
         }
     }
 
@@ -139,7 +165,164 @@ final class VolumeViewModel {
             try await objectStoreService.removeObjectStore(name)
             await refresh()
         } catch {
-            self.error = error.localizedDescription
+            self.error = CivoAPIError.userMessage(error)
+        }
+    }
+
+    func credentialForStore(_ store: CivoObjectStore) -> CivoObjectStoreCredential? {
+        guard let credId = store.credentialId else { return nil }
+        return credentials.first(where: { $0.id == credId })
+    }
+
+    func createCredential(_ name: String) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            _ = try await objectStoreService.createCredential(["name": name])
+            isCreatingCredential = false
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = CivoAPIError.userMessage(error)
+            return false
+        }
+    }
+
+    func removeCredential(_ id: String) async {
+        do {
+            try await objectStoreService.removeCredential(id)
+            await refresh()
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+        }
+    }
+
+    // MARK: - Pause / Resume
+
+    /// Stores visible to the user (excludes the vault store)
+    var visibleObjectStores: [CivoObjectStore] {
+        objectStores.filter { $0.name != ObjectStorePauseService.vaultName }
+    }
+
+    func setupVault() async -> Bool {
+        isSaving = true
+        pauseError = nil
+        defer { isSaving = false }
+
+        do {
+            let _ = try await pauseService.setupVault()
+            vaultEnabled = true
+            await refresh()
+            return true
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+            return false
+        }
+    }
+
+    func pauseObjectStore(_ store: CivoObjectStore) {
+        guard !isPausing && !isResuming else { return }
+        guard let credential = credentialForStore(store) else {
+            pauseError = "No credentials found for \(store.name)"
+            return
+        }
+        isPausing = true
+        pauseError = nil
+        pauseProgress = nil
+
+        pausingTask = Task {
+            do {
+                try await pauseService.pauseStore(store, credential: credential) { progress in
+                    Task { @MainActor [weak self] in
+                        self?.pauseProgress = progress
+                    }
+                }
+                isPausing = false
+                showSuccess = true
+                await refresh()
+            } catch is CancellationError {
+                isPausing = false
+                pauseProgress = nil
+            } catch {
+                isPausing = false
+                pauseError = CivoAPIError.userMessage(error)
+            }
+        }
+    }
+
+    func resumeObjectStore(_ paused: PausedObjectStore) {
+        guard !isPausing && !isResuming else { return }
+        isResuming = true
+        pauseError = nil
+        pauseProgress = nil
+
+        pausingTask = Task {
+            do {
+                try await pauseService.resumeStore(paused) { progress in
+                    Task { @MainActor [weak self] in
+                        self?.pauseProgress = progress
+                    }
+                }
+                isResuming = false
+                showSuccess = true
+                await refresh()
+            } catch is CancellationError {
+                isResuming = false
+                pauseProgress = nil
+            } catch {
+                isResuming = false
+                pauseError = CivoAPIError.userMessage(error)
+            }
+        }
+    }
+
+    func cancelPauseResume() {
+        pausingTask?.cancel()
+        pausingTask = nil
+        isPausing = false
+        isResuming = false
+        pauseProgress = nil
+    }
+
+    func assignCredentialAndResume(_ paused: PausedObjectStore, credentialId: String, accessKeyId: String?) async {
+        do {
+            try await pauseService.updatePausedStoreCredential(
+                storeName: paused.originalName,
+                credentialId: credentialId,
+                accessKeyId: accessKeyId
+            )
+            // Build updated paused store directly (do NOT call loadPausedStores which may auto-clean the entry)
+            let updated = PausedObjectStore(
+                id: paused.id, originalName: paused.originalName, originalMaxSize: paused.originalMaxSize,
+                credentialId: credentialId, accessKeyId: accessKeyId,
+                region: paused.region, endpoint: paused.endpoint, pausedAt: paused.pausedAt,
+                fileCount: paused.fileCount, totalSizeBytes: paused.totalSizeBytes, vaultPrefix: paused.vaultPrefix
+            )
+            resumeObjectStore(updated)
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+        }
+    }
+
+    func discardPausedStore(_ paused: PausedObjectStore) async {
+        do {
+            try await pauseService.discardPausedStore(paused)
+            showSuccess = true
+            await refresh()
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
+        }
+    }
+
+    func createCredentialAndResume(_ paused: PausedObjectStore) async {
+        do {
+            let newCred = try await CivoObjectStoreService().createCredential(["name": paused.originalName])
+            await assignCredentialAndResume(paused, credentialId: newCred.id, accessKeyId: newCred.accessKeyId)
+        } catch {
+            pauseError = CivoAPIError.userMessage(error)
         }
     }
 }

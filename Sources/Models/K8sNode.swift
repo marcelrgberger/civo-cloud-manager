@@ -15,6 +15,7 @@ struct K8sNode: Codable, Identifiable, Sendable {
 
 struct K8sMetadata: Codable, Sendable {
     let name: String?
+    let namespace: String?
     let uid: String?
     let labels: [String: String]?
     let annotations: [String: String]?

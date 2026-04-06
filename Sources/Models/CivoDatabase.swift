@@ -16,9 +16,11 @@ struct CivoDatabase: Codable, Identifiable, Sendable {
     let dnsEntry: String?
     let createdAt: String?
     let region: String?
+    let username: String?
+    let password: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, status, software, size, nodes, port, region
+        case id, name, status, software, size, nodes, port, region, username, password
         case softwareVersion = "software_version"
         case publicIpv4 = "public_ipv4"
         case privateIpv4 = "private_ipv4"

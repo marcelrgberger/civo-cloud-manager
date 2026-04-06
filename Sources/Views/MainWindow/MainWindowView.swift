@@ -12,6 +12,9 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case databases = "Databases"
     case volumes = "Volumes"
     case objectStores = "Object Stores"
+    case credentials = "Credentials"
+    case costs = "Cost Estimate"
+    case apiHealth = "API Health"
     case regions = "Regions"
     case about = "About"
 
@@ -30,8 +33,32 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .databases: return "cylinder.split.1x2"
         case .volumes: return "cylinder"
         case .objectStores: return "tray.2"
+        case .credentials: return "key.horizontal"
+        case .costs: return "dollarsign.circle"
+        case .apiHealth: return "waveform.path.ecg"
         case .regions: return "map"
         case .about: return "info.circle"
+        }
+    }
+
+    var iconColor: Color {
+        switch self {
+        case .dashboard: return .blue
+        case .instances: return .green
+        case .sshKeys: return .orange
+        case .clusters: return .blue
+        case .networks: return .green
+        case .firewalls: return .red
+        case .loadBalancers: return .indigo
+        case .domains: return .teal
+        case .databases: return .purple
+        case .volumes: return .orange
+        case .objectStores: return .cyan
+        case .credentials: return .yellow
+        case .costs: return .green
+        case .apiHealth: return .pink
+        case .regions: return .mint
+        case .about: return .secondary
         }
     }
 
@@ -41,7 +68,9 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .instances, .sshKeys: return .compute
         case .clusters: return .kubernetes
         case .networks, .firewalls, .loadBalancers, .domains: return .networking
-        case .databases, .volumes, .objectStores: return .storage
+        case .databases, .volumes, .objectStores, .credentials: return .storage
+        case .costs: return .account
+        case .apiHealth: return .account
         case .regions: return .account
         case .about: return .account
         }
@@ -64,6 +93,8 @@ enum SidebarCategory: String, CaseIterable {
 struct MainWindowView: View {
     @State private var store = StoreManager.shared
     @State private var selection: SidebarSection = .dashboard
+    @State private var showSearch = false
+    @State private var showExport = false
     @State private var dashboardVM = DashboardViewModel()
     @State private var kubernetesVM = KubernetesViewModel()
     @State private var databaseVM = DatabaseViewModel()
@@ -83,6 +114,47 @@ struct MainWindowView: View {
                         .contentTransition(.opacity)
                         .animation(.spring(duration: 0.3, bounce: 0.1), value: selection)
                 }
+                .sheet(isPresented: $showSearch) {
+                    QuickSearchView(
+                        isPresented: $showSearch,
+                        selection: $selection,
+                        instanceVM: instanceVM,
+                        kubernetesVM: kubernetesVM,
+                        databaseVM: databaseVM,
+                        networkVM: networkVM,
+                        volumeVM: volumeVM,
+                        domainVM: domainVM
+                    )
+                }
+                .sheet(isPresented: $showExport) {
+                    ExportView(
+                        instanceVM: instanceVM,
+                        kubernetesVM: kubernetesVM,
+                        databaseVM: databaseVM,
+                        networkVM: networkVM,
+                        volumeVM: volumeVM,
+                        domainVM: domainVM
+                    )
+                }
+                .background {
+                    Button("") { showSearch = true }
+                        .keyboardShortcut("k", modifiers: .command)
+                        .hidden()
+                    Button("") { showExport = true }
+                        .keyboardShortcut("e", modifiers: [.command, .shift])
+                        .hidden()
+                }
+                #if DEBUG
+                .overlay(alignment: .bottomTrailing) {
+                    Text(store.isDebugBuild ? "DEBUG BUILD" : "RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
+                        .font(.caption2.monospaced())
+                        .padding(4)
+                        .background(.black.opacity(0.7))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .padding(8)
+                }
+                #endif
             } else {
                 PaywallView()
             }
@@ -91,6 +163,19 @@ struct MainWindowView: View {
         .frame(minWidth: 900, minHeight: 600)
         .task {
             await store.refreshPurchaseStatus()
+            regionVM.onRegionChanged = { [
+                dashboardVM, instanceVM, kubernetesVM, databaseVM,
+                networkVM, volumeVM, domainVM
+            ] in
+                async let d: () = dashboardVM.refresh()
+                async let i: () = instanceVM.refresh()
+                async let k: () = kubernetesVM.refresh()
+                async let db: () = databaseVM.refresh()
+                async let n: () = networkVM.refresh()
+                async let v: () = volumeVM.refresh()
+                async let dom: () = domainVM.refresh()
+                _ = await (d, i, k, db, n, v, dom)
+            }
         }
     }
 
@@ -101,14 +186,45 @@ struct MainWindowView: View {
             ForEach(SidebarCategory.allCases, id: \.self) { category in
                 Section(category.rawValue) {
                     ForEach(category.sections) { section in
-                        Label(section.rawValue, systemImage: section.icon)
-                            .tag(section)
+                        Label {
+                            Text(section.rawValue)
+                        } icon: {
+                            Image(systemName: section.icon)
+                                .foregroundStyle(section.iconColor)
+                        }
+                        .tag(section)
                     }
                 }
             }
         }
         .listStyle(.sidebar)
         .navigationSplitViewColumnWidth(min: 180, ideal: 220)
+        .safeAreaInset(edge: .bottom) {
+            regionIndicator
+        }
+    }
+
+    private var regionIndicator: some View {
+        Button {
+            selection = .regions
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "mappin.circle.fill")
+                    .foregroundStyle(.mint)
+                    .font(.caption)
+                Text(regionVM.currentRegion.uppercased())
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.primary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+        .background(.bar)
     }
 
     // MARK: - Detail
@@ -138,6 +254,17 @@ struct MainWindowView: View {
             VolumeListView(vm: volumeVM)
         case .objectStores:
             ObjectStoreListView(vm: volumeVM)
+        case .credentials:
+            CredentialListView(vm: volumeVM)
+        case .apiHealth:
+            APIHealthView()
+        case .costs:
+            CostDashboardView(
+                instanceVM: instanceVM,
+                kubernetesVM: kubernetesVM,
+                databaseVM: databaseVM,
+                volumeVM: volumeVM
+            )
         case .regions:
             RegionListView(vm: regionVM)
         case .about:
