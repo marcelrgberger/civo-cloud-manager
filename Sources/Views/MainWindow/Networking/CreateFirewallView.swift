@@ -5,12 +5,15 @@ struct CreateFirewallView: View {
     @State private var name = ""
     @State private var networkId = ""
 
+    private var defaultNetworkId: String {
+        vm.networks.first(where: { $0.isDefault == true })?.id ?? vm.networks.first?.id ?? ""
+    }
+
     var body: some View {
         Form {
             Section("Firewall Details") {
                 TextField("Name", text: $name)
                 Picker("Network", selection: $networkId) {
-                    Text("Default").tag("")
                     ForEach(vm.networks) { net in
                         Text(net.displayName).tag(net.id)
                     }
@@ -25,6 +28,7 @@ struct CreateFirewallView: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Create Firewall")
+        .onAppear { networkId = defaultNetworkId }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") { vm.isCreatingFirewall = false }
@@ -32,12 +36,14 @@ struct CreateFirewallView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Create") {
                     Task {
-                        var body: [String: Any] = ["name": name]
-                        if !networkId.isEmpty { body["network_id"] = networkId }
+                        let body: [String: Any] = [
+                            "name": name,
+                            "network_id": networkId,
+                        ]
                         _ = await vm.createFirewall(body)
                     }
                 }
-                .disabled(name.isEmpty || vm.isSaving)
+                .disabled(name.isEmpty || networkId.isEmpty || vm.isSaving)
             }
         }
     }

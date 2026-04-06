@@ -163,6 +163,19 @@ struct MainWindowView: View {
         .frame(minWidth: 900, minHeight: 600)
         .task {
             await store.refreshPurchaseStatus()
+            regionVM.onRegionChanged = { [
+                dashboardVM, instanceVM, kubernetesVM, databaseVM,
+                networkVM, volumeVM, domainVM
+            ] in
+                async let d: () = dashboardVM.refresh()
+                async let i: () = instanceVM.refresh()
+                async let k: () = kubernetesVM.refresh()
+                async let db: () = databaseVM.refresh()
+                async let n: () = networkVM.refresh()
+                async let v: () = volumeVM.refresh()
+                async let dom: () = domainVM.refresh()
+                _ = await (d, i, k, db, n, v, dom)
+            }
         }
     }
 
@@ -186,6 +199,32 @@ struct MainWindowView: View {
         }
         .listStyle(.sidebar)
         .navigationSplitViewColumnWidth(min: 180, ideal: 220)
+        .safeAreaInset(edge: .bottom) {
+            regionIndicator
+        }
+    }
+
+    private var regionIndicator: some View {
+        Button {
+            selection = .regions
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "mappin.circle.fill")
+                    .foregroundStyle(.mint)
+                    .font(.caption)
+                Text(regionVM.currentRegion.uppercased())
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.primary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+        }
+        .buttonStyle(.plain)
+        .background(.bar)
     }
 
     // MARK: - Detail
