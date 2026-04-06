@@ -63,7 +63,7 @@ struct RegionListView: View {
 
                         if !isCurrent {
                             Button("Use") {
-                                vm.useRegion(region.code)
+                                Task { await vm.useRegion(region.code) }
                             }
                             .buttonStyle(.bordered)
                             .controlSize(.small)
@@ -79,14 +79,14 @@ struct RegionListView: View {
         .navigationTitle("Regions")
         .task {
             await vm.refresh()
-            await vm.loadCurrentRegionCounts()
+            await vm.loadAllRegionCounts()
         }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
                     Task {
                         await vm.refresh()
-                        await vm.loadCurrentRegionCounts()
+                        await vm.loadAllRegionCounts()
                     }
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
