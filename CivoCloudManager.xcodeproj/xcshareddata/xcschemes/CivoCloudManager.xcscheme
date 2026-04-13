@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1620"
+   LastUpgradeVersion = "2640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3FE351F11938F1EB7B7D7BBD"
+               BlueprintIdentifier = "8C1FD72A050E4F08DB9A1650"
                BuildableName = "Civo Cloud Manager.app"
                BlueprintName = "CivoCloudManager"
+               ReferencedContainer = "container:CivoCloudManager.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "30A94BDF0329865C334CAF4C"
+               BuildableName = "Civo Cloud Manager.xctest"
+               BlueprintName = "CivoCloudManagerTests"
                ReferencedContainer = "container:CivoCloudManager.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,16 +41,17 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3FE351F11938F1EB7B7D7BBD"
-            BuildableName = "Civo Cloud Manager.app"
-            BlueprintName = "CivoCloudManager"
-            ReferencedContainer = "container:CivoCloudManager.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "30A94BDF0329865C334CAF4C"
+               BuildableName = "Civo Cloud Manager.xctest"
+               BlueprintName = "CivoCloudManagerTests"
+               ReferencedContainer = "container:CivoCloudManager.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -49,19 +64,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3FE351F11938F1EB7B7D7BBD"
-            BuildableName = "Civo Cloud Manager.app"
-            BlueprintName = "CivoCloudManager"
-            ReferencedContainer = "container:CivoCloudManager.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
-      <StoreKitConfigurationFileReference
-         identifier = "../../CivoCloudManager/CivoCloudManager.storekit">
-      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -69,16 +71,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3FE351F11938F1EB7B7D7BBD"
-            BuildableName = "Civo Cloud Manager.app"
-            BlueprintName = "CivoCloudManager"
-            ReferencedContainer = "container:CivoCloudManager.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

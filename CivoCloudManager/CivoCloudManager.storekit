@@ -1,5 +1,15 @@
 {
-  "identifier" : "de.berger-rosenstock.CivoCloudManager.storekit",
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "16AC6758",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -7,47 +17,12 @@
     {
       "displayPrice" : "14.99",
       "familyShareable" : true,
-      "internalID" : "fullaccess",
+      "internalID" : "6760911478",
       "localizations" : [
         {
-          "description" : "Unlock Dashboard, Kubernetes, Databases, Networking, Storage, Compute, and all resource management.",
+          "description" : "Unlock all functions",
           "displayName" : "Full Access",
           "locale" : "en_US"
-        },
-        {
-          "description" : "Dashboard, Kubernetes, Datenbanken, Netzwerk, Storage, Compute und alle Ressourcen freischalten.",
-          "displayName" : "Vollzugriff",
-          "locale" : "de"
-        },
-        {
-          "description" : "Desbloquear panel, Kubernetes, bases de datos, redes, almacenamiento, computaci\u00f3n y gesti\u00f3n de todos los recursos.",
-          "displayName" : "Acceso completo",
-          "locale" : "es"
-        },
-        {
-          "description" : "D\u00e9bloquer le tableau de bord, Kubernetes, bases de donn\u00e9es, r\u00e9seau, stockage, calcul et gestion de toutes les ressources.",
-          "displayName" : "Acc\u00e8s complet",
-          "locale" : "fr"
-        },
-        {
-          "description" : "Sblocca dashboard, Kubernetes, database, rete, archiviazione, calcolo e gestione di tutte le risorse.",
-          "displayName" : "Accesso completo",
-          "locale" : "it"
-        },
-        {
-          "description" : "Odblokuj panel, Kubernetes, bazy danych, sieci, pami\u0119\u0107 masow\u0105, obliczenia i zarz\u0105dzanie wszystkimi zasobami.",
-          "displayName" : "Pe\u0142ny dost\u0119p",
-          "locale" : "pl"
-        },
-        {
-          "description" : "Ontgrendel dashboard, Kubernetes, databases, netwerken, opslag, compute en alle resourcebeheer.",
-          "displayName" : "Volledige toegang",
-          "locale" : "nl"
-        },
-        {
-          "description" : "Desbloquear painel, Kubernetes, bases de dados, redes, armazenamento, computa\u00e7\u00e3o e gest\u00e3o de todos os recursos.",
-          "displayName" : "Acesso completo",
-          "locale" : "pt_BR"
         }
       ],
       "productID" : "de.berger_rosenstock.CivoCloudManager.fullaccess",
@@ -56,64 +31,27 @@
     }
   ],
   "settings" : {
-    "_applicationInternalID" : "CivoCloudManager",
-    "_developerTeamID" : "",
+    "_applicationInternalID" : "6760776010",
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_developerTeamID" : "7TSZJCJY88",
+    "_disableDialogs" : false,
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 0,
+    "_lastSynchronizedDate" : 797779912.75780702,
     "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
     "_storeKitErrors" : [
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Load Products"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Purchase"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Verification"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "App Store Sync"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Subscription Status"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "App Transaction"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Manage Subscriptions Sheet"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Refund Request Sheet"
-      },
-      {
-        "current" : null,
-        "enabled" : false,
-        "name" : "Offer Code Redeem Sheet"
-      }
-    ]
+
+    ],
+    "_timeRate" : 0
   },
   "subscriptionGroups" : [
 
   ],
   "version" : {
-    "major" : 4,
+    "major" : 5,
     "minor" : 0
   }
 }
