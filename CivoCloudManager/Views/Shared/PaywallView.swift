@@ -105,9 +105,6 @@ struct PaywallView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-            } else if store.isLoading {
-                ProgressView("Loading price...")
-                    .controlSize(.small)
             } else {
                 // Fallback when products can't be loaded (no StoreKit config or network issue)
                 Button {
@@ -149,7 +146,7 @@ struct PaywallView: View {
             .font(.subheadline)
 
             Button {
-                store.redeemOfferCode()
+                store.redeemPromoCode()
             } label: {
                 Label("Redeem Code", systemImage: "ticket")
             }

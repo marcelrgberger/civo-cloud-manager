@@ -33,7 +33,7 @@ final class StoreManager {
 
     private var updateTask: Task<Void, Never>?
 
-    init() {}
+    private init() {}
 
     func startListening() {
         guard updateTask == nil else { return }
@@ -96,11 +96,9 @@ final class StoreManager {
         }
     }
 
-    // MARK: - Redeem offer code (App Store Connect codes)
+    // MARK: - Redeem promo code
 
-    func redeemOfferCode() {
-        // Opens Apple's native offer code redemption sheet.
-        // Codes are generated in App Store Connect → Subscriptions/IAP → Offer Codes.
+    func redeemPromoCode() {
         if let url = URL(string: "https://apps.apple.com/redeem") {
             NSWorkspace.shared.open(url)
         }
