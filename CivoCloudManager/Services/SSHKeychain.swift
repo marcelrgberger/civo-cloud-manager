@@ -1,9 +1,13 @@
 import Foundation
 import CryptoKit
+import Security
 
 /// Stores SSH private keys as encrypted files in the app's Application Support directory.
-/// Files are encrypted with a key derived from the machine's hardware UUID.
+/// Files are encrypted with a random key stored securely in the Keychain.
 enum SSHKeychain {
+    private static let keychainService = "de.berger-rosenstock.CivoCloudManager.ssh-encryption"
+    private static let keychainAccount = "ssh-key-encryption"
+
     private static var storageDir: URL {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let dir = appSupport.appendingPathComponent("CivoCloudManager/ssh-keys")
@@ -12,29 +16,58 @@ enum SSHKeychain {
     }
 
     private static var encryptionKey: SymmetricKey {
-        // Derive key from bundle ID + hardware UUID for basic protection
-        let seed = (Bundle.main.bundleIdentifier ?? "civo") + (hardwareUUID ?? "fallback")
-        let hash = SHA256.hash(data: Data(seed.utf8))
-        return SymmetricKey(data: hash)
+        // Try to load existing key from Keychain
+        if let existing = loadKeychainKey() {
+            return SymmetricKey(data: existing)
+        }
+        // Generate and store a new random key
+        let newKey = SymmetricKey(size: .bits256)
+        let keyData = newKey.withUnsafeBytes { Data($0) }
+        saveKeychainKey(keyData)
+        return newKey
     }
 
-    private static var hardwareUUID: String? {
-        let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice"))
-        defer { IOObjectRelease(service) }
-        guard let uuid = IORegistryEntryCreateCFProperty(service, "IOPlatformUUID" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? String else { return nil }
-        return uuid
+    private static func loadKeychainKey() -> Data? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: keychainAccount,
+            kSecReturnData as String: true,
+        ]
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        guard status == errSecSuccess, let data = result as? Data else { return nil }
+        return data
+    }
+
+    private static func saveKeychainKey(_ data: Data) {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: keychainAccount,
+            kSecValueData as String: data,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
+        ]
+        SecItemDelete(query as CFDictionary)
+        let status = SecItemAdd(query as CFDictionary, nil)
+        if status != errSecSuccess {
+            Log.error("Failed to store SSH encryption key in Keychain: \(status)")
+        }
     }
 
     static func save(name: String, privateKey: Data) -> Bool {
         do {
             let sealed = try AES.GCM.seal(privateKey, using: encryptionKey)
-            let combined = sealed.combined!
+            guard let combined = sealed.combined else {
+                Log.error("SSH key encryption failed: no combined representation")
+                return false
+            }
             let path = storageDir.appendingPathComponent(name)
             try combined.write(to: path)
-            print("[SSHKeychain] SAVE OK: \(path.path) (\(combined.count) bytes)")
+            Log.info("SSH key saved for '\(name)'")
             return true
         } catch {
-            print("[SSHKeychain] SAVE FAILED for '\(name)': \(error)")
+            Log.error("SSH key save failed for '\(name)': \(error.localizedDescription)")
             return false
         }
     }
@@ -56,14 +89,11 @@ enum SSHKeychain {
 
     static func listKeys() -> [String] {
         let dir = storageDir
-        print("[SSHKeychain] LIST path: \(dir.path)")
         guard let files = try? FileManager.default.contentsOfDirectory(atPath: dir.path) else {
-            print("[SSHKeychain] LIST: cannot read directory")
+            Log.error("SSH keychain: cannot read directory")
             return []
         }
-        let keys = files.filter { !$0.hasPrefix(".") }.sorted()
-        print("[SSHKeychain] LIST found: \(keys)")
-        return keys
+        return files.filter { !$0.hasPrefix(".") }.sorted()
     }
 
     static func exists(name: String) -> Bool {

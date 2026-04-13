@@ -5,7 +5,13 @@ import Security
 /// URLSession retains its delegate strongly; using a proxy with a weak back-reference
 /// allows the client to be deallocated normally when no longer referenced.
 private final class K8sSessionDelegate: NSObject, URLSessionDelegate, @unchecked Sendable {
-    weak var client: KubernetesAPIClient?
+    private let lock = NSLock()
+    private weak var _client: KubernetesAPIClient?
+
+    var client: KubernetesAPIClient? {
+        get { lock.withLock { _client } }
+        set { lock.withLock { _client = newValue } }
+    }
 
     func urlSession(
         _ session: URLSession,
@@ -112,26 +118,31 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
 
     // MARK: - K8s API
 
+    /// URL-encodes a path segment (namespace, pod name, etc.) for safe inclusion in K8s API paths.
+    private func e(_ segment: String) -> String {
+        segment.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? segment
+    }
+
     func listNodes() async throws -> K8sNodeList { try await get("/api/v1/nodes") }
-    func getNode(_ name: String) async throws -> K8sNode { try await get("/api/v1/nodes/\(name)") }
+    func getNode(_ name: String) async throws -> K8sNode { try await get("/api/v1/nodes/\(e(name))") }
     func listPods(nodeName: String? = nil) async throws -> K8sPodList {
         if let nodeName, !nodeName.isEmpty {
-            return try await get("/api/v1/pods?fieldSelector=spec.nodeName=\(nodeName)")
+            return try await get("/api/v1/pods?fieldSelector=spec.nodeName=\(e(nodeName))")
         }
         return try await get("/api/v1/pods")
     }
     func getPodLogs(namespace: String, pod: String, tailLines: Int = 200) async throws -> String {
-        try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(pod)/log?tailLines=\(tailLines)")
+        try await getRaw("/api/v1/namespaces/\(e(namespace))/pods/\(e(pod))/log?tailLines=\(tailLines)")
     }
     func deletePod(namespace: String, pod: String) async throws {
-        _ = try await execute("/api/v1/namespaces/\(namespace)/pods/\(pod)", method: "DELETE")
+        _ = try await execute("/api/v1/namespaces/\(e(namespace))/pods/\(e(pod))", method: "DELETE")
     }
     func scaleDeployment(namespace: String, name: String, replicas: Int) async throws {
         let body = "{\"spec\":{\"replicas\":\(replicas)}}"
-        _ = try await execute("/apis/apps/v1/namespaces/\(namespace)/deployments/\(name)/scale", method: "PATCH", body: body, contentType: "application/merge-patch+json")
+        _ = try await execute("/apis/apps/v1/namespaces/\(e(namespace))/deployments/\(e(name))/scale", method: "PATCH", body: body, contentType: "application/merge-patch+json")
     }
     func getNodeMetrics() async throws -> K8sNodeMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/nodes") }
-    func getPodMetrics(nodeName: String) async throws -> K8sPodMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/pods?fieldSelector=spec.nodeName=\(nodeName)") }
+    func getPodMetrics(nodeName: String) async throws -> K8sPodMetricsList { try await get("/apis/metrics.k8s.io/v1beta1/pods?fieldSelector=spec.nodeName=\(e(nodeName))") }
     func listEvents(limit: Int = 50) async throws -> K8sEventList { try await get("/api/v1/events?limit=\(limit)") }
     func listDeployments() async throws -> K8sDeploymentList { try await get("/apis/apps/v1/deployments") }
     func listDaemonSets() async throws -> K8sDaemonSetList { try await get("/apis/apps/v1/daemonsets") }
@@ -142,21 +153,21 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     func listNamespaces() async throws -> K8sNamespaceList { try await get("/api/v1/namespaces") }
     func listPVCs() async throws -> K8sPVCList { try await get("/api/v1/persistentvolumeclaims") }
     func listPVs() async throws -> K8sPVList { try await get("/api/v1/persistentvolumes") }
-    func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics { try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(name)") }
+    func getNodeMetric(_ name: String) async throws -> K8sNodeMetrics { try await get("/apis/metrics.k8s.io/v1beta1/nodes/\(e(name))") }
     func listConfigMaps(namespace: String? = nil) async throws -> K8sConfigMapList {
         if let ns = namespace {
-            return try await get("/api/v1/namespaces/\(ns)/configmaps")
+            return try await get("/api/v1/namespaces/\(e(ns))/configmaps")
         }
         return try await get("/api/v1/configmaps")
     }
     func listSecrets(namespace: String? = nil) async throws -> K8sSecretList {
         if let ns = namespace {
-            return try await get("/api/v1/namespaces/\(ns)/secrets")
+            return try await get("/api/v1/namespaces/\(e(ns))/secrets")
         }
         return try await get("/api/v1/secrets")
     }
     func getSecret(namespace: String, name: String) async throws -> K8sSecret {
-        try await get("/api/v1/namespaces/\(namespace)/secrets/\(name)")
+        try await get("/api/v1/namespaces/\(e(namespace))/secrets/\(e(name))")
     }
 
     func listHelmSecrets() async throws -> K8sSecretList {
@@ -169,7 +180,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         let body = """
         {"spec":{"template":{"metadata":{"annotations":{"kubectl.kubernetes.io/restartedAt":"\(timestamp)"}}}}}
         """
-        _ = try await execute("/apis/apps/v1/namespaces/\(namespace)/deployments/\(name)", method: "PATCH", body: body, contentType: "application/strategic-merge-patch+json")
+        _ = try await execute("/apis/apps/v1/namespaces/\(e(namespace))/deployments/\(e(name))", method: "PATCH", body: body, contentType: "application/strategic-merge-patch+json")
     }
 
     // MARK: - Exec (command execution in pod via SPDY/WebSocket)
@@ -181,6 +192,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         let cmdJson = try JSONSerialization.data(withJSONObject: command)
         let cmdStr = String(data: cmdJson, encoding: .utf8) ?? "[]"
 
+        let ns = e(namespace)
         let jobBody = """
         {
             "apiVersion": "batch/v1",
@@ -205,7 +217,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
 
         // Create job
         _ = try await execute(
-            "/apis/batch/v1/namespaces/\(namespace)/jobs",
+            "/apis/batch/v1/namespaces/\(ns)/jobs",
             method: "POST",
             body: jobBody
         )
@@ -216,17 +228,17 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
             try await Task.sleep(for: .seconds(2))
 
             // Check job status
-            let statusData = try await execute("/apis/batch/v1/namespaces/\(namespace)/jobs/\(jobName)")
+            let statusData = try await execute("/apis/batch/v1/namespaces/\(ns)/jobs/\(jobName)")
             if let statusJson = try? JSONSerialization.jsonObject(with: statusData) as? [String: Any],
                let status = statusJson["status"] as? [String: Any] {
                 if status["succeeded"] as? Int == 1 {
                     // Get pod name
-                    let podsData = try await execute("/api/v1/namespaces/\(namespace)/pods?labelSelector=job-name%3D\(jobName)")
+                    let podsData = try await execute("/api/v1/namespaces/\(ns)/pods?labelSelector=job-name%3D\(jobName)")
                     if let podsJson = try? JSONSerialization.jsonObject(with: podsData) as? [String: Any],
                        let items = podsJson["items"] as? [[String: Any]],
                        let podMeta = items.first?["metadata"] as? [String: Any],
                        let podName = podMeta["name"] as? String {
-                        output = try await getRaw("/api/v1/namespaces/\(namespace)/pods/\(podName)/log")
+                        output = try await getRaw("/api/v1/namespaces/\(ns)/pods/\(e(podName))/log")
                     }
                     break
                 }
@@ -239,7 +251,7 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
 
         // Cleanup
         _ = try? await execute(
-            "/apis/batch/v1/namespaces/\(namespace)/jobs/\(jobName)?propagationPolicy=Background",
+            "/apis/batch/v1/namespaces/\(ns)/jobs/\(jobName)?propagationPolicy=Background",
             method: "DELETE"
         )
 
@@ -284,45 +296,49 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         return data
     }
 
-    // MARK: - Identity via PKCS#12 (openssl)
+    // MARK: - Identity via Security.framework (no openssl dependency)
 
     private static func createIdentity(certPEM: Data, keyPEM: Data) throws -> SecIdentity {
-        let tmpDir = FileManager.default.temporaryDirectory.appendingPathComponent("civo-k8s-\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: tmpDir) }
-
-        let certPath = tmpDir.appendingPathComponent("cert.pem")
-        let keyPath = tmpDir.appendingPathComponent("key.pem")
-        let p12Path = tmpDir.appendingPathComponent("client.p12")
-        let password = UUID().uuidString
-
-        try certPEM.write(to: certPath)
-        try keyPEM.write(to: keyPath)
-
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/openssl")
-        process.arguments = ["pkcs12", "-export", "-out", p12Path.path, "-inkey", keyPath.path, "-in", certPath.path, "-passout", "pass:\(password)"]
-        process.standardOutput = FileHandle.nullDevice
-        process.standardError = FileHandle.nullDevice
-        try process.run()
-        process.waitUntilExit()
-
-        guard process.terminationStatus == 0 else {
-            throw K8sAPIError.invalidCertificate("openssl pkcs12 export failed: \(process.terminationStatus)")
+        // Import client certificate from PEM
+        var certItems: CFArray?
+        var certFormat = SecExternalFormat.formatPEMSequence
+        var certType = SecExternalItemType.itemTypeCertificate
+        let certStatus = SecItemImport(certPEM as CFData, nil, &certFormat, &certType, [], nil, nil, &certItems)
+        guard certStatus == errSecSuccess,
+              let certs = certItems as? [SecCertificate],
+              let cert = certs.first else {
+            throw K8sAPIError.invalidCertificate("Client certificate import failed: \(certStatus)")
         }
 
-        let p12Data = try Data(contentsOf: p12Path)
-        var items: CFArray?
-        let status = SecPKCS12Import(p12Data as CFData, [kSecImportExportPassphrase as String: password] as CFDictionary, &items)
+        // Import private key from PEM (use formatUnknown to handle RSA, EC, and PKCS#8 keys)
+        var keyItems: CFArray?
+        var keyFormat = SecExternalFormat.formatUnknown
+        var keyType = SecExternalItemType.itemTypePrivateKey
+        let keyParams = SecItemImportExportKeyParameters()
+        var keyParamsMutable = keyParams
+        var keyStatus = SecItemImport(keyPEM as CFData, nil, &keyFormat, &keyType, [], &keyParamsMutable, nil, &keyItems)
 
-        guard status == errSecSuccess,
-              let dicts = items as? [[String: Any]],
-              let dict = dicts.first,
-              let identity = dict[kSecImportItemIdentity as String] else {
-            throw K8sAPIError.invalidCertificate("PKCS#12 import failed: \(status)")
+        // Fallback: try with .pem file extension hint if auto-detect fails
+        if keyStatus != errSecSuccess {
+            keyFormat = SecExternalFormat.formatUnknown
+            keyType = SecExternalItemType.itemTypePrivateKey
+            keyItems = nil
+            let pemHint = "key.pem" as CFString
+            keyStatus = SecItemImport(keyPEM as CFData, pemHint, &keyFormat, &keyType, [], &keyParamsMutable, nil, &keyItems)
         }
 
-        return (identity as! SecIdentity)
+        guard keyStatus == errSecSuccess,
+              let keys = keyItems as? [SecKey],
+              let privateKey = keys.first else {
+            throw K8sAPIError.invalidCertificate("Private key import failed: \(keyStatus)")
+        }
+
+        // Create identity directly from certificate + private key (macOS only)
+        guard let identity = SecIdentityCreate(nil, cert, privateKey) else {
+            throw K8sAPIError.invalidCertificate("Failed to create identity from certificate and key")
+        }
+
+        return identity
     }
 }
 

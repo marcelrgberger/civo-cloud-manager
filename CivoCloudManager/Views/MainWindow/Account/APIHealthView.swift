@@ -5,6 +5,15 @@ struct APIHealthView: View {
     @State private var isChecking = false
     @State private var lastCheck: Date?
 
+    private static var chargesFrom: String {
+        let formatter = ISO8601DateFormatter()
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
+        return formatter.string(from: yesterday)
+    }
+    private static var chargesTo: String {
+        ISO8601DateFormatter().string(from: Date())
+    }
+
     private let endpoints: [(name: String, path: String, icon: String)] = [
         ("Quota", "/quota", "gauge.with.dots.needle.33percent"),
         ("Regions", "/regions", "map"),
@@ -21,7 +30,7 @@ struct APIHealthView: View {
         ("Credentials", "/objectstore/credentials", "key.horizontal"),
         ("Sizes", "/sizes", "square.grid.2x2"),
         ("Disk Images", "/disk_images", "opticaldisc"),
-        ("Charges", "/charges?from=2026-01-01T00:00:00Z&to=2026-01-02T00:00:00Z", "dollarsign.circle"),
+        ("Charges", "/charges?from=\(APIHealthView.chargesFrom)&to=\(APIHealthView.chargesTo)", "dollarsign.circle"),
     ]
 
     var body: some View {

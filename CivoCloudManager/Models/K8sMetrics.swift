@@ -29,10 +29,18 @@ struct K8sPodMetrics: Codable, Identifiable, Sendable {
     var name: String { metadata.name ?? "unknown" }
 
     var totalCPU: String {
-        containers?.compactMap(\.usage?.cpu).first ?? "—"
+        guard let containers, !containers.isEmpty else { return "—" }
+        let values = containers.compactMap(\.usage?.cpu)
+        guard !values.isEmpty else { return "—" }
+        let totalMillicores = values.reduce(0.0) { $0 + K8sMetricsParser.parseCPU($1) * 1000 }
+        return "\(Int(totalMillicores))m"
     }
     var totalMemory: String {
-        containers?.compactMap(\.usage?.memory).first ?? "—"
+        guard let containers, !containers.isEmpty else { return "—" }
+        let values = containers.compactMap(\.usage?.memory)
+        guard !values.isEmpty else { return "—" }
+        let totalMB = values.reduce(0.0) { $0 + K8sMetricsParser.parseMemoryMB($1) }
+        return "\(Int(totalMB))Mi"
     }
 }
 

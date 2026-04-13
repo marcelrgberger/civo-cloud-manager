@@ -3,8 +3,12 @@ import Foundation
 final class CivoFirewallService: Sendable {
     private let api = CivoAPIClient.shared
 
-    func listFirewalls() async throws -> [CivoFirewall] {
-        try await api.getArray(path: "/firewalls")
+    func listFirewalls(region: String? = nil) async throws -> [CivoFirewall] {
+        var queryItems: [URLQueryItem]? = nil
+        if let region {
+            queryItems = [URLQueryItem(name: "region", value: region)]
+        }
+        return try await api.getArray(path: "/firewalls", queryItems: queryItems)
     }
 
     func createFirewall(_ body: [String: Any]) async throws -> CivoFirewall {
@@ -16,13 +20,11 @@ final class CivoFirewallService: Sendable {
     }
 
     func getRulesForFirewall(_ firewallId: String, region: String? = nil) async throws -> [CivoRule] {
+        var queryItems: [URLQueryItem]? = nil
         if let region {
-            let saved = CivoConfig.shared.region
-            CivoConfig.shared.region = region
-            defer { CivoConfig.shared.region = saved }
-            return try await api.getArray(path: "/firewalls/\(firewallId)/rules")
+            queryItems = [URLQueryItem(name: "region", value: region)]
         }
-        return try await api.getArray(path: "/firewalls/\(firewallId)/rules")
+        return try await api.getArray(path: "/firewalls/\(firewallId)/rules", queryItems: queryItems)
     }
 
     func createRule(
@@ -48,20 +50,15 @@ final class CivoFirewallService: Sendable {
         if let endPort { body["end_port"] = endPort }
         if let label { body["label"] = label }
 
+        var queryItems: [URLQueryItem]? = nil
         if let region {
-            let saved = CivoConfig.shared.region
-            CivoConfig.shared.region = region
-            defer { CivoConfig.shared.region = saved }
-            let _: CivoRule = try await api.post(
-                path: "/firewalls/\(firewallId)/rules",
-                body: body
-            )
-        } else {
-            let _: CivoRule = try await api.post(
-                path: "/firewalls/\(firewallId)/rules",
-                body: body
-            )
+            queryItems = [URLQueryItem(name: "region", value: region)]
         }
+        let _: CivoRule = try await api.post(
+            path: "/firewalls/\(firewallId)/rules",
+            body: body,
+            queryItems: queryItems
+        )
     }
 
     func createRuleFromBody(firewallId: String, body: [String: Any]) async throws {
@@ -72,14 +69,11 @@ final class CivoFirewallService: Sendable {
     }
 
     func deleteRule(firewallId: String, ruleId: String, region: String? = nil) async throws {
+        var queryItems: [URLQueryItem]? = nil
         if let region {
-            let saved = CivoConfig.shared.region
-            CivoConfig.shared.region = region
-            defer { CivoConfig.shared.region = saved }
-            try await api.delete(path: "/firewalls/\(firewallId)/rules/\(ruleId)")
-        } else {
-            try await api.delete(path: "/firewalls/\(firewallId)/rules/\(ruleId)")
+            queryItems = [URLQueryItem(name: "region", value: region)]
         }
+        try await api.delete(path: "/firewalls/\(firewallId)/rules/\(ruleId)", queryItems: queryItems)
     }
 
     // MARK: - Firewall status

@@ -3,8 +3,10 @@ import Foundation
 final class CivoDatabaseService: Sendable {
     private let api = CivoAPIClient.shared
 
-    func listDatabases() async throws -> [CivoDatabase] {
-        try await api.getPaginatedList(path: "/databases")
+    func listDatabases(region: String? = nil) async throws -> [CivoDatabase] {
+        var queryItems: [URLQueryItem]? = nil
+        if let region { queryItems = [URLQueryItem(name: "region", value: region)] }
+        return try await api.getPaginatedList(path: "/databases", queryItems: queryItems)
     }
 
     func createDatabase(_ body: [String: Any]) async throws -> CivoDatabase {

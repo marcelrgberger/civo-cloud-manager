@@ -3,8 +3,10 @@ import Foundation
 final class CivoVolumeService: Sendable {
     private let api = CivoAPIClient.shared
 
-    func listVolumes() async throws -> [CivoVolume] {
-        try await api.getArray(path: "/volumes")
+    func listVolumes(region: String? = nil) async throws -> [CivoVolume] {
+        var queryItems: [URLQueryItem]? = nil
+        if let region { queryItems = [URLQueryItem(name: "region", value: region)] }
+        return try await api.getArray(path: "/volumes", queryItems: queryItems)
     }
 
     func createVolume(_ body: [String: Any]) async throws -> CivoVolume {

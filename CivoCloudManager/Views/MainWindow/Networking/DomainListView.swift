@@ -66,25 +66,25 @@ struct DomainRecordsSection: View {
             )
             .frame(minWidth: 450, minHeight: 300)
         }
-        .confirmationDialog("Delete Record", isPresented: Binding(
-            get: { deleteRecordTarget != nil },
-            set: { if !$0 { deleteRecordTarget = nil } }
-        )) {
+        .sheet(isPresented: Binding(get: { deleteRecordTarget != nil }, set: { if !$0 { deleteRecordTarget = nil } })) {
             if let target = deleteRecordTarget {
-                Button("Delete Record", role: .destructive) {
-                    Task {
-                        do {
-                            try await service.removeRecord(domain.id, recordId: target.id)
-                            await loadRecords()
-                        } catch {
-                            vm.error = error.localizedDescription
+                DeleteConfirmationSheet(
+                    resourceType: "DNS Record",
+                    resourceName: "\(target.type ?? "?") \(target.name ?? "@")",
+                    onConfirm: {
+                        Task {
+                            do {
+                                try await service.removeRecord(domain.id, recordId: target.id)
+                                await loadRecords()
+                            } catch {
+                                vm.error = error.localizedDescription
+                            }
                         }
-                    }
-                    deleteRecordTarget = nil
-                }
+                        deleteRecordTarget = nil
+                    },
+                    onCancel: { deleteRecordTarget = nil }
+                )
             }
-        } message: {
-            Text("This will permanently delete the DNS record.")
         }
         .onChange(of: vm.showSuccess) { _, newValue in
             if newValue {

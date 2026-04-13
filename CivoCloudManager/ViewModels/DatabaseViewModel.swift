@@ -44,6 +44,7 @@ final class DatabaseViewModel {
             availableFirewalls = try await fws
             availableSizes = try await sizes
         } catch {
+            saveError = CivoAPIError.userMessage(error)
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
     }

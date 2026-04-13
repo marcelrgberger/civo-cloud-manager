@@ -24,6 +24,8 @@ struct StatusBadge: View {
         .foregroundStyle(color)
         .clipShape(Capsule())
         .help(statusDescription)
+        .accessibilityLabel("Status: \(status)")
+        .accessibilityValue(statusDescription)
     }
 
     private var isPending: Bool {

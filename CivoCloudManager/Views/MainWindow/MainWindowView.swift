@@ -161,6 +161,11 @@ struct MainWindowView: View {
         }
         .navigationTitle("")
         .frame(minWidth: 900, minHeight: 600)
+        .onChange(of: selection) { oldValue, newValue in
+            if oldValue == .clusters && newValue != .clusters && kubernetesVM.isK8sConnected {
+                Task { await kubernetesVM.disconnectFromCluster() }
+            }
+        }
         .task {
             await store.refreshPurchaseStatus()
             regionVM.onRegionChanged = { [

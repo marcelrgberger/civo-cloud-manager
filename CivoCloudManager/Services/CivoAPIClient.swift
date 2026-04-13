@@ -12,7 +12,7 @@ enum CivoAPIError: LocalizedError {
     static func isCancelled(_ error: Error) -> Bool {
         if let urlError = error as? URLError, urlError.code == .cancelled { return true }
         if let apiError = error as? CivoAPIError, case .cancelled = apiError { return true }
-        if error.localizedDescription.contains("cancelled") { return true }
+        if error is CancellationError { return true }
         return false
     }
 
@@ -170,9 +170,10 @@ final class CivoAPIClient: Sendable {
     func post<T: Decodable>(
         path: String,
         body: [String: Any],
+        queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true
     ) async throws -> T {
-        try await execute("POST", path: path, body: body, regionRequired: regionRequired)
+        try await execute("POST", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired)
     }
 
     /// PUT with a JSON body.
@@ -194,8 +195,8 @@ final class CivoAPIClient: Sendable {
     }
 
     /// DELETE a resource.
-    func delete(path: String, regionRequired: Bool = true) async throws {
-        let _: CivoResult = try await execute("DELETE", path: path, regionRequired: regionRequired)
+    func delete(path: String, queryItems: [URLQueryItem]? = nil, regionRequired: Bool = true) async throws {
+        let _: CivoResult = try await execute("DELETE", path: path, queryItems: queryItems, regionRequired: regionRequired)
     }
 
     /// Validate an API key by making a test request.
@@ -254,6 +255,10 @@ final class CivoAPIClient: Sendable {
         let response: URLResponse
         do {
             (data, response) = try await session.data(for: request)
+        } catch is CancellationError {
+            throw CivoAPIError.cancelled
+        } catch let urlError as URLError where urlError.code == .cancelled {
+            throw CivoAPIError.cancelled
         } catch {
             throw CivoAPIError.networkError(error.localizedDescription)
         }
@@ -314,6 +319,10 @@ final class CivoAPIClient: Sendable {
         let response: URLResponse
         do {
             (data, response) = try await session.data(for: request)
+        } catch is CancellationError {
+            throw CivoAPIError.cancelled
+        } catch let urlError as URLError where urlError.code == .cancelled {
+            throw CivoAPIError.cancelled
         } catch {
             throw CivoAPIError.networkError(error.localizedDescription)
         }

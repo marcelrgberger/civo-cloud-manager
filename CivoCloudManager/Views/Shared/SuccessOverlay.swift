@@ -17,11 +17,11 @@ struct SuccessOverlay: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .shadow(radius: 10)
             .transition(.opacity.combined(with: .scale(scale: 0.7, anchor: .center)))
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    withAnimation(.spring(duration: 0.3, bounce: 0.15)) {
-                        isPresented = false
-                    }
+            .task {
+                try? await Task.sleep(for: .seconds(1.5))
+                guard !Task.isCancelled else { return }
+                withAnimation(.spring(duration: 0.3, bounce: 0.15)) {
+                    isPresented = false
                 }
             }
         }

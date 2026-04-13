@@ -46,14 +46,14 @@ struct MenuBarView: View {
             if state.setupState != .ready {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate()
             }
         }
         .onChange(of: state.showOnboarding) { _, show in
             if show {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate()
                 state.showOnboarding = false
             }
         }
@@ -90,7 +90,7 @@ struct MenuBarView: View {
             Button("Open Setup...") {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate()
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.small)
@@ -453,7 +453,7 @@ struct MenuBarView: View {
             Button {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "main")
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate()
             } label: {
                 Image(systemName: "square.grid.2x2")
             }
@@ -465,7 +465,7 @@ struct MenuBarView: View {
             Button {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "onboarding")
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate()
             } label: {
                 Image(systemName: "gear")
             }

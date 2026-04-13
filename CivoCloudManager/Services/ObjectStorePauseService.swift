@@ -71,34 +71,40 @@ final class ObjectStorePauseService: Sendable {
         }
 
         // Create credential first
-        var credential = try await findVaultCredential()
-        if credential == nil {
+        let credential: CivoObjectStoreCredential
+        if let existing = try await findVaultCredential() {
+            credential = existing
+        } else {
             credential = try await storeService.createCredential(["name": Self.vaultCredentialName])
-            Log.info("Created vault credential: \(credential!.displayName)")
+            Log.info("Created vault credential: \(credential.displayName)")
         }
 
         // Create vault store with that credential
-        var vault = try await findVault()
-        if vault == nil {
+        var vault: CivoObjectStore
+        if let existing = try await findVault() {
+            vault = existing
+        } else {
             let body: [String: Any] = [
                 "name": Self.vaultName,
                 "size": Self.defaultVaultSize,
-                "access_key_id": credential!.accessKeyId ?? ""
+                "access_key_id": credential.accessKeyId ?? ""
             ]
             vault = try await storeService.createObjectStore(body)
-            Log.info("Created vault store: \(vault!.name)")
+            Log.info("Created vault store: \(vault.name)")
 
-            // Wait for vault to become ready
-            try await waitForStoreReady(vault!.id)
-            vault = try await storeService.showObjectStore(vault!.id)
+            try await waitForStoreReady(vault.id)
+            vault = try await storeService.showObjectStore(vault.id)
         }
 
         // Resolve the actual credential linked to the store
-        if let credId = vault!.credentialId {
-            credential = try await storeService.showCredential(credId)
+        let resolvedCredential: CivoObjectStoreCredential
+        if let credId = vault.credentialId {
+            resolvedCredential = try await storeService.showCredential(credId)
+        } else {
+            resolvedCredential = credential
         }
 
-        return (vault!, credential!)
+        return (vault, resolvedCredential)
     }
 
     // MARK: - Pause
@@ -195,12 +201,8 @@ final class ObjectStorePauseService: Sendable {
         let vaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: vaultPrefix)
         try verifyObjects(source: allObjects, copied: vaultObjects, prefix: vaultPrefix)
 
-        // 7. Delete original store FIRST, then save metadata
-        // This prevents "both active and paused" inconsistency
-        progress(PauseProgress(phase: .deleting, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: store.name, bytesCopied: bytesCopied, bytesTotal: totalBytes))
-        try await storeService.removeObjectStore(store.id)
-
-        // 8. Save metadata after successful delete
+        // 7. Build metadata entry and save local fallback BEFORE deleting
+        // This ensures recovery is possible even if remote manifest save fails after delete
         let entry = PausedObjectStore(
             id: UUID().uuidString,
             originalName: store.name,
@@ -214,6 +216,15 @@ final class ObjectStorePauseService: Sendable {
             totalSizeBytes: totalBytes,
             vaultPrefix: vaultPrefix
         )
+        var localManifest = loadLocalManifest()
+        localManifest.stores.append(entry)
+        saveLocalManifest(localManifest)
+
+        // 8. Delete original store
+        progress(PauseProgress(phase: .deleting, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: store.name, bytesCopied: bytesCopied, bytesTotal: totalBytes))
+        try await storeService.removeObjectStore(store.id)
+
+        // 9. Save remote manifest (local fallback already persisted above)
         try await savePausedMetadata(vaultClient: vaultClient, vaultBucket: vault.name, entry: entry)
 
         progress(PauseProgress(phase: .completed, currentFile: totalFiles, totalFiles: totalFiles, currentFileName: "", bytesCopied: bytesCopied, bytesTotal: totalBytes))
@@ -239,9 +250,27 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingVaultCredentials
         }
 
-        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey, region: CivoConfig.shared.region)
+        let resumeRegion = paused.region ?? CivoConfig.shared.region
+        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey, region: resumeRegion)
 
-        // 2. Recreate original store (or use existing if already created from a prior attempt)
+        // 2. List files in vault and validate BEFORE creating a new store
+        progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Validating vault data...", bytesCopied: 0, bytesTotal: 0))
+        let restoredFlag = "\(paused.vaultPrefix).restored"
+        let allVaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
+        // Filter out operational markers (.restored flag) — only data files
+        let vaultObjects = allVaultObjects.filter { $0.key != restoredFlag }
+        let totalFiles = vaultObjects.count
+        let totalBytes = Int64(vaultObjects.reduce(0) { $0 + $1.size })
+
+        // Validate vault contents match manifest metadata
+        if paused.fileCount > 0 && totalFiles == 0 {
+            throw PauseError.vaultDataMissing(paused.originalName)
+        }
+        if paused.fileCount > 0 && totalFiles < paused.fileCount {
+            throw PauseError.vaultDataIncomplete(paused.originalName, expected: paused.fileCount, actual: totalFiles)
+        }
+
+        // 3. Recreate original store (or use existing if already created from a prior attempt)
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Creating \(paused.originalName)...", bytesCopied: 0, bytesTotal: 0))
         let existingStores = try await storeService.listObjectStores()
         let readyStore: CivoObjectStore
@@ -271,7 +300,7 @@ final class ObjectStorePauseService: Sendable {
             readyStore = try await createStoreWithCredential(paused)
         }
 
-        // 3. Get the credential for the new store to build S3 client
+        // 4. Get the credential for the new store to build S3 client
         guard let destEndpoint = readyStore.objectstoreEndpoint else {
             throw PauseError.missingCredentials
         }
@@ -294,23 +323,7 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingCredentials
         }
 
-        let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: CivoConfig.shared.region)
-
-        // 4. List files in vault and validate against manifest
-        let restoredFlag = "\(paused.vaultPrefix).restored"
-        let allVaultObjects = try await vaultClient.listAllObjects(bucket: vault.name, prefix: paused.vaultPrefix)
-        // Filter out operational markers (.restored flag) — only data files
-        let vaultObjects = allVaultObjects.filter { $0.key != restoredFlag }
-        let totalFiles = vaultObjects.count
-        let totalBytes = Int64(vaultObjects.reduce(0) { $0 + $1.size })
-
-        // Validate vault contents match manifest metadata
-        if paused.fileCount > 0 && totalFiles == 0 {
-            throw PauseError.vaultDataMissing(paused.originalName)
-        }
-        if paused.fileCount > 0 && totalFiles < paused.fileCount {
-            throw PauseError.vaultDataIncomplete(paused.originalName, expected: paused.fileCount, actual: totalFiles)
-        }
+        let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: resumeRegion)
 
         // 5. Copy files back (parallel, max 4 concurrent)
         let resumeCounter = TransferCounter()
@@ -382,7 +395,7 @@ final class ObjectStorePauseService: Sendable {
         let resolvedAccessKey = try await resolveAccessKey(for: paused)
         if let ak = resolvedAccessKey {
             body["access_key_id"] = ak
-            Log.info("Resume: resolved access_key_id=\(ak) for '\(paused.originalName)'")
+            Log.info("Resume: resolved access_key_id=***\(ak.suffix(4)) for '\(paused.originalName)'")
         } else {
             Log.error("Resume: could not resolve access key for '\(paused.originalName)' — API will create new credential!")
         }
@@ -412,7 +425,7 @@ final class ObjectStorePauseService: Sendable {
             Log.info("Resume: matched credential by name '\(match.name ?? "")'")
             return match.accessKeyId
         }
-        Log.error("Resume: all 3 strategies failed — credentialId=\(paused.credentialId ?? "nil"), accessKeyId=\(paused.accessKeyId ?? "nil"), no name match")
+        Log.error("Resume: all 3 strategies failed — credentialId=\(paused.credentialId ?? "nil"), accessKeyId=\(paused.accessKeyId.map { "***\($0.suffix(4))" } ?? "nil"), no name match")
         return nil
     }
 
@@ -609,7 +622,7 @@ final class ObjectStorePauseService: Sendable {
             let data = try JSONEncoder.pauseEncoder.encode(manifest)
             try await client.uploadObject(bucket: vault.name, key: Self.manifestKey, data: data, contentType: "application/json")
             saveLocalManifest(manifest)
-            Log.info("Updated credential for paused store '\(storeName)': credentialId=\(credentialId), accessKeyId=\(accessKeyId ?? "nil")")
+            Log.info("Updated credential for paused store '\(storeName)': credentialId=\(credentialId), accessKeyId=\(accessKeyId.map { "***\($0.suffix(4))" } ?? "nil")")
         }
     }
 

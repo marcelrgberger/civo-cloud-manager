@@ -348,14 +348,12 @@ final class AppState {
             await loadRegions()
         }
 
-        // Discover firewalls from all regions
-        let userRegion = CivoConfig.shared.region
+        // Discover firewalls from all regions (pass region as query param to avoid mutating global state)
         var allFirewalls: [CivoFirewall] = []
 
         for region in availableRegions {
-            CivoConfig.shared.region = region.code
             do {
-                var regionFirewalls = try await firewallService.listFirewalls()
+                var regionFirewalls = try await firewallService.listFirewalls(region: region.code)
                 for i in regionFirewalls.indices {
                     regionFirewalls[i].region = region.code
                 }
@@ -363,7 +361,6 @@ final class AppState {
             } catch {
                 Log.error("Firewall discovery failed for \(region.code): \(error.localizedDescription)")
             }
-            CivoConfig.shared.region = userRegion
         }
         discoveredFirewalls = allFirewalls
     }
@@ -410,19 +407,16 @@ final class AppState {
     private func syncManagedFirewalls() async {
         await loadRegions()
 
-        let userRegion = CivoConfig.shared.region
         var allFirewalls: [(fw: CivoFirewall, region: String)] = []
         for region in availableRegions {
-            CivoConfig.shared.region = region.code
             do {
-                let fws = try await firewallService.listFirewalls()
+                let fws = try await firewallService.listFirewalls(region: region.code)
                 for fw in fws {
                     allFirewalls.append((fw: fw, region: region.code))
                 }
             } catch {
                 Log.error("Firewall sync failed for \(region.code): \(error.localizedDescription)")
             }
-            CivoConfig.shared.region = userRegion
         }
 
         let existingIds = Set(managedFirewalls.map(\.id))

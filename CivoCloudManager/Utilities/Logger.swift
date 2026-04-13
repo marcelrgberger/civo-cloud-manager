@@ -8,7 +8,7 @@ enum Log {
     }
 
     static func error(_ message: String) {
-        logger.error("\(message, privacy: .private)")
+        logger.error("\(message, privacy: .public)")
     }
 
     static func debug(_ message: String) {
@@ -16,6 +16,6 @@ enum Log {
     }
 
     static func warning(_ message: String) {
-        logger.warning("\(message, privacy: .private)")
+        logger.warning("\(message, privacy: .public)")
     }
 }

@@ -193,7 +193,7 @@ struct FreeModeBanner: View {
             Button("Upgrade") {
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "main")
-                NSApp.activate(ignoringOtherApps: true)
+                NSApp.activate()
             }
             .buttonStyle(.bordered)
             .controlSize(.mini)

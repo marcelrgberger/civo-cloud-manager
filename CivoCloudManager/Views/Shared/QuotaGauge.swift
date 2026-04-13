@@ -37,6 +37,9 @@ struct QuotaGauge: View {
                     .lineLimit(1)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(item.label)")
+        .accessibilityValue("\(item.usage) of \(item.limit) used, \(Int(item.percentage * 100)) percent")
         .onAppear {
             withAnimation(.easeOut(duration: 0.8)) {
                 animatedPercentage = item.percentage

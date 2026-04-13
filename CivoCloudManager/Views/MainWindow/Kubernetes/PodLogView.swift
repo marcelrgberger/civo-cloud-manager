@@ -6,7 +6,6 @@ struct PodLogView: View {
     let onBack: () -> Void
     @State private var autoScroll = true
     @State private var autoRefresh = false
-    @State private var refreshTimer: Timer?
 
     private var podNamespace: String { pod.namespace }
 
@@ -25,18 +24,6 @@ struct PodLogView: View {
                 Toggle("Auto-refresh", isOn: $autoRefresh)
                     .toggleStyle(.switch)
                     .controlSize(.small)
-                    .onChange(of: autoRefresh) { _, on in
-                        if on {
-                            refreshTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
-                                Task { @MainActor in
-                                    await vm.loadPodLog(namespace: podNamespace, pod: pod.name)
-                                }
-                            }
-                        } else {
-                            refreshTimer?.invalidate()
-                            refreshTimer = nil
-                        }
-                    }
             }
             ToolbarItem(placement: .automatic) {
                 Toggle("Auto-scroll", isOn: $autoScroll)
@@ -54,9 +41,13 @@ struct PodLogView: View {
                 .disabled(vm.isLoadingK8s)
             }
         }
-        .onDisappear {
-            refreshTimer?.invalidate()
-            refreshTimer = nil
+        .task(id: autoRefresh) {
+            guard autoRefresh else { return }
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(3))
+                guard !Task.isCancelled else { break }
+                await vm.loadPodLog(namespace: podNamespace, pod: pod.name)
+            }
         }
     }
 

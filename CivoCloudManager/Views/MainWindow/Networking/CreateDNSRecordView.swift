@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CreateDNSRecordView: View {
     @Bindable var vm: DomainViewModel
+    @Environment(\.dismiss) private var dismiss
     let domainId: String
     var editingRecord: CivoDomainRecord?
 
@@ -38,7 +39,7 @@ struct CreateDNSRecordView: View {
         .navigationTitle(editingRecord != nil ? "Edit Record" : "Create Record")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") { vm.isCreatingRecord = false }
+                Button("Cancel") { dismiss() }
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button(editingRecord != nil ? "Save" : "Create") {

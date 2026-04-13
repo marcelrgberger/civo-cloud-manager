@@ -39,10 +39,13 @@ final class DashboardViewModel {
     }
 
     private func performRefresh() async {
+        guard !Task.isCancelled else { return }
         isLoading = true
         error = nil
         warnings = []
-        defer { isLoading = false }
+        defer {
+            if !Task.isCancelled { isLoading = false }
+        }
 
         do {
             quota = try await quotaService.getQuota()

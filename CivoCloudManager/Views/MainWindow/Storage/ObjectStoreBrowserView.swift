@@ -269,8 +269,10 @@ struct ObjectStoreBrowserView: View {
                 return
             }
 
-            // Create temp download directory
-            let downloadDir = FileManager.default.temporaryDirectory
+            // Create download directory in ~/Downloads
+            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first
+                ?? FileManager.default.temporaryDirectory
+            let downloadDir = downloadsURL
                 .appendingPathComponent("CivoDownload-\(UUID().uuidString)")
             try FileManager.default.createDirectory(at: downloadDir, withIntermediateDirectories: true)
 

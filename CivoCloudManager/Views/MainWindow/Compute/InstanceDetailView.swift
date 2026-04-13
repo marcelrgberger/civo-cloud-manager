@@ -1,3 +1,4 @@
+import LocalAuthentication
 import SwiftUI
 
 struct InstanceDetailView: View {
@@ -6,6 +7,7 @@ struct InstanceDetailView: View {
     let onBack: () -> Void
     @State private var appeared = false
     @State private var showPassword = false
+    @State private var hidePasswordTask: Task<Void, Never>?
     @State private var showResize = false
     @State private var resizeTarget = ""
     @State private var editingReverseDns = false
@@ -42,6 +44,16 @@ struct InstanceDetailView: View {
         }
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
+        }
+        .onChange(of: showPassword) { _, visible in
+            hidePasswordTask?.cancel()
+            if visible {
+                hidePasswordTask = Task {
+                    try? await Task.sleep(for: .seconds(30))
+                    guard !Task.isCancelled else { return }
+                    showPassword = false
+                }
+            }
         }
         .sheet(isPresented: $showResize) {
             resizeSheet
@@ -218,7 +230,11 @@ struct InstanceDetailView: View {
                                     .font(.subheadline.monospaced())
                             }
                             Button {
-                                showPassword.toggle()
+                                if showPassword {
+                                    showPassword = false
+                                } else {
+                                    authenticateAndShowPassword()
+                                }
                             } label: {
                                 Image(systemName: showPassword ? "eye.slash" : "eye")
                                     .font(.caption)
@@ -339,6 +355,26 @@ struct InstanceDetailView: View {
         }
         .padding(24)
         .frame(width: 500)
+    }
+
+    private func authenticateAndShowPassword() {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
+            showPassword = true
+            return
+        }
+        Task {
+            do {
+                let success = try await context.evaluatePolicy(
+                    .deviceOwnerAuthentication,
+                    localizedReason: "View instance password"
+                )
+                if success { showPassword = true }
+            } catch {
+                Log.error("Touch ID failed: \(error.localizedDescription)")
+            }
+        }
     }
 
     private func infoRow(_ label: String, _ value: String) -> some View {

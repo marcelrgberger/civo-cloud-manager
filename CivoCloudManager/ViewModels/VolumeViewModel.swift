@@ -17,6 +17,7 @@ final class VolumeViewModel {
     var saveError: String?
     var showSuccess = false
 
+    var instances: [CivoInstance] = []
     var availableNetworks: [CivoNetwork] = []
     var credentials: [CivoObjectStoreCredential] = []
     var isCreatingCredential = false
@@ -31,6 +32,7 @@ final class VolumeViewModel {
     var pausingTask: Task<Void, Never>?
 
     private let volumeService = CivoVolumeService()
+    private let instanceService = CivoInstanceService()
     private let objectStoreService = CivoObjectStoreService()
     private let networkService = CivoNetworkService()
     private let pauseService = ObjectStorePauseService()
@@ -42,10 +44,12 @@ final class VolumeViewModel {
 
         do {
             async let vols = volumeService.listVolumes()
+            async let insts = instanceService.listInstances()
             async let stores = objectStoreService.listObjectStores()
             async let creds = objectStoreService.listCredentials()
 
             volumes = try await vols
+            instances = try await insts
             objectStores = try await stores
             credentials = try await creds
 
@@ -69,6 +73,7 @@ final class VolumeViewModel {
         do {
             availableNetworks = try await networkService.listNetworks()
         } catch {
+            saveError = CivoAPIError.userMessage(error)
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
     }

@@ -66,6 +66,7 @@ final class InstanceViewModel {
             availableSizes = try await sizes
             availableDiskImages = try await images
         } catch {
+            saveError = CivoAPIError.userMessage(error)
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
     }

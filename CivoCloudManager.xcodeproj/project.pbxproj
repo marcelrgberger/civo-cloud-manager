@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -228,7 +228,7 @@
 		9208F7C3043B470D09B6E5F2 /* K8sPodListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sPodListView.swift; sourceTree = "<group>"; };
 		93A67F276CE2F62C20312CD2 /* CivoInstance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoInstance.swift; sourceTree = "<group>"; };
 		94407D39E1C196B6486FC650 /* CivoChargesService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoChargesService.swift; sourceTree = "<group>"; };
-		96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = CivoCloudManagerTests.xctest; path = "Civo Cloud Manager.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96055EB467318C4CD630D27C /* Civo Cloud Manager.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Civo Cloud Manager.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96924B1B50C19D9665E1D252 /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDatabaseView.swift; sourceTree = "<group>"; };
 		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
@@ -356,7 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				C88D540C390C2B2F89971D0D /* Civo Cloud Manager.app */,
-				96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */,
+				96055EB467318C4CD630D27C /* Civo Cloud Manager.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -621,7 +621,7 @@
 			);
 			name = CivoCloudManagerTests;
 			productName = CivoCloudManagerTests;
-			productReference = 96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */;
+			productReference = 96055EB467318C4CD630D27C /* Civo Cloud Manager.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		8C1FD72A050E4F08DB9A1650 /* CivoCloudManager */ = {
@@ -647,18 +647,9 @@
 		AF5037AF23E36864EDBC4F36 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-					30A94BDF0329865C334CAF4C = {
-						DevelopmentTeam = 7TSZJCJY88;
-						ProvisioningStyle = Automatic;
-					};
-					8C1FD72A050E4F08DB9A1650 = {
-						DevelopmentTeam = 7TSZJCJY88;
-						ProvisioningStyle = Automatic;
-					};
-				};
+				LastUpgradeCheck = 2640;
 			};
 			buildConfigurationList = 9E549C86DB6A2094925AB740 /* Build configuration list for PBXProject "CivoCloudManager" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -883,6 +874,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -916,11 +908,13 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 18;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7TSZJCJY88;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -936,8 +930,10 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManager";
 				PRODUCT_NAME = "Civo Cloud Manager";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 			};
@@ -947,6 +943,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEAD_CODE_STRIPPING = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Civo Cloud Manager.app/Contents/MacOS/Civo Cloud Manager";
@@ -958,6 +955,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -991,11 +989,13 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 18;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 7TSZJCJY88;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1018,6 +1018,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManager";
 				PRODUCT_NAME = "Civo Cloud Manager";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1030,6 +1031,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEAD_CODE_STRIPPING = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Civo Cloud Manager.app/Contents/MacOS/Civo Cloud Manager";
@@ -1043,11 +1045,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CivoCloudManager/CivoCloudManager.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CivoCloudManager/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Civo Cloud Manager";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				SDKROOT = macosx;
 			};
@@ -1060,11 +1066,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CivoCloudManager/CivoCloudManager.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = CivoCloudManager/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Civo Cloud Manager";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				SDKROOT = macosx;
 			};

@@ -1,6 +1,27 @@
 import Foundation
 
-struct CivoQuota: Codable, Sendable {
+/// Decodes an Int that may arrive as a JSON string or number (Civo API sends quota fields as strings).
+private struct FlexibleInt: Codable, Sendable {
+    let value: Int
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let intVal = try? container.decode(Int.self) {
+            value = intVal
+        } else if let strVal = try? container.decode(String.self), let parsed = Int(strVal) {
+            value = parsed
+        } else {
+            value = 0
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(value)
+    }
+}
+
+struct CivoQuota: Decodable, Sendable {
     let instanceCountLimit: Int
     let instanceCountUsage: Int
     let cpuCoreLimit: Int
@@ -75,6 +96,46 @@ struct CivoQuota: Codable, Sendable {
         case databaseDiskGbUsage = "database_disk_gb_usage"
         case databaseSnapshotCountLimit = "database_snapshot_count_limit"
         case databaseSnapshotCountUsage = "database_snapshot_count_usage"
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        instanceCountLimit = (try? c.decode(FlexibleInt.self, forKey: .instanceCountLimit).value) ?? 0
+        instanceCountUsage = (try? c.decode(FlexibleInt.self, forKey: .instanceCountUsage).value) ?? 0
+        cpuCoreLimit = (try? c.decode(FlexibleInt.self, forKey: .cpuCoreLimit).value) ?? 0
+        cpuCoreUsage = (try? c.decode(FlexibleInt.self, forKey: .cpuCoreUsage).value) ?? 0
+        ramMbLimit = (try? c.decode(FlexibleInt.self, forKey: .ramMbLimit).value) ?? 0
+        ramMbUsage = (try? c.decode(FlexibleInt.self, forKey: .ramMbUsage).value) ?? 0
+        diskGbLimit = (try? c.decode(FlexibleInt.self, forKey: .diskGbLimit).value) ?? 0
+        diskGbUsage = (try? c.decode(FlexibleInt.self, forKey: .diskGbUsage).value) ?? 0
+        diskVolumeCountLimit = (try? c.decode(FlexibleInt.self, forKey: .diskVolumeCountLimit).value) ?? 0
+        diskVolumeCountUsage = (try? c.decode(FlexibleInt.self, forKey: .diskVolumeCountUsage).value) ?? 0
+        diskSnapshotCountLimit = (try? c.decode(FlexibleInt.self, forKey: .diskSnapshotCountLimit).value) ?? 0
+        diskSnapshotCountUsage = (try? c.decode(FlexibleInt.self, forKey: .diskSnapshotCountUsage).value) ?? 0
+        publicIpAddressLimit = (try? c.decode(FlexibleInt.self, forKey: .publicIpAddressLimit).value) ?? 0
+        publicIpAddressUsage = (try? c.decode(FlexibleInt.self, forKey: .publicIpAddressUsage).value) ?? 0
+        networkCountLimit = (try? c.decode(FlexibleInt.self, forKey: .networkCountLimit).value) ?? 0
+        networkCountUsage = (try? c.decode(FlexibleInt.self, forKey: .networkCountUsage).value) ?? 0
+        securityGroupLimit = (try? c.decode(FlexibleInt.self, forKey: .securityGroupLimit).value) ?? 0
+        securityGroupUsage = (try? c.decode(FlexibleInt.self, forKey: .securityGroupUsage).value) ?? 0
+        securityGroupRuleLimit = (try? c.decode(FlexibleInt.self, forKey: .securityGroupRuleLimit).value) ?? 0
+        securityGroupRuleUsage = (try? c.decode(FlexibleInt.self, forKey: .securityGroupRuleUsage).value) ?? 0
+        subnetCountLimit = (try? c.decode(FlexibleInt.self, forKey: .subnetCountLimit).value) ?? 0
+        subnetCountUsage = (try? c.decode(FlexibleInt.self, forKey: .subnetCountUsage).value) ?? 0
+        loadbalancerCountLimit = (try? c.decode(FlexibleInt.self, forKey: .loadbalancerCountLimit).value) ?? 0
+        loadbalancerCountUsage = (try? c.decode(FlexibleInt.self, forKey: .loadbalancerCountUsage).value) ?? 0
+        objectstoreGbLimit = (try? c.decode(FlexibleInt.self, forKey: .objectstoreGbLimit).value) ?? 0
+        objectstoreGbUsage = (try? c.decode(FlexibleInt.self, forKey: .objectstoreGbUsage).value) ?? 0
+        databaseCountLimit = (try? c.decode(FlexibleInt.self, forKey: .databaseCountLimit).value) ?? 0
+        databaseCountUsage = (try? c.decode(FlexibleInt.self, forKey: .databaseCountUsage).value) ?? 0
+        databaseCpuCoreLimit = (try? c.decode(FlexibleInt.self, forKey: .databaseCpuCoreLimit).value) ?? 0
+        databaseCpuCoreUsage = (try? c.decode(FlexibleInt.self, forKey: .databaseCpuCoreUsage).value) ?? 0
+        databaseRamMbLimit = (try? c.decode(FlexibleInt.self, forKey: .databaseRamMbLimit).value) ?? 0
+        databaseRamMbUsage = (try? c.decode(FlexibleInt.self, forKey: .databaseRamMbUsage).value) ?? 0
+        databaseDiskGbLimit = (try? c.decode(FlexibleInt.self, forKey: .databaseDiskGbLimit).value) ?? 0
+        databaseDiskGbUsage = (try? c.decode(FlexibleInt.self, forKey: .databaseDiskGbUsage).value) ?? 0
+        databaseSnapshotCountLimit = (try? c.decode(FlexibleInt.self, forKey: .databaseSnapshotCountLimit).value) ?? 0
+        databaseSnapshotCountUsage = (try? c.decode(FlexibleInt.self, forKey: .databaseSnapshotCountUsage).value) ?? 0
     }
 }
 

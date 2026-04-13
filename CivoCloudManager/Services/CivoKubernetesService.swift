@@ -3,8 +3,10 @@ import Foundation
 final class CivoKubernetesService: Sendable {
     private let api = CivoAPIClient.shared
 
-    func listClusters() async throws -> [CivoKubernetesCluster] {
-        try await api.getPaginatedList(path: "/kubernetes/clusters")
+    func listClusters(region: String? = nil) async throws -> [CivoKubernetesCluster] {
+        var queryItems: [URLQueryItem]? = nil
+        if let region { queryItems = [URLQueryItem(name: "region", value: region)] }
+        return try await api.getPaginatedList(path: "/kubernetes/clusters", queryItems: queryItems)
     }
 
     func showCluster(_ id: String) async throws -> CivoKubernetesCluster {

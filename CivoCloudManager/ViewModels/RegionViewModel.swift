@@ -46,20 +46,27 @@ final class RegionViewModel {
             regionCounts[region.code] = RegionResourceCounts(isLoading: true)
         }
 
-        let userRegion = CivoConfig.shared.region
-        for region in regions {
-            // Temporarily swap region for API calls, restore immediately after each
-            CivoConfig.shared.region = region.code
-
-            var counts = RegionResourceCounts()
-            do { counts.instances = try await CivoInstanceService().listInstances().count } catch {}
-            do { counts.clusters = try await CivoKubernetesService().listClusters().count } catch {}
-            do { counts.databases = try await CivoDatabaseService().listDatabases().count } catch {}
-            do { counts.networks = try await CivoNetworkService().listNetworks().count } catch {}
-            do { counts.volumes = try await CivoVolumeService().listVolumes().count } catch {}
-
-            regionCounts[region.code] = counts
-            CivoConfig.shared.region = userRegion
+        await withTaskGroup(of: (String, RegionResourceCounts).self) { group in
+            for region in regions {
+                let code = region.code
+                group.addTask {
+                    var counts = RegionResourceCounts()
+                    async let insts = CivoInstanceService().listInstances(region: code)
+                    async let clusters = CivoKubernetesService().listClusters(region: code)
+                    async let dbs = CivoDatabaseService().listDatabases(region: code)
+                    async let nets = CivoNetworkService().listNetworks(region: code)
+                    async let vols = CivoVolumeService().listVolumes(region: code)
+                    counts.instances = (try? await insts)?.count
+                    counts.clusters = (try? await clusters)?.count
+                    counts.databases = (try? await dbs)?.count
+                    counts.networks = (try? await nets)?.count
+                    counts.volumes = (try? await vols)?.count
+                    return (code, counts)
+                }
+            }
+            for await (code, counts) in group {
+                regionCounts[code] = counts
+            }
         }
 
         isLoadingCounts = false

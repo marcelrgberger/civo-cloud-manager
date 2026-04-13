@@ -8,7 +8,7 @@ struct VolumeListView: View {
     var body: some View {
         Group {
             if let vol = vm.selectedVolume {
-                VolumeDetailView(volume: vol, instances: []) {
+                VolumeDetailView(volume: vol, instances: vm.instances) {
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
                         vm.selectedVolume = nil
                     }

@@ -84,7 +84,7 @@ struct QuotaEditView: View {
             }
 
             Section("Storage") {
-                quotaRow("Object Store (GB)", value: $objectStoreGb, step: 250)
+                quotaRow("Object Store (GB)", value: $objectStoreGb, step: 500)
             }
 
             Section("Databases") {
@@ -152,7 +152,9 @@ struct QuotaEditView: View {
     }
 
     private func quotaRow(_ label: String, value: Binding<Int>, step: Int) -> some View {
-        Stepper("\(label): \(value.wrappedValue)", value: value, in: 0...100000, step: step)
+        Stepper(value: value, in: 0...100000, step: step) {
+            Text(verbatim: "\(label): \(value.wrappedValue)")
+        }
     }
 
     private func sendRequest() async {

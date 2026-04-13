@@ -69,11 +69,19 @@ struct K8sConnectingView: View {
             pulse = true
             advanceSteps()
         }
+        .onDisappear {
+            stepTask?.cancel()
+        }
     }
 
+    @State private var stepTask: Task<Void, Never>?
+
     private func advanceSteps() {
-        for i in 1...steps.count {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.8) {
+        stepTask?.cancel()
+        stepTask = Task {
+            for i in 1...steps.count {
+                try? await Task.sleep(for: .milliseconds(800))
+                guard !Task.isCancelled else { return }
                 withAnimation { step = i }
             }
         }

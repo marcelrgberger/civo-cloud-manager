@@ -175,6 +175,8 @@ final class KubernetesViewModel {
     }
 
     func disconnectFromCluster() async {
+        connectTask?.cancel()
+        connectTask = nil
         dataLoadTask?.cancel()
         dataLoadTask = nil
         k8sClient?.invalidate()
@@ -241,11 +243,12 @@ final class KubernetesViewModel {
         do {
             try await firewallService.deleteRule(firewallId: fwId, ruleId: ruleId)
             Log.info("Auto-closed K8s API firewall rule")
+            autoCreatedRuleId = nil
+            autoFirewallId = nil
         } catch {
             Log.error("Auto-close firewall failed: \(error.localizedDescription)")
+            // Keep ruleId/firewallId so we can retry on next disconnect
         }
-        autoCreatedRuleId = nil
-        autoFirewallId = nil
     }
 
     func loadClusterData() async {

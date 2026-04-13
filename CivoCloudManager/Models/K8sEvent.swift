@@ -14,7 +14,7 @@ struct K8sEvent: Codable, Identifiable, Sendable {
     let lastTimestamp: String?
     let count: Int?
 
-    var id: String { metadata.uid ?? metadata.name ?? "\(reason ?? "")-\(firstTimestamp ?? "")" }
+    var id: String { metadata.uid ?? metadata.name ?? "\(involvedObject?.name ?? "")-\(reason ?? "")-\(firstTimestamp ?? "")-\(count ?? 0)" }
 
     var isWarning: Bool { type == "Warning" }
 }

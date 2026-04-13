@@ -372,7 +372,6 @@ struct OnboardingView: View {
                     applyFirewallSelections()
                     state.completeOnboarding()
                     NSApp.keyWindow?.close()
-                    NSApp.setActivationPolicy(.accessory)
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)

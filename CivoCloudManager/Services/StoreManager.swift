@@ -25,12 +25,9 @@ final class StoreManager {
 
     var isFullAccessUnlocked: Bool {
         #if DEBUG
-        Log.info("StoreManager: DEBUG mode — full access granted")
         return true
         #else
-        let unlocked = purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
-        Log.info("StoreManager: Release mode — unlocked=\(unlocked), purchasedIDs=\(purchasedProductIDs)")
-        return unlocked
+        return purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
         #endif
     }
 
