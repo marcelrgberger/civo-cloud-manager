@@ -130,13 +130,7 @@ open CivoCloudManager.xcodeproj
 # Select scheme "CivoCloudManager" → Cmd+R
 ```
 
-The Xcode project is generated from `project.yml` via [XcodeGen](https://github.com/yonaskolb/XcodeGen):
-
-```bash
-brew install xcodegen
-xcodegen generate
-open CivoCloudManager.xcodeproj
-```
+The Xcode project is managed natively (no XcodeGen).
 
 ## First Launch
 
@@ -1288,137 +1282,160 @@ Tests cover:
 
 ```
 civo-cloud-manager/
-├── project.yml                                # XcodeGen project definition
 ├── CivoCloudManager.xcodeproj/                # Xcode project (primary build)
 ├── Package.swift                              # SPM (tests only)
+├── project.yml                                # XcodeGen project definition
 ├── CivoCloudManager/
 │   ├── Info.plist                              # App metadata + localizations
 │   ├── CivoCloudManager.entitlements           # App Sandbox + network
 │   ├── CivoCloudManager.storekit              # StoreKit test configuration
 │   ├── Localizable.xcstrings                   # String catalog (8 languages)
 │   ├── PrivacyInfo.xcprivacy                   # Apple privacy manifest
-│   └── Assets.xcassets/                        # App icon + accent color
-├── Sources/
+│   ├── Assets.xcassets/                        # App icon + accent color
+│   ├── {de,en,es,fr,it,nl,pl,pt}.lproj/       # InfoPlist.strings per language
 │   ├── App/
-│   │   └── CivoCloudManagerApp.swift           # @main — 3 scenes
+│   │   └── CivoCloudManagerApp.swift           # @main — 4 scenes
 │   ├── Models/
 │   │   ├── CivoAccessLabel.swift               # Rule label generation
-│   │   ├── FirewallRule.swift                   # CivoFirewall, CivoRule, ManagedFirewall, FirewallStatus
-│   │   ├── CivoKubernetes.swift                # Cluster, NodePool, App, Condition
-│   │   ├── K8sNode.swift                       # K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo, K8sNodeSpec, K8sNodeTaint
-│   │   ├── K8sPod.swift                        # K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
-│   │   ├── K8sMetrics.swift                    # K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
-│   │   ├── K8sEvent.swift                      # K8sEvent, K8sObjectReference
-│   │   ├── K8sWorkload.swift                   # K8sDeployment, K8sDeploymentStatus
-│   │   ├── K8sStorage.swift                    # K8sPV, K8sPVSpec, K8sCSISource
+│   │   ├── CivoCharge.swift                    # Billing charges model
 │   │   ├── CivoDatabase.swift
+│   │   ├── CivoDiskImage.swift                 # OS disk images for instances
+│   │   ├── CivoDomain.swift                    # + CivoDomainRecord
+│   │   ├── CivoInstance.swift
+│   │   ├── CivoKubernetes.swift                # Cluster, NodePool, App, Condition
+│   │   ├── CivoLoadBalancer.swift
 │   │   ├── CivoNetwork.swift
-│   │   ├── CivoVolume.swift
 │   │   ├── CivoObjectStore.swift               # + ownerInfo (accessKeyId, credentialId), objectstoreEndpoint
 │   │   ├── CivoObjectStoreCredential.swift    # Credential model (accessKeyId, secretAccessKeyId, status, suspended)
-│   │   ├── CivoLoadBalancer.swift
-│   │   ├── CivoInstance.swift
-│   │   ├── CivoSSHKey.swift
-│   │   ├── CivoDomain.swift                    # + CivoDomainRecord
-│   │   ├── CivoRegion.swift
 │   │   ├── CivoQuota.swift                     # + QuotaItem (RAM/DB RAM in GB)
+│   │   ├── CivoRegion.swift
 │   │   ├── CivoSize.swift                      # Instance/K8s/DB sizes
-│   │   └── CivoDiskImage.swift                 # OS disk images for instances
+│   │   ├── CivoSSHKey.swift
+│   │   ├── CivoVolume.swift
+│   │   ├── FirewallRule.swift                   # CivoFirewall, CivoRule, ManagedFirewall, FirewallStatus
+│   │   ├── HelmRelease.swift                   # Helm release detected from K8s secrets
+│   │   ├── IPPreset.swift                      # Named IP presets (Home, Office)
+│   │   ├── K8sConfig.swift                     # ConfigMap, Secret models
+│   │   ├── K8sEvent.swift                      # K8sEvent, K8sObjectReference
+│   │   ├── K8sMetrics.swift                    # K8sNodeMetrics, K8sPodMetrics, K8sClusterMetrics, K8sMetricsParser
+│   │   ├── K8sNetworking.swift                 # K8s Service, Ingress models
+│   │   ├── K8sNode.swift                       # K8sNode, K8sNodeCondition, K8sNodeAddress, K8sResourceList, K8sNodeSystemInfo
+│   │   ├── K8sPod.swift                        # K8sPod, K8sPodStatus, K8sContainerStatus, K8sPodSpec, K8sContainer
+│   │   ├── K8sStorage.swift                    # K8sPV, K8sPVSpec, K8sCSISource
+│   │   ├── K8sWorkload.swift                   # K8sDeployment, K8sDeploymentStatus
+│   │   └── PausedObjectStore.swift             # Paused store manifest model
 │   ├── Services/
+│   │   ├── ActivityLog.swift                   # Local action history with timestamps
 │   │   ├── CivoAPIClient.swift                 # HTTP client — GET, POST, PUT, DELETE
+│   │   ├── CivoChargesService.swift            # GET /charges for billing data
 │   │   ├── CivoConfig.swift                    # API key (Keychain) + region
-│   │   ├── CivoFirewallService.swift           # Firewall CRUD + rule management + removeFirewall
-│   │   ├── CivoQuotaService.swift              # GET /quota + PUT /quota (change request)
-│   │   ├── CivoKubernetesService.swift         # List, show, create, update, delete + kubeconfig
-│   │   ├── KubeconfigParser.swift              # Parse kubeconfig YAML → server URL, CA cert, client cert, client key
-│   │   ├── KubernetesAPIClient.swift           # Direct K8s API — nodes, pods, logs, metrics, events, deployments, PVs, deletePod, scaleDeployment via PKCS#12 client cert auth
 │   │   ├── CivoDatabaseService.swift           # List, create, delete
-│   │   ├── CivoNetworkService.swift            # List, create, update, delete (removeNetwork)
-│   │   ├── CivoVolumeService.swift             # List, create, delete
-│   │   ├── CivoObjectStoreService.swift        # List, show, create, update (resize), delete + credential CRUD
-│   │   ├── S3Client.swift                     # S3-compatible client — AWS Signature V4 via CryptoKit, ListObjects v2, GetObject, PutObject, DeleteObject, HeadObject, XML parsing
-│   │   ├── ObjectStorePauseService.swift      # Pause/resume Object Stores — vault management, copy, verify, manifest
-│   │   ├── CivoLoadBalancerService.swift       # List, delete
-│   │   ├── CivoInstanceService.swift           # List, create, update, delete, stop, start, reboot
-│   │   ├── CivoSSHKeyService.swift             # List, create, delete
 │   │   ├── CivoDomainService.swift             # Domains + records CRUD
+│   │   ├── CivoFirewallService.swift           # Firewall CRUD + rule management + removeFirewall
+│   │   ├── CivoInstanceService.swift           # List, create, update, delete, stop, start, reboot
+│   │   ├── CivoKubernetesService.swift         # List, show, create, update, delete + kubeconfig
+│   │   ├── CivoLoadBalancerService.swift       # List, delete
+│   │   ├── CivoNetworkService.swift            # List, create, update, delete (removeNetwork)
+│   │   ├── CivoObjectStoreService.swift        # List, show, create, update (resize), delete + credential CRUD
+│   │   ├── CivoQuotaService.swift              # GET /quota + PUT /quota (change request)
 │   │   ├── CivoRegionService.swift
 │   │   ├── CivoSizeService.swift               # GET /sizes, GET /disk_images
+│   │   ├── CivoSSHKeyService.swift             # List, create, delete
+│   │   ├── CivoVolumeService.swift             # List, create, delete
 │   │   ├── IPDetector.swift
+│   │   ├── KubeconfigParser.swift              # Parse kubeconfig YAML → server URL, CA cert, client cert, client key
+│   │   ├── KubernetesAPIClient.swift           # Direct K8s API — nodes, pods, logs, metrics, events, deployments, PVs, exec via PKCS#12 client cert auth
+│   │   ├── NotificationService.swift           # macOS notifications for pod restart alerts
+│   │   ├── ObjectStorePauseService.swift      # Pause/resume Object Stores — vault management, copy, verify, manifest
+│   │   ├── S3Client.swift                     # S3-compatible client — AWS Signature V4 via CryptoKit
+│   │   ├── SSHKeychain.swift                  # SSH key generation via /usr/bin/ssh-keygen
 │   │   └── StoreManager.swift                 # StoreKit 2 IAP ($14.99 lifetime)
 │   ├── ViewModels/
 │   │   ├── DashboardViewModel.swift
-│   │   ├── KubernetesViewModel.swift           # + create/update, form data, K8s API (nodes, pods, logs, metrics, events, workloads, PVs), auto-firewall, restartPod, scaleDeployment, selectedNamespace, filteredDeployments/filteredServices
 │   │   ├── DatabaseViewModel.swift             # + create, form data
-│   │   ├── NetworkViewModel.swift              # + create network/firewall, update, delete network/firewall/LB
-│   │   ├── VolumeViewModel.swift               # + create volume/object store, cleanup unused, resize, pause/resume object store
-│   │   ├── InstanceViewModel.swift             # + create instance/SSH key, form data
 │   │   ├── DomainViewModel.swift               # + create/update domain/record
-│   │   └── RegionViewModel.swift
+│   │   ├── InstanceViewModel.swift             # + create instance/SSH key, form data
+│   │   ├── KubernetesViewModel.swift           # + K8s API, auto-firewall, namespace filter
+│   │   ├── NetworkViewModel.swift              # + create network/firewall, update, delete
+│   │   ├── RegionViewModel.swift
+│   │   └── VolumeViewModel.swift               # + create volume/object store, resize, pause/resume
 │   ├── Views/
-│   │   ├── MenuBarView.swift
 │   │   ├── AppState.swift
+│   │   ├── HelpView.swift                      # Help window
+│   │   ├── MenuBarView.swift
 │   │   ├── OnboardingView.swift
 │   │   ├── MainWindow/
 │   │   │   ├── MainWindowView.swift             # NavigationSplitView + sidebar
 │   │   │   ├── DashboardView.swift              # Clickable cards → sidebar nav
-│   │   │   ├── QuotaEditView.swift              # Quota increase request form (steppers + PUT /quota)
+│   │   │   ├── CostDashboardView.swift          # Billing charges, period selection, rate editor
+│   │   │   ├── QuotaEditView.swift              # Quota increase request form
+│   │   │   ├── RateEditorView.swift             # Custom hourly rate overrides
 │   │   │   ├── Compute/
-│   │   │   │   ├── InstanceListView.swift       # + toolbar, sheet, overlay
-│   │   │   │   ├── SSHKeyListView.swift         # + toolbar, sheet, overlay
 │   │   │   │   ├── CreateInstanceView.swift     # Form: hostname, size, image, ...
-│   │   │   │   └── CreateSSHKeyView.swift       # Form: name, public key
+│   │   │   │   ├── CreateSSHKeyView.swift       # Form: name, public key
+│   │   │   │   ├── InstanceDetailView.swift     # Instance info, SSH, stop/start/reboot
+│   │   │   │   ├── InstanceListView.swift       # + toolbar, sheet, overlay
+│   │   │   │   └── SSHKeyListView.swift         # + toolbar, sheet, overlay
 │   │   │   ├── Kubernetes/
+│   │   │   │   ├── ClusterDetailView.swift      # Pools, apps, conditions, live metrics/events/workloads
 │   │   │   │   ├── ClusterListView.swift        # + toolbar, sheet, overlay
-│   │   │   │   ├── ClusterDetailView.swift      # Pools, apps, conditions, save kubeconfig, Connect to K8s API, live metrics/events/workloads
 │   │   │   │   ├── CreateClusterView.swift      # Form: name, CNI, nodes, apps
+│   │   │   │   ├── EditLabelsView.swift         # Add/remove labels on node pools
 │   │   │   │   ├── K8sNodeDetailView.swift      # Node resources, conditions, addresses, system info
 │   │   │   │   ├── K8sPodListView.swift         # Pods on a node with status, namespace, restarts
-│   │   │   │   ├── PodLogView.swift             # Scrollable monospaced logs, auto-scroll, refresh
-│   │   │   │   └── EditLabelsView.swift         # Add/remove labels on node pools
+│   │   │   │   ├── PodExecView.swift            # Terminal-like command execution in pods
+│   │   │   │   └── PodLogView.swift             # Scrollable monospaced logs, auto-scroll, refresh
 │   │   │   ├── Networking/
-│   │   │   │   ├── NetworkListView.swift        # + toolbar, sheet, overlay, context delete
-│   │   │   │   ├── FirewallListView.swift       # + drill-down to FirewallDetailView
-│   │   │   │   ├── FirewallDetailView.swift     # Rule list with add/delete
-│   │   │   │   ├── CreateRuleView.swift         # Form: protocol, ports, CIDR, direction, action
-│   │   │   │   ├── LoadBalancerListView.swift   # + context delete
-│   │   │   │   ├── DomainListView.swift         # + inline records, edit, delete
-│   │   │   │   ├── CreateNetworkView.swift      # Form: label, CIDR
-│   │   │   │   ├── CreateFirewallView.swift     # Form: name, network
+│   │   │   │   ├── CreateDNSRecordView.swift    # Form: type, name, value, TTL
 │   │   │   │   ├── CreateDomainView.swift       # Form: domain name
-│   │   │   │   └── CreateDNSRecordView.swift    # Form: type, name, value, TTL
+│   │   │   │   ├── CreateFirewallView.swift     # Form: name, network
+│   │   │   │   ├── CreateNetworkView.swift      # Form: label, CIDR
+│   │   │   │   ├── CreateRuleView.swift         # Form: protocol, ports, CIDR, direction, action
+│   │   │   │   ├── DomainListView.swift         # + inline records, edit, delete
+│   │   │   │   ├── FirewallDetailView.swift     # Rule list with add/delete
+│   │   │   │   ├── FirewallListView.swift       # + drill-down to FirewallDetailView
+│   │   │   │   ├── LoadBalancerDetailView.swift # LB config, backends, health
+│   │   │   │   ├── LoadBalancerListView.swift   # + context delete
+│   │   │   │   └── NetworkListView.swift        # + toolbar, sheet, overlay, context delete
 │   │   │   ├── Storage/
-│   │   │   │   ├── DatabaseListView.swift       # + toolbar, sheet, overlay
-│   │   │   │   ├── DatabaseDetailView.swift     # Connection details, credentials (Touch ID), config, network/firewall
-│   │   │   │   ├── VolumeListView.swift         # + toolbar, sheet, overlay
-│   │   │   │   ├── VolumeDetailView.swift       # Attachment status, mountpoint, size
-│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay, pause/resume, vault status
-│   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize, browse files button
-│   │   │   │   ├── ObjectStoreBrowserView.swift # S3 file browser — breadcrumbs, folders, files, download
-│   │   │   │   ├── ObjectStorePauseView.swift   # Pause/resume progress sheet — animated, file/byte counters
-│   │   │   │   ├── CredentialListView.swift     # Object Store credentials — list, create, delete, Touch ID secrets
 │   │   │   │   ├── CreateDatabaseView.swift     # Form: name, software, size, ...
+│   │   │   │   ├── CreateObjectStoreView.swift  # Form: name, max size
 │   │   │   │   ├── CreateVolumeView.swift       # Form: name, size, network
-│   │   │   │   └── CreateObjectStoreView.swift  # Form: name, max size
+│   │   │   │   ├── CredentialListView.swift     # Object Store credentials — list, create, delete, Touch ID secrets
+│   │   │   │   ├── DatabaseDetailView.swift     # Connection details, credentials (Touch ID), config
+│   │   │   │   ├── DatabaseListView.swift       # + toolbar, sheet, overlay
+│   │   │   │   ├── ObjectStoreBrowserView.swift # S3 file browser — breadcrumbs, folders, files, download
+│   │   │   │   ├── ObjectStoreDetailView.swift  # Credentials, config, resize, browse files button
+│   │   │   │   ├── ObjectStoreListView.swift    # + toolbar, sheet, overlay, pause/resume, vault status
+│   │   │   │   ├── ObjectStorePauseView.swift   # Pause/resume progress sheet — animated, file/byte counters
+│   │   │   │   ├── VolumeDetailView.swift       # Attachment status, mountpoint, size
+│   │   │   │   └── VolumeListView.swift         # + toolbar, sheet, overlay
 │   │   │   └── Account/
+│   │   │       ├── AboutView.swift              # App info, system tools check
+│   │   │       ├── APIHealthView.swift          # API endpoint health checks with response times
 │   │   │       └── RegionListView.swift
 │   │   └── Shared/
-│   │       ├── StatusBadge.swift
-│   │       ├── QuotaGauge.swift
-│   │       ├── ResourceListRow.swift
+│   │       ├── DeleteConfirmationSheet.swift   # Name-match confirmation for deletes
 │   │       ├── EmptyStateView.swift
 │   │       ├── ErrorBanner.swift
-│   │       ├── SuccessOverlay.swift             # Green checkmark, spring auto-dismiss
-│   │       ├── DeleteConfirmationSheet.swift   # Name-match confirmation for deletes
+│   │       ├── ExportView.swift                # Export resources as JSON with secret redaction
+│   │       ├── K8sConnectingView.swift        # Animated K8s connection progress
+│   │       ├── PaywallView.swift              # Buy-once paywall + ToS/Privacy links
+│   │       ├── QuickSearchView.swift          # ⌘K search across all resources
+│   │       ├── QuotaGauge.swift
+│   │       ├── ResourceListRow.swift
+│   │       ├── SizePickerGrid.swift           # Visual size picker for instances/clusters/databases
+│   │       ├── SparklineView.swift            # Mini chart for metrics history
 │   │       ├── StaggeredAppear.swift           # ViewModifier for staggered row animations
-│   │       ├── K8sConnectingView.swift        # Animated K8s connection progress (5 steps, rotating helm, pulsing circle)
-│   │       └── PaywallView.swift              # Buy-once paywall + ToS/Privacy links
+│   │       ├── StatusBadge.swift
+│   │       └── SuccessOverlay.swift             # Green checkmark, spring auto-dismiss
 │   └── Utilities/
 │       └── Logger.swift
-├── Tests/
+├── CivoCloudManagerTests/
 │   └── APIDecodingTests.swift                  # 21 model decoding tests
+├── EULA.md
+├── PRIVACY.md
 ├── README.md
-├── CLAUDE.md
 ├── LICENSE
 └── .gitignore
 ```
