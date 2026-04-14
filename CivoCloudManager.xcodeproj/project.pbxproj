@@ -118,6 +118,7 @@
 		CBE791DF55C81D2069CD3487 /* CivoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */; };
 		CCD59B14F52486292E202441 /* CivoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F800DB4559087DDA1A05F /* CivoAPIClient.swift */; };
 		CD1920BAE3207E9019C7B47F /* CivoChargesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94407D39E1C196B6486FC650 /* CivoChargesService.swift */; };
+		CF50BCCF2F8E185500CCE542 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF50BCCE2F8E185500CCE542 /* StoreKit.framework */; };
 		CF9F71CB4409F917A64531A8 /* CivoInstanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DC139DADC42F79E5D8F30 /* CivoInstanceService.swift */; };
 		D211C0CEEDBAC68A66D8E7DA /* CivoRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90DE16F3B60F3AB46A19FAD /* CivoRegion.swift */; };
 		D2274BF5A9886FF813D32F58 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C416A972F713EDEE76B1EA1 /* DashboardView.swift */; };
@@ -265,6 +266,7 @@
 		CD73BD70AC93DDA0F4B4C10C /* CivoQuotaService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoQuotaService.swift; sourceTree = "<group>"; };
 		CE48C43BE86B2443BB86D258 /* DeleteConfirmationSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationSheet.swift; sourceTree = "<group>"; };
 		CEA8410988E047AA5A0FA5D8 /* StaggeredAppear.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StaggeredAppear.swift; sourceTree = "<group>"; };
+		CF50BCCE2F8E185500CCE542 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CFBD215B2F8D27B1006C0080 /* CivoCloudManager.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CivoCloudManager.storekit; sourceTree = "<group>"; };
 		D09D9D127A7D5E20328F5F30 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D33F386D8A57C822AE215281 /* CivoAccessLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAccessLabel.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EC3DCCD6A0FF683DC0FB5E2 /* Cocoa.framework in Frameworks */,
+				CF50BCCF2F8E185500CCE542 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +432,7 @@
 		72ECF1884540088CA54642BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CF50BCCE2F8E185500CCE542 /* StoreKit.framework */,
 				2FD3761C8D7AB07798C79161 /* OS X */,
 			);
 			name = Frameworks;
