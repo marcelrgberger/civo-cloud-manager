@@ -42,6 +42,7 @@
 		426D364547D92AF1C603A36C /* CivoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */; };
 		459E8D06D65AB6DA9962A265 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB89B065ECDE31538143FC3E /* Cocoa.framework */; };
 		4778BBCA885824866A8DAFD7 /* EditLabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6CD15E3F39C39FE6FAA9 /* EditLabelsView.swift */; };
+		4B15AF14CE4639F7B3470CA8 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B383DBDB2B764F3E8F02769 /* LegalView.swift */; };
 		4DB17DCC7D2CBF8F9B39921A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88481839AA22E9CED63C5D51 /* OnboardingView.swift */; };
 		4E8CDE3EFCFA23ACB58217D9 /* CreateDNSRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */; };
 		50405F446AC33DA87C55A96D /* K8sPodListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9208F7C3043B470D09B6E5F2 /* K8sPodListView.swift */; };
@@ -55,13 +56,17 @@
 		5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */; };
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
 		5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */; };
+		5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 88320D84F47B5B7234DED63F /* PrivacyPolicy.md */; };
 		613988765DB18F19D7936F26 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */; };
+		6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150226384082E5A588939D22 /* MarkdownView.swift */; };
 		61F5367A5E9DD32E68020FE1 /* SSHKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */; };
 		672FBCAB272D965EEA1503A7 /* CivoInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A67F276CE2F62C20312CD2 /* CivoInstance.swift */; };
 		69AD6A864491F4044F2B011F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E080D4B547AA2B37914090E /* MenuBarView.swift */; };
 		69F6E27FFCDC4B883A1AFD23 /* LoadBalancerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */; };
+		6A344C4208F4ABD36D77273F /* Impressum.md in Resources */ = {isa = PBXBuildFile; fileRef = 94D3EC9ABD65BB78103C9392 /* Impressum.md */; };
 		6ABFB7143AA331C58109F97C /* ObjectStorePauseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84180BA7584ACEED6FC47A99 /* ObjectStorePauseService.swift */; };
 		6CCEA847DF32006176D3A9D4 /* ObjectStoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23455AFA03C51527C20C9FD9 /* ObjectStoreDetailView.swift */; };
+		6D119A5C224BC01FC5E3B4ED /* TermsOfService.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BC43170529524470671BD19 /* TermsOfService.md */; };
 		6D378161BBA02573371EC695 /* CivoQuotaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD73BD70AC93DDA0F4B4C10C /* CivoQuotaService.swift */; };
 		6DC5321D1EB4C817873A02D1 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058B306C16FA7AC278A657B /* Logger.swift */; };
 		716E6BD4C5E741C395B6C359 /* CreateObjectStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865A0EAD2DDB9B17FCF3CF89 /* CreateObjectStoreView.swift */; };
@@ -160,8 +165,13 @@
 		08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionViewModel.swift; sourceTree = "<group>"; };
 		09EC708C7CF21BD04266D608 /* CivoDomainService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomainService.swift; sourceTree = "<group>"; };
 		09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
+		0CAB90D9E06AE3F401020357 /* en */ = {isa = PBXFileReference; includeInIndex = 1; name = en; path = en.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		0DFD18515DDCB89B7B11085A /* es */ = {isa = PBXFileReference; includeInIndex = 1; name = es; path = es.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		119A83B46A65A4C30306BE66 /* CivoVolumeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolumeService.swift; sourceTree = "<group>"; };
 		139202D046776B2447E7538A /* DomainListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DomainListView.swift; sourceTree = "<group>"; };
+		150226384082E5A588939D22 /* MarkdownView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
+		158D42188BF2A1FD2BE4CD54 /* it */ = {isa = PBXFileReference; includeInIndex = 1; name = it; path = it.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		158FEB1ADBC203A9626DFBD8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; name = pt; path = pt.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		1693AEFF49056D27CAE40A92 /* PausedObjectStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PausedObjectStore.swift; sourceTree = "<group>"; };
 		19D85BF2203CFAB31EC1772C /* CivoDomain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomain.swift; sourceTree = "<group>"; };
 		1A4FC9558B135D603AC2BB25 /* CivoObjectStoreCredential.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreCredential.swift; sourceTree = "<group>"; };
@@ -169,6 +179,7 @@
 		1CC0859594861435DF119AAC /* SizePickerGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SizePickerGrid.swift; sourceTree = "<group>"; };
 		1D4BDDF3AA8CE6F2EC6DD868 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1E080D4B547AA2B37914090E /* MenuBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		1F3418483EDEFC2F2D8A08D8 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; name = nl; path = nl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		1FDC2D559CDF199ED3540F04 /* CivoDatabase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
@@ -182,6 +193,7 @@
 		2E3F800DB4559087DDA1A05F /* CivoAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAPIClient.swift; sourceTree = "<group>"; };
 		2E711DDE54B48DBE6F12D4A6 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30C29B5780C5BD66D7761CAA /* Localizable.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		3139DD72E464D3B3DBF382B5 /* en */ = {isa = PBXFileReference; includeInIndex = 1; name = en; path = en.lproj/Impressum.md; sourceTree = "<group>"; };
 		323BA1EFA2434775B360EC40 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesViewModel.swift; sourceTree = "<group>"; };
 		371F72DDF5C28CE579789154 /* PodLogView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PodLogView.swift; sourceTree = "<group>"; };
@@ -193,6 +205,7 @@
 		4052BA575096852699579B5A /* K8sStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sStorage.swift; sourceTree = "<group>"; };
 		41F803DCD5E699794A5E2F38 /* ObjectStoreBrowserView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreBrowserView.swift; sourceTree = "<group>"; };
 		427F5C2E5699C5774C494320 /* CivoKubernetesService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetesService.swift; sourceTree = "<group>"; };
+		432A9F0FCC3CD318FA50C44B /* fr */ = {isa = PBXFileReference; includeInIndex = 1; name = fr; path = fr.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		44DB18154AC50CA130D2FB09 /* CredentialListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
 		47BC22D44A6BDA44A865773F /* MainWindowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
 		4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancer.swift; sourceTree = "<group>"; };
@@ -202,17 +215,24 @@
 		541FD48B68AB64C17DAEF5F2 /* ClusterDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClusterDetailView.swift; sourceTree = "<group>"; };
 		5531411EA45415DC78696414 /* CreateDomainView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDomainView.swift; sourceTree = "<group>"; };
 		59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetes.swift; sourceTree = "<group>"; };
+		5AD7C8749E56550EFAB908BA /* es */ = {isa = PBXFileReference; includeInIndex = 1; name = es; path = es.lproj/Impressum.md; sourceTree = "<group>"; };
+		5C10C1A3D33738504C94B6CB /* de */ = {isa = PBXFileReference; includeInIndex = 1; name = de; path = de.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		5C6007AB693639033F735D50 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; name = pl; path = pl.lproj/Impressum.md; sourceTree = "<group>"; };
+		5DEE909290CCC663692F435F /* it */ = {isa = PBXFileReference; includeInIndex = 1; name = it; path = it.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		6058B306C16FA7AC278A657B /* Logger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		611244C5645319E3DD2DD6CA /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		618697D3D7D82F7D65EDCF86 /* PodExecView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PodExecView.swift; sourceTree = "<group>"; };
 		6573B0CCE355C008B097BE98 /* K8sMetrics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sMetrics.swift; sourceTree = "<group>"; };
 		65ECBE7F88791326260A0FD0 /* K8sNodeDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sNodeDetailView.swift; sourceTree = "<group>"; };
+		67605B8A33B72AD5D3674CC1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; name = nl; path = nl.lproj/Impressum.md; sourceTree = "<group>"; };
 		6AC522011F72417D84D6479C /* CivoSSHKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSSHKey.swift; sourceTree = "<group>"; };
 		6C38900AD57D6A3AA1BE8D86 /* AboutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		6C416A972F713EDEE76B1EA1 /* DashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		6C8E6CAAC1AD5DF9B154596C /* APIHealthView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIHealthView.swift; sourceTree = "<group>"; };
+		6CC06AA05040B36654815EFC /* fr */ = {isa = PBXFileReference; includeInIndex = 1; name = fr; path = fr.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		6D09EE0597317A299FF33F61 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6FEC678CBA94690F848CF1F7 /* QuotaEditView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEditView.swift; sourceTree = "<group>"; };
+		730986B6978871BAFC769F98 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; name = fr; path = fr.lproj/Impressum.md; sourceTree = "<group>"; };
 		78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ErrorBanner.swift; sourceTree = "<group>"; };
 		78B5D4692DA28F2E46B9EA19 /* K8sPod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sPod.swift; sourceTree = "<group>"; };
 		7F26AD9AE845091B084D7C1F /* DatabaseViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DatabaseViewModel.swift; sourceTree = "<group>"; };
@@ -222,6 +242,7 @@
 		85B6B375E3D2A3808726F712 /* VolumeListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VolumeListView.swift; sourceTree = "<group>"; };
 		865A0EAD2DDB9B17FCF3CF89 /* CreateObjectStoreView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateObjectStoreView.swift; sourceTree = "<group>"; };
 		86735EED01F2D8BA1F04558F /* CostDashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostDashboardView.swift; sourceTree = "<group>"; };
+		8703B7ADBE6B3FE8F2D24EB3 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; name = nl; path = nl.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		88481839AA22E9CED63C5D51 /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8A2B3F1204BB739A272BBB9D /* StoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		8CD1B523085B1FE88F1390E7 /* DashboardViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
@@ -235,6 +256,7 @@
 		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
 		9A0D734E5AADEC5426048D0D /* NetworkListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		9B01D46854B56A4823DA0330 /* QuotaGauge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
+		9B383DBDB2B764F3E8F02769 /* LegalView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
 		9CF001A1D2E20FC2079DBDCA /* CreateFirewallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateFirewallView.swift; sourceTree = "<group>"; };
 		9D2DD872423A252DACA2ED1A /* CreateVolumeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateVolumeView.swift; sourceTree = "<group>"; };
 		9D863C92BB8355FC86FD7921 /* CreateNetworkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateNetworkView.swift; sourceTree = "<group>"; };
@@ -246,6 +268,7 @@
 		A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetworkService.swift; sourceTree = "<group>"; };
 		AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSHKeychain.swift; sourceTree = "<group>"; };
 		AE84E4DD07E304399A5562A3 /* CivoQuota.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoQuota.swift; sourceTree = "<group>"; };
+		B12F7996F1A16922E40D6BD3 /* it */ = {isa = PBXFileReference; includeInIndex = 1; name = it; path = it.lproj/Impressum.md; sourceTree = "<group>"; };
 		B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetwork.swift; sourceTree = "<group>"; };
 		B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateRuleView.swift; sourceTree = "<group>"; };
 		B438532CEAB87ACE7FE3EAD9 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
@@ -258,6 +281,7 @@
 		BE58D59A701E14C63EE6DB83 /* SparklineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
 		BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceListView.swift; sourceTree = "<group>"; };
 		C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDNSRecordView.swift; sourceTree = "<group>"; };
+		C17FDFD0A2757A7BFF86340C /* pl */ = {isa = PBXFileReference; includeInIndex = 1; name = pl; path = pl.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		C25A7DC489DFA0E4E49034B4 /* IPDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IPDetector.swift; sourceTree = "<group>"; };
 		C50E6CD15E3F39C39FE6FAA9 /* EditLabelsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditLabelsView.swift; sourceTree = "<group>"; };
 		C75DC139DADC42F79E5D8F30 /* CivoInstanceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoInstanceService.swift; sourceTree = "<group>"; };
@@ -271,6 +295,7 @@
 		D09D9D127A7D5E20328F5F30 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D33F386D8A57C822AE215281 /* CivoAccessLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAccessLabel.swift; sourceTree = "<group>"; };
 		D730A1AEFCAFE05E6012ADE3 /* K8sWorkload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sWorkload.swift; sourceTree = "<group>"; };
+		D86101F39E79A191C020D2DE /* de */ = {isa = PBXFileReference; includeInIndex = 1; name = de; path = de.lproj/Impressum.md; sourceTree = "<group>"; };
 		DB215CC1AD313B8729ED3E16 /* CivoObjectStoreService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreService.swift; sourceTree = "<group>"; };
 		DB89B065ECDE31538143FC3E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		DBF124BAA294FA2132745A3A /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
@@ -278,8 +303,11 @@
 		DD0E621B8A284E2DEA9AD09B /* CivoDatabaseService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabaseService.swift; sourceTree = "<group>"; };
 		E4E32B8C0292ABE978042F2F /* K8sConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConfig.swift; sourceTree = "<group>"; };
 		E65306F70453D10A71A4761E /* K8sEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sEvent.swift; sourceTree = "<group>"; };
+		E8EB982C6B9FBB5DD15F657A /* pt */ = {isa = PBXFileReference; includeInIndex = 1; name = pt; path = pt.lproj/Impressum.md; sourceTree = "<group>"; };
 		EC30E33A559EF2EDE5F1EFF7 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EC4E4960816C20C03974D4DD /* pl */ = {isa = PBXFileReference; includeInIndex = 1; name = pl; path = pl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		ECBA6FF0E44C565460FE7EC0 /* ExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
+		ED9C224968AEEA8411D81E21 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; name = pt; path = pt.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolume.swift; sourceTree = "<group>"; };
 		EF44F5E3DEF4B58AF3241C8A /* InstanceDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDetailView.swift; sourceTree = "<group>"; };
 		F01918F95778C2210D574D04 /* InstanceViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceViewModel.swift; sourceTree = "<group>"; };
@@ -292,11 +320,14 @@
 		F45EDC4E0AD6ACB0769F05AE /* RegionListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionListView.swift; sourceTree = "<group>"; };
 		F4E1448D6889E0EE066A4CBB /* CivoObjectStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStore.swift; sourceTree = "<group>"; };
 		F60841FA970B11CC88C24C39 /* CivoCloudManager.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = CivoCloudManager.entitlements; sourceTree = "<group>"; };
+		F6139AFE5D6A8935110977B3 /* de */ = {isa = PBXFileReference; includeInIndex = 1; name = de; path = de.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
 		F953ABDE939CB530828314B8 /* CivoConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConfig.swift; sourceTree = "<group>"; };
+		F985475E4B0A46FBB3464699 /* en */ = {isa = PBXFileReference; includeInIndex = 1; name = en; path = en.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		FA2DCEEDC8117A41FBC2CD5B /* ObjectStoreListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreListView.swift; sourceTree = "<group>"; };
 		FECCC382DD128691627D9B04 /* SuccessOverlay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SuccessOverlay.swift; sourceTree = "<group>"; };
 		FF3B983A59EFD4C3E70560F6 /* CivoFirewallService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoFirewallService.swift; sourceTree = "<group>"; };
+		FF6DD453E48669C7FC20DB5A /* es */ = {isa = PBXFileReference; includeInIndex = 1; name = es; path = es.lproj/TermsOfService.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +357,7 @@
 				6C8E6CAAC1AD5DF9B154596C /* APIHealthView.swift */,
 				6C38900AD57D6A3AA1BE8D86 /* AboutView.swift */,
 				F45EDC4E0AD6ACB0769F05AE /* RegionListView.swift */,
+				9B383DBDB2B764F3E8F02769 /* LegalView.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -380,6 +412,9 @@
 				8D7334B33C94EA256DA23370 /* Info.plist */,
 				F60841FA970B11CC88C24C39 /* CivoCloudManager.entitlements */,
 				3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */,
+				88320D84F47B5B7234DED63F /* PrivacyPolicy.md */,
+				1BC43170529524470671BD19 /* TermsOfService.md */,
+				94D3EC9ABD65BB78103C9392 /* Impressum.md */,
 			);
 			path = CivoCloudManager;
 			sourceTree = "<group>";
@@ -595,6 +630,7 @@
 				CEA8410988E047AA5A0FA5D8 /* StaggeredAppear.swift */,
 				05DFE2E2DF24970B74AA501F /* StatusBadge.swift */,
 				FECCC382DD128691627D9B04 /* SuccessOverlay.swift */,
+				150226384082E5A588939D22 /* MarkdownView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -690,6 +726,9 @@
 				8613EAA5ADFEB7622FA9F267 /* Localizable.xcstrings in Resources */,
 				284AC248923AA2EA5CDA17B7 /* PrivacyInfo.xcprivacy in Resources */,
 				26AE2B95EE1C325878952853 /* InfoPlist.strings in Resources */,
+				5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */,
+				6D119A5C224BC01FC5E3B4ED /* TermsOfService.md in Resources */,
+				6A344C4208F4ABD36D77273F /* Impressum.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,6 +871,8 @@
 				A59742F6DF25FCF2EB1AE9C6 /* StaggeredAppear.swift in Sources */,
 				FAAF3DCA9262EA12FE8B4DCB /* StatusBadge.swift in Sources */,
 				B60C62798B450D852A9DA6BF /* SuccessOverlay.swift in Sources */,
+				6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */,
+				4B15AF14CE4639F7B3470CA8 /* LegalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,6 +896,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1BC43170529524470671BD19 /* TermsOfService.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0CAB90D9E06AE3F401020357 /* en */,
+				F6139AFE5D6A8935110977B3 /* de */,
+				FF6DD453E48669C7FC20DB5A /* es */,
+				432A9F0FCC3CD318FA50C44B /* fr */,
+				158D42188BF2A1FD2BE4CD54 /* it */,
+				8703B7ADBE6B3FE8F2D24EB3 /* nl */,
+				C17FDFD0A2757A7BFF86340C /* pl */,
+				ED9C224968AEEA8411D81E21 /* pt */,
+			);
+			name = TermsOfService.md;
+			sourceTree = "<group>";
+		};
 		3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -868,6 +924,36 @@
 				323BA1EFA2434775B360EC40 /* pt */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		88320D84F47B5B7234DED63F /* PrivacyPolicy.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F985475E4B0A46FBB3464699 /* en */,
+				5C10C1A3D33738504C94B6CB /* de */,
+				0DFD18515DDCB89B7B11085A /* es */,
+				6CC06AA05040B36654815EFC /* fr */,
+				5DEE909290CCC663692F435F /* it */,
+				1F3418483EDEFC2F2D8A08D8 /* nl */,
+				EC4E4960816C20C03974D4DD /* pl */,
+				158FEB1ADBC203A9626DFBD8 /* pt */,
+			);
+			name = PrivacyPolicy.md;
+			sourceTree = "<group>";
+		};
+		94D3EC9ABD65BB78103C9392 /* Impressum.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3139DD72E464D3B3DBF382B5 /* en */,
+				D86101F39E79A191C020D2DE /* de */,
+				5AD7C8749E56550EFAB908BA /* es */,
+				730986B6978871BAFC769F98 /* fr */,
+				B12F7996F1A16922E40D6BD3 /* it */,
+				67605B8A33B72AD5D3674CC1 /* nl */,
+				5C6007AB693639033F735D50 /* pl */,
+				E8EB982C6B9FBB5DD15F657A /* pt */,
+			);
+			name = Impressum.md;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -99,7 +99,7 @@ struct SSHKeyListView: View {
                             Text(keyName)
                                 .font(.body.monospaced())
                             Spacer()
-                            Button("Export to Downloads") {
+                            Button("Export...") {
                                 recoverKey(name: keyName)
                             }
                             .buttonStyle(.bordered)
@@ -131,16 +131,19 @@ struct SSHKeyListView: View {
             recoveredMessage = "Could not read key from backup"
             return
         }
-        guard let downloadsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
-            recoveredMessage = "Could not access Downloads folder"
-            return
-        }
-        let targetPath = downloadsDir.appendingPathComponent(name)
+
+        let panel = NSSavePanel()
+        panel.title = "Export SSH Private Key"
+        panel.nameFieldStringValue = name
+        panel.canCreateDirectories = true
+
+        guard panel.runModal() == .OK, let saveURL = panel.url else { return }
+
         do {
-            try keyData.write(to: targetPath)
-            try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: targetPath.path)
-            NSWorkspace.shared.activateFileViewerSelecting([targetPath])
-            recoveredMessage = "Private key '\(name)' exported to ~/Downloads/"
+            try keyData.write(to: saveURL)
+            try FileManager.default.setAttributes([.posixPermissions: 0o600], ofItemAtPath: saveURL.path)
+            NSWorkspace.shared.activateFileViewerSelecting([saveURL])
+            recoveredMessage = "Private key '\(name)' exported to \(saveURL.path)"
         } catch {
             recoveredMessage = "Export failed: \(error.localizedDescription)"
         }

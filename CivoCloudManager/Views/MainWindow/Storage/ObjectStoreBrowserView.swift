@@ -240,11 +240,27 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
-    // MARK: - Download (saves to temp, opens Finder)
+    // MARK: - Download (single file → NSSavePanel, multi/folder → NSOpenPanel)
 
     private func download(selection ids: Set<String>) async {
         let selectedItems = ids.compactMap { id in items.first { $0.id == id } }
         guard !selectedItems.isEmpty else { return }
+
+        // Single-file fast path: use NSSavePanel so the user picks exact destination
+        if selectedItems.count == 1, let only = selectedItems.first, !only.isFolder {
+            await downloadSingleFile(only)
+            return
+        }
+
+        // Multiple items or folder(s): user picks a destination folder
+        let panel = NSOpenPanel()
+        panel.title = "Choose Download Location"
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+
+        guard panel.runModal() == .OK, let baseDir = panel.url else { return }
 
         isDownloading = true
         error = nil
@@ -269,10 +285,7 @@ struct ObjectStoreBrowserView: View {
                 return
             }
 
-            // Create download directory in ~/Downloads
-            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first
-                ?? FileManager.default.temporaryDirectory
-            let downloadDir = downloadsURL
+            let downloadDir = baseDir
                 .appendingPathComponent("CivoDownload-\(UUID().uuidString)")
             try FileManager.default.createDirectory(at: downloadDir, withIntermediateDirectories: true)
 
@@ -311,6 +324,35 @@ struct ObjectStoreBrowserView: View {
             isDownloading = false
             downloadProgress = ""
         }
+    }
+
+    private func downloadSingleFile(_ item: BrowserItem) async {
+        let panel = NSSavePanel()
+        panel.title = "Save File"
+        panel.nameFieldStringValue = item.name
+        panel.canCreateDirectories = true
+
+        guard panel.runModal() == .OK, let saveURL = panel.url else { return }
+
+        isDownloading = true
+        error = nil
+        downloadProgress = "Downloading \(item.name)..."
+
+        do {
+            try Task.checkCancellation()
+            let data = try await s3Client.downloadObject(bucket: store.name, key: item.key)
+            try data.write(to: saveURL)
+            downloadProgress = "Done — \(item.name) saved"
+            NSWorkspace.shared.activateFileViewerSelecting([saveURL])
+            try? await Task.sleep(for: .seconds(2))
+        } catch is CancellationError {
+            // fall through to cleanup
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isDownloading = false
+        downloadProgress = ""
     }
 
     // MARK: - Helpers
