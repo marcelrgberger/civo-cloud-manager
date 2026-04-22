@@ -160,11 +160,21 @@ struct PaywallView: View {
 
     // MARK: - Legal (Apple Guideline 3.1.2)
 
+    @Environment(\.openWindow) private var openWindow
+
     private var legalLinks: some View {
         HStack(spacing: 16) {
-            Link("Terms of Use", destination: URL(string: "https://civo-cloud-manager.app/terms")!)
+            Button("Terms of Use") {
+                LegalNavigation.shared.requestedDocument = .terms
+                openWindow(id: "legal")
+            }
+            .buttonStyle(.plain)
             Text("·").foregroundStyle(.tertiary)
-            Link("Privacy Policy", destination: URL(string: "https://berger-rosenstock.de/data-protection")!)
+            Button("Privacy Policy") {
+                LegalNavigation.shared.requestedDocument = .privacy
+                openWindow(id: "legal")
+            }
+            .buttonStyle(.plain)
         }
         .font(.caption2)
         .foregroundStyle(.tertiary)

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AboutView: View {
+    @Environment(\.openWindow) private var openWindow
     private let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
     private let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—"
 
@@ -40,12 +41,10 @@ struct AboutView: View {
                     .frame(width: 200)
 
                 VStack(spacing: 8) {
-                    Link("Privacy Policy", destination: URL(string: "https://berger-rosenstock.de/data-protection")!)
-                    Link("Terms of Use", destination: URL(string: "https://civo-cloud-manager.app/terms")!)
-                    Link("Imprint", destination: URL(string: "https://berger-rosenstock.de/imprint")!)
-                    Link("Website", destination: URL(string: "https://civo-cloud-manager.app")!)
+                    Button("Legal Information") { openWindow(id: "legal") }
                 }
                 .font(.caption)
+                .buttonStyle(.plain)
                 .foregroundStyle(.blue)
 
                 Divider()
