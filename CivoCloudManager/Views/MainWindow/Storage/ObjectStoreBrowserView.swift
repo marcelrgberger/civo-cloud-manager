@@ -240,13 +240,19 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
-    // MARK: - Download (user picks folder, saves there, opens Finder)
+    // MARK: - Download (single file → NSSavePanel, multi/folder → NSOpenPanel)
 
     private func download(selection ids: Set<String>) async {
         let selectedItems = ids.compactMap { id in items.first { $0.id == id } }
         guard !selectedItems.isEmpty else { return }
 
-        // Ask user for download directory
+        // Single-file fast path: use NSSavePanel so the user picks exact destination
+        if selectedItems.count == 1, let only = selectedItems.first, !only.isFolder {
+            await downloadSingleFile(only)
+            return
+        }
+
+        // Multiple items or folder(s): user picks a destination folder
         let panel = NSOpenPanel()
         panel.title = "Choose Download Location"
         panel.canChooseFiles = false
@@ -318,6 +324,35 @@ struct ObjectStoreBrowserView: View {
             isDownloading = false
             downloadProgress = ""
         }
+    }
+
+    private func downloadSingleFile(_ item: BrowserItem) async {
+        let panel = NSSavePanel()
+        panel.title = "Save File"
+        panel.nameFieldStringValue = item.name
+        panel.canCreateDirectories = true
+
+        guard panel.runModal() == .OK, let saveURL = panel.url else { return }
+
+        isDownloading = true
+        error = nil
+        downloadProgress = "Downloading \(item.name)..."
+
+        do {
+            try Task.checkCancellation()
+            let data = try await s3Client.downloadObject(bucket: store.name, key: item.key)
+            try data.write(to: saveURL)
+            downloadProgress = "Done — \(item.name) saved"
+            NSWorkspace.shared.activateFileViewerSelecting([saveURL])
+            try? await Task.sleep(for: .seconds(2))
+        } catch is CancellationError {
+            // fall through to cleanup
+        } catch {
+            self.error = error.localizedDescription
+        }
+
+        isDownloading = false
+        downloadProgress = ""
     }
 
     // MARK: - Helpers

@@ -56,7 +56,9 @@ struct CreateSSHKeyView: View {
                                 .font(.caption.bold())
                         }
 
-                        let command = "mv \(savedPath) ~/.ssh/\(keyName) && chmod 600 ~/.ssh/\(keyName)"
+                        let srcQuoted = Self.shellQuote(savedPath)
+                        let dstQuoted = Self.shellQuote("~/.ssh/\(keyName)")
+                        let command = "mv \(srcQuoted) \(dstQuoted) && chmod 600 \(dstQuoted)"
 
                         Text("Move it to your SSH directory:")
                             .font(.caption)
@@ -125,6 +127,15 @@ struct CreateSSHKeyView: View {
     }
 
     private static let safeNamePattern = try! Regex("[^A-Za-z0-9._-]")
+
+    /// Single-quotes a path for safe use in a POSIX shell command. Preserves `~` (tilde expansion).
+    static func shellQuote(_ s: String) -> String {
+        if s.hasPrefix("~/") {
+            let rest = String(s.dropFirst(2))
+            return "~/" + "'" + rest.replacingOccurrences(of: "'", with: "'\\''") + "'"
+        }
+        return "'" + s.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
 
     private func generateKey() {
         let sanitizedName = name.replacingOccurrences(of: " ", with: "-").lowercased()

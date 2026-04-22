@@ -165,11 +165,13 @@ struct PaywallView: View {
     private var legalLinks: some View {
         HStack(spacing: 16) {
             Button("Terms of Use") {
+                LegalNavigation.shared.requestedDocument = .terms
                 openWindow(id: "legal")
             }
             .buttonStyle(.plain)
             Text("·").foregroundStyle(.tertiary)
             Button("Privacy Policy") {
+                LegalNavigation.shared.requestedDocument = .privacy
                 openWindow(id: "legal")
             }
             .buttonStyle(.plain)

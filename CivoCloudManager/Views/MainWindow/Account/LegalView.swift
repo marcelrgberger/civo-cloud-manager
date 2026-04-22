@@ -1,10 +1,19 @@
 import SwiftUI
 
+/// Shared navigation target for the Legal window — callers set this before
+/// opening the `legal` window to request a specific initial tab.
+@Observable
+@MainActor
+final class LegalNavigation {
+    static let shared = LegalNavigation()
+    var requestedDocument: LegalDocument = .privacy
+}
+
 /// Unified legal information view with tabs for Privacy Policy, Terms of Use, and Imprint.
 /// Documents are loaded from localized Markdown files (`.lproj/*.md`) in the user's language,
 /// falling back to English automatically via macOS bundle localization.
 struct LegalView: View {
-    @State private var selectedDocument: LegalDocument = .privacy
+    @State private var selectedDocument: LegalDocument = LegalNavigation.shared.requestedDocument
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,6 +37,9 @@ struct LegalView: View {
             }
         }
         .navigationTitle("Legal")
+        .onAppear {
+            selectedDocument = LegalNavigation.shared.requestedDocument
+        }
     }
 }
 

@@ -475,6 +475,7 @@ struct MenuBarView: View {
             Spacer()
 
             Button {
+                LegalNavigation.shared.requestedDocument = .privacy
                 NSApp.setActivationPolicy(.regular)
                 openWindow(id: "legal")
                 NSApp.activate()
@@ -483,7 +484,7 @@ struct MenuBarView: View {
             }
             .buttonStyle(.borderless)
             .foregroundStyle(.secondary)
-            .help("Legal")
+            .help("Privacy Policy")
 
             Spacer()
 
