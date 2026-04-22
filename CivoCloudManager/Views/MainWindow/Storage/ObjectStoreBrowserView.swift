@@ -240,11 +240,21 @@ struct ObjectStoreBrowserView: View {
         }
     }
 
-    // MARK: - Download (saves to temp, opens Finder)
+    // MARK: - Download (user picks folder, saves there, opens Finder)
 
     private func download(selection ids: Set<String>) async {
         let selectedItems = ids.compactMap { id in items.first { $0.id == id } }
         guard !selectedItems.isEmpty else { return }
+
+        // Ask user for download directory
+        let panel = NSOpenPanel()
+        panel.title = "Choose Download Location"
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.canCreateDirectories = true
+        panel.allowsMultipleSelection = false
+
+        guard panel.runModal() == .OK, let baseDir = panel.url else { return }
 
         isDownloading = true
         error = nil
@@ -269,10 +279,7 @@ struct ObjectStoreBrowserView: View {
                 return
             }
 
-            // Create download directory in ~/Downloads
-            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first
-                ?? FileManager.default.temporaryDirectory
-            let downloadDir = downloadsURL
+            let downloadDir = baseDir
                 .appendingPathComponent("CivoDownload-\(UUID().uuidString)")
             try FileManager.default.createDirectory(at: downloadDir, withIntermediateDirectories: true)
 

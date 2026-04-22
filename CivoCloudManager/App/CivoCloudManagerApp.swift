@@ -53,6 +53,13 @@ struct CivoCloudManagerApp: App {
         }
         .defaultSize(width: 650, height: 700)
         .defaultPosition(.center)
+
+        Window("Legal", id: "legal") {
+            LegalView()
+                .onDisappear { hideFromDockIfNoWindows() }
+        }
+        .defaultSize(width: 720, height: 720)
+        .defaultPosition(.center)
     }
 
     private func hideFromDockIfNoWindows() {

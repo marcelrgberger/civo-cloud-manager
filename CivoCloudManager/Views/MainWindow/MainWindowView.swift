@@ -16,6 +16,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case costs = "Cost Estimate"
     case apiHealth = "API Health"
     case regions = "Regions"
+    case legal = "Legal"
     case about = "About"
 
     var id: String { rawValue }
@@ -37,6 +38,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .costs: return "dollarsign.circle"
         case .apiHealth: return "waveform.path.ecg"
         case .regions: return "map"
+        case .legal: return "doc.text"
         case .about: return "info.circle"
         }
     }
@@ -58,6 +60,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .costs: return .green
         case .apiHealth: return .pink
         case .regions: return .mint
+        case .legal: return .brown
         case .about: return .secondary
         }
     }
@@ -72,6 +75,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .costs: return .account
         case .apiHealth: return .account
         case .regions: return .account
+        case .legal: return .account
         case .about: return .account
         }
     }
@@ -272,6 +276,8 @@ struct MainWindowView: View {
             )
         case .regions:
             RegionListView(vm: regionVM)
+        case .legal:
+            LegalView()
         case .about:
             AboutView()
         }

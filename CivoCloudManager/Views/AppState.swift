@@ -332,7 +332,7 @@ final class AppState {
             return
         }
 
-        if enabledFirewalls.isEmpty {
+        if enabledFirewalls.isEmpty && !onboardingComplete {
             setupState = .needsFirewallSelection
             return
         }
@@ -378,11 +378,8 @@ final class AppState {
     func completeOnboarding() {
         onboardingComplete = true
         showOnboarding = false
-
-        if !enabledFirewalls.isEmpty {
-            setupState = .ready
-            Task { await initialLoad() }
-        }
+        setupState = .ready
+        Task { await initialLoad() }
     }
 
     // MARK: - Actions

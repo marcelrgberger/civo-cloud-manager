@@ -475,15 +475,15 @@ struct MenuBarView: View {
             Spacer()
 
             Button {
-                if let url = URL(string: "https://berger-rosenstock.de/privacy") {
-                    NSWorkspace.shared.open(url)
-                }
+                NSApp.setActivationPolicy(.regular)
+                openWindow(id: "legal")
+                NSApp.activate()
             } label: {
                 Image(systemName: "hand.raised")
             }
             .buttonStyle(.borderless)
             .foregroundStyle(.secondary)
-            .help("Privacy Policy")
+            .help("Legal")
 
             Spacer()
 

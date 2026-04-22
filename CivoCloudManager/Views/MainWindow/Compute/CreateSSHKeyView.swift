@@ -46,18 +46,17 @@ struct CreateSSHKeyView: View {
                     }
                 }
 
-                if generatedPrivateKeyPath != nil {
-                    let keyName = name.replacingOccurrences(of: " ", with: "-").lowercased()
-                        .replacing(Self.safeNamePattern, with: { _ in "" })
+                if let savedPath = generatedPrivateKeyPath {
+                    let keyName = URL(fileURLWithPath: savedPath).lastPathComponent
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundStyle(.green)
-                            Text("Key pair saved to Downloads and shown in Finder")
+                            Text("Key pair saved and shown in Finder")
                                 .font(.caption.bold())
                         }
 
-                        let command = "mv ~/Downloads/\(keyName) ~/.ssh/\(keyName) && chmod 600 ~/.ssh/\(keyName)"
+                        let command = "mv \(savedPath) ~/.ssh/\(keyName) && chmod 600 ~/.ssh/\(keyName)"
 
                         Text("Move it to your SSH directory:")
                             .font(.caption)
@@ -84,7 +83,7 @@ struct CreateSSHKeyView: View {
                             .foregroundStyle(.tertiary)
                     }
                 } else {
-                    Text("Generates an Ed25519 key pair. Private key is saved to Downloads, public key is uploaded to Civo.")
+                    Text("Generates an Ed25519 key pair. You choose where to save the private key, the public key is uploaded to Civo.")
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
@@ -136,16 +135,13 @@ struct CreateSSHKeyView: View {
             return
         }
 
-        guard let downloadsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first else {
-            vm.saveError = "Could not access Downloads folder"
-            return
-        }
-        let downloadedKeyPath = downloadsDir.appendingPathComponent(sanitizedName)
+        // Ask user where to save
+        let panel = NSSavePanel()
+        panel.title = "Save SSH Private Key"
+        panel.nameFieldStringValue = sanitizedName
+        panel.canCreateDirectories = true
 
-        if FileManager.default.fileExists(atPath: downloadedKeyPath.path) {
-            vm.saveError = "File '\(sanitizedName)' already exists in Downloads. Rename the key or move the existing file."
-            return
-        }
+        guard panel.runModal() == .OK, let saveURL = panel.url else { return }
 
         isGenerating = true
         defer { isGenerating = false }
@@ -174,16 +170,16 @@ struct CreateSSHKeyView: View {
             let saved = SSHKeychain.save(name: sanitizedName, privateKey: privateKeyData)
             Log.info("SSH key backup \(saved ? "OK" : "FAILED") for '\(sanitizedName)'")
 
-            // Save private key to Downloads
-            try privateKeyData.write(to: downloadedKeyPath)
+            // Save private key to user-selected location
+            try privateKeyData.write(to: saveURL)
             try? FileManager.default.setAttributes(
                 [.posixPermissions: 0o600],
-                ofItemAtPath: downloadedKeyPath.path
+                ofItemAtPath: saveURL.path
             )
-            generatedPrivateKeyPath = downloadedKeyPath.path
+            generatedPrivateKeyPath = saveURL.path
 
             // Show in Finder
-            NSWorkspace.shared.activateFileViewerSelecting([downloadedKeyPath])
+            NSWorkspace.shared.activateFileViewerSelecting([saveURL])
         } catch {
             vm.saveError = "Key generation failed: \(error.localizedDescription)"
         }
