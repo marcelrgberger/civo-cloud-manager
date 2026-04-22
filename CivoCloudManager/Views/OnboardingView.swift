@@ -197,11 +197,14 @@ struct OnboardingView: View {
                     .padding()
             } else if state.discoveredFirewalls.isEmpty {
                 VStack(spacing: 8) {
-                    Image(systemName: "exclamationmark.triangle")
+                    Image(systemName: "shield")
                         .font(.title)
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(.secondary)
                     Text("No firewalls found in your account.")
                         .foregroundStyle(.secondary)
+                    Text("You can skip this step and configure firewalls later.")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
 
                     Button("Retry") {
                         Task { await loadFirewalls() }
@@ -394,7 +397,9 @@ struct OnboardingView: View {
         case .welcome: return true
         case .apiKey: return apiKeyValid
         case .region: return !selectedRegion.isEmpty
-        case .firewallDiscovery: return firewallSelections.values.contains(true) && allPortsValid
+        case .firewallDiscovery:
+            if state.discoveredFirewalls.isEmpty { return true }
+            return firewallSelections.values.contains(true) && allPortsValid
         case .launchAtLogin: return true
         case .done: return true
         }

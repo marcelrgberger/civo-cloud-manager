@@ -83,7 +83,7 @@ The App:
 - Stores your API key in the **macOS Keychain** (encrypted, local only)
 - Stores preferences in **UserDefaults** (local only)
 
-For more information, see our Privacy Policy at: https://berger-rosenstock.de/privacy
+For more information, see the Privacy Policy accessible from within the application.
 
 ### 9. Intellectual Property
 
