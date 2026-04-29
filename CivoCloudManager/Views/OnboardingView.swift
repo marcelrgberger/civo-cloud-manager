@@ -121,6 +121,15 @@ struct OnboardingView: View {
                 .textFieldStyle(.roundedBorder)
                 .frame(maxWidth: 360)
 
+            Link(destination: URL(string: "https://www.civo.com/")!) {
+                HStack(spacing: 4) {
+                    Text("No API key yet? Create one here")
+                    Image(systemName: "arrow.up.right.square")
+                        .font(.caption)
+                }
+                .font(.caption)
+            }
+
             if isChecking {
                 ProgressView("Validating...")
             } else if apiKeyValid {
