@@ -4,7 +4,7 @@ struct VolumeDetailView: View {
     let volume: CivoVolume
     let instances: [CivoInstance]
     let onBack: () -> Void
-    var vm: VolumeViewModel? = nil
+    @Bindable var vm: VolumeViewModel
     @State private var appeared = false
     @State private var showResize = false
 
@@ -51,25 +51,21 @@ struct VolumeDetailView: View {
                 Button("Back", systemImage: "chevron.left") { onBack() }
                     .help("Return to list")
             }
-            if vm != nil {
-                ToolbarItem(placement: .automatic) {
-                    Button("Resize", systemImage: "arrow.up.left.and.arrow.down.right") {
-                        showResize = true
-                    }
-                    .disabled(isAttached)
-                    .help(isAttached
-                        ? "Detach volume before resizing"
-                        : "Increase volume size")
+            ToolbarItem(placement: .automatic) {
+                Button("Resize", systemImage: "arrow.up.left.and.arrow.down.right") {
+                    showResize = true
                 }
+                .disabled(isAttached)
+                .help(isAttached
+                    ? "Detach volume before resizing"
+                    : "Increase volume size")
             }
         }
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
         }
         .sheet(isPresented: $showResize) {
-            if let vm {
-                ResizeVolumeSheet(vm: vm, volume: volume) { showResize = false }
-            }
+            ResizeVolumeSheet(vm: vm, volume: volume) { showResize = false }
         }
     }
 
