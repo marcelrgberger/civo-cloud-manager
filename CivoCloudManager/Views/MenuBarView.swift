@@ -4,7 +4,7 @@ struct MenuBarView: View {
     @Bindable var state: AppState
     @Environment(\.openWindow) private var openWindow
     @State private var hasLoaded = false
-    @State private var store = StoreManager.shared
+    private let store = StoreManager.shared
     @State private var showSavePreset = false
     @State private var presetName = ""
     @State private var selectedDuration: FirewallDuration = .unlimited

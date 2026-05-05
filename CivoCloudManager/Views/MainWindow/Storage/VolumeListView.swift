@@ -8,11 +8,16 @@ struct VolumeListView: View {
     var body: some View {
         Group {
             if let vol = vm.selectedVolume {
-                VolumeDetailView(volume: vol, instances: vm.instances) {
-                    withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
-                        vm.selectedVolume = nil
-                    }
-                }
+                VolumeDetailView(
+                    volume: vol,
+                    instances: vm.instances,
+                    onBack: {
+                        withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
+                            vm.selectedVolume = nil
+                        }
+                    },
+                    vm: vm
+                )
                 .transition(.move(edge: .trailing).combined(with: .opacity))
             } else {
                 volumeList

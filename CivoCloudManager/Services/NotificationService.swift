@@ -1,12 +1,21 @@
 import Foundation
+import os
 import UserNotifications
 
 final class NotificationService: Sendable {
     static let shared = NotificationService()
 
+    private let didRequestPermission = OSAllocatedUnfairLock(initialState: false)
+
     private init() {}
 
     func requestPermission() {
+        let alreadyRequested = didRequestPermission.withLock { state in
+            defer { state = true }
+            return state
+        }
+        guard !alreadyRequested else { return }
+
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
             if let error {
                 Log.error("Notification permission error: \(error.localizedDescription)")
