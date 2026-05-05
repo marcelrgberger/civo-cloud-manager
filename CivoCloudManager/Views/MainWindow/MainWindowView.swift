@@ -95,7 +95,7 @@ enum SidebarCategory: String, CaseIterable {
 }
 
 struct MainWindowView: View {
-    @State private var store = StoreManager.shared
+    private let store = StoreManager.shared
     @State private var selection: SidebarSection = .dashboard
     @State private var showSearch = false
     @State private var showExport = false

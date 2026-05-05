@@ -53,8 +53,11 @@ final class CivoConfig: @unchecked Sendable {
 
         guard let valueData = value.data(using: .utf8) else { return }
 
-        // Try update first — preserves existing item if present
-        let updateAttrs: [String: Any] = [kSecValueData as String: valueData]
+        // Always set accessibility explicitly on update to keep the class consistent across upgrades.
+        let updateAttrs: [String: Any] = [
+            kSecValueData as String: valueData,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
+        ]
         let updateStatus = SecItemUpdate(baseQuery as CFDictionary, updateAttrs as CFDictionary)
 
         if updateStatus == errSecItemNotFound {

@@ -13,6 +13,7 @@ final class LegalNavigation {
 /// Documents are loaded from localized Markdown files (`.lproj/*.md`) in the user's language,
 /// falling back to English automatically via macOS bundle localization.
 struct LegalView: View {
+    @State private var navigation = LegalNavigation.shared
     @State private var selectedDocument: LegalDocument = LegalNavigation.shared.requestedDocument
 
     var body: some View {
@@ -38,7 +39,10 @@ struct LegalView: View {
         }
         .navigationTitle("Legal")
         .onAppear {
-            selectedDocument = LegalNavigation.shared.requestedDocument
+            selectedDocument = navigation.requestedDocument
+        }
+        .onChange(of: navigation.requestedDocument) { _, newValue in
+            selectedDocument = newValue
         }
     }
 }
@@ -67,11 +71,15 @@ enum LegalDocument: String, CaseIterable, Identifiable {
     }
 
     func load() -> String {
-        guard let url = Bundle.main.url(forResource: filename, withExtension: "md"),
-              let text = try? String(contentsOf: url, encoding: .utf8)
-        else {
+        guard let url = Bundle.main.url(forResource: filename, withExtension: "md") else {
+            Log.error("LegalDocument: \(filename).md not found in bundle")
             return "Document not available."
         }
-        return text
+        do {
+            return try String(contentsOf: url, encoding: .utf8)
+        } catch {
+            Log.error("LegalDocument: failed to read \(filename).md: \(error.localizedDescription)")
+            return "Document not available."
+        }
     }
 }
