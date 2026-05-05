@@ -11,13 +11,15 @@ struct CivoCloudManagerApp: App {
         DispatchQueue.main.async {
             NSApp.setActivationPolicy(.accessory)
         }
-        StoreManager.shared.startListening()
-        NotificationService.shared.requestPermission()
     }
 
     var body: some Scene {
         MenuBarExtra {
             MenuBarView(state: appState)
+                .task {
+                    StoreManager.shared.startListening()
+                    NotificationService.shared.requestPermission()
+                }
         } label: {
             Image(systemName: appState.menuBarIcon)
                 .renderingMode(.template)

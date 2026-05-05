@@ -141,6 +141,22 @@ final class VolumeViewModel {
         }
     }
 
+    func resizeVolume(_ id: String, newSizeGb: Int) async -> Bool {
+        isSaving = true
+        saveError = nil
+        defer { isSaving = false }
+
+        do {
+            try await volumeService.resizeVolume(id, sizeGb: newSizeGb)
+            showSuccess = true
+            await refresh()
+            return true
+        } catch {
+            saveError = CivoAPIError.userMessage(error)
+            return false
+        }
+    }
+
     func updateObjectStoreSize(_ id: String, newSize: Int) async -> Bool {
         isSaving = true
         saveError = nil

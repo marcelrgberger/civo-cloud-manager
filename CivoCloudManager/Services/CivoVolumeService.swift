@@ -21,6 +21,10 @@ final class CivoVolumeService: Sendable {
         let _: CivoResult = try await api.put(path: "/volumes/\(volumeId)/detach", body: [:])
     }
 
+    func resizeVolume(_ volumeId: String, sizeGb: Int) async throws {
+        let _: CivoResult = try await api.put(path: "/volumes/\(volumeId)/resize", body: ["size_gb": sizeGb])
+    }
+
     func removeVolume(_ id: String) async throws {
         try await api.delete(path: "/volumes/\(id)")
     }
