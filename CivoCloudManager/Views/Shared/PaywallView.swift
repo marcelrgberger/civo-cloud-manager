@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PaywallView: View {
-    @State private var store = StoreManager.shared
+    private let store = StoreManager.shared
     @State private var appeared = false
 
     private let features: [(icon: String, text: String)] = [

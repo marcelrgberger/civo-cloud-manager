@@ -408,7 +408,8 @@ struct OnboardingView: View {
         case .region: return !selectedRegion.isEmpty
         case .firewallDiscovery:
             if state.discoveredFirewalls.isEmpty { return true }
-            return firewallSelections.values.contains(true) && allPortsValid
+            // Allow skipping (no selection) per onboarding copy. Validate ports only when at least one firewall is selected.
+            return !firewallSelections.values.contains(true) || allPortsValid
         case .launchAtLogin: return true
         case .done: return true
         }
