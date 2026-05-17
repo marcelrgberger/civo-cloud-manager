@@ -1,5 +1,7 @@
 # Civo Cloud Manager
 
+[![Download on the App Store](https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg)](https://apps.apple.com/de/app/civocloudmanager/id6760776010)
+
 A native macOS application for managing your **Civo Cloud** infrastructure. Menu bar quick-access for firewall rules, full dashboard for all resources. Connects directly to the Civo REST API and Kubernetes API — no CLI dependency.
 
 ## Features
