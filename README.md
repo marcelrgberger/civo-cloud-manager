@@ -1126,6 +1126,8 @@ graph LR
         CE --> CDV[CostDashboardView]
         AH --> AHV[APIHealthView]
         AC --> RL[RegionListView]
+        AC --> LG[LegalView]
+        AC --> ABV[AboutView]
     end
 
     subgraph "Create Sheets"
@@ -1162,6 +1164,7 @@ graph LR
     style AHV fill:#14B8A6,color:#fff
     style CMS fill:#059669,color:#fff
     style PE fill:#047857,color:#fff
+    style LG fill:#92400E,color:#fff
 ```
 
 ---
@@ -1294,7 +1297,7 @@ civo-cloud-manager/
 │   ├── Localizable.xcstrings                   # String catalog (8 languages)
 │   ├── PrivacyInfo.xcprivacy                   # Apple privacy manifest
 │   ├── Assets.xcassets/                        # App icon + accent color
-│   ├── {de,en,es,fr,it,nl,pl,pt}.lproj/       # InfoPlist.strings per language
+│   ├── {de,en,es,fr,it,nl,pl,pt}.lproj/       # InfoPlist.strings + EULA / Privacy / Impressum markdown per language
 │   ├── App/
 │   │   └── CivoCloudManagerApp.swift           # @main — 4 scenes
 │   ├── Models/
@@ -1415,6 +1418,7 @@ civo-cloud-manager/
 │   │   │   └── Account/
 │   │   │       ├── AboutView.swift              # App info, system tools check
 │   │   │       ├── APIHealthView.swift          # API endpoint health checks with response times
+│   │   │       ├── LegalView.swift              # EULA, Privacy Policy, Impressum (localized markdown)
 │   │   │       └── RegionListView.swift
 │   │   └── Shared/
 │   │       ├── DeleteConfirmationSheet.swift   # Name-match confirmation for deletes
@@ -1422,6 +1426,7 @@ civo-cloud-manager/
 │   │       ├── ErrorBanner.swift
 │   │       ├── ExportView.swift                # Export resources as JSON with secret redaction
 │   │       ├── K8sConnectingView.swift        # Animated K8s connection progress
+│   │       ├── MarkdownView.swift             # Renders localized markdown (legal docs, help text)
 │   │       ├── PaywallView.swift              # Buy-once paywall + ToS/Privacy links
 │   │       ├── QuickSearchView.swift          # ⌘K search across all resources
 │   │       ├── QuotaGauge.swift
