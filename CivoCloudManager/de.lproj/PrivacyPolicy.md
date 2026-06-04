@@ -1,524 +1,439 @@
-# Datenschutzerklärung
+# PRIVACY POLICY
 
-## Civo Cloud Manager
+## Global Data Protection and Privacy Notice
 
-**Gültig ab:** April 2026
-**Zuletzt aktualisiert:** April 2026
+**Effective Date:** May 2026
 
-**Verantwortlicher:**
-Berger & Rosenstock GbR
-Marcel R. G. Berger, Jasmin Rosenstock
-Dieselstraße 22e, 61231 Bad Nauheim, Deutschland
-E-Mail: moin@berger-rosenstock.de
+**Service operated by:** DigitalFreedom — a brand of Berger & Rosenstock GbR
 
----
-
-## 1. Einleitung
-
-Diese Datenschutzerklärung erläutert, wie Marcel R. G. Berger, handelnd als Berger & Rosenstock GbR („wir", „uns", „unser"), Informationen im Zusammenhang mit der Anwendung Civo Cloud Manager („die Anwendung") behandelt.
-
-Wir verpflichten uns zum Schutz Ihrer Privatsphäre und zur Einhaltung der anwendbaren Datenschutzgesetze, einschließlich, aber nicht beschränkt auf:
-
-- Datenschutz-Grundverordnung der EU (DSGVO, Verordnung (EU) 2016/679)
-- Bundesdatenschutzgesetz (BDSG)
-- UK General Data Protection Regulation (UK GDPR) und Data Protection Act 2018
-- Schweizer Bundesgesetz über den Datenschutz (DSG / revDSG)
-- California Consumer Privacy Act (CCPA) und California Privacy Rights Act (CPRA)
-- Virginia Consumer Data Protection Act (VCDPA), Colorado Privacy Act (CPA), Connecticut Data Privacy Act (CTDPA), Utah Consumer Privacy Act (UCPA) und andere US-Bundesstaatengesetze
-- Kanadischer Personal Information Protection and Electronic Documents Act (PIPEDA) und Provinzgesetze
-- Australian Privacy Act 1988 und Australian Privacy Principles (APPs)
-- Brasilianisches allgemeines Datenschutzgesetz (LGPD, Gesetz Nr. 13.709/2018)
-- Japanisches Act on the Protection of Personal Information (APPI)
-- Südkoreanisches Personal Information Protection Act (PIPA)
-- Singapur Personal Data Protection Act (PDPA)
-- Thailand Personal Data Protection Act (PDPA 2019)
-- Chinesisches Personal Information Protection Law (PIPL)
-- Indisches Digital Personal Data Protection Act 2023 (DPDP Act)
-- Südafrikanisches Protection of Personal Information Act (POPIA)
-- Personal Data Protection Law (PDPL) der Vereinigten Arabischen Emirate
-- Neuseeländischer Privacy Act 2020
-- Children's Online Privacy Protection Act (COPPA, USA)
-
----
-
-## 2. Grundsatz der Nulldatenerhebung
-
-**Wir erheben, speichern, übertragen oder verarbeiten keinerlei personenbezogene Daten auf unseren Servern.**
-
-Die Anwendung läuft vollständig auf Ihrem Gerät. Sämtliche Konfigurationen, Zugangsdaten und Präferenzen werden lokal gespeichert. Wir betreiben keine Server, die Ihre Daten empfangen. Wir betreiben keine Backend-Infrastruktur zur Datenerhebung, Analyse, Absturzberichterstattung oder Telemetrie.
-
-Da wir keine personenbezogenen Daten unter unserer Kontrolle verarbeiten, gelten die meisten Pflichten aus den Datenschutzgesetzen (Pflichten als Verantwortlicher, Pflichten bei internationalen Übermittlungen, Meldepflichten bei Datenpannen usw.) für uns als Herausgeber dieser Anwendung nicht. Abschnitt 10 beschreibt gleichwohl die Ihnen nach geltendem Recht zustehenden Rechte.
-
----
-
-## 3. Auf Ihrem Gerät gespeicherte Daten
-
-Die Anwendung speichert die folgenden Daten lokal auf Ihrem macOS-Gerät. Keine dieser Daten werden an unsere Server übertragen.
-
-### 3.1 Zugangsdaten
-
-- **Civo-API-Schlüssel** — gespeichert im macOS-Schlüsselbund (hardwaregestützte Verschlüsselung) — dient der Authentifizierung gegenüber der Civo-Cloud-API
-- **Kubeconfig-Zugangsdaten** — ausschließlich im Arbeitsspeicher während aktiver Sitzungen gespeichert, niemals persistiert
-- **Object-Store-Zugangsdaten (Access Key ID / Secret)** — bei Bedarf von der Civo-API abgerufen, ausschließlich im Arbeitsspeicher gespeichert
-
-### 3.2 Präferenzen
-
-- **Ausgewählte Region** (UserDefaults) — aktiver Civo-Regionscode
-- **Verwaltete Firewalls** (UserDefaults, JSON) — von der Anwendung erfasste Firewall-Konfigurationen
-- **Beim Anmelden starten** (UserDefaults) — Einstellung für den automatischen Start
-- **Onboarding-Status** (UserDefaults) — Kennzeichen für den Abschluss der Einrichtung
-- **IP-Voreinstellungen** (UserDefaults, JSON) — benutzerdefinierte IP-Adressen für Firewall-Regeln
-
-### 3.3 Transiente Laufzeitdaten
-
-- **Erkannte öffentliche IP** — während einer Sitzung im Arbeitsspeicher gehalten, niemals persistiert
-- **API-Antworten** — während der Anzeige im Arbeitsspeicher gehalten, niemals über die Sitzung hinaus persistiert
-
-### 3.4 Kaufstatus
-
-Wird vollständig durch Apple StoreKit verwaltet. Wir erhalten, speichern oder verarbeiten keinerlei Zahlungsinformationen.
-
----
-
-## 4. Rechtsgrundlage für die Verarbeitung (DSGVO)
-
-Da wir weder als Verantwortlicher noch als Auftragsverarbeiter für über die Anwendung erhobene personenbezogene Daten auftreten, finden die Rechtsgrundlagen nach Art. 6 DSGVO auf uns keine Anwendung. Soweit der Betrieb der Anwendung lokale Verarbeitungen auf Ihrem Gerät umfasst, erfolgen diese auf Grundlage von:
-
-- **Vertragserfüllung** (Art. 6 Abs. 1 lit. b DSGVO) — Bereitstellung der Funktionen, zu deren Nutzung Sie die Anwendung installiert haben
-- **Einwilligung** (Art. 6 Abs. 1 lit. a DSGVO) — wenn Sie Aktionen wie IP-Erkennung, Erstellung von Firewall-Regeln oder Touch-ID-Authentifizierung explizit auslösen
-
-Auf von uns betriebener Infrastruktur erfolgt keine Verarbeitung nach Art. 6 Abs. 1 lit. a, c, d, e oder f DSGVO.
-
----
-
-## 5. Verwendung der Daten
-
-Daten auf Ihrem Gerät werden ausschließlich verwendet, um:
-
-- Sie gegenüber der Civo-Cloud-API, Kubernetes-API-Servern und S3-kompatiblen Object-Storage-Endpunkten zu authentifizieren, die Sie der Anwendung vorgeben
-- Ihre Civo-Cloud-Ressourcen (Instanzen, Cluster, Datenbanken, Firewalls usw.) zu verwalten
-- Ihre öffentliche IPv4-Adresse zu erkennen, um Firewall-Regeln zu öffnen und zu schließen
-- Ressourcenstatus, Kostenschätzungen und Aktivitätsprotokolle lokal anzuzeigen
-- Ihren einmaligen In-App-Kauf über Apple StoreKit abzuwickeln
-
-Daten werden von uns niemals an Dritte weitergegeben, verkauft, vermietet oder anderweitig offengelegt.
-
----
-
-## 6. Dienste Dritter
-
-Die Anwendung kommuniziert auf Ihre ausdrückliche Veranlassung hin direkt mit den folgenden Diensten Dritter. Wir sind an diesen Kommunikationen nicht beteiligt.
-
-### 6.1 Civo-Cloud-API (api.civo.com)
-
-- **Zweck:** Verwaltung Ihrer Civo-Cloud-Infrastruktur
-- **Gesendete Daten:** Ihr Civo-API-Schlüssel (als Authentifizierungs-Header), Ressourcenverwaltungsanfragen
-- **Betreiber:** Civo Ltd, Vereinigtes Königreich
-- **Datenschutzerklärung:** https://www.civo.com/privacy
-
-### 6.2 Kubernetes-API-Server
-
-- **Zweck:** Zugriff auf Cluster-Knoten, Pods, Logs, Deployments und Metriken
-- **Gesendete Daten:** Client-Zertifikat-Zugangsdaten aus Ihrer Kubeconfig (PKCS#12 mTLS)
-- **Betreiber:** Der Betreiber des Kubernetes-Clusters (Ihr Civo-Cluster; Sie kontrollieren den Endpunkt)
-
-### 6.3 Civo Object Storage (S3-kompatibel)
-
-- **Zweck:** Durchsuchen, Hochladen und Herunterladen von Dateien in Ihren Object Stores
-- **Gesendete Daten:** S3-kompatible Anfragen, signiert mit Ihren Object-Store-Zugangsdaten (AWS Signature V4)
-- **Betreiber:** Civo Ltd
-
-### 6.4 IP-Erkennungsdienste
-
-- **Zweck:** Erkennung Ihrer öffentlichen IPv4-Adresse zur Verwaltung von Firewall-Regeln
-- **Verwendete Dienste:** ipify.org, ifconfig.me, icanhazip.com (Fallback-Kette)
-- **Gesendete Daten:** Standard-HTTPS-Anfrage (Ihre IP-Adresse ist für diese Dienste inhärent sichtbar)
-- **Empfangene Daten:** Ihre öffentliche IPv4-Adresse
-
-### 6.5 Apple App Store / StoreKit
-
-- **Zweck:** Abwicklung von In-App-Käufen, Prüfung von Berechtigungen, Aktivierung der Familienfreigabe
-- **Gesendete Daten:** Vollständig durch Apples StoreKit-Framework verwaltet
-- **Betreiber:** Apple Inc.
-- **Datenschutzerklärung:** https://www.apple.com/legal/privacy/
-
-### 6.6 Nicht verwendete SDKs
-
-Wir integrieren **keine** der folgenden:
-
-- Analyse-SDKs (Google Analytics, Firebase Analytics, Mixpanel, Amplitude, PostHog usw.)
-- Absturzberichts-SDKs (Crashlytics, Sentry, Bugsnag usw.)
-- Werbe-SDKs (AdMob, Meta Audience Network, AppLovin usw.)
-- Attributions-SDKs (AppsFlyer, Adjust, Branch, Kochava usw.)
-- A/B-Test-Frameworks
-- Social-Media-SDKs
-- Authentifizierungsanbieter Dritter
-
----
-
-## 7. Internationale Datenübermittlungen
-
-Wir übermitteln keine personenbezogenen Daten international, da wir keine personenbezogenen Daten erheben oder verarbeiten.
-
-Durch Sie initiierte Datenflüsse (API-Aufrufe an Civo, Kubernetes, S3, IP-Erkennung) können grenzüberschreitende Übertragungen umfassen. Diese Übermittlungen unterliegen den Datenschutzhinweisen und Übertragungsmechanismen der jeweiligen Betreiber. Für Nutzer aus dem EWR/Vereinigten Königreich stützt sich Civo Ltd auf Angemessenheitsbeschlüsse der EU und des Vereinigten Königreichs sowie gegebenenfalls auf Standardvertragsklauseln (SCCs).
-
----
-
-## 8. Speicherdauer
-
-Wir speichern keine Daten. Sämtliche Anwendungsdaten werden lokal auf Ihrem Gerät gespeichert und unterliegen ausschließlich Ihrer Kontrolle.
-
-- **Deinstallation der Anwendung** entfernt die in UserDefaults gespeicherten Präferenzen (typischerweise unter `~/Library/Containers/de.berger-rosenstock.CivoCloudManager/`)
-- **Schlüsselbund-Einträge** können nach der Deinstallation bestehen bleiben; diese können manuell über die Schlüsselbundverwaltung entfernt werden
-- **Zwischenspeicher für Kosten des Vormonats** werden lokal gespeichert und mit dem Container bei der Deinstallation entfernt
-
----
-
-## 9. Datensicherheit
-
-Obwohl wir keine Daten von Ihnen erheben, setzen wir innerhalb der Anwendung folgende Sicherheitsmaßnahmen um:
-
-- **Speicherung des API-Schlüssels:** macOS-Schlüsselbund mit hardwaregestützter Verschlüsselung (Secure Enclave, sofern verfügbar)
-- **Object-Store-Secrets:** durch Touch ID / Systempasswort über das LocalAuthentication-Framework geschützt
-- **Kubeconfig-Zugangsdaten:** ausschließlich im Arbeitsspeicher während aktiver Sitzungen gespeichert, niemals persistiert
-- **Netzwerkkommunikation:** HTTPS/TLS 1.2+ für sämtliche API-Kommunikation
-- **Zertifikatsauthentifizierung:** Kubernetes-API verwendet PKCS#12-Client-Zertifikat-mTLS
-- **App Sandbox:** Die Anwendung läuft innerhalb der macOS App Sandbox mit minimal erforderlichen Entitlements
-- **Hardened Runtime:** Zusätzliche Sicherheitshärtung zur Laufzeit
-- **Keine Telemetrie:** Es werden keinerlei Nutzungsdaten, Analysen oder Absturzberichte übertragen
-- **Keine persistente Protokollierung:** Protokolle verwenden `os.Logger` mit `privacy: .private` und werden nicht exportiert
-
-Kein System ist vollständig sicher. Wir empfehlen die Verwendung eines dedizierten API-Schlüssels mit den für Ihren Arbeitsablauf mindestens erforderlichen Civo-Berechtigungen.
-
----
-
-## 10. Ihre Rechte
-
-### 10.1 Rechte nach DSGVO (EU / EWR / Vereinigtes Königreich)
-
-Sie haben das Recht auf:
-
-- **Auskunft** über Ihre personenbezogenen Daten (Art. 15 DSGVO) — nicht anwendbar, wir speichern keine Daten über Sie
-- **Berichtigung** unrichtiger Daten (Art. 16 DSGVO) — nicht anwendbar
-- **Löschung** / Recht auf Vergessenwerden (Art. 17 DSGVO) — nicht anwendbar; Sie können lokale Daten durch Deinstallation löschen
-- **Einschränkung** der Verarbeitung (Art. 18 DSGVO) — nicht anwendbar
-- **Datenübertragbarkeit** (Art. 20 DSGVO) — nicht anwendbar
-- **Widerspruch** gegen die Verarbeitung (Art. 21 DSGVO) — nicht anwendbar
-- **Widerruf der Einwilligung** jederzeit (Art. 7 Abs. 3 DSGVO) — Sie können die Nutzung der Anwendung jederzeit einstellen
-- **Beschwerde** bei einer Aufsichtsbehörde
-
-Diese Rechte werden durch unsere Nulldatenerhebungs-Richtlinie erfüllt. Sollte sich dies in einer künftigen Version ändern, werden wir Sie benachrichtigen und den vollständigen Rechterahmen umsetzen.
-
-### 10.2 Rechte nach CCPA / CPRA (Kalifornien, USA)
-
-Einwohner Kaliforniens haben das Recht auf:
-
-- Kenntnis darüber, welche personenbezogenen Informationen erhoben, verwendet, weitergegeben oder verkauft werden
-- Löschung personenbezogener Informationen
-- Widerspruch gegen den Verkauf oder die Weitergabe personenbezogener Informationen
-- Nichtdiskriminierung bei Ausübung von Datenschutzrechten
-- Berichtigung unrichtiger personenbezogener Informationen
-- Einschränkung der Nutzung sensibler personenbezogener Informationen
-
-Wir verkaufen keine personenbezogenen Informationen. Wir geben keine personenbezogenen Informationen zu kontextübergreifender verhaltensbezogener Werbung weiter. Wir erheben keine personenbezogenen Informationen im Sinne des CCPA/CPRA.
-
-### 10.3 Rechte nach weiteren US-Staatsgesetzen (VCDPA, CPA, CTDPA, UCPA, TDPSA, OCPA, IDPA, MCDPA, FDBR usw.)
-
-Einwohner von Virginia, Colorado, Connecticut, Utah, Texas, Oregon, Iowa, Montana, Florida, Tennessee, Indiana, Delaware, New Jersey und anderen US-Bundesstaaten mit Datenschutzgesetzen haben Rechte auf Auskunft, Löschung, Berichtigung und Widerspruch gegen zielgerichtete Werbung / Verkauf / Profiling. Diese Rechte werden durch unsere Nulldatenerhebungs-Richtlinie erfüllt.
-
-### 10.4 Rechte nach PIPEDA und Provinzgesetzen (Kanada)
-
-Kanadische Einwohner haben das Recht auf Auskunft, Anfechtung der Richtigkeit, Widerruf der Einwilligung und Beschwerde beim Office of the Privacy Commissioner of Canada (oder Provinzbehörden in Quebec, British Columbia, Alberta).
-
-### 10.5 Rechte nach australischem Privacy Act
-
-Australische Einwohner haben das Recht auf Auskunft und Berichtigung ihrer personenbezogenen Informationen sowie auf Beschwerde beim Office of the Australian Information Commissioner (OAIC).
-
-### 10.6 Rechte nach LGPD (Brasilien)
-
-Brasilianische Einwohner haben das Recht auf Bestätigung der Verarbeitung, Auskunft, Berichtigung, Anonymisierung, Übertragbarkeit, Information über Weitergaben und Widerruf der Einwilligung. Beschwerden können an die Autoridade Nacional de Proteção de Dados (ANPD) gerichtet werden.
-
-### 10.7 Rechte nach APPI (Japan)
-
-Japanische Einwohner haben das Recht auf Offenlegung, Berichtigung, Löschung und Einstellung der Nutzung. Beschwerden können an die Personal Information Protection Commission (PPC) gerichtet werden.
-
-### 10.8 Rechte nach PIPA (Südkorea)
-
-Südkoreanische Einwohner haben das Recht auf Auskunft, Berichtigung, Löschung, Aussetzung der Verarbeitung und Geltendmachung von Schadensersatz. Beschwerden können an die Personal Information Protection Commission (PIPC) gerichtet werden.
-
-### 10.9 Rechte nach PDPA (Singapur / Thailand)
-
-Einwohner haben das Recht auf Auskunft, Berichtigung und Widerruf der Einwilligung. Beschwerden können an die Personal Data Protection Commission (PDPC) des jeweiligen Landes gerichtet werden.
-
-### 10.10 Rechte nach PIPL (China)
-
-Chinesische Einwohner haben das Recht zu wissen, zu entscheiden, einzuschränken, abzulehnen, Einsicht zu nehmen, zu kopieren, zu übertragen, zu berichtigen, zu löschen und eine Erläuterung zu den Verarbeitungsregeln zu verlangen.
-
-### 10.11 Rechte nach DPDP Act (Indien)
-
-Indische Einwohner haben das Recht auf Information, Berichtigung, Löschung, Beschwerdebearbeitung und Nominierung.
-
-### 10.12 Rechte nach POPIA (Südafrika)
-
-Südafrikanische Einwohner haben das Recht auf Auskunft, Berichtigung, Löschung und Beschwerde beim Information Regulator.
-
-### 10.13 Rechte nach Schweizer DSG
-
-Schweizer Einwohner haben das Recht auf Information, Auskunft, Berichtigung, Löschung, Widerspruch und Datenübertragbarkeit. Beschwerden können an den Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) gerichtet werden.
-
-### 10.14 Rechte nach neuseeländischem Privacy Act
-
-Neuseeländische Einwohner haben das Recht auf Auskunft und Berichtigung personenbezogener Informationen sowie auf Beschwerde beim Privacy Commissioner.
-
-### 10.15 Ausübung Ihrer Rechte
-
-Da wir keine Daten über Sie speichern, sind diese Rechte standardmäßig erfüllt. Sollten Sie glauben, dass wir trotz dieser Richtlinie personenbezogene Daten über Sie speichern, wenden Sie sich an moin@berger-rosenstock.de.
-
----
-
-## 11. Datenschutz bei Kindern
-
-Die Anwendung trägt im Apple App Store die Altersfreigabe **4+** und ist daher technisch für Nutzer aller Altersgruppen zugänglich. Die Anwendung ist jedoch ein technisches Werkzeug zur Infrastrukturverwaltung, das sich an Administratoren von Civo-Cloud-Konten richtet. Ein Civo-Cloud-Konto setzt voraus, dass der Kontoinhaber in seiner Rechtsordnung vertragsfähig ist.
-
-**Wir erheben wissentlich keine personenbezogenen Informationen von irgendwem, einschließlich Kindern unter 13 Jahren (COPPA, USA), 16 Jahren (DSGVO-K, EU) oder dem in Ihrer Rechtsordnung geltenden Einwilligungsalter.**
-
-Da die Anwendung eine strikte Nulldatenerhebungs-Richtlinie umsetzt (siehe Abschnitt 2), werden keinerlei personenbezogene Informationen über einen Nutzer — unabhängig vom Alter — erhoben, übertragen, auf unseren Servern gespeichert oder an Dritte weitergegeben. Damit werden erfüllt:
-
-- **COPPA** (Children's Online Privacy Protection Act, 15 U.S.C. §§ 6501–6506, USA)
-- **Art. 8 DSGVO** (EU)
-- **PIPEDA** und anwendbare Provinzgesetze (Kanada)
-- **Art. 14 LGPD** (Brasilien)
-- **APPI** (Japan)
-- **Australian Privacy Act** und APP 8 zum Schutz von Kindern
-
-Sollten Sie Elternteil oder Erziehungsberechtigter sein und der Ansicht sein, dass Ihr Kind personenbezogene Informationen angegeben hat, wenden Sie sich an moin@berger-rosenstock.de. Wir werden die Angelegenheit unverzüglich prüfen und solche Informationen bei Auffinden löschen.
-
----
-
-## 12. Cookies und Tracking
-
-Die Anwendung ist eine native macOS-Anwendung und verwendet keine Cookies, Web Beacons, Pixel-Tags, Fingerprinting oder ähnliche Tracking-Technologien.
-
-Die Anwendung enthält keine eingebetteten Webviews, die Inhalte Dritter laden.
-
----
-
-## 13. Automatisierte Entscheidungsfindung
-
-Wir nehmen keine automatisierte Entscheidungsfindung oder Profilbildung vor, die rechtliche Wirkung entfaltet oder Sie in ähnlicher Weise erheblich beeinträchtigt. Die Anwendung führt keine automatisierten Entscheidungen auf Grundlage personenbezogener Daten durch.
-
----
-
-## 14. Links und Dienste Dritter
-
-Die Anwendung kann Links zu Websites Dritter enthalten (z. B. Civo-Website, Apple App Store, Plattform zur Online-Streitbeilegung). Wir sind für die Datenschutzpraktiken oder Inhalte von Diensten Dritter nicht verantwortlich. Bitte lesen Sie deren Datenschutzerklärungen, bevor Sie Daten bereitstellen.
-
----
-
-## 15. Änderungen dieser Erklärung
-
-Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren.
-
-- Wesentliche Änderungen werden mindestens 30 Tage vor ihrem Inkrafttreten über die Anwendung oder den App-Store-Eintrag kommuniziert
-- Das „Gültig ab"-Datum am Anfang spiegelt die jüngste Überarbeitung wider
-- Wir werden unsere Datenschutzpraktiken nicht rückwirkend ändern, um ohne Ihre ausdrückliche Einwilligung Daten zu erheben
-
----
-
-## 16. Kontakt
-
-Für datenschutzbezogene Anfragen oder zur Ausübung Ihrer Rechte:
-
-**Berger & Rosenstock GbR**
-Marcel R. G. Berger, Jasmin Rosenstock
-Dieselstraße 22e
+**Data Controller (legal entity):**
+Berger & Rosenstock GbR (trading as DigitalFreedom)
+Dieselstr. 22e
 61231 Bad Nauheim
-Deutschland
-E-Mail: moin@berger-rosenstock.de
+Germany
 
-Für Einwohner der EU können Sie sich auch an die zuständige Aufsichtsbehörde in Ihrem Mitgliedstaat wenden. Eine Liste der EU-Aufsichtsbehörden ist verfügbar unter: https://edpb.europa.eu/about-edpb/board/members_en
+Authorized Representatives: Marcel R. G. Berger, Jasmin Rosenstock
+VAT-ID: DE455096022
 
-Für Einwohner des Vereinigten Königreichs ist die Aufsichtsbehörde das Information Commissioner's Office (ICO): https://ico.org.uk
+Contact (general): hello@digitalfreedom.co.za
+Contact (data protection): data-protection@digitalfreedom.co.za
+Website: https://digitalfreedom.co.za
 
 ---
 
-## 17. Regionale Bestimmungen
+## 1. INTRODUCTION
 
-### 17.1 Europäische Union / Europäischer Wirtschaftsraum
+This Privacy Policy explains how DigitalFreedom (a brand of Berger & Rosenstock GbR, collectively "we", "us", "our") collects, uses, stores, and protects your personal data when you use our applications, software, websites, and related services ("the Services").
 
-- Der Betrieb erfolgt konform mit der DSGVO, soweit auf lokale Verarbeitungen auf Ihrem Gerät anwendbar
-- Aufsichtsbehörde des Verantwortlichen ist die zuständige deutsche Landesdatenschutzbehörde
-- Datenschutz-Folgenabschätzungen (DSFA) sind nicht erforderlich (keine Erhebung)
+### 1.1 Global scope
 
-### 17.2 Deutschland
+Our applications are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This Privacy Policy applies globally to all users of the Services, regardless of the country in which the Service is downloaded, accessed or used.
 
-- Einhaltung der DSGVO und des Bundesdatenschutzgesetzes (BDSG)
-- Zuständige Aufsichtsbehörde: Landesbeauftragte für Datenschutz des jeweiligen Bundeslandes (der Verantwortliche hat seinen Sitz in Deutschland)
+### 1.2 GDPR as the global baseline
 
-### 17.3 Österreich
+We adopt the **European Union General Data Protection Regulation (GDPR)** and related EU data-protection law as the strictest baseline and apply it as a **global floor** — every user, in every country, benefits from at least the GDPR-level protections set out in this Policy. We additionally respect and comply with any applicable local data-protection law of the user's jurisdiction, and where that local law is more protective for the user, the more protective standard applies.
 
-- Einhaltung der DSGVO und des Datenschutzgesetzes (DSG)
-- Aufsichtsbehörde: Datenschutzbehörde (DSB)
+We are committed to protecting your privacy and complying with applicable data-protection laws, including but not limited to:
 
-### 17.4 Schweiz
-
-- Einhaltung des revidierten Bundesgesetzes über den Datenschutz (revDSG), in Kraft seit 1. September 2023
-- Aufsichtsbehörde: Eidgenössischer Datenschutz- und Öffentlichkeitsbeauftragter (EDÖB)
-
-### 17.5 Vereinigtes Königreich
-
-- Einhaltung von UK GDPR und Data Protection Act 2018
-- Aufsichtsbehörde: Information Commissioner's Office (ICO)
-
-### 17.6 Frankreich
-
-- Einhaltung der DSGVO und des Loi Informatique et Libertés
-- Aufsichtsbehörde: Commission Nationale de l'Informatique et des Libertés (CNIL)
-
-### 17.7 Italien
-
-- Einhaltung der DSGVO und des Codice in materia di protezione dei dati personali
-- Aufsichtsbehörde: Garante per la Protezione dei Dati Personali
-
-### 17.8 Spanien
-
-- Einhaltung der DSGVO und der Ley Orgánica 3/2018 (LOPDGDD)
-- Aufsichtsbehörde: Agencia Española de Protección de Datos (AEPD)
-
-### 17.9 Niederlande
-
-- Einhaltung der DSGVO und der Uitvoeringswet AVG (UAVG)
-- Aufsichtsbehörde: Autoriteit Persoonsgegevens (AP)
-
-### 17.10 Polen
-
-- Einhaltung der DSGVO und der Ustawa o ochronie danych osobowych
-- Aufsichtsbehörde: Urząd Ochrony Danych Osobowych (UODO)
-
-### 17.11 Portugal
-
-- Einhaltung der DSGVO und der Lei n.º 58/2019
-- Aufsichtsbehörde: Comissão Nacional de Proteção de Dados (CNPD)
-
-### 17.12 Belgien
-
-- Einhaltung der DSGVO und des Loi du 30 juillet 2018
-- Aufsichtsbehörde: Gegevensbeschermingsautoriteit (APD-GBA)
-
-### 17.13 Irland
-
-- Einhaltung der DSGVO und des Data Protection Act 2018
-- Aufsichtsbehörde: Data Protection Commission (DPC)
-
-### 17.14 Nordische Länder (Dänemark, Finnland, Norwegen, Schweden, Island)
-
-- Einhaltung der DSGVO (und der EWR-Entsprechungen für Norwegen und Island)
-- Nationale Aufsichtsbehörden: Datatilsynet (DK, NO), Tietosuojavaltuutettu (FI), Integritetsskyddsmyndigheten (SE), Persónuvernd (IS)
-
-### 17.15 Weitere Mitgliedstaaten der EU/des EWR
-
-Einhaltung der DSGVO und der jeweiligen nationalen Umsetzung. Aufsichtsbehörden: https://edpb.europa.eu/about-edpb/board/members_en
-
-### 17.16 Vereinigte Staaten
-
-- Einhaltung der anwendbaren staatlichen Datenschutzgesetze: CCPA/CPRA (Kalifornien), VCDPA (Virginia), CPA (Colorado), CTDPA (Connecticut), UCPA (Utah), TDPSA (Texas), OCPA (Oregon), IDPA (Iowa), MCDPA (Montana), FDBR (Florida), TIPA (Tennessee), INDPA (Indiana), DPDPA (Delaware), NJDPA (New Jersey)
-- „Do Not Track"- und „Global Privacy Control"-Signale werden, soweit technisch möglich, beachtet (die Anwendung führt kein Tracking durch)
-- COPPA-Konformität für Nutzer unter 13 Jahren
-
-### 17.17 Kanada
-
-- Einhaltung von PIPEDA und anwendbaren Provinzgesetzen: Quebec Act 25, British Columbia PIPA, Alberta PIPA
-- Beschwerden: Office of the Privacy Commissioner of Canada (OPC) und Provinzbehörden
-
-### 17.18 Mexiko
-
-- Einhaltung des Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)
-- Aufsichtsbehörde: Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI)
-
-### 17.19 Brasilien
-
-- Einhaltung der LGPD
-- Aufsichtsbehörde: Autoridade Nacional de Proteção de Dados (ANPD)
-
-### 17.20 Argentinien, Chile, Kolumbien, Peru, Uruguay
-
-- Einhaltung der nationalen Datenschutzgesetze (Gesetz 25.326 / Gesetz 19.628 / Gesetz 1581 / Gesetz 29733 / Gesetz 18.331)
-
-### 17.21 Australien
-
-- Einhaltung des Privacy Act 1988 und der Australian Privacy Principles (APPs)
-- Aufsichtsbehörde: Office of the Australian Information Commissioner (OAIC)
-
-### 17.22 Neuseeland
-
-- Einhaltung des Privacy Act 2020
-- Aufsichtsbehörde: Office of the Privacy Commissioner
-
-### 17.23 Japan
-
-- Einhaltung des Act on the Protection of Personal Information (APPI)
-- Aufsichtsbehörde: Personal Information Protection Commission (PPC)
-
-### 17.24 Südkorea
-
-- Einhaltung des Personal Information Protection Act (PIPA)
-- Aufsichtsbehörde: Personal Information Protection Commission (PIPC)
-
-### 17.25 Singapur
-
-- Einhaltung des Personal Data Protection Act (PDPA)
-- Aufsichtsbehörde: Personal Data Protection Commission (PDPC)
-
-### 17.26 Thailand
-
-- Einhaltung des Personal Data Protection Act B.E. 2562 (2019)
-- Aufsichtsbehörde: Personal Data Protection Committee
-
-### 17.27 China
-
-- Einhaltung des Personal Information Protection Law (PIPL), Cybersecurity Law (CSL) und Data Security Law (DSL)
-
-### 17.28 Hongkong
-
-- Einhaltung der Personal Data (Privacy) Ordinance (PDPO)
-- Aufsichtsbehörde: Office of the Privacy Commissioner for Personal Data (PCPD)
-
-### 17.29 Indien
-
-- Einhaltung des Digital Personal Data Protection Act 2023 (DPDP Act) und des Information Technology Act 2000
-- Aufsichtsbehörde: Data Protection Board of India
-
-### 17.30 Vereinigte Arabische Emirate
-
-- Einhaltung des Federal Decree-Law Nr. 45 von 2021 (Personal Data Protection Law)
-
-### 17.31 Saudi-Arabien
-
-- Einhaltung des Personal Data Protection Law (PDPL)
-
-### 17.32 Türkei
-
-- Einhaltung des Personal Data Protection Law Nr. 6698 (KVKK)
-- Aufsichtsbehörde: Kişisel Verileri Koruma Kurulu (KVKK)
-
-### 17.33 Israel
-
-- Einhaltung des Privacy Protection Law, 5741-1981 und der Privacy Protection Regulations
-- Aufsichtsbehörde: Privacy Protection Authority (PPA)
-
-### 17.34 Südafrika
-
-- Einhaltung des Protection of Personal Information Act (POPIA)
-- Aufsichtsbehörde: Information Regulator
-
-### 17.35 Kenia, Nigeria, Ägypten, Marokko
-
-- Einhaltung der nationalen Datenschutzgesetze (Data Protection Act 2019 Kenia, NDPR / NDPA Nigeria, Gesetz Nr. 151 von 2020 Ägypten, Gesetz 09-08 Marokko)
-
-### 17.36 Weitere Rechtsordnungen
-
-Für Nutzer in Rechtsordnungen, die oben nicht ausdrücklich aufgeführt sind, stellt der Nulldatenerhebungs-Ansatz der Anwendung die Einhaltung der Grundsätze der Datenminimierung und Zweckbindung sicher, die modernen Datenschutzrahmen gemein sind. Sollte Ihr lokales Recht zusätzliche Rechte vorsehen, werden diese Rechte respektiert.
+- EU General Data Protection Regulation (GDPR) — applied as the global baseline
+- German Federal Data Protection Act (BDSG)
+- UK General Data Protection Regulation (UK GDPR) and Data Protection Act 2018
+- Swiss Federal Act on Data Protection (FADP)
+- California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA) and other US state privacy laws
+- Canadian Personal Information Protection and Electronic Documents Act (PIPEDA)
+- Australian Privacy Act 1988
+- Brazilian General Data Protection Law (LGPD)
+- Japanese Act on the Protection of Personal Information (APPI)
+- South Korean Personal Information Protection Act (PIPA)
+- Indian Digital Personal Data Protection Act (DPDP Act) and IT Act
+- South African Protection of Personal Information Act (POPIA)
+- All other applicable national data-protection regimes in jurisdictions in which the Services are made available via the Apple App Store or Google Play Store
 
 ---
 
-© 2025–2026 Marcel R. G. Berger / Berger & Rosenstock GbR. Alle Rechte vorbehalten.
+## 2. DATA CONTROLLER
+
+The Services are offered under the **DigitalFreedom** brand. The legal entity responsible for processing your personal data (the "data controller" under Art. 4(7) GDPR) is:
+
+Berger & Rosenstock GbR (trading as DigitalFreedom)
+Dieselstr. 22e
+61231 Bad Nauheim
+Germany
+
+Authorized Representatives: Marcel R. G. Berger, Jasmin Rosenstock
+VAT-ID: DE455096022
+
+For data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests):
+Email: data-protection@digitalfreedom.co.za
+
+For general inquiries:
+Email: hello@digitalfreedom.co.za
+
+Website: https://digitalfreedom.co.za
+
+---
+
+## 3. DATA WE COLLECT
+
+### 3.1 Data You Provide
+
+- Account information (name, email address, username)
+- Communication data (support requests, feedback)
+- Payment information (processed via third-party payment providers)
+- User-generated content
+
+### 3.2 Data Collected Automatically
+
+- Device information (device type, operating system, version)
+- Usage data (features used, interaction patterns)
+- Log data (IP address, access times, error logs)
+- Analytics data (aggregated usage statistics)
+
+### 3.3 Data from Third Parties
+
+- Authentication data from social login providers (if applicable)
+- Platform-specific data from app stores (Apple, Google)
+
+### 3.4 Sensor, Device and Biometric Data
+
+Where the app uses sensors or biometrics on your device:
+
+- **Biometric authentication** (Face ID / Touch ID / Android BiometricPrompt): the biometric template never leaves your device. The app only receives a yes/no result from the operating system.
+- **Camera, microphone, location, photos, contacts, calendar, motion, health**: accessed only when you actively use the feature that needs them. Each access is prompted by the OS with our usage-description text explaining why.
+- **Health & Fitness data** (HealthKit / Health Connect): processed only for the specific feature you use; not shared with third parties for advertising; not used to train AI models.
+- **App Tracking Transparency (iOS) / AAID controls (Android)**: by default, DigitalFreedom apps do not track you across other companies' apps and websites. We do not present the ATT prompt unless a specific feature requires it; if a future feature does, you can decline without losing access to the rest of the app.
+
+### 3.5 Data NOT Collected
+
+Unless explicitly disclosed for a specific feature in the per-app addendum, we do **not** collect:
+
+- precise location in the background
+- contacts / address book
+- SMS / email contents from your device
+- browsing history outside the app
+- behavioural-advertising identifiers
+- payment-card data (Apple and Google are merchants of record for in-app purchases)
+
+---
+
+## 4. LEGAL BASIS FOR PROCESSING (GDPR)
+
+We process your personal data based on the following legal grounds:
+
+| Legal Basis | Purpose |
+|---|---|
+| **Contract performance** (Art. 6(1)(b) GDPR) | Providing the Services, account management |
+| **Legitimate interests** (Art. 6(1)(f) GDPR) | Security, fraud prevention, service improvement |
+| **Consent** (Art. 6(1)(a) GDPR) | Marketing communications, optional analytics |
+| **Legal obligation** (Art. 6(1)(c) GDPR) | Tax records, regulatory compliance |
+
+---
+
+## 5. HOW WE USE YOUR DATA
+
+We use your personal data to:
+
+- Provide, operate, and maintain the Services
+- Process transactions and manage subscriptions
+- Communicate with you (support, updates, notices)
+- Improve and personalize the Services
+- Ensure security and prevent fraud
+- Comply with legal obligations
+- Conduct analytics (where permitted or consented)
+
+---
+
+## 6. DATA SHARING AND DISCLOSURE
+
+We may share your data with:
+
+### 6.1 Service Providers
+
+Third-party providers who assist in operating the Services, including:
+
+- Cloud hosting providers
+- Payment processors
+- Analytics providers
+- Customer support tools
+
+### 6.1.1 Named Sub-processors
+
+The following sub-processors are currently engaged for processing your personal data:
+
+| Processor | Role | Location |
+|---|---|---|
+| Civo Ltd. | Cloud infrastructure (Kubernetes, virtual machines, object storage, DNS) — primary infrastructure provider; workloads distributed across both regions | Frankfurt am Main, Germany (`fra1`) and London, United Kingdom (`lon1`) |
+| Migadu Mail AG | Email hosting (inbound/outbound mail for support and contact addresses) | Switzerland |
+| Google Ireland Limited (Google Cloud / Workspace) | Ancillary Google Cloud Platform / Workspace services consumed by applications and tooling | EEA data-centre regions (with onward transfer to other Google entities under EU SCCs / UK Addendum) |
+| OpenAI Ireland Ltd. | OpenAI API Services (model inference, embeddings) for AI-assisted application features | Ireland (with onward transfer to OpenAI OpCo, LLC in the United States under EU SCCs / UK Addendum) |
+| RevenueCat, Inc. | Subscription and in-app-purchase management (receipt validation, entitlement state) for Flutter apps | United States (governed by RevenueCat's published DPA framework / EU SCCs) |
+| UAB "MailerLite" | Opt-in newsletter / email-marketing platform — only for users who actively subscribe (double opt-in) | Lithuania (EU/EEA) |
+
+Workloads on Civo are distributed across the `fra1` and `lon1` regions for redundancy and migration purposes. The list of sub-processors may change; the current list is maintained in our internal sub-processor register and is available on request via the data protection contact below.
+
+### 6.1.2 Platform and Distribution Channels
+
+The following parties act as **independent controllers** (and, where applicable, merchant of record) for processing carried out in connection with platform distribution, payment, and platform-level services — not as our processors under Art. 28 GDPR. They are disclosed here for transparency:
+
+| Party | Role | Location |
+|---|---|---|
+| Apple Distribution International Ltd. | App Store / TestFlight distribution, In-App Purchase / StoreKit (merchant of record for paid transactions and subscriptions on Apple platforms), Apple Push Notification service (APNs), optional Sign in with Apple | Ireland (with intra-group processing by Apple Inc. in the United States under Apple's internal safeguards / SCCs) |
+
+For data processed by Apple under its own controllership (Apple ID, payment details, App Store analytics, APNs delivery), Apple's own Privacy Policy applies: <https://www.apple.com/legal/privacy/>.
+
+### 6.2 Legal Requirements
+
+We may disclose data when required by law, legal process, or government request.
+
+### 6.3 Business Transfers
+
+In the event of a merger, acquisition, or sale of assets, your data may be transferred.
+
+### 6.4 No Sale of Personal Data
+
+We do not sell your personal data to third parties.
+
+---
+
+## 7. INTERNATIONAL DATA TRANSFERS
+
+Your data may be transferred to and processed in countries outside your country of residence.
+
+Specifically with regard to our named sub-processors:
+
+- **Civo `fra1` (Frankfurt am Main, Germany)** — within the EU, no transfer outside the EEA.
+- **Civo `lon1` (London, United Kingdom)** — covered by the EU Commission adequacy decision for the UK pursuant to Art. 45 GDPR.
+- **Migadu (Switzerland)** — covered by the EU Commission adequacy decision for Switzerland pursuant to Art. 45 GDPR.
+- **Google Cloud / Workspace** — primary processing in EEA data-centre regions. Onward transfers to Google entities outside the EEA (including the United States) are governed by the **EU Standard Contractual Clauses** (Commission Implementing Decision (EU) 2021/914), the **UK International Data Transfer Addendum** issued by the ICO, and supplementary technical measures (encryption in transit and at rest, key management). The contractual basis is Google's Cloud Data Processing Addendum (Customers).
+- **OpenAI Ireland Ltd. (Ireland) and OpenAI OpCo, LLC (United States)** — Customer Data submitted to the OpenAI API is processed by OpenAI Ireland Ltd. in the EEA. Onward transfers to OpenAI OpCo, LLC in the United States are governed by the **EU Standard Contractual Clauses** (Module Two — Controller to Processor), the **UK International Data Transfer Addendum**, and intra-group safeguards. API Customer Data is retained for a maximum of 30 days and then deleted, unless retention is required by law. The contractual basis is the OpenAI Data Processing Addendum signed on 2025-08-02.
+- **RevenueCat, Inc. (United States)** — subscription / in-app-purchase data is transferred to the United States. Transfers are covered by the **EU Standard Contractual Clauses** referenced in RevenueCat's publicly published DPA framework and supplementary technical measures (encryption in transit and at rest, pseudonymous App User IDs, no payment-card data — card data is processed by Apple / Google as merchants of record).
+- **MailerLite (UAB MailerLite, Lithuania)** — primary processing is intra-EEA. Where MailerLite engages sub-processors outside the EEA (per its public sub-processor list), those transfers are covered by the **EU Standard Contractual Clauses** referenced in MailerLite's publicly published DPA framework.
+- **Apple (Apple Distribution International Ltd., Ireland; intra-group processing by Apple Inc., United States)** — Apple acts as **independent controller** (and merchant of record for paid transactions). Intra-group transfers to Apple Inc. in the United States are governed by Apple's internal Binding Corporate Rules / SCCs as disclosed in the Apple Privacy Policy.
+
+For any transfers not covered by an adequacy decision:
+
+- We rely on EU Standard Contractual Clauses (SCCs)
+- We ensure adequate safeguards under GDPR Chapter V
+- We assess the data protection laws of the recipient country (Transfer Impact Assessment)
+
+For transfers from other jurisdictions, we comply with applicable cross-border transfer requirements.
+
+---
+
+## 8. DATA RETENTION
+
+We retain personal data only as long as necessary for the purposes described in this Policy.
+
+Criteria for retention periods:
+
+- Duration of your account or use of the Services
+- Legal obligations (e.g., tax retention periods under German law: up to 10 years)
+- Legitimate interests (e.g., dispute resolution)
+
+Upon expiration of the retention period, data is securely deleted or anonymized.
+
+---
+
+## 9. DATA SECURITY
+
+We implement appropriate technical and organizational measures to protect your data, including:
+
+- Encryption in transit (TLS 1.3) and at rest (AES-256 or equivalent)
+- Access controls (RBAC, MFA for administrative access, principle of least privilege)
+- Regular security assessments and sub-processor audits
+- Audit logging restricted to authorised personnel
+- Daily backups with off-site replicas
+- Documented incident response per our internal Breach Response Plan (Art. 33/34 GDPR)
+
+No system is completely secure. We cannot guarantee absolute data security.
+
+### 9.1 Breach Notification to You
+
+In the event of a personal data breach **likely to result in a high risk** to your rights and freedoms (Art. 34 GDPR), we will notify you without undue delay using the email address associated with your account, including:
+
+- nature of the breach
+- categories and approximate number of records concerned
+- likely consequences
+- measures taken or proposed to address the breach and mitigate adverse effects
+- contact details for further information
+
+If individual notification would involve disproportionate effort, we make a public communication on https://digitalfreedom.co.za/.
+
+---
+
+## 10. YOUR RIGHTS
+
+### 10.1 Rights under GDPR (EU/EEA/UK)
+
+You have the right to:
+
+- **Access** your personal data (Art. 15 GDPR)
+- **Rectify** inaccurate data (Art. 16 GDPR)
+- **Erase** your data ("right to be forgotten") (Art. 17 GDPR)
+- **Restrict** processing (Art. 18 GDPR)
+- **Data portability** (Art. 20 GDPR)
+- **Object** to processing (Art. 21 GDPR)
+- **Withdraw consent** at any time (Art. 7(3) GDPR)
+- **Lodge a complaint** with a supervisory authority
+
+### 10.2 Rights under CCPA/CPRA (California)
+
+California residents have the right to:
+
+- Know what personal information is collected
+- Request deletion of personal information
+- Opt out of the sale or sharing of personal information
+- Non-discrimination for exercising privacy rights
+- Correct inaccurate personal information
+- Limit the use of sensitive personal information
+
+### 10.3 Rights under PIPEDA (Canada)
+
+Canadian residents have the right to:
+
+- Access their personal information
+- Challenge the accuracy of their information
+- Withdraw consent (subject to legal or contractual restrictions)
+
+### 10.4 Rights under Australian Privacy Act
+
+Australian residents have the right to:
+
+- Access their personal information
+- Request correction of inaccurate information
+- Complain to the Office of the Australian Information Commissioner (OAIC)
+
+### 10.5 Rights under LGPD (Brazil)
+
+Brazilian residents have the right to:
+
+- Confirmation of data processing
+- Access to data
+- Correction of incomplete or inaccurate data
+- Anonymization, blocking, or deletion of unnecessary data
+- Data portability
+- Information about shared data
+- Revocation of consent
+
+---
+
+## 11. CHILDREN'S PRIVACY
+
+Our Services are not directed to children under the age of 16 (or the applicable age of consent in your jurisdiction).
+
+We do not knowingly collect personal data from children. If we become aware that we have collected data from a child, we will take steps to delete it promptly.
+
+---
+
+## 12. COOKIES AND TRACKING
+
+Our use of cookies and similar technologies is described in our separate [Cookie Policy](COOKIE_POLICY.md).
+
+---
+
+## 13. AUTOMATED DECISION-MAKING AND AI
+
+### 13.1 Automated decisions with legal or similarly significant effect
+
+We do not engage in automated decision-making or profiling that produces legal effects concerning you, unless:
+
+- You have given explicit consent
+- It is necessary for contract performance
+- It is authorized by applicable law
+
+Where any such processing occurs, you have the right under Art. 22(3) GDPR to obtain human intervention, to express your point of view, and to contest the decision.
+
+### 13.2 AI-assisted features
+
+Where the Services include AI-assisted features (for example, content generation, summarisation, classification powered by third-party AI APIs such as OpenAI), the [AI Transparency Notice](AI_TRANSPARENCY_NOTICE.md) describes:
+
+- which features use AI
+- which AI provider is engaged
+- what data is sent to the AI
+- retention at the AI provider (30 days for OpenAI API by default)
+- your right to opt out
+- AI-generated content labelling (Art. 50 EU AI Act, in force 2026-08-02)
+
+### 13.3 Fair Use enforcement
+
+The [Fair Use Policy](FAIR_USE_POLICY.md) describes how operational telemetry is used to detect abuse and to apply throttling, rate-limiting, restriction or suspension where appropriate. Automated detection informs human review; no automated decision under the Fair Use Policy produces legal effects on you without human involvement, except where strictly necessary to mitigate an immediate threat.
+
+### 13.4 Marketing communications
+
+Marketing emails (via MailerLite) and marketing push notifications are sent only with your **explicit, separate opt-in**. You can withdraw consent at any time without affecting the rest of the Services.
+
+### 13.5 Account deletion
+
+You can delete your account and request erasure of your data at any time. See the [Account Deletion Notice](ACCOUNT_DELETION_NOTICE.md) for the in-app, email and postal paths.
+
+---
+
+## 14. THIRD-PARTY LINKS AND SERVICES
+
+The Services may contain links to third-party websites or services. We are not responsible for the privacy practices of third parties.
+
+---
+
+## 15. CHANGES TO THIS POLICY
+
+We may update this Privacy Policy from time to time.
+
+- Material changes will be communicated via the Services or email
+- Continued use after changes constitutes acceptance
+- The "Effective Date" at the top reflects the latest revision
+
+---
+
+## 16. CONTACT
+
+For privacy-related inquiries or to exercise your rights:
+
+DigitalFreedom
+A brand of Berger & Rosenstock GbR
+Dieselstr. 22e
+61231 Bad Nauheim
+Germany
+
+Data protection: data-protection@digitalfreedom.co.za
+General inquiries: hello@digitalfreedom.co.za
+Website: https://digitalfreedom.co.za
+
+For EU residents, you may also contact the competent supervisory authority in your member state.
+
+---
+
+## 17. REGIONAL PROVISIONS
+
+### 17.1 European Union / EEA
+
+- Processing complies with GDPR requirements
+- The lead supervisory authority is the competent German data protection authority
+- Data Protection Impact Assessments (DPIAs) are conducted where required
+
+### 17.2 United Kingdom
+
+- Processing complies with UK GDPR and Data Protection Act 2018
+- The supervisory authority is the Information Commissioner's Office (ICO)
+
+### 17.3 United States
+
+- Processing complies with applicable state privacy laws (CCPA/CPRA, VCDPA, CPA, etc.)
+- "Do Not Track" signals are respected where technically feasible
+
+### 17.4 Canada
+
+- Processing complies with PIPEDA and applicable provincial privacy legislation
+- The Office of the Privacy Commissioner of Canada may be contacted for complaints
+
+### 17.5 Australia
+
+- Processing complies with the Privacy Act 1988 and Australian Privacy Principles (APPs)
+
+### 17.6 Brazil
+
+- Processing complies with the Lei Geral de Proteção de Dados (LGPD)
+- The Autoridade Nacional de Proteção de Dados (ANPD) is the competent authority
+
+---
+
+(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
