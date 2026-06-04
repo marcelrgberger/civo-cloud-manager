@@ -2,6 +2,11 @@ import SwiftUI
 
 /// Simple block-level Markdown renderer using only Apple frameworks.
 /// Supports: # headings (H1-H3), paragraphs, bullet lists, inline **bold**, *italic*, `code`, [links](url).
+///
+/// Relative `*.md` links are rewritten at render time: targets that map to a known
+/// in-app `LegalDocument` become `civoccm://legal/<case>` (handled by `LegalView`'s
+/// `OpenURLAction`); unresolved targets are unwrapped to plain text so the system
+/// browser is never asked to open a non-existent file (which on macOS produces -50).
 struct MarkdownView: View {
     let content: String
 
@@ -14,7 +19,7 @@ struct MarkdownView: View {
     }
 
     private var blocks: [Block] {
-        MarkdownParser.parse(content)
+        MarkdownParser.parse(MarkdownLinkRewriter.rewrite(content))
     }
 
     @ViewBuilder
@@ -58,6 +63,55 @@ struct MarkdownView: View {
     private func inline(_ text: String) -> AttributedString {
         (try? AttributedString(markdown: text, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)))
             ?? AttributedString(text)
+    }
+}
+
+// MARK: - Link rewriter
+
+enum MarkdownLinkRewriter {
+    /// Rewrites `[text](FILENAME.md)` style references:
+    /// - if `FILENAME.md` maps to an in-app `LegalDocument`, the URL becomes `civoccm://legal/<case>`
+    /// - otherwise the link wrapping is stripped so only the link text remains
+    /// External `http(s)://` and `mailto:` links are left untouched.
+    static func rewrite(_ content: String) -> String {
+        // `(?s)` not needed — markdown links don't span lines
+        // Pattern: [text](target) where target contains no spaces or close-paren
+        // We don't try to be RFC-perfect; this matches the same shape MarkdownParser/AttributedString accept.
+        guard let regex = try? NSRegularExpression(
+            pattern: #"\[([^\]\n]+)\]\(([^)\s]+)\)"#
+        ) else { return content }
+
+        var result = ""
+        var cursor = content.startIndex
+        let nsContent = content as NSString
+        let fullRange = NSRange(location: 0, length: nsContent.length)
+
+        regex.enumerateMatches(in: content, range: fullRange) { match, _, _ in
+            guard let match,
+                  let textRange = Range(match.range(at: 1), in: content),
+                  let targetRange = Range(match.range(at: 2), in: content),
+                  let matchRange = Range(match.range, in: content)
+            else { return }
+
+            // Append everything between the previous match and this one verbatim
+            result.append(contentsOf: content[cursor..<matchRange.lowerBound])
+            cursor = matchRange.upperBound
+
+            let text = String(content[textRange])
+            let target = String(content[targetRange])
+
+            if let doc = LegalDocument.documentForFilename(target) {
+                result.append("[\(text)](civoccm://legal/\(doc.rawValue))")
+            } else if target.hasSuffix(".md") {
+                // Unknown sibling doc — strip link wrapping
+                result.append(text)
+            } else {
+                // External link (https://, mailto:, etc) — keep as-is
+                result.append("[\(text)](\(target))")
+            }
+        }
+        result.append(contentsOf: content[cursor..<content.endIndex])
+        return result
     }
 }
 

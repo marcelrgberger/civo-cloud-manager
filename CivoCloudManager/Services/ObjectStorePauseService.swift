@@ -250,8 +250,7 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingVaultCredentials
         }
 
-        let resumeRegion = paused.region ?? CivoConfig.shared.region
-        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey, region: resumeRegion)
+        let vaultClient = S3Client(endpoint: vaultEndpoint, accessKey: vaultAccessKey, secretKey: vaultSecretKey, region: paused.region)
 
         // 2. List files in vault and validate BEFORE creating a new store
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Validating vault data...", bytesCopied: 0, bytesTotal: 0))
@@ -323,7 +322,7 @@ final class ObjectStorePauseService: Sendable {
             throw PauseError.missingCredentials
         }
 
-        let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: resumeRegion)
+        let destClient = S3Client(endpoint: destEndpoint, accessKey: destAccessKey, secretKey: destSecretKey, region: paused.region)
 
         // 5. Copy files back (parallel, max 4 concurrent)
         let resumeCounter = TransferCounter()

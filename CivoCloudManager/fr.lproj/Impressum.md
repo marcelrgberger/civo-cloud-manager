@@ -1,232 +1,187 @@
-# Mentions légales
+# IMPRESSUM / LEGAL NOTICE
 
-Informations conformément au § 5 DDG (Digitale-Dienste-Gesetz), au § 18, al. 2 MStV (Medienstaatsvertrag), à l'article 12 du règlement sur les services numériques (règlement (UE) 2022/2065) et aux obligations internationales applicables en matière de divulgation.
+## Information pursuant to § 5 DDG (Digitale-Dienste-Gesetz) and applicable international disclosure requirements
 
-**Dernière mise à jour :** Avril 2026
+**Last Updated:** May 2026
 
 ---
 
-## 1. Fournisseur du service
+## 1. SERVICE PROVIDER
 
-**Berger & Rosenstock GbR**
-Gesellschaft bürgerlichen Rechts
+The Services are offered under the **DigitalFreedom** brand. The operating legal entity (Diensteanbieter / Service Provider within the meaning of § 5 DDG) is:
 
-Dieselstraße 22e
+Berger & Rosenstock GbR
+Dieselstr. 22e
 61231 Bad Nauheim
-Allemagne
+Germany
 
-Courriel : moin@berger-rosenstock.de
+Trade name: **DigitalFreedom** (used on websites, apps, marketing, customer communications and product UI)
 
----
-
-## 2. Forme juridique
-
-Gesellschaft bürgerlichen Rechts (GbR) — société de droit civil au titre des §§ 705 et suivants du BGB (Code civil allemand).
-
-**Représentants autorisés (conjointement) :**
-
-- Marcel R. G. Berger
-- Jasmin Rosenstock
-
-La société est représentée conjointement par les deux associés.
+**Email:** hello@digitalfreedom.co.za
+**Website:** https://digitalfreedom.co.za
 
 ---
 
-## 3. Contact
+## 2. LEGAL FORM
 
-**Courriel :** moin@berger-rosenstock.de
+Gesellschaft bürgerlichen Rechts (GbR) — Civil law partnership under German law
 
-Les demandes spécifiquement relatives à l'application Civo Cloud Manager peuvent être adressées à la même adresse.
-
----
-
-## 4. Informations réglementaires
-
-### 4.1 Numéro d'identification à la TVA
-
-Numéro de TVA conformément au § 27a UStG (loi allemande sur la TVA) :
-**DE455096022**
-
-### 4.2 Registre du commerce
-
-Non applicable. Une Gesellschaft bürgerlichen Rechts (GbR) de droit allemand n'est pas tenue d'être inscrite au registre du commerce (Handelsregister).
-
-### 4.3 Réglementation professionnelle
-
-Non applicable. Les services fournis ne constituent pas une profession réglementée au sens du § 5, al. 1, nº 5 DDG.
-
-### 4.4 Adhésion à une chambre
-
-Non applicable.
+**Authorized Representatives:**
+Marcel R. G. Berger
+Jasmin Rosenstock
 
 ---
 
-## 5. Responsable du contenu éditorial
+## 3. CONTACT
 
-Responsable du contenu éditorial conformément au § 18, al. 2 MStV (Medienstaatsvertrag) :
+**General inquiries:** hello@digitalfreedom.co.za
+**Customer support:** support@digitalfreedom.co.za
+**Data protection inquiries:** data-protection@digitalfreedom.co.za
+**Website:** https://digitalfreedom.co.za
 
-Pour les contenus relatifs au numérique, à l'informatique et aux technologies (y compris l'application Civo Cloud Manager) :
+---
 
-**Marcel R. G. Berger**
-Dieselstraße 22e
+## 4. REGULATORY INFORMATION
+
+### 4.1 VAT Identification Number
+
+VAT identification number pursuant to § 27a German VAT Act (UStG):
+
+DE455096022
+
+### 4.2 Commercial Register
+
+Not applicable — Gesellschaft bürgerlichen Rechts (GbR) under German law is not subject to commercial register registration.
+
+### 4.3 Professional Regulations
+
+Not applicable — no regulated professions within the meaning of § 5(1) No. 5 DDG.
+
+---
+
+## 5. RESPONSIBLE FOR EDITORIAL CONTENT
+
+Responsible pursuant to § 18(2) MStV (Medienstaatsvertrag):
+
+Marcel R. G. Berger
+Dieselstr. 22e
 61231 Bad Nauheim
-Allemagne
+Germany
 
 ---
 
-## 6. Règlement des litiges
+## 6. DISPUTE RESOLUTION
 
-### 6.1 Règlement en ligne des litiges de l'UE
+### 6.1 EU Online Dispute Resolution
 
-La Commission européenne met à disposition une plateforme de règlement en ligne des litiges (RLL) conformément au règlement (UE) nº 524/2013 :
+The European Commission provides an Online Dispute Resolution (ODR) platform:
 https://ec.europa.eu/consumers/odr
 
-Notre adresse électronique à ces fins : moin@berger-rosenstock.de
+### 6.2 Consumer Arbitration
 
-### 6.2 Arbitrage consommateur
-
-Nous ne sommes ni tenus ni disposés à participer à des procédures de règlement des litiges devant un organisme d'arbitrage consommateur (Verbraucherschlichtungsstelle) conformément à la loi allemande sur le règlement des litiges de consommation (Verbraucherstreitbeilegungsgesetz — VSBG), sauf obligation légale.
+The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board (Verbraucherschlichtungsstelle) pursuant to the German Consumer Dispute Resolution Act (VSBG), unless required by law.
 
 ---
 
-## 7. Responsabilité du contenu
+## 7. LIABILITY FOR CONTENT
 
-En tant que fournisseur de services, nous sommes responsables de nos propres contenus sur ces pages et dans nos services conformément au § 7, al. 1 DDG et aux lois générales.
+### 7.1 Own Content
 
-Conformément aux §§ 8 à 10 DDG, nous ne sommes pas tenus de surveiller les informations de tiers transmises ou stockées, ni d'enquêter sur des circonstances qui indiqueraient une activité illégale. Les obligations de retirer ou de bloquer l'utilisation d'informations au titre des lois générales demeurent inchangées. Toute responsabilité à cet égard n'est envisageable qu'à partir du moment où une infraction concrète à la loi est connue. Dès que nous aurons connaissance de telles infractions, nous supprimerons immédiatement le contenu concerné.
+As a service provider, we are responsible for our own content on these pages in accordance with § 7(1) DDG and general laws.
 
----
+### 7.2 Third-Party Content
 
-## 8. Responsabilité des liens
-
-Nos services peuvent contenir des liens vers des sites web de tiers sur le contenu desquels nous n'avons aucune influence. Nous ne pouvons donc assumer aucune responsabilité pour ces contenus externes. Le fournisseur ou l'exploitant respectif des pages est toujours responsable du contenu des pages liées.
-
-Les pages liées ont été vérifiées quant à d'éventuelles infractions à la loi au moment de la création du lien. Aucun contenu illégal n'était identifiable au moment de la création du lien. Une surveillance permanente des pages liées n'est pas raisonnable sans indices concrets de violation. Dès que nous aurons connaissance d'infractions, nous supprimerons immédiatement ces liens.
+Pursuant to §§ 8–10 DDG, we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the point in time at which a concrete infringement of the law becomes known. If we become aware of any such infringements, we will remove the content immediately.
 
 ---
 
-## 9. Droit d'auteur
+## 8. LIABILITY FOR LINKS
 
-Les contenus et œuvres créés par le fournisseur de services sur ces pages et dans nos services sont soumis au droit d'auteur allemand (Urheberrechtsgesetz — UrhG). La reproduction, l'édition, la distribution et toute forme d'exploitation en dehors des limites du droit d'auteur requièrent le consentement écrit de l'auteur ou du créateur respectif.
-
-Les téléchargements et copies de nos services ne sont autorisés que pour un usage privé et non commercial. Dans la mesure où le contenu de ce site n'a pas été créé par le fournisseur de services, les droits d'auteur de tiers sont respectés. Les contenus tiers sont identifiés comme tels. Si vous veniez néanmoins à constater une violation du droit d'auteur, veuillez nous en informer. Dès que nous aurons connaissance d'infractions, nous supprimerons immédiatement ces contenus.
+Our Services may contain links to external third-party websites over whose content we have no influence. Therefore, we cannot assume any liability for such external content. The respective provider or operator of the pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal content was not recognizable at the time of linking. Permanent monitoring of linked pages is not reasonable without concrete evidence of a violation. If we become aware of any infringements, we will remove such links immediately.
 
 ---
 
-## 10. Délégué à la protection des données
+## 9. COPYRIGHT
 
-Un délégué à la protection des données conformément à l'art. 37 RGPD / § 38 BDSG n'est pas requis, car :
-
-- Les activités principales du Fournisseur ne consistent pas en opérations de traitement nécessitant un suivi régulier et systématique à grande échelle des personnes concernées
-- Les activités principales ne consistent pas en un traitement à grande échelle de catégories particulières de données (art. 9 RGPD) ou de données relatives aux condamnations pénales (art. 10 RGPD)
-- L'application Civo Cloud Manager met en œuvre une politique de collecte nulle (voir la politique de confidentialité)
-
-Pour les demandes relatives à la protection des données, veuillez contacter : moin@berger-rosenstock.de
+Content and works created by the site operators on these pages are subject to German copyright law (Urheberrechtsgesetz — UrhG). The reproduction, editing, distribution, and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. Third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. If we become aware of any infringements, we will remove such content immediately.
 
 ---
 
-## 11. Obligations internationales de divulgation
+## 10. INTERNATIONAL DISCLOSURE REQUIREMENTS
 
-Les présentes mentions légales satisfont aux exigences des juridictions suivantes :
+### 10.1 European Union / EEA
 
-### 11.1 Allemagne
+This legal notice fulfills the requirements of:
 
-- § 5 DDG (Digitale-Dienste-Gesetz)
-- § 18, al. 2 MStV (Medienstaatsvertrag)
-- § 27a UStG (identification à la TVA)
+- **Germany:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
+- **EU:** Article 5 of the E-Commerce Directive (2000/31/EC), Article 12 of the Digital Services Act (Regulation (EU) 2022/2065)
+- **Austria:** § 5 ECG (E-Commerce-Gesetz), § 25 MedienG
+- **France:** Article 6, Law No. 2004-575 (LCEN — Loi pour la confiance dans l'économie numérique)
+- **Italy:** D.Lgs. 70/2003 (Decreto legislativo 9 aprile 2003, n. 70)
+- **Spain:** Ley 34/2002 (LSSI-CE — Ley de Servicios de la Sociedad de la Información)
+- **Netherlands:** Article 3:15d BW (Burgerlijk Wetboek)
+- **Belgium:** Law of 11 March 2003 on electronic commerce
+- **Portugal:** Decree-Law No. 7/2004
+- **Poland:** Act on Provision of Electronic Services (Ustawa o świadczeniu usług drogą elektroniczną)
+- **Sweden:** E-Commerce Act (Lag om elektronisk handel)
 
-### 11.2 Union européenne / EEE
+### 10.2 United Kingdom
 
-- Article 5 de la directive sur le commerce électronique (2000/31/CE)
-- Article 12 du règlement sur les services numériques (règlement (UE) 2022/2065)
-- Article 13 RGPD (identification du responsable du traitement)
-
-### 11.3 Autriche
-
-- § 5 ECG (E-Commerce-Gesetz)
-- § 25 MedienG
-
-### 11.4 Suisse
-
-- Art. 3, let. s LCD (Loi fédérale contre la concurrence déloyale) — obligation de divulgation de l'adresse électronique
-
-### 11.5 France
-
-- Article 6 de la loi nº 2004-575 (LCEN — Loi pour la confiance dans l'économie numérique)
-
-### 11.6 Italie
-
-- D.Lgs. 70/2003 (Decreto legislativo 9 aprile 2003, n. 70)
-
-### 11.7 Espagne
-
-- Ley 34/2002 (LSSI-CE — Ley de Servicios de la Sociedad de la Información y de Comercio Electrónico)
-
-### 11.8 Pays-Bas
-
-- Article 3:15d BW (Burgerlijk Wetboek)
-
-### 11.9 Belgique
-
-- Loi du 11 mars 2003 sur le commerce électronique
-
-### 11.10 Portugal
-
-- Décret-loi nº 7/2004
-
-### 11.11 Pologne
-
-- Loi sur la fourniture de services électroniques (Ustawa o świadczeniu usług drogą elektroniczną)
-
-### 11.12 Scandinavie (Danemark, Finlande, Norvège, Suède, Islande)
-
-- Lois sur le commerce électronique transposant la directive 2000/31/CE
-
-### 11.13 Royaume-Uni
+This notice fulfills the requirements of:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
-- Companies Act 2006 (pour les sites web d'entreprise)
+- Companies Act 2006 (for business websites)
 
-### 11.14 États-Unis
+### 10.3 United States
 
-- Section 5 du FTC Act (actes ou pratiques déloyaux ou trompeurs)
-- Obligations de divulgation propres à chaque État
-- CAN-SPAM Act (pour les communications commerciales)
+Business identification disclosures comply with:
 
-### 11.15 Canada
+- FTC Act § 5 (unfair or deceptive acts or practices)
+- State-specific business disclosure requirements
+- CAN-SPAM Act (for commercial communications)
 
-- Obligations d'identification de la LCAP (Loi canadienne anti-pourriel)
-- Obligations provinciales de divulgation commerciale
+### 10.4 Canada
 
-### 11.16 Australie
+- CASL (Canada's Anti-Spam Legislation) identification requirements
+- Provincial business disclosure requirements
 
-- Obligations d'identification commerciale au titre de l'Australian Consumer Law (ACL)
-- Obligations d'identification de l'expéditeur au titre du Spam Act 2003
+### 10.5 Australia
 
-### 11.17 Japon
+- Australian Consumer Law (ACL) business identification requirements
+- Spam Act 2003 sender identification requirements
 
-- Loi sur les transactions commerciales spécifiées (特定商取引法)
-- Loi sur la régulation de la transmission de courriers électroniques spécifiés (特定電子メール法)
+### 10.6 Japan
 
-### 11.18 Corée du Sud
+- Act on Specified Commercial Transactions (特定商取引法) disclosure requirements
+- Act on Regulation of Transmission of Specified Electronic Mail (特定電子メール法)
 
-- Loi sur la protection des consommateurs dans le commerce électronique (전자상거래법)
-- Loi sur la promotion de l'utilisation des réseaux d'information et de communication (정보통신망법)
+### 10.7 South Korea
 
-### 11.19 Brésil
+- Act on Consumer Protection in Electronic Commerce (전자상거래법) disclosure requirements
+- Act on Promotion of Information and Communications Network Utilization (정보통신망법)
 
-- Marco Civil da Internet (loi nº 12.965/2014)
-- Obligations d'identification commerciale du Code de défense du consommateur (CDC)
+### 10.8 Brazil
 
-### 11.20 Inde
+- Marco Civil da Internet (Law No. 12.965/2014) identification requirements
+- Consumer Defence Code (CDC) business identification obligations
 
-- Information Technology Act 2000 — obligations de divulgation des intermédiaires
-- Consumer Protection (E-Commerce) Rules 2020
+### 10.9 India
 
-### 11.21 Autres juridictions
+- Information Technology Act, 2000 — intermediary disclosure requirements
+- Consumer Protection (E-Commerce) Rules, 2020
 
-Nous nous conformons aux obligations applicables d'identification commerciale et de divulgation dans toutes les juridictions où l'Application est proposée via l'App Store Apple.
+### 10.10 Other Jurisdictions
+
+The Provider complies with applicable business identification and disclosure requirements in all jurisdictions where the Services are offered.
 
 ---
 
-© 2025–2026 Berger & Rosenstock GbR. Tous droits réservés.
+## 11. DATA PROTECTION OFFICER
+
+A formal Data Protection Officer has not been appointed, as the Provider does not meet the threshold criteria for mandatory appointment under Art. 37 GDPR / § 38 BDSG.
+
+For all data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests), please contact: data-protection@digitalfreedom.co.za
+
+---
+
+(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
