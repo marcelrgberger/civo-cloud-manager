@@ -25,14 +25,19 @@ struct AboutView: View {
                     .frame(width: 200)
 
                 VStack(spacing: 6) {
-                    Text("Marcel R. G. Berger")
+                    Text("DigitalFreedom")
                         .font(.headline)
-                    Text("Berger & Rosenstock GbR")
+                    Text("A brand of Berger & Rosenstock GbR")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                    Text(try! AttributedString(
+                        markdown: "Made by [Marcel R. G. Berger](https://marcelrgberger.com)"
+                    ))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
                 }
 
-                Text("Copyright \u{00A9} 2026 Marcel R. G. Berger.\nAll rights reserved.")
+                Text("Copyright \u{00A9} 2025\u{2013}2026 DigitalFreedom \u{2014} Berger & Rosenstock GbR.\nAll rights reserved.")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)

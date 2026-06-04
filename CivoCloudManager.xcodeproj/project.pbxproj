@@ -95,6 +95,7 @@
 		9E953B01155C3E5BDB427123 /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA6FF0E44C565460FE7EC0 /* ExportView.swift */; };
 		9E96AAFD3703722C2DBCAE5E /* KubernetesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */; };
 		A0F4E426FF1D7B3A27BB7796 /* RegionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */; };
+		A1AAC0F11E0A4D2C8B9F0003 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AAC0F11E0A4D2C8B9F0004 /* SupportView.swift */; };
 		A2A4F5350240F0936399A783 /* CivoDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D85BF2203CFAB31EC1772C /* CivoDomain.swift */; };
 		A492A7FBCCAE211062D50079 /* CivoDiskImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA198873A8982E8D24319F /* CivoDiskImage.swift */; };
 		A5835E1FCB6E30D6E95108FC /* CredentialListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DB18154AC50CA130D2FB09 /* CredentialListView.swift */; };
@@ -145,6 +146,10 @@
 		F9C47FDCDC04C1C5006271EB /* CreateVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DD872423A252DACA2ED1A /* CreateVolumeView.swift */; };
 		FAAC509E66D41F87401520CD /* CivoObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1448D6889E0EE066A4CBB /* CivoObjectStore.swift */; };
 		FAAF3DCA9262EA12FE8B4DCB /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DFE2E2DF24970B74AA501F /* StatusBadge.swift */; };
+		D31BDB7103B8408EB8F22BCE /* EULA.md in Resources */ = {isa = PBXBuildFile; fileRef = 2A897D1A14AF4EFE8B4D31C7 /* EULA.md */; };
+		DB6E42A9F4264F23AF76DDFE /* AcceptableUsePolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */; };
+		35659D1E3DE448618AAE263F /* PushNotificationConsent.md in Resources */ = {isa = PBXBuildFile; fileRef = D0716BC9263146AA83EA2828 /* PushNotificationConsent.md */; };
+		8D6FF0B021C34AA58903C92D /* TrademarkDisclaimer.md in Resources */ = {isa = PBXBuildFile; fileRef = 463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,13 +170,13 @@
 		08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionViewModel.swift; sourceTree = "<group>"; };
 		09EC708C7CF21BD04266D608 /* CivoDomainService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomainService.swift; sourceTree = "<group>"; };
 		09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
-		0CAB90D9E06AE3F401020357 /* en */ = {isa = PBXFileReference; includeInIndex = 1; name = en; path = en.lproj/TermsOfService.md; sourceTree = "<group>"; };
-		0DFD18515DDCB89B7B11085A /* es */ = {isa = PBXFileReference; includeInIndex = 1; name = es; path = es.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		0CAB90D9E06AE3F401020357 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		0DFD18515DDCB89B7B11085A /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		119A83B46A65A4C30306BE66 /* CivoVolumeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolumeService.swift; sourceTree = "<group>"; };
 		139202D046776B2447E7538A /* DomainListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DomainListView.swift; sourceTree = "<group>"; };
 		150226384082E5A588939D22 /* MarkdownView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
-		158D42188BF2A1FD2BE4CD54 /* it */ = {isa = PBXFileReference; includeInIndex = 1; name = it; path = it.lproj/TermsOfService.md; sourceTree = "<group>"; };
-		158FEB1ADBC203A9626DFBD8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; name = pt; path = pt.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		158D42188BF2A1FD2BE4CD54 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		158FEB1ADBC203A9626DFBD8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		1693AEFF49056D27CAE40A92 /* PausedObjectStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PausedObjectStore.swift; sourceTree = "<group>"; };
 		19D85BF2203CFAB31EC1772C /* CivoDomain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomain.swift; sourceTree = "<group>"; };
 		1A4FC9558B135D603AC2BB25 /* CivoObjectStoreCredential.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreCredential.swift; sourceTree = "<group>"; };
@@ -179,7 +184,7 @@
 		1CC0859594861435DF119AAC /* SizePickerGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SizePickerGrid.swift; sourceTree = "<group>"; };
 		1D4BDDF3AA8CE6F2EC6DD868 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1E080D4B547AA2B37914090E /* MenuBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
-		1F3418483EDEFC2F2D8A08D8 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; name = nl; path = nl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		1F3418483EDEFC2F2D8A08D8 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		1FDC2D559CDF199ED3540F04 /* CivoDatabase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
@@ -193,7 +198,7 @@
 		2E3F800DB4559087DDA1A05F /* CivoAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAPIClient.swift; sourceTree = "<group>"; };
 		2E711DDE54B48DBE6F12D4A6 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30C29B5780C5BD66D7761CAA /* Localizable.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		3139DD72E464D3B3DBF382B5 /* en */ = {isa = PBXFileReference; includeInIndex = 1; name = en; path = en.lproj/Impressum.md; sourceTree = "<group>"; };
+		3139DD72E464D3B3DBF382B5 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/Impressum.md; sourceTree = "<group>"; };
 		323BA1EFA2434775B360EC40 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesViewModel.swift; sourceTree = "<group>"; };
 		371F72DDF5C28CE579789154 /* PodLogView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PodLogView.swift; sourceTree = "<group>"; };
@@ -205,7 +210,7 @@
 		4052BA575096852699579B5A /* K8sStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sStorage.swift; sourceTree = "<group>"; };
 		41F803DCD5E699794A5E2F38 /* ObjectStoreBrowserView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreBrowserView.swift; sourceTree = "<group>"; };
 		427F5C2E5699C5774C494320 /* CivoKubernetesService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetesService.swift; sourceTree = "<group>"; };
-		432A9F0FCC3CD318FA50C44B /* fr */ = {isa = PBXFileReference; includeInIndex = 1; name = fr; path = fr.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		432A9F0FCC3CD318FA50C44B /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		44DB18154AC50CA130D2FB09 /* CredentialListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
 		47BC22D44A6BDA44A865773F /* MainWindowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
 		4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancer.swift; sourceTree = "<group>"; };
@@ -215,24 +220,24 @@
 		541FD48B68AB64C17DAEF5F2 /* ClusterDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClusterDetailView.swift; sourceTree = "<group>"; };
 		5531411EA45415DC78696414 /* CreateDomainView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDomainView.swift; sourceTree = "<group>"; };
 		59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetes.swift; sourceTree = "<group>"; };
-		5AD7C8749E56550EFAB908BA /* es */ = {isa = PBXFileReference; includeInIndex = 1; name = es; path = es.lproj/Impressum.md; sourceTree = "<group>"; };
-		5C10C1A3D33738504C94B6CB /* de */ = {isa = PBXFileReference; includeInIndex = 1; name = de; path = de.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
-		5C6007AB693639033F735D50 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; name = pl; path = pl.lproj/Impressum.md; sourceTree = "<group>"; };
-		5DEE909290CCC663692F435F /* it */ = {isa = PBXFileReference; includeInIndex = 1; name = it; path = it.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		5AD7C8749E56550EFAB908BA /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/Impressum.md; sourceTree = "<group>"; };
+		5C10C1A3D33738504C94B6CB /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		5C6007AB693639033F735D50 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/Impressum.md; sourceTree = "<group>"; };
+		5DEE909290CCC663692F435F /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		6058B306C16FA7AC278A657B /* Logger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		611244C5645319E3DD2DD6CA /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		618697D3D7D82F7D65EDCF86 /* PodExecView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PodExecView.swift; sourceTree = "<group>"; };
 		6573B0CCE355C008B097BE98 /* K8sMetrics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sMetrics.swift; sourceTree = "<group>"; };
 		65ECBE7F88791326260A0FD0 /* K8sNodeDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sNodeDetailView.swift; sourceTree = "<group>"; };
-		67605B8A33B72AD5D3674CC1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; name = nl; path = nl.lproj/Impressum.md; sourceTree = "<group>"; };
+		67605B8A33B72AD5D3674CC1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/Impressum.md; sourceTree = "<group>"; };
 		6AC522011F72417D84D6479C /* CivoSSHKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSSHKey.swift; sourceTree = "<group>"; };
 		6C38900AD57D6A3AA1BE8D86 /* AboutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		6C416A972F713EDEE76B1EA1 /* DashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		6C8E6CAAC1AD5DF9B154596C /* APIHealthView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIHealthView.swift; sourceTree = "<group>"; };
-		6CC06AA05040B36654815EFC /* fr */ = {isa = PBXFileReference; includeInIndex = 1; name = fr; path = fr.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		6CC06AA05040B36654815EFC /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		6D09EE0597317A299FF33F61 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6FEC678CBA94690F848CF1F7 /* QuotaEditView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEditView.swift; sourceTree = "<group>"; };
-		730986B6978871BAFC769F98 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; name = fr; path = fr.lproj/Impressum.md; sourceTree = "<group>"; };
+		730986B6978871BAFC769F98 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/Impressum.md; sourceTree = "<group>"; };
 		78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ErrorBanner.swift; sourceTree = "<group>"; };
 		78B5D4692DA28F2E46B9EA19 /* K8sPod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sPod.swift; sourceTree = "<group>"; };
 		7F26AD9AE845091B084D7C1F /* DatabaseViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DatabaseViewModel.swift; sourceTree = "<group>"; };
@@ -242,7 +247,7 @@
 		85B6B375E3D2A3808726F712 /* VolumeListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VolumeListView.swift; sourceTree = "<group>"; };
 		865A0EAD2DDB9B17FCF3CF89 /* CreateObjectStoreView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateObjectStoreView.swift; sourceTree = "<group>"; };
 		86735EED01F2D8BA1F04558F /* CostDashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostDashboardView.swift; sourceTree = "<group>"; };
-		8703B7ADBE6B3FE8F2D24EB3 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; name = nl; path = nl.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		8703B7ADBE6B3FE8F2D24EB3 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		88481839AA22E9CED63C5D51 /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8A2B3F1204BB739A272BBB9D /* StoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		8CD1B523085B1FE88F1390E7 /* DashboardViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
@@ -262,13 +267,14 @@
 		9D863C92BB8355FC86FD7921 /* CreateNetworkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateNetworkView.swift; sourceTree = "<group>"; };
 		9EAF45889895EE0C2002FE44 /* AppState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		9FCA198873A8982E8D24319F /* CivoDiskImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDiskImage.swift; sourceTree = "<group>"; };
+		A1AAC0F11E0A4D2C8B9F0004 /* SupportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		A20A85AE8A0AAB61AEB6A794 /* CivoSize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSize.swift; sourceTree = "<group>"; };
 		A330325FCF5408E7D101EEE0 /* SSHKeyListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSHKeyListView.swift; sourceTree = "<group>"; };
 		A5D4DFF0F2B2AE3D63C83F2E /* CivoRegionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoRegionService.swift; sourceTree = "<group>"; };
 		A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetworkService.swift; sourceTree = "<group>"; };
 		AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSHKeychain.swift; sourceTree = "<group>"; };
 		AE84E4DD07E304399A5562A3 /* CivoQuota.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoQuota.swift; sourceTree = "<group>"; };
-		B12F7996F1A16922E40D6BD3 /* it */ = {isa = PBXFileReference; includeInIndex = 1; name = it; path = it.lproj/Impressum.md; sourceTree = "<group>"; };
+		B12F7996F1A16922E40D6BD3 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/Impressum.md; sourceTree = "<group>"; };
 		B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetwork.swift; sourceTree = "<group>"; };
 		B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateRuleView.swift; sourceTree = "<group>"; };
 		B438532CEAB87ACE7FE3EAD9 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
@@ -281,7 +287,7 @@
 		BE58D59A701E14C63EE6DB83 /* SparklineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
 		BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceListView.swift; sourceTree = "<group>"; };
 		C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDNSRecordView.swift; sourceTree = "<group>"; };
-		C17FDFD0A2757A7BFF86340C /* pl */ = {isa = PBXFileReference; includeInIndex = 1; name = pl; path = pl.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		C17FDFD0A2757A7BFF86340C /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		C25A7DC489DFA0E4E49034B4 /* IPDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IPDetector.swift; sourceTree = "<group>"; };
 		C50E6CD15E3F39C39FE6FAA9 /* EditLabelsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditLabelsView.swift; sourceTree = "<group>"; };
 		C75DC139DADC42F79E5D8F30 /* CivoInstanceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoInstanceService.swift; sourceTree = "<group>"; };
@@ -295,7 +301,7 @@
 		D09D9D127A7D5E20328F5F30 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D33F386D8A57C822AE215281 /* CivoAccessLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAccessLabel.swift; sourceTree = "<group>"; };
 		D730A1AEFCAFE05E6012ADE3 /* K8sWorkload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sWorkload.swift; sourceTree = "<group>"; };
-		D86101F39E79A191C020D2DE /* de */ = {isa = PBXFileReference; includeInIndex = 1; name = de; path = de.lproj/Impressum.md; sourceTree = "<group>"; };
+		D86101F39E79A191C020D2DE /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/Impressum.md; sourceTree = "<group>"; };
 		DB215CC1AD313B8729ED3E16 /* CivoObjectStoreService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreService.swift; sourceTree = "<group>"; };
 		DB89B065ECDE31538143FC3E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		DBF124BAA294FA2132745A3A /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
@@ -303,11 +309,11 @@
 		DD0E621B8A284E2DEA9AD09B /* CivoDatabaseService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabaseService.swift; sourceTree = "<group>"; };
 		E4E32B8C0292ABE978042F2F /* K8sConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConfig.swift; sourceTree = "<group>"; };
 		E65306F70453D10A71A4761E /* K8sEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sEvent.swift; sourceTree = "<group>"; };
-		E8EB982C6B9FBB5DD15F657A /* pt */ = {isa = PBXFileReference; includeInIndex = 1; name = pt; path = pt.lproj/Impressum.md; sourceTree = "<group>"; };
+		E8EB982C6B9FBB5DD15F657A /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/Impressum.md; sourceTree = "<group>"; };
 		EC30E33A559EF2EDE5F1EFF7 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		EC4E4960816C20C03974D4DD /* pl */ = {isa = PBXFileReference; includeInIndex = 1; name = pl; path = pl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		EC4E4960816C20C03974D4DD /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		ECBA6FF0E44C565460FE7EC0 /* ExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
-		ED9C224968AEEA8411D81E21 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; name = pt; path = pt.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		ED9C224968AEEA8411D81E21 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolume.swift; sourceTree = "<group>"; };
 		EF44F5E3DEF4B58AF3241C8A /* InstanceDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDetailView.swift; sourceTree = "<group>"; };
 		F01918F95778C2210D574D04 /* InstanceViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceViewModel.swift; sourceTree = "<group>"; };
@@ -320,14 +326,46 @@
 		F45EDC4E0AD6ACB0769F05AE /* RegionListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionListView.swift; sourceTree = "<group>"; };
 		F4E1448D6889E0EE066A4CBB /* CivoObjectStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStore.swift; sourceTree = "<group>"; };
 		F60841FA970B11CC88C24C39 /* CivoCloudManager.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = CivoCloudManager.entitlements; sourceTree = "<group>"; };
-		F6139AFE5D6A8935110977B3 /* de */ = {isa = PBXFileReference; includeInIndex = 1; name = de; path = de.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		F6139AFE5D6A8935110977B3 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
 		F953ABDE939CB530828314B8 /* CivoConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConfig.swift; sourceTree = "<group>"; };
-		F985475E4B0A46FBB3464699 /* en */ = {isa = PBXFileReference; includeInIndex = 1; name = en; path = en.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		F985475E4B0A46FBB3464699 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		FA2DCEEDC8117A41FBC2CD5B /* ObjectStoreListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreListView.swift; sourceTree = "<group>"; };
 		FECCC382DD128691627D9B04 /* SuccessOverlay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SuccessOverlay.swift; sourceTree = "<group>"; };
 		FF3B983A59EFD4C3E70560F6 /* CivoFirewallService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoFirewallService.swift; sourceTree = "<group>"; };
-		FF6DD453E48669C7FC20DB5A /* es */ = {isa = PBXFileReference; includeInIndex = 1; name = es; path = es.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		FF6DD453E48669C7FC20DB5A /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		56469B97DC8541E0990B7D1B /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/EULA.md; sourceTree = "<group>"; };
+		E87E9221921143138258B015 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/EULA.md; sourceTree = "<group>"; };
+		66DFD8FC77D84A63B85725C7 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/EULA.md; sourceTree = "<group>"; };
+		26464A191217434882CF4265 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/EULA.md; sourceTree = "<group>"; };
+		0660B4FDF4FC4BE8B3DBA487 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/EULA.md; sourceTree = "<group>"; };
+		F7ECBD65A3F5499785440554 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/EULA.md; sourceTree = "<group>"; };
+		AE954C8291924AD3B0188B3D /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/EULA.md; sourceTree = "<group>"; };
+		6042803EF9784013997EAC40 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/EULA.md; sourceTree = "<group>"; };
+		5B1BFB96ECCB485C959ACD7E /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		F0BB12AD192A4B28927E32DD /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		B7D461C9854745D0B7EFC380 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		73576492A22346838A2BEF3C /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		0C657637534140BB996AC826 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		0946922D1BCD4AA9BD0F7CA1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		F3A3826B8C804D53B8762A31 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		F545067F5A0841AEB3358B41 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		A21577E4135D4DB0B5C884DA /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		E3C784A8B0DE4498B50C166B /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		7D1B95B09BB745E6AA2616EE /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		C35E755F065E462098ECFB22 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		43B89799B6E74AC5B104257F /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		668730B5D3B84493A662757C /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		AB14071F721E4034AB7583B1 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		DB195696E10F4E7B9EA89645 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		7B08DCACC2364E7AAC7B12D1 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		303AA24A2FAD468AA9BDE6C2 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		BC5D7AE8EB654BB2B39E556D /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		D3AA4FF9BA3542BDB9840EAD /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		11C1E0A6C3D046B59C67A4DF /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		E279EDFEAF2243A0A6A94CA2 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		88367E96C90041C98F6CCA67 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		74C945EC314349EA82F5B6E8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +396,7 @@
 				6C38900AD57D6A3AA1BE8D86 /* AboutView.swift */,
 				F45EDC4E0AD6ACB0769F05AE /* RegionListView.swift */,
 				9B383DBDB2B764F3E8F02769 /* LegalView.swift */,
+				A1AAC0F11E0A4D2C8B9F0004 /* SupportView.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -415,6 +454,10 @@
 				88320D84F47B5B7234DED63F /* PrivacyPolicy.md */,
 				1BC43170529524470671BD19 /* TermsOfService.md */,
 				94D3EC9ABD65BB78103C9392 /* Impressum.md */,
+				2A897D1A14AF4EFE8B4D31C7 /* EULA.md */,
+				C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */,
+				D0716BC9263146AA83EA2828 /* PushNotificationConsent.md */,
+				463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */,
 			);
 			path = CivoCloudManager;
 			sourceTree = "<group>";
@@ -689,7 +732,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 2650;
 			};
 			buildConfigurationList = 9E549C86DB6A2094925AB740 /* Build configuration list for PBXProject "CivoCloudManager" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -729,6 +772,10 @@
 				5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */,
 				6D119A5C224BC01FC5E3B4ED /* TermsOfService.md in Resources */,
 				6A344C4208F4ABD36D77273F /* Impressum.md in Resources */,
+				D31BDB7103B8408EB8F22BCE /* EULA.md in Resources */,
+				DB6E42A9F4264F23AF76DDFE /* AcceptableUsePolicy.md in Resources */,
+				35659D1E3DE448618AAE263F /* PushNotificationConsent.md in Resources */,
+				8D6FF0B021C34AA58903C92D /* TrademarkDisclaimer.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -873,6 +920,7 @@
 				B60C62798B450D852A9DA6BF /* SuccessOverlay.swift in Sources */,
 				6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */,
 				4B15AF14CE4639F7B3470CA8 /* LegalView.swift in Sources */,
+				A1AAC0F11E0A4D2C8B9F0003 /* SupportView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +1004,66 @@
 			name = Impressum.md;
 			sourceTree = "<group>";
 		};
+		2A897D1A14AF4EFE8B4D31C7 /* EULA.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56469B97DC8541E0990B7D1B /* en */,
+				E87E9221921143138258B015 /* de */,
+				66DFD8FC77D84A63B85725C7 /* es */,
+				26464A191217434882CF4265 /* fr */,
+				0660B4FDF4FC4BE8B3DBA487 /* it */,
+				F7ECBD65A3F5499785440554 /* nl */,
+				AE954C8291924AD3B0188B3D /* pl */,
+				6042803EF9784013997EAC40 /* pt */,
+			);
+			name = EULA.md;
+			sourceTree = "<group>";
+		};
+		C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B1BFB96ECCB485C959ACD7E /* en */,
+				F0BB12AD192A4B28927E32DD /* de */,
+				B7D461C9854745D0B7EFC380 /* es */,
+				73576492A22346838A2BEF3C /* fr */,
+				0C657637534140BB996AC826 /* it */,
+				0946922D1BCD4AA9BD0F7CA1 /* nl */,
+				F3A3826B8C804D53B8762A31 /* pl */,
+				F545067F5A0841AEB3358B41 /* pt */,
+			);
+			name = AcceptableUsePolicy.md;
+			sourceTree = "<group>";
+		};
+		D0716BC9263146AA83EA2828 /* PushNotificationConsent.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A21577E4135D4DB0B5C884DA /* en */,
+				E3C784A8B0DE4498B50C166B /* de */,
+				7D1B95B09BB745E6AA2616EE /* es */,
+				C35E755F065E462098ECFB22 /* fr */,
+				43B89799B6E74AC5B104257F /* it */,
+				668730B5D3B84493A662757C /* nl */,
+				AB14071F721E4034AB7583B1 /* pl */,
+				DB195696E10F4E7B9EA89645 /* pt */,
+			);
+			name = PushNotificationConsent.md;
+			sourceTree = "<group>";
+		};
+		463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7B08DCACC2364E7AAC7B12D1 /* en */,
+				303AA24A2FAD468AA9BDE6C2 /* de */,
+				BC5D7AE8EB654BB2B39E556D /* es */,
+				D3AA4FF9BA3542BDB9840EAD /* fr */,
+				11C1E0A6C3D046B59C67A4DF /* it */,
+				E279EDFEAF2243A0A6A94CA2 /* nl */,
+				88367E96C90041C98F6CCA67 /* pl */,
+				74C945EC314349EA82F5B6E8 /* pt */,
+			);
+			name = TrademarkDisclaimer.md;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -964,6 +1072,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -997,7 +1106,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7TSZJCJY88;
@@ -1015,7 +1124,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManager";
@@ -1045,6 +1154,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1078,7 +1188,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 7TSZJCJY88;
@@ -1102,7 +1212,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;

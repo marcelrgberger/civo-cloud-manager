@@ -10,6 +10,10 @@ private enum ConfigKey {
 final class CivoConfig: @unchecked Sendable {
     static let shared = CivoConfig()
 
+    /// Central support portal for all Apple-native apps. Identical URL for every app;
+    /// the server-side router forwards to the current support/feature-request form.
+    static let supportPortalURL = URL(string: "https://support.apps.digitalfreedom.co.za")!
+
     var apiKey: String {
         get { readKeychain() ?? "" }
         set { writeKeychain(newValue) }

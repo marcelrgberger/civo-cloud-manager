@@ -1,411 +1,333 @@
-# Conditions d'utilisation
+# TERMS OF SERVICE
 
-## Civo Cloud Manager
+## General Terms and Conditions
 
-**Date d'entrée en vigueur :** Avril 2026
-**Dernière mise à jour :** Avril 2026
+**Effective Date:** April 2026
 
-**Fournisseur :**
-Berger & Rosenstock GbR
-Marcel R. G. Berger, Jasmin Rosenstock
-Dieselstraße 22e, 61231 Bad Nauheim, Allemagne
-Courriel : moin@berger-rosenstock.de
-Numéro de TVA : DE455096022
-
----
-
-## 1. Champ d'application et acceptation
-
-### 1.1 Accord
-
-Les présentes conditions d'utilisation (« Conditions ») régissent votre accès à l'application Civo Cloud Manager (« l'Application ») et son utilisation, fournie par Berger & Rosenstock GbR (« le Fournisseur », « nous », « notre »).
-
-### 1.2 Acceptation
-
-En installant, en accédant ou en utilisant l'Application, vous acceptez d'être lié par les présentes Conditions. Si vous n'acceptez pas, vous ne devez pas installer ni utiliser l'Application.
-
-### 1.3 Éligibilité
-
-L'Application est classée **4+** dans l'App Store Apple. Pour conclure un contrat contraignant, vous devez avoir atteint l'âge légal de contracter dans votre juridiction. Un compte Civo Cloud, nécessaire à une utilisation significative de l'Application, exige que le titulaire ait atteint l'âge légal de contracter.
-
-### 1.4 Usage professionnel
-
-Si vous utilisez l'Application pour le compte d'une organisation, vous déclarez avoir le pouvoir d'engager cette organisation au titre des présentes Conditions.
-
-### 1.5 Contrat de licence utilisateur final d'Apple pour les applications sous licence
-
-Les présentes Conditions complètent le contrat de licence utilisateur final d'Apple pour les applications sous licence (EULA Apple) conclu entre vous et Apple Inc. En cas de conflit entre les présentes Conditions et l'EULA Apple, l'EULA Apple prévaut pour les questions qu'il couvre.
+**Provider:**
+DigitalFreedom
+A brand of Berger & Rosenstock GbR
+Dieselstr. 22e
+61231 Bad Nauheim
+Germany
+Contact: hello@digitalfreedom.co.za
+Website: https://digitalfreedom.co.za
 
 ---
 
-## 2. Services
+## 1. SCOPE AND ACCEPTANCE
+
+### 1.1 Agreement
+
+These Terms of Service ("Terms") govern your access to and use of our websites, applications, APIs, and related services ("the Services") provided under the **DigitalFreedom** brand by Berger & Rosenstock GbR ("the Provider").
+
+### 1.1.1 Global scope
+
+The Services are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. These Terms apply globally to all users of the Services, regardless of country of access or use. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; mandatory consumer-protection and other statutory rights granted by the user's country of residence remain unaffected and prevail wherever they are more protective.
+
+### 1.2 Acceptance
+
+By accessing or using the Services, you agree to be bound by these Terms. If you do not agree, you must not use the Services.
+
+### 1.3 Eligibility
+
+You must be at least 16 years old (or the applicable age of consent in your jurisdiction) to use the Services. By using the Services, you represent that you meet this requirement.
+
+### 1.4 Business Use
+
+If you use the Services on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.
+
+---
+
+## 2. SERVICES
 
 ### 2.1 Description
 
-L'Application est une application macOS native qui permet la gestion de l'infrastructure Civo Cloud (instances virtuelles, clusters Kubernetes, bases de données, pare-feu, réseaux, équilibreurs de charge, volumes, magasins d'objets, DNS, clés SSH) et l'accès direct à l'API Kubernetes via les identifiants API de l'utilisateur.
+The Provider offers software applications, tools, and related services. The specific scope and functionality of each Service is described in its respective documentation.
 
-L'Application se connecte directement depuis votre appareil à :
+### 2.2 Modifications
 
-- L'API REST de Civo Cloud (`api.civo.com`)
-- Les serveurs API Kubernetes de vos clusters Civo (via mTLS)
-- Les points de terminaison de stockage d'objets compatibles S3 de votre compte Civo
-- Les services de détection d'IP publique (ipify.org, ifconfig.me, icanhazip.com)
-- L'App Store Apple / StoreKit pour le traitement des achats
+The Provider reserves the right to modify, suspend, or discontinue any Service at any time, with or without notice. Material changes will be communicated where practicable.
 
-Le Fournisseur n'exploite aucun service dorsal, serveur intermédiaire ou proxy. Toutes les communications se font directement entre votre appareil et les exploitants tiers respectifs.
+### 2.3 Availability
 
-### 2.2 Fonctionnalités gratuites et payantes
-
-La fonctionnalité de gestion de pare-feu dans la barre de menus est gratuite. « Full Access » — qui débloque le tableau de bord de gestion pour tous les types de ressources pris en charge — est un achat intégré unique traité exclusivement via l'App Store Apple (voir section 7).
-
-### 2.3 Modifications
-
-Le Fournisseur peut modifier, suspendre ou interrompre toute fonctionnalité de l'Application à tout moment. Les modifications substantielles affectant des fonctionnalités payantes seront communiquées au moins trente (30) jours à l'avance lorsque cela est possible en pratique.
-
-### 2.4 Disponibilité
-
-L'Application est fournie « telle que disponible ». Le Fournisseur ne garantit pas un accès ou une disponibilité ininterrompus, et la fonctionnalité de l'Application dépend de la disponibilité de services tiers (Civo Cloud, App Store Apple, fournisseurs de détection d'IP) qui échappent au contrôle du Fournisseur.
+The Services are provided on an "as available" basis. The Provider does not guarantee uninterrupted access or availability.
 
 ---
 
-## 3. Comptes
+## 3. ACCOUNTS
 
-L'Application ne nécessite pas de compte auprès du Fournisseur. Toute l'authentification est gérée via :
+### 3.1 Registration
 
-- Votre clé API Civo (stockée localement dans le trousseau macOS)
-- Votre kubeconfig Kubernetes (récupéré depuis l'API Civo)
-- Votre identifiant Apple (pour la vérification des achats intégrés, géré par Apple)
+Some Services may require account registration. You must provide accurate and complete information.
 
-Vous êtes responsable :
+### 3.2 Security
 
-- Du maintien de la confidentialité de votre clé API Civo et des autres identifiants
-- De toutes les activités effectuées avec vos identifiants
-- De toutes les modifications de ressources, coûts et implications de facturation résultant de votre utilisation de l'Application
-- De la configuration des permissions de la clé API Civo selon le principe du moindre privilège
+You are responsible for:
 
-Le Fournisseur n'a pas la possibilité d'accéder à vos identifiants Civo, de les récupérer ni de les réinitialiser. La perte d'identifiants relève exclusivement de votre responsabilité.
+- Maintaining the confidentiality of your credentials
+- All activities that occur under your account
+- Notifying the Provider of any unauthorized use
 
----
+### 3.3 Suspension
 
-## 4. Contenu utilisateur
-
-L'Application n'héberge, ne stocke ni ne transmet de contenu généré par l'utilisateur vers un serveur exploité par le Fournisseur. Tout contenu, donnée ou configuration que vous créez en utilisant l'Application (par exemple noms d'instances, clés SSH, libellés de règles de pare-feu, fichiers de magasins d'objets) est stocké :
-
-- Localement sur votre appareil, ou
-- Dans votre propre compte Civo Cloud
-
-Vous conservez l'intégralité des droits, titres et intérêts sur ce contenu. Le Fournisseur ne revendique aucune licence, propriété ou autre droit sur votre contenu.
+The Provider may suspend or terminate accounts that violate these Terms or applicable law.
 
 ---
 
-## 5. Utilisation acceptable
+## 4. USER CONTENT
 
-Vous ne pouvez pas utiliser l'Application pour :
+### 4.1 Ownership
 
-- Violer une loi, un règlement ou un droit de tiers applicable
-- Accéder à des ressources Civo ou exploiter des ressources Civo auxquelles vous n'êtes pas autorisé à accéder
-- Perturber ou interrompre le service Civo Cloud, des clusters Kubernetes dont vous n'êtes pas propriétaire, ou l'Application elle-même
-- Tenter de rétro-concevoir, décompiler, désassembler ou dériver le code source de l'Application, sauf dans la mesure où une telle restriction est interdite par le droit applicable
-- Contourner les mécanismes de sécurité ou de contrôle d'accès (y compris la barrière de paiement intégrée)
-- Distribuer, sous-licencier, louer, vendre ou autrement exploiter commercialement l'Application
-- Supprimer, modifier ou masquer des mentions de propriété, marques de copyright ou marques commerciales
-- Utiliser l'Application pour attaquer, compromettre ou tester la sécurité de systèmes dont vous n'êtes pas propriétaire ou pour lesquels vous n'avez pas l'autorisation écrite explicite de tester
-- Utiliser l'Application à toute fin interdite par les lois de la République fédérale d'Allemagne, de l'Union européenne ou de votre juridiction de résidence
+You retain ownership of content you create, upload, or submit through the Services ("User Content").
 
----
+### 4.2 License Grant
 
-## 6. Propriété intellectuelle
+By submitting User Content, you grant the Provider a worldwide, non-exclusive, royalty-free license to use, store, and process the content as necessary to provide the Services.
 
-### 6.1 Propriété
+### 4.3 Responsibility
 
-L'Application (y compris le code source, la conception, les textes, graphiques, icônes, localisations et tous les droits de propriété intellectuelle associés) est la propriété exclusive du Fournisseur et est protégée par les lois allemandes, européennes et internationales sur le droit d'auteur, les marques et autres droits de propriété intellectuelle.
+You are solely responsible for your User Content. You represent that:
 
-### 6.2 Octroi de licence
+- You have the right to submit the content
+- The content does not violate any law or third-party rights
+- The content does not contain malicious code
 
-Sous réserve de votre respect des présentes Conditions et de l'EULA Apple, le Fournisseur vous accorde une licence limitée, non exclusive, non transférable, non sous-licenciable et révocable pour installer et utiliser l'Application sur les appareils Apple que vous possédez ou contrôlez, uniquement pour votre usage personnel ou professionnel interne de gestion de votre infrastructure Civo Cloud.
+### 4.4 Removal
 
-### 6.3 Marques tierces
-
-« Civo » est une marque de Civo Ltd. « Apple », « App Store », « macOS », « iCloud », « StoreKit », « TestFlight » sont des marques d'Apple Inc. « Kubernetes » est une marque de The Linux Foundation. Toutes les autres marques sont la propriété de leurs détenteurs respectifs. Le Fournisseur n'est affilié, approuvé ou parrainé par aucune de ces parties.
-
-### 6.4 Retour d'information
-
-Tout retour d'information, suggestion ou idée que vous soumettez au Fournisseur concernant l'Application peut être utilisé par le Fournisseur sans restriction et sans contrepartie pour vous.
+The Provider may remove User Content that violates these Terms or applicable law.
 
 ---
 
-## 7. Paiements et abonnements
+## 5. ACCEPTABLE USE AND FAIR USE
 
-### 7.1 Achat intégré
+Use of the Services is subject to our [Acceptable Use Policy](ACCEPTABLE_USE_POLICY.md) and our [Fair Use Policy](FAIR_USE_POLICY.md). The Fair Use Policy empowers the Provider to throttle, rate-limit, restrict features, suspend or terminate access where use exceeds normal individual end-user use or where misuse is suspected on good-faith grounds.
 
-« Full Access » est vendu comme un achat intégré non consommable via l'App Store Apple pour un prix unique. Le prix est affiché dans l'Application dans votre devise locale avant l'achat.
+You shall not:
 
-### 7.2 Traitement du paiement
-
-Le paiement est traité exclusivement par Apple Inc. Le Fournisseur ne reçoit, ne stocke ni ne traite aucune information de paiement. Toutes les questions de paiement, de remboursement et de facturation sont régies par les conditions des services médias d'Apple et l'EULA Apple.
-
-### 7.3 Partage familial
-
-« Full Access » est activé pour le Partage familial Apple. Les membres de votre groupe de Partage familial Apple pourront utiliser l'achat sur leurs propres appareils, sous réserve des règles de Partage familial d'Apple.
-
-### 7.4 Codes promotionnels Apple
-
-Le Fournisseur peut émettre des codes promotionnels Apple à des fins promotionnelles. Les codes peuvent être échangés via la fonction « Utiliser un code » dans l'Application ou dans l'App Store.
-
-### 7.5 Remboursements
-
-Les remboursements sont gérés exclusivement par Apple conformément à la politique de remboursement d'Apple. Les droits légaux des consommateurs au titre du droit applicable (voir section 15) restent inchangés. En particulier, les consommateurs de l'UE sont informés que le droit légal de rétractation de 14 jours pour le contenu numérique expire lorsque l'exécution a commencé avec votre accord exprès préalable — Apple met cela en œuvre via la boîte de dialogue de confirmation au moment de l'achat.
-
-### 7.6 Taxes
-
-Le prix affiché inclut toutes les taxes applicables (TVA, taxe de vente) telles que déterminées par Apple en fonction de votre pays.
+- Violate any applicable law or regulation
+- Infringe intellectual property or other rights of third parties
+- Transmit malware, spam, or harmful content
+- Attempt to gain unauthorized access to the Services or related systems
+- Interfere with the operation or security of the Services
+- Use the Services for fraudulent or deceptive purposes
+- Resell or redistribute the Services without authorization
 
 ---
 
-## 8. Services tiers
+## 6. INTELLECTUAL PROPERTY
 
-L'utilisation de l'Application nécessite une interaction avec des services tiers. Votre utilisation de ces services est régie par leurs conditions respectives :
+### 6.1 Provider's IP
 
-- **Civo Cloud :** https://www.civo.com/terms
-- **App Store Apple / Apple ID :** https://www.apple.com/legal/internet-services/terms/
-- **Clusters Kubernetes :** les conditions de votre exploitant de cluster (Civo)
+The Services, including software, design, logos, and documentation, are protected by intellectual property laws. All rights not expressly granted remain with the Provider.
 
-Le Fournisseur n'est partie à aucun accord entre vous et un fournisseur de services tiers et n'est pas responsable de la disponibilité, de l'exactitude ou du comportement de ces services.
+### 6.2 Trademarks
 
----
+The Provider's trademarks and trade names may not be used without prior written consent.
 
-## 9. Exclusion de garanties
+### 6.3 Feedback
 
-L'APPLICATION EST FOURNIE « EN L'ÉTAT » ET « SELON DISPONIBILITÉ », SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE, Y COMPRIS, MAIS SANS S'Y LIMITER, LES GARANTIES DE QUALITÉ MARCHANDE, D'ADÉQUATION À UN USAGE PARTICULIER, D'EXACTITUDE, D'EXHAUSTIVITÉ OU DE NON-CONTREFAÇON.
-
-LE FOURNISSEUR NE GARANTIT PAS QUE :
-
-- L'APPLICATION SERA ININTERROMPUE, EXEMPTE D'ERREURS OU SÉCURISÉE
-- L'APPLICATION AFFICHERA, CRÉERA, MODIFIERA, SUPPRIMERA OU GÉRERA CORRECTEMENT LES RESSOURCES CIVO CLOUD
-- LES DONNÉES AFFICHÉES PAR L'APPLICATION SONT EXACTES, COMPLÈTES OU À JOUR
-- L'APPLICATION EST COMPATIBLE AVEC TOUTES LES VERSIONS, FONCTIONNALITÉS OU RÉGIONS DE L'API CIVO
-
-**Opérations destructives.** L'Application peut effectuer des opérations irréversibles sur votre compte Civo Cloud, y compris la suppression de clusters Kubernetes, de bases de données, de volumes, de magasins d'objets, d'instances, de clés SSH et de règles de pare-feu. Toutes les opérations destructives nécessitent une confirmation explicite de l'utilisateur (généralement en saisissant le nom de la ressource). LE FOURNISSEUR N'ASSUME AUCUNE RESPONSABILITÉ pour les suppressions involontaires, pertes de données, dépassements de coûts ou dommages à l'infrastructure causés par votre utilisation de l'Application.
-
-Il est vivement recommandé de conserver des sauvegardes indépendantes de toutes les données critiques, d'utiliser une clé API dédiée avec les permissions Civo minimales requises et d'examiner attentivement toutes les boîtes de dialogue de confirmation.
-
-Aucune disposition de la présente section n'exclut ni ne limite une garantie qui ne peut être exclue ou limitée en vertu du droit applicable (voir section 15).
+Any feedback or suggestions you provide may be used by the Provider without obligation to you.
 
 ---
 
-## 10. Limitation de responsabilité
+## 7. PAYMENTS AND SUBSCRIPTIONS
 
-DANS TOUTE LA MESURE PERMISE PAR LE DROIT APPLICABLE :
+### 7.1 Pricing
 
-### 10.1 Exclusions
+Prices for paid Services are displayed at the time of purchase. All prices are inclusive of applicable taxes unless otherwise stated.
 
-LE FOURNISSEUR N'EST PAS RESPONSABLE DES DOMMAGES INDIRECTS, ACCESSOIRES, SPÉCIAUX, CONSÉCUTIFS, PUNITIFS OU EXEMPLAIRES, Y COMPRIS, MAIS SANS S'Y LIMITER :
+### 7.2 Payment Processing
 
-- Perte de données, de revenus, de bénéfices ou d'opportunités commerciales
-- Coûts d'obtention de services de substitution
-- Dommages ou suppression de l'infrastructure cloud, de ressources ou de données
-- Accès non autorisé résultant de clés API compromises
+Payments may be processed by third-party payment providers. You agree to the terms of such providers.
 
-### 10.2 Plafond
+### 7.3 Subscriptions
 
-LA RESPONSABILITÉ TOTALE CUMULÉE DU FOURNISSEUR À VOTRE ÉGARD POUR TOUTES LES RÉCLAMATIONS DÉCOULANT DE L'APPLICATION OU Y ÉTANT LIÉES N'EXCÉDERA PAS LE MONTANT QUE VOUS AVEZ EFFECTIVEMENT PAYÉ POUR L'APPLICATION AU COURS DES DOUZE (12) MOIS PRÉCÉDANT L'ÉVÉNEMENT DONNANT LIEU À LA RÉCLAMATION.
+Subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time through the applicable platform or by contacting the Provider. Detailed disclosure of auto-renewal, free-trial conversion and cancellation paths is provided in the [Subscription Terms](SUBSCRIPTION_TERMS.md).
 
-### 10.3 Exceptions
+### 7.3.1 Kündigungs-Button (Germany, § 312k BGB)
 
-Aucune disposition des présentes Conditions n'exclut ni ne limite la responsabilité pour :
+For direct subscriptions concluded with consumers in Germany, the Provider provides a cancellation button reachable in no more than two clicks from the account page (see [Subscription Terms](SUBSCRIPTION_TERMS.md) § 6.3). For subscriptions concluded through the Apple App Store or Google Play, cancellation is handled by the respective platform's standard mechanism.
 
-- Décès ou dommages corporels causés par une négligence
-- Dol ou fausses déclarations frauduleuses
-- Faute intentionnelle ou négligence grave (en droit allemand, §§ 276, 309 BGB)
-- Violation d'obligations contractuelles essentielles (Kardinalpflichten), limitée aux dommages prévisibles typiques pour ce type de contrat
-- Toute autre responsabilité qui ne peut être exclue ou limitée en vertu du droit applicable
+### 7.3.2 California Automatic Renewal Law (ARL)
 
-### 10.4 Responsabilité du fait des produits
+For California residents, the Provider complies with Cal. Bus. & Prof. Code § 17600 et seq. as further described in the [Subscription Terms](SUBSCRIPTION_TERMS.md) § 8.
 
-La responsabilité au titre de la loi allemande sur la responsabilité du fait des produits (Produkthaftungsgesetz) demeure inchangée.
+### 7.4 Refunds
 
----
+Refunds are governed by:
 
-## 11. Indemnisation
+- The applicable platform terms (Apple App Store, Google Play) — see [Refund Policy](REFUND_POLICY.md) § 2
+- Applicable consumer protection laws
+- The Provider's [Refund Policy](REFUND_POLICY.md)
 
-Vous acceptez d'indemniser, de défendre et d'exonérer le Fournisseur, ses associés, employés et agents de toute réclamation, responsabilité, dommage, perte, coût, dépense ou honoraire (y compris les honoraires raisonnables d'avocat) découlant de ou liés à :
+### 7.5 EU Right of Withdrawal
 
-- Votre violation des présentes Conditions
-- Votre violation d'une loi ou d'un droit de tiers
-- Votre utilisation de l'Application pour accéder à ou gérer une infrastructure à laquelle vous n'êtes pas autorisé à accéder
-- Tout contenu ou configuration que vous créez, modifiez ou supprimez via l'Application
+Consumers in the EU have a 14-day right of withdrawal for digital content, unless:
 
-Cette obligation d'indemnisation ne s'applique pas aux consommateurs au sens de la législation applicable en matière de protection des consommateurs lorsque le droit impératif interdit une telle indemnisation.
+- The consumer has expressly consented to immediate performance
+- The consumer has acknowledged loss of the right of withdrawal
 
 ---
 
-## 12. Résiliation
+## 8. THIRD-PARTY SERVICES
 
-### 12.1 Résiliation par vous
+### 8.1 Integration
 
-Vous pouvez résilier les présentes Conditions à tout moment en désinstallant l'Application de vos appareils.
+The Services may integrate with or link to third-party services. The Provider does not endorse or control such services.
 
-### 12.2 Résiliation par le Fournisseur
+### 8.2 Terms
 
-Le Fournisseur peut résilier ou suspendre immédiatement votre licence d'utilisation de l'Application en cas de manquement substantiel aux présentes Conditions. En cas de résiliation :
+Your use of third-party services is subject to their respective terms and privacy policies.
 
-- Votre droit d'utiliser l'Application cesse immédiatement
-- Vous devez désinstaller l'Application de vos appareils
-- Les sections 6, 9, 10, 11, 13, 14, 16 survivent à la résiliation
+### 8.3 Liability
 
-### 12.3 Effet sur l'achat
-
-La résiliation ne vous donne pas droit à un remboursement de votre achat intégré, sauf si cela est requis par le droit applicable de protection des consommateurs ou par la politique de remboursement d'Apple.
+The Provider is not liable for any damages resulting from your use of third-party services.
 
 ---
 
-## 13. Droit applicable et règlement des litiges
+## 9. DISCLAIMER OF WARRANTIES
 
-### 13.1 Droit applicable
+TO THE MAXIMUM EXTENT PERMITTED BY LAW:
 
-Les présentes Conditions sont régies par le droit de la République fédérale d'Allemagne, à l'exclusion de ses règles de conflit de lois et de la Convention des Nations unies sur les contrats de vente internationale de marchandises (CVIM).
-
-Pour les consommateurs de l'Union européenne / EEE, ce choix de droit ne vous prive pas de la protection impérative des consommateurs prévue par les lois de votre pays de résidence habituelle.
-
-### 13.2 Juridiction
-
-Pour les commerçants, personnes morales de droit public et fonds spéciaux de droit public (Kaufleute, juristische Personen des öffentlichen Rechts, öffentlich-rechtliche Sondervermögen), le lieu de juridiction exclusif pour tous les litiges découlant des présentes Conditions est Bad Nauheim, Allemagne.
-
-Pour les consommateurs, le lieu de juridiction légal s'applique. Vous pouvez engager une procédure devant les tribunaux de votre pays de résidence habituelle.
-
-### 13.3 Règlement en ligne des litiges de l'UE
-
-La Commission européenne met à disposition une plateforme de règlement en ligne des litiges à l'adresse suivante : https://ec.europa.eu/consumers/odr.
-
-### 13.4 Arbitrage consommateur
-
-Le Fournisseur n'est ni tenu ni disposé à participer à des procédures de règlement des litiges devant un organisme d'arbitrage consommateur (Verbraucherschlichtungsstelle) au sens de la loi allemande sur le règlement des litiges de consommation (VSBG), sauf obligation légale.
+- The Services are provided "AS IS" and "AS AVAILABLE"
+- The Provider disclaims all warranties, express or implied
+- No guarantee of accuracy, completeness, reliability, or fitness for a particular purpose
+- No warranty that the Services will be uninterrupted, secure, or error-free
 
 ---
 
-## 14. Dispositions régionales
+## 10. LIMITATION OF LIABILITY
 
-### 14.1 Allemagne
+TO THE MAXIMUM EXTENT PERMITTED BY LAW:
 
-- Les droits des consommateurs au titre des §§ 312 et suivants, 327 et suivants BGB (produits numériques) demeurent inchangés
-- Les droits légaux de rétractation selon le § 355 BGB s'appliquent le cas échéant
-
-### 14.2 Union européenne / EEE
-
-- La directive 2011/83/UE relative aux droits des consommateurs et la directive (UE) 2019/770 sur le contenu numérique s'appliquent lorsque vous êtes consommateur
-- Les mentions applicables en vertu de l'article 12 du règlement sur les services numériques (règlement (UE) 2022/2065) figurent dans les mentions légales
-
-### 14.3 Royaume-Uni
-
-- Le Consumer Rights Act 2015 s'applique lorsque vous êtes consommateur résidant au Royaume-Uni
-- Le contenu numérique doit être de qualité satisfaisante, adapté à sa destination et conforme à la description
-
-### 14.4 Suisse
-
-- Les dispositions impératives de protection des consommateurs du Code des obligations suisse (CO) demeurent inchangées
-- La loi fédérale contre la concurrence déloyale (LCD) s'applique
-
-### 14.5 États-Unis
-
-- Les présentes Conditions ne visent pas à créer des droits au titre de lois étatiques de protection des consommateurs qui ne s'appliquent pas selon leurs propres termes
-- Résidents de Californie : avis de droits des consommateurs au titre du Civil Code § 1789.3 — contactez moin@berger-rosenstock.de
-
-### 14.6 Canada
-
-- La Loi sur la protection du consommateur du Québec s'applique aux résidents du Québec lorsqu'elle est impérative
-- Langue du contrat : les présentes Conditions sont fournies en anglais ; des versions françaises sont disponibles lorsque la Charte de la langue française (Québec) l'exige
-
-### 14.7 Australie
-
-- Les garanties du droit australien de la consommation (Competition and Consumer Act 2010, Schedule 2) s'appliquent lorsque vous êtes consommateur — ces garanties ne peuvent être exclues
-
-### 14.8 Nouvelle-Zélande
-
-- Le Consumer Guarantees Act 1993 s'applique lorsque vous êtes consommateur pour un usage personnel, domestique ou ménager
-
-### 14.9 Japon
-
-- La loi sur les contrats de consommation (消費者契約法) s'applique ; les dispositions des présentes Conditions qui seraient invalides en vertu de cette loi sont limitées dans la mesure nécessaire
-
-### 14.10 Corée du Sud
-
-- L'Act on the Regulation of Terms and Conditions (약관의 규제에 관한 법률) s'applique
-
-### 14.11 Brésil
-
-- Le Code de défense du consommateur (CDC, loi nº 8.078/1990) s'applique ; les droits des consommateurs ne peuvent être renoncés
-
-### 14.12 Inde
-
-- Le Consumer Protection Act 2019 et les E-Commerce Rules 2020 s'appliquent lorsque vous êtes consommateur
-
-### 14.13 Autres juridictions
-
-Pour les utilisateurs de juridictions non expressément mentionnées ci-dessus, les présentes Conditions s'appliquent dans la mesure permise par le droit impératif local de protection des consommateurs.
+- The Provider shall not be liable for indirect, incidental, special, consequential, or punitive damages
+- The Provider shall not be liable for loss of data, profits, revenue, or business opportunities
+- Total aggregate liability shall not exceed the greater of (a) the amount paid by you in the 12 months preceding the claim, or (b) EUR 100
 
 ---
 
-## 15. Droits des consommateurs (informations obligatoires)
+## 11. INDEMNIFICATION
 
-Les présentes Conditions n'affectent pas vos droits légaux de consommateur au titre du droit applicable, y compris, mais sans s'y limiter :
+You agree to indemnify and hold harmless the Provider from claims, damages, losses, and expenses (including reasonable legal fees) arising from:
 
-- Directive 2011/83/UE relative aux droits des consommateurs et directive (UE) 2019/770 sur le contenu numérique
-- UK Consumer Rights Act 2015
-- Droit australien de la consommation
-- Dispositions allemandes de protection des consommateurs du BGB (§§ 312 et suivants, §§ 327 et suivants)
-- New Zealand Consumer Guarantees Act 1993
-- Code de défense du consommateur brésilien (CDC)
-- Lois provinciales canadiennes de protection des consommateurs
-- Toute autre législation applicable de protection des consommateurs dans votre juridiction
+- Your use of the Services
+- Your violation of these Terms
+- Your violation of any law or third-party rights
+- Your User Content
 
 ---
 
-## 16. Dispositions générales
+## 12. TERMINATION
 
-### 16.1 Modifications des présentes Conditions
+### 12.1 By You
 
-Nous pouvons mettre à jour les présentes Conditions de temps à autre. Les modifications substantielles seront communiquées via l'Application ou la fiche App Store au moins trente (30) jours avant leur entrée en vigueur. La poursuite de votre utilisation après l'entrée en vigueur des modifications vaut acceptation.
+You may stop using the Services at any time. Account deletion requests can be submitted to the Provider.
 
-### 16.2 Cession
+### 12.2 By the Provider
 
-Vous ne pouvez ni céder ni transférer les présentes Conditions ou les droits qui en découlent sans le consentement écrit préalable du Fournisseur. Le Fournisseur peut céder les présentes Conditions dans le cadre d'une fusion, acquisition ou vente d'actifs.
+The Provider may terminate or suspend your access at any time, with or without cause. Material breaches may result in immediate termination without notice.
 
-### 16.3 Divisibilité
+### 12.3 Effect of Termination
 
-Si une disposition des présentes Conditions est jugée inexécutable ou invalide, cette disposition sera limitée ou supprimée dans la mesure minimale nécessaire afin que les présentes Conditions demeurent en vigueur pour le reste. Pour le droit allemand, le § 306 BGB s'applique.
+Upon termination:
 
-### 16.4 Renonciation
-
-Le fait pour le Fournisseur de ne pas faire valoir une disposition des présentes Conditions ne constitue pas une renonciation à cette disposition.
-
-### 16.5 Intégralité de l'accord
-
-Les présentes Conditions, conjointement avec la politique de confidentialité, les mentions légales et l'EULA Apple, constituent l'intégralité de l'accord entre vous et le Fournisseur concernant l'Application et remplacent tous les accords et ententes antérieurs.
-
-### 16.6 Langue
-
-La version faisant foi des présentes Conditions est la version anglaise. Les traductions sont fournies à titre indicatif. En cas de divergence, la version anglaise prévaut, sauf lorsque le droit local impératif l'exige autrement.
-
-### 16.7 Communications électroniques
-
-Vous consentez à recevoir les notifications légalement requises du Fournisseur sous forme électronique (via l'Application ou par courriel).
-
-### 16.8 Force majeure
-
-Le Fournisseur n'est pas responsable de tout manquement ou retard d'exécution causé par des événements échappant à son contrôle raisonnable, y compris les catastrophes naturelles, la guerre, le terrorisme, les troubles civils, les conflits du travail, les défaillances d'Internet, les interruptions de services tiers ou une action gouvernementale.
+- Your right to use the Services ceases
+- Provisions that by their nature should survive will continue (including liability limitations, indemnification, governing law)
 
 ---
 
-## 17. Contact
+## 13. GOVERNING LAW AND DISPUTE RESOLUTION
 
-**Berger & Rosenstock GbR**
-Marcel R. G. Berger, Jasmin Rosenstock
-Dieselstraße 22e
-61231 Bad Nauheim
-Allemagne
-Courriel : moin@berger-rosenstock.de
-Numéro de TVA : DE455096022
+### 13.1 Governing Law
+
+These Terms are governed by German law.
+
+### 13.2 Jurisdiction
+
+Disputes shall be subject to the exclusive jurisdiction of the courts in Germany, unless mandatory consumer protection laws provide otherwise.
+
+### 13.3 Consumer Disputes (EU)
+
+The European Commission provides an Online Dispute Resolution platform at https://ec.europa.eu/consumers/odr. The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board unless required by law.
 
 ---
 
-© 2025–2026 Berger & Rosenstock GbR. Tous droits réservés.
+## 14. REGIONAL PROVISIONS
+
+### 14.1 European Union
+
+- Mandatory consumer protection rights under EU Directives (including the Consumer Rights Directive and Digital Content Directive) remain unaffected
+- The right of withdrawal applies to digital content purchases as provided by law
+- Warranty rights for digital content under Directive (EU) 2019/770 are not excluded
+
+### 14.2 United States
+
+- Where prohibited by state law, limitations on liability or warranties shall not apply
+- Arbitration provisions may not apply in jurisdictions where consumer arbitration is restricted
+
+### 14.3 United Kingdom
+
+- Consumer Rights Act 2015 protections apply
+- Liability for death or personal injury caused by negligence is not excluded
+
+### 14.4 Canada
+
+- Provincial consumer protection legislation may override certain provisions
+
+### 14.5 Australia
+
+- Consumer guarantees under Australian Consumer Law cannot be excluded
+- Liability is limited to re-supply of the Services or payment of the cost of re-supply
+
+### 14.6 Other Jurisdictions
+
+- Where local mandatory law restricts any provision, such provision applies only to the extent permitted
+
+---
+
+## 15. FORCE MAJEURE
+
+Neither party is liable for delay or failure to perform any obligation under these Terms to the extent the delay or failure is caused by events beyond reasonable control, including but not limited to acts of nature, war, civil unrest, terrorism, cyber-attack, government action, pandemic, fire, flood, prolonged power or telecommunications outage, or failure of upstream sub-processor infrastructure. The affected party will notify the other without undue delay and use reasonable efforts to mitigate.
+
+This Section does not affect the obligation to pay amounts already due, nor any mandatory consumer-protection right under the user's country of residence.
+
+---
+
+## 16. GENERAL
+
+### 16.1 Severability
+
+If any provision is found invalid, the remaining provisions continue in full effect.
+
+### 16.2 Waiver
+
+Failure to enforce any provision does not constitute a waiver.
+
+### 16.3 Assignment
+
+The Provider may assign these Terms (for example, in connection with the planned reorganisation of the operating company from Berger & Rosenstock GbR (Germany) to DigitalFreedom Pty (Ltd) (South Africa)). Users will be informed at least 30 days in advance of any change of contracting entity, and where required by law, fresh consent will be sought. You may not assign without prior written consent.
+
+### 16.4 Entire Agreement
+
+These Terms, together with the [Privacy Policy](PRIVACY_POLICY.md), [EULA](EULA.md), [Subscription Terms](SUBSCRIPTION_TERMS.md), [Fair Use Policy](FAIR_USE_POLICY.md), [Acceptable Use Policy](ACCEPTABLE_USE_POLICY.md), [Refund Policy](REFUND_POLICY.md) and any other referenced policies, constitute the entire agreement between you and the Provider.
+
+### 16.5 Changes
+
+The Provider may update these Terms. Material changes are notified at least 30 days in advance via the Services or by email and, where applicable consumer-protection law requires, take effect only on renewed acceptance. Continued use after non-material changes constitutes acceptance.
+
+### 16.6 Limitation period
+
+Claims under these Terms are subject to the statutory limitation periods of the governing law (for German law: § 195 BGB — three years from the end of the year in which the claim arose and you became aware of it). This does not affect any mandatory limitation period of the user's country of residence.
+
+### 16.7 Notices
+
+Notices to the Provider should be sent to `hello@digitalfreedom.co.za` (general) or `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Notices to you may be sent by email to the address associated with your account or by in-app notification.
+
+### 16.8 Language
+
+These Terms are made available in English. Translations may be provided for convenience; in the event of conflict, the English version controls except where mandatory local law requires otherwise.
+
+---
+
+(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
