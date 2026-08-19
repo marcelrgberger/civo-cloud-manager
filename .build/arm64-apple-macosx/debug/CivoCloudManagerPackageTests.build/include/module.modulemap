@@ -1,0 +1,3 @@
+module CivoCloudManagerPackageTests {
+    header "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/arm64-apple-macosx/debug/CivoCloudManagerPackageTests.build/include/CivoCloudManagerPackageTests-Swift.h"
+}

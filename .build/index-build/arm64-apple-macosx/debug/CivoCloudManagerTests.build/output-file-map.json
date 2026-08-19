@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManagerTests.build/primary.swiftdeps"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManagerTests/APIDecodingTests.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManagerTests.build/APIDecodingTests.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManagerTests.build/APIDecodingTests.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManagerTests.build/APIDecodingTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManagerTests.build/APIDecodingTests.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManagerTests.build/APIDecodingTests.dia"
+  }
+}
