@@ -1,15 +1,16 @@
+<!-- doc-id: ACCEPTABLE_USE_POLICY | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/ACCEPTABLE_USE_POLICY.en.md | adapted: company identity and related clauses -->
 # ACCEPTABLE USE POLICY
 
 ## Global Acceptable Use Policy
 
-**Effective Date:** April 2026
+**Effective Date:** September 2026
 
 **Provider:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -17,7 +18,7 @@ Website: https://digitalfreedom.co.za
 
 ## 1. INTRODUCTION
 
-This Acceptable Use Policy ("AUP") governs your use of all applications, software, websites, APIs, and related services ("the Services") provided by DigitalFreedom, a brand of Berger & Rosenstock GbR ("the Provider").
+This Acceptable Use Policy ("AUP") governs your use of all applications, software, websites, APIs, and related services ("the Services") provided by DigitalFreedom, a brand of DigitalFreedom Global LLC ("the Provider").
 
 This AUP supplements our [Terms of Service](TERMS_OF_SERVICE.md), [EULA](EULA.md) and [Fair Use Policy](FAIR_USE_POLICY.md). In the event of conflict, the more restrictive provision applies.
 
@@ -262,10 +263,10 @@ The Provider may update this AUP from time to time. Changes take effect upon pos
 For questions about this AUP or to report violations:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 General / AUP reports: hello@digitalfreedom.co.za
 Customer support: support@digitalfreedom.co.za
@@ -273,4 +274,4 @@ Website: https://digitalfreedom.co.za
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.

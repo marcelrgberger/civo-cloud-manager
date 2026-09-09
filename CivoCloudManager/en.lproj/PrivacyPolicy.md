@@ -1,29 +1,28 @@
+<!-- doc-id: PRIVACY_POLICY | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/PRIVACY_POLICY.en.md | adapted: company identity and related clauses -->
 # PRIVACY POLICY
 
 ## Global Data Protection and Privacy Notice
 
-**Effective Date:** May 2026
+**Effective Date:** September 2026
 
-**Service operated by:** DigitalFreedom — a brand of Berger & Rosenstock GbR
+**Service operated by:** DigitalFreedom — a brand of DigitalFreedom Global LLC
 
 **Data Controller (legal entity):**
-Berger & Rosenstock GbR (trading as DigitalFreedom)
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-
-Authorized Representatives: Marcel R. G. Berger, Jasmin Rosenstock
-VAT-ID: DE455096022
+DigitalFreedom Global LLC (trading as DigitalFreedom)
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 Contact (general): hello@digitalfreedom.co.za
 Contact (data protection): data-protection@digitalfreedom.co.za
+Data protection request form: https://data-protection.digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
 ## 1. INTRODUCTION
 
-This Privacy Policy explains how DigitalFreedom (a brand of Berger & Rosenstock GbR, collectively "we", "us", "our") collects, uses, stores, and protects your personal data when you use our applications, software, websites, and related services ("the Services").
+This Privacy Policy explains how DigitalFreedom (a brand of DigitalFreedom Global LLC, collectively "we", "us", "our") collects, uses, stores, and protects your personal data when you use our applications, software, websites, and related services ("the Services").
 
 ### 1.1 Global scope
 
@@ -55,16 +54,16 @@ We are committed to protecting your privacy and complying with applicable data-p
 
 The Services are offered under the **DigitalFreedom** brand. The legal entity responsible for processing your personal data (the "data controller" under Art. 4(7) GDPR) is:
 
-Berger & Rosenstock GbR (trading as DigitalFreedom)
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-
-Authorized Representatives: Marcel R. G. Berger, Jasmin Rosenstock
-VAT-ID: DE455096022
+DigitalFreedom Global LLC (trading as DigitalFreedom)
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 For data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests):
+Request form: https://data-protection.digitalfreedom.co.za
 Email: data-protection@digitalfreedom.co.za
+
+You may use either route, and you are free to reach us by any other channel — we act on your request however it arrives.
 
 For general inquiries:
 Email: hello@digitalfreedom.co.za
@@ -387,12 +386,13 @@ We may update this Privacy Policy from time to time.
 For privacy-related inquiries or to exercise your rights:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 Data protection: data-protection@digitalfreedom.co.za
+Data protection request form: https://data-protection.digitalfreedom.co.za
 General inquiries: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -405,7 +405,8 @@ For EU residents, you may also contact the competent supervisory authority in yo
 ### 17.1 European Union / EEA
 
 - Processing complies with GDPR requirements
-- The lead supervisory authority is the competent German data protection authority
+- No lead supervisory authority applies: the Controller is not established in the Union, so the one-stop-shop under Art. 56 GDPR does not apply.
+- You may lodge a complaint with the supervisory authority of your habitual residence, your place of work, or the place of the alleged infringement (Art. 77 GDPR).
 - Data Protection Impact Assessments (DPIAs) are conducted where required
 
 ### 17.2 United Kingdom
@@ -434,4 +435,4 @@ For EU residents, you may also contact the competent supervisory authority in yo
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.

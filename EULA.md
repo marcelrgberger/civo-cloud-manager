@@ -2,9 +2,9 @@
 
 ## Civo Cloud Manager — Beta Testing Agreement
 
-**Effective Date:** March 2026
-**Publisher:** Marcel R. G. Berger / Berger & Rosenstock GbR, Germany
-**Contact:** hello@marcelrgberger.com
+**Effective Date:** September 2026
+**Publisher:** DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, United States
+**Contact:** hello@digitalfreedom.co.za
 
 By installing, accessing, or using Civo Cloud Manager ("the App"), you agree to be bound by the terms of this End User License Agreement ("Agreement"). If you do not agree, do not install or use the App.
 
@@ -101,7 +101,9 @@ This license is effective until terminated. The Publisher may terminate this Agr
 
 ### 12. Governing Law
 
-This Agreement shall be governed by and construed in accordance with the laws of the Federal Republic of Germany, without regard to its conflict of law provisions. Any disputes shall be subject to the exclusive jurisdiction of the courts in Germany.
+These Terms are governed by the laws of the State of Wyoming, United States of America, excluding its conflict-of-law rules and the UN Convention on Contracts for the International Sale of Goods. Where you are a consumer, this choice of law does not deprive you of the protection of the mandatory provisions of the law of your country of habitual residence (Art. 6(2) Rome I Regulation and equivalent rules).
+
+For users who are not consumers, the courts of Sheridan County, Wyoming, United States, have exclusive jurisdiction. Consumers may bring proceedings before the courts of their country of habitual residence, and may be sued by the Provider only before those courts.
 
 ### 13. Severability
 
@@ -115,4 +117,4 @@ This Agreement constitutes the entire agreement between you and the Publisher re
 
 **By using Civo Cloud Manager, you acknowledge that you have read, understood, and agree to be bound by this Agreement.**
 
-© 2025-2026 Marcel R. G. Berger / Berger & Rosenstock GbR. All rights reserved.
+© 2025-2026 DigitalFreedom Global LLC. All rights reserved.

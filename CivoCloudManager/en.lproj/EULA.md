@@ -1,15 +1,16 @@
+<!-- doc-id: EULA | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
 # END USER LICENSE AGREEMENT (EULA)
 
 ## Global Multi-Platform License Agreement
 
-**Effective Date:** March 2026
+**Effective Date:** September 2026
 
 **Publisher:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -193,7 +194,7 @@ You agree to comply with all applicable export control and sanctions laws.
 
 ## 16. GOVERNING LAW
 
-This Agreement shall be governed by German law.
+This Agreement shall be governed by the laws of the State of Wyoming, United States of America, excluding its conflict-of-law rules and the UN Convention on Contracts for the International Sale of Goods.
 
 Mandatory consumer protection laws of your country of residence remain unaffected.
 
@@ -248,4 +249,4 @@ It supplements platform-specific terms (Apple, Google).
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.

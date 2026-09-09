@@ -1449,4 +1449,4 @@ civo-cloud-manager/
 
 ## License
 
-Proprietary. Copyright (c) 2025-2026 Marcel R. G. Berger / Berger & Rosenstock GbR. All rights reserved. Distributed exclusively via the Apple App Store.
+Proprietary. Copyright (c) 2025-2026 DigitalFreedom Global LLC. All rights reserved. Distributed exclusively via the Apple App Store.

@@ -1,251 +1,252 @@
-# END USER LICENSE AGREEMENT (EULA)
+<!-- doc-id: EULA | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+# ENDNUTZER-LIZENZVEREINBARUNG (EULA)
 
-## Global Multi-Platform License Agreement
+## Globale plattformübergreifende Lizenzvereinbarung
 
-**Effective Date:** March 2026
+**Wirksamkeitsdatum:** September 2026
 
-**Publisher:**
+**Herausgeber:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Contact: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Eine Marke von DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Vereinigte Staaten
+Kontakt: hello@digitalfreedom.co.za
+Webseite: https://digitalfreedom.co.za
 
 ---
 
-## 1. ACCEPTANCE OF TERMS
+## 1. ANNAHME DER BEDINGUNGEN
 
-By installing, accessing, or using this application, software, or related services ("the App"), you agree to be bound by this Agreement.
+Durch die Installation, den Zugriff oder die Nutzung dieser Anwendung, Software oder damit verbundener Dienste ("die App") erklären Sie sich mit dieser Vereinbarung einverstanden.
 
-If you do not agree, you must not use the App.
+Wenn Sie nicht einverstanden sind, dürfen Sie die App nicht nutzen.
 
 ---
 
-## 2. SCOPE OF APPLICATION
+## 2. GELTUNGSBEREICH
 
-This Agreement applies to all distribution channels, including but not limited to:
+Diese Vereinbarung gilt für alle Vertriebskanäle, einschließlich, aber nicht beschränkt auf:
 
 - Apple App Store / TestFlight
-- Google Play Store / APK distribution
-- GitHub or other source code repositories
-- Homebrew or other package managers
-- Direct downloads or enterprise distribution
+- Google Play Store / APK-Verteilung
+- GitHub oder andere Quellcode-Repositorien
+- Homebrew oder andere Paketmanager
+- Direkte Downloads oder Unternehmensverteilung
 
-The App may be provided as free, paid, open-source, or hybrid software.
+Die App kann als kostenlose, kostenpflichtige, Open-Source- oder hybride Software bereitgestellt werden.
 
-### 2.1 Global scope
+### 2.1 Globaler Geltungsbereich
 
-The App is distributed via the Apple App Store and the Google Play Store and is therefore made available in every country and territory those platforms serve. This Agreement applies globally to all such users, regardless of the country in which the App is downloaded, installed or used. The Publisher adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; mandatory consumer-protection and other statutory rights granted by the user's country of residence remain unaffected and prevail wherever they are more protective.
-
----
-
-## 3. LICENSE GRANT
-
-Subject to this Agreement, the Publisher grants you a limited, non-exclusive, non-transferable, revocable license to:
-
-- Use the App on devices you own or control
-- Access and use functionalities according to intended purpose
-
-For open-source components, the applicable open-source licenses shall prevail.
+Die App wird über den Apple App Store und den Google Play Store vertrieben und ist daher in jedem Land und jedem Gebiet verfügbar, das von diesen Plattformen bedient wird. Diese Vereinbarung gilt weltweit für alle derartigen Nutzer, unabhängig davon, in welchem Land die App heruntergeladen, installiert oder genutzt wird. Der Herausgeber übernimmt die Datenschutz-Grundverordnung (DSGVO) der Europäischen Union und die damit verbundenen EU-Gesetze als Mindeststandard und wendet diese weltweit an; zwingende Verbraucherschutzrechte und andere gesetzliche Rechte, die dem Nutzer durch das Recht seines Wohnsitzlandes gewährt werden, bleiben unberührt und haben Vorrang, sofern sie weitergehenden Schutz bieten.
 
 ---
 
-## 4. OPEN SOURCE COMPONENTS
+## 3. LIZENZERTEILUNG
 
-The App may include open-source software.
+Vorbehaltlich dieser Vereinbarung gewährt der Herausgeber Ihnen eine beschränkte, nicht-exklusive, nicht übertragbare, widerrufliche Lizenz zur:
 
-- Such components are governed by their respective licenses
-- This Agreement does not override or restrict rights granted under open-source licenses
-- A list of open-source components shall be provided where required
+- Nutzung der App auf Geräten, die Sie besitzen oder kontrollieren
+- Nutzung und Zugriff auf Funktionen gemäß dem vorgesehenen Zweck
 
-You are responsible for complying with applicable open-source licenses.
-
----
-
-## 5. RESTRICTIONS
-
-You shall not:
-
-- Reverse-engineer or decompile the App except where permitted by law
-- Circumvent security or access control mechanisms
-- Use the App unlawfully or in violation of third-party rights
-- Redistribute proprietary components outside permitted scope
+Für Open-Source-Komponenten gelten die jeweiligen Open-Source-Lizenzen vorrangig.
 
 ---
 
-## 6. COMMERCIAL TERMS
+## 4. OPEN-SOURCE-KOMPONENTEN
 
-The App may be offered:
+Die App kann Open-Source-Software enthalten.
 
-- Free of charge
-- As a one-time purchase
-- As a subscription
+- Solche Komponenten unterliegen ihren jeweiligen Lizenzen
+- Diese Vereinbarung setzt Rechte aus Open-Source-Lizenzen nicht außer Kraft oder schränkt sie ein
+- Eine Liste der Open-Source-Komponenten wird bereitgestellt, sofern erforderlich
 
-Payments may be processed via third-party platforms (e.g., Apple, Google) or directly.
-
-Refunds and billing are subject to the respective platform terms or applicable law.
+Sie sind für die Einhaltung der anwendbaren Open-Source-Lizenzen verantwortlich.
 
 ---
 
-## 7. USER RESPONSIBILITY
+## 5. EINSCHRÄNKUNGEN
 
-You are solely responsible for:
+Sie dürfen nicht:
 
-- All activities performed using the App
-- All data processed, stored, or transmitted
-- Compliance with applicable laws and regulations
-
-Use of the App may result in unintended actions, including data modification or deletion.
-
----
-
-## 8. DATA AND PRIVACY
-
-Data processing depends on the specific implementation of the App.
-
-Unless explicitly stated otherwise:
-
-- Data may be stored locally or processed via third-party services
-- The Publisher does not guarantee data security or integrity
-- You are responsible for backups
-
-A separate Privacy Policy governs data processing.
+- Die App zurückentwickeln oder dekompilieren, außer soweit gesetzlich zulässig
+- Sicherheits- oder Zugangskontrollmechanismen umgehen
+- Die App rechtswidrig oder unter Verletzung von Rechten Dritter nutzen
+- Proprietäre Komponenten außerhalb des erlaubten Rahmens weiterverbreiten
 
 ---
 
-## 9. THIRD-PARTY SERVICES
+## 6. KOMMERZIELLE BEDINGUNGEN
 
-The App may interact with third-party services.
+Die App kann angeboten werden:
 
-The Publisher:
+- Kostenfrei
+- Als Einmalkauf
+- Als Abonnement
 
-- Does not control third-party services
-- Is not responsible for their availability or behavior
-- Is not liable for damages caused by such services
+Zahlungen können über Drittanbieter-Plattformen (z. B. Apple, Google) oder direkt abgewickelt werden.
 
-Use of third-party services is subject to their terms.
-
----
-
-## 10. DISCLAIMER OF WARRANTIES
-
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND.
-
-This includes, but is not limited to:
-
-- MERCHANTABILITY
-- FITNESS FOR A PARTICULAR PURPOSE
-- ACCURACY OR RELIABILITY
-- SECURITY OR AVAILABILITY
+Rückerstattungen und Abrechnungen unterliegen den jeweiligen Plattformbedingungen oder geltendem Recht.
 
 ---
 
-## 11. LIMITATION OF LIABILITY
+## 7. VERANTWORTUNG DES NUTZERS
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE PUBLISHER SHALL NOT BE LIABLE FOR:
+Sie sind allein verantwortlich für:
 
-- INDIRECT OR CONSEQUENTIAL DAMAGES
-- LOSS OF DATA, PROFITS, OR BUSINESS
-- SYSTEM FAILURES OR SECURITY INCIDENTS
+- Alle Aktivitäten, die mit der App durchgeführt werden
+- Alle verarbeiteten, gespeicherten oder übertragenen Daten
+- Die Einhaltung der geltenden Gesetze und Vorschriften
 
-TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT PAID FOR THE APP (IF ANY).
-
----
-
-## 12. HIGH-RISK USE
-
-The App is not intended for use in:
-
-- Safety-critical systems
-- Medical applications
-- Financial trading systems
-- Critical infrastructure
-
-Use in such contexts is at your own risk.
+Die Nutzung der App kann zu unbeabsichtigten Handlungen führen, einschließlich Datenänderung oder -löschung.
 
 ---
 
-## 13. INDEMNIFICATION
+## 8. DATEN UND DATENSCHUTZ
 
-You agree to indemnify the Publisher against claims arising from:
+Die Datenverarbeitung hängt von der jeweiligen Implementierung der App ab.
 
-- Your use of the App
-- Violation of this Agreement
-- Violation of applicable law
+Sofern nicht ausdrücklich anders angegeben:
 
----
+- Daten können lokal gespeichert oder über Dienste Dritter verarbeitet werden
+- Der Herausgeber übernimmt keine Gewähr für Datensicherheit oder -integrität
+- Sie sind für Sicherungskopien verantwortlich
 
-## 14. TERMINATION
-
-The Publisher may terminate this Agreement at any time.
-
-Upon termination, you must cease use and delete all copies of the App.
+Eine separate Datenschutzrichtlinie regelt die Datenverarbeitung.
 
 ---
 
-## 15. EXPORT AND SANCTIONS
+## 9. DIENSTE DRITTER
 
-You agree to comply with all applicable export control and sanctions laws.
+Die App kann mit Diensten Dritter interagieren.
 
----
+Der Herausgeber:
 
-## 16. GOVERNING LAW
+- Kontrolliert keine Dienste Dritter
+- Ist nicht verantwortlich für deren Verfügbarkeit oder Verhalten
+- Haftet nicht für Schäden, die durch solche Dienste verursacht werden
 
-This Agreement shall be governed by German law.
-
-Mandatory consumer protection laws of your country of residence remain unaffected.
-
----
-
-## 17. REGIONAL PROVISIONS
-
-### 17.1 European Union
-
-- Mandatory consumer rights (including warranty rights) are not excluded
-- Liability exclusions apply only to the extent permitted under EU law
-
-### 17.2 United States
-
-- Some states do not allow limitation of certain warranties or liabilities
-- In such cases, limitations apply to the maximum extent permitted
-
-### 17.3 United Kingdom
-
-- Nothing excludes liability for death or personal injury caused by negligence
-- Consumer Rights Act protections remain unaffected
-
-### 17.4 Canada
-
-- Consumer protection laws vary by province and may override parts of this Agreement
-
-### 17.5 Australia
-
-- Statutory guarantees under Australian Consumer Law apply and cannot be excluded
-
-### 17.6 Other Jurisdictions
-
-- Where local law restricts provisions of this Agreement, such provisions shall apply only to the extent permitted
+Die Nutzung von Diensten Dritter unterliegt deren Bedingungen.
 
 ---
 
-## 18. SEVERABILITY
+## 10. GEWÄHRLEISTUNGSAUSSCHLUSS
 
-If any provision is invalid, the remainder remains in effect.
+SOWEIT GESETZLICH ZULÄSSIG, WIRD DIE APP "WIE BESEHEN" OHNE JEGLICHE GEWÄHRLEISTUNG BEREITGESTELLT.
 
----
+Dies umfasst unter anderem:
 
-## 19. ENTIRE AGREEMENT
-
-This Agreement constitutes the entire agreement between you and the Publisher.
-
-It supplements platform-specific terms (Apple, Google).
-
----
-
-**BY USING THE APP, YOU AGREE TO THIS AGREEMENT.**
+- MARKTGÄNGIGKEIT
+- EIGNUNG FÜR EINEN BESTIMMTEN ZWECK
+- GENAUIGKEIT ODER ZUVERLÄSSIGKEIT
+- SICHERHEIT ODER VERFÜGBARKEIT
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+## 11. HAFTUNGSBESCHRÄNKUNG
+
+SOWEIT GESETZLICH ZULÄSSIG, HAFTET DER HERAUSGEBER NICHT FÜR:
+
+- INDIREKTE ODER FOLGESCHÄDEN
+- DATEN-, GEWINN- ODER GESCHÄFTSVERLUSTE
+- SYSTEMAUSFÄLLE ODER SICHERHEITSVORFÄLLE
+
+DIE GESAMTHAFTUNG ÜBERSCHREITET NICHT DEN FÜR DIE APP GEZAHLTEN BETRAG (FALLS VORHANDEN).
+
+---
+
+## 12. HOCHRISKANTE NUTZUNG
+
+Die App ist nicht vorgesehen für den Einsatz in:
+
+- Sicherheitskritischen Systemen
+- Medizinischen Anwendungen
+- Systemen für den Finanzhandel
+- Kritischer Infrastruktur
+
+Die Nutzung in solchen Kontexten erfolgt auf eigenes Risiko.
+
+---
+
+## 13. FREISTELLUNG
+
+Sie verpflichten sich, den Herausgeber von Ansprüchen freizustellen, die entstehen durch:
+
+- Ihre Nutzung der App
+- Verletzung dieser Vereinbarung
+- Verletzung geltenden Rechts
+
+---
+
+## 14. KÜNDIGUNG
+
+Der Herausgeber kann diese Vereinbarung jederzeit kündigen.
+
+Nach Beendigung müssen Sie die Nutzung einstellen und alle Kopien der App löschen.
+
+---
+
+## 15. EXPORT UND SANKTIONEN
+
+Sie verpflichten sich, alle anwendbaren Exportkontroll- und Sanktionsgesetze einzuhalten.
+
+---
+
+## 16. ANWENDBARES RECHT
+
+Diese Vereinbarung unterliegt dem Recht des Bundesstaates Wyoming, Vereinigte Staaten von Amerika, unter Ausschluss seiner Kollisionsnormen und des UN-Übereinkommens über Verträge über den internationalen Warenkauf.
+
+Zwingende Verbraucherschutzgesetze Ihres Wohnsitzlandes bleiben unberührt.
+
+---
+
+## 17. REGIONALE BESTIMMUNGEN
+
+### 17.1 Europäische Union
+
+- Zwingende Verbraucherrechte (einschließlich Gewährleistungsrechte) werden nicht ausgeschlossen
+- Haftungsausschlüsse gelten nur, soweit nach EU-Recht zulässig
+
+### 17.2 Vereinigte Staaten
+
+- Einige Bundesstaaten erlauben keine Beschränkung bestimmter Gewährleistungen oder Haftungen
+- In solchen Fällen gelten die Beschränkungen im maximal zulässigen Umfang
+
+### 17.3 Vereinigtes Königreich
+
+- Nichts schließt die Haftung für Tod oder Körperverletzung durch Fahrlässigkeit aus
+- Der Schutz durch den Consumer Rights Act bleibt unberührt
+
+### 17.4 Kanada
+
+- Verbraucherschutzgesetze variieren je nach Provinz und können Teile dieser Vereinbarung außer Kraft setzen
+
+### 17.5 Australien
+
+- Gesetzliche Garantien nach dem australischen Verbraucherschutzgesetz gelten und können nicht ausgeschlossen werden
+
+### 17.6 Andere Rechtsordnungen
+
+- Soweit das lokale Recht Bestimmungen dieser Vereinbarung einschränkt, gelten diese Bestimmungen nur im zulässigen Umfang
+
+---
+
+## 18. SALVATORISCHE KLAUSEL
+
+Sollte eine Bestimmung unwirksam sein, bleibt der Rest wirksam.
+
+---
+
+## 19. GESAMTVEREINBARUNG
+
+Diese Vereinbarung stellt die vollständige Vereinbarung zwischen Ihnen und dem Herausgeber dar.
+
+Sie ergänzt plattformspezifische Bedingungen (Apple, Google).
+
+---
+
+**DURCH DIE NUTZUNG DER APP ERKLÄREN SIE SICH MIT DIESER VEREINBARUNG EINVERSTANDEN.**
+
+---
+
+(c) 2025-2026 DigitalFreedom Global LLC. Alle Rechte vorbehalten.

@@ -1,8 +1,9 @@
+<!-- doc-id: IMPRESSUM | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / LEGAL NOTICE
 
 ## Information pursuant to § 5 DDG (Digitale-Dienste-Gesetz) and applicable international disclosure requirements
 
-**Last Updated:** May 2026
+**Last Updated:** September 2026
 
 ---
 
@@ -10,25 +11,26 @@
 
 The Services are offered under the **DigitalFreedom** brand. The operating legal entity (Diensteanbieter / Service Provider within the meaning of § 5 DDG) is:
 
-Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 Trade name: **DigitalFreedom** (used on websites, apps, marketing, customer communications and product UI)
 
 **Email:** hello@digitalfreedom.co.za
+**Phone:** +1 307 451 0707
 **Website:** https://digitalfreedom.co.za
 
 ---
 
 ## 2. LEGAL FORM
 
-Gesellschaft bürgerlichen Rechts (GbR) — Civil law partnership under German law
+Limited Liability Company (LLC) under the laws of the State of Wyoming, United States of America
 
 **Authorized Representatives:**
-Marcel R. G. Berger
-Jasmin Rosenstock
+M. Berger
+J. Rosenstock
 
 ---
 
@@ -36,26 +38,41 @@ Jasmin Rosenstock
 
 **General inquiries:** hello@digitalfreedom.co.za
 **Customer support:** support@digitalfreedom.co.za
+**Support portal (rapid electronic contact, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Data protection inquiries:** data-protection@digitalfreedom.co.za
+**Data protection request form:** https://data-protection.digitalfreedom.co.za
+**Phone:** +1 307 451 0707
 **Website:** https://digitalfreedom.co.za
 
 ---
 
 ## 4. REGULATORY INFORMATION
 
-### 4.1 VAT Identification Number
+### 4.1 Commercial Register
 
-VAT identification number pursuant to § 27a German VAT Act (UStG):
+Wyoming Secretary of State, Cheyenne, Wyoming, United States
 
-DE455096022
+Filing ID: 2026-002048530
 
-### 4.2 Commercial Register
-
-Not applicable — Gesellschaft bürgerlichen Rechts (GbR) under German law is not subject to commercial register registration.
-
-### 4.3 Professional Regulations
+### 4.2 Professional Regulations
 
 Not applicable — no regulated professions within the meaning of § 5(1) No. 5 DDG.
+
+### 4.3 Contact Points under the Digital Services Act
+
+Regulation (EU) 2022/2065 requires providers of intermediary services to name two contact points. They are stated here irrespective of how the services are ultimately classified, so that authorities and users always have an addressable route.
+
+**Point of contact for authorities of the Member States, the Commission and the European Board for Digital Services (Art. 11 DSA):**
+hello@digitalfreedom.co.za
+
+**Point of contact for recipients of the service (Art. 12 DSA):**
+support@digitalfreedom.co.za, or the support form at https://support.apps.digitalfreedom.co.za
+
+Communication with both contact points is handled by a person; it is not exclusively automated.
+
+**Languages accepted:** German and English.
+
+**Legal representative in the Union (Art. 13 DSA):** none designated. Art. 13(1) addresses providers of intermediary services without an establishment in the Union, not only online platforms — so the fact that the services are not an online platform within Art. 3(i) does not by itself remove the duty. Whether the services are an intermediary service at all is the open question, and the position taken is set out above: the contact points under Art. 11 and 12 are published regardless, and no representative is designated. The risk is carried deliberately.
 
 ---
 
@@ -63,10 +80,7 @@ Not applicable — no regulated professions within the meaning of § 5(1) No. 5 
 
 Responsible pursuant to § 18(2) MStV (Medienstaatsvertrag):
 
-Marcel R. G. Berger
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Not applicable — the Services do not constitute a journalistic-editorial offering within the meaning of § 18(2) MStV.
 
 ---
 
@@ -74,8 +88,7 @@ Germany
 
 ### 6.1 EU Online Dispute Resolution
 
-The European Commission provides an Online Dispute Resolution (ODR) platform:
-https://ec.europa.eu/consumers/odr
+The European Commission's Online Dispute Resolution platform ceased operation on 20 July 2025. Regulation (EU) 2024/3228 repealed Regulation (EU) No 524/2013, under which the platform had been established. Consumers may contact us directly at hello@digitalfreedom.co.za or approach a competent alternative dispute resolution body in their country of residence.
 
 ### 6.2 Consumer Arbitration
 
@@ -87,11 +100,11 @@ The Provider is neither obligated nor willing to participate in dispute resoluti
 
 ### 7.1 Own Content
 
-As a service provider, we are responsible for our own content on these pages in accordance with § 7(1) DDG and general laws.
+We are responsible for our own content under the general law. The liability privileges of Art. 4 to 6 of Regulation (EU) 2022/2065 — made applicable to every service provider by § 7(1) DDG — concern information provided by a *recipient of the service*, not a provider's own content, and are not invoked here.
 
 ### 7.2 Third-Party Content
 
-Pursuant to §§ 8–10 DDG, we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the point in time at which a concrete infringement of the law becomes known. If we become aware of any such infringements, we will remove the content immediately.
+There is no general obligation to monitor the information a provider transmits or stores, nor to actively seek facts indicating illegal activity — Art. 8 of Regulation (EU) 2022/2065, applicable through § 7(1) DDG. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the point in time at which a concrete infringement of the law becomes known. If we become aware of any such infringements, we will remove the content immediately.
 
 ---
 
@@ -103,7 +116,7 @@ Our Services may contain links to external third-party websites over whose conte
 
 ## 9. COPYRIGHT
 
-Content and works created by the site operators on these pages are subject to German copyright law (Urheberrechtsgesetz — UrhG). The reproduction, editing, distribution, and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. Third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. If we become aware of any infringements, we will remove such content immediately.
+Content and works created by the site operators on these pages are protected by copyright. Which law governs that protection is determined by the country for which protection is claimed — Art. 5(2) of the Berne Convention and Art. 8(1) of the Rome II Regulation — not by the operator's seat and not by German law as a default. Reproduction, adaptation, distribution and any form of exploitation beyond the limits of the applicable copyright law require the written consent of the respective author or creator. Downloads and copies of this site are permitted for private, non-commercial use only. Where content on this site was not created by the operator, third-party copyrights are respected and such content is marked as such. If you nevertheless become aware of a copyright infringement, please let us know; on becoming aware of such infringements we will remove the content without delay.
 
 ---
 
@@ -180,8 +193,16 @@ The Provider complies with applicable business identification and disclosure req
 
 A formal Data Protection Officer has not been appointed, as the Provider does not meet the threshold criteria for mandatory appointment under Art. 37 GDPR / § 38 BDSG.
 
-For all data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests), please contact: data-protection@digitalfreedom.co.za
+For all data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests), please contact: data-protection@digitalfreedom.co.za or use the request form at https://data-protection.digitalfreedom.co.za
+
+**Responsible for data protection**
+
+DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
+data-protection@digitalfreedom.co.za
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.

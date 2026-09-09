@@ -11,7 +11,7 @@ final class LegalNavigation {
 
 /// Unified legal information view with tabs for Privacy Policy, Terms of Use, and Imprint.
 /// Documents are loaded from localized Markdown files (`.lproj/*.md`) in the user's language,
-/// falling back to English automatically via macOS bundle localization.
+/// matching the system's preferred languages with an explicit English fallback.
 struct LegalView: View {
     @State private var navigation = LegalNavigation.shared
     @State private var selectedDocument: LegalDocument = LegalNavigation.shared.requestedDocument
@@ -93,17 +93,29 @@ enum LegalDocument: String, CaseIterable, Identifiable {
         }
     }
 
-    func load() -> String {
-        guard let url = Bundle.main.url(forResource: filename, withExtension: "md") else {
-            Log.error("LegalDocument: \(filename).md not found in bundle")
-            return "Document not available."
+    static let supportedLanguages = ["en", "de", "es", "fr", "it", "nl", "pl", "pt"]
+
+    static func preferredLanguage(for preferences: [String]) -> String {
+        Bundle.preferredLocalizations(from: supportedLanguages, forPreferences: preferences).first ?? "en"
+    }
+
+    func load(bundle: Bundle = .main, preferredLanguages: [String] = Locale.preferredLanguages) -> String {
+        let language = Self.preferredLanguage(for: preferredLanguages)
+        let candidates = language == "en" ? ["en"] : [language, "en"]
+        for candidate in candidates {
+            guard let url = bundle.resourceURL?
+                .appendingPathComponent("\(candidate).lproj", isDirectory: true)
+                .appendingPathComponent("\(filename).md") else { continue }
+            if let content = try? String(contentsOf: url, encoding: .utf8) {
+                // Source/version comments are for maintaining the documents, not display.
+                let displayedContent = content.replacingOccurrences(
+                    of: #"(?s)<!--.*?-->"#, with: "", options: .regularExpression
+                ).trimmingCharacters(in: .whitespacesAndNewlines)
+                if !displayedContent.isEmpty { return displayedContent }
+            }
         }
-        do {
-            return try String(contentsOf: url, encoding: .utf8)
-        } catch {
-            Log.error("LegalDocument: failed to read \(filename).md: \(error.localizedDescription)")
-            return "Document not available."
-        }
+        Log.error("LegalDocument: \(filename).md unavailable in \(language) and English")
+        return String(localized: "Document not available.")
     }
 
     /// Maps the canonical legal-repo filenames (and our in-app filenames) to LegalDocument cases.

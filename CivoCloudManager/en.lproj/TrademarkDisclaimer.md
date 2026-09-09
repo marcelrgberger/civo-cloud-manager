@@ -1,15 +1,16 @@
+<!-- doc-id: TRADEMARK_DISCLAIMER | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/TRADEMARK_DISCLAIMER.en.md | adapted: company identity and related clauses -->
 # TRADEMARK DISCLAIMER
 
 ## For Applications Referencing Third-Party Trademarks or Programs
 
-**Effective Date:** May 2026
+**Effective Date:** September 2026
 
 **Publisher:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -73,10 +74,10 @@ Trademark owners retain all rights to their trademarks. The Publisher's nominati
 If you are a trademark owner and believe that a Publisher application or material uses your trademark in a manner that exceeds nominative fair use or otherwise infringes your rights, please contact:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 Email: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -99,4 +100,4 @@ https://digitalfreedom.co.za/
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.
