@@ -1,102 +1,103 @@
-# TRADEMARK DISCLAIMER
+<!-- doc-id: TRADEMARK_DISCLAIMER | lang: nl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/TRADEMARK_DISCLAIMER.en.md | adapted: company identity and related clauses -->
+# HANDELSMERK DISCLAIMER
 
-## For Applications Referencing Third-Party Trademarks or Programs
+## Voor Applicaties die Verwijzen naar Merken of Programma's van Derden
 
-**Effective Date:** May 2026
+**Ingangsdatum:** september 2026
 
-**Publisher:**
+**Uitgever:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Een merk van DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Verenigde Staten
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-## 1. PURPOSE AND SCOPE
+## 1. DOEL EN REIKWIJDTE
 
-This document clarifies the relationship between applications published by the Publisher and any third-party trademarks, brand names, programs, or methodologies referenced within those applications, marketing materials, or supporting documentation.
+Dit document verduidelijkt de relatie tussen applicaties die door de Uitgever worden gepubliceerd en eventuele merken, merknamen, programma's of methodologieën van derden waarnaar in die applicaties, marketingmaterialen of ondersteunende documentatie wordt verwezen.
 
-The Publisher's applications are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This Disclaimer applies globally. The Publisher applies EU trademark law (Regulation (EU) 2017/1001 on the EU trade mark and Directive (EU) 2015/2436) and the nominative-fair-use doctrine as its baseline standard and additionally observes the trademark and fair-use rules of every jurisdiction in which the applications are made available.
-
----
-
-## 2. NOMINATIVE FAIR USE
-
-References to third-party trademarks, brand names, programs, or methodologies within the Publisher's applications and materials are made under the doctrine of **nominative fair use** (or comparable doctrines under applicable trademark law).
-
-Such references are intended to:
-
-- Identify the third-party program, methodology, or product accurately
-- Provide context for the user about compatibility, support, or applicability
-- Enable factual descriptions of features and functions
-
-References do **not** imply:
-
-- Endorsement of the Publisher's app by the trademark owner
-- Affiliation between the Publisher and the trademark owner
-- Sponsorship of the Publisher's app by the trademark owner
-- Authorization, certification, or approval by the trademark owner
+De applicaties van de Uitgever worden verspreid via de Apple App Store en de Google Play Store en zijn derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Deze Disclaimer is wereldwijd van toepassing. De Uitgever past het EU-merkenrecht toe (Verordening (EU) 2017/1001 inzake het Uniemerk en Richtlijn (EU) 2015/2436) en het beginsel van nominatief eerlijk gebruik als basisnorm en houdt daarnaast rekening met de merken- en fair-use-regels van elke jurisdictie waarin de applicaties beschikbaar worden gesteld.
 
 ---
 
-## 3. TRADEMARK OWNERSHIP
+## 2. NOMINATIEF EERLIJK GEBRUIK
 
-All trademarks, registered trademarks, service marks, brand names, and trade names referenced in the Publisher's applications or materials are the property of their respective owners.
+Verwijzingen naar merken, merknamen, programma's of methodologieën van derden in de applicaties en materialen van de Uitgever worden gedaan onder het beginsel van **nominatief eerlijk gebruik** (of vergelijkbare doctrines onder toepasselijk merkenrecht).
 
-The Publisher claims no ownership of such third-party intellectual property and uses them only for the purposes described in Section 2.
+Dergelijke verwijzingen zijn bedoeld om:
 
-Specific trademark attributions for individual applications are provided in the relevant application's documentation, in-app disclosures, or marketing materials.
+- Het programma, de methodologie of het product van derden nauwkeurig te identificeren
+- Context te bieden aan de gebruiker over compatibiliteit, ondersteuning of toepasbaarheid
+- Feitelijke beschrijvingen van functies en mogelijkheden mogelijk te maken
 
----
+Verwijzingen impliceren **niet**:
 
-## 4. INDEPENDENT DEVELOPMENT
-
-Applications published by the Publisher are independently developed.
-
-- The Publisher's applications are not affiliated with, endorsed by, sponsored by, or approved by any third-party trademark owner unless explicitly stated in writing
-- Functional similarity between an application and a third-party program does not imply licensing or partnership
-- Compatibility with a third-party methodology does not imply certification or accreditation
-
----
-
-## 5. RIGHTS RESERVED
-
-Trademark owners retain all rights to their trademarks. The Publisher's nominative fair use does not transfer, license, or grant any rights to the third-party trademarks.
+- Goedkeuring van de app van de Uitgever door de merkeigenaar
+- Enige band tussen de Uitgever en de merkeigenaar
+- Sponsoring van de app van de Uitgever door de merkeigenaar
+- Autorisatie, certificering of goedkeuring door de merkeigenaar
 
 ---
 
-## 6. TRADEMARK COMPLAINTS
+## 3. EIGENDOM VAN HANDELSMERKEN
 
-If you are a trademark owner and believe that a Publisher application or material uses your trademark in a manner that exceeds nominative fair use or otherwise infringes your rights, please contact:
+Alle handelsmerken, geregistreerde handelsmerken, dienstmerken, merknamen en handelsnamen waarnaar wordt verwezen in de applicaties of materialen van de Uitgever zijn eigendom van hun respectieve eigenaren.
+
+De Uitgever claimt geen eigendom van dergelijke intellectuele eigendom van derden en gebruikt deze uitsluitend voor de doeleinden beschreven in Sectie 2.
+
+Specifieke merkvermeldingen voor afzonderlijke applicaties worden verstrekt in de relevante applicatiedocumentatie, in-app openbaarmakingen of marketingmaterialen.
+
+---
+
+## 4. ONAFHANKELIJKE ONTWIKKELING
+
+Applicaties die door de Uitgever worden gepubliceerd, zijn onafhankelijk ontwikkeld.
+
+- De applicaties van de Uitgever zijn niet verbonden met, goedgekeurd door, gesponsord door of goedgekeurd door enige merkeigenaar van derden, tenzij uitdrukkelijk schriftelijk vermeld
+- Functionele gelijkenis tussen een applicatie en een programma van derden impliceert geen licentie of partnerschap
+- Compatibiliteit met een methodologie van derden impliceert geen certificering of accreditatie
+
+---
+
+## 5. VOORBEHOUDEN RECHTEN
+
+Merkeigenaren behouden alle rechten op hun handelsmerken. Het nominatief eerlijk gebruik door de Uitgever draagt geen rechten over, verleent geen licentie of verleent geen enkele rechten op de handelsmerken van derden.
+
+---
+
+## 6. KLACHTEN OVER HANDELSMERKEN
+
+Indien u merkeigenaar bent en van mening bent dat een applicatie of materiaal van de Uitgever uw handelsmerk gebruikt op een wijze die het nominatief eerlijk gebruik te boven gaat of anderszins inbreuk maakt op uw rechten, neem dan contact op met:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Email: hello@digitalfreedom.co.za
+Een merk van DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Verenigde Staten
+E-mail: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
-Please include:
+Gelieve het volgende te vermelden:
 
-- Identification of the trademark in question (registration number, jurisdiction)
-- Identification of the alleged infringing use (specific application, page, or material)
-- Description of the requested remedy
-- Your contact information
+- Identificatie van het betreffende handelsmerk (registratienummer, jurisdictie)
+- Identificatie van het vermeende inbreukmakende gebruik (specifieke applicatie, pagina of materiaal)
+- Omschrijving van de gevraagde oplossing
+- Uw contactgegevens
 
-The Publisher will review such complaints in good faith and take appropriate action where warranted.
+De Uitgever zal dergelijke klachten te goeder trouw beoordelen en waar nodig passende maatregelen nemen.
 
 ---
 
 ## 7. UPDATES
 
-The Publisher may update this Trademark Disclaimer from time to time. The most current version is available at:
+De Uitgever kan deze Handelsmerk Disclaimer van tijd tot tijd bijwerken. De meest actuele versie is beschikbaar op:
 
 https://digitalfreedom.co.za/
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. Alle rechten voorbehouden.

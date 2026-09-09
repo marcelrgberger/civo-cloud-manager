@@ -27,17 +27,15 @@ struct AboutView: View {
                 VStack(spacing: 6) {
                     Text("DigitalFreedom")
                         .font(.headline)
-                    Text("A brand of Berger & Rosenstock GbR")
+                    Text("A brand of DigitalFreedom Global LLC")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text(try! AttributedString(
-                        markdown: "Made by [Marcel R. G. Berger](https://marcelrgberger.com)"
-                    ))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    Link("digitalfreedom.co.za", destination: URL(string: "https://digitalfreedom.co.za")!)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
 
-                Text("Copyright \u{00A9} 2025\u{2013}2026 DigitalFreedom \u{2014} Berger & Rosenstock GbR.\nAll rights reserved.")
+                Text("Copyright \u{00A9} 2025\u{2013}2026 DigitalFreedom Global LLC.\nAll rights reserved.")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)

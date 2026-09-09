@@ -1,10 +1,10 @@
 # Privacy Policy
 
 **Civo Cloud Manager**
-Last Updated: March 21, 2026
+Last Updated: September 9, 2026
 Effective Date: March 21, 2026
 
-Marcel R. G. Berger, operating as Berger & Rosenstock GbR ("we", "us", "our"), is committed to protecting your privacy. This Privacy Policy describes how we handle information in connection with the Civo Cloud Manager application ("Application").
+DigitalFreedom Global LLC ("we", "us", "our"), is committed to protecting your privacy. This Privacy Policy describes how we handle information in connection with the Civo Cloud Manager application ("Application").
 
 ---
 
@@ -157,7 +157,7 @@ The Application does not process personal information of users in China. No pers
 ### 5.11 COPPA (USA)
 Children's Online Privacy Protection Act (15 U.S.C. 6501-6506)
 
-The Application is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that a child under 13 has provided personal information, we will take immediate steps to delete such information. If you are a parent or guardian and believe your child has provided personal information, please contact us at hello@marcelrgberger.com.
+The Application is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that a child under 13 has provided personal information, we will take immediate steps to delete such information. If you are a parent or guardian and believe your child has provided personal information, please contact us at hello@digitalfreedom.co.za.
 
 ### 5.12 Other Jurisdictions
 
@@ -205,13 +205,17 @@ We are not obligated to participate in dispute resolution proceedings before a c
 
 If you have questions about this Privacy Policy or our privacy practices:
 
-**Marcel R. G. Berger**
-**Berger & Rosenstock GbR**
-Email: hello@marcelrgberger.com
-Web: https://berger-rosenstock.de
+DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
+Phone: +1 307 451 0707
+Email: hello@digitalfreedom.co.za
+Web: https://digitalfreedom.co.za
 
-For data protection inquiries: hello@marcelrgberger.com
+For data protection inquiries: data-protection@digitalfreedom.co.za
+Request form: https://data-protection.digitalfreedom.co.za
 
 ---
 
-Copyright (c) 2026 Marcel R. G. Berger / Berger & Rosenstock GbR. All rights reserved.
+Copyright (c) 2026 DigitalFreedom Global LLC. All rights reserved.

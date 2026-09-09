@@ -3,6 +3,57 @@ import Testing
 
 @testable import CivoCloudManager
 
+@Suite("Localized legal documents")
+struct LegalDocumentTests {
+    @Test("System languages and regional variants resolve to shipped translations")
+    func preferredLanguages() {
+        for language in ["en", "de", "es", "fr", "it", "nl", "pl", "pt"] {
+            #expect(LegalDocument.preferredLanguage(for: [language]) == language)
+        }
+        #expect(LegalDocument.preferredLanguage(for: ["de-CH"]) == "de")
+        #expect(LegalDocument.preferredLanguage(for: ["fr-CA"]) == "fr")
+        #expect(LegalDocument.preferredLanguage(for: ["pt-BR"]) == "pt")
+        #expect(LegalDocument.preferredLanguage(for: ["ja", "nl-NL"]) == "nl")
+        #expect(LegalDocument.preferredLanguage(for: ["ja"]) == "en")
+        #expect(LegalDocument.preferredLanguage(for: []) == "en")
+    }
+
+    @Test("Missing, empty and unreadable translations fall back to English")
+    func englishFallback() throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LegalDocuments-\(UUID().uuidString).bundle")
+        defer { try? FileManager.default.removeItem(at: directory) }
+        for language in ["en", "de"] {
+            try FileManager.default.createDirectory(
+                at: directory.appendingPathComponent("\(language).lproj"),
+                withIntermediateDirectories: true
+            )
+        }
+        let info: [String: Any] = [
+            "CFBundleIdentifier": "test.legal.documents",
+            "CFBundlePackageType": "BNDL",
+            "CFBundleDevelopmentRegion": "en"
+        ]
+        try PropertyListSerialization.data(fromPropertyList: info, format: .xml, options: 0)
+            .write(to: directory.appendingPathComponent("Info.plist"))
+        let bundle = try #require(Bundle(url: directory))
+        let english = directory.appendingPathComponent("en.lproj/PrivacyPolicy.md")
+        let german = directory.appendingPathComponent("de.lproj/PrivacyPolicy.md")
+        try "<!-- doc-id: PRIVACY_POLICY | lang: en -->\nEnglish privacy policy"
+            .write(to: english, atomically: true, encoding: .utf8)
+        #expect(LegalDocument.privacy.load(bundle: bundle, preferredLanguages: ["de"]) == "English privacy policy")
+        try "Deutsche Datenschutzerklärung".write(to: german, atomically: true, encoding: .utf8)
+        #expect(LegalDocument.privacy.load(bundle: bundle, preferredLanguages: ["de-CH"]) == "Deutsche Datenschutzerklärung")
+        #expect(LegalDocument.privacy.load(bundle: bundle, preferredLanguages: ["ja"]) == "English privacy policy")
+        try " \n".write(to: german, atomically: true, encoding: .utf8)
+        #expect(LegalDocument.privacy.load(bundle: bundle, preferredLanguages: ["de"]) == "English privacy policy")
+        try "<!-- metadata only -->".write(to: german, atomically: true, encoding: .utf8)
+        #expect(LegalDocument.privacy.load(bundle: bundle, preferredLanguages: ["de"]) == "English privacy policy")
+        try Data([0xFF]).write(to: german)
+        #expect(LegalDocument.privacy.load(bundle: bundle, preferredLanguages: ["de"]) == "English privacy policy")
+    }
+}
+
 @Suite("Free trial access")
 @MainActor
 struct FreeTrialTests {

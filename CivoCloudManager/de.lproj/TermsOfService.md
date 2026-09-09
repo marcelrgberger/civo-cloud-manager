@@ -1,333 +1,334 @@
-# TERMS OF SERVICE
+<!-- doc-id: TERMS_OF_SERVICE | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/TERMS_OF_SERVICE.en.md | adapted: company identity and related clauses -->
+# NUTZUNGSBEDINGUNGEN
 
-## General Terms and Conditions
+## Allgemeine Geschäftsbedingungen
 
-**Effective Date:** April 2026
+**Gültig ab:** September 2026
 
-**Provider:**
+**Anbieter:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Contact: hello@digitalfreedom.co.za
+Eine Marke von DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Vereinigte Staaten
+Kontakt: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-## 1. SCOPE AND ACCEPTANCE
+## 1. GELTUNGSBEREICH UND ANNAHME
 
-### 1.1 Agreement
+### 1.1 Vereinbarung
 
-These Terms of Service ("Terms") govern your access to and use of our websites, applications, APIs, and related services ("the Services") provided under the **DigitalFreedom** brand by Berger & Rosenstock GbR ("the Provider").
+Diese Nutzungsbedingungen ("Bedingungen") regeln Ihren Zugang zu und die Nutzung unserer Websites, Anwendungen, APIs und damit verbundenen Dienstleistungen ("die Dienste"), die unter der Marke **DigitalFreedom** von DigitalFreedom Global LLC ("der Anbieter") bereitgestellt werden.
 
-### 1.1.1 Global scope
+### 1.1.1 Weltweiter Geltungsbereich
 
-The Services are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. These Terms apply globally to all users of the Services, regardless of country of access or use. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; mandatory consumer-protection and other statutory rights granted by the user's country of residence remain unaffected and prevail wherever they are more protective.
+Die Dienste werden über den Apple App Store und den Google Play Store vertrieben und sind daher in jedem Land und jedem Gebiet verfügbar, das von diesen Plattformen bedient wird. Diese Bedingungen gelten weltweit für alle Nutzer der Dienste, unabhängig vom Land des Zugriffs oder der Nutzung. Der Anbieter übernimmt die Datenschutz-Grundverordnung der Europäischen Union (DSGVO) und die einschlägigen EU-Gesetze als Mindeststandard und wendet diese weltweit an; zwingende verbraucherschützende und andere gesetzliche Rechte, die dem Nutzer durch das Recht seines Wohnsitzlandes gewährt werden, bleiben unberührt und gehen vor, soweit sie weitergehenden Schutz bieten.
 
-### 1.2 Acceptance
+### 1.2 Annahme
 
-By accessing or using the Services, you agree to be bound by these Terms. If you do not agree, you must not use the Services.
+Durch den Zugriff auf oder die Nutzung der Dienste erklären Sie sich mit diesen Bedingungen einverstanden. Wenn Sie nicht einverstanden sind, dürfen Sie die Dienste nicht nutzen.
 
-### 1.3 Eligibility
+### 1.3 Nutzungsberechtigung
 
-You must be at least 16 years old (or the applicable age of consent in your jurisdiction) to use the Services. By using the Services, you represent that you meet this requirement.
+Sie müssen mindestens 16 Jahre alt sein (oder das jeweils geltende Mindestalter in Ihrem Land), um die Dienste nutzen zu dürfen. Mit der Nutzung der Dienste versichern Sie, dass Sie diese Voraussetzung erfüllen.
 
-### 1.4 Business Use
+### 1.4 Nutzung im geschäftlichen Kontext
 
-If you use the Services on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.
-
----
-
-## 2. SERVICES
-
-### 2.1 Description
-
-The Provider offers software applications, tools, and related services. The specific scope and functionality of each Service is described in its respective documentation.
-
-### 2.2 Modifications
-
-The Provider reserves the right to modify, suspend, or discontinue any Service at any time, with or without notice. Material changes will be communicated where practicable.
-
-### 2.3 Availability
-
-The Services are provided on an "as available" basis. The Provider does not guarantee uninterrupted access or availability.
+Wenn Sie die Dienste im Namen einer Organisation nutzen, versichern Sie, dass Sie befugt sind, diese Organisation an diese Bedingungen zu binden.
 
 ---
 
-## 3. ACCOUNTS
+## 2. DIENSTE
 
-### 3.1 Registration
+### 2.1 Beschreibung
 
-Some Services may require account registration. You must provide accurate and complete information.
+Der Anbieter stellt Softwareanwendungen, Werkzeuge und damit verbundene Dienstleistungen bereit. Der jeweilige Umfang und die Funktionalität jedes Dienstes sind in der zugehörigen Dokumentation beschrieben.
 
-### 3.2 Security
+### 2.2 Änderungen
 
-You are responsible for:
+Der Anbieter behält sich das Recht vor, jeden Dienst jederzeit mit oder ohne Vorankündigung zu ändern, auszusetzen oder einzustellen. Wesentliche Änderungen werden, soweit praktikabel, mitgeteilt.
 
-- Maintaining the confidentiality of your credentials
-- All activities that occur under your account
-- Notifying the Provider of any unauthorized use
+### 2.3 Verfügbarkeit
 
-### 3.3 Suspension
-
-The Provider may suspend or terminate accounts that violate these Terms or applicable law.
+Die Dienste werden auf einer "wie verfügbar"-Basis bereitgestellt. Der Anbieter garantiert keinen ununterbrochenen Zugang oder eine ständige Verfügbarkeit.
 
 ---
 
-## 4. USER CONTENT
+## 3. KONTEN
 
-### 4.1 Ownership
+### 3.1 Registrierung
 
-You retain ownership of content you create, upload, or submit through the Services ("User Content").
+Für einige Dienste ist eine Registrierung eines Kontos erforderlich. Sie müssen korrekte und vollständige Angaben machen.
 
-### 4.2 License Grant
+### 3.2 Sicherheit
 
-By submitting User Content, you grant the Provider a worldwide, non-exclusive, royalty-free license to use, store, and process the content as necessary to provide the Services.
+Sie sind verantwortlich für:
 
-### 4.3 Responsibility
+- Die Wahrung der Vertraulichkeit Ihrer Zugangsdaten
+- Alle Aktivitäten, die unter Ihrem Konto erfolgen
+- Die unverzügliche Benachrichtigung des Anbieters bei unbefugter Nutzung
 
-You are solely responsible for your User Content. You represent that:
+### 3.3 Sperrung
 
-- You have the right to submit the content
-- The content does not violate any law or third-party rights
-- The content does not contain malicious code
-
-### 4.4 Removal
-
-The Provider may remove User Content that violates these Terms or applicable law.
+Der Anbieter kann Konten sperren oder kündigen, die gegen diese Bedingungen oder geltendes Recht verstoßen.
 
 ---
 
-## 5. ACCEPTABLE USE AND FAIR USE
+## 4. NUTZERINHALTE
 
-Use of the Services is subject to our [Acceptable Use Policy](ACCEPTABLE_USE_POLICY.md) and our [Fair Use Policy](FAIR_USE_POLICY.md). The Fair Use Policy empowers the Provider to throttle, rate-limit, restrict features, suspend or terminate access where use exceeds normal individual end-user use or where misuse is suspected on good-faith grounds.
+### 4.1 Eigentum
 
-You shall not:
+Sie behalten das Eigentum an Inhalten, die Sie über die Dienste erstellen, hochladen oder einreichen ("Nutzerinhalte").
 
-- Violate any applicable law or regulation
-- Infringe intellectual property or other rights of third parties
-- Transmit malware, spam, or harmful content
-- Attempt to gain unauthorized access to the Services or related systems
-- Interfere with the operation or security of the Services
-- Use the Services for fraudulent or deceptive purposes
-- Resell or redistribute the Services without authorization
+### 4.2 Lizenzgewährung
 
----
+Mit der Einreichung von Nutzerinhalten gewähren Sie dem Anbieter eine weltweite, nicht-exklusive, gebührenfreie Lizenz zur Nutzung, Speicherung und Verarbeitung der Inhalte, soweit dies zur Bereitstellung der Dienste erforderlich ist.
 
-## 6. INTELLECTUAL PROPERTY
+### 4.3 Verantwortung
 
-### 6.1 Provider's IP
+Sie sind allein für Ihre Nutzerinhalte verantwortlich. Sie versichern, dass:
 
-The Services, including software, design, logos, and documentation, are protected by intellectual property laws. All rights not expressly granted remain with the Provider.
+- Sie berechtigt sind, die Inhalte einzureichen
+- Die Inhalte keine Gesetze oder Rechte Dritter verletzen
+- Die Inhalte keinen schädlichen Code enthalten
 
-### 6.2 Trademarks
+### 4.4 Entfernung
 
-The Provider's trademarks and trade names may not be used without prior written consent.
-
-### 6.3 Feedback
-
-Any feedback or suggestions you provide may be used by the Provider without obligation to you.
+Der Anbieter kann Nutzerinhalte entfernen, die gegen diese Bedingungen oder geltendes Recht verstoßen.
 
 ---
 
-## 7. PAYMENTS AND SUBSCRIPTIONS
+## 5. ZULÄSSIGE NUTZUNG UND FAIR USE
 
-### 7.1 Pricing
+Die Nutzung der Dienste unterliegt unserer [Richtlinie zur zulässigen Nutzung](ACCEPTABLE_USE_POLICY.md) und unserer [Fair-Use-Richtlinie](FAIR_USE_POLICY.md). Die Fair-Use-Richtlinie berechtigt den Anbieter, bei Überschreitung des üblichen individuellen Endnutzergebrauchs oder bei begründetem Verdacht auf Missbrauch die Nutzung zu drosseln, Funktionen einzuschränken, den Zugang auszusetzen oder zu kündigen.
 
-Prices for paid Services are displayed at the time of purchase. All prices are inclusive of applicable taxes unless otherwise stated.
+Sie dürfen nicht:
 
-### 7.2 Payment Processing
+- Gegen geltende Gesetze oder Vorschriften verstoßen
+- Rechte an geistigem Eigentum oder sonstige Rechte Dritter verletzen
+- Schadsoftware, Spam oder schädliche Inhalte übermitteln
+- Unbefugten Zugang zu den Diensten oder zugehörigen Systemen versuchen zu erlangen
+- Den Betrieb oder die Sicherheit der Dienste beeinträchtigen
+- Die Dienste für betrügerische oder irreführende Zwecke nutzen
+- Die Dienste ohne Genehmigung weiterverkaufen oder weiterverbreiten
 
-Payments may be processed by third-party payment providers. You agree to the terms of such providers.
+---
 
-### 7.3 Subscriptions
+## 6. GEISTIGES EIGENTUM
 
-Subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time through the applicable platform or by contacting the Provider. Detailed disclosure of auto-renewal, free-trial conversion and cancellation paths is provided in the [Subscription Terms](SUBSCRIPTION_TERMS.md).
+### 6.1 Geistiges Eigentum des Anbieters
 
-### 7.3.1 Kündigungs-Button (Germany, § 312k BGB)
+Die Dienste, einschließlich Software, Design, Logos und Dokumentation, sind durch Gesetze zum Schutz des geistigen Eigentums geschützt. Alle nicht ausdrücklich gewährten Rechte verbleiben beim Anbieter.
 
-For direct subscriptions concluded with consumers in Germany, the Provider provides a cancellation button reachable in no more than two clicks from the account page (see [Subscription Terms](SUBSCRIPTION_TERMS.md) § 6.3). For subscriptions concluded through the Apple App Store or Google Play, cancellation is handled by the respective platform's standard mechanism.
+### 6.2 Marken
+
+Die Marken und Handelsnamen des Anbieters dürfen ohne vorherige schriftliche Zustimmung nicht verwendet werden.
+
+### 6.3 Rückmeldungen
+
+Jegliches Feedback oder Vorschläge, die Sie geben, dürfen vom Anbieter ohne Verpflichtung Ihnen gegenüber verwendet werden.
+
+---
+
+## 7. ZAHLUNGEN UND ABONNEMENTS
+
+### 7.1 Preise
+
+Die Preise für kostenpflichtige Dienste werden zum Zeitpunkt des Kaufs angezeigt. Alle Preise verstehen sich inklusive der jeweils geltenden Steuern, sofern nicht anders angegeben.
+
+### 7.2 Zahlungsabwicklung
+
+Zahlungen können durch Drittanbieter abgewickelt werden. Sie stimmen den Bedingungen dieser Anbieter zu.
+
+### 7.3 Abonnements
+
+Abonnements verlängern sich automatisch, sofern sie nicht vor dem Verlängerungsdatum gekündigt werden. Sie können jederzeit über die jeweilige Plattform oder durch Kontaktaufnahme mit dem Anbieter kündigen. Ausführliche Informationen zu automatischer Verlängerung, Umwandlung von kostenlosen Testphasen und Kündigungswegen finden Sie in den [Abonnementbedingungen](SUBSCRIPTION_TERMS.md).
+
+### 7.3.1 Kündigungs-Button (Deutschland, § 312k BGB)
+
+Für direkt mit Verbrauchern in Deutschland abgeschlossene Abonnements stellt der Anbieter einen Kündigungsbutton bereit, der mit höchstens zwei Klicks von der Kontoseite aus erreichbar ist (siehe [Abonnementbedingungen](SUBSCRIPTION_TERMS.md) § 6.3). Für über den Apple App Store oder Google Play abgeschlossene Abonnements erfolgt die Kündigung über den jeweiligen Standardmechanismus der Plattform.
 
 ### 7.3.2 California Automatic Renewal Law (ARL)
 
-For California residents, the Provider complies with Cal. Bus. & Prof. Code § 17600 et seq. as further described in the [Subscription Terms](SUBSCRIPTION_TERMS.md) § 8.
+Für Einwohner Kaliforniens erfüllt der Anbieter die Anforderungen des Cal. Bus. & Prof. Code § 17600 ff., wie in den [Abonnementbedingungen](SUBSCRIPTION_TERMS.md) § 8 näher beschrieben.
 
-### 7.4 Refunds
+### 7.4 Rückerstattungen
 
-Refunds are governed by:
+Rückerstattungen richten sich nach:
 
-- The applicable platform terms (Apple App Store, Google Play) — see [Refund Policy](REFUND_POLICY.md) § 2
-- Applicable consumer protection laws
-- The Provider's [Refund Policy](REFUND_POLICY.md)
+- Den geltenden Plattformbedingungen (Apple App Store, Google Play) — siehe [Rückerstattungsrichtlinie](REFUND_POLICY.md) § 2
+- Anwendbaren verbraucherschützenden Gesetzen
+- Der [Rückerstattungsrichtlinie](REFUND_POLICY.md) des Anbieters
 
-### 7.5 EU Right of Withdrawal
+### 7.5 Widerrufsrecht in der EU
 
-Consumers in the EU have a 14-day right of withdrawal for digital content, unless:
+Verbraucher in der EU haben ein 14-tägiges Widerrufsrecht für digitale Inhalte, es sei denn:
 
-- The consumer has expressly consented to immediate performance
-- The consumer has acknowledged loss of the right of withdrawal
+- Der Verbraucher hat ausdrücklich der sofortigen Ausführung zugestimmt
+- Der Verbraucher hat den Verlust des Widerrufsrechts anerkannt
 
 ---
 
-## 8. THIRD-PARTY SERVICES
+## 8. DIENSTE DRITTER
 
 ### 8.1 Integration
 
-The Services may integrate with or link to third-party services. The Provider does not endorse or control such services.
+Die Dienste können mit Diensten Dritter integriert sein oder auf solche verlinken. Der Anbieter befürwortet oder kontrolliert diese Dienste nicht.
 
-### 8.2 Terms
+### 8.2 Bedingungen
 
-Your use of third-party services is subject to their respective terms and privacy policies.
+Ihre Nutzung von Diensten Dritter unterliegt deren jeweiligen Bedingungen und Datenschutzrichtlinien.
 
-### 8.3 Liability
+### 8.3 Haftung
 
-The Provider is not liable for any damages resulting from your use of third-party services.
-
----
-
-## 9. DISCLAIMER OF WARRANTIES
-
-TO THE MAXIMUM EXTENT PERMITTED BY LAW:
-
-- The Services are provided "AS IS" and "AS AVAILABLE"
-- The Provider disclaims all warranties, express or implied
-- No guarantee of accuracy, completeness, reliability, or fitness for a particular purpose
-- No warranty that the Services will be uninterrupted, secure, or error-free
+Der Anbieter haftet nicht für Schäden, die aus Ihrer Nutzung von Diensten Dritter entstehen.
 
 ---
 
-## 10. LIMITATION OF LIABILITY
+## 9. HAFTUNGSAUSSCHLUSS FÜR GEWÄHRLEISTUNGEN
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+IM GESETZLICH ZULÄSSIGEN UMFANG:
 
-- The Provider shall not be liable for indirect, incidental, special, consequential, or punitive damages
-- The Provider shall not be liable for loss of data, profits, revenue, or business opportunities
-- Total aggregate liability shall not exceed the greater of (a) the amount paid by you in the 12 months preceding the claim, or (b) EUR 100
-
----
-
-## 11. INDEMNIFICATION
-
-You agree to indemnify and hold harmless the Provider from claims, damages, losses, and expenses (including reasonable legal fees) arising from:
-
-- Your use of the Services
-- Your violation of these Terms
-- Your violation of any law or third-party rights
-- Your User Content
+- Die Dienste werden "WIE BESEHEN" und "WIE VERFÜGBAR" bereitgestellt
+- Der Anbieter schließt alle ausdrücklichen oder stillschweigenden Gewährleistungen aus
+- Es wird keine Garantie für Genauigkeit, Vollständigkeit, Zuverlässigkeit oder Eignung für einen bestimmten Zweck übernommen
+- Es wird keine Gewähr für ununterbrochene, sichere oder fehlerfreie Dienste übernommen
 
 ---
 
-## 12. TERMINATION
+## 10. HAFTUNGSBESCHRÄNKUNG
 
-### 12.1 By You
+IM GESETZLICH ZULÄSSIGEN UMFANG:
 
-You may stop using the Services at any time. Account deletion requests can be submitted to the Provider.
-
-### 12.2 By the Provider
-
-The Provider may terminate or suspend your access at any time, with or without cause. Material breaches may result in immediate termination without notice.
-
-### 12.3 Effect of Termination
-
-Upon termination:
-
-- Your right to use the Services ceases
-- Provisions that by their nature should survive will continue (including liability limitations, indemnification, governing law)
+- Der Anbieter haftet nicht für indirekte, beiläufig entstandene, besondere, Folge- oder Strafschäden
+- Der Anbieter haftet nicht für Datenverlust, entgangenen Gewinn, Umsatz oder Geschäftsmöglichkeiten
+- Die Gesamthaftung ist auf den höheren Betrag von (a) dem von Ihnen in den 12 Monaten vor dem Anspruch gezahlten Betrag oder (b) EUR 100 begrenzt
 
 ---
 
-## 13. GOVERNING LAW AND DISPUTE RESOLUTION
+## 11. FREISTELLUNG
 
-### 13.1 Governing Law
+Sie verpflichten sich, den Anbieter von Ansprüchen, Schäden, Verlusten und Aufwendungen (einschließlich angemessener Anwaltskosten) freizustellen und schadlos zu halten, die entstehen aus:
 
-These Terms are governed by German law.
-
-### 13.2 Jurisdiction
-
-Disputes shall be subject to the exclusive jurisdiction of the courts in Germany, unless mandatory consumer protection laws provide otherwise.
-
-### 13.3 Consumer Disputes (EU)
-
-The European Commission provides an Online Dispute Resolution platform at https://ec.europa.eu/consumers/odr. The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board unless required by law.
+- Ihrer Nutzung der Dienste
+- Ihrem Verstoß gegen diese Bedingungen
+- Ihrem Verstoß gegen Gesetze oder Rechte Dritter
+- Ihren Nutzerinhalten
 
 ---
 
-## 14. REGIONAL PROVISIONS
+## 12. KÜNDIGUNG
 
-### 14.1 European Union
+### 12.1 Durch Sie
 
-- Mandatory consumer protection rights under EU Directives (including the Consumer Rights Directive and Digital Content Directive) remain unaffected
-- The right of withdrawal applies to digital content purchases as provided by law
-- Warranty rights for digital content under Directive (EU) 2019/770 are not excluded
+Sie können die Nutzung der Dienste jederzeit beenden. Anträge auf Kontolöschung können beim Anbieter eingereicht werden.
 
-### 14.2 United States
+### 12.2 Durch den Anbieter
 
-- Where prohibited by state law, limitations on liability or warranties shall not apply
-- Arbitration provisions may not apply in jurisdictions where consumer arbitration is restricted
+Der Anbieter kann Ihren Zugang jederzeit mit oder ohne Grund kündigen oder aussetzen. Wesentliche Verstöße können zur sofortigen Kündigung ohne Vorankündigung führen.
 
-### 14.3 United Kingdom
+### 12.3 Wirkung der Kündigung
 
-- Consumer Rights Act 2015 protections apply
-- Liability for death or personal injury caused by negligence is not excluded
+Nach Beendigung:
 
-### 14.4 Canada
-
-- Provincial consumer protection legislation may override certain provisions
-
-### 14.5 Australia
-
-- Consumer guarantees under Australian Consumer Law cannot be excluded
-- Liability is limited to re-supply of the Services or payment of the cost of re-supply
-
-### 14.6 Other Jurisdictions
-
-- Where local mandatory law restricts any provision, such provision applies only to the extent permitted
+- Erlischt Ihr Recht zur Nutzung der Dienste
+- Bleiben Bestimmungen, die ihrer Natur nach fortbestehen sollen (einschließlich Haftungsbeschränkungen, Freistellung, anwendbares Recht), weiterhin wirksam
 
 ---
 
-## 15. FORCE MAJEURE
+## 13. ANWENDBARES RECHT UND STREITBEILEGUNG
 
-Neither party is liable for delay or failure to perform any obligation under these Terms to the extent the delay or failure is caused by events beyond reasonable control, including but not limited to acts of nature, war, civil unrest, terrorism, cyber-attack, government action, pandemic, fire, flood, prolonged power or telecommunications outage, or failure of upstream sub-processor infrastructure. The affected party will notify the other without undue delay and use reasonable efforts to mitigate.
+### 13.1 Anwendbares Recht
 
-This Section does not affect the obligation to pay amounts already due, nor any mandatory consumer-protection right under the user's country of residence.
+Diese Bedingungen unterliegen dem Recht des Bundesstaates Wyoming, Vereinigte Staaten von Amerika, unter Ausschluss seiner Kollisionsnormen und des UN-Kaufrechts (CISG). Sind Sie Verbraucher, so entzieht diese Rechtswahl Ihnen nicht den Schutz zwingender Bestimmungen des Rechts Ihres gewöhnlichen Aufenthaltsstaates (Art. 6 Abs. 2 Rom I-Verordnung und gleichwertige Vorschriften).
 
----
+### 13.2 Gerichtsstand
 
-## 16. GENERAL
+Für Nutzer, die keine Verbraucher sind, sind ausschließlich die Gerichte im Sheridan County, Wyoming, Vereinigte Staaten, zuständig. Verbraucher können Klagen vor den Gerichten ihres gewöhnlichen Aufenthaltsstaates erheben und dürfen vom Anbieter nur vor diesen Gerichten verklagt werden.
 
-### 16.1 Severability
+### 13.3 Verbraucherstreitigkeiten (EU)
 
-If any provision is found invalid, the remaining provisions continue in full effect.
-
-### 16.2 Waiver
-
-Failure to enforce any provision does not constitute a waiver.
-
-### 16.3 Assignment
-
-The Provider may assign these Terms (for example, in connection with the planned reorganisation of the operating company from Berger & Rosenstock GbR (Germany) to DigitalFreedom Pty (Ltd) (South Africa)). Users will be informed at least 30 days in advance of any change of contracting entity, and where required by law, fresh consent will be sought. You may not assign without prior written consent.
-
-### 16.4 Entire Agreement
-
-These Terms, together with the [Privacy Policy](PRIVACY_POLICY.md), [EULA](EULA.md), [Subscription Terms](SUBSCRIPTION_TERMS.md), [Fair Use Policy](FAIR_USE_POLICY.md), [Acceptable Use Policy](ACCEPTABLE_USE_POLICY.md), [Refund Policy](REFUND_POLICY.md) and any other referenced policies, constitute the entire agreement between you and the Provider.
-
-### 16.5 Changes
-
-The Provider may update these Terms. Material changes are notified at least 30 days in advance via the Services or by email and, where applicable consumer-protection law requires, take effect only on renewed acceptance. Continued use after non-material changes constitutes acceptance.
-
-### 16.6 Limitation period
-
-Claims under these Terms are subject to the statutory limitation periods of the governing law (for German law: § 195 BGB — three years from the end of the year in which the claim arose and you became aware of it). This does not affect any mandatory limitation period of the user's country of residence.
-
-### 16.7 Notices
-
-Notices to the Provider should be sent to `hello@digitalfreedom.co.za` (general) or `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Notices to you may be sent by email to the address associated with your account or by in-app notification.
-
-### 16.8 Language
-
-These Terms are made available in English. Translations may be provided for convenience; in the event of conflict, the English version controls except where mandatory local law requires otherwise.
+Die Online-Streitbeilegungsplattform der Europäischen Kommission wurde am 20. Juli 2025 nach Aufhebung der Verordnung (EU) Nr. 524/2013 durch Verordnung (EU) 2024/3228 eingestellt. Verbraucher können den Anbieter direkt unter hello@digitalfreedom.co.za kontaktieren. Der Anbieter ist weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen, es sei denn, dies ist gesetzlich vorgeschrieben.
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+## 14. REGIONALE BESTIMMUNGEN
+
+### 14.1 Europäische Union
+
+- Zwingende verbraucherschützende Rechte nach EU-Richtlinien (einschließlich Verbraucherrechte-Richtlinie und Richtlinie über digitale Inhalte) bleiben unberührt
+- Das Widerrufsrecht gilt für Käufe digitaler Inhalte nach den gesetzlichen Vorgaben
+- Gewährleistungsrechte für digitale Inhalte gemäß Richtlinie (EU) 2019/770 werden nicht ausgeschlossen
+
+### 14.2 Vereinigte Staaten
+
+- Soweit durch einzelstaatliches Recht verboten, gelten Haftungs- oder Gewährleistungsbeschränkungen nicht
+- Schiedsklauseln gelten nicht in Rechtsordnungen, in denen Verbraucherschiedsverfahren eingeschränkt sind
+
+### 14.3 Vereinigtes Königreich
+
+- Die Schutzvorschriften des Consumer Rights Act 2015 gelten
+- Die Haftung für Tod oder Körperverletzung durch Fahrlässigkeit ist nicht ausgeschlossen
+
+### 14.4 Kanada
+
+- Provinzielle Verbraucherschutzgesetze können bestimmte Bestimmungen außer Kraft setzen
+
+### 14.5 Australien
+
+- Verbrauchergarantien nach dem australischen Verbraucherschutzgesetz (Australian Consumer Law) können nicht ausgeschlossen werden
+- Die Haftung ist auf die erneute Bereitstellung der Dienste oder die Zahlung der Kosten für die erneute Bereitstellung beschränkt
+
+### 14.6 Andere Rechtsordnungen
+
+- Soweit das lokale zwingende Recht eine Bestimmung einschränkt, gilt diese Bestimmung nur im gesetzlich zulässigen Umfang
+
+---
+
+## 15. HÖHERE GEWALT
+
+Keine Partei haftet für Verzögerungen oder die Nichterfüllung von Verpflichtungen aus diesen Bedingungen, soweit diese Verzögerung oder Nichterfüllung auf Ereignisse außerhalb der zumutbaren Kontrolle zurückzuführen ist, einschließlich, aber nicht beschränkt auf Naturereignisse, Krieg, innere Unruhen, Terrorismus, Cyberangriffe, behördliche Maßnahmen, Pandemien, Feuer, Überschwemmungen, langanhaltende Strom- oder Telekommunikationsausfälle oder Ausfälle der Infrastruktur von Subunternehmern. Die betroffene Partei wird die andere Partei unverzüglich benachrichtigen und angemessene Maßnahmen zur Schadensminderung ergreifen.
+
+Dieser Abschnitt berührt nicht die Verpflichtung zur Zahlung bereits fälliger Beträge und auch nicht zwingende verbraucherschützende Rechte nach dem Recht des Wohnsitzlandes des Nutzers.
+
+---
+
+## 16. ALLGEMEINES
+
+### 16.1 Salvatorische Klausel
+
+Sollte eine Bestimmung unwirksam sein, bleiben die übrigen Bestimmungen in vollem Umfang wirksam.
+
+### 16.2 Verzicht
+
+Die Nichtdurchsetzung einer Bestimmung stellt keinen Verzicht dar.
+
+### 16.3 Abtretung
+
+Der Anbieter kann diese Bedingungen im Zusammenhang mit einer Fusion, Übernahme, Umstrukturierung oder dem Verkauf von Vermögenswerten abtreten. Nutzer werden mindestens 30 Tage im Voraus über einen Wechsel der Vertragspartei informiert und, soweit gesetzlich erforderlich, wird eine erneute Zustimmung eingeholt. Sie dürfen ohne vorherige schriftliche Zustimmung nicht abtreten.
+
+### 16.4 Gesamte Vereinbarung
+
+Diese Bedingungen bilden zusammen mit der [Datenschutzerklärung](PRIVACY_POLICY.md), der [EULA](EULA.md), den [Abonnementbedingungen](SUBSCRIPTION_TERMS.md), der [Fair-Use-Richtlinie](FAIR_USE_POLICY.md), der [Richtlinie zur zulässigen Nutzung](ACCEPTABLE_USE_POLICY.md), der [Rückerstattungsrichtlinie](REFUND_POLICY.md) und allen weiteren genannten Richtlinien die vollständige Vereinbarung zwischen Ihnen und dem Anbieter.
+
+### 16.5 Änderungen
+
+Der Anbieter kann diese Bedingungen aktualisieren. Wesentliche Änderungen werden mindestens 30 Tage im Voraus über die Dienste oder per E-Mail mitgeteilt und treten, soweit dies durch geltendes Verbraucherschutzrecht vorgeschrieben ist, erst nach erneuter Zustimmung in Kraft. Die fortgesetzte Nutzung nach unwesentlichen Änderungen gilt als Zustimmung.
+
+### 16.6 Verjährung
+
+Ansprüche aus diesen Bedingungen unterliegen den gesetzlichen Verjährungsfristen des anwendbaren Rechts. Dies berührt nicht etwaige zwingende Verjährungsfristen des Wohnsitzlandes des Nutzers.
+
+### 16.7 Mitteilungen
+
+Mitteilungen an den Anbieter sind an `hello@digitalfreedom.co.za` (allgemein) oder `data-protection@digitalfreedom.co.za` (Datenschutz / DSGVO) zu richten. Mitteilungen an Sie können per E-Mail an die mit Ihrem Konto verbundene Adresse oder per In-App-Benachrichtigung erfolgen.
+
+### 16.8 Sprache
+
+Für Verbraucher gilt die Version in einer Amtssprache ihres gewöhnlichen Aufenthaltsortes, sofern eine solche Version existiert. Für Geschäftskunden und für Sprachen, in denen keine Version existiert, gilt die englische Version.
+
+---
+
+(c) 2025-2026 DigitalFreedom Global LLC. Alle Rechte vorbehalten.

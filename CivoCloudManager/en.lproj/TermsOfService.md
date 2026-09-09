@@ -1,15 +1,16 @@
+<!-- doc-id: TERMS_OF_SERVICE | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/TERMS_OF_SERVICE.en.md | adapted: company identity and related clauses -->
 # TERMS OF SERVICE
 
 ## General Terms and Conditions
 
-**Effective Date:** April 2026
+**Effective Date:** September 2026
 
 **Provider:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -19,7 +20,7 @@ Website: https://digitalfreedom.co.za
 
 ### 1.1 Agreement
 
-These Terms of Service ("Terms") govern your access to and use of our websites, applications, APIs, and related services ("the Services") provided under the **DigitalFreedom** brand by Berger & Rosenstock GbR ("the Provider").
+These Terms of Service ("Terms") govern your access to and use of our websites, applications, APIs, and related services ("the Services") provided under the **DigitalFreedom** brand by DigitalFreedom Global LLC ("the Provider").
 
 ### 1.1.1 Global scope
 
@@ -241,15 +242,15 @@ Upon termination:
 
 ### 13.1 Governing Law
 
-These Terms are governed by German law.
+These Terms are governed by the laws of the State of Wyoming, United States of America, excluding its conflict-of-law rules and the UN Convention on Contracts for the International Sale of Goods. Where you are a consumer, this choice of law does not deprive you of the protection of the mandatory provisions of the law of your country of habitual residence (Art. 6(2) Rome I Regulation and equivalent rules).
 
 ### 13.2 Jurisdiction
 
-Disputes shall be subject to the exclusive jurisdiction of the courts in Germany, unless mandatory consumer protection laws provide otherwise.
+For users who are not consumers, the courts of Sheridan County, Wyoming, United States, have exclusive jurisdiction. Consumers may bring proceedings before the courts of their country of habitual residence, and may be sued by the Provider only before those courts.
 
 ### 13.3 Consumer Disputes (EU)
 
-The European Commission provides an Online Dispute Resolution platform at https://ec.europa.eu/consumers/odr. The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board unless required by law.
+The European Commission's Online Dispute Resolution platform ceased operation on 20 July 2025 following the repeal of Regulation (EU) No 524/2013 by Regulation (EU) 2024/3228. Consumers may contact the Provider directly at hello@digitalfreedom.co.za. The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board unless required by law.
 
 ---
 
@@ -306,7 +307,7 @@ Failure to enforce any provision does not constitute a waiver.
 
 ### 16.3 Assignment
 
-The Provider may assign these Terms (for example, in connection with the planned reorganisation of the operating company from Berger & Rosenstock GbR (Germany) to DigitalFreedom Pty (Ltd) (South Africa)). Users will be informed at least 30 days in advance of any change of contracting entity, and where required by law, fresh consent will be sought. You may not assign without prior written consent.
+The Provider may assign these Terms in connection with a merger, acquisition, corporate reorganisation or sale of assets. Users will be informed at least 30 days in advance of any change of contracting entity, and where required by law, fresh consent will be sought. You may not assign without prior written consent.
 
 ### 16.4 Entire Agreement
 
@@ -318,7 +319,7 @@ The Provider may update these Terms. Material changes are notified at least 30 d
 
 ### 16.6 Limitation period
 
-Claims under these Terms are subject to the statutory limitation periods of the governing law (for German law: § 195 BGB — three years from the end of the year in which the claim arose and you became aware of it). This does not affect any mandatory limitation period of the user's country of residence.
+Claims under these Terms are subject to the statutory limitation periods of the governing law. This does not affect any mandatory limitation period of the user's country of residence.
 
 ### 16.7 Notices
 
@@ -326,8 +327,8 @@ Notices to the Provider should be sent to `hello@digitalfreedom.co.za` (general)
 
 ### 16.8 Language
 
-These Terms are made available in English. Translations may be provided for convenience; in the event of conflict, the English version controls except where mandatory local law requires otherwise.
+For a consumer, the version in an official language of their place of habitual residence governs where such a version exists. The English version governs for business customers and for languages in which no version exists.
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.

@@ -1,251 +1,252 @@
-# END USER LICENSE AGREEMENT (EULA)
+<!-- doc-id: EULA | lang: nl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+# EINDEGEBRUIKERSLICENTIEOVEREENKOMST (EULA)
 
-## Global Multi-Platform License Agreement
+## Wereldwijde Multi-Platform Licentieovereenkomst
 
-**Effective Date:** March 2026
+**Ingangsdatum:** september 2026
 
-**Publisher:**
+**Uitgever:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Een merk van DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Verenigde Staten
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-## 1. ACCEPTANCE OF TERMS
+## 1. AANVAARDING VAN DE VOORWAARDEN
 
-By installing, accessing, or using this application, software, or related services ("the App"), you agree to be bound by this Agreement.
+Door deze applicatie, software of aanverwante diensten ("de App") te installeren, te openen of te gebruiken, gaat u akkoord met deze Overeenkomst.
 
-If you do not agree, you must not use the App.
+Indien u niet akkoord gaat, mag u de App niet gebruiken.
 
 ---
 
-## 2. SCOPE OF APPLICATION
+## 2. TOEPASSINGSGEBIED
 
-This Agreement applies to all distribution channels, including but not limited to:
+Deze Overeenkomst is van toepassing op alle distributiekanalen, waaronder maar niet beperkt tot:
 
 - Apple App Store / TestFlight
-- Google Play Store / APK distribution
-- GitHub or other source code repositories
-- Homebrew or other package managers
-- Direct downloads or enterprise distribution
+- Google Play Store / APK-distributie
+- GitHub of andere broncode-repositories
+- Homebrew of andere pakketbeheerders
+- Directe downloads of bedrijfsdistributie
 
-The App may be provided as free, paid, open-source, or hybrid software.
+De App kan worden aangeboden als gratis, betaald, open-source of hybride software.
 
-### 2.1 Global scope
+### 2.1 Wereldwijd toepassingsgebied
 
-The App is distributed via the Apple App Store and the Google Play Store and is therefore made available in every country and territory those platforms serve. This Agreement applies globally to all such users, regardless of the country in which the App is downloaded, installed or used. The Publisher adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; mandatory consumer-protection and other statutory rights granted by the user's country of residence remain unaffected and prevail wherever they are more protective.
-
----
-
-## 3. LICENSE GRANT
-
-Subject to this Agreement, the Publisher grants you a limited, non-exclusive, non-transferable, revocable license to:
-
-- Use the App on devices you own or control
-- Access and use functionalities according to intended purpose
-
-For open-source components, the applicable open-source licenses shall prevail.
+De App wordt verspreid via de Apple App Store en de Google Play Store en is derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Deze Overeenkomst is wereldwijd van toepassing op alle dergelijke gebruikers, ongeacht het land waarin de App wordt gedownload, geïnstalleerd of gebruikt. De Uitgever hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; dwingende consumentenbeschermingsrechten en andere wettelijke rechten die door het land van verblijf van de gebruiker worden verleend, blijven onaangetast en prevaleren waar zij meer bescherming bieden.
 
 ---
 
-## 4. OPEN SOURCE COMPONENTS
+## 3. LICENTIEVERLENING
 
-The App may include open-source software.
+Onder voorbehoud van deze Overeenkomst verleent de Uitgever u een beperkte, niet-exclusieve, niet-overdraagbare, herroepbare licentie om:
 
-- Such components are governed by their respective licenses
-- This Agreement does not override or restrict rights granted under open-source licenses
-- A list of open-source components shall be provided where required
+- De App te gebruiken op apparaten die u bezit of beheert
+- Functionaliteiten te openen en te gebruiken overeenkomstig het beoogde doel
 
-You are responsible for complying with applicable open-source licenses.
-
----
-
-## 5. RESTRICTIONS
-
-You shall not:
-
-- Reverse-engineer or decompile the App except where permitted by law
-- Circumvent security or access control mechanisms
-- Use the App unlawfully or in violation of third-party rights
-- Redistribute proprietary components outside permitted scope
+Voor open-source componenten prevaleren de toepasselijke open-sourcelicenties.
 
 ---
 
-## 6. COMMERCIAL TERMS
+## 4. OPEN-SOURCE COMPONENTEN
 
-The App may be offered:
+De App kan open-source software bevatten.
 
-- Free of charge
-- As a one-time purchase
-- As a subscription
+- Dergelijke componenten worden beheerst door hun respectieve licenties
+- Deze Overeenkomst doet geen afbreuk aan of beperkt niet de rechten verleend onder open-sourcelicenties
+- Een lijst van open-source componenten wordt verstrekt waar vereist
 
-Payments may be processed via third-party platforms (e.g., Apple, Google) or directly.
-
-Refunds and billing are subject to the respective platform terms or applicable law.
+U bent verantwoordelijk voor het naleven van de toepasselijke open-sourcelicenties.
 
 ---
 
-## 7. USER RESPONSIBILITY
+## 5. BEPERKINGEN
 
-You are solely responsible for:
+U mag niet:
 
-- All activities performed using the App
-- All data processed, stored, or transmitted
-- Compliance with applicable laws and regulations
-
-Use of the App may result in unintended actions, including data modification or deletion.
-
----
-
-## 8. DATA AND PRIVACY
-
-Data processing depends on the specific implementation of the App.
-
-Unless explicitly stated otherwise:
-
-- Data may be stored locally or processed via third-party services
-- The Publisher does not guarantee data security or integrity
-- You are responsible for backups
-
-A separate Privacy Policy governs data processing.
+- De App reverse-engineeren of decompileren, behalve waar wettelijk toegestaan
+- Beveiligings- of toegangscontrolemechanismen omzeilen
+- De App onrechtmatig of in strijd met rechten van derden gebruiken
+- Proprietaire componenten buiten de toegestane reikwijdte herdistribueren
 
 ---
 
-## 9. THIRD-PARTY SERVICES
+## 6. COMMERCIELE VOORWAARDEN
 
-The App may interact with third-party services.
+De App kan worden aangeboden:
 
-The Publisher:
+- Gratis
+- Als een eenmalige aankoop
+- Als een abonnement
 
-- Does not control third-party services
-- Is not responsible for their availability or behavior
-- Is not liable for damages caused by such services
+Betalingen kunnen worden verwerkt via platforms van derden (bijv. Apple, Google) of rechtstreeks.
 
-Use of third-party services is subject to their terms.
-
----
-
-## 10. DISCLAIMER OF WARRANTIES
-
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND.
-
-This includes, but is not limited to:
-
-- MERCHANTABILITY
-- FITNESS FOR A PARTICULAR PURPOSE
-- ACCURACY OR RELIABILITY
-- SECURITY OR AVAILABILITY
+Restituties en facturering zijn onderworpen aan de voorwaarden van het betreffende platform of toepasselijke wetgeving.
 
 ---
 
-## 11. LIMITATION OF LIABILITY
+## 7. VERANTWOORDELIJKHEID VAN DE GEBRUIKER
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE PUBLISHER SHALL NOT BE LIABLE FOR:
+U bent als enige verantwoordelijk voor:
 
-- INDIRECT OR CONSEQUENTIAL DAMAGES
-- LOSS OF DATA, PROFITS, OR BUSINESS
-- SYSTEM FAILURES OR SECURITY INCIDENTS
+- Alle activiteiten die met de App worden uitgevoerd
+- Alle gegevens die worden verwerkt, opgeslagen of verzonden
+- Naleving van toepasselijke wet- en regelgeving
 
-TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT PAID FOR THE APP (IF ANY).
-
----
-
-## 12. HIGH-RISK USE
-
-The App is not intended for use in:
-
-- Safety-critical systems
-- Medical applications
-- Financial trading systems
-- Critical infrastructure
-
-Use in such contexts is at your own risk.
+Gebruik van de App kan leiden tot onbedoelde handelingen, waaronder wijziging of verwijdering van gegevens.
 
 ---
 
-## 13. INDEMNIFICATION
+## 8. GEGEVENS EN PRIVACY
 
-You agree to indemnify the Publisher against claims arising from:
+Gegevensverwerking is afhankelijk van de specifieke implementatie van de App.
 
-- Your use of the App
-- Violation of this Agreement
-- Violation of applicable law
+Tenzij uitdrukkelijk anders vermeld:
 
----
+- Gegevens kunnen lokaal worden opgeslagen of via diensten van derden worden verwerkt
+- De Uitgever garandeert geen gegevensbeveiliging of integriteit
+- U bent verantwoordelijk voor back-ups
 
-## 14. TERMINATION
-
-The Publisher may terminate this Agreement at any time.
-
-Upon termination, you must cease use and delete all copies of the App.
+Een afzonderlijk Privacybeleid regelt de gegevensverwerking.
 
 ---
 
-## 15. EXPORT AND SANCTIONS
+## 9. DIENSTEN VAN DERDEN
 
-You agree to comply with all applicable export control and sanctions laws.
+De App kan interageren met diensten van derden.
+
+De Uitgever:
+
+- Heeft geen controle over diensten van derden
+- Is niet verantwoordelijk voor hun beschikbaarheid of gedrag
+- Is niet aansprakelijk voor schade veroorzaakt door dergelijke diensten
+
+Gebruik van diensten van derden is onderworpen aan hun voorwaarden.
 
 ---
 
-## 16. GOVERNING LAW
+## 10. AFWIJZING VAN GARANTIES
 
-This Agreement shall be governed by German law.
+VOOR ZOVER TOEGESTAAN DOOR DE WET WORDT DE APP GELEVERD "AS IS" ZONDER ENIGE VORM VAN GARANTIE.
 
-Mandatory consumer protection laws of your country of residence remain unaffected.
+Dit omvat, maar is niet beperkt tot:
+
+- VERKOOPBAARHEID
+- GESCHIKTHEID VOOR EEN BEPAALD DOEL
+- NAUWKEURIGHEID OF BETROUWBAARHEID
+- VEILIGHEID OF BESCHIKBAARHEID
 
 ---
 
-## 17. REGIONAL PROVISIONS
+## 11. BEPERKING VAN AANSPRAKELIJKHEID
 
-### 17.1 European Union
+VOOR ZOVER TOEGESTAAN DOOR DE WET IS DE UITGEVER NIET AANSPRAKELIJK VOOR:
 
-- Mandatory consumer rights (including warranty rights) are not excluded
-- Liability exclusions apply only to the extent permitted under EU law
+- INDIRECTE OF GEVOLGSCHADE
+- VERLIES VAN GEGEVENS, WINST OF BEDRIJF
+- SYSTEEMFALEN OF VEILIGHEIDSINCIDENTEN
 
-### 17.2 United States
+DE TOTALE AANSPRAKELIJKHEID ZAL NIET HOGER ZIJN DAN HET BETAALDE BEDRAG VOOR DE APP (INDIEN VAN TOEPASSING).
 
-- Some states do not allow limitation of certain warranties or liabilities
-- In such cases, limitations apply to the maximum extent permitted
+---
 
-### 17.3 United Kingdom
+## 12. HOOGRISICOGEBRUIK
 
-- Nothing excludes liability for death or personal injury caused by negligence
-- Consumer Rights Act protections remain unaffected
+De App is niet bedoeld voor gebruik in:
+
+- Veiligheidskritische systemen
+- Medische toepassingen
+- Financiële handelssystemen
+- Kritieke infrastructuur
+
+Gebruik in dergelijke contexten is voor eigen risico.
+
+---
+
+## 13. VRIJWARING
+
+U stemt ermee in de Uitgever te vrijwaren tegen vorderingen die voortvloeien uit:
+
+- Uw gebruik van de App
+- Schending van deze Overeenkomst
+- Schending van toepasselijke wetgeving
+
+---
+
+## 14. BEËINDIGING
+
+De Uitgever kan deze Overeenkomst te allen tijde beëindigen.
+
+Na beëindiging dient u het gebruik te staken en alle kopieën van de App te verwijderen.
+
+---
+
+## 15. EXPORT EN SANCTIES
+
+U stemt ermee in alle toepasselijke exportcontrole- en sanctiewetgeving na te leven.
+
+---
+
+## 16. TOEPASSELIJK RECHT
+
+Deze Overeenkomst wordt beheerst door het recht van de staat Wyoming, Verenigde Staten van Amerika, met uitsluiting van de conflictenrechtregels en het VN-Verdrag inzake internationale koopovereenkomsten betreffende roerende zaken.
+
+Dwingende consumentenbeschermingswetten van uw land van verblijf blijven onaangetast.
+
+---
+
+## 17. REGIONALE BEPALINGEN
+
+### 17.1 Europese Unie
+
+- Dwingende consumentenrechten (waaronder garantie) worden niet uitgesloten
+- Uitsluitingen van aansprakelijkheid gelden slechts voor zover toegestaan onder EU-recht
+
+### 17.2 Verenigde Staten
+
+- Sommige staten staan beperking van bepaalde garanties of aansprakelijkheden niet toe
+- In dergelijke gevallen gelden de beperkingen voor zover maximaal toegestaan
+
+### 17.3 Verenigd Koninkrijk
+
+- Niets sluit aansprakelijkheid uit voor overlijden of persoonlijk letsel veroorzaakt door nalatigheid
+- Bescherming onder de Consumer Rights Act blijft onaangetast
 
 ### 17.4 Canada
 
-- Consumer protection laws vary by province and may override parts of this Agreement
+- Consumentenbeschermingswetten verschillen per provincie en kunnen delen van deze Overeenkomst buiten werking stellen
 
-### 17.5 Australia
+### 17.5 Australië
 
-- Statutory guarantees under Australian Consumer Law apply and cannot be excluded
+- Wettelijke garanties onder de Australische consumentenwetgeving zijn van toepassing en kunnen niet worden uitgesloten
 
-### 17.6 Other Jurisdictions
+### 17.6 Overige rechtsgebieden
 
-- Where local law restricts provisions of this Agreement, such provisions shall apply only to the extent permitted
-
----
-
-## 18. SEVERABILITY
-
-If any provision is invalid, the remainder remains in effect.
+- Waar lokale wetgeving bepalingen van deze Overeenkomst beperkt, gelden deze bepalingen slechts voor zover toegestaan
 
 ---
 
-## 19. ENTIRE AGREEMENT
+## 18. SCHEIDBAARHEID
 
-This Agreement constitutes the entire agreement between you and the Publisher.
-
-It supplements platform-specific terms (Apple, Google).
+Indien een bepaling ongeldig is, blijft de rest van kracht.
 
 ---
 
-**BY USING THE APP, YOU AGREE TO THIS AGREEMENT.**
+## 19. VOLLEDIGE OVEREENKOMST
+
+Deze Overeenkomst vormt de volledige overeenkomst tussen u en de Uitgever.
+
+Zij vult platformspecifieke voorwaarden (Apple, Google) aan.
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+**DOOR DE APP TE GEBRUIKEN GAAT U AKKOORD MET DEZE OVEREENKOMST.**
+
+---
+
+(c) 2025-2026 DigitalFreedom Global LLC. Alle rechten voorbehouden.

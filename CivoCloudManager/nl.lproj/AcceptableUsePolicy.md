@@ -1,276 +1,277 @@
-# ACCEPTABLE USE POLICY
+<!-- doc-id: ACCEPTABLE_USE_POLICY | lang: nl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/ACCEPTABLE_USE_POLICY.en.md | adapted: company identity and related clauses -->
+# BELEID VOOR AANVAARDBAAR GEBRUIK
 
-## Global Acceptable Use Policy
+## Mondiaal Beleid voor Aanvaardbaar Gebruik
 
-**Effective Date:** April 2026
+**Ingangsdatum:** september 2026
 
-**Provider:**
+**Aanbieder:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Een merk van DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Verenigde Staten
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-## 1. INTRODUCTION
+## 1. INLEIDING
 
-This Acceptable Use Policy ("AUP") governs your use of all applications, software, websites, APIs, and related services ("the Services") provided by DigitalFreedom, a brand of Berger & Rosenstock GbR ("the Provider").
+Dit Beleid voor Aanvaardbaar Gebruik ("AUG") regelt uw gebruik van alle applicaties, software, websites, API's en aanverwante diensten ("de Diensten") aangeboden door DigitalFreedom, een merk van DigitalFreedom Global LLC ("de Aanbieder").
 
-This AUP supplements our [Terms of Service](TERMS_OF_SERVICE.md), [EULA](EULA.md) and [Fair Use Policy](FAIR_USE_POLICY.md). In the event of conflict, the more restrictive provision applies.
+Dit AUG vormt een aanvulling op onze [Servicevoorwaarden](TERMS_OF_SERVICE.md), [EULA](EULA.md) en [Fair Use Policy](FAIR_USE_POLICY.md). In geval van tegenstrijdigheid geldt de meest beperkende bepaling.
 
-By using the Services, you agree to comply with this AUP. Violation may result in suspension or termination of access.
+Door gebruik te maken van de Diensten stemt u in met dit AUG. Overtreding kan leiden tot opschorting of beëindiging van de toegang.
 
-### 1.1 Global scope
+### 1.1 Mondiale reikwijdte
 
-The Services are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This AUP applies globally to all such users. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; any more protective local law of the user's jurisdiction additionally applies.
-
----
-
-## 2. GENERAL PRINCIPLES
-
-You agree to use the Services:
-
-- Lawfully and in accordance with all applicable laws and regulations
-- Responsibly and in a manner that does not harm others
-- In accordance with the intended purpose of the Services
-- Without infringing the rights of third parties
+De Diensten worden verspreid via de Apple App Store en de Google Play Store en zijn derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Dit AUG is wereldwijd van toepassing op alle dergelijke gebruikers. De Aanbieder hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; elke verdergaande beschermende lokale wetgeving van het rechtsgebied van de gebruiker is aanvullend van toepassing.
 
 ---
 
-## 3. PROHIBITED CONDUCT
+## 2. ALGEMENE PRINCIPES
 
-### 3.1 Illegal Activities
+U stemt ermee in de Diensten te gebruiken:
 
-You shall not use the Services to:
+- Wettig en in overeenstemming met alle toepasselijke wetten en regelgeving
+- Verantwoordelijk en op een wijze die anderen geen schade berokkent
+- Overeenkomstig het beoogde doel van de Diensten
+- Zonder inbreuk te maken op de rechten van derden
 
-- Violate any applicable law, statute, regulation, or ordinance in any jurisdiction
-- Facilitate, promote, or engage in criminal activity
-- Engage in money laundering or terrorist financing
-- Violate export control or sanctions laws (including EU, US OFAC, and UN sanctions)
-- Violate anti-corruption or anti-bribery laws (including the UK Bribery Act, US FCPA, and German StGB §§ 299 ff.)
+---
 
-### 3.2 Harmful Content
+## 3. VERBODEN GEDRAG
 
-You shall not use the Services to create, store, transmit, or distribute:
+### 3.1 Illegale activiteiten
 
-- Content that promotes violence, hatred, or discrimination based on race, ethnicity, religion, gender, sexual orientation, disability, or any other protected characteristic
-- Child sexual abuse material (CSAM) or content that exploits minors
-- Content that incites terrorism or violent extremism
-- Defamatory, harassing, threatening, or intimidating content
-- Non-consensual intimate imagery
-- Disinformation or deliberately misleading content intended to cause harm
+U mag de Diensten niet gebruiken om:
 
-### 3.3 Intellectual Property Violations
+- Enige toepasselijke wet, statuut, regelgeving of verordening in enig rechtsgebied te overtreden
+- Criminele activiteiten te faciliteren, promoten of eraan deel te nemen
+- Zich bezig te houden met witwassen van geld of financiering van terrorisme
+- Exportcontrole- of sanctiewetten te overtreden (waaronder EU-, VS OFAC- en VN-sancties)
+- Anti-corruptie- of anti-omkopingswetten te overtreden (waaronder de UK Bribery Act, US FCPA en Duits StGB §§ 299 e.v.)
 
-You shall not:
+### 3.2 Schadelijke inhoud
 
-- Infringe copyrights, trademarks, patents, trade secrets, or other intellectual property rights
-- Distribute pirated software, media, or other copyrighted material
-- Circumvent digital rights management (DRM) or technological protection measures
-- Use the Services to facilitate counterfeiting
+U mag de Diensten niet gebruiken om te creëren, op te slaan, te verzenden of te verspreiden:
 
-### 3.4 Security Violations
+- Inhoud die geweld, haat of discriminatie bevordert op grond van ras, etniciteit, religie, geslacht, seksuele geaardheid, handicap of enig ander beschermd kenmerk
+- Materiaal inzake seksueel misbruik van kinderen (CSAM) of inhoud die minderjarigen uitbuit
+- Inhoud die aanzet tot terrorisme of gewelddadig extremisme
+- Smadelijke, intimiderende, bedreigende of intimiderende inhoud
+- Intieme beelden zonder toestemming
+- Desinformatie of opzettelijk misleidende inhoud bedoeld om schade te veroorzaken
 
-You shall not:
+### 3.3 Inbreuken op intellectuele eigendom
 
-- Attempt to gain unauthorized access to the Services, accounts, or systems
-- Transmit malware, viruses, ransomware, or other malicious code
-- Conduct denial-of-service (DoS/DDoS) attacks
-- Engage in port scanning, vulnerability scanning, or penetration testing without written authorization
-- Intercept or monitor communications without authorization
-- Exploit vulnerabilities in the Services (report them instead via responsible disclosure)
+U mag niet:
 
-### 3.5 Spam and Abuse
+- Inbreuk maken op auteursrechten, handelsmerken, octrooien, bedrijfsgeheimen of andere intellectuele eigendomsrechten
+- Illegaal gekopieerde software, media of ander auteursrechtelijk beschermd materiaal verspreiden
+- Digitale rechtenbeheer (DRM) of technologische beschermingsmaatregelen omzeilen
+- De Diensten gebruiken om namaak te faciliteren
 
-You shall not:
+### 3.4 Schendingen van beveiliging
 
-- Send unsolicited bulk messages (spam)
-- Engage in phishing, social engineering, or identity fraud
-- Create fake accounts or impersonate others
-- Use bots, scrapers, or automated tools in violation of the Services' terms
-- Manipulate ratings, reviews, or feedback systems
+U mag niet:
 
-### 3.6 Network and Resource Abuse
+- Pogingen doen om ongeautoriseerde toegang te verkrijgen tot de Diensten, accounts of systemen
+- Malware, virussen, ransomware of andere kwaadaardige code verzenden
+- Denial-of-service (DoS/DDoS)-aanvallen uitvoeren
+- Poortscans, kwetsbaarheidsscans of penetratietests uitvoeren zonder schriftelijke toestemming
+- Communicatie onderscheppen of monitoren zonder toestemming
+- Kwetsbaarheden in de Diensten uitbuiten (meld deze in plaats daarvan via responsible disclosure)
 
-You shall not:
+### 3.5 Spam en misbruik
 
-- Use the Services in a manner that degrades performance for other users
-- Consume excessive resources (bandwidth, storage, compute) beyond fair use as set out in the [Fair Use Policy](FAIR_USE_POLICY.md)
-- Use the Services for cryptocurrency mining without authorization
-- Operate open proxies, relays, or anonymization services through the Services
+U mag niet:
 
-Resource consumption, abnormal usage patterns and presumed misuse are addressed in detail by the [Fair Use Policy](FAIR_USE_POLICY.md), which empowers the Provider to throttle, rate-limit, restrict features or suspend access on good-faith suspicion without requiring conclusive proof of violation.
+- Ongevraagde bulkberichten (spam) verzenden
+- Zich bezighouden met phishing, social engineering of identiteitsfraude
+- Nepaccounts aanmaken of zich voordoen als anderen
+- Bots, scrapers of geautomatiseerde tools gebruiken in strijd met de voorwaarden van de Diensten
+- Beoordelings-, recensie- of feedbacksystemen manipuleren
 
-### 3.6.1 Per-tier quantitative limits
+### 3.6 Netwerk- en bronmisbruik
 
-Civo Cloud Manager does not enforce per-tier quantitative limits within the Application itself. The Application connects directly to third-party APIs (Civo REST API, Kubernetes API of the user's own clusters, S3-compatible object storage of the user's own object stores); all usage is subject to those providers' own rate limits, quotas, and terms of service.
+U mag niet:
 
-| Plan / tier | API requests | Storage | Bandwidth | AI invocations | Concurrent sessions |
+- De Diensten gebruiken op een wijze die de prestaties voor andere gebruikers vermindert
+- Overmatige middelen (bandbreedte, opslag, rekenkracht) verbruiken buiten redelijk gebruik zoals uiteengezet in het [Fair Use Policy](FAIR_USE_POLICY.md)
+- De Diensten gebruiken voor cryptomining zonder toestemming
+- Open proxies, relays of anonimiseringsdiensten via de Diensten exploiteren
+
+Middelenverbruik, abnormale gebruikspatronen en vermoed misbruik worden in detail behandeld in het [Fair Use Policy](FAIR_USE_POLICY.md), dat de Aanbieder de bevoegdheid geeft om op basis van goede trouw het gebruik te beperken, functies te beperken of toegang op te schorten bij vermoeden van overtreding, zonder sluitend bewijs te vereisen.
+
+### 3.6.1 Kwantitatieve limieten per abonnementsniveau
+
+Civo Cloud Manager hanteert geen kwantitatieve limieten per abonnementsniveau binnen de Applicatie zelf. De Applicatie maakt rechtstreeks verbinding met externe API's (Civo REST API, Kubernetes API van de eigen clusters van de gebruiker, S3-compatibele objectopslag van de eigen object stores van de gebruiker); al het gebruik is onderworpen aan de eigen limieten, quota en servicevoorwaarden van die aanbieders.
+
+| Abonnement / niveau | API-verzoeken | Opslag | Bandbreedte | AI-aanroepen | Gelijktijdige sessies |
 |---|---|---|---|---|---|
-| Free (menu-bar firewall management) | Governed by Civo API limits | None hosted by Provider | None hosted by Provider | Not applicable | Not applicable |
-| Full Access (one-time in-app purchase) | Governed by Civo API limits | None hosted by Provider | None hosted by Provider | Not applicable | Not applicable |
+| Gratis (menu-balk firewallbeheer) | Onderworpen aan Civo API-limieten | Geen door Aanbieder gehost | Geen door Aanbieder gehost | Niet van toepassing | Niet van toepassing |
+| Volledige toegang (eenmalige in-app aankoop) | Onderworpen aan Civo API-limieten | Geen door Aanbieder gehost | Geen door Aanbieder gehost | Niet van toepassing | Niet van toepassing |
 
-### 3.7 Privacy Violations
+### 3.7 Schendingen van privacy
 
-You shall not:
+U mag niet:
 
-- Collect, process, or store personal data in violation of applicable data protection laws
-- Engage in surveillance or tracking of individuals without lawful basis
-- Dox or publish private information of others without consent
-- Violate the privacy rights of minors
-
----
-
-## 4. CONTENT STANDARDS
-
-### 4.1 User-Generated Content
-
-If the Services permit user-generated content, you are solely responsible for content you create, upload, or share.
-
-### 4.2 Content Moderation
-
-The Provider reserves the right to:
-
-- Review content for compliance with this AUP
-- Remove or disable access to content that violates this AUP
-- Report illegal content to law enforcement
-
-### 4.3 Legal Obligations
-
-Content moderation complies with:
-
-- EU Digital Services Act (DSA) — Regulation (EU) 2022/2065
-- German Network Enforcement Act (NetzDG)
-- UK Online Safety Act 2023
-- Applicable notice-and-takedown procedures worldwide
+- Persoonsgegevens verzamelen, verwerken of opslaan in strijd met toepasselijke privacywetgeving
+- Personen surveilleren of volgen zonder wettelijke grondslag
+- Doxen of privé-informatie van anderen publiceren zonder toestemming
+- De privacyrechten van minderjarigen schenden
 
 ---
 
-## 5. ENFORCEMENT
+## 4. INHOUDSNORMEN
 
-### 5.1 Violations
+### 4.1 Door gebruikers gegenereerde inhoud
 
-The Provider may take the following actions in response to violations:
+Indien de Diensten door gebruikers gegenereerde inhoud toestaan, bent u als enige verantwoordelijk voor de inhoud die u creëert, uploadt of deelt.
 
-| Severity | Action |
+### 4.2 Inhoudsmoderatie
+
+De Aanbieder behoudt zich het recht voor om:
+
+- Inhoud te beoordelen op naleving van dit AUG
+- Toegang tot inhoud die dit AUG schendt te verwijderen of te blokkeren
+- Illegale inhoud te melden bij de autoriteiten
+
+### 4.3 Wettelijke verplichtingen
+
+Inhoudsmoderatie voldoet aan:
+
+- EU Digital Services Act (DSA) — Verordening (EU) 2022/2065
+- Duits Netwerkhandhavingswet (NetzDG)
+- Britse Online Safety Act 2023
+- Toepasselijke notice-and-takedown procedures wereldwijd
+
+---
+
+## 5. HANDHAVING
+
+### 5.1 Overtredingen
+
+De Aanbieder kan de volgende maatregelen nemen bij overtredingen:
+
+| Ernst | Maatregel |
 |---|---|
-| **Minor** | Warning and request to remedy |
-| **Moderate** | Temporary suspension of access |
-| **Severe** | Immediate termination of access |
-| **Criminal** | Reporting to law enforcement |
+| **Licht** | Waarschuwing en verzoek tot herstel |
+| **Matig** | Tijdelijke opschorting van toegang |
+| **Ernstig** | Onmiddellijke beëindiging van toegang |
+| **Strafbaar** | Melden bij de autoriteiten |
 
-### 5.2 Due Process
+### 5.2 Zorgvuldige procedure
 
-Where practicable, the Provider will:
+Waar mogelijk zal de Aanbieder:
 
-- Notify you of the violation
-- Provide an opportunity to remedy the violation
-- Allow you to appeal the decision
+- U op de hoogte stellen van de overtreding
+- U de gelegenheid geven de overtreding te herstellen
+- U de mogelijkheid bieden om in beroep te gaan tegen het besluit
 
-Emergency situations (imminent harm, illegal content, security threats) may warrant immediate action without prior notice.
+Noodsituaties (dreigend gevaar, illegale inhoud, beveiligingsdreigingen) kunnen onmiddellijke actie zonder voorafgaande kennisgeving rechtvaardigen.
 
-### 5.3 Reporting Violations
+### 5.3 Overtredingen melden
 
-You may report violations of this AUP to: hello@digitalfreedom.co.za
-
----
-
-## 6. RESPONSIBLE DISCLOSURE
-
-If you discover a security vulnerability in the Services:
-
-- Report it to: hello@digitalfreedom.co.za
-- Do not exploit the vulnerability
-- Do not disclose it publicly before it is resolved
-- Provide reasonable detail for reproduction
-
-The Provider will acknowledge reports and work to resolve vulnerabilities promptly.
+U kunt overtredingen van dit AUG melden aan: hello@digitalfreedom.co.za
 
 ---
 
-## 7. REGIONAL CONSIDERATIONS
+## 6. VERANTWOORDELIJKE MELDING
 
-### 7.1 European Union
+Indien u een beveiligingslek in de Diensten ontdekt:
 
-- Content obligations comply with the Digital Services Act (DSA)
-- Transparency reporting requirements are observed
-- Trusted flagger mechanisms are supported where applicable
+- Meld dit aan: hello@digitalfreedom.co.za
+- Maak geen misbruik van de kwetsbaarheid
+- Maak het niet openbaar voordat het is opgelost
+- Geef voldoende details voor reproductie
 
-### 7.2 Germany
+De Aanbieder zal meldingen erkennen en zich inspannen om kwetsbaarheden snel op te lossen.
 
-- NetzDG requirements for content removal are observed
-- Telemediengesetz (TMG) / Digitale-Dienste-Gesetz (DDG) obligations apply
+---
 
-### 7.3 United States
+## 7. REGIONALE OVERWEGINGEN
 
-- DMCA safe harbor provisions apply where applicable
-- Section 230 of the Communications Decency Act governs intermediary liability
-- CFAA compliance is required for security-related provisions
+### 7.1 Europese Unie
 
-### 7.4 United Kingdom
+- Inhoudsverplichtingen voldoen aan de Digital Services Act (DSA)
+- Transparantierapportageverplichtingen worden nageleefd
+- Mechanismen voor vertrouwde melders worden waar van toepassing ondersteund
 
-- Online Safety Act 2023 requirements are observed
-- Content moderation obligations for user-to-user and search services apply
+### 7.2 Duitsland
 
-### 7.5 Australia
+- NetzDG-verplichtingen voor inhoudsverwijdering worden nageleefd
+- Telemediengesetz (TMG) / Digitale-Dienste-Gesetz (DDG) verplichtingen zijn van toepassing
 
-- Online Safety Act 2021 requirements are observed
-- eSafety Commissioner reporting obligations apply
+### 7.3 Verenigde Staten
+
+- DMCA safe harbor-bepalingen zijn van toepassing waar relevant
+- Section 230 van de Communications Decency Act regelt de aansprakelijkheid van tussenpersonen
+- CFAA-naleving is vereist voor beveiligingsgerelateerde bepalingen
+
+### 7.4 Verenigd Koninkrijk
+
+- Online Safety Act 2023-verplichtingen worden nageleefd
+- Inhoudsmoderatieverplichtingen voor gebruikers-naar-gebruikers- en zoekdiensten zijn van toepassing
+
+### 7.5 Australië
+
+- Online Safety Act 2021-verplichtingen worden nageleefd
+- Rapportageverplichtingen aan de eSafety Commissioner zijn van toepassing
 
 ### 7.6 Canada
 
-- Canadian content regulation requirements are observed
-- Provincial consumer protection laws apply
+- Canadese verplichtingen inzake inhoudsregulering worden nageleefd
+- Provinciale consumentenbeschermingswetten zijn van toepassing
 
 ### 7.7 Japan
 
-- Act on the Limitation of Liability for Damages of Specified Telecommunications Service Providers applies
-- Provider Liability Limitation Act obligations are observed
+- Wet op de beperking van aansprakelijkheid voor schade van gespecificeerde telecommunicatiedienstverleners is van toepassing
+- Verplichtingen uit de Provider Liability Limitation Act worden nageleefd
 
-### 7.8 South Korea
+### 7.8 Zuid-Korea
 
-- Information and Communications Network Act requirements apply
-- Korea Communications Standards Commission guidelines are observed
+- Vereisten uit de Information and Communications Network Act zijn van toepassing
+- Richtlijnen van de Korea Communications Standards Commission worden nageleefd
 
 ### 7.9 India
 
-- Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 apply
-- Content moderation and grievance redressal mechanisms are maintained
+- Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 zijn van toepassing
+- Mechanismen voor inhoudsmoderatie en klachtenafhandeling worden onderhouden
 
-### 7.10 Brazil
+### 7.10 Brazilië
 
-- Marco Civil da Internet (Law No. 12.965/2014) requirements apply
-- Judicial notice-and-takedown obligations are observed
+- Marco Civil da Internet (Wet nr. 12.965/2014) is van toepassing
+- Gerechtelijke notice-and-takedown-verplichtingen worden nageleefd
 
-### 7.11 Other Jurisdictions
+### 7.11 Overige rechtsgebieden
 
-- The Provider complies with applicable content regulation, intermediary liability, and consumer protection laws in all jurisdictions where the Services are available
+- De Aanbieder voldoet aan toepasselijke regelgeving inzake inhoud, aansprakelijkheid van tussenpersonen en consumentenbescherming in alle rechtsgebieden waar de Diensten beschikbaar zijn
 
 ---
 
-## 8. CHANGES TO THIS POLICY
+## 8. WIJZIGINGEN IN DIT BELEID
 
-The Provider may update this AUP from time to time. Changes take effect upon posting. Continued use of the Services constitutes acceptance of the updated AUP.
+De Aanbieder kan dit AUG van tijd tot tijd bijwerken. Wijzigingen treden in werking bij publicatie. Voortgezet gebruik van de Diensten geldt als aanvaarding van het bijgewerkte AUG.
 
 ---
 
 ## 9. CONTACT
 
-For questions about this AUP or to report violations:
+Voor vragen over dit AUG of om overtredingen te melden:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Een merk van DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Verenigde Staten
 
-General / AUP reports: hello@digitalfreedom.co.za
-Customer support: support@digitalfreedom.co.za
+Algemeen / AUG-meldingen: hello@digitalfreedom.co.za
+Klantenservice: support@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. Alle rechten voorbehouden.
