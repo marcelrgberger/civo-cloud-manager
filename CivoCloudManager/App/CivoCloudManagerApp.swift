@@ -6,6 +6,7 @@ struct CivoCloudManagerApp: App {
     @Environment(\.openWindow) private var openWindow
 
     init() {
+        StoreManager.shared.startListening()
         // Start as menu-bar-only (no Dock icon) — windows promote to .regular when opened
         // NSApp may be nil during init, so defer activation policy to first run loop cycle
         DispatchQueue.main.async {

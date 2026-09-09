@@ -3,6 +3,37 @@ import Testing
 
 @testable import CivoCloudManager
 
+@Suite("Free trial access")
+@MainActor
+struct FreeTrialTests {
+    @Test("Full access lasts seven days, survives restart, and respects purchases")
+    func trialLifecycle() throws {
+        let suite = "FreeTrialTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let start = Date(timeIntervalSince1970: 1_800_000_000)
+        let store = StoreManager(defaults: defaults, now: start)
+        #expect(store.isFullAccessUnlocked)
+        #expect(store.isTrialActive)
+
+        let restarted = StoreManager(defaults: defaults, now: start.addingTimeInterval(86400))
+        #expect(restarted.trialEndsAt == store.trialEndsAt)
+        #expect(restarted.isFullAccessUnlocked)
+        restarted.refreshTrialStatus(now: store.trialEndsAt.addingTimeInterval(-1))
+        #expect(restarted.isFullAccessUnlocked)
+        restarted.refreshTrialStatus(now: store.trialEndsAt)
+        #expect(!restarted.isFullAccessUnlocked)
+
+        let expired = StoreManager(defaults: defaults, now: store.trialEndsAt.addingTimeInterval(86400))
+        #expect(!expired.isTrialActive)
+        #expect(!expired.isFullAccessUnlocked)
+        expired.purchasedProductIDs.insert(AppProduct.fullAccess.rawValue)
+        #expect(expired.isFullAccessUnlocked)
+        expired.purchasedProductIDs.removeAll()
+        #expect(!expired.isFullAccessUnlocked)
+    }
+}
+
 @Suite("API Response Decoding Tests")
 struct APIDecodingTests {
 

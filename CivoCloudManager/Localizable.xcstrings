@@ -1,6 +1,58 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Your 7-day free trial has ended. Unlock full access with a one-time purchase." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine kostenlose 7-tägige Testphase ist abgelaufen. Schalte mit einem einmaligen Kauf alle Funktionen frei."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your 7-day free trial has ended. Unlock full access with a one-time purchase."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu prueba gratuita de 7 días ha finalizado. Desbloquea el acceso completo con una compra única."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre essai gratuit de 7 jours est terminé. Débloquez l’accès complet avec un achat unique."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La tua prova gratuita di 7 giorni è terminata. Sblocca l’accesso completo con un acquisto una tantum."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je gratis proefperiode van 7 dagen is afgelopen. Ontgrendel volledige toegang met een eenmalige aankoop."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twój 7-dniowy bezpłatny okres próbny dobiegł końca. Odblokuj pełny dostęp dzięki jednorazowemu zakupowi."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu período de avaliação gratuito de 7 dias terminou. Desbloqueie o acesso completo com uma compra única."
+          }
+        }
+      }
+    },
     "" : {
 
     },
