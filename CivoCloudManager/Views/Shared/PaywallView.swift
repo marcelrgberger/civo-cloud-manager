@@ -46,7 +46,7 @@ struct PaywallView: View {
             Text("Civo Cloud Manager Pro")
                 .font(.largeTitle.bold())
 
-            Text("Unlock full access to all Civo Cloud resources")
+            Text("Your 7-day free trial has ended. Unlock full access with a one-time purchase.")
                 .font(.title3)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

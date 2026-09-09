@@ -14,6 +14,9 @@ final class StoreManager {
     var purchasedProductIDs: Set<String> = []
     var isLoading = false
     var error: String?
+    private(set) var isTrialActive: Bool
+    private(set) var hasLoadedPurchaseStatus = false
+    let trialEndsAt: Date
 
     var isDebugBuild: Bool {
         #if DEBUG
@@ -24,19 +27,39 @@ final class StoreManager {
     }
 
     var isFullAccessUnlocked: Bool {
-        #if DEBUG
-        return true
-        #else
-        return purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
-        #endif
+        isTrialActive || purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
     }
 
     private var updateTask: Task<Void, Never>?
+    private var trialTask: Task<Void, Never>?
 
-    private init() {}
+    init(defaults: UserDefaults = .standard, now: Date = Date()) {
+        let key = "fullAccessTrialStartedAt"
+        let startedAt = defaults.object(forKey: key) as? Date ?? now
+        if defaults.object(forKey: key) == nil {
+            defaults.set(startedAt, forKey: key)
+        }
+        trialEndsAt = startedAt.addingTimeInterval(7 * 24 * 60 * 60)
+        isTrialActive = now < trialEndsAt
+    }
+
+    func refreshTrialStatus(now: Date = Date()) {
+        isTrialActive = now < trialEndsAt
+    }
 
     func startListening() {
         guard updateTask == nil else { return }
+        refreshTrialStatus()
+        trialTask = Task { [weak self] in
+            while !Task.isCancelled {
+                guard let remaining = self?.trialEndsAt.timeIntervalSinceNow else { return }
+                self?.refreshTrialStatus()
+                guard remaining > 0 else { return }
+                do {
+                    try await Task.sleep(for: .seconds(min(remaining, 30)))
+                } catch { return }
+            }
+        }
         Task { await refreshPurchaseStatus() }
         updateTask = Task { await listenForTransactions() }
     }
@@ -116,6 +139,7 @@ final class StoreManager {
         }
         Log.info("StoreManager: refreshPurchaseStatus done — found \(purchased.count) entitlements: \(purchased)")
         purchasedProductIDs = purchased
+        hasLoadedPurchaseStatus = true
     }
 
     // MARK: - Transaction listener

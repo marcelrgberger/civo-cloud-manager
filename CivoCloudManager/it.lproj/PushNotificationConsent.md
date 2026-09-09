@@ -72,7 +72,7 @@ Marketing / promotional push notifications are governed by Art. 6(1)(a) GDPR + e
 
 - The marketing toggle is **off** by default
 - You can turn it on (and off) at any time in **Settings → Notifications → Marketing**
-- Marketing push consent is **distinct** from email-marketing consent (MailerLite); enabling one does not enable the other
+- Marketing push consent is **distinct** from email-marketing consent; enabling one does not enable the other
 - Withdrawal is as easy as opt-in (single toggle), and does not affect non-marketing notifications
 
 ---
