@@ -4,6 +4,29 @@ import Security
 
 @testable import CivoCloudManager
 
+@Suite("API region routing")
+struct RegionRoutingTests {
+    @Test("Explicit regions override the selected region without duplicates")
+    func explicitRegion() throws {
+        let supplied = [URLQueryItem(name: "region", value: "lon1"), URLQueryItem(name: "page", value: "2")]
+        let items = try CivoAPIClient.resolvedQueryItems(supplied, defaultRegion: "fra1", regionRequired: true)
+        #expect(items.filter { $0.name == "region" }.map(\.value) == ["lon1"])
+        #expect(items.contains(URLQueryItem(name: "page", value: "2")))
+        #expect(try CivoAPIClient.resolvedQueryItems(supplied, defaultRegion: "", regionRequired: true) == items)
+        #expect(try CivoAPIClient.resolvedQueryItems(nil, defaultRegion: "fra1", regionRequired: true) == [URLQueryItem(name: "region", value: "fra1")])
+        #expect(try CivoAPIClient.resolvedQueryItems(nil, defaultRegion: "fra1", regionRequired: false).isEmpty)
+    }
+    @Test("Invalid explicit regions fail instead of falling back")
+    func invalidRegions() {
+        let cases: [[String?]] = [[""], [nil], ["fra1", "lon1"]]
+        for values in cases {
+            #expect(throws: CivoAPIError.self) {
+                try CivoAPIClient.resolvedQueryItems(values.map { URLQueryItem(name: "region", value: $0) }, defaultRegion: "fra1", regionRequired: true)
+            }
+        }
+    }
+}
+
 @Suite("Kubernetes TLS trust")
 struct KubernetesTrustTests {
     private let serverCertificate = "MIIDZDCCAkygAwIBAgIUWThxTBBVX43jb0Xa9IDI97Wb2ekwDQYJKoZIhvcNAQELBQAwHzEdMBsGA1UEAwwUY2x1c3Rlci5leGFtcGxlLnRlc3QwHhcNMjYwOTA5MDkyOTExWhcNMjcwOTA5MDkyOTExWjAfMR0wGwYDVQQDDBRjbHVzdGVyLmV4YW1wbGUudGVzdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKtXEATYPcER2KK6oEBQGTy15U+ugkOaPThBEGgjxuA3pHXT1Krzqn01olHq0G7lTAsjTZiRiRnB4UkIwpO0h8GuqaUzV1Kezb+8aPxGMgR3ECZWQoudKAbSGmJ4G9mKJZHQfOD2SjnraNO7Xxil6V/riWBJ+OJtRDUqVKNrrjTuuQGdCsANS02wpLpojefGY593WzZOxoVPda047RbeTX/NQfQoqWlKMOcZM4J1FP17KPwtSIfIvUH6gy/rWXL+iMaDa9QiR5RiDTdrKlMj7F26OIqbgm0eP3QS2j6z49S/l08EVg1uU1BaqAa+QuIatKQnYSKOC2Zk5pl1KeHcy4cCAwEAAaOBlzCBlDAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAfBgNVHREEGDAWghRjbHVzdGVyLmV4YW1wbGUudGVzdDAdBgNVHQ4EFgQU3PJZ/qHjk1N3E+13jm9A5/ieX6wwHwYDVR0jBBgwFoAUya2acjiuwnDGZigJjyfPnl8s2CYwDQYJKoZIhvcNAQELBQADggEBAIi+J2y8KjzQ4NEhcGmY7bW29/gmQ9Cp4HKEti8FwQP0vP92MOEWe3pPJKGNSbHOHex51zwzwmjrBlAlD5Sn6V7aYZXRZu67r1J9hIXZy1acLMvHnmkzYzK7uuphXUpu2qZotVpFtI6uOBVZaPCd95S9C9h3zoCbxm3OdMI7Yn+ZKInfH99yVBf+8AH9YLUJqVwRCpbsCcOESuzf6neoUjm6pF/evfUosgfNm+rishjLAXQHBWbhLtmnjpXgjd5H4miRVamYLj8SXquA3eM2ReukMpRFfulahyuzEOuLl22GU91U1PaNUjSP726na6QUx5QEs1sxxW5uTUvTylfYDiU="
