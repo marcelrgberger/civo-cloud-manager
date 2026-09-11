@@ -4,6 +4,117 @@ import Security
 
 @testable import CivoCloudManager
 
+@Suite("Persistent firewall closures")
+@MainActor
+struct FirewallClosureTests {
+    @Test("Confirmed deletions are not repeated when persistence fails")
+    func failedPersistenceAfterDeletion() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let file = dir.appendingPathComponent("jobs.json")
+        let queue = FirewallClosureQueue(file: file)
+        try queue.schedule(firewallId: "fw", ruleId: "rule", region: "fra1", closeAt: .distantPast)
+        try FileManager.default.removeItem(at: file)
+        try FileManager.default.createDirectory(at: file, withIntermediateDirectories: false)
+        await queue.closeDue { _ in }
+        #expect(queue.jobs.isEmpty)
+        #expect(queue.lastError != nil)
+        try FileManager.default.removeItem(at: file)
+        await queue.closeDue { _ in Issue.record("Repeated confirmed deletion") }
+        #expect(queue.lastError == nil)
+        #expect(FirewallClosureQueue(file: file).jobs.isEmpty)
+    }
+
+    @Test("Retry limits survive restart and permit explicit retry")
+    func retryLimit() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let file = dir.appendingPathComponent("jobs.json")
+        let queue = FirewallClosureQueue(file: file)
+        try queue.schedule(firewallId: "fw", ruleId: "rule", region: "fra1", closeAt: .distantPast)
+        for attempt in 0..<8 {
+            await queue.closeDue(now: Date(timeIntervalSince1970: Double(attempt) * 7200)) { _ in
+                throw URLError(.notConnectedToInternet)
+            }
+        }
+        let restarted = FirewallClosureQueue(file: file)
+        #expect(restarted.jobs.first?.failures == 8)
+        await restarted.closeDue { _ in Issue.record("Exceeded retry limit") }
+        restarted.retryFailures()
+        await restarted.closeDue { _ in }
+        #expect(restarted.jobs.isEmpty)
+    }
+
+    @Test("Corrupt storage cannot be silently overwritten")
+    func corruptStorage() throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: file) }
+        let original = Data("not-json".utf8)
+        try original.write(to: file)
+        let queue = FirewallClosureQueue(file: file)
+        #expect(queue.lastError != nil)
+        #expect(throws: CivoAPIError.self) { try queue.prepare() }
+        #expect(try Data(contentsOf: file) == original)
+    }
+
+    @Test("Reentrant ticks do not delete the same rule concurrently")
+    func overlappingTicks() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let queue = FirewallClosureQueue(file: dir.appendingPathComponent("jobs.json"))
+        try queue.schedule(firewallId: "fw", ruleId: "rule", region: "fra1", closeAt: .distantPast)
+        var calls = 0
+        await queue.closeDue { _ in
+            calls += 1
+            await queue.closeDue { _ in calls += 1 }
+        }
+        #expect(calls == 1)
+        #expect(queue.jobs.isEmpty)
+    }
+
+    @Test("Deadlines survive restart and transient failures without changing region")
+    func retryAndRestart() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let file = dir.appendingPathComponent("jobs.json")
+        let queue = FirewallClosureQueue(file: file)
+        let deadline = Date(timeIntervalSince1970: 100)
+        try queue.schedule(firewallId: "fw", ruleId: "rule", region: "lon1", closeAt: deadline)
+        let restarted = FirewallClosureQueue(file: file)
+        #expect(restarted.jobs.count == 1)
+        await restarted.closeDue(now: deadline.addingTimeInterval(-1)) { _ in Issue.record("Closed before deadline") }
+        await restarted.closeDue(now: deadline) { job in
+            #expect(job.region == "lon1")
+            throw URLError(.notConnectedToInternet)
+        }
+        #expect(restarted.jobs.count == 1)
+        #expect(restarted.lastError != nil)
+        #expect(FirewallClosureQueue(file: file).jobs.count == 1)
+        await restarted.closeDue(now: deadline) { _ in Issue.record("Retry ignored backoff") }
+        await restarted.closeDue(now: deadline.addingTimeInterval(30)) { job in
+            #expect(job.firewallId == "fw" && job.ruleId == "rule" && job.region == "lon1")
+        }
+        #expect(restarted.jobs.isEmpty)
+        #expect(restarted.lastError == nil)
+        #expect(FirewallClosureQueue(file: file).jobs.isEmpty)
+    }
+
+    @Test("Already removed rules complete; failed jobs do not block other closures")
+    func independentJobs() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let queue = FirewallClosureQueue(file: dir.appendingPathComponent("jobs.json"))
+        for rule in ["failed", "gone"] {
+            try queue.schedule(firewallId: "fw", ruleId: rule, region: "fra1", closeAt: .distantPast)
+        }
+        await queue.closeDue { job in
+            if job.ruleId == "failed" { throw CivoAPIError.httpError(503, "Unavailable") }
+            throw CivoAPIError.httpError(404, "Gone")
+        }
+        #expect(queue.jobs.map(\.ruleId) == ["failed"])
+    }
+}
+
 @Suite("API region routing")
 struct RegionRoutingTests {
     @Test("Explicit regions override the selected region without duplicates")

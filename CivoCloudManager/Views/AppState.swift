@@ -1,6 +1,112 @@
 import ServiceManagement
 import SwiftUI
 
+struct FirewallClosureJob: Codable, Sendable, Identifiable {
+    let id: UUID
+    let firewallId: String
+    let ruleId: String
+    let region: String
+    let closeAt: Date
+    var failures: Int?
+    var nextAttempt: Date?
+    var failureMessage: String?
+}
+
+/// Persists deadlines independently of popovers and retries until deletion is confirmed.
+@Observable
+@MainActor
+final class FirewallClosureQueue {
+    private(set) var jobs: [FirewallClosureJob] = []
+    private(set) var lastError: String?
+    private var processing = false
+    private let file: URL
+    private var loadFailed = false
+    private var needsPersistence = false
+
+    init(file: URL? = nil) {
+        self.file = file ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("CivoCloudManager/firewall-closures.json")
+        if FileManager.default.fileExists(atPath: self.file.path) {
+            do { jobs = try JSONDecoder().decode([FirewallClosureJob].self, from: Data(contentsOf: self.file)) }
+            catch {
+                loadFailed = true
+                lastError = "\(error.localizedDescription) — \(self.file.path)"
+            }
+        }
+    }
+
+    func schedule(firewallId: String, ruleId: String, region: String, closeAt: Date) throws {
+        guard !region.isEmpty else { throw CivoAPIError.noRegion }
+        guard !loadFailed else { throw CivoAPIError.networkError("Unable to read saved firewall deadlines") }
+        let job = FirewallClosureJob(id: UUID(), firewallId: firewallId, ruleId: ruleId, region: region, closeAt: closeAt)
+        jobs.append(job)
+        do { try persist(jobs) }
+        catch {
+            // Retain the in-memory job so a failed rollback can still be retried during this run.
+            lastError = error.localizedDescription
+            needsPersistence = true
+            throw error
+        }
+    }
+
+    func prepare() throws {
+        guard !loadFailed else { throw CivoAPIError.networkError("Unable to read saved firewall deadlines") }
+        try persist(jobs)
+    }
+
+    func retryFailures() {
+        if loadFailed {
+            do {
+                jobs = try JSONDecoder().decode([FirewallClosureJob].self, from: Data(contentsOf: file))
+                loadFailed = false
+            } catch {
+                lastError = "\(error.localizedDescription) — \(file.path)"
+                return
+            }
+        }
+        for index in jobs.indices {
+            jobs[index].failures = nil
+            jobs[index].nextAttempt = nil
+            jobs[index].failureMessage = nil
+        }
+        needsPersistence = true
+        lastError = nil
+    }
+
+    func closeDue(now: Date = Date(), close: (FirewallClosureJob) async throws -> Void) async {
+        guard !processing else { return }
+        processing = true
+        defer { processing = false }
+        var failure: String?
+        for job in jobs where job.closeAt <= now && (job.nextAttempt ?? .distantPast) <= now && (job.failures ?? 0) < 8 {
+            do {
+                do { try await close(job) }
+                catch CivoAPIError.httpError(404, _) { /* Already deleted. */ }
+                jobs.removeAll { $0.id == job.id }
+                needsPersistence = true
+            } catch {
+                if let index = jobs.firstIndex(where: { $0.id == job.id }) {
+                    let count = (jobs[index].failures ?? 0) + 1
+                    jobs[index].failures = count
+                    jobs[index].nextAttempt = now.addingTimeInterval(min(3600, 30 * pow(2, Double(count - 1))))
+                    jobs[index].failureMessage = "\(job.region)/\(job.firewallId): \(error.localizedDescription)"
+                    needsPersistence = true
+                }
+            }
+        }
+        if needsPersistence && !loadFailed {
+            do { try persist(jobs); needsPersistence = false }
+            catch { failure = "\(error.localizedDescription) — \(file.path)" }
+        }
+        if !loadFailed { lastError = failure ?? jobs.compactMap(\.failureMessage).first }
+    }
+
+    private func persist(_ jobs: [FirewallClosureJob]) throws {
+        try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try JSONEncoder().encode(jobs).write(to: file, options: .atomic)
+    }
+}
+
 // MARK: - UserDefaults keys
 
 private enum UDKey {
@@ -45,8 +151,7 @@ final class AppState {
         didSet { savePresets() }
     }
 
-    // Auto-close timers: maps "firewallId:ruleId" to scheduled close time
-    var autoCloseTimers: [String: Date] = [:]
+    let firewallClosures: FirewallClosureQueue
     private var autoCloseTimer: Timer?
 
     // Persisted settings
@@ -95,7 +200,7 @@ final class AppState {
 
     var menuBarColor: Color {
         if setupState != .ready && setupState != .checking { return .red }
-        if error != nil { return .red }
+        if error != nil || firewallClosures.lastError != nil { return .red }
         if anyOpen { return .yellow }
         return .green
     }
@@ -106,6 +211,7 @@ final class AppState {
         if setupState == .needsFirewallSelection { return "Setup required" }
         if isLoading { return "Loading..." }
         if let error { return "Error: \(error)" }
+        if let failure = firewallClosures.lastError { return "Error: \(failure)" }
         if allClosed && !firewalls.isEmpty { return "All closed" }
         if anyOpen { return "\(openCount) firewall\(openCount == 1 ? "" : "s") open" }
         if enabledFirewalls.isEmpty { return "No firewalls managed" }
@@ -124,6 +230,7 @@ final class AppState {
     // MARK: - Init
 
     init() {
+        self.firewallClosures = FirewallClosureQueue()
         if let data = UserDefaults.standard.data(forKey: UDKey.managedFirewalls),
             let decoded = try? JSONDecoder().decode([ManagedFirewall].self, from: data)
         {
@@ -142,6 +249,7 @@ final class AppState {
 
         self.launchAtLogin = UserDefaults.standard.bool(forKey: UDKey.launchAtLogin)
         self.onboardingComplete = UserDefaults.standard.bool(forKey: UDKey.onboardingComplete)
+        if !firewallClosures.jobs.isEmpty { startAutoCloseTimer() }
     }
 
     // MARK: - Persistence
@@ -219,15 +327,27 @@ final class AppState {
         defer { isLoading = false }
 
         do {
+            guard !managed.region.isEmpty else { throw CivoAPIError.noRegion }
+            try firewallClosures.prepare()
             currentIP = try await ipDetector.detectIP()
             let label = CivoAccessLabel.make(firewallName: managed.name)
-            try await firewallService.openAccess(
+            let rule = try await firewallService.openAccess(
                 firewallId: managed.id,
                 port: managed.port,
                 ip: currentIP,
                 label: label,
                 region: managed.region
             )
+            do {
+                try firewallClosures.schedule(firewallId: managed.id, ruleId: rule.id, region: managed.region,
+                                              closeAt: Date().addingTimeInterval(Double(minutes * 60)))
+            } catch {
+                // If the deadline cannot be persisted, roll back the newly opened access.
+                startAutoCloseTimer()
+                try await firewallService.closeAccess(firewallId: managed.id, ruleId: rule.id, region: managed.region)
+                throw error
+            }
+            startAutoCloseTimer()
             try? await Task.sleep(for: .seconds(1))
         } catch {
             self.error = error.localizedDescription
@@ -236,12 +356,6 @@ final class AppState {
 
         await forceRefresh()
 
-        // Find the rule that was just opened to register the timer
-        if let status = firewalls.first(where: { $0.id == managed.id }), let ruleId = status.ruleId {
-            let key = "\(managed.id):\(ruleId)"
-            autoCloseTimers[key] = Date().addingTimeInterval(Double(minutes * 60))
-            startAutoCloseTimer()
-        }
     }
 
     func startAutoCloseTimer() {
@@ -254,38 +368,12 @@ final class AppState {
     }
 
     private func checkAutoCloseTimers() async {
-        let now = Date()
-        var keysToRemove: [String] = []
-
-        for (key, closeTime) in autoCloseTimers where closeTime <= now {
-            let parts = key.split(separator: ":")
-            guard parts.count == 2 else {
-                keysToRemove.append(key)
-                continue
-            }
-            let firewallId = String(parts[0])
-            let ruleId = String(parts[1])
-
-            do {
-                try await firewallService.closeAccess(firewallId: firewallId, ruleId: ruleId)
-                keysToRemove.append(key)
-            } catch {
-                Log.error("Auto-close failed for \(key): \(error.localizedDescription)")
-                keysToRemove.append(key) // Remove even on failure to avoid infinite retries
-            }
+        let count = firewallClosures.jobs.count
+        await firewallClosures.closeDue { [firewallService] job in
+            try await firewallService.closeAccess(firewallId: job.firewallId, ruleId: job.ruleId, region: job.region)
         }
-
-        for key in keysToRemove {
-            autoCloseTimers.removeValue(forKey: key)
-        }
-
-        if !keysToRemove.isEmpty {
-            try? await Task.sleep(for: .seconds(1))
-            await forceRefresh()
-        }
-
-        // Stop the timer if no more scheduled closures
-        if autoCloseTimers.isEmpty {
+        if firewallClosures.jobs.count != count { await forceRefresh() }
+        if firewallClosures.jobs.isEmpty && firewallClosures.lastError == nil {
             autoCloseTimer?.invalidate()
             autoCloseTimer = nil
         }
@@ -294,8 +382,9 @@ final class AppState {
     /// Returns the remaining minutes for an auto-close timer, if any, for the given firewall status.
     func remainingMinutes(for status: FirewallStatus) -> Int? {
         guard let ruleId = status.ruleId else { return nil }
-        let key = "\(status.managed.id):\(ruleId)"
-        guard let closeTime = autoCloseTimers[key] else { return nil }
+        guard let closeTime = firewallClosures.jobs.first(where: {
+            $0.firewallId == status.managed.id && $0.ruleId == ruleId && $0.region == status.managed.region
+        })?.closeAt else { return nil }
         let remaining = closeTime.timeIntervalSince(Date())
         guard remaining > 0 else { return nil }
         return Int(ceil(remaining / 60))
@@ -557,8 +646,12 @@ final class AppState {
 
         do {
             let result = try await firewallService.closeAllManagedRules(managedFirewalls: enabledFirewalls)
+            await forceRefresh()
             if result.failed > 0 {
                 self.error = "Failed to remove \(result.failed) rule\(result.failed == 1 ? "" : "s")"
+            }
+            if !result.listErrors.isEmpty {
+                self.error = ([self.error].compactMap { $0 } + result.listErrors).joined(separator: "\n")
             }
             try? await Task.sleep(for: .seconds(1))
         } catch {
@@ -566,7 +659,6 @@ final class AppState {
             return
         }
 
-        await forceRefresh()
     }
 
     private func forceRefresh() async {
