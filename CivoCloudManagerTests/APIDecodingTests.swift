@@ -1,7 +1,59 @@
 import Foundation
 import Testing
+import Security
 
 @testable import CivoCloudManager
+
+@Suite("Kubernetes TLS trust")
+struct KubernetesTrustTests {
+    private let serverCertificate = "MIIDZDCCAkygAwIBAgIUWThxTBBVX43jb0Xa9IDI97Wb2ekwDQYJKoZIhvcNAQELBQAwHzEdMBsGA1UEAwwUY2x1c3Rlci5leGFtcGxlLnRlc3QwHhcNMjYwOTA5MDkyOTExWhcNMjcwOTA5MDkyOTExWjAfMR0wGwYDVQQDDBRjbHVzdGVyLmV4YW1wbGUudGVzdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKtXEATYPcER2KK6oEBQGTy15U+ugkOaPThBEGgjxuA3pHXT1Krzqn01olHq0G7lTAsjTZiRiRnB4UkIwpO0h8GuqaUzV1Kezb+8aPxGMgR3ECZWQoudKAbSGmJ4G9mKJZHQfOD2SjnraNO7Xxil6V/riWBJ+OJtRDUqVKNrrjTuuQGdCsANS02wpLpojefGY593WzZOxoVPda047RbeTX/NQfQoqWlKMOcZM4J1FP17KPwtSIfIvUH6gy/rWXL+iMaDa9QiR5RiDTdrKlMj7F26OIqbgm0eP3QS2j6z49S/l08EVg1uU1BaqAa+QuIatKQnYSKOC2Zk5pl1KeHcy4cCAwEAAaOBlzCBlDAMBgNVHRMBAf8EAjAAMA4GA1UdDwEB/wQEAwIFoDATBgNVHSUEDDAKBggrBgEFBQcDATAfBgNVHREEGDAWghRjbHVzdGVyLmV4YW1wbGUudGVzdDAdBgNVHQ4EFgQU3PJZ/qHjk1N3E+13jm9A5/ieX6wwHwYDVR0jBBgwFoAUya2acjiuwnDGZigJjyfPnl8s2CYwDQYJKoZIhvcNAQELBQADggEBAIi+J2y8KjzQ4NEhcGmY7bW29/gmQ9Cp4HKEti8FwQP0vP92MOEWe3pPJKGNSbHOHex51zwzwmjrBlAlD5Sn6V7aYZXRZu67r1J9hIXZy1acLMvHnmkzYzK7uuphXUpu2qZotVpFtI6uOBVZaPCd95S9C9h3zoCbxm3OdMI7Yn+ZKInfH99yVBf+8AH9YLUJqVwRCpbsCcOESuzf6neoUjm6pF/evfUosgfNm+rishjLAXQHBWbhLtmnjpXgjd5H4miRVamYLj8SXquA3eM2ReukMpRFfulahyuzEOuLl22GU91U1PaNUjSP726na6QUx5QEs1sxxW5uTUvTylfYDiU="
+    private let certificate = "MIIDQDCCAiigAwIBAgIUcKwMgRV3l+JvXXLn7gMCkA/HyU0wDQYJKoZIhvcNAQELBQAwHzEdMBsGA1UEAwwUY2x1c3Rlci5leGFtcGxlLnRlc3QwHhcNMjYwOTA5MDkyODA5WhcNMzYwOTA2MDkyODA5WjAfMR0wGwYDVQQDDBRjbHVzdGVyLmV4YW1wbGUudGVzdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKE1rUmKyDMQ8nKOxl3qeX85QHBUuHmKPnPeDaHp5FH69KYQkD0Y5dOOKPkBZYmjLGV3vufqm6tEqLvaj65wlr10ze1SeytRsxz/A6KYY2/xfI53uVKf1Crn6F/e1LJvZ9dqERscqv3k5NjJ2E+I7sutfGIca24Qv4A5llbnFvIZqlEqHQjXzVP1+owdsq0VSDs5tKNokKLGLmfB8EZ0ewW/HlvGu8DxRJksw81d6hoyt9v0UzRbV/lHqSQK25PrhhIXhGID4x655tjPdRq9kCssl0n3+pNm4mrvH0w/S923xwEXWuzUfLzndshVTXGabeKDq6WBYk1tUtcmblHJ+f8CAwEAAaN0MHIwHQYDVR0OBBYEFMmtmnI4rsJwxmYoCY8nz55fLNgmMB8GA1UdIwQYMBaAFMmtmnI4rsJwxmYoCY8nz55fLNgmMA8GA1UdEwEB/wQFMAMBAf8wHwYDVR0RBBgwFoIUY2x1c3Rlci5leGFtcGxlLnRlc3QwDQYJKoZIhvcNAQELBQADggEBAEy9Bl4/7/eBAObRiDJMkE+o3z+XSTcD3C2ZX6T1zEg6ZZUSvcILNTbt+P9aBAj79+e8T201OpI7XYp6jNzHOeiWhm5STs+jUTgPSZEeaP8br7CHYeVGoMFtlbMywHTHxvyUZnefPhk5/Hv59cdsDBlybVnmYATP6Xx4fbmd1PeYw06WOXEOeasHOfMSfUT679lW7d/c5VDOZrSKQx0S4x+++kLoJhVzngSvabYkYLQZikhJqGkAdSihyRwMPq3d0nejmhHeOH4WEHDFIJ9AYk/3qNrvMXz2TYjVjtXo1MiICavGI8eYE7mLnSoRPGQGLHb7LOkNJuaOOuNh4pB7kTk="
+    private let unrelatedCA = "MIIDDzCCAfegAwIBAgIUbUG+SLSN7KdppUwi0znGgH5xn44wDQYJKoZIhvcNAQELBQAwFzEVMBMGA1UEAwwMVW5yZWxhdGVkIENBMB4XDTI2MDkwOTA5MjgzN1oXDTM2MDkwNjA5MjgzN1owFzEVMBMGA1UEAwwMVW5yZWxhdGVkIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApH2Se6jowIqVnIb9EUx4Ip5AxZmfH3ZMkCDgBaKBlWZ74ELhfK8aJEekCYq/wXo1um+gZyfCuxttcW3VY4w8wc8pis1xkk7Y8Zcgg0jasyq0jSjwgoirlxa7WYL4svDeXUKW3cK+IIDyXgb1RX8ZLU2s1uXoIlHJUg86XiglkGDU1PAB0vP9zEYQJFkz+lf1B4ghIn7qoR2jkUN472JOm7IPu6/5wsDFigsqcNfpdufzYsWviUyOL7gT48RcctSrD7MgrgOuQIi0kIMPwaOUm56Jt0tv/iPCSqaZBn4WQmNmEY4cA3wfW6rwWSiaTPTavpHbuckcUCZislyF5H8edwIDAQABo1MwUTAdBgNVHQ4EFgQU+WskWPPk3MAFygYtwZKLs5rxg2owHwYDVR0jBBgwFoAU+WskWPPk3MAFygYtwZKLs5rxg2owDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAGbEwCUJLguBzCgrpVP4+43cteUX+PpuJfmSjyfZh+VGz3gmP4CXidDdC1xJhSmHppV9d0g4FPVqRuudGHTZgbqLAzEHSXj2OB6Y614ATfrxjWolh8ARsWIRwkQwgl/F4M3aG35qLLeOfCuXQ5YMYoeHzVpyS0XHnIan821LaRNlORbVXqLKOMUDW35LkX2tXJjLYPKCH7zl7DDQotXWF82tug+jJjdrNio5ZAHyX2yWnm7u8wsR1rlXV4x3Ni+VjTypdxiQVaO5K69TdYMgMHhQl2QAcU5lj3GGzPSPrSLO+SooCymG7e1FClMEwxSpXYNqkyNhDmTq3msLFo7hlrw=="
+
+    @Test("Only the configured CA, matching hostname and valid dates are accepted")
+    func serverTrust() throws {
+        let certData = try #require(Data(base64Encoded: certificate))
+        let otherData = try #require(Data(base64Encoded: unrelatedCA))
+        let leafData = try #require(Data(base64Encoded: serverCertificate))
+        let cert = try #require(SecCertificateCreateWithData(nil, certData as CFData))
+        let other = try #require(SecCertificateCreateWithData(nil, otherData as CFData))
+        let leaf = try #require(SecCertificateCreateWithData(nil, leafData as CFData))
+        func trust(at date: Date) throws -> SecTrust {
+            var result: SecTrust?
+            #expect(SecTrustCreateWithCertificates([leaf, cert] as CFArray, SecPolicyCreateBasicX509(), &result) == errSecSuccess)
+            let trust = try #require(result)
+            SecTrustSetVerifyDate(trust, date as CFDate)
+            SecTrustSetNetworkFetchAllowed(trust, false)
+            return trust
+        }
+        let validDate = Date(timeIntervalSince1970: 1789041600)
+        #expect(KubernetesAPIClient.validateServerTrust(try trust(at: validDate), host: "cluster.example.test", caCertificate: cert))
+        #expect(!KubernetesAPIClient.validateServerTrust(try trust(at: validDate), host: "attacker.example.test", caCertificate: cert))
+        #expect(!KubernetesAPIClient.validateServerTrust(try trust(at: validDate), host: "cluster.example.test", caCertificate: other))
+        let expiredDate = Date(timeIntervalSince1970: 1900000000)
+        #expect(!KubernetesAPIClient.validateServerTrust(try trust(at: expiredDate), host: "cluster.example.test", caCertificate: cert))
+        let validTrust = try trust(at: validDate)
+        var callbacks = 0
+        KubernetesAPIClient.handleServerTrust(validTrust, host: "cluster.example.test", caCertificate: cert) { disposition, credential in
+            callbacks += 1
+            #expect(disposition == .useCredential)
+            #expect(credential != nil)
+        }
+        for candidate in [nil, try trust(at: expiredDate)] as [SecTrust?] {
+            KubernetesAPIClient.handleServerTrust(candidate, host: "cluster.example.test", caCertificate: cert) { disposition, credential in
+                callbacks += 1
+                #expect(disposition == .cancelAuthenticationChallenge)
+                #expect(credential == nil)
+            }
+        }
+        KubernetesAPIClient.handleServerTrust(validTrust, host: "wrong.example.test", caCertificate: cert) { disposition, credential in
+            callbacks += 1
+            #expect(disposition == .cancelAuthenticationChallenge)
+            #expect(credential == nil)
+        }
+        #expect(callbacks == 4)
+    }
+}
 
 @Suite("Localized legal documents")
 struct LegalDocumentTests {
