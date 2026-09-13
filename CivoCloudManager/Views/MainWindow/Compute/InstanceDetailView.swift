@@ -78,7 +78,7 @@ struct InstanceDetailView: View {
 
     private var specsRow: some View {
         HStack(spacing: 16) {
-            specCard("CPU", value: instance.cpuCores.map { "\($0)" } ?? "—", unit: "cores", icon: "cpu", color: .blue, index: 0)
+            specCard("CPU", value: instance.cpuCores.map { "\($0)" } ?? "—", unit: String(localized: "cores"), icon: "cpu", color: .blue, index: 0)
             specCard("RAM", value: instance.ramMb.map { "\($0)" } ?? "—", unit: "MB", icon: "memorychip", color: .purple, index: 1)
             specCard("Disk", value: instance.diskGb.map { "\($0)" } ?? "—", unit: "GB", icon: "externaldrive", color: .orange, index: 2)
         }
