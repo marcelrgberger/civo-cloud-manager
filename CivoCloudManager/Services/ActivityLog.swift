@@ -19,10 +19,8 @@ struct ActivityEntry: Codable, Identifiable, Sendable {
 
     var timeAgo: String {
         let interval = Date().timeIntervalSince(timestamp)
-        if interval < 60 { return "just now" }
-        if interval < 3600 { return "\(Int(interval / 60))m ago" }
-        if interval < 86400 { return "\(Int(interval / 3600))h ago" }
-        return "\(Int(interval / 86400))d ago"
+        if interval < 60 { return String(localized: "Just now") }
+        return timestamp.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
     }
 
     var icon: String {

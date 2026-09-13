@@ -29,7 +29,7 @@ struct FirewallDetailView: View {
         .task { await vm.loadRules(firewall.id) }
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
                     .help("Return to list")
             }
             ToolbarItem(placement: .automatic) {

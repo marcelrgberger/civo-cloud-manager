@@ -4,7 +4,7 @@ struct PaywallView: View {
     private let store = StoreManager.shared
     @State private var appeared = false
 
-    private let features: [(icon: String, text: String)] = [
+    private let features: [(icon: String, text: LocalizedStringKey)] = [
         ("gauge.with.dots.needle.33percent", "Dashboard with quota overview"),
         ("helm", "Kubernetes cluster management"),
         ("cylinder.split.1x2", "Database management"),

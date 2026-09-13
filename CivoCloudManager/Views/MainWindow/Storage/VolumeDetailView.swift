@@ -48,7 +48,7 @@ struct VolumeDetailView: View {
         .navigationTitle(volume.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
                     .help("Return to list")
             }
             ToolbarItem(placement: .automatic) {
@@ -119,8 +119,8 @@ struct VolumeDetailView: View {
                 infoRow("Size", volume.sizeDisplay)
                 infoRow("Status", volume.status ?? "—")
                 infoRow("Region", volume.region ?? "—")
-                infoRow("Network ID", volume.networkId ?? "Default")
-                infoRow("Bootable", volume.bootable == true ? "Yes" : "No")
+                infoRow("Network ID", volume.networkId ?? String(localized: "Default"))
+                infoRow("Bootable", volume.bootable == true ? String(localized: "Yes") : String(localized: "No"))
                 infoRow("Created", volume.createdAt ?? "—")
             }
             .padding(8)
@@ -129,7 +129,7 @@ struct VolumeDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.15), value: appeared)
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)

@@ -70,7 +70,7 @@ struct ObjectStoreBrowserView: View {
         .navigationTitle(store.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { navigateBack() }
+                Button("Back", systemImage: "chevron.backward") { navigateBack() }
             }
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -112,7 +112,7 @@ struct ObjectStoreBrowserView: View {
 
                 let parts = currentPrefix.components(separatedBy: "/").filter { !$0.isEmpty }
                 ForEach(Array(parts.enumerated()), id: \.offset) { index, part in
-                    Image(systemName: "chevron.right").font(.caption2).foregroundStyle(.tertiary)
+                    Image(systemName: "chevron.forward").font(.caption2).foregroundStyle(.tertiary)
                     Button(part) {
                         let newPrefix = parts[0...index].joined(separator: "/") + "/"
                         currentPrefix = newPrefix

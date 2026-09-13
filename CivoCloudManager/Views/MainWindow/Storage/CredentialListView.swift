@@ -143,7 +143,7 @@ struct CredentialListView: View {
         Task {
             let context = LAContext()
             do {
-                let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key")
+                let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: String(localized: "Reveal secret access key"))
                 if success { revealedSecrets.insert(id) }
             } catch {
                 // User cancelled or auth failed

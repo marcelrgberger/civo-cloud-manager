@@ -4,7 +4,7 @@ struct K8sConnectingView: View {
     @State private var step = 0
     @State private var pulse = false
 
-    private let steps = [
+    private let steps: [(String, LocalizedStringKey)] = [
         ("lock.shield", "Opening firewall..."),
         ("doc.text", "Fetching kubeconfig..."),
         ("key.horizontal", "Importing certificates..."),

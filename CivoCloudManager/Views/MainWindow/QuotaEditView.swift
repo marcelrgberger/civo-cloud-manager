@@ -127,12 +127,12 @@ struct QuotaEditView: View {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(changes, id: \.label) { change in
                     HStack {
-                        Text(change.label)
+                        Text(LocalizedStringKey(change.label))
                             .foregroundStyle(.secondary)
                         Spacer()
                         Text("\(change.from)")
                             .foregroundStyle(.secondary)
-                        Image(systemName: "arrow.right")
+                        Image(systemName: "arrow.forward")
                             .foregroundStyle(.secondary)
                             .font(.caption)
                         Text("\(change.to)")
@@ -151,9 +151,9 @@ struct QuotaEditView: View {
         .frame(minWidth: 400)
     }
 
-    private func quotaRow(_ label: String, value: Binding<Int>, step: Int) -> some View {
+    private func quotaRow(_ label: LocalizedStringKey, value: Binding<Int>, step: Int) -> some View {
         Stepper(value: value, in: 0...100000, step: step) {
-            Text(verbatim: "\(label): \(value.wrappedValue)")
+            Text("\(Text(label)): \(value.wrappedValue)")
         }
     }
 

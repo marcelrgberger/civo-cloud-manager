@@ -11,7 +11,8 @@ Each document's header records the relevant source and version; it does not clai
 that unrelated template changes have been imported. Other product-specific terms
 and disclosures retain their existing scope.
 
-Seven documents ship in each of `en`, `de`, `es`, `fr`, `it`, `nl`, `pl` and `pt`.
+Seven documents ship in each of the 16 languages: `en`, `de`, `es`, `fr`, `it`,
+`nl`, `pl`, `pt`, `zh-Hans`, `ja`, `ko`, `ar`, `hi`, `id`, `tr` and `ru`.
 English is the source for the complete translations. Country-specific sections,
 numbered provisions, links and company details are retained in every language.
 `LegalDocument` resolves the system's preferred languages, including regional
@@ -23,7 +24,7 @@ remain stable to preserve the existing App Store product, purchases and credenti
 They are technical identifiers, not the displayed legal entity.
 
 Run `python3 scripts/check_legal_localizations.py` to check the document set,
-section numbering, numerical values, links and company details. Add
-`--app '/path/to/Civo Cloud Manager.app'` to verify that all 56 documents are
+section numbering, critical legal dates, numerical values, links and company details. Add
+`--app '/path/to/Civo Cloud Manager.app'` to verify that all 112 documents are
 actually included in the built app. Swift tests cover language resolution and
 English fallback behavior.

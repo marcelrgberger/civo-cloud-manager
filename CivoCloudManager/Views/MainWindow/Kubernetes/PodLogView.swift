@@ -18,7 +18,7 @@ struct PodLogView: View {
         .navigationTitle("Logs: \(pod.name)")
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
             }
             ToolbarItem(placement: .automatic) {
                 Toggle("Auto-refresh", isOn: $autoRefresh)
