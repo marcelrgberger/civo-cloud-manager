@@ -313,14 +313,17 @@ struct KubernetesTrustTests {
 struct LegalDocumentTests {
     @Test("System languages and regional variants resolve to shipped translations")
     func preferredLanguages() {
-        for language in ["en", "de", "es", "fr", "it", "nl", "pl", "pt"] {
+        for language in ["en", "de", "es", "fr", "it", "nl", "pl", "pt", "zh-Hans", "ja", "ko", "ar", "hi", "id", "tr", "ru"] {
             #expect(LegalDocument.preferredLanguage(for: [language]) == language)
         }
         #expect(LegalDocument.preferredLanguage(for: ["de-CH"]) == "de")
         #expect(LegalDocument.preferredLanguage(for: ["fr-CA"]) == "fr")
         #expect(LegalDocument.preferredLanguage(for: ["pt-BR"]) == "pt")
-        #expect(LegalDocument.preferredLanguage(for: ["ja", "nl-NL"]) == "nl")
-        #expect(LegalDocument.preferredLanguage(for: ["ja"]) == "en")
+        for (regional, expected) in [("zh-CN", "zh-Hans"), ("zh-SG", "zh-Hans"), ("zh-Hans-CN", "zh-Hans"), ("ja-JP", "ja"), ("ko-KR", "ko"), ("ar-SA", "ar"), ("hi-IN", "hi"), ("id-ID", "id"), ("tr-TR", "tr"), ("ru-RU", "ru")] {
+            #expect(LegalDocument.preferredLanguage(for: [regional]) == expected)
+        }
+        #expect(LegalDocument.preferredLanguage(for: ["sv", "nl-NL"]) == "nl")
+        #expect(LegalDocument.preferredLanguage(for: ["sv"]) == "en")
         #expect(LegalDocument.preferredLanguage(for: []) == "en")
     }
 

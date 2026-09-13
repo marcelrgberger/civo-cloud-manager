@@ -27,7 +27,7 @@ struct PodExecView: View {
         .navigationTitle("Exec: \(pod.name)")
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
             }
             ToolbarItem(placement: .automatic) {
                 Button {

@@ -18,7 +18,7 @@ struct LoadBalancerDetailView: View {
         .navigationTitle(lb.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
                     .help("Return to list")
             }
         }
@@ -98,7 +98,7 @@ struct LoadBalancerDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.2), value: appeared)
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)

@@ -21,7 +21,7 @@ struct DatabaseDetailView: View {
         .navigationTitle(db.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
                     .help("Return to list")
             }
         }
@@ -95,8 +95,8 @@ struct DatabaseDetailView: View {
     private var networkSection: some View {
         GroupBox("Network & Security") {
             VStack(alignment: .leading, spacing: 10) {
-                infoRow("Network ID", db.networkId ?? "Default")
-                infoRow("Firewall ID", db.firewallId ?? "Default")
+                infoRow("Network ID", db.networkId ?? String(localized: "Default"))
+                infoRow("Firewall ID", db.firewallId ?? String(localized: "Default"))
             }
             .padding(8)
         }
@@ -143,14 +143,14 @@ struct DatabaseDetailView: View {
     private func authenticateAndReveal() async {
         let context = LAContext()
         do {
-            let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal database password")
+            let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: String(localized: "Reveal database password"))
             passwordRevealed = success
         } catch {
             // User cancelled or auth failed
         }
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)

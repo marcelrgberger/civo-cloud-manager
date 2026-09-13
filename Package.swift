@@ -23,6 +23,14 @@ let package = Package(
                 "nl.lproj",
                 "pl.lproj",
                 "pt.lproj",
+                "zh-Hans.lproj",
+                "ja.lproj",
+                "ko.lproj",
+                "ar.lproj",
+                "hi.lproj",
+                "id.lproj",
+                "tr.lproj",
+                "ru.lproj",
             ],
             linkerSettings: [
                 .unsafeFlags([

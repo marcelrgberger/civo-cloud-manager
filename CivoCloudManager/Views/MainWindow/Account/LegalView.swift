@@ -93,7 +93,7 @@ enum LegalDocument: String, CaseIterable, Identifiable {
         }
     }
 
-    static let supportedLanguages = ["en", "de", "es", "fr", "it", "nl", "pl", "pt"]
+    static let supportedLanguages = ["en", "de", "es", "fr", "it", "nl", "pl", "pt", "zh-Hans", "ja", "ko", "ar", "hi", "id", "tr", "ru"]
 
     static func preferredLanguage(for preferences: [String]) -> String {
         Bundle.preferredLocalizations(from: supportedLanguages, forPreferences: preferences).first ?? "en"

@@ -64,7 +64,7 @@ struct ClusterDetailView: View {
         .navigationTitle(cluster.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
                     .help("Return to list")
             }
             ToolbarItem(placement: .destructiveAction) {
@@ -142,7 +142,7 @@ struct ClusterDetailView: View {
         }
     }
 
-    private func statCard(_ title: String, value: String, icon: String, color: Color, index: Int) -> some View {
+    private func statCard(_ title: LocalizedStringKey, value: String, icon: String, color: Color, index: Int) -> some View {
         VStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.title2)
@@ -203,7 +203,7 @@ struct ClusterDetailView: View {
         }
     }
 
-    private func liveGauge(_ title: String, percent: Double, detail: String, color: Color, index: Int, history: [Double] = []) -> some View {
+    private func liveGauge(_ title: LocalizedStringKey, percent: Double, detail: String, color: Color, index: Int, history: [Double] = []) -> some View {
         VStack(spacing: 6) {
             ZStack {
                 Circle()
@@ -442,7 +442,7 @@ struct ClusterDetailView: View {
                                                         Text(path.path ?? "/")
                                                             .font(.caption2.monospaced())
                                                             .foregroundStyle(.secondary)
-                                                        Image(systemName: "arrow.right").font(.caption2).foregroundStyle(.tertiary)
+                                                        Image(systemName: "arrow.forward").font(.caption2).foregroundStyle(.tertiary)
                                                         if let svcName = path.backend?.service?.name {
                                                             Text(svcName).font(.caption2.weight(.medium)).foregroundStyle(.blue)
                                                         }
@@ -732,7 +732,7 @@ struct ClusterDetailView: View {
                 poolInfoRow("Pool ID", pool.id)
                 poolInfoRow("Size", pool.size ?? "—")
                 poolInfoRow("Node Count", "\(pool.count ?? 0)")
-                poolInfoRow("Public IPs", pool.publicIPNodePool == true ? "Yes" : "No")
+                poolInfoRow("Public IPs", pool.publicIPNodePool == true ? String(localized: "Yes") : String(localized: "No"))
             }
 
             if let names = pool.instanceNames, !names.isEmpty {
@@ -759,7 +759,7 @@ struct ClusterDetailView: View {
                                 Text(name)
                                     .font(.caption.monospaced())
                                 Spacer()
-                                Image(systemName: "chevron.right")
+                                Image(systemName: "chevron.forward")
                                     .font(.caption2)
                                     .foregroundStyle(.tertiary)
                             }
@@ -846,7 +846,7 @@ struct ClusterDetailView: View {
         return allLabels
     }
 
-    private func poolInfoRow(_ label: String, _ value: String) -> some View {
+    private func poolInfoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption2)
@@ -893,7 +893,7 @@ struct ClusterDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.35), value: appeared)
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)

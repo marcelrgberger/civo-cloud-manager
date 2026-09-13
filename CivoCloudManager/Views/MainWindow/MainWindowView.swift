@@ -199,7 +199,7 @@ struct MainWindowView: View {
     private var sidebar: some View {
         List(selection: $selection) {
             ForEach(SidebarCategory.allCases, id: \.self) { category in
-                Section(category.rawValue) {
+                Section(LocalizedStringKey(category.rawValue)) {
                     ForEach(category.sections) { section in
                         Label {
                             Text(LocalizedStringKey(section.rawValue))
@@ -231,7 +231,7 @@ struct MainWindowView: View {
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.primary)
                 Spacer()
-                Image(systemName: "chevron.right")
+                Image(systemName: "chevron.forward")
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
             }
