@@ -428,6 +428,19 @@ python3 scripts/test_legal_localizations.py
 python3 scripts/check_app_localizations.py
 ```
 
+The commands above check catalog translations and runtime help/sidebar keys. Complete coverage of Swift-extracted keys and packaged resources additionally requires a fresh native build:
+
+```bash
+xcodebuild -project CivoCloudManager.xcodeproj -scheme CivoCloudManager \
+  -configuration Release -derivedDataPath /tmp/civo-localization-build \
+  CODE_SIGNING_ALLOWED=NO build
+python3 scripts/check_app_localizations.py \
+  --derived-data /tmp/civo-localization-build \
+  --app '/tmp/civo-localization-build/Build/Products/Release/Civo Cloud Manager.app'
+python3 scripts/check_legal_localizations.py \
+  --app '/tmp/civo-localization-build/Build/Products/Release/Civo Cloud Manager.app'
+```
+
 The regression tests cover certificate rejection and callback decisions; duplicate/conflicting regions; saved deadlines, restart, retry limits, reentrant timer ticks and disk-write failures; and Keychain errors, duplicate creation, backup-file detection and encryption round trips. Tests use fixtures and temporary storage rather than altering cloud resources or the real SSH Keychain.
 
 A native Xcode Release build additionally verifies target membership and resources. The four architecture fixes were each reviewed through the Claude CLI before their separate commits; all 40 tests and the Release build passed for that code revision. This is not a claim of live cloud integration coverage.
