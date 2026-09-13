@@ -163,6 +163,8 @@ struct MainWindowView: View {
                         .padding(8)
                 }
                 #endif
+            } else if !store.hasLoadedPurchaseStatus {
+                ProgressView()
             } else {
                 PaywallView()
             }

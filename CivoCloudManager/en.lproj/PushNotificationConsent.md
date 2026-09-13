@@ -1,15 +1,16 @@
+<!-- doc-id: PUSH_NOTIFICATION_CONSENT | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: apps/screens/PUSH_NOTIFICATION_CONSENT.en.md | adapted: company identity and related clauses -->
 # PUSH NOTIFICATION CONSENT NOTICE
 
 ## Information shown alongside the system permission prompt for push notifications
 
-**Effective Date:** May 2026
+**Effective Date:** September 2026
 
 **Provider:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 Contact: hello@digitalfreedom.co.za
 Data protection: data-protection@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
@@ -72,7 +73,7 @@ Marketing / promotional push notifications are governed by Art. 6(1)(a) GDPR + e
 
 - The marketing toggle is **off** by default
 - You can turn it on (and off) at any time in **Settings → Notifications → Marketing**
-- Marketing push consent is **distinct** from email-marketing consent (MailerLite); enabling one does not enable the other
+- Marketing push consent is **distinct** from email-marketing consent; enabling one does not enable the other
 - Withdrawal is as easy as opt-in (single toggle), and does not affect non-marketing notifications
 
 ---
@@ -120,10 +121,10 @@ If you decline the system prompt:
 ## 9. CONTACT
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 Notification preferences help: support@digitalfreedom.co.za
 Data protection: data-protection@digitalfreedom.co.za
@@ -132,4 +133,4 @@ Website: https://digitalfreedom.co.za
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.

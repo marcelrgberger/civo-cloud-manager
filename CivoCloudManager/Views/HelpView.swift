@@ -226,7 +226,8 @@ struct HelpSection {
         ]),
         HelpSection(title: "Full Access", icon: "cart", items: [
             "Menu bar firewall management is free.",
-            "Full Access ($14.99 one-time) unlocks the dashboard and all resource management.",
+            String(localized: "All features are free for seven elapsed days from first use."),
+            String(localized: "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase."),
             "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes.",
             "Family Sharing is enabled.",
         ]),

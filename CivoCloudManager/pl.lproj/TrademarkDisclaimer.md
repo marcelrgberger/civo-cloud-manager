@@ -1,102 +1,103 @@
-# TRADEMARK DISCLAIMER
+<!-- doc-id: TRADEMARK_DISCLAIMER | lang: pl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/TRADEMARK_DISCLAIMER.en.md | adapted: company identity and related clauses -->
+# ZASTRZEŻENIE DOTYCZĄCE ZNAKÓW TOWAROWYCH
 
-## For Applications Referencing Third-Party Trademarks or Programs
+## Dla aplikacji odwołujących się do znaków towarowych lub programów stron trzecich
 
-**Effective Date:** May 2026
+**Data wejścia w życie:** wrzesień 2026
 
-**Publisher:**
+**Wydawca:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Contact: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Marka należąca do DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Stany Zjednoczone
+Kontakt: hello@digitalfreedom.co.za
+Strona internetowa: https://digitalfreedom.co.za
 
 ---
 
-## 1. PURPOSE AND SCOPE
+## 1. CEL I ZAKRES
 
-This document clarifies the relationship between applications published by the Publisher and any third-party trademarks, brand names, programs, or methodologies referenced within those applications, marketing materials, or supporting documentation.
+Niniejszy dokument wyjaśnia relację pomiędzy aplikacjami publikowanymi przez Wydawcę a wszelkimi znakami towarowymi, nazwami marek, programami lub metodykami stron trzecich, do których odniesienia pojawiają się w tych aplikacjach, materiałach marketingowych lub dokumentacji pomocniczej.
 
-The Publisher's applications are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This Disclaimer applies globally. The Publisher applies EU trademark law (Regulation (EU) 2017/1001 on the EU trade mark and Directive (EU) 2015/2436) and the nominative-fair-use doctrine as its baseline standard and additionally observes the trademark and fair-use rules of every jurisdiction in which the applications are made available.
-
----
-
-## 2. NOMINATIVE FAIR USE
-
-References to third-party trademarks, brand names, programs, or methodologies within the Publisher's applications and materials are made under the doctrine of **nominative fair use** (or comparable doctrines under applicable trademark law).
-
-Such references are intended to:
-
-- Identify the third-party program, methodology, or product accurately
-- Provide context for the user about compatibility, support, or applicability
-- Enable factual descriptions of features and functions
-
-References do **not** imply:
-
-- Endorsement of the Publisher's app by the trademark owner
-- Affiliation between the Publisher and the trademark owner
-- Sponsorship of the Publisher's app by the trademark owner
-- Authorization, certification, or approval by the trademark owner
+Aplikacje Wydawcy są dystrybuowane za pośrednictwem Apple App Store oraz Google Play Store i są tym samym udostępniane we wszystkich krajach i terytoriach obsługiwanych przez te platformy. Niniejsze Zastrzeżenie obowiązuje na całym świecie. Wydawca stosuje prawo znaków towarowych Unii Europejskiej (Rozporządzenie (UE) 2017/1001 w sprawie znaku towarowego Unii Europejskiej oraz Dyrektywa (UE) 2015/2436) oraz doktrynę dozwolonego użytku nominatywnego jako standard bazowy, a ponadto przestrzega przepisów dotyczących znaków towarowych i dozwolonego użytku obowiązujących w każdej jurysdykcji, w której aplikacje są udostępniane.
 
 ---
 
-## 3. TRADEMARK OWNERSHIP
+## 2. DOZWOLONY UŻYTEK NOMINATYWNY
 
-All trademarks, registered trademarks, service marks, brand names, and trade names referenced in the Publisher's applications or materials are the property of their respective owners.
+Odniesienia do znaków towarowych, nazw marek, programów lub metodyk stron trzecich w aplikacjach i materiałach Wydawcy dokonywane są na podstawie doktryny **dozwolonego użytku nominatywnego** (lub porównywalnych doktryn wynikających z właściwego prawa znaków towarowych).
 
-The Publisher claims no ownership of such third-party intellectual property and uses them only for the purposes described in Section 2.
+Takie odniesienia mają na celu:
 
-Specific trademark attributions for individual applications are provided in the relevant application's documentation, in-app disclosures, or marketing materials.
+- Dokładne zidentyfikowanie programu, metodyki lub produktu strony trzeciej
+- Dostarczenie użytkownikowi kontekstu dotyczącego kompatybilności, wsparcia lub zastosowania
+- Umożliwienie rzeczowego opisu funkcji i cech
 
----
+Odniesienia te **nie** oznaczają:
 
-## 4. INDEPENDENT DEVELOPMENT
-
-Applications published by the Publisher are independently developed.
-
-- The Publisher's applications are not affiliated with, endorsed by, sponsored by, or approved by any third-party trademark owner unless explicitly stated in writing
-- Functional similarity between an application and a third-party program does not imply licensing or partnership
-- Compatibility with a third-party methodology does not imply certification or accreditation
-
----
-
-## 5. RIGHTS RESERVED
-
-Trademark owners retain all rights to their trademarks. The Publisher's nominative fair use does not transfer, license, or grant any rights to the third-party trademarks.
+- Poparcia aplikacji Wydawcy przez właściciela znaku towarowego
+- Powiązania pomiędzy Wydawcą a właścicielem znaku towarowego
+- Sponsorowania aplikacji Wydawcy przez właściciela znaku towarowego
+- Autoryzacji, certyfikacji lub zatwierdzenia przez właściciela znaku towarowego
 
 ---
 
-## 6. TRADEMARK COMPLAINTS
+## 3. WŁASNOŚĆ ZNAKÓW TOWAROWYCH
 
-If you are a trademark owner and believe that a Publisher application or material uses your trademark in a manner that exceeds nominative fair use or otherwise infringes your rights, please contact:
+Wszystkie znaki towarowe, zarejestrowane znaki towarowe, znaki usługowe, nazwy marek i nazwy handlowe wymienione w aplikacjach lub materiałach Wydawcy są własnością ich odpowiednich właścicieli.
+
+Wydawca nie rości sobie żadnych praw własności do takiej własności intelektualnej stron trzecich i korzysta z niej wyłącznie w celach opisanych w Sekcji 2.
+
+Szczegółowe informacje dotyczące przypisania znaków towarowych dla poszczególnych aplikacji są zawarte w dokumentacji danej aplikacji, ujawnieniach w aplikacji lub materiałach marketingowych.
+
+---
+
+## 4. NIEZALEŻNY ROZWÓJ
+
+Aplikacje publikowane przez Wydawcę są rozwijane niezależnie.
+
+- Aplikacje Wydawcy nie są powiązane, popierane, sponsorowane ani zatwierdzone przez żadnego właściciela znaku towarowego strony trzeciej, chyba że wyraźnie wskazano to na piśmie
+- Podobieństwo funkcjonalne pomiędzy aplikacją a programem strony trzeciej nie oznacza udzielenia licencji ani partnerstwa
+- Kompatybilność z metodyką strony trzeciej nie oznacza certyfikacji ani akredytacji
+
+---
+
+## 5. WSZELKIE PRAWA ZASTRZEŻONE
+
+Właściciele znaków towarowych zachowują wszelkie prawa do swoich znaków towarowych. Dozwolony użytek nominatywny przez Wydawcę nie przenosi, nie licencjonuje ani nie przyznaje żadnych praw do znaków towarowych stron trzecich.
+
+---
+
+## 6. SKARGI DOTYCZĄCE ZNAKÓW TOWAROWYCH
+
+Jeżeli jesteś właścicielem znaku towarowego i uważasz, że aplikacja lub materiał Wydawcy wykorzystuje Twój znak towarowy w sposób wykraczający poza dozwolony użytek nominatywny lub w inny sposób narusza Twoje prawa, prosimy o kontakt:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Email: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Marka należąca do DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Stany Zjednoczone
+E-mail: hello@digitalfreedom.co.za
+Strona internetowa: https://digitalfreedom.co.za
 
-Please include:
+Prosimy o dołączenie:
 
-- Identification of the trademark in question (registration number, jurisdiction)
-- Identification of the alleged infringing use (specific application, page, or material)
-- Description of the requested remedy
-- Your contact information
+- Identyfikacji znaku towarowego (numer rejestracyjny, jurysdykcja)
+- Identyfikacji domniemanego naruszenia (konkretna aplikacja, strona lub materiał)
+- Opisu żądanego środka zaradczego
+- Twoich danych kontaktowych
 
-The Publisher will review such complaints in good faith and take appropriate action where warranted.
+Wydawca rozpatrzy takie skargi w dobrej wierze i podejmie odpowiednie działania, jeśli będzie to uzasadnione.
 
 ---
 
-## 7. UPDATES
+## 7. AKTUALIZACJE
 
-The Publisher may update this Trademark Disclaimer from time to time. The most current version is available at:
+Wydawca może od czasu do czasu aktualizować niniejsze Zastrzeżenie dotyczące znaków towarowych. Najnowsza wersja jest dostępna pod adresem:
 
 https://digitalfreedom.co.za/
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. Wszelkie prawa zastrzeżone.

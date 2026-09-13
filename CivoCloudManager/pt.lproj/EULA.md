@@ -1,251 +1,252 @@
-# END USER LICENSE AGREEMENT (EULA)
+<!-- doc-id: EULA | lang: pt | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+# CONTRATO DE LICENÇA DE UTILIZADOR FINAL (EULA)
 
-## Global Multi-Platform License Agreement
+## Contrato Global de Licença Multi-Plataforma
 
-**Effective Date:** March 2026
+**Data de Entrada em Vigor:** Setembro de 2026
 
-**Publisher:**
+**Editora:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Contact: hello@digitalfreedom.co.za
+Uma marca de DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Estados Unidos da América
+Contacto: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-## 1. ACCEPTANCE OF TERMS
+## 1. ACEITAÇÃO DOS TERMOS
 
-By installing, accessing, or using this application, software, or related services ("the App"), you agree to be bound by this Agreement.
+Ao instalar, aceder ou utilizar esta aplicação, software ou serviços relacionados ("a Aplicação"), concorda em ficar vinculado ao presente Contrato.
 
-If you do not agree, you must not use the App.
+Se não concordar, não deve utilizar a Aplicação.
 
 ---
 
-## 2. SCOPE OF APPLICATION
+## 2. ÂMBITO DE APLICAÇÃO
 
-This Agreement applies to all distribution channels, including but not limited to:
+O presente Contrato aplica-se a todos os canais de distribuição, incluindo, mas não se limitando a:
 
 - Apple App Store / TestFlight
-- Google Play Store / APK distribution
-- GitHub or other source code repositories
-- Homebrew or other package managers
-- Direct downloads or enterprise distribution
+- Google Play Store / distribuição APK
+- GitHub ou outros repositórios de código-fonte
+- Homebrew ou outros gestores de pacotes
+- Transferências diretas ou distribuição empresarial
 
-The App may be provided as free, paid, open-source, or hybrid software.
+A Aplicação pode ser disponibilizada como software gratuito, pago, de código aberto ou híbrido.
 
-### 2.1 Global scope
+### 2.1 Âmbito global
 
-The App is distributed via the Apple App Store and the Google Play Store and is therefore made available in every country and territory those platforms serve. This Agreement applies globally to all such users, regardless of the country in which the App is downloaded, installed or used. The Publisher adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; mandatory consumer-protection and other statutory rights granted by the user's country of residence remain unaffected and prevail wherever they are more protective.
-
----
-
-## 3. LICENSE GRANT
-
-Subject to this Agreement, the Publisher grants you a limited, non-exclusive, non-transferable, revocable license to:
-
-- Use the App on devices you own or control
-- Access and use functionalities according to intended purpose
-
-For open-source components, the applicable open-source licenses shall prevail.
+A Aplicação é distribuída através da Apple App Store e da Google Play Store e, por conseguinte, está disponível em todos os países e territórios servidos por essas plataformas. O presente Contrato aplica-se globalmente a todos esses utilizadores, independentemente do país em que a Aplicação é transferida, instalada ou utilizada. A Editora adota o Regulamento Geral sobre a Proteção de Dados (RGPD) da União Europeia e a legislação da UE relacionada como padrão mínimo e aplica-o globalmente; os direitos obrigatórios de proteção do consumidor e outros direitos legais concedidos pelo país de residência do utilizador permanecem inalterados e prevalecem sempre que forem mais protetores.
 
 ---
 
-## 4. OPEN SOURCE COMPONENTS
+## 3. CONCESSÃO DE LICENÇA
 
-The App may include open-source software.
+Sujeito ao presente Contrato, a Editora concede-lhe uma licença limitada, não exclusiva, intransmissível e revogável para:
 
-- Such components are governed by their respective licenses
-- This Agreement does not override or restrict rights granted under open-source licenses
-- A list of open-source components shall be provided where required
+- Utilizar a Aplicação em dispositivos que possua ou controle
+- Aceder e utilizar as funcionalidades de acordo com o fim a que se destinam
 
-You are responsible for complying with applicable open-source licenses.
-
----
-
-## 5. RESTRICTIONS
-
-You shall not:
-
-- Reverse-engineer or decompile the App except where permitted by law
-- Circumvent security or access control mechanisms
-- Use the App unlawfully or in violation of third-party rights
-- Redistribute proprietary components outside permitted scope
+Para componentes de código aberto, prevalecem as respetivas licenças de código aberto.
 
 ---
 
-## 6. COMMERCIAL TERMS
+## 4. COMPONENTES DE CÓDIGO ABERTO
 
-The App may be offered:
+A Aplicação pode incluir software de código aberto.
 
-- Free of charge
-- As a one-time purchase
-- As a subscription
+- Esses componentes regem-se pelas respetivas licenças
+- O presente Contrato não substitui nem restringe os direitos concedidos ao abrigo das licenças de código aberto
+- Será fornecida uma lista de componentes de código aberto quando exigido
 
-Payments may be processed via third-party platforms (e.g., Apple, Google) or directly.
-
-Refunds and billing are subject to the respective platform terms or applicable law.
+É da sua responsabilidade cumprir as licenças de código aberto aplicáveis.
 
 ---
 
-## 7. USER RESPONSIBILITY
+## 5. RESTRIÇÕES
 
-You are solely responsible for:
+Não pode:
 
-- All activities performed using the App
-- All data processed, stored, or transmitted
-- Compliance with applicable laws and regulations
-
-Use of the App may result in unintended actions, including data modification or deletion.
-
----
-
-## 8. DATA AND PRIVACY
-
-Data processing depends on the specific implementation of the App.
-
-Unless explicitly stated otherwise:
-
-- Data may be stored locally or processed via third-party services
-- The Publisher does not guarantee data security or integrity
-- You are responsible for backups
-
-A separate Privacy Policy governs data processing.
+- Reverter a engenharia ou descompilar a Aplicação, exceto quando permitido por lei
+- Contornar mecanismos de segurança ou controlo de acesso
+- Utilizar a Aplicação de forma ilícita ou em violação de direitos de terceiros
+- Redistribuir componentes proprietários fora do âmbito permitido
 
 ---
 
-## 9. THIRD-PARTY SERVICES
+## 6. TERMOS COMERCIAIS
 
-The App may interact with third-party services.
+A Aplicação pode ser disponibilizada:
 
-The Publisher:
+- Gratuitamente
+- Mediante compra única
+- Por subscrição
 
-- Does not control third-party services
-- Is not responsible for their availability or behavior
-- Is not liable for damages caused by such services
+Os pagamentos podem ser processados através de plataformas de terceiros (por exemplo, Apple, Google) ou diretamente.
 
-Use of third-party services is subject to their terms.
-
----
-
-## 10. DISCLAIMER OF WARRANTIES
-
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND.
-
-This includes, but is not limited to:
-
-- MERCHANTABILITY
-- FITNESS FOR A PARTICULAR PURPOSE
-- ACCURACY OR RELIABILITY
-- SECURITY OR AVAILABILITY
+Os reembolsos e a faturação estão sujeitos aos termos da respetiva plataforma ou à legislação aplicável.
 
 ---
 
-## 11. LIMITATION OF LIABILITY
+## 7. RESPONSABILIDADE DO UTILIZADOR
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE PUBLISHER SHALL NOT BE LIABLE FOR:
+É exclusivamente responsável por:
 
-- INDIRECT OR CONSEQUENTIAL DAMAGES
-- LOSS OF DATA, PROFITS, OR BUSINESS
-- SYSTEM FAILURES OR SECURITY INCIDENTS
+- Todas as atividades realizadas com a Aplicação
+- Todos os dados processados, armazenados ou transmitidos
+- Cumprimento das leis e regulamentos aplicáveis
 
-TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT PAID FOR THE APP (IF ANY).
-
----
-
-## 12. HIGH-RISK USE
-
-The App is not intended for use in:
-
-- Safety-critical systems
-- Medical applications
-- Financial trading systems
-- Critical infrastructure
-
-Use in such contexts is at your own risk.
+A utilização da Aplicação pode resultar em ações não intencionais, incluindo modificação ou eliminação de dados.
 
 ---
 
-## 13. INDEMNIFICATION
+## 8. DADOS E PRIVACIDADE
 
-You agree to indemnify the Publisher against claims arising from:
+O tratamento de dados depende da implementação específica da Aplicação.
 
-- Your use of the App
-- Violation of this Agreement
-- Violation of applicable law
+Salvo indicação expressa em contrário:
 
----
+- Os dados podem ser armazenados localmente ou processados através de serviços de terceiros
+- A Editora não garante a segurança ou integridade dos dados
+- É da sua responsabilidade efetuar cópias de segurança
 
-## 14. TERMINATION
-
-The Publisher may terminate this Agreement at any time.
-
-Upon termination, you must cease use and delete all copies of the App.
+O tratamento de dados rege-se por uma Política de Privacidade separada.
 
 ---
 
-## 15. EXPORT AND SANCTIONS
+## 9. SERVIÇOS DE TERCEIROS
 
-You agree to comply with all applicable export control and sanctions laws.
+A Aplicação pode interagir com serviços de terceiros.
 
----
+A Editora:
 
-## 16. GOVERNING LAW
+- Não controla os serviços de terceiros
+- Não é responsável pela sua disponibilidade ou comportamento
+- Não é responsável por danos causados por esses serviços
 
-This Agreement shall be governed by German law.
-
-Mandatory consumer protection laws of your country of residence remain unaffected.
-
----
-
-## 17. REGIONAL PROVISIONS
-
-### 17.1 European Union
-
-- Mandatory consumer rights (including warranty rights) are not excluded
-- Liability exclusions apply only to the extent permitted under EU law
-
-### 17.2 United States
-
-- Some states do not allow limitation of certain warranties or liabilities
-- In such cases, limitations apply to the maximum extent permitted
-
-### 17.3 United Kingdom
-
-- Nothing excludes liability for death or personal injury caused by negligence
-- Consumer Rights Act protections remain unaffected
-
-### 17.4 Canada
-
-- Consumer protection laws vary by province and may override parts of this Agreement
-
-### 17.5 Australia
-
-- Statutory guarantees under Australian Consumer Law apply and cannot be excluded
-
-### 17.6 Other Jurisdictions
-
-- Where local law restricts provisions of this Agreement, such provisions shall apply only to the extent permitted
+A utilização de serviços de terceiros está sujeita aos respetivos termos.
 
 ---
 
-## 18. SEVERABILITY
+## 10. EXCLUSÃO DE GARANTIAS
 
-If any provision is invalid, the remainder remains in effect.
+ATÉ AO LIMITE MÁXIMO PERMITIDO POR LEI, A APLICAÇÃO É FORNECIDA "TAL COMO ESTÁ" SEM GARANTIAS DE QUALQUER TIPO.
 
----
+Isto inclui, mas não se limita a:
 
-## 19. ENTIRE AGREEMENT
-
-This Agreement constitutes the entire agreement between you and the Publisher.
-
-It supplements platform-specific terms (Apple, Google).
-
----
-
-**BY USING THE APP, YOU AGREE TO THIS AGREEMENT.**
+- COMERCIALIZAÇÃO
+- ADEQUAÇÃO A UM DETERMINADO FIM
+- EXATIDÃO OU FIABILIDADE
+- SEGURANÇA OU DISPONIBILIDADE
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+## 11. LIMITAÇÃO DE RESPONSABILIDADE
+
+ATÉ AO LIMITE MÁXIMO PERMITIDO POR LEI, A EDITORA NÃO SERÁ RESPONSÁVEL POR:
+
+- DANOS INDIRETOS OU CONSEQUENCIAIS
+- PERDA DE DADOS, LUCROS OU NEGÓCIOS
+- FALHAS DE SISTEMA OU INCIDENTES DE SEGURANÇA
+
+A RESPONSABILIDADE TOTAL NÃO EXCEDERÁ O MONTANTE PAGO PELA APLICAÇÃO (SE ALGUM).
+
+---
+
+## 12. UTILIZAÇÃO DE ALTO RISCO
+
+A Aplicação não se destina a utilização em:
+
+- Sistemas críticos para a segurança
+- Aplicações médicas
+- Sistemas de negociação financeira
+- Infraestruturas críticas
+
+A utilização nestes contextos é da sua inteira responsabilidade.
+
+---
+
+## 13. INDEMNIZAÇÃO
+
+Compromete-se a indemnizar a Editora por reclamações resultantes de:
+
+- A sua utilização da Aplicação
+- Violação do presente Contrato
+- Violação da legislação aplicável
+
+---
+
+## 14. RESOLUÇÃO
+
+A Editora pode resolver o presente Contrato a qualquer momento.
+
+Após a resolução, deve cessar a utilização e eliminar todas as cópias da Aplicação.
+
+---
+
+## 15. EXPORTAÇÃO E SANÇÕES
+
+Compromete-se a cumprir todas as leis aplicáveis de controlo de exportação e sanções.
+
+---
+
+## 16. LEI APLICÁVEL
+
+O presente Contrato rege-se pelas leis do Estado do Wyoming, Estados Unidos da América, excluindo as regras de conflito de leis e a Convenção das Nações Unidas sobre Contratos de Compra e Venda Internacional de Mercadorias.
+
+As leis obrigatórias de proteção do consumidor do seu país de residência permanecem inalteradas.
+
+---
+
+## 17. DISPOSIÇÕES REGIONAIS
+
+### 17.1 União Europeia
+
+- Os direitos obrigatórios do consumidor (incluindo direitos de garantia) não são excluídos
+- As exclusões de responsabilidade aplicam-se apenas na medida permitida pela legislação da UE
+
+### 17.2 Estados Unidos da América
+
+- Alguns estados não permitem a limitação de certas garantias ou responsabilidades
+- Nesses casos, as limitações aplicam-se na máxima extensão permitida
+
+### 17.3 Reino Unido
+
+- Nada exclui a responsabilidade por morte ou danos pessoais causados por negligência
+- As proteções do Consumer Rights Act permanecem inalteradas
+
+### 17.4 Canadá
+
+- As leis de proteção do consumidor variam consoante a província e podem prevalecer sobre partes do presente Contrato
+
+### 17.5 Austrália
+
+- As garantias legais ao abrigo da Lei do Consumidor Australiana aplicam-se e não podem ser excluídas
+
+### 17.6 Outras Jurisdições
+
+- Quando a legislação local restringir disposições do presente Contrato, essas disposições aplicar-se-ão apenas na medida permitida
+
+---
+
+## 18. DIVISIBILIDADE
+
+Se alguma disposição for inválida, o restante permanece em vigor.
+
+---
+
+## 19. CONTRATO INTEGRAL
+
+O presente Contrato constitui o acordo integral entre si e a Editora.
+
+Complementa os termos específicos das plataformas (Apple, Google).
+
+---
+
+**AO UTILIZAR A APLICAÇÃO, CONCORDA COM O PRESENTE CONTRATO.**
+
+---
+
+(c) 2025-2026 DigitalFreedom Global LLC. Todos os direitos reservados.

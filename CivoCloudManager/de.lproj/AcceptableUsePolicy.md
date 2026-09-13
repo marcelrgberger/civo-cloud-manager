@@ -1,276 +1,277 @@
-# ACCEPTABLE USE POLICY
+<!-- doc-id: ACCEPTABLE_USE_POLICY | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/ACCEPTABLE_USE_POLICY.en.md | adapted: company identity and related clauses -->
+# RICHTLINIE FÜR ZULÄSSIGE NUTZUNG
 
-## Global Acceptable Use Policy
+## Globale Richtlinie für zulässige Nutzung
 
-**Effective Date:** April 2026
+**Gültigkeitsdatum:** September 2026
 
-**Provider:**
+**Anbieter:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Contact: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Eine Marke von DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Vereinigte Staaten
+Kontakt: hello@digitalfreedom.co.za
+Webseite: https://digitalfreedom.co.za
 
 ---
 
-## 1. INTRODUCTION
+## 1. EINLEITUNG
 
-This Acceptable Use Policy ("AUP") governs your use of all applications, software, websites, APIs, and related services ("the Services") provided by DigitalFreedom, a brand of Berger & Rosenstock GbR ("the Provider").
+Diese Richtlinie für zulässige Nutzung ("AUP") regelt Ihre Nutzung aller Anwendungen, Software, Webseiten, APIs und damit verbundenen Dienste ("die Dienste"), die von DigitalFreedom, einer Marke von DigitalFreedom Global LLC ("der Anbieter"), bereitgestellt werden.
 
-This AUP supplements our [Terms of Service](TERMS_OF_SERVICE.md), [EULA](EULA.md) and [Fair Use Policy](FAIR_USE_POLICY.md). In the event of conflict, the more restrictive provision applies.
+Diese AUP ergänzt unsere [Nutzungsbedingungen](TERMS_OF_SERVICE.md), [EULA](EULA.md) und [Fair-Use-Richtlinie](FAIR_USE_POLICY.md). Im Falle eines Widerspruchs gilt die restriktivere Bestimmung.
 
-By using the Services, you agree to comply with this AUP. Violation may result in suspension or termination of access.
+Durch die Nutzung der Dienste erklären Sie sich mit dieser AUP einverstanden. Ein Verstoß kann zur Sperrung oder Beendigung des Zugangs führen.
 
-### 1.1 Global scope
+### 1.1 Globaler Geltungsbereich
 
-The Services are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This AUP applies globally to all such users. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; any more protective local law of the user's jurisdiction additionally applies.
-
----
-
-## 2. GENERAL PRINCIPLES
-
-You agree to use the Services:
-
-- Lawfully and in accordance with all applicable laws and regulations
-- Responsibly and in a manner that does not harm others
-- In accordance with the intended purpose of the Services
-- Without infringing the rights of third parties
+Die Dienste werden über den Apple App Store und den Google Play Store vertrieben und sind daher in jedem Land und jedem Gebiet verfügbar, das von diesen Plattformen bedient wird. Diese AUP gilt weltweit für alle derartigen Nutzer. Der Anbieter übernimmt die Datenschutz-Grundverordnung der Europäischen Union (DSGVO) und die einschlägigen EU-Gesetze als Mindeststandard und wendet diese weltweit als Mindestmaßstab an; darüber hinaus gilt jedes weitergehende lokale Recht des Nutzers zusätzlich.
 
 ---
 
-## 3. PROHIBITED CONDUCT
+## 2. ALLGEMEINE GRUNDSÄTZE
 
-### 3.1 Illegal Activities
+Sie verpflichten sich, die Dienste wie folgt zu nutzen:
 
-You shall not use the Services to:
+- Gesetzeskonform und in Übereinstimmung mit allen anwendbaren Gesetzen und Vorschriften
+- Verantwortungsbewusst und so, dass anderen kein Schaden zugefügt wird
+- Im Einklang mit dem vorgesehenen Zweck der Dienste
+- Ohne die Rechte Dritter zu verletzen
 
-- Violate any applicable law, statute, regulation, or ordinance in any jurisdiction
-- Facilitate, promote, or engage in criminal activity
-- Engage in money laundering or terrorist financing
-- Violate export control or sanctions laws (including EU, US OFAC, and UN sanctions)
-- Violate anti-corruption or anti-bribery laws (including the UK Bribery Act, US FCPA, and German StGB §§ 299 ff.)
+---
 
-### 3.2 Harmful Content
+## 3. VERBOTENES VERHALTEN
 
-You shall not use the Services to create, store, transmit, or distribute:
+### 3.1 Illegale Aktivitäten
 
-- Content that promotes violence, hatred, or discrimination based on race, ethnicity, religion, gender, sexual orientation, disability, or any other protected characteristic
-- Child sexual abuse material (CSAM) or content that exploits minors
-- Content that incites terrorism or violent extremism
-- Defamatory, harassing, threatening, or intimidating content
-- Non-consensual intimate imagery
-- Disinformation or deliberately misleading content intended to cause harm
+Sie dürfen die Dienste nicht nutzen, um:
 
-### 3.3 Intellectual Property Violations
+- Gegen geltendes Recht, Gesetze, Vorschriften oder Verordnungen in irgendeiner Gerichtsbarkeit zu verstoßen
+- Kriminelle Aktivitäten zu erleichtern, zu fördern oder daran teilzunehmen
+- Geldwäsche oder Terrorismusfinanzierung zu betreiben
+- Exportkontroll- oder Sanktionsgesetze zu verletzen (einschließlich EU-, US-OFAC- und UN-Sanktionen)
+- Anti-Korruptions- oder Anti-Bestechungsgesetze zu verletzen (einschließlich UK Bribery Act, US FCPA und deutsches StGB §§ 299 ff.)
 
-You shall not:
+### 3.2 Schädliche Inhalte
 
-- Infringe copyrights, trademarks, patents, trade secrets, or other intellectual property rights
-- Distribute pirated software, media, or other copyrighted material
-- Circumvent digital rights management (DRM) or technological protection measures
-- Use the Services to facilitate counterfeiting
+Sie dürfen die Dienste nicht nutzen, um folgende Inhalte zu erstellen, zu speichern, zu übertragen oder zu verbreiten:
 
-### 3.4 Security Violations
+- Inhalte, die Gewalt, Hass oder Diskriminierung aufgrund von Rasse, ethnischer Herkunft, Religion, Geschlecht, sexueller Orientierung, Behinderung oder eines anderen geschützten Merkmals fördern
+- Material über sexuellen Missbrauch von Kindern (CSAM) oder Inhalte, die Minderjährige ausbeuten
+- Inhalte, die zu Terrorismus oder gewalttätigem Extremismus aufrufen
+- Verleumderische, belästigende, bedrohende oder einschüchternde Inhalte
+- Nicht einvernehmliche intime Aufnahmen
+- Desinformation oder absichtlich irreführende Inhalte, die Schaden verursachen sollen
 
-You shall not:
+### 3.3 Verletzungen geistigen Eigentums
 
-- Attempt to gain unauthorized access to the Services, accounts, or systems
-- Transmit malware, viruses, ransomware, or other malicious code
-- Conduct denial-of-service (DoS/DDoS) attacks
-- Engage in port scanning, vulnerability scanning, or penetration testing without written authorization
-- Intercept or monitor communications without authorization
-- Exploit vulnerabilities in the Services (report them instead via responsible disclosure)
+Sie dürfen nicht:
 
-### 3.5 Spam and Abuse
+- Urheberrechte, Marken, Patente, Geschäftsgeheimnisse oder andere Rechte an geistigem Eigentum verletzen
+- Raubkopierte Software, Medien oder anderes urheberrechtlich geschütztes Material verbreiten
+- Maßnahmen zum Schutz digitaler Rechte (DRM) oder technische Schutzmaßnahmen umgehen
+- Die Dienste zur Förderung von Produktfälschungen nutzen
 
-You shall not:
+### 3.4 Sicherheitsverletzungen
 
-- Send unsolicited bulk messages (spam)
-- Engage in phishing, social engineering, or identity fraud
-- Create fake accounts or impersonate others
-- Use bots, scrapers, or automated tools in violation of the Services' terms
-- Manipulate ratings, reviews, or feedback systems
+Sie dürfen nicht:
 
-### 3.6 Network and Resource Abuse
+- Unbefugten Zugang zu den Diensten, Konten oder Systemen versuchen zu erlangen
+- Schadsoftware, Viren, Ransomware oder anderen bösartigen Code übertragen
+- Denial-of-Service-Angriffe (DoS/DDoS) durchführen
+- Port-Scanning, Schwachstellen-Scanning oder Penetrationstests ohne schriftliche Genehmigung durchführen
+- Kommunikation ohne Genehmigung abfangen oder überwachen
+- Schwachstellen in den Diensten ausnutzen (melden Sie diese stattdessen über Responsible Disclosure)
 
-You shall not:
+### 3.5 Spam und Missbrauch
 
-- Use the Services in a manner that degrades performance for other users
-- Consume excessive resources (bandwidth, storage, compute) beyond fair use as set out in the [Fair Use Policy](FAIR_USE_POLICY.md)
-- Use the Services for cryptocurrency mining without authorization
-- Operate open proxies, relays, or anonymization services through the Services
+Sie dürfen nicht:
 
-Resource consumption, abnormal usage patterns and presumed misuse are addressed in detail by the [Fair Use Policy](FAIR_USE_POLICY.md), which empowers the Provider to throttle, rate-limit, restrict features or suspend access on good-faith suspicion without requiring conclusive proof of violation.
+- Unaufgeforderte Massenmitteilungen (Spam) versenden
+- Phishing, Social Engineering oder Identitätsbetrug betreiben
+- Fake-Accounts erstellen oder sich als andere ausgeben
+- Bots, Scraper oder automatisierte Tools entgegen den Bedingungen der Dienste verwenden
+- Bewertungssysteme, Rezensionen oder Feedback manipulieren
 
-### 3.6.1 Per-tier quantitative limits
+### 3.6 Missbrauch von Netzwerk und Ressourcen
 
-Civo Cloud Manager does not enforce per-tier quantitative limits within the Application itself. The Application connects directly to third-party APIs (Civo REST API, Kubernetes API of the user's own clusters, S3-compatible object storage of the user's own object stores); all usage is subject to those providers' own rate limits, quotas, and terms of service.
+Sie dürfen nicht:
 
-| Plan / tier | API requests | Storage | Bandwidth | AI invocations | Concurrent sessions |
+- Die Dienste so nutzen, dass die Leistung für andere Nutzer beeinträchtigt wird
+- Übermäßige Ressourcen (Bandbreite, Speicher, Rechenleistung) über den in der [Fair-Use-Richtlinie](FAIR_USE_POLICY.md) festgelegten Rahmen hinaus verbrauchen
+- Die Dienste ohne Genehmigung für das Mining von Kryptowährungen nutzen
+- Offene Proxys, Relays oder Anonymisierungsdienste über die Dienste betreiben
+
+Ressourcenverbrauch, abnormale Nutzungsmuster und vermuteter Missbrauch werden ausführlich in der [Fair-Use-Richtlinie](FAIR_USE_POLICY.md) behandelt, die den Anbieter ermächtigt, bei gutgläubigem Verdacht ohne abschließenden Nachweis Funktionen zu drosseln, zu begrenzen, einzuschränken oder den Zugang zu sperren.
+
+### 3.6.1 Quantitative Begrenzungen je Tarif
+
+Civo Cloud Manager setzt innerhalb der Anwendung keine quantitativen Begrenzungen je Tarif durch. Die Anwendung verbindet sich direkt mit Drittanbieter-APIs (Civo REST API, Kubernetes API der eigenen Cluster des Nutzers, S3-kompatibler Objektspeicher der eigenen Object Stores des Nutzers); die gesamte Nutzung unterliegt den jeweiligen Rate-Limits, Quoten und Nutzungsbedingungen dieser Anbieter.
+
+| Tarif / Stufe | API-Anfragen | Speicher | Bandbreite | KI-Aufrufe | Gleichzeitige Sitzungen |
 |---|---|---|---|---|---|
-| Free (menu-bar firewall management) | Governed by Civo API limits | None hosted by Provider | None hosted by Provider | Not applicable | Not applicable |
-| Full Access (one-time in-app purchase) | Governed by Civo API limits | None hosted by Provider | None hosted by Provider | Not applicable | Not applicable |
+| Kostenlos (Firewall-Verwaltung in der Menüleiste) | Unterliegt den Civo-API-Limits | Kein vom Anbieter gehosteter Speicher | Keine vom Anbieter gehostete Bandbreite | Nicht anwendbar | Nicht anwendbar |
+| Vollzugriff (einmaliger In-App-Kauf) | Unterliegt den Civo-API-Limits | Kein vom Anbieter gehosteter Speicher | Keine vom Anbieter gehostete Bandbreite | Nicht anwendbar | Nicht anwendbar |
 
-### 3.7 Privacy Violations
+### 3.7 Datenschutzverletzungen
 
-You shall not:
+Sie dürfen nicht:
 
-- Collect, process, or store personal data in violation of applicable data protection laws
-- Engage in surveillance or tracking of individuals without lawful basis
-- Dox or publish private information of others without consent
-- Violate the privacy rights of minors
+- Personenbezogene Daten unter Verstoß gegen geltende Datenschutzgesetze erheben, verarbeiten oder speichern
+- Überwachung oder Nachverfolgung von Personen ohne rechtliche Grundlage betreiben
+- Doxing oder Veröffentlichung privater Informationen anderer ohne deren Einwilligung
+- Die Datenschutzrechte von Minderjährigen verletzen
 
 ---
 
-## 4. CONTENT STANDARDS
+## 4. INHALTSSTANDARDS
 
-### 4.1 User-Generated Content
+### 4.1 Nutzer-generierte Inhalte
 
-If the Services permit user-generated content, you are solely responsible for content you create, upload, or share.
+Sofern die Dienste nutzergenerierte Inhalte zulassen, sind Sie allein für die von Ihnen erstellten, hochgeladenen oder geteilten Inhalte verantwortlich.
 
-### 4.2 Content Moderation
+### 4.2 Inhaltsmoderation
 
-The Provider reserves the right to:
+Der Anbieter behält sich das Recht vor:
 
-- Review content for compliance with this AUP
-- Remove or disable access to content that violates this AUP
-- Report illegal content to law enforcement
+- Inhalte auf Einhaltung dieser AUP zu überprüfen
+- Den Zugang zu Inhalten, die gegen diese AUP verstoßen, zu entfernen oder zu sperren
+- Illegale Inhalte den Strafverfolgungsbehörden zu melden
 
-### 4.3 Legal Obligations
+### 4.3 Gesetzliche Verpflichtungen
 
-Content moderation complies with:
+Die Inhaltsmoderation erfolgt in Übereinstimmung mit:
 
-- EU Digital Services Act (DSA) — Regulation (EU) 2022/2065
-- German Network Enforcement Act (NetzDG)
+- EU-Digital Services Act (DSA) — Verordnung (EU) 2022/2065
+- Deutsches Netzwerkdurchsetzungsgesetz (NetzDG)
 - UK Online Safety Act 2023
-- Applicable notice-and-takedown procedures worldwide
+- Weltweit geltenden Notice-and-Takedown-Verfahren
 
 ---
 
-## 5. ENFORCEMENT
+## 5. DURCHSETZUNG
 
-### 5.1 Violations
+### 5.1 Verstöße
 
-The Provider may take the following actions in response to violations:
+Der Anbieter kann bei Verstößen folgende Maßnahmen ergreifen:
 
-| Severity | Action |
+| Schweregrad | Maßnahme |
 |---|---|
-| **Minor** | Warning and request to remedy |
-| **Moderate** | Temporary suspension of access |
-| **Severe** | Immediate termination of access |
-| **Criminal** | Reporting to law enforcement |
+| **Geringfügig** | Verwarnung und Aufforderung zur Behebung |
+| **Mittel** | Vorübergehende Sperrung des Zugangs |
+| **Schwerwiegend** | Sofortige Beendigung des Zugangs |
+| **Kriminell** | Meldung an Strafverfolgungsbehörden |
 
-### 5.2 Due Process
+### 5.2 Rechtliches Gehör
 
-Where practicable, the Provider will:
+Soweit praktikabel, wird der Anbieter:
 
-- Notify you of the violation
-- Provide an opportunity to remedy the violation
-- Allow you to appeal the decision
+- Sie über den Verstoß informieren
+- Ihnen Gelegenheit zur Behebung des Verstoßes geben
+- Ihnen die Möglichkeit zur Anfechtung der Entscheidung einräumen
 
-Emergency situations (imminent harm, illegal content, security threats) may warrant immediate action without prior notice.
+In Notfällen (unmittelbare Gefahr, illegale Inhalte, Sicherheitsbedrohungen) kann eine sofortige Maßnahme ohne vorherige Benachrichtigung erforderlich sein.
 
-### 5.3 Reporting Violations
+### 5.3 Meldung von Verstößen
 
-You may report violations of this AUP to: hello@digitalfreedom.co.za
-
----
-
-## 6. RESPONSIBLE DISCLOSURE
-
-If you discover a security vulnerability in the Services:
-
-- Report it to: hello@digitalfreedom.co.za
-- Do not exploit the vulnerability
-- Do not disclose it publicly before it is resolved
-- Provide reasonable detail for reproduction
-
-The Provider will acknowledge reports and work to resolve vulnerabilities promptly.
+Sie können Verstöße gegen diese AUP melden an: hello@digitalfreedom.co.za
 
 ---
 
-## 7. REGIONAL CONSIDERATIONS
+## 6. VERANTWORTLICHE OFFENLEGUNG
 
-### 7.1 European Union
+Wenn Sie eine Sicherheitslücke in den Diensten entdecken:
 
-- Content obligations comply with the Digital Services Act (DSA)
-- Transparency reporting requirements are observed
-- Trusted flagger mechanisms are supported where applicable
+- Melden Sie diese an: hello@digitalfreedom.co.za
+- Nutzen Sie die Schwachstelle nicht aus
+- Veröffentlichen Sie sie nicht, bevor sie behoben ist
+- Geben Sie ausreichende Details zur Reproduktion an
 
-### 7.2 Germany
+Der Anbieter bestätigt den Eingang von Meldungen und bemüht sich, Schwachstellen umgehend zu beheben.
 
-- NetzDG requirements for content removal are observed
-- Telemediengesetz (TMG) / Digitale-Dienste-Gesetz (DDG) obligations apply
+---
 
-### 7.3 United States
+## 7. REGIONALE BESONDERHEITEN
 
-- DMCA safe harbor provisions apply where applicable
-- Section 230 of the Communications Decency Act governs intermediary liability
-- CFAA compliance is required for security-related provisions
+### 7.1 Europäische Union
 
-### 7.4 United Kingdom
+- Inhaltsvorgaben entsprechen dem Digital Services Act (DSA)
+- Transparenzberichtspflichten werden eingehalten
+- Mechanismen für vertrauenswürdige Hinweisgeber werden, soweit anwendbar, unterstützt
 
-- Online Safety Act 2023 requirements are observed
-- Content moderation obligations for user-to-user and search services apply
+### 7.2 Deutschland
 
-### 7.5 Australia
+- Anforderungen des NetzDG zur Inhaltsentfernung werden eingehalten
+- Verpflichtungen nach Telemediengesetz (TMG) / Digitale-Dienste-Gesetz (DDG) gelten
 
-- Online Safety Act 2021 requirements are observed
-- eSafety Commissioner reporting obligations apply
+### 7.3 Vereinigte Staaten
 
-### 7.6 Canada
+- DMCA Safe-Harbor-Bestimmungen gelten, soweit anwendbar
+- Section 230 des Communications Decency Act regelt die Haftung von Vermittlern
+- CFAA-Konformität ist für sicherheitsrelevante Bestimmungen erforderlich
 
-- Canadian content regulation requirements are observed
-- Provincial consumer protection laws apply
+### 7.4 Vereinigtes Königreich
+
+- Anforderungen des Online Safety Act 2023 werden eingehalten
+- Verpflichtungen zur Inhaltsmoderation für Nutzer-zu-Nutzer- und Suchdienste gelten
+
+### 7.5 Australien
+
+- Anforderungen des Online Safety Act 2021 werden eingehalten
+- Meldepflichten gegenüber dem eSafety Commissioner gelten
+
+### 7.6 Kanada
+
+- Anforderungen an kanadische Inhaltsregulierung werden eingehalten
+- Provinzielle Verbraucherschutzgesetze gelten
 
 ### 7.7 Japan
 
-- Act on the Limitation of Liability for Damages of Specified Telecommunications Service Providers applies
-- Provider Liability Limitation Act obligations are observed
+- Gesetz zur Begrenzung der Haftung für Schäden von bestimmten Telekommunikationsdienstanbietern gilt
+- Verpflichtungen nach dem Provider Liability Limitation Act werden eingehalten
 
-### 7.8 South Korea
+### 7.8 Südkorea
 
-- Information and Communications Network Act requirements apply
-- Korea Communications Standards Commission guidelines are observed
+- Anforderungen des Information and Communications Network Act gelten
+- Richtlinien der Korea Communications Standards Commission werden eingehalten
 
-### 7.9 India
+### 7.9 Indien
 
-- Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 apply
-- Content moderation and grievance redressal mechanisms are maintained
+- Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 gelten
+- Mechanismen zur Inhaltsmoderation und Beschwerdebearbeitung werden aufrechterhalten
 
-### 7.10 Brazil
+### 7.10 Brasilien
 
-- Marco Civil da Internet (Law No. 12.965/2014) requirements apply
-- Judicial notice-and-takedown obligations are observed
+- Anforderungen des Marco Civil da Internet (Gesetz Nr. 12.965/2014) gelten
+- Gerichtliche Notice-and-Takedown-Verpflichtungen werden eingehalten
 
-### 7.11 Other Jurisdictions
+### 7.11 Andere Rechtsordnungen
 
-- The Provider complies with applicable content regulation, intermediary liability, and consumer protection laws in all jurisdictions where the Services are available
-
----
-
-## 8. CHANGES TO THIS POLICY
-
-The Provider may update this AUP from time to time. Changes take effect upon posting. Continued use of the Services constitutes acceptance of the updated AUP.
+- Der Anbieter hält sich an geltende Inhaltsregulierung, Vermittlerhaftung und Verbraucherschutzgesetze in allen Rechtsordnungen, in denen die Dienste verfügbar sind
 
 ---
 
-## 9. CONTACT
+## 8. ÄNDERUNGEN DIESER RICHTLINIE
 
-For questions about this AUP or to report violations:
+Der Anbieter kann diese AUP von Zeit zu Zeit aktualisieren. Änderungen treten mit Veröffentlichung in Kraft. Die fortgesetzte Nutzung der Dienste gilt als Zustimmung zur aktualisierten AUP.
+
+---
+
+## 9. KONTAKT
+
+Für Fragen zu dieser AUP oder zur Meldung von Verstößen:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Eine Marke von DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Vereinigte Staaten
 
-General / AUP reports: hello@digitalfreedom.co.za
-Customer support: support@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Allgemeine / AUP-Meldungen: hello@digitalfreedom.co.za
+Kundensupport: support@digitalfreedom.co.za
+Webseite: https://digitalfreedom.co.za
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. Alle Rechte vorbehalten.

@@ -109,12 +109,7 @@ final class CivoAPIClient: Sendable {
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {
             throw CivoAPIError.networkError("Invalid API path: \(path)")
         }
-        var items = queryItems ?? []
-        if regionRequired {
-            let region = CivoConfig.shared.region
-            guard !region.isEmpty else { throw CivoAPIError.noRegion }
-            items.append(URLQueryItem(name: "region", value: region))
-        }
+        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
         if !items.isEmpty { components.queryItems = items }
 
         guard let url = components.url else {
@@ -217,6 +212,18 @@ final class CivoAPIClient: Sendable {
 
     // MARK: - Core
 
+    static func resolvedQueryItems(_ queryItems: [URLQueryItem]?, defaultRegion: String, regionRequired: Bool) throws -> [URLQueryItem] {
+        let supplied = queryItems ?? []
+        let explicitRegions = supplied.filter { $0.name == "region" }
+        guard regionRequired || !explicitRegions.isEmpty else { return supplied }
+        let region = explicitRegions.first?.value ?? (explicitRegions.isEmpty ? defaultRegion : "")
+        guard !region.isEmpty else { throw CivoAPIError.noRegion }
+        guard explicitRegions.allSatisfy({ $0.value == region }) else {
+            throw CivoAPIError.networkError("Conflicting regions in API request")
+        }
+        return supplied.filter { $0.name != "region" } + [URLQueryItem(name: "region", value: region)]
+    }
+
     private func execute<T: Decodable>(
         _ method: String,
         path: String,
@@ -230,12 +237,7 @@ final class CivoAPIClient: Sendable {
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {
             throw CivoAPIError.networkError("Invalid API path: \(path)")
         }
-        var items = queryItems ?? []
-        if regionRequired {
-            let region = CivoConfig.shared.region
-            guard !region.isEmpty else { throw CivoAPIError.noRegion }
-            items.append(URLQueryItem(name: "region", value: region))
-        }
+        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
         if !items.isEmpty { components.queryItems = items }
 
         guard let url = components.url else {
@@ -294,12 +296,7 @@ final class CivoAPIClient: Sendable {
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {
             throw CivoAPIError.networkError("Invalid API path: \(path)")
         }
-        var items = queryItems ?? []
-        if regionRequired {
-            let region = CivoConfig.shared.region
-            guard !region.isEmpty else { throw CivoAPIError.noRegion }
-            items.append(URLQueryItem(name: "region", value: region))
-        }
+        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
         if !items.isEmpty { components.queryItems = items }
 
         guard let url = components.url else {

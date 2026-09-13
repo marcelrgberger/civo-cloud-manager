@@ -1,333 +1,334 @@
-# TERMS OF SERVICE
+<!-- doc-id: TERMS_OF_SERVICE | lang: nl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/TERMS_OF_SERVICE.en.md | adapted: company identity and related clauses -->
+# GEBRUIKSVOORWAARDEN
 
-## General Terms and Conditions
+## Algemene Voorwaarden
 
-**Effective Date:** April 2026
+**Ingangsdatum:** september 2026
 
-**Provider:**
+**Aanbieder:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Een merk van DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Verenigde Staten
 Contact: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
-## 1. SCOPE AND ACCEPTANCE
+## 1. REIKWIJDTE EN AANVAARDING
 
-### 1.1 Agreement
+### 1.1 Overeenkomst
 
-These Terms of Service ("Terms") govern your access to and use of our websites, applications, APIs, and related services ("the Services") provided under the **DigitalFreedom** brand by Berger & Rosenstock GbR ("the Provider").
+Deze Gebruiksvoorwaarden ("Voorwaarden") zijn van toepassing op uw toegang tot en gebruik van onze websites, applicaties, API's en aanverwante diensten ("de Diensten") die onder het merk **DigitalFreedom** worden aangeboden door DigitalFreedom Global LLC ("de Aanbieder").
 
-### 1.1.1 Global scope
+### 1.1.1 Wereldwijde reikwijdte
 
-The Services are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. These Terms apply globally to all users of the Services, regardless of country of access or use. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; mandatory consumer-protection and other statutory rights granted by the user's country of residence remain unaffected and prevail wherever they are more protective.
+De Diensten worden verspreid via de Apple App Store en de Google Play Store en zijn derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Deze Voorwaarden zijn wereldwijd van toepassing op alle gebruikers van de Diensten, ongeacht het land van toegang of gebruik. De Aanbieder hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; dwingende consumentenbescherming en andere wettelijke rechten die door het land van verblijf van de gebruiker worden verleend, blijven onaangetast en prevaleren waar zij meer bescherming bieden.
 
-### 1.2 Acceptance
+### 1.2 Aanvaarding
 
-By accessing or using the Services, you agree to be bound by these Terms. If you do not agree, you must not use the Services.
+Door toegang te verkrijgen tot of gebruik te maken van de Diensten, gaat u akkoord met deze Voorwaarden. Indien u niet akkoord gaat, mag u de Diensten niet gebruiken.
 
-### 1.3 Eligibility
+### 1.3 Geschiktheid
 
-You must be at least 16 years old (or the applicable age of consent in your jurisdiction) to use the Services. By using the Services, you represent that you meet this requirement.
+U moet ten minste 16 jaar oud zijn (of de toepasselijke leeftijd van toestemming in uw rechtsgebied) om de Diensten te gebruiken. Door gebruik te maken van de Diensten verklaart u aan deze vereiste te voldoen.
 
-### 1.4 Business Use
+### 1.4 Zakelijk gebruik
 
-If you use the Services on behalf of an organization, you represent that you have the authority to bind that organization to these Terms.
+Indien u de Diensten gebruikt namens een organisatie, verklaart u bevoegd te zijn om die organisatie aan deze Voorwaarden te binden.
 
 ---
 
-## 2. SERVICES
+## 2. DIENSTEN
 
-### 2.1 Description
+### 2.1 Beschrijving
 
-The Provider offers software applications, tools, and related services. The specific scope and functionality of each Service is described in its respective documentation.
+De Aanbieder biedt softwareapplicaties, tools en aanverwante diensten aan. De specifieke reikwijdte en functionaliteit van elke Dienst wordt beschreven in de bijbehorende documentatie.
 
-### 2.2 Modifications
+### 2.2 Wijzigingen
 
-The Provider reserves the right to modify, suspend, or discontinue any Service at any time, with or without notice. Material changes will be communicated where practicable.
+De Aanbieder behoudt zich het recht voor om op elk moment, met of zonder kennisgeving, een Dienst te wijzigen, op te schorten of stop te zetten. Materiële wijzigingen worden gecommuniceerd waar dit redelijkerwijs mogelijk is.
 
-### 2.3 Availability
+### 2.3 Beschikbaarheid
 
-The Services are provided on an "as available" basis. The Provider does not guarantee uninterrupted access or availability.
+De Diensten worden geleverd op een "zoals beschikbaar" basis. De Aanbieder garandeert geen ononderbroken toegang of beschikbaarheid.
 
 ---
 
 ## 3. ACCOUNTS
 
-### 3.1 Registration
+### 3.1 Registratie
 
-Some Services may require account registration. You must provide accurate and complete information.
+Voor sommige Diensten is registratie van een account vereist. U dient juiste en volledige informatie te verstrekken.
 
-### 3.2 Security
+### 3.2 Beveiliging
 
-You are responsible for:
+U bent verantwoordelijk voor:
 
-- Maintaining the confidentiality of your credentials
-- All activities that occur under your account
-- Notifying the Provider of any unauthorized use
+- Het vertrouwelijk houden van uw inloggegevens
+- Alle activiteiten die onder uw account plaatsvinden
+- Het melden van ongeoorloofd gebruik aan de Aanbieder
 
-### 3.3 Suspension
+### 3.3 Opschorting
 
-The Provider may suspend or terminate accounts that violate these Terms or applicable law.
-
----
-
-## 4. USER CONTENT
-
-### 4.1 Ownership
-
-You retain ownership of content you create, upload, or submit through the Services ("User Content").
-
-### 4.2 License Grant
-
-By submitting User Content, you grant the Provider a worldwide, non-exclusive, royalty-free license to use, store, and process the content as necessary to provide the Services.
-
-### 4.3 Responsibility
-
-You are solely responsible for your User Content. You represent that:
-
-- You have the right to submit the content
-- The content does not violate any law or third-party rights
-- The content does not contain malicious code
-
-### 4.4 Removal
-
-The Provider may remove User Content that violates these Terms or applicable law.
+De Aanbieder kan accounts opschorten of beëindigen die deze Voorwaarden of toepasselijke wetgeving schenden.
 
 ---
 
-## 5. ACCEPTABLE USE AND FAIR USE
+## 4. GEBRUIKERSINHOUD
 
-Use of the Services is subject to our [Acceptable Use Policy](ACCEPTABLE_USE_POLICY.md) and our [Fair Use Policy](FAIR_USE_POLICY.md). The Fair Use Policy empowers the Provider to throttle, rate-limit, restrict features, suspend or terminate access where use exceeds normal individual end-user use or where misuse is suspected on good-faith grounds.
+### 4.1 Eigendom
 
-You shall not:
+U behoudt het eigendom van de inhoud die u aanmaakt, uploadt of indient via de Diensten ("Gebruikersinhoud").
 
-- Violate any applicable law or regulation
-- Infringe intellectual property or other rights of third parties
-- Transmit malware, spam, or harmful content
-- Attempt to gain unauthorized access to the Services or related systems
-- Interfere with the operation or security of the Services
-- Use the Services for fraudulent or deceptive purposes
-- Resell or redistribute the Services without authorization
+### 4.2 Licentieverlening
+
+Door Gebruikersinhoud in te dienen, verleent u de Aanbieder een wereldwijde, niet-exclusieve, royaltyvrije licentie om de inhoud te gebruiken, op te slaan en te verwerken voor zover noodzakelijk om de Diensten te leveren.
+
+### 4.3 Verantwoordelijkheid
+
+U bent als enige verantwoordelijk voor uw Gebruikersinhoud. U verklaart dat:
+
+- U het recht heeft om de inhoud in te dienen
+- De inhoud geen wet of rechten van derden schendt
+- De inhoud geen kwaadaardige code bevat
+
+### 4.4 Verwijdering
+
+De Aanbieder kan Gebruikersinhoud verwijderen die deze Voorwaarden of toepasselijke wetgeving schendt.
 
 ---
 
-## 6. INTELLECTUAL PROPERTY
+## 5. TOELAATBAAR GEBRUIK EN FAIR USE
 
-### 6.1 Provider's IP
+Het gebruik van de Diensten is onderworpen aan ons [Beleid Toelaatbaar Gebruik](ACCEPTABLE_USE_POLICY.md) en ons [Fair Use-beleid](FAIR_USE_POLICY.md). Het Fair Use-beleid geeft de Aanbieder het recht om het gebruik te beperken, functies te beperken, toegang op te schorten of te beëindigen wanneer het gebruik het normale individuele eindgebruik overschrijdt of wanneer misbruik op goede gronden wordt vermoed.
 
-The Services, including software, design, logos, and documentation, are protected by intellectual property laws. All rights not expressly granted remain with the Provider.
+U mag niet:
 
-### 6.2 Trademarks
+- Enige toepasselijke wet- of regelgeving overtreden
+- Intellectuele eigendomsrechten of andere rechten van derden schenden
+- Malware, spam of schadelijke inhoud verzenden
+- Pogingen doen om ongeoorloofde toegang te verkrijgen tot de Diensten of gerelateerde systemen
+- De werking of beveiliging van de Diensten verstoren
+- De Diensten gebruiken voor frauduleuze of misleidende doeleinden
+- De Diensten zonder toestemming doorverkopen of herverdelen
 
-The Provider's trademarks and trade names may not be used without prior written consent.
+---
+
+## 6. INTELLECTUEEL EIGENDOM
+
+### 6.1 Intellectuele eigendom van de Aanbieder
+
+De Diensten, waaronder software, ontwerp, logo's en documentatie, zijn beschermd door intellectuele eigendomsrechten. Alle rechten die niet uitdrukkelijk zijn verleend, blijven bij de Aanbieder.
+
+### 6.2 Merken
+
+De handelsmerken en handelsnamen van de Aanbieder mogen niet worden gebruikt zonder voorafgaande schriftelijke toestemming.
 
 ### 6.3 Feedback
 
-Any feedback or suggestions you provide may be used by the Provider without obligation to you.
+Alle feedback of suggesties die u verstrekt, mogen door de Aanbieder worden gebruikt zonder enige verplichting jegens u.
 
 ---
 
-## 7. PAYMENTS AND SUBSCRIPTIONS
+## 7. BETALINGEN EN ABONNEMENTEN
 
-### 7.1 Pricing
+### 7.1 Prijzen
 
-Prices for paid Services are displayed at the time of purchase. All prices are inclusive of applicable taxes unless otherwise stated.
+Prijzen voor betaalde Diensten worden weergegeven op het moment van aankoop. Alle prijzen zijn inclusief toepasselijke belastingen, tenzij anders vermeld.
 
-### 7.2 Payment Processing
+### 7.2 Betalingsverwerking
 
-Payments may be processed by third-party payment providers. You agree to the terms of such providers.
+Betalingen kunnen worden verwerkt door externe betalingsverwerkers. U stemt in met de voorwaarden van deze aanbieders.
 
-### 7.3 Subscriptions
+### 7.3 Abonnementen
 
-Subscriptions automatically renew unless cancelled before the renewal date. You may cancel at any time through the applicable platform or by contacting the Provider. Detailed disclosure of auto-renewal, free-trial conversion and cancellation paths is provided in the [Subscription Terms](SUBSCRIPTION_TERMS.md).
+Abonnementen worden automatisch verlengd tenzij ze vóór de verlengingsdatum worden opgezegd. U kunt op elk moment opzeggen via het betreffende platform of door contact op te nemen met de Aanbieder. Uitgebreide informatie over automatische verlenging, omzetting van gratis proefperiodes en opzegmogelijkheden vindt u in de [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md).
 
-### 7.3.1 Kündigungs-Button (Germany, § 312k BGB)
+### 7.3.1 Kündigungs-Button (Duitsland, § 312k BGB)
 
-For direct subscriptions concluded with consumers in Germany, the Provider provides a cancellation button reachable in no more than two clicks from the account page (see [Subscription Terms](SUBSCRIPTION_TERMS.md) § 6.3). For subscriptions concluded through the Apple App Store or Google Play, cancellation is handled by the respective platform's standard mechanism.
+Voor directe abonnementen die met consumenten in Duitsland zijn afgesloten, biedt de Aanbieder een opzeggingsknop die in maximaal twee klikken vanaf de accountpagina bereikbaar is (zie [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md) § 6.3). Voor abonnementen via de Apple App Store of Google Play wordt opzegging afgehandeld via het standaardmechanisme van het betreffende platform.
 
 ### 7.3.2 California Automatic Renewal Law (ARL)
 
-For California residents, the Provider complies with Cal. Bus. & Prof. Code § 17600 et seq. as further described in the [Subscription Terms](SUBSCRIPTION_TERMS.md) § 8.
+Voor inwoners van Californië voldoet de Aanbieder aan Cal. Bus. & Prof. Code § 17600 e.v., zoals verder beschreven in de [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md) § 8.
 
-### 7.4 Refunds
+### 7.4 Restituties
 
-Refunds are governed by:
+Restituties worden geregeld door:
 
-- The applicable platform terms (Apple App Store, Google Play) — see [Refund Policy](REFUND_POLICY.md) § 2
-- Applicable consumer protection laws
-- The Provider's [Refund Policy](REFUND_POLICY.md)
+- De toepasselijke platformvoorwaarden (Apple App Store, Google Play) — zie [Restitutiebeleid](REFUND_POLICY.md) § 2
+- Toepasselijke consumentenbeschermingswetten
+- Het [Restitutiebeleid](REFUND_POLICY.md) van de Aanbieder
 
-### 7.5 EU Right of Withdrawal
+### 7.5 EU-herroepingsrecht
 
-Consumers in the EU have a 14-day right of withdrawal for digital content, unless:
+Consumenten in de EU hebben een herroepingsrecht van 14 dagen voor digitale inhoud, tenzij:
 
-- The consumer has expressly consented to immediate performance
-- The consumer has acknowledged loss of the right of withdrawal
-
----
-
-## 8. THIRD-PARTY SERVICES
-
-### 8.1 Integration
-
-The Services may integrate with or link to third-party services. The Provider does not endorse or control such services.
-
-### 8.2 Terms
-
-Your use of third-party services is subject to their respective terms and privacy policies.
-
-### 8.3 Liability
-
-The Provider is not liable for any damages resulting from your use of third-party services.
+- De consument uitdrukkelijk heeft ingestemd met onmiddellijke uitvoering
+- De consument heeft erkend het herroepingsrecht te verliezen
 
 ---
 
-## 9. DISCLAIMER OF WARRANTIES
+## 8. DIENSTEN VAN DERDEN
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+### 8.1 Integratie
 
-- The Services are provided "AS IS" and "AS AVAILABLE"
-- The Provider disclaims all warranties, express or implied
-- No guarantee of accuracy, completeness, reliability, or fitness for a particular purpose
-- No warranty that the Services will be uninterrupted, secure, or error-free
+De Diensten kunnen integreren met of verwijzen naar diensten van derden. De Aanbieder onderschrijft of beheert deze diensten niet.
 
----
+### 8.2 Voorwaarden
 
-## 10. LIMITATION OF LIABILITY
+Uw gebruik van diensten van derden is onderworpen aan hun respectieve voorwaarden en privacybeleid.
 
-TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+### 8.3 Aansprakelijkheid
 
-- The Provider shall not be liable for indirect, incidental, special, consequential, or punitive damages
-- The Provider shall not be liable for loss of data, profits, revenue, or business opportunities
-- Total aggregate liability shall not exceed the greater of (a) the amount paid by you in the 12 months preceding the claim, or (b) EUR 100
+De Aanbieder is niet aansprakelijk voor enige schade die voortvloeit uit uw gebruik van diensten van derden.
 
 ---
 
-## 11. INDEMNIFICATION
+## 9. AFWIJZING VAN GARANTIES
 
-You agree to indemnify and hold harmless the Provider from claims, damages, losses, and expenses (including reasonable legal fees) arising from:
+VOOR ZOVER TOEGESTAAN DOOR DE WET:
 
-- Your use of the Services
-- Your violation of these Terms
-- Your violation of any law or third-party rights
-- Your User Content
-
----
-
-## 12. TERMINATION
-
-### 12.1 By You
-
-You may stop using the Services at any time. Account deletion requests can be submitted to the Provider.
-
-### 12.2 By the Provider
-
-The Provider may terminate or suspend your access at any time, with or without cause. Material breaches may result in immediate termination without notice.
-
-### 12.3 Effect of Termination
-
-Upon termination:
-
-- Your right to use the Services ceases
-- Provisions that by their nature should survive will continue (including liability limitations, indemnification, governing law)
+- De Diensten worden geleverd "ZOALS ZE ZIJN" en "ZOALS BESCHIKBAAR"
+- De Aanbieder wijst alle expliciete of impliciete garanties af
+- Geen garantie op juistheid, volledigheid, betrouwbaarheid of geschiktheid voor een bepaald doel
+- Geen garantie dat de Diensten ononderbroken, veilig of foutloos zullen zijn
 
 ---
 
-## 13. GOVERNING LAW AND DISPUTE RESOLUTION
+## 10. BEPERKING VAN AANSPRAKELIJKHEID
 
-### 13.1 Governing Law
+VOOR ZOVER TOEGESTAAN DOOR DE WET:
 
-These Terms are governed by German law.
-
-### 13.2 Jurisdiction
-
-Disputes shall be subject to the exclusive jurisdiction of the courts in Germany, unless mandatory consumer protection laws provide otherwise.
-
-### 13.3 Consumer Disputes (EU)
-
-The European Commission provides an Online Dispute Resolution platform at https://ec.europa.eu/consumers/odr. The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board unless required by law.
+- De Aanbieder is niet aansprakelijk voor indirecte, incidentele, bijzondere, gevolg- of bestraffende schade
+- De Aanbieder is niet aansprakelijk voor verlies van gegevens, winst, omzet of zakelijke kansen
+- De totale aansprakelijkheid bedraagt niet meer dan het hoogste van (a) het door u betaalde bedrag in de 12 maanden voorafgaand aan de claim, of (b) EUR 100
 
 ---
 
-## 14. REGIONAL PROVISIONS
+## 11. VRIJWARING
 
-### 14.1 European Union
+U stemt ermee in de Aanbieder te vrijwaren en schadeloos te stellen voor claims, schade, verliezen en kosten (inclusief redelijke juridische kosten) die voortvloeien uit:
 
-- Mandatory consumer protection rights under EU Directives (including the Consumer Rights Directive and Digital Content Directive) remain unaffected
-- The right of withdrawal applies to digital content purchases as provided by law
-- Warranty rights for digital content under Directive (EU) 2019/770 are not excluded
+- Uw gebruik van de Diensten
+- Uw schending van deze Voorwaarden
+- Uw schending van enige wet of rechten van derden
+- Uw Gebruikersinhoud
 
-### 14.2 United States
+---
 
-- Where prohibited by state law, limitations on liability or warranties shall not apply
-- Arbitration provisions may not apply in jurisdictions where consumer arbitration is restricted
+## 12. BEËINDIGING
 
-### 14.3 United Kingdom
+### 12.1 Door u
 
-- Consumer Rights Act 2015 protections apply
-- Liability for death or personal injury caused by negligence is not excluded
+U kunt op elk moment stoppen met het gebruik van de Diensten. Verzoeken tot verwijdering van accounts kunnen bij de Aanbieder worden ingediend.
+
+### 12.2 Door de Aanbieder
+
+De Aanbieder kan uw toegang op elk moment beëindigen of opschorten, met of zonder reden. Ernstige schendingen kunnen leiden tot onmiddellijke beëindiging zonder voorafgaande kennisgeving.
+
+### 12.3 Gevolgen van beëindiging
+
+Na beëindiging:
+
+- Uw recht om de Diensten te gebruiken vervalt
+- Bepalingen die naar hun aard voortduren, blijven van kracht (waaronder aansprakelijkheidsbeperkingen, vrijwaring, toepasselijk recht)
+
+---
+
+## 13. TOEPASSELIJK RECHT EN GESCHILLENBESLECHTING
+
+### 13.1 Toepasselijk recht
+
+Deze Voorwaarden worden beheerst door het recht van de staat Wyoming, Verenigde Staten van Amerika, met uitzondering van de regels inzake conflictenrecht en het VN-Verdrag inzake internationale koopovereenkomsten betreffende roerende zaken. Indien u consument bent, doet deze rechtskeuze geen afbreuk aan de bescherming die u geniet op grond van dwingende bepalingen van het recht van uw gewone verblijfplaats (art. 6(2) Rome I-Verordening en gelijkwaardige regels).
+
+### 13.2 Bevoegde rechter
+
+Voor gebruikers die geen consument zijn, zijn de rechtbanken van Sheridan County, Wyoming, Verenigde Staten, exclusief bevoegd. Consumenten kunnen procedures aanhangig maken bij de rechtbanken van hun land van gewone verblijfplaats en kunnen door de Aanbieder alleen voor die rechtbanken worden gedaagd.
+
+### 13.3 Consumentengeschillen (EU)
+
+Het onlinegeschillenbeslechtingsplatform van de Europese Commissie is op 20 juli 2025 opgeheven na de intrekking van Verordening (EU) nr. 524/2013 door Verordening (EU) 2024/3228. Consumenten kunnen rechtstreeks contact opnemen met de Aanbieder via hello@digitalfreedom.co.za. De Aanbieder is niet verplicht noch bereid deel te nemen aan geschillenbeslechting voor een consumentenarbitragecommissie, tenzij wettelijk verplicht.
+
+---
+
+## 14. REGIONALE BEPALINGEN
+
+### 14.1 Europese Unie
+
+- Dwingende consumentenrechten op grond van EU-richtlijnen (waaronder de Richtlijn Consumentenrechten en de Richtlijn Digitale Inhoud) blijven onaangetast
+- Het herroepingsrecht is van toepassing op aankopen van digitale inhoud zoals wettelijk bepaald
+- Garantieaanspraken voor digitale inhoud onder Richtlijn (EU) 2019/770 worden niet uitgesloten
+
+### 14.2 Verenigde Staten
+
+- Waar verboden door staatswetgeving, zijn beperkingen van aansprakelijkheid of garanties niet van toepassing
+- Arbitragebepalingen zijn mogelijk niet van toepassing in rechtsgebieden waar consumentenarbitrage is beperkt
+
+### 14.3 Verenigd Koninkrijk
+
+- Bescherming onder de Consumer Rights Act 2015 is van toepassing
+- Aansprakelijkheid voor overlijden of persoonlijk letsel door nalatigheid wordt niet uitgesloten
 
 ### 14.4 Canada
 
-- Provincial consumer protection legislation may override certain provisions
+- Provinciale consumentenbeschermingswetgeving kan bepaalde bepalingen buiten werking stellen
 
-### 14.5 Australia
+### 14.5 Australië
 
-- Consumer guarantees under Australian Consumer Law cannot be excluded
-- Liability is limited to re-supply of the Services or payment of the cost of re-supply
+- Consumentengaranties onder de Australische Consumentenwet kunnen niet worden uitgesloten
+- Aansprakelijkheid is beperkt tot herlevering van de Diensten of betaling van de kosten van herlevering
 
-### 14.6 Other Jurisdictions
+### 14.6 Overige rechtsgebieden
 
-- Where local mandatory law restricts any provision, such provision applies only to the extent permitted
-
----
-
-## 15. FORCE MAJEURE
-
-Neither party is liable for delay or failure to perform any obligation under these Terms to the extent the delay or failure is caused by events beyond reasonable control, including but not limited to acts of nature, war, civil unrest, terrorism, cyber-attack, government action, pandemic, fire, flood, prolonged power or telecommunications outage, or failure of upstream sub-processor infrastructure. The affected party will notify the other without undue delay and use reasonable efforts to mitigate.
-
-This Section does not affect the obligation to pay amounts already due, nor any mandatory consumer-protection right under the user's country of residence.
+- Waar lokale dwingende wetgeving een bepaling beperkt, geldt die bepaling slechts voor zover toegestaan
 
 ---
 
-## 16. GENERAL
+## 15. OVERMACHT
 
-### 16.1 Severability
+Geen van beide partijen is aansprakelijk voor vertraging of het niet nakomen van enige verplichting onder deze Voorwaarden voor zover de vertraging of het niet-nakomen wordt veroorzaakt door gebeurtenissen buiten redelijke controle, waaronder maar niet beperkt tot natuurrampen, oorlog, burgerlijke onrust, terrorisme, cyberaanvallen, overheidsmaatregelen, pandemie, brand, overstroming, langdurige stroom- of telecommunicatiestoring, of uitval van infrastructuur van onderaannemers. De getroffen partij zal de andere partij zonder onnodige vertraging informeren en redelijke inspanningen leveren om de gevolgen te beperken.
 
-If any provision is found invalid, the remaining provisions continue in full effect.
-
-### 16.2 Waiver
-
-Failure to enforce any provision does not constitute a waiver.
-
-### 16.3 Assignment
-
-The Provider may assign these Terms (for example, in connection with the planned reorganisation of the operating company from Berger & Rosenstock GbR (Germany) to DigitalFreedom Pty (Ltd) (South Africa)). Users will be informed at least 30 days in advance of any change of contracting entity, and where required by law, fresh consent will be sought. You may not assign without prior written consent.
-
-### 16.4 Entire Agreement
-
-These Terms, together with the [Privacy Policy](PRIVACY_POLICY.md), [EULA](EULA.md), [Subscription Terms](SUBSCRIPTION_TERMS.md), [Fair Use Policy](FAIR_USE_POLICY.md), [Acceptable Use Policy](ACCEPTABLE_USE_POLICY.md), [Refund Policy](REFUND_POLICY.md) and any other referenced policies, constitute the entire agreement between you and the Provider.
-
-### 16.5 Changes
-
-The Provider may update these Terms. Material changes are notified at least 30 days in advance via the Services or by email and, where applicable consumer-protection law requires, take effect only on renewed acceptance. Continued use after non-material changes constitutes acceptance.
-
-### 16.6 Limitation period
-
-Claims under these Terms are subject to the statutory limitation periods of the governing law (for German law: § 195 BGB — three years from the end of the year in which the claim arose and you became aware of it). This does not affect any mandatory limitation period of the user's country of residence.
-
-### 16.7 Notices
-
-Notices to the Provider should be sent to `hello@digitalfreedom.co.za` (general) or `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Notices to you may be sent by email to the address associated with your account or by in-app notification.
-
-### 16.8 Language
-
-These Terms are made available in English. Translations may be provided for convenience; in the event of conflict, the English version controls except where mandatory local law requires otherwise.
+Deze bepaling doet geen afbreuk aan de verplichting tot betaling van reeds verschuldigde bedragen, noch aan enig dwingend consumentenrecht van het land van verblijf van de gebruiker.
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+## 16. ALGEMEEN
+
+### 16.1 Scheidbaarheid
+
+Indien een bepaling ongeldig wordt bevonden, blijven de overige bepalingen volledig van kracht.
+
+### 16.2 Afstand
+
+Het niet afdwingen van een bepaling houdt geen afstand van recht in.
+
+### 16.3 Overdracht
+
+De Aanbieder mag deze Voorwaarden overdragen in het kader van een fusie, overname, bedrijfsherstructurering of verkoop van activa. Gebruikers worden ten minste 30 dagen van tevoren geïnformeerd over een wijziging van de contractspartij en waar wettelijk vereist zal opnieuw toestemming worden gevraagd. U mag niet overdragen zonder voorafgaande schriftelijke toestemming.
+
+### 16.4 Volledige overeenkomst
+
+Deze Voorwaarden, samen met het [Privacybeleid](PRIVACY_POLICY.md), de [EULA](EULA.md), de [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md), het [Fair Use-beleid](FAIR_USE_POLICY.md), het [Beleid Toelaatbaar Gebruik](ACCEPTABLE_USE_POLICY.md), het [Restitutiebeleid](REFUND_POLICY.md) en alle andere genoemde beleidsregels, vormen de volledige overeenkomst tussen u en de Aanbieder.
+
+### 16.5 Wijzigingen
+
+De Aanbieder kan deze Voorwaarden bijwerken. Materiële wijzigingen worden ten minste 30 dagen van tevoren aangekondigd via de Diensten of per e-mail en treden, waar vereist door toepasselijke consumentenbeschermingswetgeving, pas in werking na hernieuwde aanvaarding. Voortgezet gebruik na niet-materiële wijzigingen geldt als aanvaarding.
+
+### 16.6 Verjaringstermijn
+
+Vorderingen op grond van deze Voorwaarden zijn onderworpen aan de wettelijke verjaringstermijnen van het toepasselijke recht. Dit doet geen afbreuk aan enige dwingende verjaringstermijn van het land van verblijf van de gebruiker.
+
+### 16.7 Kennisgevingen
+
+Kennisgevingen aan de Aanbieder dienen te worden gestuurd naar `hello@digitalfreedom.co.za` (algemeen) of `data-protection@digitalfreedom.co.za` (privacy / AVG). Kennisgevingen aan u kunnen worden verzonden per e-mail naar het aan uw account gekoppelde adres of via een melding in de app.
+
+### 16.8 Taal
+
+Voor consumenten geldt de versie in een officiële taal van hun gewone verblijfplaats indien een dergelijke versie bestaat. De Engelse versie geldt voor zakelijke klanten en voor talen waarvoor geen versie bestaat.
+
+---
+
+(c) 2025-2026 DigitalFreedom Global LLC. Alle rechten voorbehouden.

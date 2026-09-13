@@ -1,29 +1,28 @@
+<!-- doc-id: PRIVACY_POLICY | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/PRIVACY_POLICY.en.md | adapted: company identity and related clauses -->
 # PRIVACY POLICY
 
 ## Global Data Protection and Privacy Notice
 
-**Effective Date:** May 2026
+**Effective Date:** September 2026
 
-**Service operated by:** DigitalFreedom — a brand of Berger & Rosenstock GbR
+**Service operated by:** DigitalFreedom — a brand of DigitalFreedom Global LLC
 
 **Data Controller (legal entity):**
-Berger & Rosenstock GbR (trading as DigitalFreedom)
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-
-Authorized Representatives: Marcel R. G. Berger, Jasmin Rosenstock
-VAT-ID: DE455096022
+DigitalFreedom Global LLC (trading as DigitalFreedom)
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 Contact (general): hello@digitalfreedom.co.za
 Contact (data protection): data-protection@digitalfreedom.co.za
+Data protection request form: https://data-protection.digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
 ---
 
 ## 1. INTRODUCTION
 
-This Privacy Policy explains how DigitalFreedom (a brand of Berger & Rosenstock GbR, collectively "we", "us", "our") collects, uses, stores, and protects your personal data when you use our applications, software, websites, and related services ("the Services").
+This Privacy Policy explains how DigitalFreedom (a brand of DigitalFreedom Global LLC, collectively "we", "us", "our") collects, uses, stores, and protects your personal data when you use our applications, software, websites, and related services ("the Services").
 
 ### 1.1 Global scope
 
@@ -55,16 +54,16 @@ We are committed to protecting your privacy and complying with applicable data-p
 
 The Services are offered under the **DigitalFreedom** brand. The legal entity responsible for processing your personal data (the "data controller" under Art. 4(7) GDPR) is:
 
-Berger & Rosenstock GbR (trading as DigitalFreedom)
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-
-Authorized Representatives: Marcel R. G. Berger, Jasmin Rosenstock
-VAT-ID: DE455096022
+DigitalFreedom Global LLC (trading as DigitalFreedom)
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 For data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests):
+Request form: https://data-protection.digitalfreedom.co.za
 Email: data-protection@digitalfreedom.co.za
+
+You may use either route, and you are free to reach us by any other channel — we act on your request however it arrives.
 
 For general inquiries:
 Email: hello@digitalfreedom.co.za
@@ -167,7 +166,6 @@ The following sub-processors are currently engaged for processing your personal 
 | Google Ireland Limited (Google Cloud / Workspace) | Ancillary Google Cloud Platform / Workspace services consumed by applications and tooling | EEA data-centre regions (with onward transfer to other Google entities under EU SCCs / UK Addendum) |
 | OpenAI Ireland Ltd. | OpenAI API Services (model inference, embeddings) for AI-assisted application features | Ireland (with onward transfer to OpenAI OpCo, LLC in the United States under EU SCCs / UK Addendum) |
 | RevenueCat, Inc. | Subscription and in-app-purchase management (receipt validation, entitlement state) for Flutter apps | United States (governed by RevenueCat's published DPA framework / EU SCCs) |
-| UAB "MailerLite" | Opt-in newsletter / email-marketing platform — only for users who actively subscribe (double opt-in) | Lithuania (EU/EEA) |
 
 Workloads on Civo are distributed across the `fra1` and `lon1` regions for redundancy and migration purposes. The list of sub-processors may change; the current list is maintained in our internal sub-processor register and is available on request via the data protection contact below.
 
@@ -207,7 +205,6 @@ Specifically with regard to our named sub-processors:
 - **Google Cloud / Workspace** — primary processing in EEA data-centre regions. Onward transfers to Google entities outside the EEA (including the United States) are governed by the **EU Standard Contractual Clauses** (Commission Implementing Decision (EU) 2021/914), the **UK International Data Transfer Addendum** issued by the ICO, and supplementary technical measures (encryption in transit and at rest, key management). The contractual basis is Google's Cloud Data Processing Addendum (Customers).
 - **OpenAI Ireland Ltd. (Ireland) and OpenAI OpCo, LLC (United States)** — Customer Data submitted to the OpenAI API is processed by OpenAI Ireland Ltd. in the EEA. Onward transfers to OpenAI OpCo, LLC in the United States are governed by the **EU Standard Contractual Clauses** (Module Two — Controller to Processor), the **UK International Data Transfer Addendum**, and intra-group safeguards. API Customer Data is retained for a maximum of 30 days and then deleted, unless retention is required by law. The contractual basis is the OpenAI Data Processing Addendum signed on 2025-08-02.
 - **RevenueCat, Inc. (United States)** — subscription / in-app-purchase data is transferred to the United States. Transfers are covered by the **EU Standard Contractual Clauses** referenced in RevenueCat's publicly published DPA framework and supplementary technical measures (encryption in transit and at rest, pseudonymous App User IDs, no payment-card data — card data is processed by Apple / Google as merchants of record).
-- **MailerLite (UAB MailerLite, Lithuania)** — primary processing is intra-EEA. Where MailerLite engages sub-processors outside the EEA (per its public sub-processor list), those transfers are covered by the **EU Standard Contractual Clauses** referenced in MailerLite's publicly published DPA framework.
 - **Apple (Apple Distribution International Ltd., Ireland; intra-group processing by Apple Inc., United States)** — Apple acts as **independent controller** (and merchant of record for paid transactions). Intra-group transfers to Apple Inc. in the United States are governed by Apple's internal Binding Corporate Rules / SCCs as disclosed in the Apple Privacy Policy.
 
 For any transfers not covered by an adequacy decision:
@@ -360,7 +357,7 @@ The [Fair Use Policy](FAIR_USE_POLICY.md) describes how operational telemetry is
 
 ### 13.4 Marketing communications
 
-Marketing emails (via MailerLite) and marketing push notifications are sent only with your **explicit, separate opt-in**. You can withdraw consent at any time without affecting the rest of the Services.
+Marketing emails and marketing push notifications are sent only with your **explicit, separate opt-in**. You can withdraw consent at any time without affecting the rest of the Services.
 
 ### 13.5 Account deletion
 
@@ -389,12 +386,13 @@ We may update this Privacy Policy from time to time.
 For privacy-related inquiries or to exercise your rights:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+A brand of DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+United States
 
 Data protection: data-protection@digitalfreedom.co.za
+Data protection request form: https://data-protection.digitalfreedom.co.za
 General inquiries: hello@digitalfreedom.co.za
 Website: https://digitalfreedom.co.za
 
@@ -407,7 +405,8 @@ For EU residents, you may also contact the competent supervisory authority in yo
 ### 17.1 European Union / EEA
 
 - Processing complies with GDPR requirements
-- The lead supervisory authority is the competent German data protection authority
+- No lead supervisory authority applies: the Controller is not established in the Union, so the one-stop-shop under Art. 56 GDPR does not apply.
+- You may lodge a complaint with the supervisory authority of your habitual residence, your place of work, or the place of the alleged infringement (Art. 77 GDPR).
 - Data Protection Impact Assessments (DPIAs) are conducted where required
 
 ### 17.2 United Kingdom
@@ -436,4 +435,4 @@ For EU residents, you may also contact the competent supervisory authority in yo
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.
