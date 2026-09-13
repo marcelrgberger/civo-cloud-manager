@@ -1,8 +1,98 @@
 import Foundation
 import Testing
 import Security
+import CryptoKit
 
 @testable import CivoCloudManager
+
+@Suite("SSH encryption key preservation")
+struct SSHEncryptionTests {
+    @Test("Finder metadata permits creation; visible and hidden backup files prevent replacement")
+    func backupDetection() throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: false)
+        let metadata = dir.appendingPathComponent(".DS_Store")
+        try Data([1, 2, 3]).write(to: metadata)
+        #expect(try SSHKeychain.hasBackups(in: dir))
+        try Data([0, 0, 0, 1, 0x42, 0x75, 0x64, 0x31]).write(to: metadata)
+        #expect(try !SSHKeychain.hasBackups(in: dir))
+        let hidden = dir.appendingPathComponent(".private-key")
+        try Data([1]).write(to: hidden)
+        #expect(try SSHKeychain.hasBackups(in: dir))
+        try FileManager.default.moveItem(at: hidden, to: dir.appendingPathComponent("private-key"))
+        #expect(try SSHKeychain.hasBackups(in: dir))
+    }
+
+    @Test("Concurrent creation cannot hide failed or missing winner reads")
+    func failedWinnerRead() {
+        #expect(throws: SSHKeychain.KeyError.keychain(errSecDuplicateItem)) {
+            try SSHKeychain.resolveKey(allowCreation: true, read: { nil }, add: { _ in errSecDuplicateItem })
+        }
+        var reads = 0
+        #expect(throws: SSHKeychain.KeyError.keychain(errSecInteractionNotAllowed)) {
+            try SSHKeychain.resolveKey(allowCreation: true, read: {
+                reads += 1
+                if reads > 1 { throw SSHKeychain.KeyError.keychain(errSecInteractionNotAllowed) }
+                return nil
+            }, add: { _ in errSecDuplicateItem })
+        }
+    }
+
+    @Test("Locked keychains and malformed keys never cause replacement")
+    func readFailure() {
+        #expect(throws: SSHKeychain.KeyError.self) {
+            try SSHKeychain.resolveKey(allowCreation: true, read: {
+                throw SSHKeychain.KeyError.keychain(errSecInteractionNotAllowed)
+            }, add: { _ in Issue.record("Replaced unavailable key"); return errSecSuccess })
+        }
+        #expect(throws: SSHKeychain.KeyError.self) {
+            try SSHKeychain.resolveKey(allowCreation: true, read: { Data([1]) },
+                                      add: { _ in Issue.record("Replaced malformed key"); return errSecSuccess })
+        }
+    }
+
+    @Test("Reading backups or saving alongside existing backups cannot create a missing key")
+    func missingExistingKey() {
+        #expect(throws: SSHKeychain.KeyError.self) {
+            try SSHKeychain.resolveKey(allowCreation: false, read: { nil },
+                                      add: { _ in Issue.record("Created replacement key"); return errSecSuccess })
+        }
+    }
+
+    @Test("Failed key persistence prevents encryption with an unpersisted key")
+    func failedCreation() {
+        #expect(throws: SSHKeychain.KeyError.self) {
+            try SSHKeychain.resolveKey(allowCreation: true, read: { nil }, add: { _ in errSecAuthFailed })
+        }
+    }
+
+    @Test("A concurrent creator wins without replacing or using the losing key")
+    func concurrentCreation() throws {
+        let winner = Data(repeating: 42, count: 32)
+        var reads = 0
+        let key = try SSHKeychain.resolveKey(allowCreation: true, read: {
+            reads += 1
+            return reads == 1 ? nil : winner
+        }, add: { _ in errSecDuplicateItem })
+        #expect(key.withUnsafeBytes { Data($0) } == winner)
+        #expect(reads == 2)
+    }
+
+    @Test("Newly persisted keys decrypt backups after reload")
+    func roundTrip() throws {
+        var stored: Data?
+        let key = try SSHKeychain.resolveKey(allowCreation: true, read: { stored }, add: {
+            stored = $0
+            return errSecSuccess
+        })
+        let plaintext = Data("private-key-fixture".utf8)
+        let sealed = try AES.GCM.seal(plaintext, using: key)
+        let reloaded = try SSHKeychain.resolveKey(allowCreation: false, read: { stored },
+                                                add: { _ in Issue.record("Replaced stored key"); return errSecSuccess })
+        #expect(try AES.GCM.open(sealed, using: reloaded) == plaintext)
+    }
+}
 
 @Suite("Persistent firewall closures")
 @MainActor
