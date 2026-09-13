@@ -1,6 +1,162 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Family Sharing is enabled.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Family Sharing is enabled."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Familienfreigabe ist aktiviert."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartir en familia está activado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le partage familial est activé."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La condivisione in famiglia è attivata."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delen met gezin is ingeschakeld."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chmura rodzinna jest włączona."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Partilha com a família está ativada."
+          }
+        }
+      }
+    },
+    "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mit „Kauf wiederherstellen“ stellst du frühere Käufe wieder her. „Code einlösen“ ist für Apple-Angebotscodes vorgesehen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Restaurar compra» recupera compras anteriores. «Canjear código» permite usar códigos de oferta de Apple."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Restaurer l’achat» récupère les achats précédents. «Utiliser un code» permet d’utiliser les codes promotionnels Apple."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Ripristina acquisto» recupera gli acquisti precedenti. «Riscatta codice» consente di usare i codici promozionali Apple."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Met ‘Aankoop herstellen’ herstel je eerdere aankopen. ‘Code inwisselen’ is bedoeld voor Apple-aanbiedingscodes."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„Przywróć zakup” przywraca wcześniejsze zakupy. „Zrealizuj kod” służy do realizacji kodów promocyjnych Apple."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Restaurar compra» recupera compras anteriores. «Resgatar código» permite utilizar códigos de oferta da Apple."
+          }
+        }
+      }
+    },
+    "Menu bar firewall management is free.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu bar firewall management is free."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Firewall-Verwaltung in der Menüleiste ist kostenlos."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La gestión del cortafuegos desde la barra de menús es gratuita."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La gestion du pare-feu depuis la barre des menus est gratuite."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La gestione del firewall dalla barra dei menu è gratuita."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Firewallbeheer via de menubalk is gratis."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zarządzanie zaporą z paska menu jest bezpłatne."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A gestão da firewall na barra de menus é gratuita."
+          }
+        }
+      }
+    },
     "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase.": {
       "localizations": {
         "en": {

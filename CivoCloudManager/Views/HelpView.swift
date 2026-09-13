@@ -31,9 +31,13 @@ struct HelpView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 12) {
-                Image(systemName: "shield.checkered")
-                    .font(.system(size: 36))
-                    .foregroundStyle(.blue)
+                if let icon = NSImage(named: NSImage.applicationIconName) {
+                    Image(nsImage: icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 48, height: 48)
+                        .clipShape(RoundedRectangle(cornerRadius: 11, style: .continuous))
+                }
                 VStack(alignment: .leading) {
                     Text("Civo Cloud Manager")
                         .font(.title.bold())
@@ -225,11 +229,11 @@ struct HelpSection {
             "Right-click any resource and select 'Delete' to start.",
         ]),
         HelpSection(title: "Full Access", icon: "cart", items: [
-            "Menu bar firewall management is free.",
+            String(localized: "Menu bar firewall management is free."),
             String(localized: "All features are free for seven elapsed days from first use."),
             String(localized: "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase."),
-            "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes.",
-            "Family Sharing is enabled.",
+            String(localized: "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes."),
+            String(localized: "Family Sharing is enabled."),
         ]),
     ]
 }
