@@ -1,0 +1,3 @@
+/* Localized app name and authentication usage description. */
+"CFBundleDisplayName" = "Civo Cloud Manager";
+"NSFaceIDUsageDescription" = "Hassas kimlik bilgilerini ve SSH anahtarlarını görüntülemek için kimliğinizi doğrulayın";

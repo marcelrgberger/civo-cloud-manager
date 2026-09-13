@@ -33,7 +33,7 @@ struct StatusBadge: View {
         return lower == "building" || lower == "pending" || lower == "creating"
     }
 
-    private var statusDescription: String {
+    private var statusDescription: LocalizedStringKey {
         let lower = status.lowercased()
         if lower == "active" || lower == "ready" || lower == "available" || lower == "true" {
             return "Resource is running normally"

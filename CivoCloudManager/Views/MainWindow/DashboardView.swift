@@ -111,7 +111,7 @@ struct DashboardView: View {
                     }
                 }
                 HStack {
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     Spacer()
@@ -122,7 +122,7 @@ struct DashboardView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .buttonStyle(.plain)
-        .help("Click to view \(title.lowercased())")
+        .help("Click to view \(Bundle.main.localizedString(forKey: title, value: title, table: nil))")
         .scaleEffect(hoveredCard == target ? 1.02 : 1.0)
         .animation(.easeOut(duration: 0.15), value: hoveredCard)
         .onHover { isHovered in

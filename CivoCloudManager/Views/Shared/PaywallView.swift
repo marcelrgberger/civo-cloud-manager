@@ -4,11 +4,11 @@ struct PaywallView: View {
     private let store = StoreManager.shared
     @State private var appeared = false
 
-    private let features: [(icon: String, text: String)] = [
+    private let features: [(icon: String, text: LocalizedStringKey)] = [
         ("gauge.with.dots.needle.33percent", "Dashboard with quota overview"),
         ("helm", "Kubernetes cluster management"),
         ("cylinder.split.1x2", "Database management"),
-        ("point.3.connected.trianglepath.dotted", "Network, firewall & load balancer views"),
+        ("point.3.connected.trianglepath.dotted", "Network firewall & load balancer views"),
         ("cylinder", "Volume & object store management"),
         ("desktopcomputer", "Instance & SSH key management"),
         ("map", "Region switching"),

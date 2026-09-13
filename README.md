@@ -360,7 +360,7 @@ classDiagram
 
 ## Languages and legal identity
 
-The app supports **English, German, Spanish, French, Italian, Dutch, Polish and Portuguese**. Seven legal documents ship in each language: Privacy Policy, Terms of Service, EULA, Acceptable Use Policy, Push Notification Consent, Trademark Disclaimer and Imprint (56 bundled Markdown files).
+The app supports **16 languages: English, German, Spanish, French, Italian, Dutch, Polish, Portuguese, Simplified Chinese, Japanese, Korean, Arabic, Hindi, Indonesian, Turkish and Russian**. Seven legal documents ship in each language: Privacy Policy, Terms of Service, EULA, Acceptable Use Policy, Push Notification Consent, Trademark Disclaimer and Imprint (112 bundled Markdown files).
 
 ```mermaid
 flowchart TD
@@ -424,6 +424,7 @@ The current suite contains **41 tests in seven suites**: response decoding, free
 ```bash
 swift test --scratch-path /tmp/civo-tests
 python3 scripts/check_legal_localizations.py
+python3 scripts/check_app_localizations.py
 ```
 
 The regression tests cover certificate rejection and callback decisions; duplicate/conflicting regions; saved deadlines, restart, retry limits, reentrant timer ticks and disk-write failures; and Keychain errors, duplicate creation, backup-file detection and encryption round trips. Tests use fixtures and temporary storage rather than altering cloud resources or the real SSH Keychain.
@@ -442,11 +443,12 @@ A native Xcode Release build additionally verifies target membership and resourc
 | `CivoCloudManager/ViewModels/` | Resource loading and workflows |
 | `CivoCloudManager/Models/` | Civo, Kubernetes, S3 and app data models |
 | `CivoCloudManager/Services/` | API clients, resource services, SSH backups, StoreKit and pause/resume |
-| `CivoCloudManager/Localizable.xcstrings` | App string catalog for eight languages |
+| `CivoCloudManager/Localizable.xcstrings` | App string catalog for 16 languages |
 | `CivoCloudManager/*.lproj/` | Localized app metadata and legal documents |
 | `CivoCloudManagerTests/APIDecodingTests.swift` | Seven Swift Testing suites |
 | `docs/legal-documents.md` | Legal source provenance and maintenance |
 | `scripts/check_legal_localizations.py` | Legal document consistency and optional built-bundle checks |
+| `scripts/check_app_localizations.py` | Complete catalog coverage, format arguments and optional built-bundle checks |
 
 ## License
 

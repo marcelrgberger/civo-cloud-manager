@@ -213,25 +213,23 @@ final class AppState {
     }
 
     var statusText: String {
-        if setupState == .needsAPIKey { return "API key not configured" }
-        if setupState == .needsRegion { return "No region selected" }
-        if setupState == .needsFirewallSelection { return "Setup required" }
-        if isLoading { return "Loading..." }
-        if let error { return "Error: \(error)" }
-        if let failure = firewallClosures.lastError { return "Error: \(failure)" }
-        if allClosed && !firewalls.isEmpty { return "All closed" }
-        if anyOpen { return "\(openCount) firewall\(openCount == 1 ? "" : "s") open" }
-        if enabledFirewalls.isEmpty { return "No firewalls managed" }
-        return "Ready"
+        if setupState == .needsAPIKey { return String(localized: "API key not configured") }
+        if setupState == .needsRegion { return String(localized: "No region selected") }
+        if setupState == .needsFirewallSelection { return String(localized: "Setup required") }
+        if isLoading { return String(localized: "Loading...") }
+        if let error { return String(localized: "Error: \(error)") }
+        if let failure = firewallClosures.lastError { return String(localized: "Error: \(failure)") }
+        if allClosed && !firewalls.isEmpty { return String(localized: "All closed") }
+        if anyOpen { return String(localized: "Open firewalls: \(openCount)") }
+        if enabledFirewalls.isEmpty { return String(localized: "No firewalls managed") }
+        return String(localized: "Ready")
     }
 
     var lastRefreshText: String {
-        guard let lastRefresh else { return "Never" }
+        guard let lastRefresh else { return String(localized: "Never") }
         let interval = Date().timeIntervalSince(lastRefresh)
-        if interval < 5 { return "Just now" }
-        if interval < 60 { return "\(Int(interval))s ago" }
-        if interval < 3600 { return "\(Int(interval / 60))m ago" }
-        return "\(Int(interval / 3600))h ago"
+        if interval < 5 { return String(localized: "Just now") }
+        return lastRefresh.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
     }
 
     // MARK: - Init

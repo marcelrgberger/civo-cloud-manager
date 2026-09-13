@@ -35,7 +35,7 @@ struct ObjectStoreDetailView: View {
         .navigationTitle(store.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
                     .help("Return to list")
             }
         }
@@ -68,7 +68,7 @@ struct ObjectStoreDetailView: View {
                     Text("Navigate folders, view and download files").font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                Image(systemName: "chevron.forward").foregroundStyle(.secondary)
             }
             .padding(14)
             .background(.blue.opacity(0.08))
@@ -167,7 +167,7 @@ struct ObjectStoreDetailView: View {
         Task {
             let context = LAContext()
             do {
-                let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Reveal secret access key")
+                let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: String(localized: "Reveal secret access key"))
                 secretRevealed = success
             } catch {
                 // User cancelled or auth failed
@@ -175,7 +175,7 @@ struct ObjectStoreDetailView: View {
         }
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label).font(.caption).foregroundStyle(.secondary)
             Text(value).font(.subheadline.monospaced()).textSelection(.enabled)

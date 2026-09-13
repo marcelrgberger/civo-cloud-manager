@@ -124,7 +124,7 @@ struct OnboardingView: View {
             Link(destination: URL(string: "https://www.civo.com/")!) {
                 HStack(spacing: 4) {
                     Text("No API key yet? Create one here")
-                    Image(systemName: "arrow.up.right.square")
+                    Image(systemName: "arrow.up.forward.square")
                         .font(.caption)
                 }
                 .font(.caption)
@@ -321,7 +321,7 @@ struct OnboardingView: View {
 
     private var launchAtLoginStep: some View {
         VStack(spacing: 16) {
-            Image(systemName: "arrow.right.circle.fill")
+            Image(systemName: "arrow.forward.circle.fill")
                 .font(.system(size: 36))
                 .foregroundStyle(.blue)
 

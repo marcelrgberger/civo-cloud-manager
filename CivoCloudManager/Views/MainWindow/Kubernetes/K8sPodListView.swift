@@ -37,7 +37,7 @@ struct K8sPodListView: View {
         .navigationTitle("Pods on \(nodeName)")
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
             }
             ToolbarItem(placement: .automatic) {
                 Button {

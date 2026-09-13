@@ -49,3 +49,6 @@ CLAUDE.md
 
 # TLS Certificates
 .certs/
+
+# Python localization checks
+__pycache__/

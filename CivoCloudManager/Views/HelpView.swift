@@ -7,8 +7,8 @@ struct HelpView: View {
         if searchText.isEmpty { return HelpSection.all }
         let query = searchText.lowercased()
         return HelpSection.all.filter { section in
-            section.title.lowercased().contains(query) ||
-            section.items.contains { $0.lowercased().contains(query) }
+            section.localizedTitle.lowercased().contains(query) ||
+            section.localizedItems.contains { $0.lowercased().contains(query) }
         }
     }
 
@@ -75,6 +75,14 @@ struct HelpSection {
     let title: String
     let icon: String
     let items: [String]
+
+    var localizedTitle: String {
+        Bundle.main.localizedString(forKey: title, value: title, table: nil)
+    }
+
+    var localizedItems: [String] {
+        items.map { Bundle.main.localizedString(forKey: $0, value: $0, table: nil) }
+    }
 
     static let all: [HelpSection] = [
         HelpSection(title: "Getting Started", icon: "play.circle", items: [
@@ -210,7 +218,7 @@ struct HelpSection {
             "Generate Ed25519 SSH key pairs directly from the app.",
             "Private key saved to your chosen location and encrypted backup stored in the app.",
             "Public key uploaded to Civo when you click Create.",
-            "'Move to ~/.ssh/' button copies the command and opens Terminal.",
+            "The 'Copy & Open Terminal' button copies the command for moving the key to ~/.ssh/ and opens Terminal.",
             "SSH command with key path shown in instance detail view.",
             "Backup button in SSH Keys toolbar: recover private keys from encrypted backup.",
             "'Export' restores a key from the app's backup storage to your chosen location.",
@@ -229,11 +237,11 @@ struct HelpSection {
             "Right-click any resource and select 'Delete' to start.",
         ]),
         HelpSection(title: "Full Access", icon: "cart", items: [
-            String(localized: "Menu bar firewall management is free."),
-            String(localized: "All features are free for seven elapsed days from first use."),
-            String(localized: "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase."),
-            String(localized: "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes."),
-            String(localized: "Family Sharing is enabled."),
+            "Menu bar firewall management is free.",
+            "All features are free for seven elapsed days from first use.",
+            "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase.",
+            "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes.",
+            "Family Sharing is enabled.",
         ]),
     ]
 }
