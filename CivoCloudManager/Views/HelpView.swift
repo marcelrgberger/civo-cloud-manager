@@ -31,9 +31,13 @@ struct HelpView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 12) {
-                Image(systemName: "shield.checkered")
-                    .font(.system(size: 36))
-                    .foregroundStyle(.blue)
+                if let icon = NSImage(named: NSImage.applicationIconName) {
+                    Image(nsImage: icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 48, height: 48)
+                        .clipShape(RoundedRectangle(cornerRadius: 11, style: .continuous))
+                }
                 VStack(alignment: .leading) {
                     Text("Civo Cloud Manager")
                         .font(.title.bold())
