@@ -1,6 +1,58 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "The private key was exported, but its encrypted backup could not be saved. Keep the exported file safe.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The private key was exported, but its encrypted backup could not be saved. Keep the exported file safe."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der private Schlüssel wurde exportiert, aber sein verschlüsseltes Backup konnte nicht gespeichert werden. Bewahre die exportierte Datei sicher auf."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La clave privada se exportó, pero no se pudo guardar su copia de seguridad cifrada. Guarda el archivo exportado en un lugar seguro."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La clé privée a été exportée, mais sa sauvegarde chiffrée n’a pas pu être enregistrée. Conservez le fichier exporté en lieu sûr."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La chiave privata è stata esportata, ma non è stato possibile salvare il backup crittografato. Conserva il file esportato in un luogo sicuro."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De privésleutel is geëxporteerd, maar de versleutelde back-up kon niet worden opgeslagen. Bewaar het geëxporteerde bestand veilig."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klucz prywatny został wyeksportowany, ale nie udało się zapisać jego zaszyfrowanej kopii zapasowej. Przechowuj wyeksportowany plik w bezpiecznym miejscu."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A chave privada foi exportada, mas não foi possível guardar a cópia de segurança encriptada. Guarde o ficheiro exportado num local seguro."
+          }
+        }
+      }
+    },
     "Document not available." : {
       "localizations" : {
         "en" : {

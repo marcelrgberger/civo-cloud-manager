@@ -188,6 +188,9 @@ struct CreateSSHKeyView: View {
                 ofItemAtPath: saveURL.path
             )
             generatedPrivateKeyPath = saveURL.path
+            if !saved {
+                vm.saveError = String(localized: "The private key was exported, but its encrypted backup could not be saved. Keep the exported file safe.")
+            }
 
             // Show in Finder
             NSWorkspace.shared.activateFileViewerSelecting([saveURL])

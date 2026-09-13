@@ -95,12 +95,9 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
     ) {
         let method = challenge.protectionSpace.authenticationMethod
 
-        if method == NSURLAuthenticationMethodServerTrust,
-           let trust = challenge.protectionSpace.serverTrust
-        {
-            SecTrustSetAnchorCertificates(trust, [caCert] as CFArray)
-            SecTrustSetAnchorCertificatesOnly(trust, true)
-            completionHandler(.useCredential, URLCredential(trust: trust))
+        if method == NSURLAuthenticationMethodServerTrust {
+            Self.handleServerTrust(challenge.protectionSpace.serverTrust, host: challenge.protectionSpace.host,
+                                   caCertificate: caCert, completionHandler: completionHandler)
             return
         }
 
@@ -114,6 +111,27 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         }
 
         completionHandler(.performDefaultHandling, nil)
+    }
+
+    static func validateServerTrust(_ trust: SecTrust, host: String, caCertificate: SecCertificate) -> Bool {
+        guard SecTrustSetPolicies(trust, SecPolicyCreateSSL(true, host as CFString)) == errSecSuccess,
+              SecTrustSetAnchorCertificates(trust, [caCertificate] as CFArray) == errSecSuccess,
+              SecTrustSetAnchorCertificatesOnly(trust, true) == errSecSuccess else { return false }
+        var error: CFError?
+        let valid = SecTrustEvaluateWithError(trust, &error)
+        if !valid { Log.error("Kubernetes TLS validation failed for \(host): \(String(describing: error))") }
+        return valid
+    }
+
+    static func handleServerTrust(
+        _ trust: SecTrust?, host: String, caCertificate: SecCertificate,
+        completionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
+    ) {
+        guard let trust, validateServerTrust(trust, host: host, caCertificate: caCertificate) else {
+            completionHandler(.cancelAuthenticationChallenge, nil)
+            return
+        }
+        completionHandler(.useCredential, URLCredential(trust: trust))
     }
 
     // MARK: - K8s API
