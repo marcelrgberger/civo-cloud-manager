@@ -27,17 +27,15 @@ struct AboutView: View {
                 VStack(spacing: 6) {
                     Text("DigitalFreedom")
                         .font(.headline)
-                    Text("A brand of Berger & Rosenstock GbR")
+                    Text("A brand of DigitalFreedom Global LLC")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                    Text(try! AttributedString(
-                        markdown: "Made by [Marcel R. G. Berger](https://marcelrgberger.com)"
-                    ))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    Link("digitalfreedom.co.za", destination: URL(string: "https://digitalfreedom.co.za")!)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
 
-                Text("Copyright \u{00A9} 2025\u{2013}2026 DigitalFreedom \u{2014} Berger & Rosenstock GbR.\nAll rights reserved.")
+                Text("Copyright \u{00A9} 2025\u{2013}2026 DigitalFreedom Global LLC.\nAll rights reserved.")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)
@@ -55,8 +53,6 @@ struct AboutView: View {
                 Divider()
                     .frame(width: 200)
 
-                systemToolsSection
-
                 Spacer(minLength: 40)
             }
             .frame(maxWidth: .infinity)
@@ -64,46 +60,4 @@ struct AboutView: View {
         .navigationTitle("About")
     }
 
-    // MARK: - System Tools
-
-    private var systemToolsSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("System Tools")
-                .font(.caption.bold())
-                .foregroundStyle(.secondary)
-
-            Text("This app uses the following tools pre-installed on macOS. No additional software is required.")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-
-            VStack(alignment: .leading, spacing: 6) {
-                toolRow(
-                    name: "/usr/bin/openssl",
-                    purpose: "Kubernetes client certificate authentication (PKCS#12)",
-                    available: FileManager.default.fileExists(atPath: "/usr/bin/openssl")
-                )
-                toolRow(
-                    name: "/usr/bin/ssh-keygen",
-                    purpose: "SSH key pair generation (Ed25519)",
-                    available: FileManager.default.fileExists(atPath: "/usr/bin/ssh-keygen")
-                )
-            }
-        }
-        .padding(.horizontal, 40)
-    }
-
-    private func toolRow(name: String, purpose: String, available: Bool) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: available ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .foregroundStyle(available ? .green : .red)
-                .font(.caption)
-            VStack(alignment: .leading, spacing: 1) {
-                Text(name)
-                    .font(.caption.monospaced().bold())
-                Text(purpose)
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
-            }
-        }
-    }
 }

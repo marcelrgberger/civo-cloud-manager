@@ -1,0 +1,901 @@
+{
+  "": {
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/primary.swiftdeps"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/App/CivoCloudManagerApp.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCloudManagerApp.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCloudManagerApp.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCloudManagerApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCloudManagerApp.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCloudManagerApp.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoAccessLabel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAccessLabel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAccessLabel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAccessLabel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAccessLabel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAccessLabel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoCharge.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCharge.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCharge.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCharge~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCharge.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoCharge.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoDatabase.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabase.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabase.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabase~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabase.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabase.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoDiskImage.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDiskImage.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDiskImage.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDiskImage~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDiskImage.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDiskImage.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoDomain.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomain.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomain.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomain~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomain.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomain.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoInstance.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstance.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstance.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstance~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstance.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstance.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoKubernetes.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetes.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetes.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetes~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetes.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetes.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoLoadBalancer.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancer.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancer.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancer~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancer.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancer.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoNetwork.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetwork.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetwork.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetwork~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetwork.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetwork.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoObjectStore.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStore.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStore.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStore.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStore.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoObjectStoreCredential.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreCredential.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreCredential.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreCredential~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreCredential.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreCredential.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoQuota.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuota.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuota.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuota~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuota.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuota.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoRegion.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegion.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegion.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegion~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegion.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegion.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoSSHKey.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKey.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKey.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKey~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKey.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKey.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoSize.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSize.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSize.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSize~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSize.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSize.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/CivoVolume.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolume.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolume.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolume~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolume.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolume.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/FirewallRule.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallRule.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallRule.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallRule~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallRule.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallRule.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/HelmRelease.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelmRelease.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelmRelease.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelmRelease~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelmRelease.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelmRelease.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/IPPreset.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPPreset.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPPreset.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPPreset~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPPreset.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPPreset.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sConfig.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConfig.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConfig.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConfig~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConfig.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConfig.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sEvent.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sEvent.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sEvent.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sEvent~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sEvent.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sEvent.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sMetrics.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sMetrics.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sMetrics.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sMetrics~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sMetrics.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sMetrics.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sNetworking.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNetworking.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNetworking.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNetworking~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNetworking.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNetworking.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sNode.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNode.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNode.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNode~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNode.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNode.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sPod.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPod.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPod.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPod~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPod.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPod.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sStorage.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sStorage.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sStorage.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sStorage~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sStorage.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sStorage.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/K8sWorkload.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sWorkload.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sWorkload.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sWorkload~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sWorkload.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sWorkload.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Models/PausedObjectStore.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PausedObjectStore.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PausedObjectStore.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PausedObjectStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PausedObjectStore.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PausedObjectStore.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/ActivityLog.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ActivityLog.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ActivityLog.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ActivityLog~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ActivityLog.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ActivityLog.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/AppConfig.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppConfig.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppConfig.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppConfig~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppConfig.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppConfig.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoAPIClient.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAPIClient.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAPIClient.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAPIClient~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAPIClient.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoAPIClient.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoChargesService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoChargesService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoChargesService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoChargesService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoChargesService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoChargesService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoConfig.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoConfig.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoConfig.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoConfig~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoConfig.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoConfig.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoDatabaseService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabaseService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabaseService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabaseService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabaseService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDatabaseService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoDomainService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomainService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomainService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomainService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomainService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoDomainService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoFirewallService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoFirewallService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoFirewallService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoFirewallService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoFirewallService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoFirewallService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoInstanceService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstanceService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstanceService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstanceService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstanceService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoInstanceService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoKubernetesService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetesService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetesService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetesService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetesService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoKubernetesService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoLoadBalancerService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancerService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancerService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancerService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancerService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoLoadBalancerService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoNetworkService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetworkService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetworkService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetworkService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetworkService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoNetworkService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoObjectStoreService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoObjectStoreService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoQuotaService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuotaService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuotaService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuotaService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuotaService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoQuotaService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoRegionService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegionService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegionService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegionService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegionService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoRegionService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoSSHKeyService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKeyService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKeyService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKeyService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKeyService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSSHKeyService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoSizeService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSizeService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSizeService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSizeService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSizeService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoSizeService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/CivoVolumeService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolumeService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolumeService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolumeService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolumeService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CivoVolumeService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/IPDetector.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPDetector.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPDetector.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPDetector~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPDetector.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/IPDetector.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/KubeconfigParser.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubeconfigParser.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubeconfigParser.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubeconfigParser~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubeconfigParser.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubeconfigParser.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/KubernetesAPIClient.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesAPIClient.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesAPIClient.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesAPIClient~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesAPIClient.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesAPIClient.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/NotificationService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NotificationService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NotificationService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NotificationService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NotificationService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NotificationService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/ObjectStorePauseService.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseService.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseService.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseService~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseService.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseService.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/S3Client.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/S3Client.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/S3Client.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/S3Client~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/S3Client.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/S3Client.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/SSHKeychain.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeychain.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeychain.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeychain~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeychain.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeychain.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Services/StoreManager.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StoreManager.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StoreManager.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StoreManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StoreManager.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StoreManager.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Utilities/Logger.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/Logger.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/Logger.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/Logger~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/Logger.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/Logger.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/DashboardViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/DatabaseViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/DomainViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/InstanceViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/KubernetesViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/KubernetesViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/NetworkViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/RegionViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/ViewModels/VolumeViewModel.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeViewModel.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeViewModel.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeViewModel.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeViewModel.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/AppState.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppState.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppState.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppState~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppState.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AppState.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/HelpView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelpView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelpView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelpView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelpView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/HelpView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Account/APIHealthView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/APIHealthView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/APIHealthView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/APIHealthView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/APIHealthView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/APIHealthView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Account/AboutView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AboutView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AboutView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AboutView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AboutView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/AboutView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Account/LegalView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LegalView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LegalView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LegalView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LegalView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LegalView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Account/RegionListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RegionListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Compute/CreateInstanceView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateInstanceView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateInstanceView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateInstanceView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateInstanceView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateInstanceView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Compute/CreateSSHKeyView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateSSHKeyView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateSSHKeyView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateSSHKeyView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateSSHKeyView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateSSHKeyView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Compute/InstanceDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Compute/InstanceListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/InstanceListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Compute/SSHKeyListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeyListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeyListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeyListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeyListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SSHKeyListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/CostDashboardView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CostDashboardView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CostDashboardView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CostDashboardView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CostDashboardView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CostDashboardView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/DashboardView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DashboardView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/ClusterDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/ClusterListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ClusterListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/CreateClusterView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateClusterView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateClusterView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateClusterView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateClusterView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateClusterView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/EditLabelsView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EditLabelsView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EditLabelsView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EditLabelsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EditLabelsView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EditLabelsView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/K8sNodeDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNodeDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNodeDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNodeDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNodeDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sNodeDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/K8sPodListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPodListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPodListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPodListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPodListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sPodListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/PodExecView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodExecView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodExecView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodExecView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodExecView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodExecView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Kubernetes/PodLogView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodLogView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodLogView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodLogView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodLogView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PodLogView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/MainWindowView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MainWindowView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MainWindowView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MainWindowView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MainWindowView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MainWindowView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/CreateDNSRecordView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDNSRecordView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDNSRecordView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDNSRecordView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDNSRecordView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDNSRecordView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/CreateDomainView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDomainView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDomainView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDomainView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDomainView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDomainView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/CreateFirewallView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateFirewallView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateFirewallView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateFirewallView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateFirewallView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateFirewallView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/CreateNetworkView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateNetworkView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateNetworkView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateNetworkView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateNetworkView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateNetworkView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/CreateRuleView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateRuleView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateRuleView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateRuleView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateRuleView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateRuleView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/DomainListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DomainListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/FirewallDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/FirewallListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/FirewallListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/LoadBalancerDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/LoadBalancerListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/LoadBalancerListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Networking/NetworkListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/NetworkListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/QuotaEditView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaEditView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaEditView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaEditView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaEditView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaEditView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/RateEditorView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RateEditorView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RateEditorView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RateEditorView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RateEditorView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/RateEditorView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/CreateDatabaseView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDatabaseView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDatabaseView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDatabaseView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDatabaseView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateDatabaseView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/CreateObjectStoreView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateObjectStoreView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateObjectStoreView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateObjectStoreView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateObjectStoreView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateObjectStoreView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/CreateVolumeView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateVolumeView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateVolumeView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateVolumeView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateVolumeView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CreateVolumeView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/CredentialListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CredentialListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CredentialListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CredentialListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CredentialListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/CredentialListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/DatabaseDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/DatabaseListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DatabaseListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/ObjectStoreBrowserView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreBrowserView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreBrowserView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreBrowserView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreBrowserView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreBrowserView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/ObjectStoreDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/ObjectStoreListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStoreListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/ObjectStorePauseView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ObjectStorePauseView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/VolumeDetailView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeDetailView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeDetailView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeDetailView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeDetailView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MainWindow/Storage/VolumeListView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeListView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeListView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeListView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeListView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/VolumeListView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/MenuBarView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MenuBarView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MenuBarView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MenuBarView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MenuBarView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MenuBarView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/OnboardingView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/OnboardingView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/OnboardingView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/OnboardingView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/OnboardingView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/OnboardingView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/DeleteConfirmationSheet.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DeleteConfirmationSheet.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DeleteConfirmationSheet.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DeleteConfirmationSheet~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DeleteConfirmationSheet.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/DeleteConfirmationSheet.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/EmptyStateView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EmptyStateView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EmptyStateView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EmptyStateView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EmptyStateView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/EmptyStateView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/ErrorBanner.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ErrorBanner.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ErrorBanner.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ErrorBanner~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ErrorBanner.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ErrorBanner.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/ExportView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ExportView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ExportView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ExportView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ExportView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ExportView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/K8sConnectingView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConnectingView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConnectingView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConnectingView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConnectingView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/K8sConnectingView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/MarkdownView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MarkdownView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MarkdownView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MarkdownView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MarkdownView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/MarkdownView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/PaywallView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PaywallView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PaywallView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PaywallView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PaywallView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/PaywallView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/QuickSearchView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuickSearchView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuickSearchView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuickSearchView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuickSearchView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuickSearchView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/QuotaGauge.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaGauge.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaGauge.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaGauge~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaGauge.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/QuotaGauge.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/ResourceListRow.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ResourceListRow.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ResourceListRow.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ResourceListRow~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ResourceListRow.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/ResourceListRow.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/SizePickerGrid.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SizePickerGrid.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SizePickerGrid.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SizePickerGrid~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SizePickerGrid.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SizePickerGrid.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/SparklineView.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SparklineView.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SparklineView.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SparklineView~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SparklineView.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SparklineView.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/StaggeredAppear.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StaggeredAppear.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StaggeredAppear.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StaggeredAppear~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StaggeredAppear.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StaggeredAppear.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/StatusBadge.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StatusBadge.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StatusBadge.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StatusBadge~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StatusBadge.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/StatusBadge.dia"
+  },
+  "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/CivoCloudManager/Views/Shared/SuccessOverlay.swift": {
+    "dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SuccessOverlay.d",
+    "object": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SuccessOverlay.swift.o",
+    "swiftmodule": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SuccessOverlay~partial.swiftmodule",
+    "swift-dependencies": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SuccessOverlay.swiftdeps",
+    "diagnostics": "/Users/marcelrgberger/Developer/projects/civo-cloud-manager/.build/index-build/arm64-apple-macosx/debug/CivoCloudManager.build/SuccessOverlay.dia"
+  }
+}

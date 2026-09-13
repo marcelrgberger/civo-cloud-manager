@@ -1,102 +1,103 @@
-# TRADEMARK DISCLAIMER
+<!-- doc-id: TRADEMARK_DISCLAIMER | lang: it | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: shared/TRADEMARK_DISCLAIMER.en.md | adapted: company identity and related clauses -->
+# DISCLAIMER SUI MARCHI
 
-## For Applications Referencing Third-Party Trademarks or Programs
+## Per Applicazioni che Fanno Riferimento a Marchi o Programmi di Terzi
 
-**Effective Date:** May 2026
+**Data di Entrata in Vigore:** Settembre 2026
 
-**Publisher:**
+**Editore:**
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
-Contact: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Un marchio di DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Stati Uniti
+Contatto: hello@digitalfreedom.co.za
+Sito web: https://digitalfreedom.co.za
 
 ---
 
-## 1. PURPOSE AND SCOPE
+## 1. SCOPO E AMBITO DI APPLICAZIONE
 
-This document clarifies the relationship between applications published by the Publisher and any third-party trademarks, brand names, programs, or methodologies referenced within those applications, marketing materials, or supporting documentation.
+Il presente documento chiarisce il rapporto tra le applicazioni pubblicate dall’Editore e qualsiasi marchio, nome commerciale, programma o metodologia di terzi menzionati all’interno di tali applicazioni, materiali di marketing o documentazione di supporto.
 
-The Publisher's applications are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This Disclaimer applies globally. The Publisher applies EU trademark law (Regulation (EU) 2017/1001 on the EU trade mark and Directive (EU) 2015/2436) and the nominative-fair-use doctrine as its baseline standard and additionally observes the trademark and fair-use rules of every jurisdiction in which the applications are made available.
-
----
-
-## 2. NOMINATIVE FAIR USE
-
-References to third-party trademarks, brand names, programs, or methodologies within the Publisher's applications and materials are made under the doctrine of **nominative fair use** (or comparable doctrines under applicable trademark law).
-
-Such references are intended to:
-
-- Identify the third-party program, methodology, or product accurately
-- Provide context for the user about compatibility, support, or applicability
-- Enable factual descriptions of features and functions
-
-References do **not** imply:
-
-- Endorsement of the Publisher's app by the trademark owner
-- Affiliation between the Publisher and the trademark owner
-- Sponsorship of the Publisher's app by the trademark owner
-- Authorization, certification, or approval by the trademark owner
+Le applicazioni dell’Editore sono distribuite tramite l’Apple App Store e il Google Play Store e sono pertanto rese disponibili in ogni paese e territorio serviti da tali piattaforme. Il presente Disclaimer si applica a livello globale. L’Editore applica la normativa sui marchi dell’Unione Europea (Regolamento (UE) 2017/1001 sul marchio dell’Unione Europea e Direttiva (UE) 2015/2436) e il principio del fair use nominativo come standard di base e osserva inoltre le norme sui marchi e sul fair use di ogni giurisdizione in cui le applicazioni sono rese disponibili.
 
 ---
 
-## 3. TRADEMARK OWNERSHIP
+## 2. FAIR USE NOMINATIVO
 
-All trademarks, registered trademarks, service marks, brand names, and trade names referenced in the Publisher's applications or materials are the property of their respective owners.
+I riferimenti a marchi, nomi commerciali, programmi o metodologie di terzi all’interno delle applicazioni e dei materiali dell’Editore sono effettuati ai sensi del principio del **fair use nominativo** (o dottrine analoghe previste dalla normativa applicabile sui marchi).
 
-The Publisher claims no ownership of such third-party intellectual property and uses them only for the purposes described in Section 2.
+Tali riferimenti sono intesi a:
 
-Specific trademark attributions for individual applications are provided in the relevant application's documentation, in-app disclosures, or marketing materials.
+- Identificare accuratamente il programma, la metodologia o il prodotto di terzi
+- Fornire all’utente un contesto circa la compatibilità, il supporto o l’applicabilità
+- Consentire descrizioni fattuali di funzionalità e caratteristiche
 
----
+I riferimenti **non** implicano:
 
-## 4. INDEPENDENT DEVELOPMENT
-
-Applications published by the Publisher are independently developed.
-
-- The Publisher's applications are not affiliated with, endorsed by, sponsored by, or approved by any third-party trademark owner unless explicitly stated in writing
-- Functional similarity between an application and a third-party program does not imply licensing or partnership
-- Compatibility with a third-party methodology does not imply certification or accreditation
-
----
-
-## 5. RIGHTS RESERVED
-
-Trademark owners retain all rights to their trademarks. The Publisher's nominative fair use does not transfer, license, or grant any rights to the third-party trademarks.
+- Approvazione dell’app dell’Editore da parte del titolare del marchio
+- Affiliazione tra l’Editore e il titolare del marchio
+- Sponsorizzazione dell’app dell’Editore da parte del titolare del marchio
+- Autorizzazione, certificazione o approvazione da parte del titolare del marchio
 
 ---
 
-## 6. TRADEMARK COMPLAINTS
+## 3. TITOLARITÀ DEI MARCHI
 
-If you are a trademark owner and believe that a Publisher application or material uses your trademark in a manner that exceeds nominative fair use or otherwise infringes your rights, please contact:
+Tutti i marchi, marchi registrati, marchi di servizio, nomi commerciali e denominazioni commerciali menzionati nelle applicazioni o nei materiali dell’Editore sono di proprietà dei rispettivi titolari.
+
+L’Editore non rivendica alcuna titolarità su tali diritti di proprietà intellettuale di terzi e li utilizza esclusivamente per le finalità descritte nella Sezione 2.
+
+Attribuzioni specifiche dei marchi per singole applicazioni sono fornite nella documentazione pertinente dell’applicazione, nelle informative in-app o nei materiali di marketing.
+
+---
+
+## 4. SVILUPPO INDIPENDENTE
+
+Le applicazioni pubblicate dall’Editore sono sviluppate in modo indipendente.
+
+- Le applicazioni dell’Editore non sono affiliate, approvate, sponsorizzate o autorizzate da alcun titolare di marchio di terzi, salvo esplicita dichiarazione scritta
+- La somiglianza funzionale tra un’applicazione e un programma di terzi non implica licenza o partnership
+- La compatibilità con una metodologia di terzi non implica certificazione o accreditamento
+
+---
+
+## 5. DIRITTI RISERVATI
+
+I titolari dei marchi conservano tutti i diritti sui propri marchi. Il fair use nominativo da parte dell’Editore non trasferisce, concede in licenza o attribuisce alcun diritto sui marchi di terzi.
+
+---
+
+## 6. RECLAMI RELATIVI AI MARCHI
+
+Se siete titolari di un marchio e ritenete che un’applicazione o un materiale dell’Editore utilizzi il vostro marchio in modo eccedente rispetto al fair use nominativo o comunque in violazione dei vostri diritti, siete pregati di contattare:
 
 DigitalFreedom
-A brand of Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+Un marchio di DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Stati Uniti
 Email: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
+Sito web: https://digitalfreedom.co.za
 
-Please include:
+Si prega di includere:
 
-- Identification of the trademark in question (registration number, jurisdiction)
-- Identification of the alleged infringing use (specific application, page, or material)
-- Description of the requested remedy
-- Your contact information
+- Identificazione del marchio in questione (numero di registrazione, giurisdizione)
+- Identificazione dell’uso contestato (applicazione, pagina o materiale specifico)
+- Descrizione del rimedio richiesto
+- I vostri dati di contatto
 
-The Publisher will review such complaints in good faith and take appropriate action where warranted.
+L’Editore esaminerà tali reclami in buona fede e adotterà le misure appropriate ove necessario.
 
 ---
 
-## 7. UPDATES
+## 7. AGGIORNAMENTI
 
-The Publisher may update this Trademark Disclaimer from time to time. The most current version is available at:
+L’Editore può aggiornare periodicamente il presente Disclaimer sui Marchi. La versione più aggiornata è disponibile al seguente indirizzo:
 
 https://digitalfreedom.co.za/
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+(c) 2025-2026 DigitalFreedom Global LLC. Tutti i diritti riservati.

@@ -268,6 +268,17 @@ struct MenuBarView: View {
 
     private var statusSection: some View {
         VStack(alignment: .leading, spacing: 4) {
+            if let failure = state.firewallClosures.lastError {
+                Text(verbatim: failure)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .textSelection(.enabled)
+                Button("Retry") {
+                    state.firewallClosures.retryFailures()
+                    state.startAutoCloseTimer()
+                }
+                .controlSize(.small)
+            }
             HStack {
                 Image(systemName: statusIcon)
                     .foregroundStyle(statusColor)

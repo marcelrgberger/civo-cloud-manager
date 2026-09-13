@@ -1,187 +1,208 @@
-# IMPRESSUM / LEGAL NOTICE
+<!-- doc-id: IMPRESSUM | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+# IMPRESSUM / RECHTLICHER HINWEIS
 
-## Information pursuant to § 5 DDG (Digitale-Dienste-Gesetz) and applicable international disclosure requirements
+## Informationen gemäß § 5 DDG (Digitale-Dienste-Gesetz) und anwendbaren internationalen Offenlegungspflichten
 
-**Last Updated:** May 2026
+**Letzte Aktualisierung:** September 2026
 
 ---
 
-## 1. SERVICE PROVIDER
+## 1. DIENSTEANBIETER
 
-The Services are offered under the **DigitalFreedom** brand. The operating legal entity (Diensteanbieter / Service Provider within the meaning of § 5 DDG) is:
+Die Dienste werden unter der Marke **DigitalFreedom** angeboten. Die betreibende juristische Person (Diensteanbieter im Sinne des § 5 DDG) ist:
 
-Berger & Rosenstock GbR
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Vereinigte Staaten
 
-Trade name: **DigitalFreedom** (used on websites, apps, marketing, customer communications and product UI)
+Handelsname: **DigitalFreedom** (verwendet auf Websites, Apps, Marketing, Kundenkommunikation und Produkt-Oberfläche)
 
-**Email:** hello@digitalfreedom.co.za
+**E-Mail:** hello@digitalfreedom.co.za
+**Telefon:** +1 307 451 0707
 **Website:** https://digitalfreedom.co.za
 
 ---
 
-## 2. LEGAL FORM
+## 2. RECHTSFORM
 
-Gesellschaft bürgerlichen Rechts (GbR) — Civil law partnership under German law
+Gesellschaft mit beschränkter Haftung (LLC) nach dem Recht des Bundesstaates Wyoming, Vereinigte Staaten von Amerika
 
-**Authorized Representatives:**
-Marcel R. G. Berger
-Jasmin Rosenstock
+**Vertretungsberechtigte Personen:**
+M. Berger
+J. Rosenstock
 
 ---
 
-## 3. CONTACT
+## 3. KONTAKT
 
-**General inquiries:** hello@digitalfreedom.co.za
-**Customer support:** support@digitalfreedom.co.za
-**Data protection inquiries:** data-protection@digitalfreedom.co.za
+**Allgemeine Anfragen:** hello@digitalfreedom.co.za
+**Kundensupport:** support@digitalfreedom.co.za
+**Support-Portal (schneller elektronischer Kontakt, § 5 DDG):** https://support.apps.digitalfreedom.co.za
+**Datenschutzanfragen:** data-protection@digitalfreedom.co.za
+**Datenschutz-Antragsformular:** https://data-protection.digitalfreedom.co.za
+**Telefon:** +1 307 451 0707
 **Website:** https://digitalfreedom.co.za
 
 ---
 
-## 4. REGULATORY INFORMATION
+## 4. REGULATORISCHE INFORMATIONEN
 
-### 4.1 VAT Identification Number
+### 4.1 Handelsregister
 
-VAT identification number pursuant to § 27a German VAT Act (UStG):
+Wyoming Secretary of State, Cheyenne, Wyoming, Vereinigte Staaten
 
-DE455096022
+Aktenzeichen: 2026-002048530
 
-### 4.2 Commercial Register
+### 4.2 Berufliche Vorschriften
 
-Not applicable — Gesellschaft bürgerlichen Rechts (GbR) under German law is not subject to commercial register registration.
+Nicht anwendbar — keine reglementierten Berufe im Sinne des § 5 Abs. 1 Nr. 5 DDG.
 
-### 4.3 Professional Regulations
+### 4.3 Kontaktstellen nach dem Digital Services Act
 
-Not applicable — no regulated professions within the meaning of § 5(1) No. 5 DDG.
+Die Verordnung (EU) 2022/2065 verpflichtet Anbieter von Vermittlungsdiensten zur Benennung von zwei Kontaktstellen. Diese werden hier unabhängig von der letztlichen Einordnung der Dienste angegeben, sodass Behörden und Nutzer stets eine erreichbare Anlaufstelle haben.
 
----
+**Kontaktstelle für Behörden der Mitgliedstaaten, die Kommission und das Europäische Gremium für digitale Dienste (Art. 11 DSA):**
+hello@digitalfreedom.co.za
 
-## 5. RESPONSIBLE FOR EDITORIAL CONTENT
+**Kontaktstelle für Empfänger des Dienstes (Art. 12 DSA):**
+support@digitalfreedom.co.za oder das Support-Formular unter https://support.apps.digitalfreedom.co.za
 
-Responsible pursuant to § 18(2) MStV (Medienstaatsvertrag):
+Die Kommunikation mit beiden Kontaktstellen erfolgt durch eine Person; sie ist nicht ausschließlich automatisiert.
 
-Marcel R. G. Berger
-Dieselstr. 22e
-61231 Bad Nauheim
-Germany
+**Akzeptierte Sprachen:** Deutsch und Englisch.
 
----
-
-## 6. DISPUTE RESOLUTION
-
-### 6.1 EU Online Dispute Resolution
-
-The European Commission provides an Online Dispute Resolution (ODR) platform:
-https://ec.europa.eu/consumers/odr
-
-### 6.2 Consumer Arbitration
-
-The Provider is neither obligated nor willing to participate in dispute resolution proceedings before a consumer arbitration board (Verbraucherschlichtungsstelle) pursuant to the German Consumer Dispute Resolution Act (VSBG), unless required by law.
+**Repräsentant in der Union (Art. 13 DSA):** nicht benannt. Art. 13 Abs. 1 richtet sich an Anbieter von Vermittlungsdiensten ohne Niederlassung in der Union, nicht nur an Online-Plattformen — daher entfällt die Pflicht nicht allein dadurch, dass die Dienste keine Online-Plattform im Sinne des Art. 3(i) sind. Ob es sich überhaupt um einen Vermittlungsdienst handelt, ist die offene Frage; die vertretene Auffassung ist oben dargelegt: Die Kontaktstellen nach Art. 11 und 12 werden unabhängig davon veröffentlicht, ein Vertreter wird nicht benannt. Das Risiko wird bewusst getragen.
 
 ---
 
-## 7. LIABILITY FOR CONTENT
+## 5. VERANTWORTLICHER FÜR DEN REDAKTIONELLEN INHALT
 
-### 7.1 Own Content
+Verantwortlich gemäß § 18 Abs. 2 MStV (Medienstaatsvertrag):
 
-As a service provider, we are responsible for our own content on these pages in accordance with § 7(1) DDG and general laws.
-
-### 7.2 Third-Party Content
-
-Pursuant to §§ 8–10 DDG, we are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. However, liability in this regard is only possible from the point in time at which a concrete infringement of the law becomes known. If we become aware of any such infringements, we will remove the content immediately.
+Nicht anwendbar — die Dienste stellen kein journalistisch-redaktionelles Angebot im Sinne des § 18 Abs. 2 MStV dar.
 
 ---
 
-## 8. LIABILITY FOR LINKS
+## 6. STREITBEILEGUNG
 
-Our Services may contain links to external third-party websites over whose content we have no influence. Therefore, we cannot assume any liability for such external content. The respective provider or operator of the pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal content was not recognizable at the time of linking. Permanent monitoring of linked pages is not reasonable without concrete evidence of a violation. If we become aware of any infringements, we will remove such links immediately.
+### 6.1 EU Online-Streitbeilegung
+
+Die Online-Streitbeilegungsplattform der Europäischen Kommission wurde am 20. Juli 2025 eingestellt. Die Verordnung (EU) 2024/3228 hat die Verordnung (EU) Nr. 524/2013, auf deren Grundlage die Plattform eingerichtet wurde, aufgehoben. Verbraucher können uns direkt unter hello@digitalfreedom.co.za kontaktieren oder sich an eine zuständige alternative Streitbeilegungsstelle in ihrem Wohnsitzland wenden.
+
+### 6.2 Verbraucherschlichtung
+
+Der Anbieter ist weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle gemäß dem Verbraucherstreitbeilegungsgesetz (VSBG) teilzunehmen, es sei denn, eine gesetzliche Verpflichtung besteht.
 
 ---
 
-## 9. COPYRIGHT
+## 7. HAFTUNG FÜR INHALTE
 
-Content and works created by the site operators on these pages are subject to German copyright law (Urheberrechtsgesetz — UrhG). The reproduction, editing, distribution, and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use. Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. Third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. If we become aware of any infringements, we will remove such content immediately.
+### 7.1 Eigene Inhalte
+
+Für eigene Inhalte sind wir nach den allgemeinen Gesetzen verantwortlich. Die Haftungsprivilegien der Art. 4 bis 6 der Verordnung (EU) 2022/2065 — durch § 7 Abs. 1 DDG auf jeden Diensteanbieter anwendbar — betreffen Informationen eines *Nutzers des Dienstes*, nicht eigene Inhalte des Anbieters, und werden hier nicht geltend gemacht.
+
+### 7.2 Inhalte Dritter
+
+Es besteht keine allgemeine Verpflichtung, die von einem Anbieter übermittelten oder gespeicherten Informationen zu überwachen oder aktiv nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen — Art. 8 der Verordnung (EU) 2022/2065, anwendbar durch § 7 Abs. 1 DDG. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt möglich, zu dem eine konkrete Rechtsverletzung bekannt wird. Bei Bekanntwerden entsprechender Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
 
 ---
 
-## 10. INTERNATIONAL DISCLOSURE REQUIREMENTS
+## 8. HAFTUNG FÜR LINKS
 
-### 10.1 European Union / EEA
+Unsere Dienste können Links zu externen Websites Dritter enthalten, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
 
-This legal notice fulfills the requirements of:
+---
 
-- **Germany:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
-- **EU:** Article 5 of the E-Commerce Directive (2000/31/EC), Article 12 of the Digital Services Act (Regulation (EU) 2022/2065)
-- **Austria:** § 5 ECG (E-Commerce-Gesetz), § 25 MedienG
-- **France:** Article 6, Law No. 2004-575 (LCEN — Loi pour la confiance dans l'économie numérique)
-- **Italy:** D.Lgs. 70/2003 (Decreto legislativo 9 aprile 2003, n. 70)
-- **Spain:** Ley 34/2002 (LSSI-CE — Ley de Servicios de la Sociedad de la Información)
-- **Netherlands:** Article 3:15d BW (Burgerlijk Wetboek)
-- **Belgium:** Law of 11 March 2003 on electronic commerce
-- **Portugal:** Decree-Law No. 7/2004
-- **Poland:** Act on Provision of Electronic Services (Ustawa o świadczeniu usług drogą elektroniczną)
-- **Sweden:** E-Commerce Act (Lag om elektronisk handel)
+## 9. URHEBERRECHT
 
-### 10.2 United Kingdom
+Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem Urheberrecht. Welches Recht hierfür maßgeblich ist, bestimmt sich nach dem Land, für das Schutz beansprucht wird — Art. 5 Abs. 2 der Berner Übereinkunft und Art. 8 Abs. 1 der Rom II-Verordnung — nicht nach dem Sitz des Betreibers und nicht nach deutschem Recht als Standard. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des jeweils geltenden Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet und solche Inhalte als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis; bei Bekanntwerden werden wir derartige Inhalte umgehend entfernen.
 
-This notice fulfills the requirements of:
+---
+
+## 10. INTERNATIONALE OFFENLEGUNGSPFLICHTEN
+
+### 10.1 Europäische Union / EWR
+
+Dieser rechtliche Hinweis erfüllt die Anforderungen von:
+
+- **Deutschland:** § 5 DDG (Digitale-Dienste-Gesetz), § 18 Abs. 2 MStV (Medienstaatsvertrag)
+- **EU:** Artikel 5 der E-Commerce-Richtlinie (2000/31/EG), Artikel 12 des Digital Services Act (Verordnung (EU) 2022/2065)
+- **Österreich:** § 5 ECG (E-Commerce-Gesetz), § 25 MedienG
+- **Frankreich:** Artikel 6, Gesetz Nr. 2004-575 (LCEN — Loi pour la confiance dans l'économie numérique)
+- **Italien:** D.Lgs. 70/2003 (Decreto legislativo 9 aprile 2003, n. 70)
+- **Spanien:** Ley 34/2002 (LSSI-CE — Ley de Servicios de la Sociedad de la Información)
+- **Niederlande:** Artikel 3:15d BW (Burgerlijk Wetboek)
+- **Belgien:** Gesetz vom 11. März 2003 über den elektronischen Geschäftsverkehr
+- **Portugal:** Decreto-Lei Nr. 7/2004
+- **Polen:** Gesetz über die Erbringung elektronischer Dienstleistungen (Ustawa o świadczeniu usług drogą elektroniczną)
+- **Schweden:** E-Commerce Act (Lag om elektronisk handel)
+
+### 10.2 Vereinigtes Königreich
+
+Dieser Hinweis erfüllt die Anforderungen von:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
-- Companies Act 2006 (for business websites)
+- Companies Act 2006 (für Unternehmenswebsites)
 
-### 10.3 United States
+### 10.3 Vereinigte Staaten
 
-Business identification disclosures comply with:
+Die Offenlegung der Unternehmensidentität entspricht:
 
-- FTC Act § 5 (unfair or deceptive acts or practices)
-- State-specific business disclosure requirements
-- CAN-SPAM Act (for commercial communications)
+- FTC Act § 5 (unlautere oder irreführende Handlungen oder Praktiken)
+- Staatsspezifische Offenlegungspflichten für Unternehmen
+- CAN-SPAM Act (für kommerzielle Kommunikation)
 
-### 10.4 Canada
+### 10.4 Kanada
 
-- CASL (Canada's Anti-Spam Legislation) identification requirements
-- Provincial business disclosure requirements
+- CASL (Canada's Anti-Spam Legislation) Identifikationsanforderungen
+- Provinzielle Offenlegungspflichten für Unternehmen
 
-### 10.5 Australia
+### 10.5 Australien
 
-- Australian Consumer Law (ACL) business identification requirements
-- Spam Act 2003 sender identification requirements
+- Australian Consumer Law (ACL) Anforderungen zur Unternehmensidentifikation
+- Spam Act 2003 Anforderungen zur Absenderidentifikation
 
 ### 10.6 Japan
 
-- Act on Specified Commercial Transactions (特定商取引法) disclosure requirements
-- Act on Regulation of Transmission of Specified Electronic Mail (特定電子メール法)
+- Gesetz über bestimmte Handelsgeschäfte (特定商取引法) Offenlegungspflichten
+- Gesetz zur Regulierung des Versands bestimmter elektronischer Post (特定電子メール法)
 
-### 10.7 South Korea
+### 10.7 Südkorea
 
-- Act on Consumer Protection in Electronic Commerce (전자상거래법) disclosure requirements
-- Act on Promotion of Information and Communications Network Utilization (정보통신망법)
+- Gesetz zum Verbraucherschutz im elektronischen Geschäftsverkehr (전자상거래법) Offenlegungspflichten
+- Gesetz zur Förderung der Nutzung von Informations- und Kommunikationsnetzen (정보통신망법)
 
-### 10.8 Brazil
+### 10.8 Brasilien
 
-- Marco Civil da Internet (Law No. 12.965/2014) identification requirements
-- Consumer Defence Code (CDC) business identification obligations
+- Marco Civil da Internet (Gesetz Nr. 12.965/2014) Identifikationsanforderungen
+- Verbraucherschutzgesetz (CDC) Pflichten zur Unternehmensidentifikation
 
-### 10.9 India
+### 10.9 Indien
 
-- Information Technology Act, 2000 — intermediary disclosure requirements
+- Information Technology Act, 2000 — Offenlegungspflichten für Vermittler
 - Consumer Protection (E-Commerce) Rules, 2020
 
-### 10.10 Other Jurisdictions
+### 10.10 Weitere Rechtsordnungen
 
-The Provider complies with applicable business identification and disclosure requirements in all jurisdictions where the Services are offered.
-
----
-
-## 11. DATA PROTECTION OFFICER
-
-A formal Data Protection Officer has not been appointed, as the Provider does not meet the threshold criteria for mandatory appointment under Art. 37 GDPR / § 38 BDSG.
-
-For all data protection inquiries (GDPR Art. 13/14, access, rectification, erasure, portability, objection requests), please contact: data-protection@digitalfreedom.co.za
+Der Anbieter erfüllt die jeweils geltenden Anforderungen zur Unternehmensidentifikation und Offenlegung in allen Rechtsordnungen, in denen die Dienste angeboten werden.
 
 ---
 
-(c) 2025-2026 DigitalFreedom — Berger & Rosenstock GbR. All rights reserved.
+## 11. DATENSCHUTZBEAUFTRAGTER
+
+Ein formeller Datenschutzbeauftragter wurde nicht bestellt, da der Anbieter die Schwellenwerte für eine Pflichtbestellung nach Art. 37 DSGVO / § 38 BDSG nicht erreicht.
+
+Für alle Datenschutzanfragen (DSGVO Art. 13/14, Auskunft, Berichtigung, Löschung, Übertragbarkeit, Widerspruch) wenden Sie sich bitte an: data-protection@digitalfreedom.co.za oder nutzen Sie das Antragsformular unter https://data-protection.digitalfreedom.co.za
+
+**Verantwortlich für den Datenschutz**
+
+DigitalFreedom Global LLC
+30 N Gould St, Ste N
+Sheridan, WY 82801
+Vereinigte Staaten
+data-protection@digitalfreedom.co.za
+
+---
+
+(c) 2025-2026 DigitalFreedom Global LLC. Alle Rechte vorbehalten.

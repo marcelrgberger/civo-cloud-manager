@@ -27,6 +27,7 @@ final class CivoFirewallService: Sendable {
         return try await api.getArray(path: "/firewalls/\(firewallId)/rules", queryItems: queryItems)
     }
 
+    @discardableResult
     func createRule(
         firewallId: String,
         protocol proto: String = "tcp",
@@ -37,7 +38,7 @@ final class CivoFirewallService: Sendable {
         label: String? = nil,
         action: String = "allow",
         region: String? = nil
-    ) async throws {
+    ) async throws -> CivoRule {
         let effectiveRegion = region ?? CivoConfig.shared.region
         var body: [String: Any] = [
             "protocol": proto,
@@ -54,7 +55,7 @@ final class CivoFirewallService: Sendable {
         if let region {
             queryItems = [URLQueryItem(name: "region", value: region)]
         }
-        let _: CivoRule = try await api.post(
+        return try await api.post(
             path: "/firewalls/\(firewallId)/rules",
             body: body,
             queryItems: queryItems
@@ -118,7 +119,8 @@ final class CivoFirewallService: Sendable {
         return statuses
     }
 
-    func openAccess(firewallId: String, port: Int, ip: String, label: String, region: String? = nil) async throws {
+    @discardableResult
+    func openAccess(firewallId: String, port: Int, ip: String, label: String, region: String? = nil) async throws -> CivoRule {
         try await createRule(
             firewallId: firewallId,
             startPort: String(port),
@@ -132,14 +134,22 @@ final class CivoFirewallService: Sendable {
         try await deleteRule(firewallId: firewallId, ruleId: ruleId, region: region)
     }
 
-    func closeAllManagedRules(managedFirewalls: [ManagedFirewall]) async throws -> (removed: Int, failed: Int) {
+    func closeAllManagedRules(managedFirewalls: [ManagedFirewall]) async throws -> (removed: Int, failed: Int, listErrors: [String]) {
         var removedCount = 0
         var failedCount = 0
+        var listErrors: [String] = []
         let hostname = CivoAccessLabel.hostname
         let fullLabelPrefix = "\(CivoAccessLabel.prefix)\(hostname)-"
 
         for managed in managedFirewalls where managed.enabled {
-            let rules = try await getRulesForFirewall(managed.id, region: managed.region)
+            let rules: [CivoRule]
+            do {
+                rules = try await getRulesForFirewall(managed.id, region: managed.region)
+            } catch {
+                listErrors.append("\(managed.name): \(error.localizedDescription)")
+                Log.error("Unable to list managed rules for \(managed.id): \(error)")
+                continue
+            }
             let ourRules = rules.filter { $0.label?.hasPrefix(fullLabelPrefix) ?? false }
 
             for rule in ourRules {
@@ -153,6 +163,6 @@ final class CivoFirewallService: Sendable {
             }
         }
 
-        return (removed: removedCount, failed: failedCount)
+        return (removed: removedCount, failed: failedCount, listErrors: listErrors)
     }
 }
