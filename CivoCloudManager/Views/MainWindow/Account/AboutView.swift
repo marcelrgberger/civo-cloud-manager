@@ -10,9 +10,13 @@ struct AboutView: View {
             VStack(spacing: 24) {
                 Spacer(minLength: 40)
 
-                Image(systemName: "shield.checkered")
-                    .font(.system(size: 64))
-                    .foregroundStyle(.blue)
+                if let icon = NSImage(named: NSImage.applicationIconName) {
+                    Image(nsImage: icon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                }
 
                 Text("Civo Cloud Manager")
                     .font(.largeTitle.bold())
