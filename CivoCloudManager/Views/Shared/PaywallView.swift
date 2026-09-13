@@ -8,7 +8,7 @@ struct PaywallView: View {
         ("gauge.with.dots.needle.33percent", "Dashboard with quota overview"),
         ("helm", "Kubernetes cluster management"),
         ("cylinder.split.1x2", "Database management"),
-        ("point.3.connected.trianglepath.dotted", "Network firewall & load balancer views"),
+        ("point.3.connected.trianglepath.dotted", "Network, firewall & load balancer views"),
         ("cylinder", "Volume & object store management"),
         ("desktopcomputer", "Instance & SSH key management"),
         ("map", "Region switching"),

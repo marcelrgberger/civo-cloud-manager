@@ -32873,7 +32873,7 @@
         }
       }
     },
-    "Network firewall & load balancer views" : {
+    "Network, firewall & load balancer views" : {
       "extractionState" : "stale",
       "localizations" : {
         "de" : {
@@ -32885,7 +32885,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Network firewall & load balancer views"
+            "value" : "Network, firewall & load balancer views"
           }
         },
         "es" : {
