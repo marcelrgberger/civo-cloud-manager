@@ -34,7 +34,7 @@ struct InstanceDetailView: View {
         .navigationTitle(instance.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
             }
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: {
@@ -78,13 +78,13 @@ struct InstanceDetailView: View {
 
     private var specsRow: some View {
         HStack(spacing: 16) {
-            specCard("CPU", value: instance.cpuCores.map { "\($0)" } ?? "—", unit: "cores", icon: "cpu", color: .blue, index: 0)
+            specCard("CPU", value: instance.cpuCores.map { "\($0)" } ?? "—", unit: String(localized: "cores"), icon: "cpu", color: .blue, index: 0)
             specCard("RAM", value: instance.ramMb.map { "\($0)" } ?? "—", unit: "MB", icon: "memorychip", color: .purple, index: 1)
             specCard("Disk", value: instance.diskGb.map { "\($0)" } ?? "—", unit: "GB", icon: "externaldrive", color: .orange, index: 2)
         }
     }
 
-    private func specCard(_ title: String, value: String, unit: String, icon: String, color: Color, index: Int) -> some View {
+    private func specCard(_ title: LocalizedStringKey, value: String, unit: String, icon: String, color: Color, index: Int) -> some View {
         VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.title2)
@@ -115,7 +115,7 @@ struct InstanceDetailView: View {
                 infoRow("Public IP", instance.publicIp ?? "—")
                 infoRow("Private IP", instance.privateIp ?? "—")
                 infoRow("Region", instance.region ?? CivoConfig.shared.region)
-                infoRow("Network ID", instance.networkId ?? "Default")
+                infoRow("Network ID", instance.networkId ?? String(localized: "Default"))
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Reverse DNS")
                         .font(.caption)
@@ -214,7 +214,7 @@ struct InstanceDetailView: View {
     private var securitySection: some View {
         GroupBox("Security") {
             VStack(alignment: .leading, spacing: 10) {
-                infoRow("Firewall ID", instance.firewallId ?? "Default")
+                infoRow("Firewall ID", instance.firewallId ?? String(localized: "Default"))
                 if let password = instance.initialPassword, !password.isEmpty {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Initial Password")
@@ -368,7 +368,7 @@ struct InstanceDetailView: View {
             do {
                 let success = try await context.evaluatePolicy(
                     .deviceOwnerAuthentication,
-                    localizedReason: "View instance password"
+                    localizedReason: String(localized: "View instance password")
                 )
                 if success { showPassword = true }
             } catch {
@@ -377,7 +377,7 @@ struct InstanceDetailView: View {
         }
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label)
                 .font(.caption)

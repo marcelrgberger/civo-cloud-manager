@@ -147,7 +147,7 @@ struct ObjectStorePauseView: View {
         mode == .pause ? "pause.circle.fill" : "play.circle.fill"
     }
 
-    private var headerTitle: String {
+    private var headerTitle: LocalizedStringKey {
         switch mode {
         case .pause:
             guard let progress else { return "Pausing Object Store" }

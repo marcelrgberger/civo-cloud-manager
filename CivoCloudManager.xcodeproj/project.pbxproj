@@ -366,6 +366,70 @@
 		E279EDFEAF2243A0A6A94CA2 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		88367E96C90041C98F6CCA67 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		74C945EC314349EA82F5B6E8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		DDF5C729EC47E53AB4837326 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		E76FFD7E4CAFCDCDF7A98BD0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		34E6D627F0D1630A8344623C /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		7BAA3AEA842BEDF44BE85FEC /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		C899FC10CDD02C81BD245E70 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		86C8C04A5EF417F735D9B5C1 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		0D66C533A1D4A7D148BAD99D /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		DF304963C895A0C44B9E4D08 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		818C31B68A2301A444C5C63F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		4D03089F47AFCCE901739263 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ja"; path = "ja.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		C9F305D58A45A24D40DD5E17 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko"; path = "ko.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F3E8BC45511E8AB1F3F11A40 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ar"; path = "ar.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		6A6E210697C85A147DC20508 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "hi"; path = "hi.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		DF8C122365AB99F406470813 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "id"; path = "id.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		0600FEA7B69667CCB03C8D2D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "tr"; path = "tr.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		E508B179BD97FD94BC6E867A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru"; path = "ru.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		76BF5A70C10F21E20BB37984 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		CE88F195654D942C42388782 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		FBA1A6B09D22F5B8EE0BF4FB /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		F9FE11B50CD3EE0D3EB4EF7F /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		65EBAD480360D46630E11664 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		32DA972DCE9D23267D3212CA /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		9BD743412B76E46803D69330 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		02A97588917A6A8CF199B248 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		C76CFD3D06E4833EE217A833 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/Impressum.md"; sourceTree = "<group>"; };
+		6F45CE7E364ED5EC40AC59DA /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/Impressum.md"; sourceTree = "<group>"; };
+		0529E990D6EA68389D4B1890 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/Impressum.md"; sourceTree = "<group>"; };
+		A899AC4B5EB66FC75BA3E725 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/Impressum.md"; sourceTree = "<group>"; };
+		6C49FB92D8E909C0B73812F2 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/Impressum.md"; sourceTree = "<group>"; };
+		64FC1DA3C7511385F5BF0807 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/Impressum.md"; sourceTree = "<group>"; };
+		9D4806FC512DB10148068FE6 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/Impressum.md"; sourceTree = "<group>"; };
+		453D0C2AEF549B252CEC403B /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/Impressum.md"; sourceTree = "<group>"; };
+		D9A1FC40666257F5808AD052 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/EULA.md"; sourceTree = "<group>"; };
+		CF4C87390BCB79EBC3C444AC /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/EULA.md"; sourceTree = "<group>"; };
+		1239CF0858ADB02A9F0520F7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/EULA.md"; sourceTree = "<group>"; };
+		1D914EE69675240BB1C9AEFE /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/EULA.md"; sourceTree = "<group>"; };
+		6902CF884B991F97508E7D9D /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/EULA.md"; sourceTree = "<group>"; };
+		98388E52F1A241CCA105722C /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/EULA.md"; sourceTree = "<group>"; };
+		841BD30B5E21314D6B21E02E /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/EULA.md"; sourceTree = "<group>"; };
+		719F75E100CB751C32A9876B /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/EULA.md"; sourceTree = "<group>"; };
+		96084E29DDD11011EF5EE949 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		8D4A94D0108B57DDCB3A2AF0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		4132B7915DA6A3F48CF54C2E /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		02FB2BEF141B3556EA03F5BA /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		6B3A28D0793407254528F843 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		3D59F2CEAB692706C25F2FFB /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		DBD4ACCCD026B1B48E7C0072 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		550F0D71512198D606CBF3DC /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		E9CFCEF6708F96403677629E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		5D76AED2994B31EBC35A6105 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		92BBFEA5E9AC65A037DCB9F8 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		E51DCC5C54E1E4370C8A1A33 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		FFCB7AF3F00EA55FE39E2920 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		C12D949B31113A3931F0EB50 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		F6E8D48FE047B016D6F5E341 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		EC20FE440080DA001342C252 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		636AE12ABCF93F695CF8DF73 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		0B3B5607ED2F18C4E97B4D23 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		0E4F4E0CCEAF3A13DFDF6C04 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		8653AB80F44985361E9456C5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		D213DCCE8D4C2D0ED22073DE /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		A5AF5E181E9A2C6767974A30 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		38EEAFDD8DD997EC1FBA6D2A /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		5899CAD7644F77866257E05F /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -747,6 +811,14 @@
 				nl,
 				pl,
 				pt,
+				"zh-Hans",
+				"ja",
+				"ko",
+				"ar",
+				"hi",
+				"id",
+				"tr",
+				"ru",
 				Base,
 			);
 			mainGroup = DB15A2E180805CA5F250A54A;
@@ -955,6 +1027,14 @@
 				8703B7ADBE6B3FE8F2D24EB3 /* nl */,
 				C17FDFD0A2757A7BFF86340C /* pl */,
 				ED9C224968AEEA8411D81E21 /* pt */,
+				DDF5C729EC47E53AB4837326 /* zh-Hans */,
+				E76FFD7E4CAFCDCDF7A98BD0 /* ja */,
+				34E6D627F0D1630A8344623C /* ko */,
+				7BAA3AEA842BEDF44BE85FEC /* ar */,
+				C899FC10CDD02C81BD245E70 /* hi */,
+				86C8C04A5EF417F735D9B5C1 /* id */,
+				0D66C533A1D4A7D148BAD99D /* tr */,
+				DF304963C895A0C44B9E4D08 /* ru */,
 			);
 			name = TermsOfService.md;
 			sourceTree = "<group>";
@@ -970,6 +1050,14 @@
 				EC30E33A559EF2EDE5F1EFF7 /* nl */,
 				6D09EE0597317A299FF33F61 /* pl */,
 				323BA1EFA2434775B360EC40 /* pt */,
+				818C31B68A2301A444C5C63F /* zh-Hans */,
+				4D03089F47AFCCE901739263 /* ja */,
+				C9F305D58A45A24D40DD5E17 /* ko */,
+				F3E8BC45511E8AB1F3F11A40 /* ar */,
+				6A6E210697C85A147DC20508 /* hi */,
+				DF8C122365AB99F406470813 /* id */,
+				0600FEA7B69667CCB03C8D2D /* tr */,
+				E508B179BD97FD94BC6E867A /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -985,6 +1073,14 @@
 				1F3418483EDEFC2F2D8A08D8 /* nl */,
 				EC4E4960816C20C03974D4DD /* pl */,
 				158FEB1ADBC203A9626DFBD8 /* pt */,
+				76BF5A70C10F21E20BB37984 /* zh-Hans */,
+				CE88F195654D942C42388782 /* ja */,
+				FBA1A6B09D22F5B8EE0BF4FB /* ko */,
+				F9FE11B50CD3EE0D3EB4EF7F /* ar */,
+				65EBAD480360D46630E11664 /* hi */,
+				32DA972DCE9D23267D3212CA /* id */,
+				9BD743412B76E46803D69330 /* tr */,
+				02A97588917A6A8CF199B248 /* ru */,
 			);
 			name = PrivacyPolicy.md;
 			sourceTree = "<group>";
@@ -1000,6 +1096,14 @@
 				67605B8A33B72AD5D3674CC1 /* nl */,
 				5C6007AB693639033F735D50 /* pl */,
 				E8EB982C6B9FBB5DD15F657A /* pt */,
+				C76CFD3D06E4833EE217A833 /* zh-Hans */,
+				6F45CE7E364ED5EC40AC59DA /* ja */,
+				0529E990D6EA68389D4B1890 /* ko */,
+				A899AC4B5EB66FC75BA3E725 /* ar */,
+				6C49FB92D8E909C0B73812F2 /* hi */,
+				64FC1DA3C7511385F5BF0807 /* id */,
+				9D4806FC512DB10148068FE6 /* tr */,
+				453D0C2AEF549B252CEC403B /* ru */,
 			);
 			name = Impressum.md;
 			sourceTree = "<group>";
@@ -1015,6 +1119,14 @@
 				F7ECBD65A3F5499785440554 /* nl */,
 				AE954C8291924AD3B0188B3D /* pl */,
 				6042803EF9784013997EAC40 /* pt */,
+				D9A1FC40666257F5808AD052 /* zh-Hans */,
+				CF4C87390BCB79EBC3C444AC /* ja */,
+				1239CF0858ADB02A9F0520F7 /* ko */,
+				1D914EE69675240BB1C9AEFE /* ar */,
+				6902CF884B991F97508E7D9D /* hi */,
+				98388E52F1A241CCA105722C /* id */,
+				841BD30B5E21314D6B21E02E /* tr */,
+				719F75E100CB751C32A9876B /* ru */,
 			);
 			name = EULA.md;
 			sourceTree = "<group>";
@@ -1030,6 +1142,14 @@
 				0946922D1BCD4AA9BD0F7CA1 /* nl */,
 				F3A3826B8C804D53B8762A31 /* pl */,
 				F545067F5A0841AEB3358B41 /* pt */,
+				96084E29DDD11011EF5EE949 /* zh-Hans */,
+				8D4A94D0108B57DDCB3A2AF0 /* ja */,
+				4132B7915DA6A3F48CF54C2E /* ko */,
+				02FB2BEF141B3556EA03F5BA /* ar */,
+				6B3A28D0793407254528F843 /* hi */,
+				3D59F2CEAB692706C25F2FFB /* id */,
+				DBD4ACCCD026B1B48E7C0072 /* tr */,
+				550F0D71512198D606CBF3DC /* ru */,
 			);
 			name = AcceptableUsePolicy.md;
 			sourceTree = "<group>";
@@ -1045,6 +1165,14 @@
 				668730B5D3B84493A662757C /* nl */,
 				AB14071F721E4034AB7583B1 /* pl */,
 				DB195696E10F4E7B9EA89645 /* pt */,
+				E9CFCEF6708F96403677629E /* zh-Hans */,
+				5D76AED2994B31EBC35A6105 /* ja */,
+				92BBFEA5E9AC65A037DCB9F8 /* ko */,
+				E51DCC5C54E1E4370C8A1A33 /* ar */,
+				FFCB7AF3F00EA55FE39E2920 /* hi */,
+				C12D949B31113A3931F0EB50 /* id */,
+				F6E8D48FE047B016D6F5E341 /* tr */,
+				EC20FE440080DA001342C252 /* ru */,
 			);
 			name = PushNotificationConsent.md;
 			sourceTree = "<group>";
@@ -1060,6 +1188,14 @@
 				E279EDFEAF2243A0A6A94CA2 /* nl */,
 				88367E96C90041C98F6CCA67 /* pl */,
 				74C945EC314349EA82F5B6E8 /* pt */,
+				636AE12ABCF93F695CF8DF73 /* zh-Hans */,
+				0B3B5607ED2F18C4E97B4D23 /* ja */,
+				0E4F4E0CCEAF3A13DFDF6C04 /* ko */,
+				8653AB80F44985361E9456C5 /* ar */,
+				D213DCCE8D4C2D0ED22073DE /* hi */,
+				A5AF5E181E9A2C6767974A30 /* id */,
+				38EEAFDD8DD997EC1FBA6D2A /* tr */,
+				5899CAD7644F77866257E05F /* ru */,
 			);
 			name = TrademarkDisclaimer.md;
 			sourceTree = "<group>";

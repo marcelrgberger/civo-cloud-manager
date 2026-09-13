@@ -1,3 +1,4 @@
+# Legacy reference only. The native project.pbxproj is authoritative; do not regenerate.
 name: CivoCloudManager
 options:
   bundleIdPrefix: de.berger-rosenstock
@@ -17,6 +18,14 @@ options:
     - nl
     - pl
     - pt
+    - zh-Hans
+    - ja
+    - ko
+    - ar
+    - hi
+    - id
+    - tr
+    - ru
     - Base
 
 settings:
@@ -57,6 +66,14 @@ targets:
       - path: CivoCloudManager/nl.lproj/InfoPlist.strings
       - path: CivoCloudManager/pl.lproj/InfoPlist.strings
       - path: CivoCloudManager/pt.lproj/InfoPlist.strings
+      - path: CivoCloudManager/zh-Hans.lproj/InfoPlist.strings
+      - path: CivoCloudManager/ja.lproj/InfoPlist.strings
+      - path: CivoCloudManager/ko.lproj/InfoPlist.strings
+      - path: CivoCloudManager/ar.lproj/InfoPlist.strings
+      - path: CivoCloudManager/hi.lproj/InfoPlist.strings
+      - path: CivoCloudManager/id.lproj/InfoPlist.strings
+      - path: CivoCloudManager/tr.lproj/InfoPlist.strings
+      - path: CivoCloudManager/ru.lproj/InfoPlist.strings
       - path: CivoCloudManager/PrivacyInfo.xcprivacy
     settings:
       base:
@@ -87,6 +104,14 @@ targets:
           - nl
           - pl
           - pt
+          - zh-Hans
+          - ja
+          - ko
+          - ar
+          - hi
+          - id
+          - tr
+          - ru
     entitlements:
       path: CivoCloudManager/CivoCloudManager.entitlements
       properties:

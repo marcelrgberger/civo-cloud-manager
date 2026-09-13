@@ -1,2 +1,3 @@
-/* App Store language marker */
+/* Localized app name and authentication usage description. */
 "CFBundleDisplayName" = "Civo Cloud Manager";
+"NSFaceIDUsageDescription" = "Authentifiez-vous pour afficher les identifiants sensibles et les clés SSH";

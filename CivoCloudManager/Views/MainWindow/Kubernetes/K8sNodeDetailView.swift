@@ -21,7 +21,7 @@ struct K8sNodeDetailView: View {
         .navigationTitle(node.name)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Button("Back", systemImage: "chevron.left") { onBack() }
+                Button("Back", systemImage: "chevron.backward") { onBack() }
             }
         }
         .onAppear {
@@ -63,7 +63,7 @@ struct K8sNodeDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.1), value: appeared)
     }
 
-    private func resourceCard(_ title: String, capacity: String?, allocatable: String?, icon: String, color: Color, index: Int) -> some View {
+    private func resourceCard(_ title: LocalizedStringKey, capacity: String?, allocatable: String?, icon: String, color: Color, index: Int) -> some View {
         VStack(spacing: 4) {
             Image(systemName: icon)
                 .font(.title2)
@@ -172,7 +172,7 @@ struct K8sNodeDetailView: View {
                 Text("View Pods on this Node")
                     .font(.headline)
                 Spacer()
-                Image(systemName: "chevron.right")
+                Image(systemName: "chevron.forward")
                     .foregroundStyle(.secondary)
             }
             .padding(14)
@@ -184,7 +184,7 @@ struct K8sNodeDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.35), value: appeared)
     }
 
-    private func infoRow(_ label: String, _ value: String) -> some View {
+    private func infoRow(_ label: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(label).font(.caption).foregroundStyle(.secondary)
             Text(value).font(.subheadline).textSelection(.enabled)

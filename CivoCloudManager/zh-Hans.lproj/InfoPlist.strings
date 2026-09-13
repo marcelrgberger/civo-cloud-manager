@@ -1,0 +1,3 @@
+/* Localized app name and authentication usage description. */
+"CFBundleDisplayName" = "Civo Cloud Manager";
+"NSFaceIDUsageDescription" = "请验证身份以查看敏感凭据和 SSH 密钥";
