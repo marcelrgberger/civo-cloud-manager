@@ -131,8 +131,38 @@ struct FirewallClosureTests {
         #expect(restarted.jobs.first?.failures == 8)
         await restarted.closeDue { _ in Issue.record("Exceeded retry limit") }
         restarted.retryFailures()
-        await restarted.closeDue { _ in }
-        #expect(restarted.jobs.isEmpty)
+        // Simulate quitting immediately after Retry, before another timer tick.
+        let afterRetryRestart = FirewallClosureQueue(file: file)
+        #expect(afterRetryRestart.jobs.count == 1)
+        #expect(afterRetryRestart.jobs.first?.failures == nil)
+        #expect(afterRetryRestart.jobs.first?.nextAttempt == nil)
+        #expect(afterRetryRestart.jobs.first?.failureMessage == nil)
+        await afterRetryRestart.closeDue { _ in }
+        #expect(afterRetryRestart.jobs.isEmpty)
+    }
+
+    @Test("Failed manual retry persistence stays visible and is retried locally")
+    func retryPersistenceFailure() async throws {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: false)
+        let file = dir.appendingPathComponent("jobs.json")
+        let job = FirewallClosureJob(id: UUID(), firewallId: "fw", ruleId: "rule", region: "fra1",
+                                     closeAt: .distantFuture, failures: 8, nextAttempt: .distantFuture,
+                                     failureMessage: "Previous failure")
+        try JSONEncoder().encode([job]).write(to: file)
+        let queue = FirewallClosureQueue(file: file)
+        try FileManager.default.removeItem(at: file)
+        try FileManager.default.createDirectory(at: file, withIntermediateDirectories: false)
+        queue.retryFailures()
+        #expect(queue.lastError?.contains(file.path) == true)
+        #expect(queue.jobs.count == 1)
+        try FileManager.default.removeItem(at: file)
+        await queue.closeDue { _ in Issue.record("Closed before deadline") }
+        #expect(queue.lastError == nil)
+        let recovered = FirewallClosureQueue(file: file)
+        #expect(recovered.jobs.count == 1)
+        #expect(recovered.jobs.first?.failures == nil)
     }
 
     @Test("Corrupt storage cannot be silently overwritten")
