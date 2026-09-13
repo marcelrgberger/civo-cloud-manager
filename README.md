@@ -417,7 +417,7 @@ Remaining architecture limitations include mutable shared API configuration acro
 
 ## Validation
 
-The current suite contains **40 tests in seven suites**: response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures and SSH encryption key preservation.
+The current suite contains **41 tests in seven suites**: response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures and SSH encryption key preservation. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests

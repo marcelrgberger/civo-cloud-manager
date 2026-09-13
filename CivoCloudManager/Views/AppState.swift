@@ -70,7 +70,14 @@ final class FirewallClosureQueue {
             jobs[index].failureMessage = nil
         }
         needsPersistence = true
-        lastError = nil
+        do {
+            try persist(jobs)
+            needsPersistence = false
+            lastError = nil
+        } catch {
+            // Keep the reset dirty for the next tick, and never report a failed save as successful.
+            lastError = "\(error.localizedDescription) — \(file.path)"
+        }
     }
 
     func closeDue(now: Date = Date(), close: (FirewallClosureJob) async throws -> Void) async {
