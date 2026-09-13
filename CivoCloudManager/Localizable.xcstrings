@@ -1,6 +1,110 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach der Testphase schaltet ein einmaliger Kauf von Full Access das Dashboard frei. Der Preis wird vor dem Kauf angezeigt."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Después de la prueba, una compra única de Full Access desbloquea el panel. El precio se muestra antes de comprar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Après l’essai, un achat unique de Full Access déverrouille le tableau de bord. Le prix est affiché avant l’achat."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dopo la prova, un acquisto una tantum di Full Access sblocca la dashboard. Il prezzo viene mostrato prima dell’acquisto."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Na de proefperiode ontgrendelt een eenmalige aankoop van Full Access het dashboard. De prijs wordt vóór aankoop getoond."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Po okresie próbnym jednorazowy zakup Full Access odblokowuje panel. Cena jest wyświetlana przed zakupem."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Após o período de avaliação, uma compra única de Full Access desbloqueia o painel. O preço é apresentado antes da compra."
+          }
+        }
+      }
+    },
+    "All features are free for seven elapsed days from first use.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All features are free for seven elapsed days from first use."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle Funktionen sind ab der ersten Nutzung sieben Tage lang kostenlos."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todas las funciones son gratuitas durante siete días desde el primer uso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les fonctionnalités sont gratuites pendant sept jours à compter de la première utilisation."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutte le funzioni sono gratuite per sette giorni dal primo utilizzo."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle functies zijn zeven dagen vanaf het eerste gebruik gratis."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wszystkie funkcje są bezpłatne przez siedem dni od pierwszego użycia."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todas as funcionalidades são gratuitas durante sete dias a partir da primeira utilização."
+          }
+        }
+      }
+    },
     "The private key was exported, but its encrypted backup could not be saved. Keep the exported file safe.": {
       "localizations": {
         "en": {

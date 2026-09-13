@@ -1,7 +1,8 @@
 # Civo Cloud Manager — Feature Roadmap
 
-Comparison baseline: Civo CLI feature set vs. app capabilities (as of v2.0.1).
-Each release ships **one** headline feature.
+Current app version: **2.1.2 (build 19)**. The feature backlog below originated from a v2.0.1 comparison and is historical planning, not a verified description of current behavior or a release commitment. See [README](../README.md) for current architecture and capabilities.
+
+Completed reliability work: Kubernetes TLS validation, explicit request-region routing, persistent timed firewall closures and SSH encryption-key preservation. Remaining architecture work is tracked in the README under persistence and current limits.
 
 ---
 
@@ -34,11 +35,11 @@ Each release ships **one** headline feature.
 
 ---
 
-## Release Plan
+## Historical Release Plan
 
 | Version | Feature |
 |---------|---------|
-| **2.1.0** | Volume Resize ⬅ current |
+| **2.1.0** | Volume Resize (historical plan) |
 | 2.2.0 | TBD |
 | 2.3.0 | TBD |
 
