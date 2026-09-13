@@ -4,7 +4,7 @@
 
 A native macOS app for managing Civo Cloud infrastructure from the menu bar and a full dashboard. Published by **DigitalFreedom Global LLC**, trading as DigitalFreedom.
 
-The shipped app requires **macOS 26 or later**, matching the native Xcode target, and a Civo account with an API key. The app connects directly to Civo, Kubernetes and S3-compatible endpoints. SwiftUI, Foundation, Security, CryptoKit, StoreKit and other Apple frameworks provide the implementation; no third-party runtime dependencies or cloud CLI are required.
+The shipped app requires **macOS 15 or later**, matching the native Xcode target, and a Civo account with an API key. The app connects directly to Civo, Kubernetes and S3-compatible endpoints. SwiftUI, Foundation, Security, CryptoKit, StoreKit and other Apple frameworks provide the implementation; no third-party runtime dependencies or cloud CLI are required.
 
 ## Features
 
@@ -39,9 +39,11 @@ xcodebuild -project CivoCloudManager.xcodeproj \
   -derivedDataPath /tmp/civo-readme-build CODE_SIGNING_ALLOWED=NO build
 ```
 
-`Package.swift` supports Swift build/test checks but does not validate Xcode resource or source membership. Its macOS 15 platform declaration is a separate test/build configuration, not the shipped app's minimum OS requirement. `project.yml` and `scripts/post_xcodegen.sh` are legacy artifacts: do not regenerate the Xcode project from them.
+`Package.swift` supports Swift build/test checks but does not validate Xcode resource or source membership. Both the native Xcode project and the Swift package declare macOS 15 as their minimum. `project.yml` and `scripts/post_xcodegen.sh` are legacy artifacts: do not regenerate the Xcode project from them.
 
 On first launch, use the menu bar shield to complete onboarding: enter the API key, choose a region, select managed firewalls and their ports, and optionally enable Launch at Login. The main window exposes the full resource dashboard; Help and Legal are separate windows.
+
+The app uses standard SwiftUI/AppKit components so presentation follows the running macOS version. Newer system styling does not require raising the minimum OS; any future use of newer APIs must have availability checks and a macOS 15 fallback. A successful deployment-target build verifies API availability, but does not replace a runtime smoke test on macOS 15.
 
 ## Access and the seven-day trial
 
