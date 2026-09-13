@@ -424,6 +424,7 @@ The current suite contains **41 tests in seven suites**: response decoding, free
 ```bash
 swift test --scratch-path /tmp/civo-tests
 python3 scripts/check_legal_localizations.py
+python3 scripts/test_legal_localizations.py
 python3 scripts/check_app_localizations.py
 ```
 
@@ -448,6 +449,7 @@ A native Xcode Release build additionally verifies target membership and resourc
 | `CivoCloudManagerTests/APIDecodingTests.swift` | Seven Swift Testing suites |
 | `docs/legal-documents.md` | Legal source provenance and maintenance |
 | `scripts/check_legal_localizations.py` | Legal document consistency and optional built-bundle checks |
+| `scripts/test_legal_localizations.py` | Regression tests for translated and swapped legal dates |
 | `scripts/check_app_localizations.py` | Complete catalog coverage, format arguments and optional built-bundle checks |
 
 ## License

@@ -19,7 +19,7 @@ COMPANY_DATA = (
 )
 
 # Dates are facts, not interchangeable digit bags. Normalize only these exact,
-# reviewed dates; an incorrect/missing day, month or year fails the count check.
+# reviewed dates; check both their counts and their sequence in the document.
 # Order: document date, ODR closure, Belgian law, Italian decree.
 # Other numerical facts still use multisets; those checks do not prove their order.
 DATE_FORMS = {
@@ -56,6 +56,7 @@ def content(text):
 
 def signature(text):
     return {
+        "date_sequence": re.findall(r"DATE_[A-D]", text),
         "headings": re.findall(r"^(#{1,6})\s+(\d+(?:\.\d+)*)?", text, re.M),
         "numbers": Counter(re.findall(r"\d+", text)),
         "links": Counter(re.findall(
