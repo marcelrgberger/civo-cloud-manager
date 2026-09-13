@@ -225,11 +225,11 @@ struct HelpSection {
             "Right-click any resource and select 'Delete' to start.",
         ]),
         HelpSection(title: "Full Access", icon: "cart", items: [
-            "Menu bar firewall management is free.",
+            String(localized: "Menu bar firewall management is free."),
             String(localized: "All features are free for seven elapsed days from first use."),
             String(localized: "After the trial, a one-time Full Access purchase unlocks the dashboard. The price is shown before purchase."),
-            "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes.",
-            "Family Sharing is enabled.",
+            String(localized: "'Restore Purchase' recovers previous purchases. 'Redeem Code' for Apple offer codes."),
+            String(localized: "Family Sharing is enabled."),
         ]),
     ]
 }
