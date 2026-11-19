@@ -374,6 +374,10 @@ Console and JWT calls use `CivoConsoleService`, a separate ephemeral `URLSession
 
 The web view uses a non-persistent website data store, has no inspector, back/forward gestures or popups, and only allows navigation to `https://vnc.<region>.civo.com` under the instance's path, port 443, without user info or foreign `token` parameters. Blocked navigations are cancelled, never opened in the system browser. The only external fallback is the token-free dashboard link. A loaded page does not prove a working VNC connection, so Reconnect stays available. Logging in requires a password of a user on the instance; copy and paste are not available.
 
+The app adds `resize=scale` to the API-returned `uri` (replacing any `resize` value it carries) before the token. Civo's console URL points to noVNC's `vnc.html`, which reads `resize` from the query since noVNC 1.0 and then sets `RFB.scaleViewport`: the remote screen fits the window, keeps its aspect ratio and rescales on every window resize through noVNC's own resize handling. The app adds no JavaScript to the page.
+
+Logging in requires a password of a user on the instance. The console window shows the instance's `initial_user` and `initial_password` from the Civo API, or states that Civo reports none. The password is masked; showing or copying it needs Touch ID or the system password, as in the detail view, and it hides itself again after 30 seconds. A copied password is marked as concealed for clipboard managers and cleared from the pasteboard after 90 seconds or when the app quits, unless something else was copied. The password itself is not selectable, so the copy button is the only copy path. A password changed later on the instance is not shown. The login travels from the main window to the console window through `ConsoleLoginStore` in memory only: it is not part of `ConsoleTarget` (the window value), is redacted in descriptions, is never logged or stored, and is dropped when the window closes or the API key changes.
+
 ```mermaid
 sequenceDiagram
     participant U as User

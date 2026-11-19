@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Testing
 import Security
@@ -677,6 +678,16 @@ struct ConsoleURLTests {
         #expect(components.percentEncodedQuery?.contains("a%2Bb") == true)
     }
 
+    @Test("noVNC is asked to scale to the window, replacing a resize mode from the API uri")
+    func scalesToWindow() throws {
+        let uri = "https://vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html?path=/\(consoleInstanceId)/websockify&resize=off"
+        let url = try ConsoleURL.make(uri: uri, token: "jwt", target: consoleTarget)
+        let items = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems)
+        #expect(items.map(\.name) == ["path", "resize", "token"])
+        #expect(items.first { $0.name == "resize" }?.value == "scale")
+        #expect(ConsoleURL.isAllowedNavigation(url, sessionURL: url, target: consoleTarget))
+    }
+
     @Test("Untrusted console locations are rejected", arguments: [
         "http://vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html",
         "https://vnc.nyc1.civo.com/\(consoleInstanceId)/vnc.html",
@@ -864,6 +875,53 @@ private final class ConsoleEnvironment {
     func connectAndSettle() async {
         vm.connect()
         await waitUntil { !self.vm.isBusy }
+    }
+}
+
+@Suite("Console initial login")
+@MainActor
+struct ConsoleLoginTests {
+    private let password = "INITIAL-PASSWORD-VALUE"
+
+    @Test("The login never appears in descriptions, and the window value carries no secret")
+    func redacted() throws {
+        let login = ConsoleLogin(user: "civo", password: password)
+        var dumped = ""
+        dump(login, to: &dumped)
+        for text in [String(describing: login), String(reflecting: login), dumped, "\(login)"] {
+            #expect(!text.contains(password))
+        }
+        let encodedTarget = try String(decoding: JSONEncoder().encode(consoleTarget), as: UTF8.self)
+        #expect(!encodedTarget.lowercased().contains("password"))
+        #expect(ConsoleLogin(user: "", password: "").isEmpty)
+    }
+
+    @Test("The login is handed to the console window in memory and dropped when it closes")
+    func handOver() {
+        let store = ConsoleLoginStore()
+        store.register(ConsoleLogin(user: "civo", password: password), for: consoleTarget)
+        let renamed = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "renamed", region: "LON1")
+        #expect(store.login(for: renamed)?.password == password)
+        store.remove(for: consoleTarget)
+        #expect(store.login(for: consoleTarget) == nil)
+    }
+
+    @Test("A copied password is concealed and cleared only if nothing else was copied")
+    func pasteboard() {
+        let board = NSPasteboard(name: NSPasteboard.Name("ccm-test-\(UUID().uuidString)"))
+        defer { board.releaseGlobally() }
+
+        let copied = SecretPasteboard.write(password, to: board)
+        #expect(board.string(forType: .string) == password)
+        #expect(board.types?.contains(SecretPasteboard.concealedType) == true)
+        SecretPasteboard.clear(board, ifUnchangedSince: copied)
+        #expect(board.string(forType: .string) == nil)
+
+        let again = SecretPasteboard.write(password, to: board)
+        board.clearContents()
+        board.setString("other", forType: .string)
+        SecretPasteboard.clear(board, ifUnchangedSince: again)
+        #expect(board.string(forType: .string) == "other")
     }
 }
 

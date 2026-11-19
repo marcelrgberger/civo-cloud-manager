@@ -1,3 +1,4 @@
+import LocalAuthentication
 import SwiftUI
 import WebKit
 
@@ -6,7 +7,13 @@ import WebKit
 struct InstanceConsoleView: View {
     @State private var vm: ConsoleViewModel
     @State private var confirmEnd = false
+    @State private var showPassword = false
+    @State private var copiedPassword = false
     private let store = StoreManager.shared
+    private let logins = ConsoleLoginStore.shared
+
+    /// Same as the instance detail view: a revealed password hides itself again.
+    private static let passwordVisibleDuration: Duration = .seconds(30)
 
     init(target: ConsoleTarget) {
         _vm = State(initialValue: ConsoleViewModel(target: target))
@@ -73,21 +80,133 @@ struct InstanceConsoleView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
             vm.apiKeyDidChange()
+            // The login belongs to the account the window was opened with.
+            showPassword = false
+            logins.remove(for: vm.target)
         }
-        .onDisappear { vm.closeLocally() }
+        .task(id: showPassword) {
+            guard showPassword else { return }
+            try? await Task.sleep(for: Self.passwordVisibleDuration)
+            if !Task.isCancelled { showPassword = false }
+        }
+        .task(id: copiedPassword) {
+            guard copiedPassword else { return }
+            try? await Task.sleep(for: .seconds(2))
+            if !Task.isCancelled { copiedPassword = false }
+        }
+        .onDisappear {
+            vm.closeLocally()
+            logins.remove(for: vm.target)
+        }
     }
 
     private var hintBar: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "info.circle")
-                .foregroundStyle(.secondary)
-            Text("Log in with a password of a user on the instance, for example the initial password. Copy and paste are not available in the console.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            Spacer()
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 8) {
+                Image(systemName: "info.circle")
+                    .foregroundStyle(.secondary)
+                Text("Log in with a password of a user on the instance, for example the initial password. Copy and paste are not available in the console.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            if store.isFullAccessUnlocked {
+                initialLogin(logins.login(for: vm.target) ?? ConsoleLogin(user: nil, password: nil))
+            }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
+    }
+
+    // MARK: - Initial login
+
+    @ViewBuilder
+    private func initialLogin(_ login: ConsoleLogin) -> some View {
+        if login.isEmpty {
+            Text("Civo reports no initial user or password for this instance.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } else {
+            HStack(spacing: 16) {
+                loginField("Initial User") {
+                    if let user = login.user {
+                        Text(verbatim: user)
+                            .font(.callout.monospaced())
+                            .textSelection(.enabled)
+                    } else {
+                        notProvided
+                    }
+                }
+                loginField("Initial Password") {
+                    if let password = login.password {
+                        passwordField(password)
+                    } else {
+                        notProvided
+                    }
+                }
+                Spacer()
+            }
+            Text("Shows the initial login reported by Civo. A password changed later on the instance is not shown here.")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+    }
+
+    private var notProvided: some View {
+        Text("Not provided by Civo")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+    }
+
+    private func loginField(_ title: LocalizedStringKey, @ViewBuilder value: () -> some View) -> some View {
+        HStack(spacing: 6) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            value()
+        }
+    }
+
+    private func passwordField(_ password: String) -> some View {
+        HStack(spacing: 6) {
+            // Not selectable: copying goes through `SecretPasteboard` only.
+            if showPassword {
+                Text(verbatim: password)
+                    .font(.callout.monospaced())
+            } else {
+                Text(verbatim: String(repeating: "*", count: 12))
+                    .font(.callout.monospaced())
+            }
+            Button {
+                if showPassword {
+                    showPassword = false
+                } else {
+                    Task { showPassword = await DeviceOwner.confirm(reason: String(localized: "View instance password")) }
+                }
+            } label: {
+                Label(showPassword ? "Hide password" : "Show password", systemImage: showPassword ? "eye.slash" : "eye")
+                    .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.borderless)
+            .help(showPassword ? "Hide password" : "Show password")
+            Button {
+                Task { await copyPassword(password) }
+            } label: {
+                Label("Copy password", systemImage: copiedPassword ? "checkmark" : "doc.on.doc")
+                    .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.borderless)
+            .help("Copy password")
+        }
+    }
+
+    /// A hidden password is copied only after the same authentication that reveals it.
+    private func copyPassword(_ password: String) async {
+        if !showPassword {
+            guard await DeviceOwner.confirm(reason: String(localized: "Copy instance password")) else { return }
+        }
+        SecretPasteboard.copy(password)
+        copiedPassword = true
     }
 
     @ViewBuilder
@@ -189,6 +308,64 @@ struct InstanceConsoleView: View {
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.background)
+    }
+}
+
+/// Touch ID or system password, as in the instance detail view: a Mac without any owner
+/// authentication shows the password directly.
+@MainActor
+private enum DeviceOwner {
+    static func confirm(reason: String) async -> Bool {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else { return true }
+        return (try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason)) ?? false
+    }
+}
+
+/// Copies a secret for an explicit paste. It is marked as concealed (nspasteboard.org) so clipboard
+/// managers do not record it, and cleared after `lifetime` or when the app quits, unless something
+/// else was copied since.
+@MainActor
+enum SecretPasteboard {
+    static let concealedType = NSPasteboard.PasteboardType("org.nspasteboard.ConcealedType")
+    static let lifetime: Duration = .seconds(90)
+
+    private static var pending: (pasteboard: NSPasteboard, changeCount: Int)?
+    private static var terminationObserver: NSObjectProtocol?
+
+    static func copy(_ secret: String, to pasteboard: NSPasteboard = .general) {
+        let changeCount = write(secret, to: pasteboard)
+        pending = (pasteboard, changeCount)
+        terminationObserver = terminationObserver ?? NotificationCenter.default.addObserver(
+            forName: NSApplication.willTerminateNotification, object: nil, queue: .main
+        ) { _ in
+            MainActor.assumeIsolated { clearPending() }
+        }
+        Task {
+            try? await Task.sleep(for: lifetime)
+            if pending?.changeCount == changeCount { clearPending() }
+        }
+    }
+
+    private static func clearPending() {
+        guard let pending else { return }
+        clear(pending.pasteboard, ifUnchangedSince: pending.changeCount)
+        self.pending = nil
+    }
+
+    /// Writes the secret with the concealed marker and returns the resulting change count.
+    @discardableResult
+    static func write(_ secret: String, to pasteboard: NSPasteboard) -> Int {
+        pasteboard.clearContents()
+        pasteboard.setString(secret, forType: .string)
+        pasteboard.setString("", forType: concealedType)
+        return pasteboard.changeCount
+    }
+
+    static func clear(_ pasteboard: NSPasteboard, ifUnchangedSince changeCount: Int) {
+        guard pasteboard.changeCount == changeCount else { return }
+        pasteboard.clearContents()
     }
 }
 
