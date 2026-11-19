@@ -3,6 +3,7 @@ import SwiftUI
 struct InstanceListView: View {
     @Bindable var vm: InstanceViewModel
     @State private var deleteTarget: CivoInstance?
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         Group {
@@ -65,6 +66,9 @@ struct InstanceListView: View {
                         if inst.status?.lowercased() == "active" {
                             Button("Stop") { Task { await vm.stopInstance(inst.id) } }
                             Button("Reboot") { Task { await vm.rebootInstance(inst.id) } }
+                            if let target = vm.consoleTarget(for: inst) {
+                                Button("Open Console") { openWindow(id: "console", value: target) }
+                            }
                         }
                         if inst.status?.lowercased() == "shutoff" {
                             Button("Start") { Task { await vm.startInstance(inst.id) } }

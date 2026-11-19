@@ -9,6 +9,8 @@ final class InstanceViewModel {
     var error: String?
 
     var selectedInstance: CivoInstance?
+    /// Region the current `instances` were fetched from.
+    private(set) var instancesRegion = ""
     var isCreatingInstance = false
     var isCreatingSSHKey = false
     var isSaving = false
@@ -33,10 +35,12 @@ final class InstanceViewModel {
         defer { isLoading = false }
 
         do {
-            async let insts = instanceService.listInstances()
+            let region = CivoConfig.shared.region
+            async let insts = instanceService.listInstances(region: region.isEmpty ? nil : region)
             async let keys = sshKeyService.listSSHKeys()
 
             instances = try await insts
+            instancesRegion = region
             sshKeys = try await keys
 
             // Update selectedInstance with fresh data
@@ -48,6 +52,13 @@ final class InstanceViewModel {
             self.error = CivoAPIError.userMessage(error)
             Log.error("Instance refresh failed: \(error.localizedDescription)")
         }
+    }
+
+    /// Console target with the region the instance was fetched from, never a later Settings change.
+    func consoleTarget(for instance: CivoInstance) -> ConsoleTarget? {
+        let region = instance.region.flatMap { $0.isEmpty ? nil : $0 } ?? instancesRegion
+        guard !region.isEmpty else { return nil }
+        return ConsoleTarget(instanceId: instance.id, instanceName: instance.name, region: region)
     }
 
     var selectedInstanceIsBuilding: Bool {

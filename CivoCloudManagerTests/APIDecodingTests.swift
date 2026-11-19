@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import Security
 import CryptoKit
+import os
 
 @testable import CivoCloudManager
 
@@ -655,5 +656,398 @@ struct APIDecodingTests {
         let label = CivoAccessLabel.make(firewallName: "test-fw")
         #expect(label.hasPrefix("civo-cloud-"))
         #expect(label.hasSuffix("-test-fw"))
+    }
+}
+
+// MARK: - Instance console
+
+private let consoleInstanceId = "11111111-2222-3333-4444-555555555555"
+private let consoleTarget = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "web-1", region: "LON1")
+private let consoleURI = "https://vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html?path=/\(consoleInstanceId)/websockify"
+
+@Suite("Console URLs and sensitive requests")
+struct ConsoleURLTests {
+    @Test("Token is appended to the API uri, keeping its path parameter and encoding reserved characters")
+    func tokenAppended() throws {
+        let url = try ConsoleURL.make(uri: consoleURI, token: "a+b/c=d&e", target: consoleTarget)
+        let components = try #require(URLComponents(url: url, resolvingAgainstBaseURL: false))
+        #expect(components.host == "vnc.lon1.civo.com")
+        #expect(components.queryItems?.first { $0.name == "path" }?.value == "/\(consoleInstanceId)/websockify")
+        #expect(components.queryItems?.first { $0.name == "token" }?.value == "a+b/c=d&e")
+        #expect(components.percentEncodedQuery?.contains("a%2Bb") == true)
+    }
+
+    @Test("Untrusted console locations are rejected", arguments: [
+        "http://vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html",
+        "https://vnc.nyc1.civo.com/\(consoleInstanceId)/vnc.html",
+        "https://vnc.lon1.civo.com.evil.example/\(consoleInstanceId)/vnc.html",
+        "https://user:pass@vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html",
+        "https://vnc.lon1.civo.com:8443/\(consoleInstanceId)/vnc.html",
+        "https://vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html?token=foreign",
+        "https://vnc.lon1.civo.com/other-instance/vnc.html",
+        "https://vnc.lon1.civo.com/\(consoleInstanceId)/../other/vnc.html",
+        "https://vnc.lon1.civo.com/\(consoleInstanceId)/..",
+        "https://vnc.lon1.civo.com/\(consoleInstanceId)/./vnc.html",
+        "https://vnc.lon1.civo.com/\(consoleInstanceId)/%2e%2e/other",
+        "https://vnc.lon1.civo.com/\(consoleInstanceId)%2F..%2Fother/vnc.html",
+    ])
+    func untrustedRejected(uri: String) {
+        #expect(throws: ConsoleURL.InvalidURL.self) {
+            try ConsoleURL.make(uri: uri, token: "jwt", target: consoleTarget)
+        }
+    }
+
+    @Test("Navigation guard keeps the page on the console origin and blocks foreign tokens")
+    func navigationGuard() throws {
+        let session = try ConsoleURL.make(uri: consoleURI, token: "jwt", target: consoleTarget)
+        let allowed = [session, URL(string: "https://vnc.lon1.civo.com/\(consoleInstanceId)/vnc_lite.html")!]
+        let blocked = [
+            "https://example.com/\(consoleInstanceId)/vnc.html",
+            "https://vnc.lon1.civo.com/\(consoleInstanceId)/vnc.html?token=other",
+            "https://vnc.lon1.civo.com:444/\(consoleInstanceId)/vnc.html",
+            "https://dashboard.civo.com/instances/\(consoleInstanceId)/console",
+        ].map { URL(string: $0)! }
+        for url in allowed { #expect(ConsoleURL.isAllowedNavigation(url, sessionURL: session, target: consoleTarget)) }
+        for url in blocked { #expect(!ConsoleURL.isAllowedNavigation(url, sessionURL: session, target: consoleTarget)) }
+    }
+
+    @Test("Console requests pin region, one-hour duration and the exchange body")
+    func requests() throws {
+        func query(_ request: URLRequest) -> [String: String] {
+            let items = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)?.queryItems ?? []
+            return Dictionary(uniqueKeysWithValues: items.map { ($0.name, $0.value ?? "") })
+        }
+        let start = try CivoConsoleService.startRequest(consoleTarget, apiKey: "k")
+        #expect(start.httpMethod == "PUT")
+        #expect(start.url?.path == "/v2/instances/\(consoleInstanceId)/vnc")
+        #expect(query(start) == ["region": "LON1", "duration": "1h"])
+        #expect(start.value(forHTTPHeaderField: "Authorization") == "bearer k")
+
+        let end = try CivoConsoleService.endRequest(consoleTarget, apiKey: "k")
+        #expect(end.httpMethod == "DELETE")
+        #expect(query(end) == ["region": "LON1"])
+
+        let exchange = try CivoConsoleService.exchangeRequest(region: "LON1", apiKey: "k")
+        #expect(exchange.httpMethod == "POST")
+        #expect(exchange.url?.path == "/v2/auth/exchange")
+        #expect(exchange.httpBody == Data(#"{"scope":""}"#.utf8))
+
+        let injected = ConsoleTarget(instanceId: "../../account", instanceName: "x", region: "LON1")
+        #expect(throws: ConsoleError.self) { try CivoConsoleService.startRequest(injected, apiKey: "k") }
+    }
+
+    @Test("Errors and token responses never reveal the console URL or JWT")
+    func sanitization() throws {
+        let secret = "SECRET-JWT-VALUE"
+        let failing = URL(string: "https://vnc.lon1.civo.com/x/vnc.html?token=\(secret)")!
+        let urlError = URLError(.cannotConnectToHost, userInfo: [NSURLErrorFailingURLErrorKey: failing,
+                                                                 NSURLErrorFailingURLStringErrorKey: failing.absoluteString])
+        let sanitized = ConsoleError.sanitize(urlError)
+        #expect(sanitized == .network(URLError.Code.cannotConnectToHost.rawValue))
+        for text in [String(describing: sanitized), sanitized.logDescription, sanitized.userMessage ?? ""] {
+            #expect(!text.contains(secret))
+        }
+        #expect(ConsoleError.sanitize(URLError(.cancelled)) == .cancelled)
+        #expect(ConsoleError.http(404) == .notFound)
+        #expect(ConsoleError.http(503) == .server(503))
+
+        let json = #"{"access_token":"\#(secret)","token_type":"Bearer","refresh_token":"<refresh>","expires_in":3600,"id_token":"<id>","account_id":"<account>"}"#
+        let token = try JSONDecoder().decode(AuthTokenExchangeResponse.self, from: Data(json.utf8))
+        #expect(token.accessToken == secret)
+        #expect(token.expiresIn == 3600)
+        #expect(!String(describing: token).contains(secret))
+        #expect(!String(reflecting: token).contains(secret))
+    }
+
+    @Test("Decode console session response")
+    func decodeSession() throws {
+        let json = #"{"uri":"https://vnc.lon1.civo.com/<instance-id>/vnc.html?path=/<instance-id>/websockify","duration":"1h"}"#
+        let session = try JSONDecoder().decode(ConsoleSessionResponse.self, from: Data(json.utf8))
+        #expect(session.uri.hasPrefix("https://vnc.lon1.civo.com/"))
+        #expect(session.duration == "1h")
+    }
+}
+
+/// Records events from the main actor and the fake API in one synchronous order.
+private final class EventOrder: Sendable {
+    private let events = OSAllocatedUnfairLock(initialState: [String]())
+    func append(_ event: String) { events.withLock { $0.append(event) } }
+    var all: [String] { events.withLock { $0 } }
+}
+
+private actor FakeConsoleAPI: ConsoleAPI {
+    let order = EventOrder()
+    private(set) var startCalls = 0
+    private(set) var endCalls = 0
+    private(set) var exchangeCalls = 0
+    private(set) var probeCalls = 0
+    private var probeResults: [ConsoleProbeResult]
+    private var endResult: Result<ConsoleEndResult, ConsoleError> = .success(.ended)
+    private var holdStart = false
+    private var holdEnd = false
+    private var startWaiters: [CheckedContinuation<Void, Never>] = []
+    private var endWaiters: [CheckedContinuation<Void, Never>] = []
+
+    init(probeResults: [ConsoleProbeResult] = []) {
+        self.probeResults = probeResults
+    }
+
+    func configure(holdStart: Bool = false, holdEnd: Bool = false, endResult: Result<ConsoleEndResult, ConsoleError> = .success(.ended)) {
+        self.holdStart = holdStart
+        self.holdEnd = holdEnd
+        self.endResult = endResult
+    }
+
+    func releaseStarts() {
+        holdStart = false
+        startWaiters.forEach { $0.resume() }
+        startWaiters = []
+    }
+
+    func releaseEnds() {
+        holdEnd = false
+        endWaiters.forEach { $0.resume() }
+        endWaiters = []
+    }
+
+    func startSession(_ target: ConsoleTarget, apiKey: String) async throws -> ConsoleSessionResponse {
+        startCalls += 1
+        if holdStart { await withCheckedContinuation { startWaiters.append($0) } }
+        return ConsoleSessionResponse(uri: consoleURI, duration: "1h")
+    }
+
+    func endSession(_ target: ConsoleTarget, apiKey: String) async throws -> ConsoleEndResult {
+        endCalls += 1
+        order.append("delete")
+        if holdEnd { await withCheckedContinuation { endWaiters.append($0) } }
+        return try endResult.get()
+    }
+
+    func exchangeToken(region: String, apiKey: String) async throws -> String {
+        exchangeCalls += 1
+        return "jwt-\(exchangeCalls)"
+    }
+
+    func probe(_ url: URL, target: ConsoleTarget) async throws -> ConsoleProbeResult {
+        probeCalls += 1
+        return probeResults.isEmpty ? .ready : probeResults.removeFirst()
+    }
+}
+
+private actor SleepRecorder {
+    private(set) var sleeps: [Duration] = []
+    func record(_ duration: Duration) { sleeps.append(duration) }
+}
+
+@MainActor
+private final class ConsoleEnvironment {
+    var apiKey = "key-a"
+    var accessAllowed = true
+    var activities: [String] = []
+    let api: FakeConsoleAPI
+    let sleeps = SleepRecorder()
+    private(set) var vm: ConsoleViewModel!
+
+    init(probeResults: [ConsoleProbeResult] = []) {
+        api = FakeConsoleAPI(probeResults: probeResults)
+        let sleeps = sleeps
+        vm = ConsoleViewModel(
+            target: consoleTarget,
+            api: api,
+            timing: .init(sleep: { duration in await sleeps.record(duration) }),
+            apiKeyProvider: { [weak self] in self?.apiKey ?? "" },
+            isAccessAllowed: { [weak self] in self?.accessAllowed ?? false },
+            recordActivity: { [weak self] in self?.activities.append($0) }
+        )
+    }
+
+    func connectAndSettle() async {
+        vm.connect()
+        await waitUntil { !self.vm.isBusy }
+    }
+}
+
+@MainActor
+private func waitUntil(_ condition: @MainActor () async -> Bool) async {
+    for _ in 0..<10_000 {
+        if await condition() { return }
+        await Task.yield()
+    }
+    Issue.record("Condition not met")
+}
+
+@Suite("Console session lifecycle")
+@MainActor
+struct ConsoleLifecycleTests {
+    @Test("Closing the window disconnects locally and never ends the server session")
+    func closeIsLocal() async throws {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        #expect(env.vm.phase == .loading)
+        let url = try #require(env.vm.consoleURL)
+        #expect(url.absoluteString.contains("token=jwt-1"))
+
+        env.vm.closeLocally()
+        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.phase == .disconnected)
+        #expect(await env.api.endCalls == 0)
+        #expect(env.activities == ["Opened console"])
+    }
+
+    @Test("End session runs the web view teardown before DELETE is sent")
+    func endDetachesFirst() async throws {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        let connection = try #require(env.vm.connection)
+        env.vm.webViewDidAttach(connectionID: connection.id) { env.api.order.append("teardown") }
+        await env.api.configure(holdEnd: true)
+
+        let ending = Task { await env.vm.endSession() }
+        await waitUntil { await env.api.endCalls == 1 }
+        #expect(env.api.order.all == ["teardown", "delete"])
+        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.phase == .ending)
+        await env.vm.endSession()
+        #expect(await env.api.endCalls == 1)
+
+        await env.api.releaseEnds()
+        await ending.value
+        #expect(env.vm.phase == .ended(.ended))
+        #expect(env.activities.last == "Ended console session")
+    }
+
+    @Test("DELETE 404 counts as stopped; a failed DELETE is reported honestly")
+    func endOutcomes() async {
+        let notFound = ConsoleEnvironment()
+        await notFound.connectAndSettle()
+        await notFound.api.configure(endResult: .success(.alreadyStopped))
+        await notFound.vm.endSession()
+        #expect(notFound.vm.phase == .ended(.alreadyStopped))
+
+        let failing = ConsoleEnvironment()
+        await failing.connectAndSettle()
+        await failing.api.configure(endResult: .failure(.server(502)))
+        await failing.vm.endSession()
+        #expect(failing.vm.phase == .endFailed(.server(502)))
+        #expect(failing.vm.consoleURL == nil)
+        #expect(!failing.activities.contains { $0.contains("Ended") })
+    }
+
+    @Test("A session that arrives after the window closed is ignored, not used or deleted")
+    func lateStartAfterClose() async {
+        let env = ConsoleEnvironment()
+        await env.api.configure(holdStart: true)
+        env.vm.connect()
+        await waitUntil { await env.api.startCalls == 1 }
+        env.vm.closeLocally()
+        await env.api.releaseStarts()
+        for _ in 0..<100 { await Task.yield() }
+
+        #expect(env.vm.phase == .disconnected)
+        #expect(env.vm.consoleURL == nil)
+        #expect(await env.api.exchangeCalls == 0)
+        #expect(await env.api.endCalls == 0)
+    }
+
+    @Test("Overlapping reconnects keep only the latest attempt")
+    func overlappingReconnect() async {
+        let env = ConsoleEnvironment()
+        await env.api.configure(holdStart: true)
+        env.vm.connect()
+        await waitUntil { await env.api.startCalls == 1 }
+        env.vm.connect()
+        await waitUntil { await env.api.startCalls == 2 }
+        await env.api.releaseStarts()
+        await waitUntil { env.vm.phase == .loading }
+
+        #expect(await env.api.exchangeCalls == 1)
+        #expect(env.activities == ["Opened console"])
+    }
+
+    @Test("Callbacks from a superseded web view cannot detach the current console")
+    func staleWebViewCallbacks() async throws {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        let old = try #require(env.vm.connection)
+        await env.connectAndSettle()
+        var staleTornDown = false
+        env.vm.webViewDidAttach(connectionID: old.id) { staleTornDown = true }
+        env.vm.pageDidFail(connectionID: old.id)
+        env.vm.pageDidLoad(connectionID: old.id)
+
+        #expect(staleTornDown)
+        #expect(env.vm.consoleURL != nil)
+        #expect(env.vm.phase == .loading)
+    }
+
+    @Test("Reconnect starts or checks the session again instead of only refreshing the JWT")
+    func reconnectRestartsSession() async {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        await env.connectAndSettle()
+        #expect(await env.api.startCalls == 2)
+        #expect(await env.api.exchangeCalls == 2)
+        #expect(env.vm.consoleURL?.absoluteString.contains("token=jwt-2") == true)
+    }
+
+    @Test("Readiness wait is bounded and uses the injected clock")
+    func boundedReadiness() async {
+        let env = ConsoleEnvironment(probeResults: Array(repeating: .notReady, count: 10))
+        await env.connectAndSettle()
+        #expect(env.vm.phase == .failed(.notReady))
+        #expect(env.vm.consoleURL == nil)
+        #expect(await env.api.probeCalls == 5)
+        #expect(await env.sleeps.sleeps == Array(repeating: .seconds(7), count: 4))
+    }
+
+    @Test("A rejected JWT is renewed at most once")
+    func boundedTokenRenewal() async {
+        let renewed = ConsoleEnvironment(probeResults: [.tokenRejected, .ready])
+        await renewed.connectAndSettle()
+        #expect(renewed.vm.phase == .loading)
+        #expect(await renewed.api.exchangeCalls == 2)
+
+        let rejected = ConsoleEnvironment(probeResults: Array(repeating: .tokenRejected, count: 10))
+        await rejected.connectAndSettle()
+        #expect(rejected.vm.phase == .failed(.notReady))
+        #expect(await rejected.api.exchangeCalls == 2)
+        #expect(await rejected.api.probeCalls == 5)
+    }
+
+    @Test("A changed API key stops the window from acting on another account")
+    func accountChange() async {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        env.apiKey = "key-b"
+        env.vm.apiKeyDidChange()
+        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.phase == .failed(.accountChanged))
+
+        await env.vm.endSession()
+        #expect(env.vm.phase == .failed(.accountChanged))
+        #expect(await env.api.endCalls == 0)
+
+        await env.connectAndSettle()
+        #expect(env.vm.phase == .failed(.accountChanged))
+        #expect(await env.api.startCalls == 1)
+    }
+
+    @Test("Without Full Access the console neither starts nor stays attached")
+    func accessGate() async {
+        let env = ConsoleEnvironment()
+        env.accessAllowed = false
+        await env.connectAndSettle()
+        #expect(env.vm.phase == .failed(.accessRevoked))
+        #expect(await env.api.startCalls == 0)
+
+        env.accessAllowed = true
+        await env.connectAndSettle()
+        #expect(env.vm.consoleURL != nil)
+        env.accessAllowed = false
+        env.vm.revokeAccess()
+        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.phase == .failed(.accessRevoked))
+        await env.vm.endSession()
+        #expect(await env.api.endCalls == 0)
     }
 }

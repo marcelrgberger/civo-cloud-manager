@@ -12,7 +12,7 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | --- | --- |
 | Menu bar | Open/close access for the current public IP, per-firewall ports, bulk actions, named IP presets, timed access, refresh every 60 seconds |
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
-| Compute | Create/delete instances, start/stop/reboot, resize, reverse DNS, tags, SSH key management and local activity history |
+| Compute | Create/delete instances, start/stop/reboot, resize, reverse DNS, tags, in-app instance console, SSH key management and local activity history |
 | Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
 | Networking | Networks, firewall rules, load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, credential management, S3 file browsing, object store pause/resume |
@@ -358,6 +358,47 @@ classDiagram
     LegalView --> LegalDocument
 ```
 
+## Instance console
+
+Active instances offer **Open Console** in the detail view and the list's context menu. The console opens in its own window and requires Full Access; the window checks access itself and detaches the console if access ends while it is open.
+
+The app uses the API-key path only: `PUT /v2/instances/{id}/vnc?region={r}&duration=1h` starts the session or returns the active one, `POST /v2/auth/exchange` returns a short-lived JWT, and the Civo-hosted noVNC page from the returned `uri` is loaded with the JWT as `token` in a `WKWebView`. No VNC protocol code runs in the app.
+
+| Action | Effect |
+| --- | --- |
+| Close the window | Disconnects locally only. The Civo session stays active until it expires (1 hour). No DELETE, because the API cannot prove who owns a session. |
+| End session | `DELETE .../vnc` ends the session on Civo for everyone, including a dashboard console. A 404 counts as already ended. A failed DELETE is reported as such and is not logged as ended. |
+| Reconnect | Repeats the PUT, fetches a fresh JWT and waits again. It does not only refresh the JWT, so an expired session is restarted. |
+
+Console and JWT calls use `CivoConsoleService`, a separate ephemeral `URLSession` without cache, cookies or credential storage. API redirects are refused; readiness probes follow redirects only on the console origin. Errors are mapped to `ConsoleError`, which carries no response bodies, URLs or underlying error text. The JWT and the tokenized URL exist only in memory; they are never written to `Log`, the activity log, UserDefaults or window restoration state (the console scene disables restoration). The region is the one the instance list was fetched from, captured when the console opens. If the API key changes while the window is open, the window stops instead of acting on another account.
+
+The web view uses a non-persistent website data store, has no inspector, back/forward gestures or popups, and only allows navigation to `https://vnc.<region>.civo.com` under the instance's path, port 443, without user info or foreign `token` parameters. Blocked navigations are cancelled, never opened in the system browser. The only external fallback is the token-free dashboard link. A loaded page does not prove a working VNC connection, so Reconnect stays available. Logging in requires a password of a user on the instance; copy and paste are not available.
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant W as Console window
+    participant A as api.civo.com
+    participant V as vnc.region.civo.com
+    U->>W: Open Console (Full Access)
+    W->>A: PUT /instances/{id}/vnc?region&duration=1h
+    A-->>W: uri
+    W->>A: POST /auth/exchange
+    A-->>W: JWT (memory only)
+    loop up to 5 probes, 7 s apart
+        W->>V: GET uri + token
+        V-->>W: 200 ready / 401 renew JWT once / other: retry
+    end
+    W->>V: WKWebView loads noVNC page
+    alt Window closed
+        W-->>W: Detach web view, keep server session
+    else End session
+        W-->>W: Detach web view first
+        W->>A: DELETE /instances/{id}/vnc?region
+        A-->>W: 200 ended / 404 already ended / error reported
+    end
+```
+
 ## Languages and legal identity
 
 The app supports **16 languages: English, German, Spanish, French, Italian, Dutch, Polish, Portuguese, Simplified Chinese, Japanese, Korean, Arabic, Hindi, Indonesian, Turkish and Russian**. Seven legal documents ship in each language: Privacy Policy, Terms of Service, EULA, Acceptable Use Policy, Push Notification Consent, Trademark Disclaimer and Imprint (112 bundled Markdown files).
@@ -419,7 +460,7 @@ Remaining architecture limitations include mutable shared API configuration acro
 
 ## Validation
 
-The current suite contains **41 tests in seven suites**: response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures and SSH encryption key preservation. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
+The current suite contains **58 tests in nine suites**: response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, and the console session lifecycle. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests
@@ -449,7 +490,9 @@ A native Xcode Release build additionally verifies target membership and resourc
 
 | Location | Responsibility |
 | --- | --- |
-| `CivoCloudManager/App/CivoCloudManagerApp.swift` | Menu bar scene and onboarding, main, help and legal windows |
+| `CivoCloudManager/App/CivoCloudManagerApp.swift` | Menu bar scene and onboarding, main, help, legal and instance console windows |
+| `CivoCloudManager/Services/CivoConsoleService.swift` | Sensitive-request path for console sessions and JWT exchange |
+| `CivoCloudManager/ViewModels/ConsoleViewModel.swift` | Console lifecycle: start, readiness wait, local close, End session, Reconnect |
 | `CivoCloudManager/Views/AppState.swift` | Menu bar state and persistent firewall closure queue/jobs |
 | `CivoCloudManager/Views/MenuBarView.swift` | Menu controls, closure errors and Retry |
 | `CivoCloudManager/Views/MainWindow/` | Resource screens and creation forms |
