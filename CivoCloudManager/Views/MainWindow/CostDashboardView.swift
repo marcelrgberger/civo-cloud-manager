@@ -6,13 +6,19 @@ struct CostDashboardView: View {
     let databaseVM: DatabaseViewModel
     let volumeVM: VolumeViewModel
 
-    @State private var charges: [CivoCharge] = []
-    @State private var isLoading = false
-    @State private var error: String?
+    @State private var model = CostChargesViewModel()
     @State private var period: ChargePeriod = .currentMonth
     @State private var showRateEditor = false
 
-    private let service = CivoChargesService()
+    /// Restarts the load, cancelling the running one, when the period or the account changes.
+    private struct LoadKey: Hashable {
+        let period: ChargePeriod
+        let accountGeneration: Int
+    }
+
+    private var charges: [CivoCharge] { model.charges }
+    private var isLoading: Bool { model.isLoading }
+    private var error: String? { model.error }
 
     // MARK: - Computed
 
@@ -24,7 +30,7 @@ struct CostDashboardView: View {
     private static let minimumProjectionBasis: TimeInterval = 60 * 60
 
     private var projectedMonthlyCost: Double {
-        let now = service.currentDate
+        let now = model.currentDate
         let monthStart = ChargeCalendar.startOfMonth(now)
         let monthEnd = ChargeCalendar.utc.date(byAdding: .month, value: 1, to: monthStart)!
         let elapsed = max(now.timeIntervalSince(monthStart), Self.minimumProjectionBasis)
@@ -115,7 +121,10 @@ struct CostDashboardView: View {
             .padding(20)
         }
         .navigationTitle("Costs")
-        .task(id: period) { await loadCharges() }
+        .task(id: LoadKey(period: period, accountGeneration: model.accountGeneration)) { await loadCharges() }
+        .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
+            model.apiKeyDidChange()
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -238,22 +247,6 @@ struct CostDashboardView: View {
     // MARK: - Data
 
     private func loadCharges() async {
-        let requestedPeriod = period
-        isLoading = true
-        error = nil
-        // A superseded load must not end the spinner of the load that replaced it.
-        defer { if requestedPeriod == period { isLoading = false } }
-
-        do {
-            let loaded = try await service.charges(for: requestedPeriod)
-            guard requestedPeriod == period else { return }
-            charges = loaded
-        } catch {
-            guard requestedPeriod == period else { return }
-            if let message = ChargesLoadError.userMessage(error) {
-                charges = []
-                self.error = message
-            }
-        }
+        await model.load(period)
     }
 }

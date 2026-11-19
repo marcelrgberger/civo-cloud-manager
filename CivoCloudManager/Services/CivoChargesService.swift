@@ -50,6 +50,14 @@ enum ChargePeriod: String, CaseIterable, Sendable {
 struct ChargeWindow: Hashable, Sendable {
     let from: Date
     let to: Date
+
+    /// Civo treats `to` as inclusive and takes second-precision timestamps, so the request ends
+    /// at the last whole second before `to`. Sending `to` itself would include the first second
+    /// of the next month and overlap the following request.
+    var lastIncludedSecond: Date {
+        let end = Date(timeIntervalSinceReferenceDate: to.timeIntervalSinceReferenceDate.rounded(.up) - 1)
+        return max(from, end)
+    }
 }
 
 enum ChargeWindowPlanner {
@@ -114,32 +122,44 @@ struct FileChargesCacheStore: ChargesCacheStore {
 
 // MARK: - Service
 
+/// The account one load runs against. It is captured once per load, so an API key change
+/// during the load can neither send requests with the new key nor file the new account's
+/// charges under the old account's cache scope.
+struct ChargeAccount: Sendable, CustomStringConvertible {
+    let apiKey: String
+
+    var cacheScope: String? { CivoChargesService.scope(forAPIKey: apiKey) }
+
+    /// Keeps the key out of logs and debug output.
+    var description: String { "ChargeAccount(redacted)" }
+}
+
 struct CivoChargesService: Sendable {
-    typealias Fetch = @Sendable (ChargeWindow) async throws -> [CivoCharge]
+    typealias Fetch = @Sendable (ChargeWindow, ChargeAccount) async throws -> [CivoCharge]
 
     private let fetch: Fetch
     private let store: any ChargesCacheStore
-    private let cacheScope: @Sendable () -> String?
+    private let account: @Sendable () -> ChargeAccount
     private let now: @Sendable () -> Date
 
     init(
         fetch: @escaping Fetch,
         store: any ChargesCacheStore,
-        cacheScope: @escaping @Sendable () -> String?,
+        account: @escaping @Sendable () -> ChargeAccount,
         now: @escaping @Sendable () -> Date
     ) {
         self.fetch = fetch
         self.store = store
-        self.cacheScope = cacheScope
+        self.account = account
         self.now = now
     }
 
     init() {
         _ = Self.legacyCachePurge
         self.init(
-            fetch: { window in try await Self.requestCharges(window) },
+            fetch: { window, account in try await Self.requestCharges(window, account: account) },
             store: FileChargesCacheStore.standard,
-            cacheScope: { Self.scope(forAPIKey: CivoConfig.shared.apiKey) },
+            account: { ChargeAccount(apiKey: CivoConfig.shared.apiKey) },
             now: { Date() }
         )
     }
@@ -151,17 +171,19 @@ struct CivoChargesService: Sendable {
     func charges(for period: ChargePeriod) async throws -> [CivoCharge] {
         let now = now()
         let range = period.dateRange(now: now)
-        let scope = cacheScope()
+        let account = account()
+        let scope = account.cacheScope
         var result: [CivoCharge] = []
 
         for window in ChargeWindowPlanner.monthlyWindows(from: range.from, to: range.to) {
+            try Task.checkCancellation()
             let month = ChargeCalendar.monthKey(window.from)
             let isCompletedMonth = ChargeWindowPlanner.isFullMonth(window) && window.to <= now
             if isCompletedMonth, let scope, let cached = store.load(scope: scope, month: month) {
                 result += cached
                 continue
             }
-            let fetched = try await fetch(window)
+            let fetched = try await fetch(window, account)
             if isCompletedMonth, let scope {
                 store.save(fetched, scope: scope, month: month)
             }
@@ -177,13 +199,17 @@ struct CivoChargesService: Sendable {
         return digest.map { String(format: "%02x", $0) }.joined()
     }
 
-    private static func requestCharges(_ window: ChargeWindow) async throws -> [CivoCharge] {
+    static func queryItems(for window: ChargeWindow) -> [URLQueryItem] {
         let formatter = ISO8601DateFormatter()
-        let queryItems = [
+        return [
             URLQueryItem(name: "from", value: formatter.string(from: window.from)),
-            URLQueryItem(name: "to", value: formatter.string(from: window.to)),
+            URLQueryItem(name: "to", value: formatter.string(from: window.lastIncludedSecond)),
         ]
-        return try await CivoAPIClient.shared.getArray(path: "/charges", queryItems: queryItems, regionRequired: false)
+    }
+
+    private static func requestCharges(_ window: ChargeWindow, account: ChargeAccount) async throws -> [CivoCharge] {
+        try await CivoAPIClient.shared.getArray(
+            path: "/charges", queryItems: queryItems(for: window), regionRequired: false, apiKey: account.apiKey)
     }
 
     /// Earlier versions cached months in UserDefaults without an account scope and with
