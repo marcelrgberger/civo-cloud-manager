@@ -225,6 +225,8 @@ struct HelpSection {
         ]),
         HelpSection(title: "Instance Management", icon: "desktopcomputer", items: [
             "Start, Stop, Reboot instances from the detail view.",
+            "Open Console opens the console of an active instance in its own window (Full Access). Log in with a password of a user on the instance.",
+            "Closing the console window only disconnects you. 'End session' ends the console session on Civo for everyone.",
             "Resize instances with the visual size picker grid.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",
