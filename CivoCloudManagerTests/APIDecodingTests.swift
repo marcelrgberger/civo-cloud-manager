@@ -923,6 +923,34 @@ struct ConsoleLoginTests {
         SecretPasteboard.clear(board, ifUnchangedSince: again)
         #expect(board.string(forType: .string) == "other")
     }
+
+    @Test("A reveal or copy still waiting for authentication does nothing once invalidated")
+    func invalidatedWhileAuthenticating() async {
+        var pendingAuthentications: [CheckedContinuation<Bool, Never>] = []
+        var copied: [String] = []
+        let access = ConsolePasswordAccess(
+            authenticate: { _ in await withCheckedContinuation { pendingAuthentications.append($0) } },
+            writeToPasteboard: { copied.append($0) }
+        )
+
+        let reveal = Task { await access.reveal() }
+        let copy = Task { await access.copy(password) }
+        await waitUntil { pendingAuthentications.count == 2 }
+        // Window closed, API key changed or Full Access ended during authentication.
+        access.invalidate()
+        pendingAuthentications.forEach { $0.resume(returning: true) }
+        await reveal.value
+        #expect(await copy.value == false)
+        #expect(!access.isRevealed)
+        #expect(copied.isEmpty)
+
+        // A fresh request after invalidation works again.
+        let next = Task { await access.copy(password) }
+        await waitUntil { pendingAuthentications.count == 3 }
+        pendingAuthentications[2].resume(returning: true)
+        #expect(await next.value)
+        #expect(copied == [password])
+    }
 }
 
 @MainActor

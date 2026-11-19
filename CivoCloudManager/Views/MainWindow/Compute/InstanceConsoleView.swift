@@ -7,7 +7,7 @@ import WebKit
 struct InstanceConsoleView: View {
     @State private var vm: ConsoleViewModel
     @State private var confirmEnd = false
-    @State private var showPassword = false
+    @State private var passwordAccess = ConsolePasswordAccess()
     @State private var copiedPassword = false
     private let store = StoreManager.shared
     private let logins = ConsoleLoginStore.shared
@@ -65,29 +65,34 @@ struct InstanceConsoleView: View {
             if store.isFullAccessUnlocked {
                 vm.connect()
             } else if store.hasLoadedPurchaseStatus {
+                passwordAccess.invalidate()
                 vm.revokeAccess()
             }
         }
         .onChange(of: store.isFullAccessUnlocked) { _, unlocked in
             if !unlocked {
+                passwordAccess.invalidate()
                 vm.revokeAccess()
             } else if vm.phase == .idle {
                 vm.connect()
             }
         }
         .onChange(of: store.hasLoadedPurchaseStatus) { _, loaded in
-            if loaded && !store.isFullAccessUnlocked { vm.revokeAccess() }
+            if loaded && !store.isFullAccessUnlocked {
+                passwordAccess.invalidate()
+                vm.revokeAccess()
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
             vm.apiKeyDidChange()
             // The login belongs to the account the window was opened with.
-            showPassword = false
+            passwordAccess.invalidate()
             logins.remove(for: vm.target)
         }
-        .task(id: showPassword) {
-            guard showPassword else { return }
+        .task(id: passwordAccess.isRevealed) {
+            guard passwordAccess.isRevealed else { return }
             try? await Task.sleep(for: Self.passwordVisibleDuration)
-            if !Task.isCancelled { showPassword = false }
+            if !Task.isCancelled { passwordAccess.hide() }
         }
         .task(id: copiedPassword) {
             guard copiedPassword else { return }
@@ -95,6 +100,7 @@ struct InstanceConsoleView: View {
             if !Task.isCancelled { copiedPassword = false }
         }
         .onDisappear {
+            passwordAccess.invalidate()
             vm.closeLocally()
             logins.remove(for: vm.target)
         }
@@ -170,7 +176,7 @@ struct InstanceConsoleView: View {
     private func passwordField(_ password: String) -> some View {
         HStack(spacing: 6) {
             // Not selectable: copying goes through `SecretPasteboard` only.
-            if showPassword {
+            if passwordAccess.isRevealed {
                 Text(verbatim: password)
                     .font(.callout.monospaced())
             } else {
@@ -178,19 +184,24 @@ struct InstanceConsoleView: View {
                     .font(.callout.monospaced())
             }
             Button {
-                if showPassword {
-                    showPassword = false
+                if passwordAccess.isRevealed {
+                    passwordAccess.hide()
                 } else {
-                    Task { showPassword = await DeviceOwner.confirm(reason: String(localized: "View instance password")) }
+                    Task { await passwordAccess.reveal() }
                 }
             } label: {
-                Label(showPassword ? "Hide password" : "Show password", systemImage: showPassword ? "eye.slash" : "eye")
-                    .labelStyle(.iconOnly)
+                Label(
+                    passwordAccess.isRevealed ? "Hide password" : "Show password",
+                    systemImage: passwordAccess.isRevealed ? "eye.slash" : "eye"
+                )
+                .labelStyle(.iconOnly)
             }
             .buttonStyle(.borderless)
-            .help(showPassword ? "Hide password" : "Show password")
+            .help(passwordAccess.isRevealed ? "Hide password" : "Show password")
             Button {
-                Task { await copyPassword(password) }
+                Task {
+                    if await passwordAccess.copy(password) { copiedPassword = true }
+                }
             } label: {
                 Label("Copy password", systemImage: copiedPassword ? "checkmark" : "doc.on.doc")
                     .labelStyle(.iconOnly)
@@ -198,15 +209,6 @@ struct InstanceConsoleView: View {
             .buttonStyle(.borderless)
             .help("Copy password")
         }
-    }
-
-    /// A hidden password is copied only after the same authentication that reveals it.
-    private func copyPassword(_ password: String) async {
-        if !showPassword {
-            guard await DeviceOwner.confirm(reason: String(localized: "Copy instance password")) else { return }
-        }
-        SecretPasteboard.copy(password)
-        copiedPassword = true
     }
 
     @ViewBuilder
@@ -320,6 +322,54 @@ private enum DeviceOwner {
         var error: NSError?
         guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else { return true }
         return (try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason)) ?? false
+    }
+}
+
+/// Reveals or copies the console password after owner authentication. Authentication can take
+/// long; if the window closes, the API key changes or Full Access ends meanwhile, `invalidate()`
+/// makes every pending reveal or copy a no-op once authentication returns.
+@Observable
+@MainActor
+final class ConsolePasswordAccess {
+    private(set) var isRevealed = false
+    private var generation = 0
+    private let authenticate: @MainActor (String) async -> Bool
+    private let writeToPasteboard: @MainActor (String) -> Void
+
+    init(
+        authenticate: (@MainActor (String) async -> Bool)? = nil,
+        writeToPasteboard: (@MainActor (String) -> Void)? = nil
+    ) {
+        self.authenticate = authenticate ?? { await DeviceOwner.confirm(reason: $0) }
+        self.writeToPasteboard = writeToPasteboard ?? { SecretPasteboard.copy($0) }
+    }
+
+    func reveal() async {
+        let started = generation
+        guard await authenticate(String(localized: "View instance password")), started == generation else { return }
+        isRevealed = true
+    }
+
+    func hide() {
+        isRevealed = false
+    }
+
+    /// A hidden password is copied only after the same authentication that reveals it.
+    /// Returns whether the password was written to the pasteboard.
+    func copy(_ password: String) async -> Bool {
+        let started = generation
+        if !isRevealed {
+            guard await authenticate(String(localized: "Copy instance password")) else { return false }
+        }
+        guard started == generation else { return false }
+        writeToPasteboard(password)
+        return true
+    }
+
+    /// Hides the password and discards every reveal or copy still waiting for authentication.
+    func invalidate() {
+        generation += 1
+        isRevealed = false
     }
 }
 

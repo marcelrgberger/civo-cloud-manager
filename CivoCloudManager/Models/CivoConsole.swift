@@ -83,9 +83,10 @@ enum ConsoleURL {
     struct InvalidURL: Error, Equatable {}
 
     static let tokenParameter = "token"
-    /// noVNC's `vnc.html` reads `resize` from the query (since noVNC 1.0). `scale` sets
-    /// `RFB.scaleViewport`: the remote screen fits the web view, keeps its aspect ratio and
-    /// follows every resize of the window.
+    /// Upstream noVNC's `vnc.html` reads `resize` from the query (since noVNC 1.0) and maps `scale`
+    /// to `RFB.scaleViewport`: the remote screen fits the web view, keeps its aspect ratio and
+    /// follows window resizes. Civo does not document its hosted noVNC version or settings, so
+    /// whether its page honours the parameter is verified live, not assumed.
     static let resizeParameter = "resize"
     static let scaleToWindow = "scale"
 
