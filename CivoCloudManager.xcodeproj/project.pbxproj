@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F37C90339F0D4480B523C1C9 /* InstanceConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */; };
 		E9CD0B9406374CF29332B9D0 /* ConsoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */; };
+		EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */; };
 		BDF2E72DDCF04757A4A056B8 /* CivoConsoleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */; };
 		C7311014833E428FABCEEA60 /* CivoConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741081E16DA45499D7C4901 /* CivoConsole.swift */; };
 		0048C6314F5EE8F79C349F21 /* KubeconfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22ABFE0D58271BEF1C782B6 /* KubeconfigParser.swift */; };
@@ -169,6 +170,7 @@
 /* Begin PBXFileReference section */
 		6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceConsoleView.swift; sourceTree = "<group>"; };
 		B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsoleViewModel.swift; sourceTree = "<group>"; };
+		0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostChargesViewModel.swift; sourceTree = "<group>"; };
 		EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsoleService.swift; sourceTree = "<group>"; };
 		2741081E16DA45499D7C4901 /* CivoConsole.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsole.swift; sourceTree = "<group>"; };
 		00892F556E339C6DA8722EB4 /* CivoSSHKeyService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSSHKeyService.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 				F41379F596E3D4C00FCFD675 /* DomainViewModel.swift */,
 				F01918F95778C2210D574D04 /* InstanceViewModel.swift */,
 				B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */,
+				0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */,
 				356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */,
 				982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */,
 				08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */,
@@ -939,6 +942,7 @@
 				C0194B4EB9FCF712C42F8AAE /* DomainViewModel.swift in Sources */,
 				C7595ED1E819E71B267AFC8A /* InstanceViewModel.swift in Sources */,
 				E9CD0B9406374CF29332B9D0 /* ConsoleViewModel.swift in Sources */,
+				EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */,
 				9E96AAFD3703722C2DBCAE5E /* KubernetesViewModel.swift in Sources */,
 				1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */,
 				A0F4E426FF1D7B3A27BB7796 /* RegionViewModel.swift in Sources */,

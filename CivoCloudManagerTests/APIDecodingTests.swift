@@ -1137,3 +1137,195 @@ struct ConsoleLifecycleTests {
         #expect(await env.api.endCalls == 0)
     }
 }
+
+@Suite("Cost estimate charges")
+struct ChargesServiceTests {
+    private static func date(_ iso: String) -> Date { ISO8601DateFormatter().date(from: iso)! }
+    private static let now = date("2026-11-19T14:57:00Z")
+
+    private static func charge(id: Int, hours: Double) -> CivoCharge {
+        CivoCharge(id: id, code: "instance-g3.small", label: "web-\(id)", from: "2026-01-01T00:00:00Z", to: nil,
+                   numHours: hours, sizeGb: nil, nodes: nil, region: "LON1", size: nil, unit: nil,
+                   productId: nil, previousChargeId: nil, parentProductId: nil)
+    }
+
+    final class MemoryStore: ChargesCacheStore, @unchecked Sendable {
+        let entries = OSAllocatedUnfairLock(initialState: [String: [CivoCharge]]())
+        func load(scope: String, month: String) -> [CivoCharge]? { entries.withLock { $0["\(scope)/\(month)"] } }
+        func save(_ charges: [CivoCharge], scope: String, month: String) { entries.withLock { $0["\(scope)/\(month)"] = charges } }
+    }
+
+    private static func service(store: MemoryStore, apiKey: String, requests: OSAllocatedUnfairLock<[ChargeWindow]>) -> CivoChargesService {
+        CivoChargesService(
+            fetch: { window, _ in
+                requests.withLock { $0.append(window) }
+                return [charge(id: 1, hours: window.to.timeIntervalSince(window.from) / 3600)]
+            },
+            store: store,
+            account: { ChargeAccount(apiKey: apiKey) },
+            now: { now }
+        )
+    }
+
+    private static let scopeA = CivoChargesService.scope(forAPIKey: "key-a")!
+    private static let scopeB = CivoChargesService.scope(forAPIKey: "key-b")!
+
+    /// Serialized `from`/`to` of every request for `period`.
+    private static func serializedWindows(_ period: ChargePeriod, now: Date) -> [(from: String, to: String)] {
+        let range = period.dateRange(now: now)
+        return ChargeWindowPlanner.monthlyWindows(from: range.from, to: range.to).map { window in
+            let items = CivoChargesService.queryItems(for: window)
+            #expect(items.map(\.name) == ["from", "to"])
+            return (items[0].value!, items[1].value!)
+        }
+    }
+
+    @Test("Last Month sends the inclusive last second of the month as to", arguments: [
+        ("2026-11-19T14:57:00Z", "2026-10-01T00:00:00Z", "2026-10-31T23:59:59Z", 31),
+        ("2028-03-10T08:00:00Z", "2028-02-01T00:00:00Z", "2028-02-29T23:59:59Z", 29),
+        ("2027-03-10T08:00:00Z", "2027-02-01T00:00:00Z", "2027-02-28T23:59:59Z", 28),
+        ("2027-01-05T08:00:00Z", "2026-12-01T00:00:00Z", "2026-12-31T23:59:59Z", 31),
+    ])
+    func lastMonthQuery(now: String, from: String, to: String, days: Int) {
+        let windows = Self.serializedWindows(.lastMonth, now: Self.date(now))
+        #expect(windows.count == 1)
+        #expect(windows.first?.from == from)
+        #expect(windows.first?.to == to)
+        // Inclusive span: from the first to the last included second.
+        let span = Self.date(to).timeIntervalSince(Self.date(from)) + 1
+        #expect(span == TimeInterval(days * 24 * 60 * 60))
+        #expect(span <= ChargeWindowPlanner.maxSpan)
+    }
+
+    @Test("Requests across the year transition neither overlap nor leave gaps")
+    func yearTransitionQueries() {
+        let now = Self.date("2027-01-05T08:00:00Z")
+        let quarter = Self.serializedWindows(.lastQuarter, now: now)
+        #expect(quarter.map(\.from) == ["2026-10-01T00:00:00Z", "2026-11-01T00:00:00Z", "2026-12-01T00:00:00Z", "2027-01-01T00:00:00Z"])
+        #expect(quarter.map(\.to) == ["2026-10-31T23:59:59Z", "2026-11-30T23:59:59Z", "2026-12-31T23:59:59Z", "2027-01-05T07:59:59Z"])
+        #expect(zip(quarter, quarter.dropFirst()).allSatisfy { Self.date($1.from).timeIntervalSince(Self.date($0.to)) == 1 })
+
+        let year = Self.serializedWindows(.thisYear, now: now)
+        #expect(year.count == 1)
+        #expect(year.first?.from == "2027-01-01T00:00:00Z")
+        #expect(year.first?.to == "2027-01-05T07:59:59Z")
+    }
+
+    @Test("This Year splits into contiguous windows of at most 31 days")
+    func thisYearWindows() {
+        let range = ChargePeriod.thisYear.dateRange(now: Self.now)
+        let windows = ChargeWindowPlanner.monthlyWindows(from: range.from, to: range.to)
+        #expect(windows.count == 11)
+        #expect(windows.first?.from == Self.date("2026-01-01T00:00:00Z"))
+        #expect(windows.last?.to == Self.now)
+        #expect(windows.allSatisfy { $0.to.timeIntervalSince($0.from) <= ChargeWindowPlanner.maxSpan })
+        #expect(zip(windows, windows.dropFirst()).allSatisfy { $0.to == $1.from })
+    }
+
+    @Test("Completed months are reused from the cache, the open month is fetched again, results are summed")
+    func cacheReuse() async throws {
+        let store = MemoryStore()
+        let requests = OSAllocatedUnfairLock(initialState: [ChargeWindow]())
+        let service = Self.service(store: store, apiKey: "key-a", requests: requests)
+
+        let first = try await service.charges(for: .lastQuarter)
+        #expect(requests.withLock { $0.count } == 4)
+        let expectedHours = Self.now.timeIntervalSince(Self.date("2026-08-01T00:00:00Z")) / 3600
+        #expect(first.reduce(0) { $0 + $1.numHours } == expectedHours)
+
+        requests.withLock { $0.removeAll() }
+        let second = try await service.charges(for: .lastQuarter)
+        #expect(requests.withLock { $0 } == [ChargeWindow(from: Self.date("2026-11-01T00:00:00Z"), to: Self.now)])
+        #expect(second.reduce(0) { $0 + $1.numHours } == expectedHours)
+        #expect(store.entries.withLock { $0.keys.sorted() } == ["2026-08", "2026-09", "2026-10"].map { "\(Self.scopeA)/\($0)" })
+    }
+
+    @Test("Another API key does not see cached charges; without a key nothing is cached")
+    func cacheScope() async throws {
+        let store = MemoryStore()
+        let requests = OSAllocatedUnfairLock(initialState: [ChargeWindow]())
+        _ = try await Self.service(store: store, apiKey: "key-a", requests: requests).charges(for: .lastMonth)
+        _ = try await Self.service(store: store, apiKey: "key-b", requests: requests).charges(for: .lastMonth)
+        _ = try await Self.service(store: store, apiKey: "", requests: requests).charges(for: .lastMonth)
+        #expect(requests.withLock { $0.count } == 3)
+        #expect(CivoChargesService.scope(forAPIKey: "") == nil)
+        #expect(CivoChargesService.scope(forAPIKey: "key-a") != CivoChargesService.scope(forAPIKey: "key-b"))
+        #expect(CivoChargesService.scope(forAPIKey: "key-a")?.contains("key-a") == false)
+        #expect(String(describing: ChargeAccount(apiKey: "key-a")).contains("key-a") == false)
+    }
+
+    /// Holds the first fetch until the test releases it.
+    actor FetchGate {
+        private var isSuspended = false
+        private var arrival: CheckedContinuation<Void, Never>?
+        private var release: CheckedContinuation<Void, Never>?
+
+        func suspend() async {
+            isSuspended = true
+            arrival?.resume()
+            arrival = nil
+            await withCheckedContinuation { release = $0 }
+        }
+
+        func untilSuspended() async {
+            guard !isSuspended else { return }
+            await withCheckedContinuation { arrival = $0 }
+        }
+
+        func open() {
+            release?.resume()
+            release = nil
+        }
+    }
+
+    @Test("An account switch during a load neither mixes caches nor shows the old account's charges")
+    @MainActor
+    func accountSwitchDuringLoad() async {
+        let store = MemoryStore()
+        let gate = FetchGate()
+        let currentKey = OSAllocatedUnfairLock(initialState: "key-a")
+        let usedKeys = OSAllocatedUnfairLock(initialState: [String]())
+        let service = CivoChargesService(
+            fetch: { window, account in
+                let isFirst = usedKeys.withLock { $0.append(account.apiKey); return $0.count == 1 }
+                if isFirst { await gate.suspend() }
+                return [Self.charge(id: 1, hours: window.to.timeIntervalSince(window.from) / 3600)]
+            },
+            store: store,
+            account: { ChargeAccount(apiKey: currentKey.withLock { $0 }) },
+            now: { Self.now }
+        )
+        let model = CostChargesViewModel(service: service)
+
+        let loadA = Task { await model.load(.lastQuarter) }
+        await gate.untilSuspended()
+        currentKey.withLock { $0 = "key-b" }
+        model.apiKeyDidChange()
+        await gate.open()
+        await loadA.value
+
+        // Every request of the load used account A's key and was filed under A only.
+        #expect(usedKeys.withLock { $0 } == Array(repeating: "key-a", count: 4))
+        #expect(store.entries.withLock { $0.keys.sorted() } == ["2026-08", "2026-09", "2026-10"].map { "\(Self.scopeA)/\($0)" })
+        // A's late result was rejected.
+        #expect(model.charges.isEmpty)
+        #expect(model.error == nil)
+        #expect(model.isLoading == false)
+
+        await model.load(.lastQuarter)
+        #expect(usedKeys.withLock { Array($0.dropFirst(4)) } == Array(repeating: "key-b", count: 4))
+        #expect(store.entries.withLock { $0.keys.filter { $0.hasPrefix(Self.scopeB) }.count } == 3)
+        #expect(model.charges.count == 4)
+    }
+
+    @Test("Error messages never contain the Civo response body")
+    func sanitizedErrors() {
+        let body = #"{"code":"parameter_date_range_too_long","reason":"The date range spanned more than 31 days"}"#
+        let message = ChargesLoadError.userMessage(CivoAPIError.httpError(400, body))
+        #expect(message?.isEmpty == false)
+        #expect(message?.contains("parameter_date_range_too_long") == false)
+        #expect(ChargesLoadError.userMessage(CivoAPIError.networkError(body))?.contains("{") == false)
+        #expect(ChargesLoadError.userMessage(CivoAPIError.cancelled) == nil)
+        #expect(ChargesLoadError.userMessage(CancellationError()) == nil)
+    }
+}
