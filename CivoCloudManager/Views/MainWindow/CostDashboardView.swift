@@ -14,46 +14,21 @@ struct CostDashboardView: View {
 
     private let service = CivoChargesService()
 
-    enum ChargePeriod: String, CaseIterable {
-        case currentMonth = "This Month"
-        case lastMonth = "Last Month"
-        case lastQuarter = "Last Quarter"
-        case thisYear = "This Year"
-
-        var dateRange: (from: Date, to: Date) {
-            let now = Date()
-            let cal = Calendar.current
-            switch self {
-            case .currentMonth:
-                let start = cal.date(from: cal.dateComponents([.year, .month], from: now))!
-                return (start, now)
-            case .lastMonth:
-                let startOfThisMonth = cal.date(from: cal.dateComponents([.year, .month], from: now))!
-                let startOfLastMonth = cal.date(byAdding: .month, value: -1, to: startOfThisMonth)!
-                return (startOfLastMonth, startOfThisMonth)
-            case .lastQuarter:
-                let threeMonthsAgo = cal.date(byAdding: .month, value: -3, to: cal.date(from: cal.dateComponents([.year, .month], from: now))!)!
-                return (threeMonthsAgo, now)
-            case .thisYear:
-                let startOfYear = cal.date(from: cal.dateComponents([.year], from: now))!
-                return (startOfYear, now)
-            }
-        }
-    }
-
     // MARK: - Computed
 
     private var totalCost: Double {
         charges.reduce(0) { $0 + $1.totalCost }
     }
 
+    /// Avoids extreme extrapolation right after the month starts.
+    private static let minimumProjectionBasis: TimeInterval = 60 * 60
+
     private var projectedMonthlyCost: Double {
-        let calendar = Calendar.current
-        let now = Date()
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
-        let daysElapsed = max(calendar.dateComponents([.day], from: startOfMonth, to: now).day ?? 1, 1)
-        let daysInMonth = calendar.range(of: .day, in: .month, for: now)?.count ?? 30
-        return totalCost / Double(daysElapsed) * Double(daysInMonth)
+        let now = service.currentDate
+        let monthStart = ChargeCalendar.startOfMonth(now)
+        let monthEnd = ChargeCalendar.utc.date(byAdding: .month, value: 1, to: monthStart)!
+        let elapsed = max(now.timeIntervalSince(monthStart), Self.minimumProjectionBasis)
+        return totalCost / elapsed * monthEnd.timeIntervalSince(monthStart)
     }
 
     private var costByType: [(type: String, cost: Double, icon: String, color: Color)] {
@@ -140,7 +115,7 @@ struct CostDashboardView: View {
             .padding(20)
         }
         .navigationTitle("Costs")
-        .task { await loadCharges() }
+        .task(id: period) { await loadCharges() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -165,9 +140,6 @@ struct CostDashboardView: View {
             }
         }
         .pickerStyle(.segmented)
-        .onChange(of: period) { _, _ in
-            Task { await loadCharges() }
-        }
     }
 
     private var totalCard: some View {
@@ -266,15 +238,22 @@ struct CostDashboardView: View {
     // MARK: - Data
 
     private func loadCharges() async {
+        let requestedPeriod = period
         isLoading = true
         error = nil
-        defer { isLoading = false }
+        // A superseded load must not end the spinner of the load that replaced it.
+        defer { if requestedPeriod == period { isLoading = false } }
 
-        let range = period.dateRange
         do {
-            charges = try await service.getChargesForRange(from: range.from, to: range.to)
+            let loaded = try await service.charges(for: requestedPeriod)
+            guard requestedPeriod == period else { return }
+            charges = loaded
         } catch {
-            self.error = error.localizedDescription
+            guard requestedPeriod == period else { return }
+            if let message = ChargesLoadError.userMessage(error) {
+                charges = []
+                self.error = message
+            }
         }
     }
 }

@@ -1051,3 +1051,94 @@ struct ConsoleLifecycleTests {
         #expect(await env.api.endCalls == 0)
     }
 }
+
+@Suite("Cost estimate charges")
+struct ChargesServiceTests {
+    private static func date(_ iso: String) -> Date { ISO8601DateFormatter().date(from: iso)! }
+    private static let now = date("2026-11-19T14:57:00Z")
+
+    private static func charge(id: Int, hours: Double) -> CivoCharge {
+        CivoCharge(id: id, code: "instance-g3.small", label: "web-\(id)", from: "2026-01-01T00:00:00Z", to: nil,
+                   numHours: hours, sizeGb: nil, nodes: nil, region: "LON1", size: nil, unit: nil,
+                   productId: nil, previousChargeId: nil, parentProductId: nil)
+    }
+
+    final class MemoryStore: ChargesCacheStore, @unchecked Sendable {
+        let entries = OSAllocatedUnfairLock(initialState: [String: [CivoCharge]]())
+        func load(scope: String, month: String) -> [CivoCharge]? { entries.withLock { $0["\(scope)/\(month)"] } }
+        func save(_ charges: [CivoCharge], scope: String, month: String) { entries.withLock { $0["\(scope)/\(month)"] = charges } }
+    }
+
+    private static func service(store: MemoryStore, scope: String?, requests: OSAllocatedUnfairLock<[ChargeWindow]>) -> CivoChargesService {
+        CivoChargesService(
+            fetch: { window in
+                requests.withLock { $0.append(window) }
+                return [charge(id: 1, hours: window.to.timeIntervalSince(window.from) / 3600)]
+            },
+            store: store,
+            cacheScope: { scope },
+            now: { now }
+        )
+    }
+
+    @Test("Last Month is one UTC calendar month that Civo accepts")
+    func lastMonthWindow() {
+        let range = ChargePeriod.lastMonth.dateRange(now: Self.now)
+        let windows = ChargeWindowPlanner.monthlyWindows(from: range.from, to: range.to)
+        #expect(windows == [ChargeWindow(from: Self.date("2026-10-01T00:00:00Z"), to: Self.date("2026-11-01T00:00:00Z"))])
+        #expect(windows[0].to.timeIntervalSince(windows[0].from) == ChargeWindowPlanner.maxSpan)
+    }
+
+    @Test("This Year splits into contiguous windows of at most 31 days")
+    func thisYearWindows() {
+        let range = ChargePeriod.thisYear.dateRange(now: Self.now)
+        let windows = ChargeWindowPlanner.monthlyWindows(from: range.from, to: range.to)
+        #expect(windows.count == 11)
+        #expect(windows.first?.from == Self.date("2026-01-01T00:00:00Z"))
+        #expect(windows.last?.to == Self.now)
+        #expect(windows.allSatisfy { $0.to.timeIntervalSince($0.from) <= ChargeWindowPlanner.maxSpan })
+        #expect(zip(windows, windows.dropFirst()).allSatisfy { $0.to == $1.from })
+    }
+
+    @Test("Completed months are reused from the cache, the open month is fetched again, results are summed")
+    func cacheReuse() async throws {
+        let store = MemoryStore()
+        let requests = OSAllocatedUnfairLock(initialState: [ChargeWindow]())
+        let service = Self.service(store: store, scope: "account-a", requests: requests)
+
+        let first = try await service.charges(for: .lastQuarter)
+        #expect(requests.withLock { $0.count } == 4)
+        let expectedHours = Self.now.timeIntervalSince(Self.date("2026-08-01T00:00:00Z")) / 3600
+        #expect(first.reduce(0) { $0 + $1.numHours } == expectedHours)
+
+        requests.withLock { $0.removeAll() }
+        let second = try await service.charges(for: .lastQuarter)
+        #expect(requests.withLock { $0 } == [ChargeWindow(from: Self.date("2026-11-01T00:00:00Z"), to: Self.now)])
+        #expect(second.reduce(0) { $0 + $1.numHours } == expectedHours)
+        #expect(store.entries.withLock { $0.keys.sorted() } == ["account-a/2026-08", "account-a/2026-09", "account-a/2026-10"])
+    }
+
+    @Test("Another API key does not see cached charges; without a key nothing is cached")
+    func cacheScope() async throws {
+        let store = MemoryStore()
+        let requests = OSAllocatedUnfairLock(initialState: [ChargeWindow]())
+        _ = try await Self.service(store: store, scope: "account-a", requests: requests).charges(for: .lastMonth)
+        _ = try await Self.service(store: store, scope: "account-b", requests: requests).charges(for: .lastMonth)
+        _ = try await Self.service(store: store, scope: nil, requests: requests).charges(for: .lastMonth)
+        #expect(requests.withLock { $0.count } == 3)
+        #expect(CivoChargesService.scope(forAPIKey: "") == nil)
+        #expect(CivoChargesService.scope(forAPIKey: "key-a") != CivoChargesService.scope(forAPIKey: "key-b"))
+        #expect(CivoChargesService.scope(forAPIKey: "key-a")?.contains("key-a") == false)
+    }
+
+    @Test("Error messages never contain the Civo response body")
+    func sanitizedErrors() {
+        let body = #"{"code":"parameter_date_range_too_long","reason":"The date range spanned more than 31 days"}"#
+        let message = ChargesLoadError.userMessage(CivoAPIError.httpError(400, body))
+        #expect(message?.isEmpty == false)
+        #expect(message?.contains("parameter_date_range_too_long") == false)
+        #expect(ChargesLoadError.userMessage(CivoAPIError.networkError(body))?.contains("{") == false)
+        #expect(ChargesLoadError.userMessage(CivoAPIError.cancelled) == nil)
+        #expect(ChargesLoadError.userMessage(CancellationError()) == nil)
+    }
+}
