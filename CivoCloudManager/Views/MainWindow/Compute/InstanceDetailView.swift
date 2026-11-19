@@ -5,6 +5,7 @@ struct InstanceDetailView: View {
     let instance: CivoInstance
     @Bindable var vm: InstanceViewModel
     let onBack: () -> Void
+    @Environment(\.openWindow) private var openWindow
     @State private var appeared = false
     @State private var showPassword = false
     @State private var hidePasswordTask: Task<Void, Never>?
@@ -267,6 +268,15 @@ struct InstanceDetailView: View {
                         }
                         .buttonStyle(.bordered)
                         .controlSize(.small)
+
+                        if let target = vm.consoleTarget(for: instance) {
+                            Button { openWindow(id: "console", value: target) } label: {
+                                Label("Open Console", systemImage: "terminal")
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
+                            .help("Open the instance console in a new window")
+                        }
                     } else if instance.status?.lowercased() == "shutoff" {
                         Button { Task { await vm.startInstance(instance.id) } } label: {
                             Label("Start", systemImage: "play.circle")

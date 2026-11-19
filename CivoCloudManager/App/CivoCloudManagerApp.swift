@@ -50,6 +50,17 @@ struct CivoCloudManagerApp: App {
             }
         }
 
+        // Restoration is disabled so a relaunch never silently starts a console session.
+        WindowGroup("Console", id: "console", for: ConsoleTarget.self) { $target in
+            if let target {
+                InstanceConsoleView(target: target)
+                    .onDisappear { hideFromDockIfNoWindows() }
+            }
+        }
+        .restorationBehavior(.disabled)
+        .defaultSize(width: 1024, height: 768)
+        .defaultPosition(.center)
+
         Window("Civo Cloud Manager Help", id: "help") {
             HelpView()
                 .onDisappear { hideFromDockIfNoWindows() }

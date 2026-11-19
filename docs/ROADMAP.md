@@ -28,7 +28,7 @@ Completed reliability work: Kubernetes TLS validation, explicit request-region r
 
 | Feature | Notes | Effort | Impact |
 |---------|-------|--------|--------|
-| Instance Console (VNC) | WebSocket + RFB protocol | XL | High |
+| Instance Console (VNC) | Implemented in #71: Civo-hosted noVNC in a `WKWebView`, no RFB code in the app | M | High |
 | Multi-API-Key Account Switcher | CivoConfig refactor | L | Medium |
 | Teams & Permissions | B2B feature | L | Low |
 | Recovery Mode for Instances | Edge case | M | Low |
