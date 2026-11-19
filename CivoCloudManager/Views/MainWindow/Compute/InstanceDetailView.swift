@@ -270,7 +270,10 @@ struct InstanceDetailView: View {
                         .controlSize(.small)
 
                         if let target = vm.consoleTarget(for: instance) {
-                            Button { openWindow(id: "console", value: target) } label: {
+                            Button {
+                                vm.handOverConsoleLogin(of: instance, to: target)
+                                openWindow(id: "console", value: target)
+                            } label: {
                                 Label("Open Console", systemImage: "terminal")
                             }
                             .buttonStyle(.bordered)

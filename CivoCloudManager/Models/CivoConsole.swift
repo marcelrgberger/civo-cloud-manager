@@ -18,6 +18,46 @@ struct ConsoleTarget: Codable, Hashable, Sendable {
     }
 }
 
+/// Initial login of an instance as reported by the Civo API (`initial_user`, `initial_password`).
+/// In memory only: not Codable, redacted in descriptions and mirrors, never part of `ConsoleTarget`.
+struct ConsoleLogin: Equatable, Sendable, CustomStringConvertible, CustomDebugStringConvertible, CustomReflectable {
+    let user: String?
+    let password: String?
+
+    init(user: String?, password: String?) {
+        self.user = user.flatMap { $0.isEmpty ? nil : $0 }
+        self.password = password.flatMap { $0.isEmpty ? nil : $0 }
+    }
+
+    var isEmpty: Bool { user == nil && password == nil }
+
+    var description: String { "ConsoleLogin(<redacted>)" }
+    var debugDescription: String { description }
+    var customMirror: Mirror { Mirror(self, children: [:]) }
+}
+
+/// Hands an instance's initial login from the main window to its console window. Window values
+/// are kept free of secrets because SwiftUI may persist them, so the login travels through memory.
+@Observable
+@MainActor
+final class ConsoleLoginStore {
+    static let shared = ConsoleLoginStore()
+
+    private var logins: [ConsoleTarget: ConsoleLogin] = [:]
+
+    func register(_ login: ConsoleLogin, for target: ConsoleTarget) {
+        logins[target] = login
+    }
+
+    func login(for target: ConsoleTarget) -> ConsoleLogin? {
+        logins[target]
+    }
+
+    func remove(for target: ConsoleTarget) {
+        logins[target] = nil
+    }
+}
+
 /// Response of `PUT /v2/instances/{id}/vnc`.
 struct ConsoleSessionResponse: Decodable, Sendable {
     let uri: String
@@ -43,19 +83,30 @@ enum ConsoleURL {
     struct InvalidURL: Error, Equatable {}
 
     static let tokenParameter = "token"
+    /// Upstream noVNC's `vnc.html` reads `resize` from the query (since noVNC 1.0) and maps `scale`
+    /// to `RFB.scaleViewport`: the remote screen fits the web view, keeps its aspect ratio and
+    /// follows window resizes. Civo does not document its hosted noVNC version or settings, so
+    /// whether its page honours the parameter is verified live, not assumed.
+    static let resizeParameter = "resize"
+    static let scaleToWindow = "scale"
 
     static func expectedHost(region: String) -> String {
         "vnc.\(region.lowercased()).civo.com"
     }
 
-    /// Appends the JWT as `token` to the API-returned `uri` after validating its origin and path.
+    /// Requests scaling to the window and appends the JWT as `token` to the API-returned `uri`,
+    /// after validating its origin and path. Other query parameters of the `uri` are kept.
     static func make(uri: String, token: String, target: ConsoleTarget) throws -> URL {
         guard !token.isEmpty,
               var components = URLComponents(string: uri),
               isTrustedConsoleLocation(components, target: target),
               !carriesToken(components)
         else { throw InvalidURL() }
-        components.queryItems = (components.queryItems ?? []) + [URLQueryItem(name: tokenParameter, value: token)]
+        let keptItems = (components.queryItems ?? []).filter { $0.name.lowercased() != resizeParameter }
+        components.queryItems = keptItems + [
+            URLQueryItem(name: resizeParameter, value: scaleToWindow),
+            URLQueryItem(name: tokenParameter, value: token),
+        ]
         // URLComponents leaves "+" unescaped in queries, which servers may decode as a space.
         components.percentEncodedQuery = components.percentEncodedQuery?
             .replacingOccurrences(of: "+", with: "%2B")

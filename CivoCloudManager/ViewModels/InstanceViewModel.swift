@@ -61,6 +61,14 @@ final class InstanceViewModel {
         return ConsoleTarget(instanceId: instance.id, instanceName: instance.name, region: region)
     }
 
+    /// Passes the instance's initial login to the console window in memory, right before it opens.
+    func handOverConsoleLogin(of instance: CivoInstance, to target: ConsoleTarget) {
+        ConsoleLoginStore.shared.register(
+            ConsoleLogin(user: instance.initialUser, password: instance.initialPassword),
+            for: target
+        )
+    }
+
     var selectedInstanceIsBuilding: Bool {
         guard let status = selectedInstance?.status?.lowercased() else { return false }
         return status != "active" && status != "error"
