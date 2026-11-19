@@ -67,7 +67,10 @@ struct InstanceListView: View {
                             Button("Stop") { Task { await vm.stopInstance(inst.id) } }
                             Button("Reboot") { Task { await vm.rebootInstance(inst.id) } }
                             if let target = vm.consoleTarget(for: inst) {
-                                Button("Open Console") { openWindow(id: "console", value: target) }
+                                Button("Open Console") {
+                                    vm.handOverConsoleLogin(of: inst, to: target)
+                                    openWindow(id: "console", value: target)
+                                }
                             }
                         }
                         if inst.status?.lowercased() == "shutoff" {

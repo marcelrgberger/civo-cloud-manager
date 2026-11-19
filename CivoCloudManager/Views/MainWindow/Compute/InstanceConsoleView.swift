@@ -1,3 +1,4 @@
+import LocalAuthentication
 import SwiftUI
 import WebKit
 
@@ -6,7 +7,13 @@ import WebKit
 struct InstanceConsoleView: View {
     @State private var vm: ConsoleViewModel
     @State private var confirmEnd = false
+    @State private var passwordAccess = ConsolePasswordAccess()
+    @State private var copiedPassword = false
     private let store = StoreManager.shared
+    private let logins = ConsoleLoginStore.shared
+
+    /// Same as the instance detail view: a revealed password hides itself again.
+    private static let passwordVisibleDuration: Duration = .seconds(30)
 
     init(target: ConsoleTarget) {
         _vm = State(initialValue: ConsoleViewModel(target: target))
@@ -58,36 +65,150 @@ struct InstanceConsoleView: View {
             if store.isFullAccessUnlocked {
                 vm.connect()
             } else if store.hasLoadedPurchaseStatus {
+                passwordAccess.invalidate()
                 vm.revokeAccess()
             }
         }
         .onChange(of: store.isFullAccessUnlocked) { _, unlocked in
             if !unlocked {
+                passwordAccess.invalidate()
                 vm.revokeAccess()
             } else if vm.phase == .idle {
                 vm.connect()
             }
         }
         .onChange(of: store.hasLoadedPurchaseStatus) { _, loaded in
-            if loaded && !store.isFullAccessUnlocked { vm.revokeAccess() }
+            if loaded && !store.isFullAccessUnlocked {
+                passwordAccess.invalidate()
+                vm.revokeAccess()
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
             vm.apiKeyDidChange()
+            // The login belongs to the account the window was opened with.
+            passwordAccess.invalidate()
+            logins.remove(for: vm.target)
         }
-        .onDisappear { vm.closeLocally() }
+        .task(id: passwordAccess.isRevealed) {
+            guard passwordAccess.isRevealed else { return }
+            try? await Task.sleep(for: Self.passwordVisibleDuration)
+            if !Task.isCancelled { passwordAccess.hide() }
+        }
+        .task(id: copiedPassword) {
+            guard copiedPassword else { return }
+            try? await Task.sleep(for: .seconds(2))
+            if !Task.isCancelled { copiedPassword = false }
+        }
+        .onDisappear {
+            passwordAccess.invalidate()
+            vm.closeLocally()
+            logins.remove(for: vm.target)
+        }
     }
 
     private var hintBar: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "info.circle")
-                .foregroundStyle(.secondary)
-            Text("Log in with a password of a user on the instance, for example the initial password. Copy and paste are not available in the console.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            Spacer()
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 8) {
+                Image(systemName: "info.circle")
+                    .foregroundStyle(.secondary)
+                Text("Log in with a password of a user on the instance, for example the initial password. Copy and paste are not available in the console.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            if store.isFullAccessUnlocked {
+                initialLogin(logins.login(for: vm.target) ?? ConsoleLogin(user: nil, password: nil))
+            }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
+    }
+
+    // MARK: - Initial login
+
+    @ViewBuilder
+    private func initialLogin(_ login: ConsoleLogin) -> some View {
+        if login.isEmpty {
+            Text("Civo reports no initial user or password for this instance.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        } else {
+            HStack(spacing: 16) {
+                loginField("Initial User") {
+                    if let user = login.user {
+                        Text(verbatim: user)
+                            .font(.callout.monospaced())
+                            .textSelection(.enabled)
+                    } else {
+                        notProvided
+                    }
+                }
+                loginField("Initial Password") {
+                    if let password = login.password {
+                        passwordField(password)
+                    } else {
+                        notProvided
+                    }
+                }
+                Spacer()
+            }
+            Text("Shows the initial login reported by Civo. A password changed later on the instance is not shown here.")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+    }
+
+    private var notProvided: some View {
+        Text("Not provided by Civo")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+    }
+
+    private func loginField(_ title: LocalizedStringKey, @ViewBuilder value: () -> some View) -> some View {
+        HStack(spacing: 6) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            value()
+        }
+    }
+
+    private func passwordField(_ password: String) -> some View {
+        HStack(spacing: 6) {
+            // Not selectable: copying goes through `SecretPasteboard` only.
+            if passwordAccess.isRevealed {
+                Text(verbatim: password)
+                    .font(.callout.monospaced())
+            } else {
+                Text(verbatim: String(repeating: "*", count: 12))
+                    .font(.callout.monospaced())
+            }
+            Button {
+                if passwordAccess.isRevealed {
+                    passwordAccess.hide()
+                } else {
+                    Task { await passwordAccess.reveal() }
+                }
+            } label: {
+                Label(
+                    passwordAccess.isRevealed ? "Hide password" : "Show password",
+                    systemImage: passwordAccess.isRevealed ? "eye.slash" : "eye"
+                )
+                .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.borderless)
+            .help(passwordAccess.isRevealed ? "Hide password" : "Show password")
+            Button {
+                Task {
+                    if await passwordAccess.copy(password) { copiedPassword = true }
+                }
+            } label: {
+                Label("Copy password", systemImage: copiedPassword ? "checkmark" : "doc.on.doc")
+                    .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.borderless)
+            .help("Copy password")
+        }
     }
 
     @ViewBuilder
@@ -189,6 +310,112 @@ struct InstanceConsoleView: View {
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.background)
+    }
+}
+
+/// Touch ID or system password, as in the instance detail view: a Mac without any owner
+/// authentication shows the password directly.
+@MainActor
+private enum DeviceOwner {
+    static func confirm(reason: String) async -> Bool {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else { return true }
+        return (try? await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason)) ?? false
+    }
+}
+
+/// Reveals or copies the console password after owner authentication. Authentication can take
+/// long; if the window closes, the API key changes or Full Access ends meanwhile, `invalidate()`
+/// makes every pending reveal or copy a no-op once authentication returns.
+@Observable
+@MainActor
+final class ConsolePasswordAccess {
+    private(set) var isRevealed = false
+    private var generation = 0
+    private let authenticate: @MainActor (String) async -> Bool
+    private let writeToPasteboard: @MainActor (String) -> Void
+
+    init(
+        authenticate: (@MainActor (String) async -> Bool)? = nil,
+        writeToPasteboard: (@MainActor (String) -> Void)? = nil
+    ) {
+        self.authenticate = authenticate ?? { await DeviceOwner.confirm(reason: $0) }
+        self.writeToPasteboard = writeToPasteboard ?? { SecretPasteboard.copy($0) }
+    }
+
+    func reveal() async {
+        let started = generation
+        guard await authenticate(String(localized: "View instance password")), started == generation else { return }
+        isRevealed = true
+    }
+
+    func hide() {
+        isRevealed = false
+    }
+
+    /// A hidden password is copied only after the same authentication that reveals it.
+    /// Returns whether the password was written to the pasteboard.
+    func copy(_ password: String) async -> Bool {
+        let started = generation
+        if !isRevealed {
+            guard await authenticate(String(localized: "Copy instance password")) else { return false }
+        }
+        guard started == generation else { return false }
+        writeToPasteboard(password)
+        return true
+    }
+
+    /// Hides the password and discards every reveal or copy still waiting for authentication.
+    func invalidate() {
+        generation += 1
+        isRevealed = false
+    }
+}
+
+/// Copies a secret for an explicit paste. It is marked as concealed (nspasteboard.org) so clipboard
+/// managers do not record it, and cleared after `lifetime` or when the app quits, unless something
+/// else was copied since.
+@MainActor
+enum SecretPasteboard {
+    static let concealedType = NSPasteboard.PasteboardType("org.nspasteboard.ConcealedType")
+    static let lifetime: Duration = .seconds(90)
+
+    private static var pending: (pasteboard: NSPasteboard, changeCount: Int)?
+    private static var terminationObserver: NSObjectProtocol?
+
+    static func copy(_ secret: String, to pasteboard: NSPasteboard = .general) {
+        let changeCount = write(secret, to: pasteboard)
+        pending = (pasteboard, changeCount)
+        terminationObserver = terminationObserver ?? NotificationCenter.default.addObserver(
+            forName: NSApplication.willTerminateNotification, object: nil, queue: .main
+        ) { _ in
+            MainActor.assumeIsolated { clearPending() }
+        }
+        Task {
+            try? await Task.sleep(for: lifetime)
+            if pending?.changeCount == changeCount { clearPending() }
+        }
+    }
+
+    private static func clearPending() {
+        guard let pending else { return }
+        clear(pending.pasteboard, ifUnchangedSince: pending.changeCount)
+        self.pending = nil
+    }
+
+    /// Writes the secret with the concealed marker and returns the resulting change count.
+    @discardableResult
+    static func write(_ secret: String, to pasteboard: NSPasteboard) -> Int {
+        pasteboard.clearContents()
+        pasteboard.setString(secret, forType: .string)
+        pasteboard.setString("", forType: concealedType)
+        return pasteboard.changeCount
+    }
+
+    static func clear(_ pasteboard: NSPasteboard, ifUnchangedSince changeCount: Int) {
+        guard pasteboard.changeCount == changeCount else { return }
+        pasteboard.clearContents()
     }
 }
 
