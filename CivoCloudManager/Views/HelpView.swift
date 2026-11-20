@@ -109,6 +109,7 @@ struct HelpSection {
         HelpSection(title: "Compute & Instances", icon: "desktopcomputer", items: [
             "Click an instance to see CPU, RAM, Disk specs, IPs, initial password, and tags.",
             "Initial password has a show/hide toggle for security.",
+            "Showing or copying the initial password requires Touch ID or the system password. It hides again after 30 seconds, when the app becomes inactive, and when the screen locks or the Mac sleeps.",
             "Right-click an instance to Stop, Start, or Reboot it via the context menu.",
             "Add SSH keys by pasting the public key.",
         ]),
