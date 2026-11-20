@@ -9,6 +9,7 @@ struct InstanceDetailView: View {
     @State private var passwordAccess = PasswordAccess()
     @State private var copiedPassword = false
     @State private var showResize = false
+    @State private var credentialsTarget: ConsoleTarget?
     @State private var resizeTarget = ""
     @State private var editingReverseDns = false
     @State private var reverseDnsValue = ""
@@ -61,6 +62,11 @@ struct InstanceDetailView: View {
         }
         .sheet(isPresented: $showResize) {
             resizeSheet
+        }
+        .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
+            if let target = credentialsTarget {
+                InstanceCredentialsView(target: target)
+            }
         }
     }
 
@@ -273,6 +279,18 @@ struct InstanceDetailView: View {
                         .buttonStyle(.bordered)
                         .controlSize(.small)
                         .tint(.green)
+                    }
+
+                    // Unlike the console, available in every state, so credentials can be kept up to date.
+                    if let target = vm.consoleTarget(for: instance) {
+                        Button {
+                            credentialsTarget = target
+                        } label: {
+                            Label("Credentials…", systemImage: "key")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .help("Save a username and password for this instance in this Mac's keychain")
                     }
 
                     Button {

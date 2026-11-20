@@ -228,6 +228,7 @@ struct HelpSection {
             "Start, Stop, Reboot instances from the detail view.",
             "Open Console opens the console of an active instance in its own window (Full Access). Log in with a password of a user on the instance.",
             "Closing the console window only disconnects you. 'End session' ends the console session on Civo for everyone.",
+            "'Credentials…' saves a username and password per instance in this Mac's keychain only, without iCloud sync. Showing, copying and editing require Touch ID or your system password.",
             "Resize instances with the visual size picker grid.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",

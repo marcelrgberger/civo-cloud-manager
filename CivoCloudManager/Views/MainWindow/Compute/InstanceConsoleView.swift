@@ -8,11 +8,14 @@ struct InstanceConsoleView: View {
     @State private var confirmEnd = false
     @State private var passwordAccess = PasswordAccess()
     @State private var copiedPassword = false
+    /// Read from the keychain by instance ID and region; the window value stays free of secrets.
+    @State private var credentialVault: InstanceCredentialVault
     private let store = StoreManager.shared
     private let logins = ConsoleLoginStore.shared
 
     init(target: ConsoleTarget) {
         _vm = State(initialValue: ConsoleViewModel(target: target))
+        _credentialVault = State(initialValue: InstanceCredentialVault(target: target))
     }
 
     var body: some View {
@@ -58,16 +61,19 @@ struct InstanceConsoleView: View {
             Text("This ends the console session on Civo for this instance, including a console open in the Civo dashboard.")
         }
         .onAppear {
+            credentialVault.refresh()
             if store.isFullAccessUnlocked {
                 vm.connect()
             } else if store.hasLoadedPurchaseStatus {
                 passwordAccess.invalidate()
+                credentialVault.invalidate()
                 vm.revokeAccess()
             }
         }
         .onChange(of: store.isFullAccessUnlocked) { _, unlocked in
             if !unlocked {
                 passwordAccess.invalidate()
+                credentialVault.invalidate()
                 vm.revokeAccess()
             } else if vm.phase == .idle {
                 vm.connect()
@@ -76,6 +82,7 @@ struct InstanceConsoleView: View {
         .onChange(of: store.hasLoadedPurchaseStatus) { _, loaded in
             if loaded && !store.isFullAccessUnlocked {
                 passwordAccess.invalidate()
+                credentialVault.invalidate()
                 vm.revokeAccess()
             }
         }
@@ -83,9 +90,16 @@ struct InstanceConsoleView: View {
             vm.apiKeyDidChange()
             // The login belongs to the account the window was opened with.
             passwordAccess.invalidate()
+            credentialVault.invalidate()
             logins.remove(for: vm.target)
         }
+        .onReceive(NotificationCenter.default.publisher(for: .instanceCredentialsDidChange)) { _ in
+            // Saved, edited or deleted elsewhere: drop what is shown and check again.
+            credentialVault.invalidate()
+            credentialVault.refresh()
+        }
         .relocksPassword(passwordAccess)
+        .relocksPassword(credentialVault.access)
         .task(id: copiedPassword) {
             guard copiedPassword else { return }
             try? await Task.sleep(for: .seconds(2))
@@ -109,6 +123,7 @@ struct InstanceConsoleView: View {
             }
             if store.isFullAccessUnlocked {
                 initialLogin(logins.login(for: vm.target) ?? ConsoleLogin(user: nil, password: nil))
+                savedCredentials
             }
         }
         .padding(.horizontal, 12)
@@ -149,6 +164,34 @@ struct InstanceConsoleView: View {
             Text("Shows the initial login reported by Civo. A password changed later on the instance is not shown here.")
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
+        }
+    }
+
+    // MARK: - Saved credentials
+
+    @ViewBuilder
+    private var savedCredentials: some View {
+        if credentialVault.entry == .present {
+            HStack(spacing: 16) {
+                Text("Saved credentials")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                loginField("Username") {
+                    CredentialFieldValue(vault: credentialVault, field: .username)
+                }
+                loginField("Password") {
+                    CredentialFieldValue(vault: credentialVault, field: .password)
+                }
+                Spacer()
+            }
+            if credentialVault.access.isDeviceAuthenticationUnavailable {
+                DeviceAuthenticationRequiredHint()
+            }
+        }
+        if let message = credentialVault.error?.userMessage {
+            Label(message, systemImage: "exclamationmark.triangle")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
     }
 

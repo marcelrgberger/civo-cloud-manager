@@ -16,8 +16,13 @@ enum DeviceOwnerAuthentication: Equatable, Sendable {
 enum DeviceOwner {
     private static let cancellations: Set<LAError.Code> = [.userCancel, .systemCancel, .appCancel]
 
-    static func authenticate(reason: String) async -> DeviceOwnerAuthentication {
-        let context = LAContext()
+    /// Whether the Mac can confirm its owner at all; without it secrets are neither shown nor stored.
+    static func canAuthenticate() -> Bool {
+        LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+    }
+
+    /// Evaluates `context`, so a granted context can unlock one keychain read without a second prompt.
+    static func authenticate(reason: String, context: LAContext = LAContext()) async -> DeviceOwnerAuthentication {
         var error: NSError?
         guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else { return .unavailable }
         do {
@@ -61,25 +66,33 @@ final class PasswordAccess {
 
     private(set) var isRevealed = false
     private(set) var isDeviceAuthenticationUnavailable = false
+    /// Called on every `invalidate()`, so owners can drop secrets they loaded after authentication.
+    @ObservationIgnored var onInvalidate: (@MainActor () -> Void)?
     private var generation = 0
-    private let authenticate: @MainActor (String) async -> DeviceOwnerAuthentication
+    private let authenticate: @MainActor (String, LAContext) async -> DeviceOwnerAuthentication
     private let writeToPasteboard: @MainActor (String) -> Void
     private let lockEvents: [LockEvent]?
     @ObservationIgnored private var lockObservers: [(center: NotificationCenter, token: NSObjectProtocol)] = []
 
     init(
-        authenticate: (@MainActor (String) async -> DeviceOwnerAuthentication)? = nil,
+        authenticate: (@MainActor (String, LAContext) async -> DeviceOwnerAuthentication)? = nil,
         writeToPasteboard: (@MainActor (String) -> Void)? = nil,
         lockEvents: [LockEvent]? = nil
     ) {
-        self.authenticate = authenticate ?? { await DeviceOwner.authenticate(reason: $0) }
+        self.authenticate = authenticate ?? { await DeviceOwner.authenticate(reason: $0, context: $1) }
         self.writeToPasteboard = writeToPasteboard ?? { SecretPasteboard.copy($0) }
         self.lockEvents = lockEvents
     }
 
     func reveal() async {
-        guard await authorize(reason: String(localized: "View instance password")) else { return }
-        isRevealed = true
+        await reveal(reason: String(localized: "View instance password")) { _ in true }
+    }
+
+    /// Reveals once `load` succeeds with the authenticated context, e.g. a keychain read.
+    func reveal(reason: String, load: (LAContext) -> Bool) async {
+        guard let context = await authorize(reason: reason) else { return }
+        defer { context.invalidate() }
+        if load(context) { isRevealed = true }
     }
 
     func hide() {
@@ -89,10 +102,20 @@ final class PasswordAccess {
     /// A hidden password is copied only after the same authentication that reveals it.
     /// Returns whether the password was written to the pasteboard.
     func copy(_ password: String) async -> Bool {
-        if !isRevealed {
-            guard await authorize(reason: String(localized: "Copy instance password")) else { return false }
+        await copy(reason: String(localized: "Copy instance password"), isVisible: isRevealed) { _ in password }
+    }
+
+    /// Copies what `secret` returns. A secret that is not visible is copied only after authentication;
+    /// `secret` then receives the authenticated context, otherwise nil.
+    func copy(reason: String, isVisible: Bool, secret: (LAContext?) -> String?) async -> Bool {
+        var context: LAContext?
+        if !isVisible {
+            guard let authenticated = await authorize(reason: reason) else { return false }
+            context = authenticated
         }
-        writeToPasteboard(password)
+        defer { context?.invalidate() }
+        guard let value = secret(context) else { return false }
+        writeToPasteboard(value)
         return true
     }
 
@@ -100,6 +123,7 @@ final class PasswordAccess {
     func invalidate() {
         generation += 1
         isRevealed = false
+        onInvalidate?()
     }
 
     /// Calls `invalidate()` on every lock event until `stopObservingLockEvents()`.
@@ -120,13 +144,19 @@ final class PasswordAccess {
         lockObservers = []
     }
 
-    /// True only if authentication succeeded and nothing invalidated access while it ran.
-    private func authorize(reason: String) async -> Bool {
+    /// The authenticated context, only if authentication succeeded and nothing invalidated access
+    /// while it ran. The caller invalidates the context once its one action is done.
+    func authorize(reason: String) async -> LAContext? {
         let started = generation
-        let outcome = await authenticate(reason)
-        guard started == generation else { return false }
-        isDeviceAuthenticationUnavailable = outcome == .unavailable
-        return outcome == .granted
+        let context = LAContext()
+        let outcome = await authenticate(reason, context)
+        guard started == generation, outcome == .granted else {
+            if started == generation { isDeviceAuthenticationUnavailable = outcome == .unavailable }
+            context.invalidate()
+            return nil
+        }
+        isDeviceAuthenticationUnavailable = false
+        return context
     }
 }
 
@@ -207,5 +237,156 @@ enum SecretPasteboard {
     static func clear(_ pasteboard: NSPasteboard, ifUnchangedSince changeCount: Int) {
         guard pasteboard.changeCount == changeCount else { return }
         pasteboard.clearContents()
+    }
+}
+
+/// An editable text field for values that came out of the keychain. Copy and cut go through
+/// `SecretPasteboard`; dragging, Services, sharing and Writing Tools get nothing.
+struct ConcealedTextField: NSViewRepresentable {
+    let placeholder: String
+    @Binding var text: String
+
+    func makeNSView(context: Context) -> NSTextField {
+        let field = ConcealedNSTextField(string: text)
+        field.placeholderString = placeholder
+        field.bezelStyle = .roundedBezel
+        field.usesSingleLineMode = true
+        field.lineBreakMode = .byTruncatingTail
+        field.cell?.isScrollable = true
+        field.delegate = context.coordinator
+        return field
+    }
+
+    func updateNSView(_ field: NSTextField, context: Context) {
+        context.coordinator.text = $text
+        if field.stringValue != text { field.stringValue = text }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(text: $text)
+    }
+
+    @MainActor
+    final class Coordinator: NSObject, NSTextFieldDelegate {
+        var text: Binding<String>
+
+        init(text: Binding<String>) {
+            self.text = text
+        }
+
+        func controlTextDidChange(_ notification: Notification) {
+            guard let field = notification.object as? NSTextField else { return }
+            text.wrappedValue = field.stringValue
+        }
+    }
+}
+
+final class ConcealedNSTextField: NSTextField {
+    override class var cellClass: AnyClass? {
+        get { ConcealedTextFieldCell.self }
+        set {}
+    }
+}
+
+/// Edits with its own `ConcealedFieldEditor` instead of the window's shared field editor.
+final class ConcealedTextFieldCell: NSTextFieldCell {
+    private lazy var editor = ConcealedFieldEditor()
+
+    override func fieldEditor(for controlView: NSView) -> NSTextView? {
+        editor
+    }
+}
+
+/// Field editor that hands copied text only to `copySecret`, by default `SecretPasteboard`.
+final class ConcealedFieldEditor: NSTextView {
+    private static let menuActions: Set<Selector> = [
+        #selector(cut(_:)), #selector(copy(_:)), #selector(paste(_:)), #selector(selectAll(_:)),
+    ]
+
+    var copySecret: (String) -> Void = { SecretPasteboard.copy($0) }
+
+    convenience init() {
+        self.init(frame: .zero)
+        isFieldEditor = true
+        isRichText = false
+        isContinuousSpellCheckingEnabled = false
+        isAutomaticSpellingCorrectionEnabled = false
+        isAutomaticTextReplacementEnabled = false
+        isAutomaticTextCompletionEnabled = false
+        writingToolsBehavior = .none
+    }
+
+    private var selectedString: String {
+        let text = string as NSString
+        return selectedRanges.map { text.substring(with: $0.rangeValue) }.joined()
+    }
+
+    override func copy(_ sender: Any?) {
+        let selected = selectedString
+        guard !selected.isEmpty else { return }
+        copySecret(selected)
+    }
+
+    override func cut(_ sender: Any?) {
+        guard !selectedString.isEmpty else { return }
+        copy(sender)
+        delete(sender)
+    }
+
+    // `delete(_:)` and the Emacs-style deletions (Control-K and friends) put the text into AppKit's
+    // kill buffer, from which Control-Y inserts it anywhere. Deleting the selection backward does not.
+    override func delete(_ sender: Any?) {
+        guard selectedRange().length > 0 else { return }
+        deleteBackward(sender)
+    }
+
+    override func deleteToEndOfLine(_ sender: Any?) {
+        deleteSelection(orExtend: moveToEndOfLineAndModifySelection)
+    }
+
+    override func deleteToBeginningOfLine(_ sender: Any?) {
+        deleteSelection(orExtend: moveToBeginningOfLineAndModifySelection)
+    }
+
+    override func deleteToEndOfParagraph(_ sender: Any?) {
+        deleteSelection(orExtend: moveToEndOfParagraphAndModifySelection)
+    }
+
+    override func deleteToBeginningOfParagraph(_ sender: Any?) {
+        deleteSelection(orExtend: moveToBeginningOfParagraphAndModifySelection)
+    }
+
+    override func deleteToMark(_ sender: Any?) {
+        deleteSelection(orExtend: selectToMark)
+    }
+
+    private func deleteSelection(orExtend extend: (Any?) -> Void) {
+        if selectedRange().length == 0 { extend(nil) }
+        delete(nil)
+    }
+
+    override func writeSelection(to pboard: NSPasteboard, types: [NSPasteboard.PasteboardType]) -> Bool {
+        false
+    }
+
+    override func writeSelection(to pboard: NSPasteboard, type: NSPasteboard.PasteboardType) -> Bool {
+        false
+    }
+
+    override func validRequestor(forSendType sendType: NSPasteboard.PasteboardType?, returnType: NSPasteboard.PasteboardType?) -> Any? {
+        sendType == nil ? super.validRequestor(forSendType: sendType, returnType: returnType) : nil
+    }
+
+    override func dragSelection(with event: NSEvent, offset mouseOffset: NSSize, slideBack: Bool) -> Bool {
+        false
+    }
+
+    /// Only cut, copy, paste and select all; no Services, Share or Look Up.
+    override func menu(for event: NSEvent) -> NSMenu? {
+        guard let menu = super.menu(for: event) else { return nil }
+        for item in menu.items where !(item.action.map(Self.menuActions.contains) ?? false) {
+            menu.removeItem(item)
+        }
+        return menu
     }
 }
