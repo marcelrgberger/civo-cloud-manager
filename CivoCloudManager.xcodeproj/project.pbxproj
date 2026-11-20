@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F37C90339F0D4480B523C1C9 /* InstanceConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */; };
+		299FA7183E6D8B4656679E80 /* PasswordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */; };
+		58DC3AF42C125EB9F8FC9967 /* InstanceCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */; };
 		E9CD0B9406374CF29332B9D0 /* ConsoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */; };
+		7FC63DE8F731FF8F6B94F08C /* InstanceCredentialVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */; };
 		EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */; };
 		BDF2E72DDCF04757A4A056B8 /* CivoConsoleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */; };
 		C7311014833E428FABCEEA60 /* CivoConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741081E16DA45499D7C4901 /* CivoConsole.swift */; };
@@ -65,6 +68,7 @@
 		613988765DB18F19D7936F26 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */; };
 		6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150226384082E5A588939D22 /* MarkdownView.swift */; };
 		61F5367A5E9DD32E68020FE1 /* SSHKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */; };
+		CDB10A3DDA4AC5E0983E14A5 /* InstanceCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967DF1876312DEA99025292C /* InstanceCredentialStore.swift */; };
 		672FBCAB272D965EEA1503A7 /* CivoInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A67F276CE2F62C20312CD2 /* CivoInstance.swift */; };
 		69AD6A864491F4044F2B011F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E080D4B547AA2B37914090E /* MenuBarView.swift */; };
 		69F6E27FFCDC4B883A1AFD23 /* LoadBalancerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */; };
@@ -169,7 +173,10 @@
 
 /* Begin PBXFileReference section */
 		6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceConsoleView.swift; sourceTree = "<group>"; };
+		F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordAccess.swift; sourceTree = "<group>"; };
+		23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialsView.swift; sourceTree = "<group>"; };
 		B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsoleViewModel.swift; sourceTree = "<group>"; };
+		3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialVault.swift; sourceTree = "<group>"; };
 		0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostChargesViewModel.swift; sourceTree = "<group>"; };
 		EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsoleService.swift; sourceTree = "<group>"; };
 		2741081E16DA45499D7C4901 /* CivoConsole.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsole.swift; sourceTree = "<group>"; };
@@ -283,6 +290,7 @@
 		A5D4DFF0F2B2AE3D63C83F2E /* CivoRegionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoRegionService.swift; sourceTree = "<group>"; };
 		A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetworkService.swift; sourceTree = "<group>"; };
 		AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSHKeychain.swift; sourceTree = "<group>"; };
+		967DF1876312DEA99025292C /* InstanceCredentialStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialStore.swift; sourceTree = "<group>"; };
 		AE84E4DD07E304399A5562A3 /* CivoQuota.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoQuota.swift; sourceTree = "<group>"; };
 		B12F7996F1A16922E40D6BD3 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/Impressum.md; sourceTree = "<group>"; };
 		B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetwork.swift; sourceTree = "<group>"; };
@@ -577,6 +585,7 @@
 				84180BA7584ACEED6FC47A99 /* ObjectStorePauseService.swift */,
 				2C7E5EDF83B18061721A8368 /* S3Client.swift */,
 				AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */,
+				967DF1876312DEA99025292C /* InstanceCredentialStore.swift */,
 				8A2B3F1204BB739A272BBB9D /* StoreManager.swift */,
 			);
 			path = Services;
@@ -599,6 +608,7 @@
 				F41379F596E3D4C00FCFD675 /* DomainViewModel.swift */,
 				F01918F95778C2210D574D04 /* InstanceViewModel.swift */,
 				B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */,
+				3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */,
 				0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */,
 				356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */,
 				982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */,
@@ -720,6 +730,8 @@
 				EF44F5E3DEF4B58AF3241C8A /* InstanceDetailView.swift */,
 				6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */,
 				BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */,
+				F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */,
+				23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */,
 				A330325FCF5408E7D101EEE0 /* SSHKeyListView.swift */,
 			);
 			path = Compute;
@@ -935,6 +947,7 @@
 				6ABFB7143AA331C58109F97C /* ObjectStorePauseService.swift in Sources */,
 				513524E90019F237FA4614DC /* S3Client.swift in Sources */,
 				61F5367A5E9DD32E68020FE1 /* SSHKeychain.swift in Sources */,
+				CDB10A3DDA4AC5E0983E14A5 /* InstanceCredentialStore.swift in Sources */,
 				28F298316CEF805352753E99 /* StoreManager.swift in Sources */,
 				6DC5321D1EB4C817873A02D1 /* Logger.swift in Sources */,
 				81225037F5B1D1E36B35DDD8 /* DashboardViewModel.swift in Sources */,
@@ -942,6 +955,7 @@
 				C0194B4EB9FCF712C42F8AAE /* DomainViewModel.swift in Sources */,
 				C7595ED1E819E71B267AFC8A /* InstanceViewModel.swift in Sources */,
 				E9CD0B9406374CF29332B9D0 /* ConsoleViewModel.swift in Sources */,
+				7FC63DE8F731FF8F6B94F08C /* InstanceCredentialVault.swift in Sources */,
 				EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */,
 				9E96AAFD3703722C2DBCAE5E /* KubernetesViewModel.swift in Sources */,
 				1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */,
@@ -956,6 +970,8 @@
 				A6580612ACEB21975C669D0D /* CreateSSHKeyView.swift in Sources */,
 				8329080CBAC20C99388925D8 /* InstanceDetailView.swift in Sources */,
 				F37C90339F0D4480B523C1C9 /* InstanceConsoleView.swift in Sources */,
+				299FA7183E6D8B4656679E80 /* PasswordAccess.swift in Sources */,
+				58DC3AF42C125EB9F8FC9967 /* InstanceCredentialsView.swift in Sources */,
 				5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */,
 				AAE860F53ABC3CC6A32456D1 /* SSHKeyListView.swift in Sources */,
 				F6F922A548293F13A135D42B /* CostDashboardView.swift in Sources */,

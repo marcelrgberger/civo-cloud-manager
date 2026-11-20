@@ -3,6 +3,7 @@ import Foundation
 import Testing
 import Security
 import CryptoKit
+import LocalAuthentication
 import os
 
 @testable import CivoCloudManager
@@ -926,10 +927,10 @@ struct ConsoleLoginTests {
 
     @Test("A reveal or copy still waiting for authentication does nothing once invalidated")
     func invalidatedWhileAuthenticating() async {
-        var pendingAuthentications: [CheckedContinuation<Bool, Never>] = []
+        var pendingAuthentications: [CheckedContinuation<DeviceOwnerAuthentication, Never>] = []
         var copied: [String] = []
-        let access = ConsolePasswordAccess(
-            authenticate: { _ in await withCheckedContinuation { pendingAuthentications.append($0) } },
+        let access = PasswordAccess(
+            authenticate: { _, _ in await withCheckedContinuation { pendingAuthentications.append($0) } },
             writeToPasteboard: { copied.append($0) }
         )
 
@@ -938,7 +939,7 @@ struct ConsoleLoginTests {
         await waitUntil { pendingAuthentications.count == 2 }
         // Window closed, API key changed or Full Access ended during authentication.
         access.invalidate()
-        pendingAuthentications.forEach { $0.resume(returning: true) }
+        pendingAuthentications.forEach { $0.resume(returning: .granted) }
         await reveal.value
         #expect(await copy.value == false)
         #expect(!access.isRevealed)
@@ -947,9 +948,58 @@ struct ConsoleLoginTests {
         // A fresh request after invalidation works again.
         let next = Task { await access.copy(password) }
         await waitUntil { pendingAuthentications.count == 3 }
-        pendingAuthentications[2].resume(returning: true)
+        pendingAuthentications[2].resume(returning: .granted)
         #expect(await next.value)
         #expect(copied == [password])
+    }
+
+    @Test("Without Touch ID or a system password the password is neither revealed nor copied")
+    func failsClosedWithoutDeviceAuthentication() async {
+        var copied: [String] = []
+        let access = PasswordAccess(
+            authenticate: { _, _ in .unavailable },
+            writeToPasteboard: { copied.append($0) }
+        )
+
+        await access.reveal()
+        #expect(await access.copy(password) == false)
+        #expect(!access.isRevealed)
+        #expect(copied.isEmpty)
+        #expect(access.isDeviceAuthenticationUnavailable)
+    }
+
+    @Test("App deactivation, screen lock and sleep hide the password and discard pending authentication")
+    func lockEventsInvalidate() async {
+        let center = NotificationCenter()
+        for name in PasswordAccess.systemLockEvents.map(\.name) {
+            var pendingAuthentication: CheckedContinuation<DeviceOwnerAuthentication, Never>?
+            var copied: [String] = []
+            let access = PasswordAccess(
+                authenticate: { _, _ in await withCheckedContinuation { pendingAuthentication = $0 } },
+                writeToPasteboard: { copied.append($0) },
+                lockEvents: [PasswordAccess.LockEvent(center: center, name: name)]
+            )
+            access.observeLockEvents()
+
+            let reveal = Task { await access.reveal() }
+            await waitUntil { pendingAuthentication != nil }
+            pendingAuthentication?.resume(returning: .granted)
+            await reveal.value
+            #expect(access.isRevealed)
+
+            center.post(name: name, object: nil)
+            #expect(!access.isRevealed, "\(name.rawValue)")
+
+            pendingAuthentication = nil
+            let copy = Task { await access.copy(password) }
+            await waitUntil { pendingAuthentication != nil }
+            center.post(name: name, object: nil)
+            pendingAuthentication?.resume(returning: .granted)
+            #expect(await copy.value == false, "\(name.rawValue)")
+            #expect(copied.isEmpty)
+
+            access.stopObservingLockEvents()
+        }
     }
 }
 
@@ -1327,5 +1377,282 @@ struct ChargesServiceTests {
         #expect(ChargesLoadError.userMessage(CivoAPIError.networkError(body))?.contains("{") == false)
         #expect(ChargesLoadError.userMessage(CivoAPIError.cancelled) == nil)
         #expect(ChargesLoadError.userMessage(CancellationError()) == nil)
+    }
+}
+
+/// In-memory keychain: tests never read or write the user's keychain.
+@MainActor
+private final class FakeKeychain {
+    var items: [String: Data] = [:]
+    /// Returned instead of the normal result, e.g. a locked keychain or a missing entitlement.
+    var failure: OSStatus?
+    var queries: [[String: Any]] = []
+
+    var client: KeychainClient {
+        KeychainClient(
+            add: { [unowned self] query in
+                queries.append(query)
+                if let failure { return failure }
+                let account = query[kSecAttrAccount as String] as! String
+                guard items[account] == nil else { return errSecDuplicateItem }
+                items[account] = query[kSecValueData as String] as? Data
+                return errSecSuccess
+            },
+            update: { [unowned self] query, attributes in
+                queries.append(query)
+                if let failure { return failure }
+                let account = query[kSecAttrAccount as String] as! String
+                guard items[account] != nil else { return errSecItemNotFound }
+                items[account] = attributes[kSecValueData as String] as? Data
+                return errSecSuccess
+            },
+            copyMatching: { [unowned self] query in
+                queries.append(query)
+                if let failure { return (failure, nil) }
+                guard let data = items[query[kSecAttrAccount as String] as! String] else { return (errSecItemNotFound, nil) }
+                // Measured on a signed build: a protected entry looked up with a context that may not
+                // prompt reports errSecInteractionNotAllowed, even without asking for its data.
+                if (query[kSecUseAuthenticationContext as String] as? LAContext)?.interactionNotAllowed == true {
+                    return (errSecInteractionNotAllowed, nil)
+                }
+                return (errSecSuccess, query[kSecReturnData as String] as? Bool == true ? data : nil)
+            },
+            delete: { [unowned self] query in
+                queries.append(query)
+                if let failure { return failure }
+                return items.removeValue(forKey: query[kSecAttrAccount as String] as! String) == nil ? errSecItemNotFound : errSecSuccess
+            }
+        )
+    }
+}
+
+@Suite("Instance credential vault")
+@MainActor
+struct InstanceCredentialVaultTests {
+    private let credential = InstanceCredential(username: "admin", password: "VAULT-PASSWORD-VALUE")
+    private let key = InstanceCredentialKey(consoleTarget)
+
+    @Test("Entries follow instance ID and region, not the name")
+    func keys() {
+        let renamed = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "renamed", region: "lon1")
+        let otherRegion = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "web-1", region: "NYC1")
+        #expect(InstanceCredentialKey(renamed) == key)
+        #expect(InstanceCredentialKey(otherRegion) != key)
+    }
+
+    @Test("Create, overwrite and delete; an empty password is never saved")
+    func lifecycle() throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        let context = LAContext()
+
+        #expect(try store.contains(key) == false)
+        #expect(throws: InstanceCredentialError.emptyPassword) {
+            try store.create(InstanceCredential(username: "admin", password: ""), for: key)
+        }
+        #expect(keychain.items.isEmpty)
+
+        try store.create(InstanceCredential(username: "", password: "only-password"), for: key)
+        #expect(try store.contains(key))
+        #expect(throws: InstanceCredentialError.keychain(errSecDuplicateItem)) { try store.create(credential, for: key) }
+
+        try store.replace(credential, for: key, context: context)
+        #expect(try store.read(key, context: context) == credential)
+
+        try store.delete(key)
+        #expect(try store.read(key, context: context) == nil)
+        try store.delete(key)
+
+        // Replacing an entry deleted meanwhile saves it again.
+        try store.replace(credential, for: key, context: context)
+        #expect(try store.read(key, context: context) == credential)
+    }
+
+    @Test("Only a missing item means no entry; other keychain errors are reported", arguments: [
+        errSecInteractionNotAllowed, errSecMissingEntitlement, errSecAuthFailed, errSecUserCanceled,
+    ])
+    func keychainErrors(status: OSStatus) throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+        keychain.failure = status
+        let reported = InstanceCredentialError.keychain(status)
+
+        if status == errSecInteractionNotAllowed {
+            // The answer for an existing protected entry; a locked keychain cannot be told apart.
+            #expect(try store.contains(key))
+        } else {
+            #expect(throws: reported) { try store.contains(key) }
+        }
+        #expect(throws: reported) { try store.read(key, context: LAContext()) }
+        #expect(throws: reported) { try store.replace(credential, for: key, context: LAContext()) }
+        #expect(throws: reported) { try store.delete(key) }
+        keychain.failure = nil
+        #expect(try store.read(key, context: LAContext()) == credential)
+    }
+
+    @Test("Entries are device-only, never synchronized, and protected by Touch ID or the system password")
+    func queryAttributes() throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+        _ = try store.contains(key)
+
+        let add = try #require(keychain.queries.first)
+        #expect(add[kSecAttrSynchronizable as String] as? Bool == false)
+        #expect(add[kSecUseDataProtectionKeychain as String] as? Bool == true)
+        #expect(add[kSecAttrAccessible as String] == nil)
+        let accessControl = try #require(add[kSecAttrAccessControl as String] as CFTypeRef?)
+        #expect(CFGetTypeID(accessControl) == SecAccessControlGetTypeID())
+        #expect(InstanceCredentialStore.protection == kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly)
+        #expect(InstanceCredentialStore.accessControlFlags.contains(.userPresence))
+
+        // User name and password only inside the protected data, never in attributes or descriptions.
+        for (name, value) in add where name != kSecValueData as String {
+            #expect(!"\(value)".contains(credential.username) && !"\(value)".contains(credential.password))
+        }
+        var dumped = ""
+        dump(credential, to: &dumped)
+        for text in [String(describing: credential), String(reflecting: credential), dumped] {
+            #expect(!text.contains(credential.password) && !text.contains(credential.username))
+        }
+
+        // The existence check reads no data and cannot prompt.
+        let check = try #require(keychain.queries.last)
+        #expect(check[kSecReturnData as String] == nil)
+        let context = try #require(check[kSecUseAuthenticationContext as String] as? LAContext)
+        #expect(context.interactionNotAllowed)
+    }
+
+    @Test("Saved credentials go only after Civo confirmed the instance deletion")
+    func instanceDeletion() async throws {
+        let instance = try JSONDecoder().decode(
+            CivoInstance.self,
+            from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "region": "LON1"}"#.utf8)
+        )
+        struct DeletionFailed: Error {}
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+
+        let failing = InstanceViewModel(credentials: store, deleteInstance: { _ in throw DeletionFailed() })
+        #expect(await failing.delete(instance) == false)
+        #expect(try store.contains(key))
+
+        var deleted: [String] = []
+        let succeeding = InstanceViewModel(credentials: store, deleteInstance: { deleted.append($0) })
+        #expect(await succeeding.delete(instance))
+        #expect(deleted == [consoleInstanceId])
+        #expect(try store.contains(key) == false)
+        #expect(succeeding.error == nil)
+    }
+
+    @Test("An edit holding the stored values ends after its time and needs a new authentication")
+    func editingExpires() async throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+        var prompts = 0
+        let access = PasswordAccess(authenticate: { _, _ in prompts += 1; return .granted }, writeToPasteboard: { _ in })
+        let vault = InstanceCredentialVault(target: consoleTarget, store: store, access: access, editingDuration: .milliseconds(100))
+
+        #expect(await vault.beginEditing() == credential)
+        #expect(vault.isEditing)
+        let relocks = vault.relocks
+        let deadline = ContinuousClock.now + .seconds(5)
+        while vault.isEditing && ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(!vault.isEditing)
+        #expect(vault.relocks > relocks)
+
+        #expect(await vault.beginEditing() == credential)
+        #expect(prompts == 2)
+        vault.cancelEditing()
+    }
+
+    @Test("Every invalidation is counted, also without an entry or an open edit")
+    func relocksWithoutEntry() {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        let vault = InstanceCredentialVault(target: consoleTarget, store: store, access: PasswordAccess(lockEvents: []))
+        vault.refresh()
+        #expect(vault.entry == .absent)
+        let relocks = vault.relocks
+        vault.invalidate()
+        #expect(vault.relocks == relocks + 1)
+    }
+}
+
+@Suite("Concealed text field")
+@MainActor
+struct ConcealedTextFieldTests {
+    private let secret = "VAULT-PASSWORD-VALUE"
+
+    private func editor() -> (ConcealedFieldEditor, copied: () -> [String]) {
+        var copied: [String] = []
+        let editor = ConcealedFieldEditor()
+        editor.copySecret = { copied.append($0) }
+        editor.string = secret
+        editor.selectAll(nil)
+        return (editor, { copied })
+    }
+
+    @Test("Copy and cut go only through the secret copy path, never the general pasteboard")
+    func copyAndCut() {
+        let changeCount = NSPasteboard.general.changeCount
+        let (copying, copied) = editor()
+        copying.copy(nil)
+        #expect(copied() == [secret])
+        #expect(copying.string == secret)
+
+        let (cutting, cut) = editor()
+        cutting.setSelectedRange(NSRange(location: 0, length: 5))
+        cutting.cut(nil)
+        #expect(cut() == ["VAULT"])
+        #expect(cutting.string == "-PASSWORD-VALUE")
+        let other = NSTextView(frame: .zero)
+        other.yank(nil)
+        #expect(!other.string.contains("VAULT"))
+        #expect(NSPasteboard.general.changeCount == changeCount)
+    }
+
+    @Test("Deleting to the end or start of the line leaves nothing in the kill buffer")
+    func noKillBuffer() {
+        let deletions: [(ConcealedFieldEditor) -> Void] = [
+            { $0.setSelectedRange(NSRange(location: 0, length: 0)); $0.deleteToEndOfLine(nil) },
+            { $0.setSelectedRange(NSRange(location: 0, length: 0)); $0.deleteToEndOfParagraph(nil) },
+            { $0.moveToEndOfDocument(nil); $0.deleteToBeginningOfLine(nil) },
+            { $0.moveToEndOfDocument(nil); $0.deleteToBeginningOfParagraph(nil) },
+            { $0.setSelectedRange(NSRange(location: 0, length: 0)); $0.setMark(nil); $0.moveToEndOfDocument(nil); $0.deleteToMark(nil) },
+        ]
+        for delete in deletions {
+            let (editor, copied) = editor()
+            delete(editor)
+            #expect(editor.string.isEmpty)
+            #expect(copied().isEmpty)
+            let other = NSTextView(frame: .zero)
+            other.yank(nil)
+            #expect(!other.string.contains(secret))
+        }
+    }
+
+    @Test("Dragging and Services receive nothing")
+    func noOtherExport() {
+        let (editor, _) = editor()
+        let board = NSPasteboard(name: NSPasteboard.Name("ConcealedTextFieldTests-\(UUID().uuidString)"))
+        defer { board.releaseGlobally() }
+        #expect(!editor.writeSelection(to: board, types: [.string]))
+        #expect(!editor.writeSelection(to: board, type: .string))
+        #expect(board.string(forType: .string) == nil)
+        #expect(editor.validRequestor(forSendType: .string, returnType: nil) == nil)
+    }
+
+    @Test("The field edits with the concealed field editor, not the window's shared one")
+    func usesConcealedEditor() {
+        let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 200, height: 40), styleMask: [.titled], backing: .buffered, defer: true)
+        let field = ConcealedNSTextField(string: secret)
+        window.contentView?.addSubview(field)
+        #expect(window.fieldEditor(true, for: field) is ConcealedFieldEditor)
     }
 }

@@ -109,6 +109,7 @@ struct HelpSection {
         HelpSection(title: "Compute & Instances", icon: "desktopcomputer", items: [
             "Click an instance to see CPU, RAM, Disk specs, IPs, initial password, and tags.",
             "Initial password has a show/hide toggle for security.",
+            "Showing or copying the initial password requires Touch ID or the system password. It hides again after 30 seconds, when the app becomes inactive, and when the screen locks or the Mac sleeps.",
             "Right-click an instance to Stop, Start, or Reboot it via the context menu.",
             "Add SSH keys by pasting the public key.",
         ]),
@@ -227,6 +228,7 @@ struct HelpSection {
             "Start, Stop, Reboot instances from the detail view.",
             "Open Console opens the console of an active instance in its own window (Full Access). Log in with a password of a user on the instance.",
             "Closing the console window only disconnects you. 'End session' ends the console session on Civo for everyone.",
+            "'Credentials…' saves a username and password per instance in this Mac's keychain only, without iCloud sync. Showing, copying and editing require Touch ID or your system password.",
             "Resize instances with the visual size picker grid.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",
