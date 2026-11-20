@@ -3,6 +3,7 @@ import Foundation
 import Testing
 import Security
 import CryptoKit
+import LocalAuthentication
 import os
 
 @testable import CivoCloudManager
@@ -929,7 +930,7 @@ struct ConsoleLoginTests {
         var pendingAuthentications: [CheckedContinuation<DeviceOwnerAuthentication, Never>] = []
         var copied: [String] = []
         let access = PasswordAccess(
-            authenticate: { _ in await withCheckedContinuation { pendingAuthentications.append($0) } },
+            authenticate: { _, _ in await withCheckedContinuation { pendingAuthentications.append($0) } },
             writeToPasteboard: { copied.append($0) }
         )
 
@@ -956,7 +957,7 @@ struct ConsoleLoginTests {
     func failsClosedWithoutDeviceAuthentication() async {
         var copied: [String] = []
         let access = PasswordAccess(
-            authenticate: { _ in .unavailable },
+            authenticate: { _, _ in .unavailable },
             writeToPasteboard: { copied.append($0) }
         )
 
@@ -974,7 +975,7 @@ struct ConsoleLoginTests {
             var pendingAuthentication: CheckedContinuation<DeviceOwnerAuthentication, Never>?
             var copied: [String] = []
             let access = PasswordAccess(
-                authenticate: { _ in await withCheckedContinuation { pendingAuthentication = $0 } },
+                authenticate: { _, _ in await withCheckedContinuation { pendingAuthentication = $0 } },
                 writeToPasteboard: { copied.append($0) },
                 lockEvents: [PasswordAccess.LockEvent(center: center, name: name)]
             )
@@ -1376,5 +1377,163 @@ struct ChargesServiceTests {
         #expect(ChargesLoadError.userMessage(CivoAPIError.networkError(body))?.contains("{") == false)
         #expect(ChargesLoadError.userMessage(CivoAPIError.cancelled) == nil)
         #expect(ChargesLoadError.userMessage(CancellationError()) == nil)
+    }
+}
+
+/// In-memory keychain: tests never read or write the user's keychain.
+@MainActor
+private final class FakeKeychain {
+    var items: [String: Data] = [:]
+    /// Returned instead of the normal result, e.g. a locked keychain or a missing entitlement.
+    var failure: OSStatus?
+    var queries: [[String: Any]] = []
+
+    var client: KeychainClient {
+        KeychainClient(
+            add: { [unowned self] query in
+                queries.append(query)
+                if let failure { return failure }
+                let account = query[kSecAttrAccount as String] as! String
+                guard items[account] == nil else { return errSecDuplicateItem }
+                items[account] = query[kSecValueData as String] as? Data
+                return errSecSuccess
+            },
+            update: { [unowned self] query, attributes in
+                queries.append(query)
+                if let failure { return failure }
+                let account = query[kSecAttrAccount as String] as! String
+                guard items[account] != nil else { return errSecItemNotFound }
+                items[account] = attributes[kSecValueData as String] as? Data
+                return errSecSuccess
+            },
+            copyMatching: { [unowned self] query in
+                queries.append(query)
+                if let failure { return (failure, nil) }
+                guard let data = items[query[kSecAttrAccount as String] as! String] else { return (errSecItemNotFound, nil) }
+                return (errSecSuccess, query[kSecReturnData as String] as? Bool == true ? data : nil)
+            },
+            delete: { [unowned self] query in
+                queries.append(query)
+                if let failure { return failure }
+                return items.removeValue(forKey: query[kSecAttrAccount as String] as! String) == nil ? errSecItemNotFound : errSecSuccess
+            }
+        )
+    }
+}
+
+@Suite("Instance credential vault")
+@MainActor
+struct InstanceCredentialVaultTests {
+    private let credential = InstanceCredential(username: "admin", password: "VAULT-PASSWORD-VALUE")
+    private let key = InstanceCredentialKey(consoleTarget)
+
+    @Test("Entries follow instance ID and region, not the name")
+    func keys() {
+        let renamed = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "renamed", region: "lon1")
+        let otherRegion = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "web-1", region: "NYC1")
+        #expect(InstanceCredentialKey(renamed) == key)
+        #expect(InstanceCredentialKey(otherRegion) != key)
+    }
+
+    @Test("Create, overwrite and delete; an empty password is never saved")
+    func lifecycle() throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        let context = LAContext()
+
+        #expect(try store.contains(key) == false)
+        #expect(throws: InstanceCredentialError.emptyPassword) {
+            try store.create(InstanceCredential(username: "admin", password: ""), for: key)
+        }
+        #expect(keychain.items.isEmpty)
+
+        try store.create(InstanceCredential(username: "", password: "only-password"), for: key)
+        #expect(try store.contains(key))
+        #expect(throws: InstanceCredentialError.keychain(errSecDuplicateItem)) { try store.create(credential, for: key) }
+
+        try store.replace(credential, for: key, context: context)
+        #expect(try store.read(key, context: context) == credential)
+
+        try store.delete(key)
+        #expect(try store.read(key, context: context) == nil)
+        try store.delete(key)
+
+        // Replacing an entry deleted meanwhile saves it again.
+        try store.replace(credential, for: key, context: context)
+        #expect(try store.read(key, context: context) == credential)
+    }
+
+    @Test("Only a missing item means no entry; other keychain errors are reported", arguments: [
+        errSecInteractionNotAllowed, errSecMissingEntitlement, errSecAuthFailed, errSecUserCanceled,
+    ])
+    func keychainErrors(status: OSStatus) throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+        keychain.failure = status
+        let reported = InstanceCredentialError.keychain(status)
+
+        #expect(throws: reported) { try store.contains(key) }
+        #expect(throws: reported) { try store.read(key, context: LAContext()) }
+        #expect(throws: reported) { try store.replace(credential, for: key, context: LAContext()) }
+        #expect(throws: reported) { try store.delete(key) }
+        keychain.failure = nil
+        #expect(try store.read(key, context: LAContext()) == credential)
+    }
+
+    @Test("Entries are device-only, never synchronized, and protected by Touch ID or the system password")
+    func queryAttributes() throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+        _ = try store.contains(key)
+
+        let add = try #require(keychain.queries.first)
+        #expect(add[kSecAttrSynchronizable as String] as? Bool == false)
+        #expect(add[kSecUseDataProtectionKeychain as String] as? Bool == true)
+        #expect(add[kSecAttrAccessible as String] == nil)
+        let accessControl = try #require(add[kSecAttrAccessControl as String] as CFTypeRef?)
+        #expect(CFGetTypeID(accessControl) == SecAccessControlGetTypeID())
+        #expect(InstanceCredentialStore.protection == kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly)
+        #expect(InstanceCredentialStore.accessControlFlags.contains(.userPresence))
+
+        // User name and password only inside the protected data, never in attributes or descriptions.
+        for (name, value) in add where name != kSecValueData as String {
+            #expect(!"\(value)".contains(credential.username) && !"\(value)".contains(credential.password))
+        }
+        var dumped = ""
+        dump(credential, to: &dumped)
+        for text in [String(describing: credential), String(reflecting: credential), dumped] {
+            #expect(!text.contains(credential.password) && !text.contains(credential.username))
+        }
+
+        // The existence check reads no data and cannot prompt.
+        let check = try #require(keychain.queries.last)
+        #expect(check[kSecReturnData as String] == nil)
+        let context = try #require(check[kSecUseAuthenticationContext as String] as? LAContext)
+        #expect(context.interactionNotAllowed)
+    }
+
+    @Test("Saved credentials go only after Civo confirmed the instance deletion")
+    func instanceDeletion() async throws {
+        let instance = try JSONDecoder().decode(
+            CivoInstance.self,
+            from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "region": "LON1"}"#.utf8)
+        )
+        struct DeletionFailed: Error {}
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+
+        let failing = InstanceViewModel(credentials: store, deleteInstance: { _ in throw DeletionFailed() })
+        #expect(await failing.delete(instance) == false)
+        #expect(try store.contains(key))
+
+        var deleted: [String] = []
+        let succeeding = InstanceViewModel(credentials: store, deleteInstance: { deleted.append($0) })
+        #expect(await succeeding.delete(instance))
+        #expect(deleted == [consoleInstanceId])
+        #expect(try store.contains(key) == false)
+        #expect(succeeding.error == nil)
     }
 }
