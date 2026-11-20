@@ -1410,6 +1410,11 @@ private final class FakeKeychain {
                 queries.append(query)
                 if let failure { return (failure, nil) }
                 guard let data = items[query[kSecAttrAccount as String] as! String] else { return (errSecItemNotFound, nil) }
+                // Measured on a signed build: a protected entry looked up with a context that may not
+                // prompt reports errSecInteractionNotAllowed, even without asking for its data.
+                if (query[kSecUseAuthenticationContext as String] as? LAContext)?.interactionNotAllowed == true {
+                    return (errSecInteractionNotAllowed, nil)
+                }
                 return (errSecSuccess, query[kSecReturnData as String] as? Bool == true ? data : nil)
             },
             delete: { [unowned self] query in
@@ -1473,7 +1478,12 @@ struct InstanceCredentialVaultTests {
         keychain.failure = status
         let reported = InstanceCredentialError.keychain(status)
 
-        #expect(throws: reported) { try store.contains(key) }
+        if status == errSecInteractionNotAllowed {
+            // The answer for an existing protected entry; a locked keychain cannot be told apart.
+            #expect(try store.contains(key))
+        } else {
+            #expect(throws: reported) { try store.contains(key) }
+        }
         #expect(throws: reported) { try store.read(key, context: LAContext()) }
         #expect(throws: reported) { try store.replace(credential, for: key, context: LAContext()) }
         #expect(throws: reported) { try store.delete(key) }

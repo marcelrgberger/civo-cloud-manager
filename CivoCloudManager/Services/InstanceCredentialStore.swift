@@ -108,7 +108,9 @@ final class InstanceCredentialStore {
         self.notificationCenter = notificationCenter
     }
 
-    /// Checks for an entry without reading it and without any authentication prompt.
+    /// Checks for an entry without reading it and without any authentication prompt. The keychain
+    /// answers an existing protected entry with `errSecInteractionNotAllowed`, because finding it
+    /// would need the prompt this check forbids; a missing entry is still `errSecItemNotFound`.
     func contains(_ key: InstanceCredentialKey) throws -> Bool {
         let context = LAContext()
         context.interactionNotAllowed = true
@@ -117,7 +119,7 @@ final class InstanceCredentialStore {
         query[kSecMatchLimit as String] = kSecMatchLimitOne
         let (status, _) = keychain.copyMatching(query)
         switch status {
-        case errSecSuccess: return true
+        case errSecSuccess, errSecInteractionNotAllowed: return true
         case errSecItemNotFound: return false
         default: throw InstanceCredentialError.keychain(status)
         }
