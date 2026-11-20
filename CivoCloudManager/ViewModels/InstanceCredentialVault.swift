@@ -15,10 +15,6 @@ final class InstanceCredentialVault {
         case unknown, absent, present
     }
 
-    /// An edit form holding the stored values closes after this time, like a revealed value after
-    /// `PasswordAccess.visibleDuration`, but with room to type a new password.
-    static let editingDuration: Duration = .seconds(120)
-
     let target: ConsoleTarget
     let access: PasswordAccess
     private(set) var entry: Entry = .unknown
@@ -26,17 +22,28 @@ final class InstanceCredentialVault {
     private(set) var revealedFields: Set<Field> = []
     /// True while the form holds the stored values for editing.
     private(set) var isEditing = false
+    /// Counts invalidations, so views can also hide what they show outside the vault, e.g. a typed password.
+    private(set) var relocks = 0
 
     @ObservationIgnored private var revealed: InstanceCredential?
     @ObservationIgnored private var editContext: LAContext?
+    @ObservationIgnored private var editExpiry: Task<Void, Never>?
     private let key: InstanceCredentialKey
     private let store: InstanceCredentialStore
+    private let editingDuration: Duration
 
-    init(target: ConsoleTarget, store: InstanceCredentialStore? = nil, access: PasswordAccess = PasswordAccess()) {
+    /// An edit form holds the stored values, so it closes after `editingDuration` like a revealed value.
+    init(
+        target: ConsoleTarget,
+        store: InstanceCredentialStore? = nil,
+        access: PasswordAccess = PasswordAccess(),
+        editingDuration: Duration = PasswordAccess.visibleDuration
+    ) {
         self.target = target
         self.key = InstanceCredentialKey(target)
         self.store = store ?? .shared
         self.access = access
+        self.editingDuration = editingDuration
         access.onInvalidate = { [weak self] in self?.discardSecrets() }
     }
 
@@ -87,7 +94,8 @@ final class InstanceCredentialVault {
     }
 
     /// Returns the stored values for the edit form after authentication. The same authentication
-    /// later allows saving them, so editing costs one prompt.
+    /// later allows saving them, so editing costs one prompt. After `editingDuration` the edit ends
+    /// and needs a new authentication.
     func beginEditing() async -> InstanceCredential? {
         hideAll()
         guard let context = await access.authorize(reason: String(localized: "Edit saved credentials")) else { return nil }
@@ -97,10 +105,16 @@ final class InstanceCredentialVault {
         }
         editContext = context
         isEditing = true
+        editExpiry = Task { [weak self, editingDuration] in
+            try? await Task.sleep(for: editingDuration)
+            if !Task.isCancelled { self?.access.invalidate() }
+        }
         return credential
     }
 
     func cancelEditing() {
+        editExpiry?.cancel()
+        editExpiry = nil
         editContext?.invalidate()
         editContext = nil
         isEditing = false
@@ -151,6 +165,7 @@ final class InstanceCredentialVault {
     }
 
     private func discardSecrets() {
+        relocks += 1
         revealedFields = []
         revealed = nil
         cancelEditing()

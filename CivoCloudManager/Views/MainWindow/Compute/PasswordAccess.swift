@@ -239,3 +239,154 @@ enum SecretPasteboard {
         pasteboard.clearContents()
     }
 }
+
+/// An editable text field for values that came out of the keychain. Copy and cut go through
+/// `SecretPasteboard`; dragging, Services, sharing and Writing Tools get nothing.
+struct ConcealedTextField: NSViewRepresentable {
+    let placeholder: String
+    @Binding var text: String
+
+    func makeNSView(context: Context) -> NSTextField {
+        let field = ConcealedNSTextField(string: text)
+        field.placeholderString = placeholder
+        field.bezelStyle = .roundedBezel
+        field.usesSingleLineMode = true
+        field.lineBreakMode = .byTruncatingTail
+        field.cell?.isScrollable = true
+        field.delegate = context.coordinator
+        return field
+    }
+
+    func updateNSView(_ field: NSTextField, context: Context) {
+        context.coordinator.text = $text
+        if field.stringValue != text { field.stringValue = text }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(text: $text)
+    }
+
+    @MainActor
+    final class Coordinator: NSObject, NSTextFieldDelegate {
+        var text: Binding<String>
+
+        init(text: Binding<String>) {
+            self.text = text
+        }
+
+        func controlTextDidChange(_ notification: Notification) {
+            guard let field = notification.object as? NSTextField else { return }
+            text.wrappedValue = field.stringValue
+        }
+    }
+}
+
+final class ConcealedNSTextField: NSTextField {
+    override class var cellClass: AnyClass? {
+        get { ConcealedTextFieldCell.self }
+        set {}
+    }
+}
+
+/// Edits with its own `ConcealedFieldEditor` instead of the window's shared field editor.
+final class ConcealedTextFieldCell: NSTextFieldCell {
+    private lazy var editor = ConcealedFieldEditor()
+
+    override func fieldEditor(for controlView: NSView) -> NSTextView? {
+        editor
+    }
+}
+
+/// Field editor that hands copied text only to `copySecret`, by default `SecretPasteboard`.
+final class ConcealedFieldEditor: NSTextView {
+    private static let menuActions: Set<Selector> = [
+        #selector(cut(_:)), #selector(copy(_:)), #selector(paste(_:)), #selector(selectAll(_:)),
+    ]
+
+    var copySecret: (String) -> Void = { SecretPasteboard.copy($0) }
+
+    convenience init() {
+        self.init(frame: .zero)
+        isFieldEditor = true
+        isRichText = false
+        isContinuousSpellCheckingEnabled = false
+        isAutomaticSpellingCorrectionEnabled = false
+        isAutomaticTextReplacementEnabled = false
+        isAutomaticTextCompletionEnabled = false
+        writingToolsBehavior = .none
+    }
+
+    private var selectedString: String {
+        let text = string as NSString
+        return selectedRanges.map { text.substring(with: $0.rangeValue) }.joined()
+    }
+
+    override func copy(_ sender: Any?) {
+        let selected = selectedString
+        guard !selected.isEmpty else { return }
+        copySecret(selected)
+    }
+
+    override func cut(_ sender: Any?) {
+        guard !selectedString.isEmpty else { return }
+        copy(sender)
+        delete(sender)
+    }
+
+    // `delete(_:)` and the Emacs-style deletions (Control-K and friends) put the text into AppKit's
+    // kill buffer, from which Control-Y inserts it anywhere. Deleting the selection backward does not.
+    override func delete(_ sender: Any?) {
+        guard selectedRange().length > 0 else { return }
+        deleteBackward(sender)
+    }
+
+    override func deleteToEndOfLine(_ sender: Any?) {
+        deleteSelection(orExtend: moveToEndOfLineAndModifySelection)
+    }
+
+    override func deleteToBeginningOfLine(_ sender: Any?) {
+        deleteSelection(orExtend: moveToBeginningOfLineAndModifySelection)
+    }
+
+    override func deleteToEndOfParagraph(_ sender: Any?) {
+        deleteSelection(orExtend: moveToEndOfParagraphAndModifySelection)
+    }
+
+    override func deleteToBeginningOfParagraph(_ sender: Any?) {
+        deleteSelection(orExtend: moveToBeginningOfParagraphAndModifySelection)
+    }
+
+    override func deleteToMark(_ sender: Any?) {
+        deleteSelection(orExtend: selectToMark)
+    }
+
+    private func deleteSelection(orExtend extend: (Any?) -> Void) {
+        if selectedRange().length == 0 { extend(nil) }
+        delete(nil)
+    }
+
+    override func writeSelection(to pboard: NSPasteboard, types: [NSPasteboard.PasteboardType]) -> Bool {
+        false
+    }
+
+    override func writeSelection(to pboard: NSPasteboard, type: NSPasteboard.PasteboardType) -> Bool {
+        false
+    }
+
+    override func validRequestor(forSendType sendType: NSPasteboard.PasteboardType?, returnType: NSPasteboard.PasteboardType?) -> Any? {
+        sendType == nil ? super.validRequestor(forSendType: sendType, returnType: returnType) : nil
+    }
+
+    override func dragSelection(with event: NSEvent, offset mouseOffset: NSSize, slideBack: Bool) -> Bool {
+        false
+    }
+
+    /// Only cut, copy, paste and select all; no Services, Share or Look Up.
+    override func menu(for event: NSEvent) -> NSMenu? {
+        guard let menu = super.menu(for: event) else { return nil }
+        for item in menu.items where !(item.action.map(Self.menuActions.contains) ?? false) {
+            menu.removeItem(item)
+        }
+        return menu
+    }
+}

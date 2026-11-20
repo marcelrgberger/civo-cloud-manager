@@ -6,8 +6,8 @@ struct InstanceCredentialsView: View {
     @State private var username = ""
     @State private var password = ""
     @State private var showsTypedPassword = false
-    /// The stored password while editing. It is only shown as typed text once replaced, because a
-    /// plain text field could copy it past `SecretPasteboard`.
+    /// The stored password while editing, until the password field was emptied. Before that the field
+    /// holds (parts of) the stored password and stays masked.
     @State private var storedPassword: String?
     @State private var confirmDelete = false
     @State private var canAuthenticate = true
@@ -45,10 +45,12 @@ struct InstanceCredentialsView: View {
         .onChange(of: vault.isEditing) { _, editing in
             if !editing { clearForm() }
         }
-        .task(id: vault.isEditing) {
-            guard vault.isEditing else { return }
-            try? await Task.sleep(for: InstanceCredentialVault.editingDuration)
-            if !Task.isCancelled { vault.invalidate() }
+        .onChange(of: vault.relocks) {
+            // Timeout, lock events and closing also hide a password typed for a new entry.
+            showsTypedPassword = false
+        }
+        .onChange(of: password) { _, typed in
+            if typed.isEmpty { storedPassword = nil }
         }
         .task(id: showsTypedPassword) {
             guard showsTypedPassword else { return }
@@ -67,6 +69,7 @@ struct InstanceCredentialsView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
             vault.invalidate()
+            clearForm()
         }
         .confirmationDialog("Delete the saved credentials?", isPresented: $confirmDelete) {
             Button("Delete", role: .destructive) { vault.delete() }
@@ -134,22 +137,18 @@ struct InstanceCredentialsView: View {
             Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 8) {
                 GridRow {
                     Text("Username").foregroundStyle(.secondary)
-                    TextField("Optional", text: $username)
-                        .textFieldStyle(.roundedBorder)
-                        .autocorrectionDisabled()
+                    ConcealedTextField(placeholder: String(localized: "Optional"), text: $username)
                 }
                 GridRow {
                     Text("Password").foregroundStyle(.secondary)
                     HStack(spacing: 6) {
-                        Group {
-                            if showsTypedPassword && canShowTypedPassword {
-                                TextField("Required", text: $password)
-                            } else {
-                                SecureField("Required", text: $password)
-                            }
+                        if showsTypedPassword && canShowTypedPassword {
+                            ConcealedTextField(placeholder: String(localized: "Required"), text: $password)
+                        } else {
+                            SecureField("Required", text: $password)
+                                .textFieldStyle(.roundedBorder)
+                                .autocorrectionDisabled()
                         }
-                        .textFieldStyle(.roundedBorder)
-                        .autocorrectionDisabled()
                         Button {
                             showsTypedPassword.toggle()
                         } label: {
@@ -191,7 +190,7 @@ struct InstanceCredentialsView: View {
     }
 
     private var canShowTypedPassword: Bool {
-        storedPassword == nil || password != storedPassword
+        storedPassword == nil
     }
 
     private func clearForm() {

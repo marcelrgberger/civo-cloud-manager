@@ -1536,4 +1536,113 @@ struct InstanceCredentialVaultTests {
         #expect(try store.contains(key) == false)
         #expect(succeeding.error == nil)
     }
+
+    @Test("An edit holding the stored values ends after its time and needs a new authentication")
+    func editingExpires() async throws {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        try store.create(credential, for: key)
+        var prompts = 0
+        let access = PasswordAccess(authenticate: { _, _ in prompts += 1; return .granted }, writeToPasteboard: { _ in })
+        let vault = InstanceCredentialVault(target: consoleTarget, store: store, access: access, editingDuration: .milliseconds(100))
+
+        #expect(await vault.beginEditing() == credential)
+        #expect(vault.isEditing)
+        let relocks = vault.relocks
+        let deadline = ContinuousClock.now + .seconds(5)
+        while vault.isEditing && ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(!vault.isEditing)
+        #expect(vault.relocks > relocks)
+
+        #expect(await vault.beginEditing() == credential)
+        #expect(prompts == 2)
+        vault.cancelEditing()
+    }
+
+    @Test("Every invalidation is counted, also without an entry or an open edit")
+    func relocksWithoutEntry() {
+        let keychain = FakeKeychain()
+        let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        let vault = InstanceCredentialVault(target: consoleTarget, store: store, access: PasswordAccess(lockEvents: []))
+        vault.refresh()
+        #expect(vault.entry == .absent)
+        let relocks = vault.relocks
+        vault.invalidate()
+        #expect(vault.relocks == relocks + 1)
+    }
+}
+
+@Suite("Concealed text field")
+@MainActor
+struct ConcealedTextFieldTests {
+    private let secret = "VAULT-PASSWORD-VALUE"
+
+    private func editor() -> (ConcealedFieldEditor, copied: () -> [String]) {
+        var copied: [String] = []
+        let editor = ConcealedFieldEditor()
+        editor.copySecret = { copied.append($0) }
+        editor.string = secret
+        editor.selectAll(nil)
+        return (editor, { copied })
+    }
+
+    @Test("Copy and cut go only through the secret copy path, never the general pasteboard")
+    func copyAndCut() {
+        let changeCount = NSPasteboard.general.changeCount
+        let (copying, copied) = editor()
+        copying.copy(nil)
+        #expect(copied() == [secret])
+        #expect(copying.string == secret)
+
+        let (cutting, cut) = editor()
+        cutting.setSelectedRange(NSRange(location: 0, length: 5))
+        cutting.cut(nil)
+        #expect(cut() == ["VAULT"])
+        #expect(cutting.string == "-PASSWORD-VALUE")
+        let other = NSTextView(frame: .zero)
+        other.yank(nil)
+        #expect(!other.string.contains("VAULT"))
+        #expect(NSPasteboard.general.changeCount == changeCount)
+    }
+
+    @Test("Deleting to the end or start of the line leaves nothing in the kill buffer")
+    func noKillBuffer() {
+        let deletions: [(ConcealedFieldEditor) -> Void] = [
+            { $0.setSelectedRange(NSRange(location: 0, length: 0)); $0.deleteToEndOfLine(nil) },
+            { $0.setSelectedRange(NSRange(location: 0, length: 0)); $0.deleteToEndOfParagraph(nil) },
+            { $0.moveToEndOfDocument(nil); $0.deleteToBeginningOfLine(nil) },
+            { $0.moveToEndOfDocument(nil); $0.deleteToBeginningOfParagraph(nil) },
+            { $0.setSelectedRange(NSRange(location: 0, length: 0)); $0.setMark(nil); $0.moveToEndOfDocument(nil); $0.deleteToMark(nil) },
+        ]
+        for delete in deletions {
+            let (editor, copied) = editor()
+            delete(editor)
+            #expect(editor.string.isEmpty)
+            #expect(copied().isEmpty)
+            let other = NSTextView(frame: .zero)
+            other.yank(nil)
+            #expect(!other.string.contains(secret))
+        }
+    }
+
+    @Test("Dragging and Services receive nothing")
+    func noOtherExport() {
+        let (editor, _) = editor()
+        let board = NSPasteboard(name: NSPasteboard.Name("ConcealedTextFieldTests-\(UUID().uuidString)"))
+        defer { board.releaseGlobally() }
+        #expect(!editor.writeSelection(to: board, types: [.string]))
+        #expect(!editor.writeSelection(to: board, type: .string))
+        #expect(board.string(forType: .string) == nil)
+        #expect(editor.validRequestor(forSendType: .string, returnType: nil) == nil)
+    }
+
+    @Test("The field edits with the concealed field editor, not the window's shared one")
+    func usesConcealedEditor() {
+        let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 200, height: 40), styleMask: [.titled], backing: .buffered, defer: true)
+        let field = ConcealedNSTextField(string: secret)
+        window.contentView?.addSubview(field)
+        #expect(window.fieldEditor(true, for: field) is ConcealedFieldEditor)
+    }
 }
