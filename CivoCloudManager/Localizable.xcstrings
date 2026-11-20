@@ -80831,6 +80831,206 @@
           }
         }
       }
+    },
+    "Touch ID or a system password is required to show or copy the password." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch ID or a system password is required to show or copy the password."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Anzeigen oder Kopieren des Passworts ist Touch ID oder ein Systempasswort erforderlich."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se necesita Touch ID o una contraseña del sistema para mostrar o copiar la contraseña."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch ID ou un mot de passe système est requis pour afficher ou copier le mot de passe."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per mostrare o copiare la password serve Touch ID o una password di sistema."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch ID of een systeemwachtwoord is vereist om het wachtwoord te tonen of te kopiëren."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do wyświetlenia lub skopiowania hasła wymagany jest Touch ID lub hasło systemowe."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "É necessário Touch ID ou uma palavra-passe do sistema para mostrar ou copiar a palavra-passe."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要 Touch ID 或系统密码才能显示或复制密码。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パスワードを表示またはコピーするには、Touch ID またはシステムパスワードが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "비밀번호를 표시하거나 복사하려면 Touch ID 또는 시스템 암호가 필요합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يلزم Touch ID أو كلمة مرور النظام لعرض كلمة المرور أو نسخها."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पासवर्ड दिखाने या कॉपी करने के लिए Touch ID या सिस्टम पासवर्ड आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch ID atau kata sandi sistem diperlukan untuk menampilkan atau menyalin kata sandi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parolayı göstermek veya kopyalamak için Touch ID ya da sistem parolası gerekir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы показать или скопировать пароль, нужен Touch ID или системный пароль."
+          }
+        }
+      }
+    },
+    "Showing or copying the initial password requires Touch ID or the system password. It hides again after 30 seconds, when the app becomes inactive, and when the screen locks or the Mac sleeps." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing or copying the initial password requires Touch ID or the system password. It hides again after 30 seconds, when the app becomes inactive, and when the screen locks or the Mac sleeps."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Initialpasswort lässt sich nur nach Touch ID oder dem Systempasswort anzeigen oder kopieren. Es wird nach 30 Sekunden wieder verborgen, ebenso wenn die App inaktiv wird, der Bildschirm gesperrt wird oder der Mac in den Ruhezustand geht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar o copiar la contraseña inicial requiere Touch ID o la contraseña del sistema. Se vuelve a ocultar a los 30 segundos, cuando la app pasa a estar inactiva y cuando se bloquea la pantalla o el Mac entra en reposo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher ou copier le mot de passe initial nécessite Touch ID ou le mot de passe système. Il est de nouveau masqué après 30 secondes, lorsque l’app devient inactive et lorsque l’écran se verrouille ou que le Mac se met en veille."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per mostrare o copiare la password iniziale servono Touch ID o la password di sistema. Viene nascosta di nuovo dopo 30 secondi, quando l'app diventa inattiva e quando lo schermo si blocca o il Mac va in stop."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het initiële wachtwoord tonen of kopiëren vereist Touch ID of het systeemwachtwoord. Het wordt weer verborgen na 30 seconden, wanneer de app inactief wordt en wanneer het scherm vergrendeld wordt of de Mac in sluimerstand gaat."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyświetlenie lub skopiowanie hasła początkowego wymaga Touch ID lub hasła systemowego. Hasło zostaje ponownie ukryte po 30 sekundach, gdy aplikacja staje się nieaktywna oraz gdy ekran zostaje zablokowany lub Mac przechodzi w stan uśpienia."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar ou copiar a palavra-passe inicial requer Touch ID ou a palavra-passe do sistema. Volta a ficar oculta após 30 segundos, quando a app fica inativa e quando o ecrã é bloqueado ou o Mac entra em repouso."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示或复制初始密码需要 Touch ID 或系统密码。30 秒后、App 变为非活跃状态时，以及屏幕锁定或 Mac 进入睡眠时，密码会再次隐藏。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初期パスワードの表示やコピーには、Touch ID またはシステムパスワードが必要です。30秒後、App が非アクティブになったとき、画面がロックされたときや Mac がスリープしたときに再び非表示になります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "초기 비밀번호를 표시하거나 복사하려면 Touch ID 또는 시스템 암호가 필요합니다. 30초 후, 앱이 비활성화될 때, 화면이 잠기거나 Mac이 잠자기에 들어갈 때 다시 숨겨집니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتطلب عرض كلمة المرور الأولية أو نسخها Touch ID أو كلمة مرور النظام. تُخفى مجددًا بعد 30 ثانية، وعندما يصبح التطبيق غير نشط، وعند قفل الشاشة أو دخول Mac في وضع السكون."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रारंभिक पासवर्ड दिखाने या कॉपी करने के लिए Touch ID या सिस्टम पासवर्ड आवश्यक है। 30 सेकंड बाद, ऐप के निष्क्रिय होने पर, और स्क्रीन लॉक होने या Mac के स्लीप में जाने पर यह फिर से छिप जाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menampilkan atau menyalin kata sandi awal memerlukan Touch ID atau kata sandi sistem. Kata sandi disembunyikan lagi setelah 30 detik, saat app menjadi tidak aktif, dan saat layar dikunci atau Mac masuk mode tidur."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İlk parolayı göstermek veya kopyalamak için Touch ID ya da sistem parolası gerekir. Parola 30 saniye sonra, uygulama etkin olmadığında ve ekran kilitlendiğinde ya da Mac uyku moduna geçtiğinde yeniden gizlenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы показать или скопировать начальный пароль, нужен Touch ID или системный пароль. Пароль снова скрывается через 30 секунд, когда приложение становится неактивным, а также при блокировке экрана или переходе Mac в режим сна."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

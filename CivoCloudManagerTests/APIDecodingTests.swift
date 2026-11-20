@@ -926,9 +926,9 @@ struct ConsoleLoginTests {
 
     @Test("A reveal or copy still waiting for authentication does nothing once invalidated")
     func invalidatedWhileAuthenticating() async {
-        var pendingAuthentications: [CheckedContinuation<Bool, Never>] = []
+        var pendingAuthentications: [CheckedContinuation<DeviceOwnerAuthentication, Never>] = []
         var copied: [String] = []
-        let access = ConsolePasswordAccess(
+        let access = PasswordAccess(
             authenticate: { _ in await withCheckedContinuation { pendingAuthentications.append($0) } },
             writeToPasteboard: { copied.append($0) }
         )
@@ -938,7 +938,7 @@ struct ConsoleLoginTests {
         await waitUntil { pendingAuthentications.count == 2 }
         // Window closed, API key changed or Full Access ended during authentication.
         access.invalidate()
-        pendingAuthentications.forEach { $0.resume(returning: true) }
+        pendingAuthentications.forEach { $0.resume(returning: .granted) }
         await reveal.value
         #expect(await copy.value == false)
         #expect(!access.isRevealed)
@@ -947,9 +947,58 @@ struct ConsoleLoginTests {
         // A fresh request after invalidation works again.
         let next = Task { await access.copy(password) }
         await waitUntil { pendingAuthentications.count == 3 }
-        pendingAuthentications[2].resume(returning: true)
+        pendingAuthentications[2].resume(returning: .granted)
         #expect(await next.value)
         #expect(copied == [password])
+    }
+
+    @Test("Without Touch ID or a system password the password is neither revealed nor copied")
+    func failsClosedWithoutDeviceAuthentication() async {
+        var copied: [String] = []
+        let access = PasswordAccess(
+            authenticate: { _ in .unavailable },
+            writeToPasteboard: { copied.append($0) }
+        )
+
+        await access.reveal()
+        #expect(await access.copy(password) == false)
+        #expect(!access.isRevealed)
+        #expect(copied.isEmpty)
+        #expect(access.isDeviceAuthenticationUnavailable)
+    }
+
+    @Test("App deactivation, screen lock and sleep hide the password and discard pending authentication")
+    func lockEventsInvalidate() async {
+        let center = NotificationCenter()
+        for name in PasswordAccess.systemLockEvents.map(\.name) {
+            var pendingAuthentication: CheckedContinuation<DeviceOwnerAuthentication, Never>?
+            var copied: [String] = []
+            let access = PasswordAccess(
+                authenticate: { _ in await withCheckedContinuation { pendingAuthentication = $0 } },
+                writeToPasteboard: { copied.append($0) },
+                lockEvents: [PasswordAccess.LockEvent(center: center, name: name)]
+            )
+            access.observeLockEvents()
+
+            let reveal = Task { await access.reveal() }
+            await waitUntil { pendingAuthentication != nil }
+            pendingAuthentication?.resume(returning: .granted)
+            await reveal.value
+            #expect(access.isRevealed)
+
+            center.post(name: name, object: nil)
+            #expect(!access.isRevealed, "\(name.rawValue)")
+
+            pendingAuthentication = nil
+            let copy = Task { await access.copy(password) }
+            await waitUntil { pendingAuthentication != nil }
+            center.post(name: name, object: nil)
+            pendingAuthentication?.resume(returning: .granted)
+            #expect(await copy.value == false, "\(name.rawValue)")
+            #expect(copied.isEmpty)
+
+            access.stopObservingLockEvents()
+        }
     }
 }
 
