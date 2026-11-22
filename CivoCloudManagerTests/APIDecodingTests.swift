@@ -3957,3 +3957,229 @@ struct KubernetesUpgradeTests {
         #expect(env.notice == nil)
     }
 }
+
+/// A cluster whose pools list `pools`, keyed by pool id, as Civo's `instance_names`.
+private func kubernetesCluster(status: String = "ACTIVE", pools: KeyValuePairs<String, [String]>, extra: String = "") -> CivoKubernetesCluster {
+    let entries = pools.map { id, names in
+        #"{"id": "\#(id)", "instance_names": [\#(names.map { "\"\($0)\"" }.joined(separator: ", "))]}"#
+    }
+    return kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": [\#(entries.joined(separator: ", "))]"# + extra)
+}
+
+/// Civo's condition while a cluster is not yet on its desired version.
+private let versionSyncPending = #", "conditions": [{"type": "ClusterVersionSync", "status": "False"}]"#
+
+private actor FakeKubernetesNodeRecycleAPI: KubernetesNodeRecycleAPI {
+    var cluster = kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"], "pool-b": ["node-3"]])
+    private(set) var calls: [String] = []
+    private var showError: Error?
+    private var recycleError: Error?
+    /// Runs while the cluster is loaded again before the replacement, like a Settings change during the request.
+    private var duringReload: (@Sendable () async -> Void)?
+
+    func replaceCluster(with cluster: CivoKubernetesCluster) { self.cluster = cluster }
+    func failShow(with error: Error) { showError = error }
+    func failRecycle(with error: Error) { recycleError = error }
+    func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster {
+        calls.append("show \(id) \(region ?? "-") \(apiKey ?? "-")")
+        if let action = duringReload {
+            duringReload = nil
+            await action()
+        }
+        if let showError { throw showError }
+        return cluster
+    }
+
+    func recycleNode(_ hostname: String, inCluster id: String, region: String, apiKey: String) async throws {
+        calls.append("recycle \(id) \(hostname) \(region) \(apiKey)")
+        if let recycleError { throw recycleError }
+    }
+}
+
+@Suite("Kubernetes node replacement")
+@MainActor
+struct KubernetesNodeRecycleTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeKubernetesNodeRecycleAPI()
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        lazy var controller = KubernetesNodeRecycleController(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] target in activities.append("\(target.clusterName) \(target.hostname)") }
+        )
+        let account = CivoAccount(apiKey: "key-a")
+        let target = KubernetesNodeRecycleTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"), hostname: "node-2", poolId: "pool-a")
+
+        /// The notice the detail page of the cluster loaded from LON1 with key-a shows.
+        var notice: String? { controller.notice(forCluster: "c-1", region: "LON1", account: account) }
+        var isRequested: Bool { controller.isReplacementRequested("node-2", inCluster: "c-1", region: "LON1", account: account) }
+        var recycleCalls: [String] { get async { await api.calls.filter { $0.hasPrefix("recycle") } } }
+
+        /// Opens the confirmation as the detail page does, for the cluster loaded from LON1 with key-a.
+        func begin(_ hostname: String = "node-2", in cluster: CivoKubernetesCluster? = nil) async {
+            let shown = if let cluster { cluster } else { await api.cluster }
+            controller.begin(replacing: hostname, in: shown, region: "LON1", account: account)
+        }
+    }
+
+    @Test("A node is identified only when exactly one pool entry names its hostname")
+    func identity() throws {
+        let cluster = kubernetesCluster(pools: ["pool-a": ["node-1", "twin", "twin"], "pool-b": ["node-3", "shared"], "pool-c": ["shared"]])
+        #expect(try KubernetesNodeIdentity.pool(listing: "node-3", in: cluster).get().id == "pool-b")
+        #expect(KubernetesNodeIdentity.pool(listing: "twin", in: cluster).failure == .nodeAmbiguous("twin"))
+        #expect(KubernetesNodeIdentity.pool(listing: "shared", in: cluster).failure == .nodeAmbiguous("shared"))
+        #expect(KubernetesNodeIdentity.pool(listing: "node-9", in: cluster).failure == .nodeRemoved("node-9"))
+        #expect(KubernetesNodeIdentity.pool(listing: "NODE-3", in: cluster).failure == .nodeRemoved("NODE-3"))
+        let unlisted = kubernetesCluster(version: "1.20.0-k3s1", extra: #", "pools": [{"id": "pool-a", "instance_names": ["node-1"]}, {"id": "pool-b"}]"#)
+        #expect(KubernetesNodeIdentity.pool(listing: "node-1", in: unlisted).failure == .nodeListUnavailable)
+        #expect(KubernetesNodeIdentity.pool(listing: "node-1", in: kubernetesCluster(version: "1.20.0-k3s1")).failure == .nodeListUnavailable)
+        #expect(!KubernetesNodeRecycleController.canOffer("", in: cluster))
+        #expect(!KubernetesNodeRecycleController.canOffer("shared", in: cluster))
+        #expect(KubernetesNodeRecycleController.canOffer("node-1", in: cluster))
+
+        let body = CivoKubernetesService.recycleBody(hostname: "node-1", region: "LON1")
+        #expect(body.count == 2)
+        #expect(body["hostname"] as? String == "node-1")
+        #expect(body["region"] as? String == "LON1")
+    }
+
+    @Test("After confirming, the cluster is loaded again with the same key, then only this node is sent and shown as requested until the cluster no longer lists it")
+    func replacement() async {
+        let env = Environment()
+        await env.begin()
+        #expect(env.controller.request?.target == env.target)
+
+        #expect(await env.controller.confirm() == .requested)
+        #expect(await env.api.calls == ["show c-1 LON1 key-a", "recycle c-1 node-2 LON1 key-a"])
+        #expect(env.controller.request == nil)
+        #expect(env.notice == KubernetesNodeRecycleController.acceptedMessage(for: env.target))
+        #expect(env.activities == ["prod node-2"])
+        #expect(env.controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-b")) == nil)
+
+        // Accepted is not finished: while the cluster still lists the node, it stays requested and is not sent again.
+        env.controller.clusterDidLoad(await env.api.cluster, region: "LON1", account: env.account)
+        #expect(env.isRequested)
+        // An answer without the node names proves nothing about the node.
+        env.controller.clusterDidLoad(kubernetesCluster(version: "1.20.0-k3s1"), region: "LON1", account: env.account)
+        #expect(env.isRequested)
+        await env.begin()
+        #expect(env.controller.request == nil)
+        #expect(env.notice == KubernetesNodeRecycleError.replacementAlreadyRequested("node-2").message)
+
+        let replaced = kubernetesCluster(pools: ["pool-a": ["node-1", "node-4"], "pool-b": ["node-3"]])
+        env.controller.clusterDidLoad(replaced, region: "LON1", account: env.account)
+        #expect(!env.isRequested)
+        #expect(env.notice == nil)
+        #expect(await env.recycleCalls.count == 1)
+    }
+
+    @Test("A node that is gone, listed twice or moved, or a busy or still upgrading cluster, when the user confirms sends nothing", arguments: [
+        (kubernetesCluster(pools: ["pool-a": ["node-1"], "pool-b": ["node-3"]]), KubernetesNodeRecycleError.nodeRemoved("node-2")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"], "pool-b": ["node-2"]]), .nodeAmbiguous("node-2")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1"], "pool-b": ["node-2"]]), .nodeMoved("node-2")),
+        (kubernetesCluster(status: "SCALING", pools: ["pool-a": ["node-1", "node-2"]]), .clusterBusy("SCALING")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"]], extra: versionSyncPending), .upgradeInProgress),
+    ])
+    func staleTarget(reloaded: CivoKubernetesCluster, problem: KubernetesNodeRecycleError) async {
+        let env = Environment()
+        await env.begin()
+        await env.api.replaceCluster(with: reloaded)
+        #expect(await env.controller.confirm() == .cancelled)
+        #expect(await env.recycleCalls.isEmpty)
+        #expect(env.controller.request == nil)
+        #expect(env.notice == problem.message)
+    }
+
+    @Test("Revoked Full Access, a region change while the cluster is loaded again, a changed key, a busy or a still upgrading cluster sends nothing")
+    func targetChecks() async {
+        let revoked = Environment()
+        await revoked.begin()
+        revoked.accessAllowed = false
+        #expect(await revoked.controller.confirm() == .cancelled)
+        #expect(await revoked.api.calls.isEmpty)
+        #expect(revoked.notice == KubernetesNodeRecycleError.accessRevoked.message)
+
+        let moved = Environment()
+        await moved.begin()
+        await moved.api.whileReloading {
+            await MainActor.run {
+                moved.region = "NYC1"
+                moved.notifications.post(name: .civoRegionDidChange, object: nil)
+            }
+        }
+        #expect(await moved.controller.confirm() == nil)
+        #expect(moved.controller.request == nil)
+        #expect(moved.notice == KubernetesNodeRecycleError.regionChanged.message)
+        #expect(await moved.recycleCalls.isEmpty)
+
+        let rekeyed = Environment()
+        rekeyed.apiKey = "key-b"
+        await rekeyed.begin()
+        #expect(rekeyed.controller.request == nil)
+        #expect(rekeyed.notice == KubernetesNodeRecycleError.accountChanged.message)
+
+        let busy = Environment()
+        await busy.begin(in: kubernetesCluster(status: "UPGRADING", pools: ["pool-a": ["node-2"]]))
+        #expect(busy.controller.request == nil)
+        #expect(busy.notice == KubernetesNodeRecycleError.clusterBusy("UPGRADING").message)
+        #expect(await busy.api.calls.isEmpty)
+
+        let upgrading = Environment()
+        await upgrading.begin(in: kubernetesCluster(pools: ["pool-a": ["node-2"]], extra: versionSyncPending))
+        #expect(upgrading.controller.request == nil)
+        #expect(upgrading.notice == KubernetesNodeRecycleError.upgradeInProgress.message)
+        #expect(await upgrading.api.calls.isEmpty)
+    }
+
+    @Test("A refusal keeps the sheet open with Civo's reason; a timeout, also an HTTP 408, is reported as unknown and not sent again; a removed cluster sends nothing")
+    func failures() async {
+        let refused = Environment()
+        await refused.begin()
+        await refused.api.failRecycle(with: CivoAPIError.httpError(403, "forbidden"))
+        #expect(await refused.controller.confirm() == nil)
+        #expect(refused.controller.request != nil)
+        #expect(refused.controller.sheetError == CivoAPIError.httpError(403, "forbidden").localizedDescription)
+        #expect(!refused.isRequested)
+        #expect(refused.activities.isEmpty)
+
+        let lost = Environment()
+        await lost.begin()
+        await lost.api.failRecycle(with: CivoAPIError.networkError("The request timed out."))
+        #expect(await lost.controller.confirm() == .uncertain)
+        #expect(lost.controller.request == nil)
+        #expect(lost.notice == KubernetesNodeRecycleController.unknownResultMessage(for: lost.target))
+        #expect(!lost.isRequested)
+        #expect(lost.activities.isEmpty)
+        #expect(await lost.recycleCalls.count == 1)
+
+        let timedOut = Environment()
+        await timedOut.begin()
+        await timedOut.api.failRecycle(with: CivoAPIError.httpError(408, "Request Timeout"))
+        #expect(await timedOut.controller.confirm() == .uncertain)
+        #expect(timedOut.notice == KubernetesNodeRecycleController.unknownResultMessage(for: timedOut.target))
+
+        let removed = Environment()
+        await removed.begin()
+        await removed.api.failShow(with: CivoAPIError.httpError(404, "not found"))
+        #expect(await removed.controller.confirm() == .cancelled)
+        #expect(removed.notice == KubernetesNodeRecycleError.clusterRemoved.message)
+        #expect(await removed.recycleCalls.isEmpty)
+    }
+}
+
+private extension Result {
+    var failure: Failure? {
+        if case .failure(let error) = self { return error }
+        return nil
+    }
+}

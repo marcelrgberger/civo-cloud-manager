@@ -105366,6 +105366,2506 @@
           }
         }
       }
+    },
+    "Replacing a node requires Full Access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replacing a node requires Full Access."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ersetzen eines Knotens erfordert Vollzugriff."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplazar un nodo requiere Acceso completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le remplacement d'un nœud nécessite l'Accès complet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sostituzione di un nodo richiede l'Accesso completo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het vervangen van een node vereist Volledige toegang."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymiana węzła wymaga Pełnego dostępu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir um nó requer Acesso total."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换节点需要完整访问权限。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノードの置き換えにはフルアクセスが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드를 교체하려면 전체 액세스가 필요합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتطلب استبدال عقدة الوصول الكامل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड बदलने के लिए पूर्ण एक्सेस आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengganti node memerlukan Akses Penuh."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir düğümü değiştirmek Tam Erişim gerektirir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для замены узла требуется полный доступ."
+          }
+        }
+      }
+    },
+    "The region changed, so the node replacement was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region changed, so the node replacement was cancelled. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region hat sich geändert, daher wurde das Ersetzen des Knotens abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región ha cambiado, así que se canceló el reemplazo del nodo. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région a changé, le remplacement du nœud a donc été annulé. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione è cambiata, quindi la sostituzione del nodo è stata annullata. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio is gewijzigd, daarom is het vervangen van de node geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region się zmienił, więc wymiana węzła została anulowana. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região mudou, por isso a substituição do nó foi cancelada. Nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "区域已更改，因此节点替换已取消。未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リージョンが変更されたため、ノードの置き換えをキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리전이 변경되어 노드 교체가 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّرت المنطقة، لذلك أُلغي استبدال العقدة. لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्षेत्र बदल गया, इसलिए नोड बदलना रद्द कर दिया गया। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah berubah, jadi penggantian node dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölge değişti, bu nedenle düğüm değişimi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион изменился, поэтому замена узла отменена. Ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The API key changed, so the node replacement was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The API key changed, so the node replacement was cancelled. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der API-Schlüssel hat sich geändert, daher wurde das Ersetzen des Knotens abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clave de API ha cambiado, así que se canceló el reemplazo del nodo. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clé API a changé, le remplacement du nœud a donc été annulé. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La chiave API è cambiata, quindi la sostituzione del nodo è stata annullata. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De API-sleutel is gewijzigd, daarom is het vervangen van de node geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klucz API się zmienił, więc wymiana węzła została anulowana. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A chave de API mudou, por isso a substituição do nó foi cancelada. Nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 密钥已更改，因此节点替换已取消。未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIキーが変更されたため、ノードの置き換えをキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 키가 변경되어 노드 교체가 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّر مفتاح API، لذلك أُلغي استبدال العقدة. لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API कुंजी बदल गई, इसलिए नोड बदलना रद्द कर दिया गया। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunci API berubah, jadi penggantian node dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API anahtarı değişti, bu nedenle düğüm değişimi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ API изменился, поэтому замена узла отменена. Ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The cluster is busy (status %@), so no node is replaced. Wait until it is active, then try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster is busy (status %@), so no node is replaced. Wait until it is active, then try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Cluster ist beschäftigt (Status %@), daher wird kein Knoten ersetzt. Warten Sie, bis er aktiv ist, und versuchen Sie es dann erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El clúster está ocupado (estado %@), así que no se reemplaza ningún nodo. Espere a que esté activo y vuelva a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le cluster est occupé (statut %@), aucun nœud n'est donc remplacé. Attendez qu'il soit actif, puis réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cluster è occupato (stato %@), quindi nessun nodo viene sostituito. Attendi che sia attivo, poi riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het cluster is bezig (status %@), daarom wordt er geen node vervangen. Wacht tot het actief is en probeer het dan opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster jest zajęty (status %@), więc żaden węzeł nie zostanie wymieniony. Poczekaj, aż będzie aktywny, i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O cluster está ocupado (estado %@), por isso nenhum nó é substituído. Aguarde até que esteja ativo e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群正忙（状态 %@），因此不会替换任何节点。请等待其变为活动状态后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタは処理中です（ステータス %@）。そのためノードは置き換えられません。アクティブになるまで待ってから、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터가 사용 중이므로(상태 %@) 노드를 교체하지 않습니다. 활성 상태가 될 때까지 기다린 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنقود مشغول (الحالة %@)، لذلك لن تُستبدل أي عقدة. انتظر حتى يصبح نشطًا، ثم حاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर व्यस्त है (स्थिति %@), इसलिए कोई नोड नहीं बदला जाएगा। इसके सक्रिय होने तक प्रतीक्षा करें, फिर दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster sedang sibuk (status %@), jadi tidak ada node yang diganti. Tunggu hingga aktif, lalu coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme meşgul (durum %@), bu nedenle hiçbir düğüm değiştirilmez. Etkin olana kadar bekleyin, ardından tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер занят (статус %@), поэтому узел не заменяется. Дождитесь, пока он станет активным, и повторите попытку."
+          }
+        }
+      }
+    },
+    "The node \"%@\" is no longer part of the cluster, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The node \"%@\" is no longer part of the cluster, so nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Knoten \"%@\" gehört nicht mehr zum Cluster, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nodo \"%@\" ya no forma parte del clúster, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nœud \"%@\" ne fait plus partie du cluster, rien n'a donc été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il nodo \"%@\" non fa più parte del cluster, quindi non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De node \"%@\" maakt geen deel meer uit van het cluster, daarom is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Węzeł \"%@\" nie należy już do klastra, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nó \"%@\" já não faz parte do cluster, por isso nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "节点\"%@\"已不再属于该集群，因此未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノード\"%@\"はクラスタに含まれなくなったため、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 \"%@\"이(가) 더 이상 클러스터에 속하지 않으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تعد العقدة \"%@\" جزءًا من العنقود، لذلك لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड \"%@\" अब क्लस्टर का हिस्सा नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Node \"%@\" tidak lagi menjadi bagian dari klaster, jadi tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" düğümü artık kümenin parçası değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Узел \"%@\" больше не входит в кластер, поэтому ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The hostname \"%@\" is listed more than once in the cluster, so the node cannot be identified and nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The hostname \"%@\" is listed more than once in the cluster, so the node cannot be identified and nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Hostname \"%@\" ist im Cluster mehrfach aufgeführt, daher lässt sich der Knoten nicht eindeutig bestimmen und es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nombre de host \"%@\" aparece más de una vez en el clúster, así que no se puede identificar el nodo y no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nom d'hôte \"%@\" figure plusieurs fois dans le cluster, le nœud ne peut donc pas être identifié et rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il nome host \"%@\" compare più di una volta nel cluster, quindi il nodo non può essere identificato e non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De hostnaam \"%@\" komt meer dan eens voor in het cluster, daarom kan de node niet worden bepaald en is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa hosta \"%@\" występuje w klastrze więcej niż raz, więc nie można zidentyfikować węzła i nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nome de host \"%@\" aparece mais de uma vez no cluster, por isso o nó não pode ser identificado e nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主机名\"%@\"在集群中出现了不止一次，因此无法确定节点，未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホスト名\"%@\"がクラスタ内に複数回記載されているため、ノードを特定できず、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "호스트 이름 \"%@\"이(가) 클러스터에 두 번 이상 나열되어 노드를 식별할 수 없으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المضيف \"%@\" مُدرج أكثر من مرة في العنقود، لذلك لا يمكن تحديد العقدة ولم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "होस्टनाम \"%@\" क्लस्टर में एक से अधिक बार सूचीबद्ध है, इसलिए नोड की पहचान नहीं हो सकती और कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama host \"%@\" tercantum lebih dari sekali di klaster, jadi node tidak dapat diidentifikasi dan tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" ana bilgisayar adı kümede birden fazla kez listeleniyor, bu nedenle düğüm belirlenemiyor ve hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя хоста \"%@\" встречается в кластере несколько раз, поэтому узел нельзя однозначно определить, и ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The node \"%@\" is now listed in another node pool, so nothing was sent. Check the node and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The node \"%@\" is now listed in another node pool, so nothing was sent. Check the node and try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Knoten \"%@\" ist jetzt in einem anderen Node-Pool aufgeführt, daher wurde nichts gesendet. Prüfen Sie den Knoten und versuchen Sie es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nodo \"%@\" aparece ahora en otro grupo de nodos, así que no se envió nada. Compruebe el nodo y vuelva a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nœud \"%@\" figure désormais dans un autre pool de nœuds, rien n'a donc été envoyé. Vérifiez le nœud et réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il nodo \"%@\" ora compare in un altro pool di nodi, quindi non è stato inviato nulla. Controlla il nodo e riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De node \"%@\" staat nu in een andere node-pool, daarom is er niets verzonden. Controleer de node en probeer het opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Węzeł \"%@\" znajduje się teraz w innej puli węzłów, więc nic nie zostało wysłane. Sprawdź węzeł i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nó \"%@\" aparece agora noutro pool de nós, por isso nada foi enviado. Verifique o nó e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "节点\"%@\"现在位于另一个节点池中，因此未发送任何内容。请检查该节点后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノード\"%@\"は別のノードプールに記載されるようになったため、何も送信されていません。ノードを確認してから、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 \"%@\"이(가) 이제 다른 노드 풀에 나열되어 있으므로 아무것도 전송되지 않았습니다. 노드를 확인한 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العقدة \"%@\" مُدرجة الآن في مجموعة عقد أخرى، لذلك لم يُرسَل أي شيء. تحقق من العقدة وحاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड \"%@\" अब किसी दूसरे नोड पूल में सूचीबद्ध है, इसलिए कुछ भी नहीं भेजा गया। नोड जाँचें और दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Node \"%@\" kini tercantum di kolam node lain, jadi tidak ada yang dikirim. Periksa node lalu coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" düğümü artık başka bir düğüm havuzunda listeleniyor, bu nedenle hiçbir şey gönderilmedi. Düğümü kontrol edip tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Узел \"%@\" теперь входит в другой пул узлов, поэтому ничего не отправлено. Проверьте узел и повторите попытку."
+          }
+        }
+      }
+    },
+    "A replacement of \"%@\" was already requested. Wait until the cluster no longer lists this node." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A replacement of \"%@\" was already requested. Wait until the cluster no longer lists this node."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ersetzen von \"%@\" wurde bereits angefordert. Warten Sie, bis der Cluster diesen Knoten nicht mehr aufführt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya se solicitó el reemplazo de \"%@\". Espere hasta que el clúster deje de mostrar este nodo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le remplacement de \"%@\" a déjà été demandé. Attendez que le cluster ne répertorie plus ce nœud."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sostituzione di \"%@\" è già stata richiesta. Attendi finché il cluster non elenca più questo nodo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het vervangen van \"%@\" is al aangevraagd. Wacht tot het cluster deze node niet meer vermeldt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymiana \"%@\" została już zlecona. Poczekaj, aż klaster przestanie wyświetlać ten węzeł."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A substituição de \"%@\" já foi solicitada. Aguarde até que o cluster deixe de listar este nó."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求替换\"%@\"。请等待集群不再列出该节点。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"の置き換えはすでにリクエスト済みです。クラスタにこのノードが表示されなくなるまでお待ちください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" 교체가 이미 요청되었습니다. 클러스터에 이 노드가 더 이상 나열되지 않을 때까지 기다리세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طُلب استبدال \"%@\" بالفعل. انتظر حتى لا يعود العنقود يُدرج هذه العقدة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" को बदलने का अनुरोध पहले ही किया जा चुका है। तब तक प्रतीक्षा करें जब तक क्लस्टर इस नोड को सूचीबद्ध करना बंद न कर दे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggantian \"%@\" sudah diminta. Tunggu hingga klaster tidak lagi mencantumkan node ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" için değişim zaten istendi. Küme bu düğümü artık listelemeyene kadar bekleyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Замена \"%@\" уже запрошена. Дождитесь, пока кластер перестанет показывать этот узел."
+          }
+        }
+      }
+    },
+    "Requested replacement of node %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requested replacement of node %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ersetzen des Knotens %@ angefordert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplazo del nodo %@ solicitado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacement du nœud %@ demandé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituzione del nodo %@ richiesta"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vervanging van node %@ aangevraagd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zlecono wymianę węzła %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituição do nó %@ solicitada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求替换节点 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノード %@ の置き換えをリクエストしました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 %@ 교체를 요청함"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طُلب استبدال العقدة %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड %@ को बदलने का अनुरोध किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggantian node %@ diminta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ düğümünün değişimi istendi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрошена замена узла %@"
+          }
+        }
+      }
+    },
+    "Civo accepted the request to replace node \"%@\" in \"%@\". The replacement runs on Civo's side and is not finished yet; the status shown here updates when you refresh." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the request to replace node \"%@\" in \"%@\". The replacement runs on Civo's side and is not finished yet; the status shown here updates when you refresh."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat die Anfrage angenommen, den Knoten \"%@\" in \"%@\" zu ersetzen. Das Ersetzen läuft bei Civo und ist noch nicht abgeschlossen; der hier angezeigte Status wird beim Aktualisieren neu geladen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó la solicitud de reemplazar el nodo \"%@\" en \"%@\". El reemplazo se ejecuta en Civo y aún no ha terminado; el estado que se muestra aquí se actualiza al refrescar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté la demande de remplacement du nœud \"%@\" dans \"%@\". Le remplacement s'exécute chez Civo et n'est pas encore terminé ; le statut affiché ici se met à jour lors de l'actualisation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato la richiesta di sostituire il nodo \"%@\" in \"%@\". La sostituzione avviene sul lato di Civo e non è ancora terminata; lo stato mostrato qui si aggiorna quando aggiorni."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft het verzoek geaccepteerd om node \"%@\" in \"%@\" te vervangen. De vervanging loopt bij Civo en is nog niet voltooid; de hier getoonde status wordt bijgewerkt wanneer u vernieuwt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło żądanie wymiany węzła \"%@\" w \"%@\". Wymiana trwa po stronie Civo i jeszcze się nie zakończyła; wyświetlany tu status zaktualizuje się po odświeżeniu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou o pedido para substituir o nó \"%@\" em \"%@\". A substituição decorre do lado da Civo e ainda não terminou; o estado mostrado aqui é atualizado quando atualizar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受替换\"%2$@\"中节点\"%1$@\"的请求。替换在 Civo 端进行，尚未完成；刷新后此处显示的状态会更新。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoは\"%2$@\"のノード\"%1$@\"を置き換えるリクエストを受け付けました。置き換えはCivo側で実行中で、まだ完了していません。ここに表示されるステータスは更新すると反映されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 \"%2$@\"의 노드 \"%1$@\" 교체 요청을 수락했습니다. 교체는 Civo 측에서 진행 중이며 아직 완료되지 않았습니다. 여기에 표시된 상태는 새로 고칠 때 업데이트됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo طلب استبدال العقدة \"%1$@\" في \"%2$@\". يجري الاستبدال لدى Civo ولم يكتمل بعد؛ تتحدث الحالة المعروضة هنا عند التحديث."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने \"%2$@\" में नोड \"%1$@\" को बदलने का अनुरोध स्वीकार कर लिया। बदलाव Civo की ओर से चल रहा है और अभी पूरा नहीं हुआ है; रीफ़्रेश करने पर यहाँ दिखाई गई स्थिति अपडेट होती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima permintaan untuk mengganti node \"%@\" di \"%@\". Penggantian berjalan di sisi Civo dan belum selesai; status yang ditampilkan di sini diperbarui saat Anda menyegarkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo, \"%2$@\" içindeki \"%1$@\" düğümünü değiştirme isteğini kabul etti. Değişim Civo tarafında yürütülüyor ve henüz tamamlanmadı; burada gösterilen durum yenilediğinizde güncellenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo приняла запрос на замену узла \"%@\" в \"%@\". Замена выполняется на стороне Civo и ещё не завершена; показанный здесь статус обновится при обновлении."
+          }
+        }
+      }
+    },
+    "Civo accepted the replacement of node \"%@\", but its answer could not be read. Refresh to see the status of the cluster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the replacement of node \"%@\", but its answer could not be read. Refresh to see the status of the cluster."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat das Ersetzen des Knotens \"%@\" angenommen, aber die Antwort konnte nicht gelesen werden. Aktualisieren Sie, um den Status des Clusters zu sehen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó el reemplazo del nodo \"%@\", pero no se pudo leer su respuesta. Actualice para ver el estado del clúster."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté le remplacement du nœud \"%@\", mais sa réponse n'a pas pu être lue. Actualisez pour voir le statut du cluster."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato la sostituzione del nodo \"%@\", ma la sua risposta non è leggibile. Aggiorna per vedere lo stato del cluster."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de vervanging van node \"%@\" geaccepteerd, maar het antwoord kon niet worden gelezen. Vernieuw om de status van het cluster te zien."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło wymianę węzła \"%@\", ale nie udało się odczytać odpowiedzi. Odśwież, aby zobaczyć status klastra."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou a substituição do nó \"%@\", mas não foi possível ler a resposta. Atualize para ver o estado do cluster."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受替换节点\"%@\"，但无法读取其响应。请刷新以查看集群状态。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoはノード\"%@\"の置き換えを受け付けましたが、応答を読み取れませんでした。更新してクラスタのステータスを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 노드 \"%@\" 교체를 수락했지만 응답을 읽을 수 없습니다. 새로 고쳐 클러스터 상태를 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo استبدال العقدة \"%@\"، لكن تعذّرت قراءة ردها. حدّث لرؤية حالة العنقود."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने नोड \"%@\" को बदलना स्वीकार किया, लेकिन उसका उत्तर पढ़ा नहीं जा सका। क्लस्टर की स्थिति देखने के लिए रीफ़्रेश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima penggantian node \"%@\", tetapi jawabannya tidak dapat dibaca. Segarkan untuk melihat status klaster."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo \"%@\" düğümünün değişimini kabul etti, ancak yanıtı okunamadı. Kümenin durumunu görmek için yenileyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo приняла замену узла \"%@\", но её ответ не удалось прочитать. Обновите, чтобы увидеть статус кластера."
+          }
+        }
+      }
+    },
+    "The result of the replacement request for node \"%@\" is unknown. Refresh to see the status of the cluster before trying again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The result of the replacement request for node \"%@\" is unknown. Refresh to see the status of the cluster before trying again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis der Anfrage, den Knoten \"%@\" zu ersetzen, ist unbekannt. Aktualisieren Sie, um den Status des Clusters zu sehen, bevor Sie es erneut versuchen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se desconoce el resultado de la solicitud de reemplazo del nodo \"%@\". Actualice para ver el estado del clúster antes de volver a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le résultat de la demande de remplacement du nœud \"%@\" est inconnu. Actualisez pour voir le statut du cluster avant de réessayer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il risultato della richiesta di sostituzione del nodo \"%@\" è sconosciuto. Aggiorna per vedere lo stato del cluster prima di riprovare."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resultaat van het verzoek om node \"%@\" te vervangen is onbekend. Vernieuw om de status van het cluster te zien voordat u het opnieuw probeert."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wynik żądania wymiany węzła \"%@\" jest nieznany. Odśwież, aby zobaczyć status klastra, zanim spróbujesz ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O resultado do pedido de substituição do nó \"%@\" é desconhecido. Atualize para ver o estado do cluster antes de tentar novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "节点\"%@\"替换请求的结果未知。请先刷新查看集群状态，然后再重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノード\"%@\"の置き換えリクエストの結果は不明です。もう一度試す前に、更新してクラスタのステータスを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 \"%@\" 교체 요청의 결과를 알 수 없습니다. 다시 시도하기 전에 새로 고쳐 클러스터 상태를 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نتيجة طلب استبدال العقدة \"%@\" غير معروفة. حدّث لرؤية حالة العنقود قبل المحاولة مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड \"%@\" को बदलने के अनुरोध का परिणाम अज्ञात है। दोबारा प्रयास करने से पहले क्लस्टर की स्थिति देखने के लिए रीफ़्रेश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasil permintaan penggantian node \"%@\" tidak diketahui. Segarkan untuk melihat status klaster sebelum mencoba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" düğümü için değişim isteğinin sonucu bilinmiyor. Tekrar denemeden önce kümenin durumunu görmek için yenileyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результат запроса на замену узла \"%@\" неизвестен. Обновите, чтобы увидеть статус кластера, прежде чем повторять попытку."
+          }
+        }
+      }
+    },
+    "The replacement request for node \"%@\" was already sent and can no longer be cancelled. Its result is shown here once Civo answers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The replacement request for node \"%@\" was already sent and can no longer be cancelled. Its result is shown here once Civo answers."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Anfrage, den Knoten \"%@\" zu ersetzen, wurde bereits gesendet und kann nicht mehr abgebrochen werden. Das Ergebnis erscheint hier, sobald Civo antwortet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La solicitud de reemplazo del nodo \"%@\" ya se envió y ya no se puede cancelar. Su resultado se mostrará aquí cuando Civo responda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La demande de remplacement du nœud \"%@\" a déjà été envoyée et ne peut plus être annulée. Son résultat s'affiche ici dès que Civo répond."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La richiesta di sostituzione del nodo \"%@\" è già stata inviata e non può più essere annullata. Il risultato verrà mostrato qui non appena Civo risponde."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het verzoek om node \"%@\" te vervangen is al verzonden en kan niet meer worden geannuleerd. Het resultaat verschijnt hier zodra Civo antwoordt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żądanie wymiany węzła \"%@\" zostało już wysłane i nie można go anulować. Wynik pojawi się tutaj, gdy Civo odpowie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O pedido de substituição do nó \"%@\" já foi enviado e já não pode ser cancelado. O resultado é mostrado aqui assim que a Civo responder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "节点\"%@\"的替换请求已发送，无法再取消。Civo 响应后，结果会显示在此处。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノード\"%@\"の置き換えリクエストはすでに送信されたため、キャンセルできません。Civoが応答すると、結果がここに表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 \"%@\" 교체 요청이 이미 전송되어 더 이상 취소할 수 없습니다. Civo가 응답하면 결과가 여기에 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أُرسل طلب استبدال العقدة \"%@\" بالفعل ولم يعد من الممكن إلغاؤه. ستظهر نتيجته هنا بمجرد رد Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड \"%@\" को बदलने का अनुरोध पहले ही भेजा जा चुका है और अब रद्द नहीं किया जा सकता। Civo के उत्तर देते ही उसका परिणाम यहाँ दिखाया जाएगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permintaan penggantian node \"%@\" sudah dikirim dan tidak dapat dibatalkan lagi. Hasilnya ditampilkan di sini setelah Civo menjawab."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" düğümü için değişim isteği zaten gönderildi ve artık iptal edilemez. Sonucu, Civo yanıt verdiğinde burada gösterilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос на замену узла \"%@\" уже отправлен и больше не может быть отменён. Результат появится здесь, как только Civo ответит."
+          }
+        }
+      }
+    },
+    "Civo did not replace node \"%@\": %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo did not replace node \"%@\": %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat den Knoten \"%@\" nicht ersetzt: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no reemplazó el nodo \"%@\": %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo n'a pas remplacé le nœud \"%@\" : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non ha sostituito il nodo \"%@\": %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft node \"%@\" niet vervangen: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie wymieniło węzła \"%@\": %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo não substituiu o nó \"%@\": %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 未替换节点\"%@\"：%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoはノード\"%1$@\"を置き換えませんでした: %2$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 노드 \"%1$@\"을(를) 교체하지 않았습니다: %2$@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تستبدل Civo العقدة \"%@\": %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने नोड \"%1$@\" को नहीं बदला: %2$@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo tidak mengganti node \"%@\": %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo \"%1$@\" düğümünü değiştirmedi: %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo не заменила узел \"%@\": %@"
+          }
+        }
+      }
+    },
+    "Cluster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cluster"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cluster"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clúster"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cluster"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cluster"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cluster"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cluster"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنقود"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер"
+          }
+        }
+      }
+    },
+    "Civo deletes this node and creates a new one in its place. Workloads running on it are interrupted, and data stored locally on the node is lost." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo deletes this node and creates a new one in its place. Workloads running on it are interrupted, and data stored locally on the node is lost."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo löscht diesen Knoten und erstellt an seiner Stelle einen neuen. Workloads auf diesem Knoten werden unterbrochen, und lokal auf dem Knoten gespeicherte Daten gehen verloren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo elimina este nodo y crea uno nuevo en su lugar. Las cargas de trabajo que se ejecutan en él se interrumpen y los datos almacenados localmente en el nodo se pierden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo supprime ce nœud et en crée un nouveau à sa place. Les charges de travail qui s'y exécutent sont interrompues, et les données stockées localement sur le nœud sont perdues."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo elimina questo nodo e ne crea uno nuovo al suo posto. I carichi di lavoro in esecuzione su di esso vengono interrotti e i dati memorizzati localmente sul nodo vanno persi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo verwijdert deze node en maakt er een nieuwe voor in de plaats. Workloads die erop draaien worden onderbroken, en lokaal op de node opgeslagen gegevens gaan verloren."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo usuwa ten węzeł i tworzy w jego miejsce nowy. Obciążenia działające na nim zostaną przerwane, a dane przechowywane lokalnie na węźle zostaną utracone."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo elimina este nó e cria um novo no seu lugar. As cargas de trabalho em execução nele são interrompidas e os dados armazenados localmente no nó são perdidos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 会删除此节点并创建一个新节点来替代它。其上运行的工作负载会中断，本地存储在该节点上的数据会丢失。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoはこのノードを削除し、代わりに新しいノードを作成します。このノードで実行中のワークロードは中断され、ノードにローカル保存されたデータは失われます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo는 이 노드를 삭제하고 그 자리에 새 노드를 만듭니다. 이 노드에서 실행 중인 워크로드는 중단되며, 노드에 로컬로 저장된 데이터는 사라집니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحذف Civo هذه العقدة وتنشئ عقدة جديدة مكانها. تنقطع أحمال العمل التي تعمل عليها، وتُفقد البيانات المخزنة محليًا على العقدة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo इस नोड को हटाकर उसकी जगह एक नया नोड बनाता है। इस पर चल रहे वर्कलोड बाधित होते हैं, और नोड पर स्थानीय रूप से संग्रहीत डेटा खो जाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menghapus node ini dan membuat node baru sebagai gantinya. Beban kerja yang berjalan di atasnya terganggu, dan data yang disimpan secara lokal di node hilang."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bu düğümü siler ve yerine yeni bir düğüm oluşturur. Üzerinde çalışan iş yükleri kesintiye uğrar ve düğümde yerel olarak depolanan veriler kaybolur."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo удаляет этот узел и создаёт вместо него новый. Работающие на нём нагрузки прерываются, а данные, хранящиеся локально на узле, теряются."
+          }
+        }
+      }
+    },
+    "The node is not drained first, and Pod Disruption Budgets are not guaranteed. To restart a single pod or deployment, use its restart action instead. Civo does not state how a replacement is billed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The node is not drained first, and Pod Disruption Budgets are not guaranteed. To restart a single pod or deployment, use its restart action instead. Civo does not state how a replacement is billed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Knoten wird vorher nicht geleert (kein Drain), und Pod Disruption Budgets sind nicht garantiert. Um einen einzelnen Pod oder ein Deployment neu zu starten, verwenden Sie stattdessen dessen Neustart-Aktion. Civo gibt nicht an, wie ein Ersetzen abgerechnet wird."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El nodo no se vacía antes (sin drain) y no se garantizan los Pod Disruption Budgets. Para reiniciar un solo pod o deployment, use su acción de reinicio. Civo no indica cómo se factura un reemplazo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nœud n'est pas vidé au préalable (pas de drain), et les Pod Disruption Budgets ne sont pas garantis. Pour redémarrer un seul pod ou déploiement, utilisez plutôt son action de redémarrage. Civo n'indique pas comment un remplacement est facturé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il nodo non viene svuotato prima (nessun drain) e i Pod Disruption Budget non sono garantiti. Per riavviare un singolo pod o deployment, usa invece la sua azione di riavvio. Civo non indica come viene fatturata una sostituzione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De node wordt vooraf niet geleegd (geen drain), en Pod Disruption Budgets zijn niet gegarandeerd. Gebruik voor het herstarten van een enkele pod of deployment de herstartactie daarvan. Civo vermeldt niet hoe een vervanging wordt gefactureerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Węzeł nie jest wcześniej opróżniany (bez drain), a Pod Disruption Budgets nie są gwarantowane. Aby ponownie uruchomić pojedynczy pod lub deployment, użyj jego akcji ponownego uruchomienia. Civo nie podaje, jak rozliczana jest wymiana."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nó não é esvaziado antes (sem drain) e os Pod Disruption Budgets não são garantidos. Para reiniciar um único pod ou deployment, use a respetiva ação de reinício. A Civo não indica como uma substituição é faturada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "节点不会事先排空（drain），也不保证 Pod Disruption Budget。若要重启单个 Pod 或 Deployment，请改用其重启操作。Civo 未说明替换如何计费。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノードは事前にドレインされず、Pod Disruption Budgetも保証されません。単一のPodやDeploymentを再起動するには、その再起動アクションを使用してください。置き換えの課金方法についてCivoは明示していません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드를 먼저 비우지(drain) 않으며 Pod Disruption Budget은 보장되지 않습니다. 단일 파드나 디플로이먼트를 재시작하려면 해당 재시작 작업을 사용하세요. Civo는 교체 비용이 어떻게 청구되는지 명시하지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تُفرَّغ العقدة مسبقًا، ولا تُضمَن ميزانيات تعطّل الحاويات (Pod Disruption Budgets). لإعادة تشغيل حاوية أو نشر واحد، استخدم إجراء إعادة التشغيل الخاص به بدلًا من ذلك. لا توضّح Civo كيفية احتساب تكلفة الاستبدال."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड को पहले खाली (drain) नहीं किया जाता, और Pod Disruption Budgets की गारंटी नहीं है। किसी एक पॉड या डिप्लॉयमेंट को रीस्टार्ट करने के लिए उसकी रीस्टार्ट कार्रवाई का उपयोग करें। Civo यह नहीं बताता कि बदलाव का बिल कैसे बनता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Node tidak dikosongkan terlebih dahulu (tanpa drain), dan Pod Disruption Budgets tidak dijamin. Untuk memulai ulang satu pod atau deployment, gunakan tindakan mulai ulangnya. Civo tidak menyebutkan bagaimana penggantian ditagih."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düğüm önceden boşaltılmaz (drain yapılmaz) ve Pod Disruption Budget garantisi yoktur. Tek bir pod'u veya deployment'ı yeniden başlatmak için bunun yerine yeniden başlatma eylemini kullanın. Civo, bir değişimin nasıl faturalandırıldığını belirtmiyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Узел предварительно не освобождается (без drain), а Pod Disruption Budgets не гарантируются. Чтобы перезапустить отдельный под или деплоймент, используйте его действие перезапуска. Civo не указывает, как тарифицируется замена."
+          }
+        }
+      }
+    },
+    "Replace Node" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace Node"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knoten ersetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplazar nodo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacer le nœud"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituisci nodo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Node vervangen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymień węzeł"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir nó"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换节点"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノードを置き換え"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 교체"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استبدال العقدة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड बदलें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganti Node"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düğümü Değiştir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменить узел"
+          }
+        }
+      }
+    },
+    "Replace node..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace node..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knoten ersetzen..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplazar nodo..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacer le nœud..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituisci nodo..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Node vervangen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymień węzeł..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir nó..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "替换节点..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノードを置き換え..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 교체..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استبدال العقدة..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नोड बदलें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganti node..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düğümü değiştir..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменить узел..."
+          }
+        }
+      }
+    },
+    "Replacement requested" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replacement requested"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ersetzen angefordert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplazo solicitado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacement demandé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituzione richiesta"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vervanging aangevraagd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zlecono wymianę"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituição solicitada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求替换"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "置き換えをリクエスト済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "교체 요청됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طُلب الاستبدال"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बदलने का अनुरोध किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggantian diminta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişim istendi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Замена запрошена"
+          }
+        }
+      }
+    },
+    "Replace this worker node with a new one" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace this worker node with a new one"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diesen Worker-Knoten durch einen neuen ersetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reemplazar este nodo de trabajo por uno nuevo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remplacer ce nœud de travail par un nouveau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituisci questo nodo worker con uno nuovo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze worker-node vervangen door een nieuwe"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wymień ten węzeł roboczy na nowy"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Substituir este nó de trabalho por um novo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用新节点替换此工作节点"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このワーカーノードを新しいノードに置き換えます"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 워커 노드를 새 노드로 교체"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استبدل عقدة العمل هذه بعقدة جديدة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस वर्कर नोड को नए नोड से बदलें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ganti node pekerja ini dengan yang baru"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu çalışan düğümü yenisiyle değiştir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заменить этот рабочий узел новым"
+          }
+        }
+      }
+    },
+    "Open a node pool and click 'Replace node...' next to a worker node to have Civo delete it and create a new one, for example when restarting pods or deployments does not help. The button appears only for nodes whose hostname is listed exactly once in the cluster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open a node pool and click 'Replace node...' next to a worker node to have Civo delete it and create a new one, for example when restarting pods or deployments does not help. The button appears only for nodes whose hostname is listed exactly once in the cluster."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffnen Sie einen Node-Pool und klicken Sie neben einem Worker-Knoten auf 'Knoten ersetzen...', damit Civo ihn löscht und einen neuen erstellt, etwa wenn ein Neustart von Pods oder Deployments nicht hilft. Die Schaltfläche erscheint nur bei Knoten, deren Hostname genau einmal im Cluster aufgeführt ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abra un grupo de nodos y haga clic en 'Reemplazar nodo...' junto a un nodo de trabajo para que Civo lo elimine y cree uno nuevo, por ejemplo cuando reiniciar pods o deployments no ayuda. El botón solo aparece para nodos cuyo nombre de host figura exactamente una vez en el clúster."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrez un pool de nœuds et cliquez sur 'Remplacer le nœud...' à côté d'un nœud de travail pour que Civo le supprime et en crée un nouveau, par exemple lorsque redémarrer des pods ou des déploiements ne suffit pas. Le bouton n'apparaît que pour les nœuds dont le nom d'hôte figure exactement une fois dans le cluster."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri un pool di nodi e fai clic su 'Sostituisci nodo...' accanto a un nodo worker perché Civo lo elimini e ne crei uno nuovo, ad esempio quando riavviare pod o deployment non basta. Il pulsante compare solo per i nodi il cui nome host compare esattamente una volta nel cluster."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open een node-pool en klik naast een worker-node op 'Node vervangen...' om Civo de node te laten verwijderen en een nieuwe te laten maken, bijvoorbeeld wanneer het herstarten van pods of deployments niet helpt. De knop verschijnt alleen bij nodes waarvan de hostnaam precies één keer in het cluster voorkomt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz pulę węzłów i kliknij 'Wymień węzeł...' obok węzła roboczego, aby Civo go usunęło i utworzyło nowy, na przykład gdy ponowne uruchomienie podów lub deploymentów nie pomaga. Przycisk pojawia się tylko przy węzłach, których nazwa hosta występuje w klastrze dokładnie raz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abra um pool de nós e clique em 'Substituir nó...' junto a um nó de trabalho para que a Civo o elimine e crie um novo, por exemplo quando reiniciar pods ou deployments não ajuda. O botão só aparece para nós cujo nome de host aparece exatamente uma vez no cluster."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开一个节点池，点击工作节点旁的'替换节点...'，Civo 会删除该节点并创建一个新节点，例如在重启 Pod 或 Deployment 无济于事时使用。只有主机名在集群中恰好出现一次的节点才会显示此按钮。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ノードプールを開き、ワーカーノードの横にある'ノードを置き換え...'をクリックすると、Civoがそのノードを削除して新しいノードを作成します。PodやDeploymentの再起動で解決しない場合などに使用します。このボタンは、ホスト名がクラスタ内にちょうど1回だけ記載されているノードにのみ表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노드 풀을 열고 워커 노드 옆의 '노드 교체...'를 클릭하면 Civo가 해당 노드를 삭제하고 새 노드를 만듭니다. 예를 들어 파드나 디플로이먼트를 재시작해도 해결되지 않을 때 사용합니다. 이 버튼은 호스트 이름이 클러스터에 정확히 한 번 나열된 노드에만 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح مجموعة عقد وانقر على 'استبدال العقدة...' بجوار عقدة عمل لتحذفها Civo وتنشئ عقدة جديدة، مثلًا عندما لا تفيد إعادة تشغيل الحاويات أو عمليات النشر. يظهر الزر فقط للعقد التي يرد اسم مضيفها مرة واحدة بالضبط في العنقود."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किसी नोड पूल को खोलें और किसी वर्कर नोड के पास 'नोड बदलें...' पर क्लिक करें ताकि Civo उसे हटाकर नया नोड बनाए, उदाहरण के लिए जब पॉड या डिप्लॉयमेंट रीस्टार्ट करने से मदद न मिले। यह बटन केवल उन नोड्स के लिए दिखता है जिनका होस्टनाम क्लस्टर में ठीक एक बार सूचीबद्ध है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buka kolam node dan klik 'Ganti node...' di samping node pekerja agar Civo menghapusnya dan membuat node baru, misalnya saat memulai ulang pod atau deployment tidak membantu. Tombol hanya muncul untuk node yang nama host-nya tercantum tepat satu kali di klaster."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir düğüm havuzunu açın ve bir çalışan düğümün yanındaki 'Düğümü değiştir...' öğesine tıklayın; Civo düğümü siler ve yenisini oluşturur. Örneğin pod'ları veya deployment'ları yeniden başlatmak işe yaramadığında kullanılır. Düğme yalnızca ana bilgisayar adı kümede tam olarak bir kez listelenen düğümlerde görünür."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Откройте пул узлов и нажмите 'Заменить узел...' рядом с рабочим узлом, чтобы Civo удалила его и создала новый, например когда перезапуск подов или деплойментов не помогает. Кнопка появляется только у узлов, имя хоста которых встречается в кластере ровно один раз."
+          }
+        }
+      }
+    },
+    "Before anything is sent, the dialog shows cluster, region and hostname and warns that workloads on the node are interrupted and its local data is lost. The node is not drained first. After Civo accepts the request, the node shows 'Replacement requested' until the cluster no longer lists it; refresh to see its status. Nothing is retried automatically." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before anything is sent, the dialog shows cluster, region and hostname and warns that workloads on the node are interrupted and its local data is lost. The node is not drained first. After Civo accepts the request, the node shows 'Replacement requested' until the cluster no longer lists it; refresh to see its status. Nothing is retried automatically."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bevor etwas gesendet wird, zeigt der Dialog Cluster, Region und Hostname und weist darauf hin, dass Workloads auf dem Knoten unterbrochen werden und seine lokalen Daten verloren gehen. Der Knoten wird vorher nicht geleert. Nachdem Civo die Anfrage angenommen hat, zeigt der Knoten 'Ersetzen angefordert', bis der Cluster ihn nicht mehr aufführt; aktualisieren Sie, um den Status zu sehen. Nichts wird automatisch wiederholt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes de enviar nada, el diálogo muestra el clúster, la región y el nombre de host y advierte de que las cargas de trabajo del nodo se interrumpen y sus datos locales se pierden. El nodo no se vacía antes. Cuando Civo acepta la solicitud, el nodo muestra 'Reemplazo solicitado' hasta que el clúster deja de mostrarlo; actualice para ver su estado. Nada se reintenta automáticamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avant tout envoi, la boîte de dialogue affiche le cluster, la région et le nom d'hôte, et avertit que les charges de travail du nœud sont interrompues et que ses données locales sont perdues. Le nœud n'est pas vidé au préalable. Une fois la demande acceptée par Civo, le nœud affiche 'Remplacement demandé' jusqu'à ce que le cluster ne le répertorie plus ; actualisez pour voir son statut. Rien n'est relancé automatiquement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prima di inviare qualsiasi cosa, la finestra mostra cluster, regione e nome host e avverte che i carichi di lavoro sul nodo vengono interrotti e i suoi dati locali vanno persi. Il nodo non viene svuotato prima. Dopo che Civo ha accettato la richiesta, il nodo mostra 'Sostituzione richiesta' finché il cluster non lo elenca più; aggiorna per vederne lo stato. Nulla viene ritentato automaticamente."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voordat er iets wordt verzonden, toont het dialoogvenster cluster, regio en hostnaam en waarschuwt het dat workloads op de node worden onderbroken en de lokale gegevens verloren gaan. De node wordt vooraf niet geleegd. Nadat Civo het verzoek heeft geaccepteerd, toont de node 'Vervanging aangevraagd' totdat het cluster de node niet meer vermeldt; vernieuw om de status te zien. Er wordt niets automatisch opnieuw geprobeerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zanim cokolwiek zostanie wysłane, okno pokazuje klaster, region i nazwę hosta oraz ostrzega, że obciążenia na węźle zostaną przerwane, a jego dane lokalne utracone. Węzeł nie jest wcześniej opróżniany. Gdy Civo przyjmie żądanie, węzeł pokazuje 'Zlecono wymianę', dopóki klaster go nie przestanie wyświetlać; odśwież, aby zobaczyć status. Nic nie jest ponawiane automatycznie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes de enviar o que quer que seja, a caixa de diálogo mostra o cluster, a região e o nome de host e avisa que as cargas de trabalho no nó são interrompidas e os seus dados locais são perdidos. O nó não é esvaziado antes. Depois de a Civo aceitar o pedido, o nó mostra 'Substituição solicitada' até o cluster deixar de o listar; atualize para ver o estado. Nada é repetido automaticamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送任何内容之前，对话框会显示集群、区域和主机名，并提醒该节点上的工作负载会中断、本地数据会丢失。节点不会事先排空。Civo 接受请求后，节点会显示'已请求替换'，直到集群不再列出该节点；请刷新查看其状态。不会自动重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信前に、ダイアログにクラスタ、リージョン、ホスト名が表示され、ノード上のワークロードが中断されローカルデータが失われることが警告されます。ノードは事前にドレインされません。Civoがリクエストを受け付けると、クラスタにそのノードが表示されなくなるまで'置き換えをリクエスト済み'と表示されます。ステータスは更新して確認してください。自動で再試行されることはありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전송하기 전에 대화 상자에 클러스터, 리전, 호스트 이름이 표시되며 노드의 워크로드가 중단되고 로컬 데이터가 사라진다는 경고가 나타납니다. 노드를 먼저 비우지 않습니다. Civo가 요청을 수락하면 클러스터에 더 이상 나열되지 않을 때까지 노드에 '교체 요청됨'이 표시됩니다. 새로 고쳐 상태를 확인하세요. 자동으로 다시 시도하지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبل إرسال أي شيء، يعرض مربع الحوار العنقود والمنطقة واسم المضيف، وينبّه إلى أن أحمال العمل على العقدة ستنقطع وأن بياناتها المحلية ستُفقد. لا تُفرَّغ العقدة مسبقًا. بعد أن تقبل Civo الطلب، تعرض العقدة 'طُلب الاستبدال' إلى أن يتوقف العنقود عن إدراجها؛ حدّث لرؤية حالتها. لا تُعاد أي محاولة تلقائيًا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कुछ भी भेजने से पहले, डायलॉग क्लस्टर, क्षेत्र और होस्टनाम दिखाता है और चेतावनी देता है कि नोड पर वर्कलोड बाधित होंगे और उसका स्थानीय डेटा खो जाएगा। नोड को पहले खाली नहीं किया जाता। Civo के अनुरोध स्वीकार करने के बाद, नोड 'बदलने का अनुरोध किया गया' दिखाता है जब तक क्लस्टर उसे सूचीबद्ध करना बंद न कर दे; उसकी स्थिति देखने के लिए रीफ़्रेश करें। कुछ भी अपने आप दोबारा नहीं भेजा जाता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sebelum apa pun dikirim, dialog menampilkan klaster, wilayah, dan nama host, serta memperingatkan bahwa beban kerja di node terganggu dan data lokalnya hilang. Node tidak dikosongkan terlebih dahulu. Setelah Civo menerima permintaan, node menampilkan 'Penggantian diminta' hingga klaster tidak lagi mencantumkannya; segarkan untuk melihat statusnya. Tidak ada yang dicoba ulang secara otomatis."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herhangi bir şey gönderilmeden önce iletişim kutusu kümeyi, bölgeyi ve ana bilgisayar adını gösterir ve düğümdeki iş yüklerinin kesintiye uğrayacağı ve yerel verilerinin kaybolacağı konusunda uyarır. Düğüm önceden boşaltılmaz. Civo isteği kabul ettikten sonra düğüm, küme onu artık listelemeyene kadar 'Değişim istendi' gösterir; durumunu görmek için yenileyin. Hiçbir şey otomatik olarak yeniden denenmez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перед отправкой диалог показывает кластер, регион и имя хоста и предупреждает, что нагрузки на узле будут прерваны, а его локальные данные потеряны. Узел предварительно не освобождается. После того как Civo примет запрос, у узла отображается 'Замена запрошена', пока кластер не перестанет его показывать; обновите, чтобы увидеть статус. Автоматических повторов нет."
+          }
+        }
+      }
+    },
+    "Civo did not list the nodes of this cluster, so the node cannot be identified and nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo did not list the nodes of this cluster, so the node cannot be identified and nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat die Knoten dieses Clusters nicht aufgeführt, daher lässt sich der Knoten nicht bestimmen und es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no listó los nodos de este clúster, así que no se puede identificar el nodo y no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo n'a pas répertorié les nœuds de ce cluster, le nœud ne peut donc pas être identifié et rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non ha elencato i nodi di questo cluster, quindi il nodo non può essere identificato e non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de nodes van dit cluster niet vermeld, daarom kan de node niet worden bepaald en is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie podało węzłów tego klastra, więc nie można zidentyfikować węzła i nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo não listou os nós deste cluster, por isso o nó não pode ser identificado e nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 未列出此集群的节点，因此无法确定节点，未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoがこのクラスタのノードを返さなかったため、ノードを特定できず、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 이 클러스터의 노드를 나열하지 않아 노드를 식별할 수 없으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تُدرج Civo عقد هذا العنقود، لذلك لا يمكن تحديد العقدة ولم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने इस क्लस्टर के नोड सूचीबद्ध नहीं किए, इसलिए नोड की पहचान नहीं हो सकती और कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo tidak mencantumkan node klaster ini, jadi node tidak dapat diidentifikasi dan tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bu kümenin düğümlerini listelemedi, bu nedenle düğüm belirlenemiyor ve hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo не вернула список узлов этого кластера, поэтому узел нельзя определить, и ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The cluster is not on its desired version yet, so no node is replaced. Wait until the upgrade has finished, then try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster is not on its desired version yet, so no node is replaced. Wait until the upgrade has finished, then try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Cluster ist noch nicht auf seiner Zielversion, daher wird kein Knoten ersetzt. Warten Sie, bis das Upgrade abgeschlossen ist, und versuchen Sie es dann erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El clúster aún no está en su versión deseada, así que no se reemplaza ningún nodo. Espere a que finalice la actualización y vuelva a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le cluster n'est pas encore à sa version cible, aucun nœud n'est donc remplacé. Attendez la fin de la mise à niveau, puis réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cluster non è ancora alla versione desiderata, quindi nessun nodo viene sostituito. Attendi il termine dell'aggiornamento, poi riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het cluster heeft zijn gewenste versie nog niet bereikt, daarom wordt er geen node vervangen. Wacht tot de upgrade is voltooid en probeer het dan opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster nie ma jeszcze docelowej wersji, więc żaden węzeł nie zostanie wymieniony. Poczekaj na zakończenie aktualizacji i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O cluster ainda não está na versão pretendida, por isso nenhum nó é substituído. Aguarde até que a atualização termine e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群尚未处于目标版本，因此不会替换任何节点。请等待升级完成后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタはまだ目的のバージョンになっていません。そのためノードは置き換えられません。アップグレードが完了するまで待ってから、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터가 아직 원하는 버전이 아니므로 노드를 교체하지 않습니다. 업그레이드가 완료될 때까지 기다린 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنقود ليس على إصداره المطلوب بعد، لذلك لن تُستبدل أي عقدة. انتظر حتى تكتمل الترقية، ثم حاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर अभी अपने वांछित संस्करण पर नहीं है, इसलिए कोई नोड नहीं बदला जाएगा। अपग्रेड पूरा होने तक प्रतीक्षा करें, फिर दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster belum berada pada versi yang diinginkan, jadi tidak ada node yang diganti. Tunggu hingga peningkatan selesai, lalu coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme henüz hedef sürümünde değil, bu nedenle hiçbir düğüm değiştirilmez. Yükseltme tamamlanana kadar bekleyin, ardından tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер ещё не на целевой версии, поэтому узел не заменяется. Дождитесь завершения обновления и повторите попытку."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

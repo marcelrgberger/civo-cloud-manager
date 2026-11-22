@@ -7,7 +7,13 @@ protocol KubernetesUpgradeAPI: Sendable {
     func upgradeCluster(_ id: String, to version: String, region: String, apiKey: String) async throws
 }
 
-final class CivoKubernetesService: KubernetesUpgradeAPI, Sendable {
+/// The requests of a node replacement, each pinned to the account and region the replacement was started in.
+protocol KubernetesNodeRecycleAPI: Sendable {
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster
+    func recycleNode(_ hostname: String, inCluster id: String, region: String, apiKey: String) async throws
+}
+
+final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAPI, Sendable {
     private let api = CivoAPIClient.shared
 
     func listClusters(region: String? = nil) async throws -> PaginatedList<CivoKubernetesCluster> {
@@ -47,6 +53,22 @@ final class CivoKubernetesService: KubernetesUpgradeAPI, Sendable {
     /// Civo treats `pools` as the complete desired state, so an upgrade must not send it, nor `applications`.
     static func upgradeBody(to version: String, region: String) -> [String: Any] {
         ["kubernetes_version": version, "region": region]
+    }
+
+    /// `POST /v2/kubernetes/clusters/:id/recycle`, which replaces the one node named by `hostname`.
+    /// Civo's answer is a simple result (`SimpleResponse` in `civogo`) and only means the request was accepted.
+    func recycleNode(_ hostname: String, inCluster id: String, region: String, apiKey: String) async throws {
+        let _: CivoResult = try await api.post(
+            path: "/kubernetes/clusters/\(id)/recycle",
+            body: Self.recycleBody(hostname: hostname, region: region),
+            queryItems: [URLQueryItem(name: "region", value: region)],
+            apiKey: apiKey
+        )
+    }
+
+    /// The body Civo's Go client `civogo` sends: the node's hostname and the cluster's region.
+    static func recycleBody(hostname: String, region: String) -> [String: Any] {
+        ["hostname": hostname, "region": region]
     }
 
     func getKubeconfig(_ id: String) async throws -> String {
