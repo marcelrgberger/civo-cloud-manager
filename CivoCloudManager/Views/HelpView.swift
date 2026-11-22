@@ -120,6 +120,9 @@ struct HelpSection {
         ]),
         HelpSection(title: "Kubernetes", icon: "helm", items: [
             "Click a cluster to see details: version, API endpoint, conditions, node pools, apps.",
+            "Click 'Upgrade...' on a cluster to move it to a newer Kubernetes version from Civo's list. Only newer versions are offered, since Civo does not support downgrades. Civo's own recommendation is preselected, and you confirm the current and the target version before anything is sent.",
+            "Civo decides whether an upgrade path is allowed and may refuse it. After Civo accepts the request, the cluster shows the requested upgrade until it reports the new version; refresh to see its status. The app never upgrades a cluster on its own.",
+            "When creating a cluster, pick a Kubernetes version or keep 'Civo default', which sends no version so Civo installs its default one.",
             "The K8s API connects automatically when you select a cluster (no manual button needed).",
             "An animated progress view shows 5 connection steps: firewall, kubeconfig, certificates, API server, metrics.",
             "The app auto-opens port 6443 on the cluster firewall for your IP.",

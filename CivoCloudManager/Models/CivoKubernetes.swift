@@ -11,6 +11,8 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
     let targetNodesSize: String?
     let builtAt: String?
     let kubernetesVersion: String?
+    /// Civo's hint that this version is available as an upgrade, as named in its Go client `civogo`.
+    let upgradeAvailableTo: String?
     let apiEndpoint: String?
     let masterIp: String?
     let dnsEntry: String?
@@ -31,6 +33,7 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
         case targetNodesSize = "target_nodes_size"
         case builtAt = "built_at"
         case kubernetesVersion = "kubernetes_version"
+        case upgradeAvailableTo = "upgrade_available_to"
         case apiEndpoint = "api_endpoint"
         case masterIp = "master_ip"
         case dnsEntry = "dns_entry"
