@@ -1854,6 +1854,8 @@ private actor FakeInstanceAPI: InstanceAPI {
     private var recoveryError: Error?
     /// Holds the next power change until the test releases it, like a request still on its way.
     private var powerGate: ChargesServiceTests.FetchGate?
+    /// Holds the next instance listing until the test releases it, like a reload still on its way.
+    private var listingGate: ChargesServiceTests.FetchGate?
 
     init(instancesByRegion: [String: [CivoInstance]]) {
         self.instancesByRegion = instancesByRegion
@@ -1866,9 +1868,14 @@ private actor FakeInstanceAPI: InstanceAPI {
     func answerRecoveryStatus(with answer: String) { recoveryAnswer = Data(answer.utf8) }
     func failRecoveryChange(with error: Error) { recoveryError = error }
     func holdNextPowerChange(at gate: ChargesServiceTests.FetchGate) { powerGate = gate }
+    func holdNextListing(at gate: ChargesServiceTests.FetchGate) { listingGate = gate }
 
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance> {
-        PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
+        if let gate = listingGate {
+            listingGate = nil
+            await gate.suspend()
+        }
+        return PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
     }
 
     func createInstance(_ body: sending [String: Any]) async throws -> InstanceCreationResponse {
@@ -2411,6 +2418,40 @@ struct InstanceRecoveryModeTests {
         #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == nil)
         #expect(env.vm.recoveryStatusError(for: InstanceEnvironment.instance) == InstanceViewModel.unreadableRecoveryStatusMessage)
         #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("After the reboot, an unreadable status keeps Exit offered, also without Full Access")
+    func exitStaysOfferedAfterReboot() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+        await env.vm.changePower(.softReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        await env.api.answerRecoveryStatus(with: #"{"result": "maybe"}"#)
+        await env.vm.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        #expect(env.vm.recoveryStatusError(for: InstanceEnvironment.instance) == InstanceViewModel.unreadableRecoveryStatusMessage)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("An accepted change is saved before the instances are reloaded, so quitting meanwhile keeps the warning")
+    func changeSavedBeforeReload() async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        await env.api.holdNextListing(at: gate)
+        let change = Task { await env.vm.changeRecovery(.enter, of: target) }
+        await gate.untilSuspended()
+        let restarted = env.makeViewModel()
+        await restarted.refresh()
+        #expect(restarted.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+
+        await gate.open()
+        await change.value
     }
 
     @Test("A change Civo refuses is shown as returned and neither logged nor marked as waiting for a reboot")
