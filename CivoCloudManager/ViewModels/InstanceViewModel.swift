@@ -21,6 +21,28 @@ enum InstanceTargetError: Error, Equatable {
     }
 }
 
+/// Why a resize was refused before anything was sent.
+enum InstanceResizeError: Error, Equatable {
+    case notRunning
+    case sizeNotEligible
+
+    var message: String {
+        switch self {
+        case .notRunning:
+            String(localized: "Only a running instance can be resized. Nothing was sent.")
+        case .sizeNotEligible:
+            String(localized: "The selected size is no longer available as a larger size for this instance. Nothing was sent.")
+        }
+    }
+}
+
+/// Sizes loaded for the resize sheet.
+enum ResizeSizes: Equatable {
+    case loading
+    case loaded([CivoSize])
+    case failed(String)
+}
+
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
@@ -56,6 +78,8 @@ final class InstanceViewModel {
     var availableFirewalls: [CivoFirewall] = []
     var availableSizes: [CivoSize] = []
     var availableDiskImages: [CivoDiskImage] = []
+    /// Loaded by the resize sheet itself, independent of the Create form.
+    private(set) var resizeSizes = ResizeSizes.loading
 
     private let instanceService = CivoInstanceService()
     private let sshKeyService = CivoSSHKeyService()
@@ -66,6 +90,7 @@ final class InstanceViewModel {
     private let credentials: InstanceCredentialStore
     private let api: any InstanceAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
+    private let loadSizes: @Sendable () async throws -> [CivoSize]
     private let settingsRegion: @MainActor () -> String
     private let isAccessAllowed: @MainActor () -> Bool
     private let notificationCenter: NotificationCenter
@@ -78,6 +103,7 @@ final class InstanceViewModel {
         credentials: InstanceCredentialStore? = nil,
         api: any InstanceAPI = CivoInstanceService(),
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
+        loadSizes: (@Sendable () async throws -> [CivoSize])? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
         isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
         notificationCenter: NotificationCenter = .default,
@@ -89,6 +115,8 @@ final class InstanceViewModel {
         self.api = api
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
+        let sizeService = CivoSizeService()
+        self.loadSizes = loadSizes ?? { try await sizeService.listSizes() }
         self.settingsRegion = settingsRegion
         self.isAccessAllowed = isAccessAllowed
         self.notificationCenter = notificationCenter
@@ -297,10 +325,41 @@ final class InstanceViewModel {
         }
     }
 
+    func loadResizeSizes() async {
+        resizeSizes = .loading
+        do {
+            resizeSizes = .loaded(try await loadSizes())
+        } catch {
+            // nil for a cancelled load: the sheet was closed.
+            guard let message = CivoAPIError.userMessage(error) else { return }
+            resizeSizes = .failed(message)
+            Log.error("Failed to load sizes for resize: \(error.localizedDescription)")
+        }
+    }
+
+    /// Sizes `instance` may be resized to, from the sizes loaded for the resize sheet.
+    func eligibleResizeSizes(for instance: CivoInstance) -> [CivoSize] {
+        guard case .loaded(let sizes) = resizeSizes else { return [] }
+        return InstanceResize.eligibleSizes(sizes, for: instance)
+    }
+
+    /// After the target checks, checks the status and size again on the current list, so an instance that
+    /// stopped or changed size while the sheet was open is not resized.
     func resizeInstance(_ target: ConsoleTarget, size: String) async {
+        if targetError(for: target) == nil, let problem = resizeError(for: target, size: size) {
+            error = problem.message
+            return
+        }
         await perform("Resized to \(size)", on: target) {
             try await $0.resizeInstance(target.instanceId, size: size, region: target.region)
         }
+    }
+
+    private func resizeError(for target: ConsoleTarget, size: String) -> InstanceResizeError? {
+        guard let instance = instances.first(where: { $0.id == target.instanceId }) else { return nil }
+        guard InstanceResize.isAllowed(status: instance.status) else { return .notRunning }
+        guard eligibleResizeSizes(for: instance).contains(where: { $0.name == size }) else { return .sizeNotEligible }
+        return nil
     }
 
     /// Sends one request for `target`, only if the target is still valid at this moment.

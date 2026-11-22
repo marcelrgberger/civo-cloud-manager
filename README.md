@@ -12,7 +12,7 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | --- | --- |
 | Menu bar | Open/close access for the current public IP, per-firewall ports, bulk actions, named IP presets, timed access, refresh every 60 seconds |
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
-| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), resize, reverse DNS, tags, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
+| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), upward resize with estimated cost change, reverse DNS, tags, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
 | Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
 | Networking | Networks, firewall rules, load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |
@@ -382,6 +382,14 @@ flowchart TD
     F -->|Full Access, region or instance no longer valid| G[Refuse, show reason, send nothing]
     F -->|Valid| H[Send request with captured region]
 ```
+
+## Instance resize
+
+`PUT /v2/instances/:id/resize` resizes an instance "upwards, providing it's within their quota" ([Civo API](https://www.civo.com/api/instances)); the official CLI states that downgrades are not possible. Neither says how CPU, RAM and disk are weighed. `InstanceResize.eligibleSizes` therefore offers a size only when it is selectable (`selectable` is not `false`), is an instance size, differs from the current size, is not smaller in CPU, RAM or disk than the instance and is larger in at least one of them. The current values come from the instance, or from its listed size when the instance omits them; unless all three are known, nothing is offered, and a size missing one of them is not offered either. The documented `GET /v2/sizes` payload has no `type` ([Civo API](https://www.civo.com/api/sizes)): a size with a `type` must be `Instance`, a size without one counts unless its name carries Civo's `.kube.` or `.db.` marker. Quota, region availability and any other refusal are checked by Civo, and its error is shown.
+
+Civo documents no status rule for resizing. Its Terraform provider resizes running instances and waits for them to become `ACTIVE` again, so Resize is offered only for `ACTIVE` instances.
+
+The resize sheet loads `/v2/sizes` itself when it opens and shows a load error with Retry instead of an empty grid. Below the grid it shows the current and the new hourly rate with the estimated difference per hour and per 730-hour month. Rates come from `CivoCharge.hourlyRate(forSize:)`, the same lookup the size cards use, over the rates editable in the cost view. If either rate is unknown or zero, the row is hidden. Resizing asks for confirmation. When the user confirms, the target is checked as above, then the instance status and the selected size are checked again on the current list, and nothing is sent if one of them no longer qualifies.
 
 ## Power actions
 
