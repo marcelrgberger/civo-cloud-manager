@@ -77,10 +77,11 @@ struct InstanceCreationResponse: Decodable, Equatable {
     }
 }
 
-/// Requests for one existing instance. Each takes the region the instance was listed from,
-/// never the current Settings region, so a later region change cannot redirect them.
+/// Instance requests. Each request for an existing instance takes the region it was listed from,
+/// never the current Settings region, so a later region change cannot redirect it.
 protocol InstanceAPI: Sendable {
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance>
+    func createInstance(_ body: sending [String: Any]) async throws -> InstanceCreationResponse
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws
     func changePower(_ action: InstancePowerAction, of id: String, region: String) async throws
     func resizeInstance(_ id: String, size: String, region: String) async throws
@@ -98,7 +99,7 @@ final class CivoInstanceService: InstanceAPI {
         return try await api.getPaginatedList(path: "/instances", queryItems: queryItems)
     }
 
-    func createInstance(_ body: [String: Any]) async throws -> InstanceCreationResponse {
+    func createInstance(_ body: sending [String: Any]) async throws -> InstanceCreationResponse {
         try await api.post(path: "/instances", body: body)
     }
 

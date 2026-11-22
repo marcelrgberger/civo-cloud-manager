@@ -68,7 +68,6 @@ final class InstanceViewModel {
     /// Why the last loading of `firewallOptions` failed, nil while it succeeded or is running.
     private(set) var firewallOptionsError: String?
 
-    private let instanceService = CivoInstanceService()
     private let sshKeyService = CivoSSHKeyService()
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
@@ -297,15 +296,15 @@ final class InstanceViewModel {
         defer { isSaving = false }
 
         do {
-            let response = try await instanceService.createInstance(body)
-            isCreatingInstance = false
+            let response = try await api.createInstance(body)
+            showCreatedInstances()
             showSuccess = true
             await refresh()
             if response.setsInitialPassword { creationNotice = Self.initialPasswordNotice }
             return true
         } catch CivoAPIError.decodingError {
             // Civo answered with success, so instances may have been created: show the list before a retry.
-            isCreatingInstance = false
+            showCreatedInstances()
             await refresh()
             error = String(localized: "Civo accepted the request, but its answer could not be read. Check the instance list before creating again.")
             if form.sshKeyId.isEmpty { creationNotice = Self.initialPasswordNotice }
@@ -314,6 +313,12 @@ final class InstanceViewModel {
             saveError = CivoAPIError.userMessage(error)
             return false
         }
+    }
+
+    /// Closes the form and returns to the list, where the new instances and the creation notice are shown.
+    private func showCreatedInstances() {
+        isCreatingInstance = false
+        selectedInstance = nil
     }
 
     static var initialPasswordNotice: String {

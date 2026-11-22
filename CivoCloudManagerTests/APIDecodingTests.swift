@@ -1847,6 +1847,8 @@ private actor FakeInstanceAPI: InstanceAPI {
     private(set) var calls: [String] = []
     private var deletionFails = false
     private var firewallError: Error?
+    /// Civo's answer to the next create; one that cannot be decoded is reported like the API client does.
+    private var creationAnswer = Data(#"{"id": "created-1", "initial_password": "not-shown"}"#.utf8)
 
     init(instancesByRegion: [String: [CivoInstance]]) {
         self.instancesByRegion = instancesByRegion
@@ -1855,9 +1857,19 @@ private actor FakeInstanceAPI: InstanceAPI {
     func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
     func failDeletion() { deletionFails = true }
     func failFirewallChange(with error: Error) { firewallError = error }
+    func answerCreation(with answer: Data) { creationAnswer = answer }
 
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance> {
         PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
+    }
+
+    func createInstance(_ body: sending [String: Any]) async throws -> InstanceCreationResponse {
+        calls.append("create \(body["hostname"] as? String ?? "")")
+        do {
+            return try JSONDecoder().decode(InstanceCreationResponse.self, from: creationAnswer)
+        } catch {
+            throw CivoAPIError.decodingError(error.localizedDescription)
+        }
     }
 
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
@@ -1939,6 +1951,27 @@ private final class InstanceEnvironment {
 @Suite("Instance action targets")
 @MainActor
 struct InstanceActionTargetTests {
+    @Test("A create started from an instance's detail page returns to the list that shows the password notice",
+          arguments: [#"{"id": "created-1", "initial_password": "not-shown"}"#, #"{"unexpected": true}"#])
+    func createReturnsToList(answer: String) async throws {
+        let env = InstanceEnvironment()
+        await env.api.answerCreation(with: Data(answer.utf8))
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.isCreatingInstance = true
+        var form = InstanceCreationForm()
+        form.hostname = "web-2"
+        form.size = "g3.small"
+        form.diskImage = "ubuntu-jammy"
+        form.networkId = "net-default"
+
+        #expect(await env.vm.createInstance(form))
+        #expect(await env.api.calls == ["create web-2"])
+        #expect(!env.vm.isCreatingInstance)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.creationNotice == InstanceViewModel.initialPasswordNotice)
+    }
+
     @Test("Actions use the region the instance was listed from, never a later Settings region")
     func capturedRegion() async throws {
         let env = InstanceEnvironment()
