@@ -171,12 +171,14 @@ final class CivoAPIClient: Sendable {
     }
 
     /// GET a decoded response from the API.
+    /// `apiKey` pins the request to one account instead of reading the current key.
     func get<T: Decodable>(
         path: String,
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey: String? = nil
     ) async throws -> T {
-        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired)
+        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey)
     }
 
     /// GET every page of a paginated list (API returns `{ page, per_page, pages, items }`).
@@ -206,30 +208,34 @@ final class CivoAPIClient: Sendable {
     }
 
     /// POST with a JSON body.
+    /// `apiKey` pins the request to one account instead of reading the current key.
     func post<T: Decodable>(
         path: String,
         body: [String: Any],
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey: String? = nil
     ) async throws -> T {
-        try await execute("POST", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired)
+        try await execute("POST", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey)
     }
 
     /// PUT with a JSON body.
+    /// `apiKey` pins the request to one account instead of reading the current key.
     func put<T: Decodable>(
         path: String,
         body: [String: Any],
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey: String? = nil
     ) async throws -> T {
-        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired)
+        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey)
     }
 
-    /// Any method with a JSON body, for callers that choose the method per request.
+    /// Any method with an optional JSON body, for callers that choose the method per request.
     func send<T: Decodable>(
         _ method: String,
         path: String,
-        body: [String: Any],
+        body: [String: Any]?,
         queryItems: [URLQueryItem]? = nil
     ) async throws -> T {
         try await execute(method, path: path, queryItems: queryItems, body: body)

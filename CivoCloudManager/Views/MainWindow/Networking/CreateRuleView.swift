@@ -12,8 +12,8 @@ struct CreateRuleView: View {
     @State private var action = "allow"
     @State private var label = ""
 
-    private let protocols = ["tcp", "udp", "icmp"]
-    private let directions = ["ingress", "egress"]
+    private let protocols = FirewallRuleDraft.protocols
+    private let directions = FirewallRuleDraft.directions
     private let actions = ["allow", "deny"]
 
     var body: some View {

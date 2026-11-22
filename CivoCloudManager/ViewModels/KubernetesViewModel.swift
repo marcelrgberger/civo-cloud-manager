@@ -6,6 +6,11 @@ final class KubernetesViewModel {
     var clusters: [CivoKubernetesCluster] = []
     private(set) var clusterCompleteness = ListCompleteness()
     var selectedCluster: CivoKubernetesCluster?
+    /// The region and account `selectedCluster` was loaded from; an upgrade or a node replacement is bound to both.
+    private(set) var selectedClusterRegion = ""
+    private(set) var selectedClusterAccount: CivoAccount?
+    let upgrades = KubernetesUpgradeController()
+    let nodeReplacements = KubernetesNodeRecycleController()
     var isLoading = false
     var error: String?
 
@@ -16,6 +21,10 @@ final class KubernetesViewModel {
 
     var availableNetworks: [CivoNetwork] = []
     var availableSizes: [CivoSize] = []
+    /// The versions offered when creating a cluster, newest first.
+    var availableVersions: [CivoKubernetesVersion] = []
+    /// Set when the version list could not be loaded; Civo's default version is used then.
+    var versionListError: String?
 
     // K8s API state
     var k8sNodes: [K8sNode] = []
@@ -80,6 +89,10 @@ final class KubernetesViewModel {
             self.error = CivoAPIError.userMessage(error)
         }
 
+        if let clusterId = selectedCluster?.id {
+            await reloadSelectedCluster(clusterId)
+        }
+
         // Also refresh K8s data if connected
         if isK8sConnected {
             await loadClusterData()
@@ -95,6 +108,13 @@ final class KubernetesViewModel {
         } catch {
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
+        do {
+            availableVersions = KubernetesVersionCatalog.createOptions(in: try await service.listVersions())
+            versionListError = nil
+        } catch {
+            availableVersions = []
+            versionListError = CivoAPIError.userMessage(error)
+        }
     }
 
     func loadClusterDetail(_ id: String) async {
@@ -102,18 +122,40 @@ final class KubernetesViewModel {
         error = nil
         defer { isLoading = false }
 
-        do {
-            selectedCluster = try await service.showCluster(id)
-        } catch {
-            self.error = CivoAPIError.userMessage(error)
-            return
-        }
+        guard await loadCluster(id, keepingSelection: false) else { return }
 
         // Auto-connect to K8s API — cancel previous connection first
         connectTask?.cancel()
         if selectedCluster?.status.lowercased() == "active" {
             let clusterId = id
             connectTask = Task { await connectToCluster(clusterId) }
+        }
+    }
+
+    /// Loads the selected cluster's detail again, for example its status after an upgrade request, without reconnecting.
+    func reloadSelectedCluster(_ id: String) async {
+        await loadCluster(id, keepingSelection: true)
+    }
+
+    /// Loads the cluster pinned to the current region and account. With `keepingSelection`, the answer is
+    /// dropped once another cluster, or none, was selected meanwhile.
+    @discardableResult
+    private func loadCluster(_ id: String, keepingSelection: Bool) async -> Bool {
+        let region = CivoConfig.shared.region
+        let apiKey = CivoConfig.shared.apiKey
+        do {
+            let cluster = try await service.showCluster(id, region: region, apiKey: apiKey)
+            guard !keepingSelection || selectedCluster?.id == id else { return false }
+            let account = CivoAccount(apiKey: apiKey)
+            selectedCluster = cluster
+            selectedClusterRegion = region
+            selectedClusterAccount = account
+            upgrades.clusterDidLoad(cluster, region: region, account: account)
+            nodeReplacements.clusterDidLoad(cluster, region: region, account: account)
+            return true
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return false
         }
     }
 

@@ -4,7 +4,9 @@ struct FirewallDetailView: View {
     let firewall: CivoFirewall
     @Bindable var vm: NetworkViewModel
     let onBack: () -> Void
+    @Environment(FirewallClosureQueue.self) private var firewallClosures
     @State private var deleteTarget: CivoRule?
+    @State private var editor = FirewallRuleEditor()
 
     var body: some View {
         List {
@@ -14,6 +16,13 @@ struct FirewallDetailView: View {
                 ForEach(Array(vm.rules.enumerated()), id: \.element.id) { index, rule in
                     ruleRow(rule, index: index)
                         .contextMenu {
+                            Button("Edit Rule") {
+                                editor.begin(
+                                    editing: rule, of: firewall, region: vm.rulesRegion,
+                                    account: vm.rulesAccount, isScheduledForClosure: isScheduledForClosure
+                                )
+                            }
+                            .disabled(editability(of: rule) != .editable)
                             Button("Delete", role: .destructive) {
                                 deleteTarget = rule
                             }
@@ -23,7 +32,10 @@ struct FirewallDetailView: View {
         }
         .animation(.easeOut, value: vm.rules.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            VStack(spacing: 0) {
+                if let error = vm.error { ErrorBanner(message: error) }
+                if let notice = editor.notice { ErrorBanner(message: notice) }
+            }
         }
         .navigationTitle(firewall.name)
         .task { await vm.loadRules(firewall.id) }
@@ -55,6 +67,14 @@ struct FirewallDetailView: View {
         .sheet(isPresented: $vm.isCreatingRule) {
             CreateRuleView(vm: vm, firewallId: firewall.id)
                 .frame(minWidth: 450, minHeight: 350)
+        }
+        .sheet(isPresented: Binding(get: { editor.session != nil }, set: { if !$0 { editor.cancel() } })) {
+            if let session = editor.session {
+                EditRuleView(editor: editor, session: session) { draft in
+                    Task { await save(draft) }
+                }
+                .frame(minWidth: 480, minHeight: 460)
+            }
         }
         .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
@@ -110,9 +130,30 @@ struct FirewallDetailView: View {
             }
 
             Spacer()
+
+            if let reason = editability(of: rule).message {
+                Image(systemName: "lock")
+                    .foregroundStyle(.secondary)
+                    .help(reason)
+                    .accessibilityLabel(reason)
+            }
         }
         .padding(.vertical, 4)
         .modifier(StaggeredAppear(index: index))
+    }
+
+    private func isScheduledForClosure(firewallId: String, ruleId: String) -> Bool {
+        firewallClosures.jobs.contains { $0.firewallId == firewallId && $0.ruleId == ruleId }
+    }
+
+    private func editability(of rule: CivoRule) -> FirewallRuleEditability {
+        FirewallRuleEditability(rule: rule, isScheduledForClosure: isScheduledForClosure(firewallId: firewall.id, ruleId: rule.id))
+    }
+
+    private func save(_ draft: FirewallRuleDraft) async {
+        guard let outcome = await editor.save(draft, isScheduledForClosure: isScheduledForClosure) else { return }
+        if outcome == .saved { vm.showSuccess = true }
+        await vm.loadRules(firewall.id)
     }
 
     private func portDisplay(_ rule: CivoRule) -> String {

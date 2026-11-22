@@ -5,6 +5,8 @@ struct CreateClusterView: View {
     @State private var name = ""
     @State private var networkId = ""
     @State private var cniPlugin = "flannel"
+    /// Empty for Civo's default version, which sends no `kubernetes_version`.
+    @State private var kubernetesVersion = ""
     @State private var nodeSize = ""
     @State private var nodeCount = 3
     @State private var applications = ""
@@ -19,6 +21,19 @@ struct CreateClusterView: View {
                     ForEach(cniOptions, id: \.self) { Text($0) }
                 }
                 .help("Network plugin for pod communication")
+            }
+
+            Section {
+                Picker("Kubernetes Version", selection: $kubernetesVersion) {
+                    Text("Civo default").tag("")
+                    ForEach(vm.availableVersions) { version in
+                        Text(version.label ?? version.version).tag(version.version)
+                    }
+                }
+            } footer: {
+                Text(versionFootnote)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
 
             Section("Node Pool") {
@@ -65,6 +80,7 @@ struct CreateClusterView: View {
                             "cni_plugin": cniPlugin,
                             "num_target_nodes": nodeCount,
                         ]
+                        if !kubernetesVersion.isEmpty { body["kubernetes_version"] = kubernetesVersion }
                         if !nodeSize.isEmpty { body["target_nodes_size"] = nodeSize }
                         if !networkId.isEmpty { body["network_id"] = networkId }
                         if !applications.isEmpty {
@@ -79,5 +95,15 @@ struct CreateClusterView: View {
                 .disabled(name.isEmpty || vm.isSaving)
             }
         }
+    }
+
+    private var versionFootnote: String {
+        if vm.versionListError != nil {
+            return String(localized: "The list of versions could not be loaded, so Civo installs its default version.")
+        }
+        if let civoDefault = vm.availableVersions.first(where: { $0.isDefault == true }) {
+            return String(localized: "Civo default sends no version, so Civo installs the version it marks as default, currently \(civoDefault.label ?? civoDefault.version).")
+        }
+        return String(localized: "Civo default sends no version, so Civo installs its default version.")
     }
 }

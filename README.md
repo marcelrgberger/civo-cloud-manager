@@ -12,13 +12,13 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | --- | --- |
 | Menu bar | Open/close access for the current public IP, per-firewall ports, bulk actions, named IP presets, timed access, refresh every 60 seconds |
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
-| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), upward resize with estimated cost change, reverse DNS, tags, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
-| Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
-| Networking | Networks, firewall rules, load balancers, domains and DNS records |
+| Compute | Create/delete instances (with count, public IP, initial user, reverse DNS and startup script; several at once only after a cost confirmation), start/stop, soft and hard reboot (each confirmed first), upward resize with estimated cost change (confirmed first), firewall change within the instance network (confirmed first), attaching and detaching volumes of the instance network (detaching confirmed first, with a reminder to unmount), recovery mode (entering and exiting confirmed first, with a persistent reboot reminder and the console as the only access path), reverse DNS, tag editing (removing all tags is confirmed first) and a tag filter on the instance list, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
+| Kubernetes | Cluster creation (with a version from Civo's list or Civo's default), version upgrades of existing clusters (newer versions only, confirmed with the current and target version), replacing a single defective worker node, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
+| Networking | Networks, firewall rules (create, edit protocol, ports, CIDR, direction and label with a before and after comparison, delete), load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |
 | Account | Billing estimates over single and multi-month periods with a per-account cache of completed months, editable rates, region selection, API health checks, legal documents |
 
-Deletion dialogs require the resource name. Sensitive database and object store credentials, initial instance passwords and saved instance credentials use LocalAuthentication. Menu bar ownership matching and bulk closure target rules the app created, labeled `civo-cloud-<hostname>-<firewall-name>`; Kubernetes API rules use the `k8s-api` suffix.
+Deletion dialogs require the resource name. Sensitive database and object store credentials, initial instance passwords and saved instance credentials use LocalAuthentication. Menu bar ownership matching and bulk closure target rules the app created, labeled `civo-cloud-<hostname>-<firewall-name>`; Kubernetes API rules use the `k8s-api` suffix. The rule editor leaves these rules and rules with a pending timer untouched, keeps the action of every rule, loads the rule again before saving and asks again when it changed elsewhere; a removed rule is never recreated.
 
 ## Build and first launch
 
@@ -299,6 +299,10 @@ The command-execution feature creates a temporary Kubernetes Job and reads its l
 
 Kubernetes auto-connect separately checks API firewall access, creates a rule if needed and attempts cleanup on disconnect. It still uses its own in-memory rule tracking; it does not inherit the timed queue's persistence and retry guarantees.
 
+Cluster upgrades read `GET /v2/kubernetes/versions` and send `PUT /v2/kubernetes/clusters/:id` with only `kubernetes_version` and `region`, so pools and applications stay untouched. Only listed, not deprecated versions of the cluster's distribution that are strictly newer are offered; Civo documents that downgrades are not supported, and its `upgrade_available_to` hint is preselected. Civo publishes no further path rules, so it stays the authority and may still refuse a listed version. The upgrade is bound to cluster, region and account from the moment the detail was loaded; on confirm, Full Access, region and account are checked again, and the cluster and the version list are loaded again. A changed version, a cluster that is not active or not yet on its desired version (`ClusterVersionSync`), or a version no longer offered sends nothing. An accepted request is shown as requested, not finished, until the cluster reports the new version; the app never upgrades on its own.
+
+Replacing a worker node sends `POST /v2/kubernetes/clusters/:id/recycle` with the node's `hostname` and the cluster's `region`, as Civo's Go client `civogo` does. "Replace node..." is offered only next to a hostname that Civo's cluster detail lists exactly once across all node pools, since the request names the node by hostname alone. The confirmation shows cluster, region, hostname and pool and warns that workloads on the node are interrupted and its local data is lost; the node is not drained, Pod Disruption Budgets are not guaranteed, and Civo does not state how a replacement is billed. The replacement is bound to cluster, region, account and pool from the moment the detail was loaded; on confirm, Full Access, region and account are checked again and the cluster is loaded again with the same key. A node that is gone, listed twice or moved to another pool, a cluster answer without the node names of every pool, or a cluster that is not active or not yet on its desired version (an upgrade still running) sends nothing; a removed cluster (404) sends nothing either. A 4xx refusal, including 403, keeps the dialog open with Civo's reason; a 408 counts as a timeout, not a refusal. An accepted request is shown as requested, not finished, until a cluster answer with the node names of every pool no longer lists the hostname; a timeout or server error is reported as an unknown result and is never retried on its own. There is no bulk replacement.
+
 ### Flow: preserving SSH encryption keys
 
 ```mermaid
@@ -365,6 +369,20 @@ classDiagram
 
 The network picker preselects the network that `GET /v2/networks` flags as `default` and always sends its ID as `network_id`, as the official Go client does (`civogo` `NewInstanceConfig` via `GetDefaultNetwork`). If no network is flagged as default, the user has to pick one. The firewall picker lists only firewalls whose `network_id` matches the selected network, and changing the network clears the chosen firewall. Leaving the firewall on Default omits `firewall_id`; in the default network Civo then uses the default firewall. API errors such as an exceeded quota are shown in the form.
 
+Tags are split at commas, trimmed and deduplicated, then sent space-separated; a tag containing a space disables Create, because Civo would split it. The collapsible **Advanced** section adds the remaining documented options. Enterprise-only parameters (`allowed_ips`, `network_bandwidth_limit`, `private_ipv4`) are not offered.
+
+| Option | Parameter | Sent |
+|---|---|---|
+| Number of instances | `count` | Only above 1 |
+| Public IP address (on by default) | `public_ip` | Always, `create` or `none` |
+| Initial user | `initial_user` | Trimmed, left out when empty (Civo then uses the disk image's default user) |
+| Reverse DNS | `reverse_dns` | Follows the hostname until edited, left out when cleared (Civo then uses the hostname) |
+| Startup script | `script` | As written, in a monospaced editor without smart quotes or dashes; left out when blank |
+
+The region is still taken from Settings. The stepper's upper bound comes from `GET /v2/quota`, loaded with the form data: `InstanceBulkCreation.maximumCount` takes the smallest of the free instances, free CPU cores, RAM and disk divided by the size's needs, and free public IPs when one is created, but at least 1: a used-up quota shows a hint, and Civo refuses the request itself. If the quota cannot be loaded, only one instance can be created at a time. The view model checks the count and Full Access again right before sending. A count above 1 opens a confirmation, and confirming sends exactly the form it was opened for, with the estimated total cost per hour, the count times the size's rate from the editable hourly rates (`instance-<size>`). Public IP pricing is not documented, so the estimate leaves it out and says so; an unknown rate is stated instead of a cost.
+
+The create answer is decoded into `InstanceCreationResponse`, which accepts one instance or a list (the docs show no answer for `count` above 1) and keeps only whether Civo set an `initial_password`, never the password. In that case the instance list shows a notice that the password is on the instance's detail page under Security, behind Touch ID or the system password. If Civo answers with success but the answer cannot be read, the sheet closes, the list is reloaded and the user is told to check it before creating again. A script that is too large or otherwise refused shows Civo's error in the form. Without a public IP address the detail view shows no SSH command, as for an instance still waiting for its IP.
+
 ## Instance action targets
 
 Every instance action (stop, start, soft reboot, hard reboot, resize, reverse DNS, delete, console and credentials) starts from a `ConsoleTarget` captured by `InstanceViewModel.consoleTarget(for:)`: the instance ID with the region the instance list was fetched from. Requests send that region explicitly, so a later Settings region never redirects them. Right before each request, `targetError(for:)` checks the target again and refuses it without sending anything when Full Access has ended, the region is unknown, the Settings region or the loaded list region no longer matches, or the instance is missing from the reloaded list. The reason is shown in the error banner.
@@ -403,6 +421,16 @@ Start, stop, soft reboot and hard reboot are `InstancePowerAction` values. `requ
 | Hard reboot | `POST /v2/instances/:id/reboots` | Hard rebooted |
 
 The detail view shows Reboot as a menu button: a click asks for a soft reboot, the menu also offers Hard Reboot. The list context menu offers both entries. Every power action opens a confirmation first; the hard reboot button uses the destructive style and warns that unsaved work and data not yet written to disk may be lost. Confirming runs the checks above again, including Full Access. A 404 for a deleted instance, a 4xx for an instance in a state that does not allow the action, `noRegion` and network errors are shown in the error banner.
+
+## Deleting an instance
+
+**Delete...** in the detail view's Actions & Metadata box and **Delete** in the list's context menu open the same `DeleteConfirmationSheet`, which asks for the instance name. Delete is kept apart from the power actions: it is permanent and leaves the detail page. Confirming runs the target checks above again, including Full Access, then sends `DELETE /v2/instances/:id?region=` with the captured region. `InstanceViewModel.removeInstance(_:)` returns an `InstanceDeletionOutcome`:
+
+| Outcome | When | Result |
+|---|---|---|
+| `deleted` | Civo answered with success | Saved credentials removed, activity "Deleted" logged, success shown, back to the list |
+| `alreadyGone` | Civo answered 404 and the complete list of the target region, loaded again, no longer shows the instance | Saved credentials removed, nothing logged, a notice says this request deleted nothing, back to the list |
+| `failed` | Refused before sending, any other error, or a 404 while the instance is still listed or the reload failed or was incomplete | Nothing logged, the error is shown, the detail page stays open |
 
 ## Instance console
 
@@ -588,7 +616,7 @@ Incomplete lists show an orange notice in the instance, cluster, database and ob
 
 ## Validation
 
-The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field, the Create Instance required fields, default network and firewall filter, and complete pagination. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
+The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field, the Create Instance required fields, default network and firewall filter, the advanced create options, quota limit, bulk cost confirmation and create answer, Kubernetes version comparison and cluster upgrades, unique node identification and node replacement, and complete pagination. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests

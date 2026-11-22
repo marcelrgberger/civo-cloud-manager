@@ -6,6 +6,9 @@ enum InstanceTargetError: Error, Equatable {
     case noRegion
     case regionChanged
     case instanceMissing
+    case firewallUnavailable
+    case volumeUnavailable
+    case volumeNotAttached
 
     var message: String {
         switch self {
@@ -17,6 +20,12 @@ enum InstanceTargetError: Error, Equatable {
             String(localized: "The region changed, so the instance action was cancelled. Nothing was sent.")
         case .instanceMissing:
             String(localized: "The instance is no longer in the list, so nothing was sent.")
+        case .firewallUnavailable:
+            String(localized: "The selected firewall is no longer in the network of this instance, so nothing was sent.")
+        case .volumeUnavailable:
+            String(localized: "The selected volume is no longer free in the network of this instance, so nothing was sent.")
+        case .volumeNotAttached:
+            String(localized: "The volume is no longer attached to this instance, so nothing was sent.")
         }
     }
 }
@@ -43,15 +52,73 @@ enum ResizeSizes: Equatable {
     case failed(String)
 }
 
+/// What a confirmed instance deletion did.
+enum InstanceDeletionOutcome: Equatable {
+    /// Civo confirmed that this request deleted the instance.
+    case deleted
+    /// Civo no longer knew the instance and the complete list of its region no longer shows it.
+    case alreadyGone
+    /// Nothing is known to be deleted; the reason is in `error`.
+    case failed
+}
+
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
-        case resize, delete
+        case resize, delete, firewall, removeAllTags, attachVolume
         case power(InstancePowerAction)
+        case recovery(InstanceRecoveryChange)
+        case detachVolume(id: String, name: String)
     }
 
     let kind: Kind
     let target: ConsoleTarget
+}
+
+/// Why the recovery mode status of an instance could not be read.
+struct InstanceRecoveryStatusFailure: Error, Equatable {
+    let message: String
+}
+
+/// Recovery mode changes Civo accepted that still wait for a reboot, kept across app restarts: until the
+/// reboot, Civo's status shows the new setting while the instance still runs the old one.
+/// Holds only instance IDs, names and regions.
+@MainActor
+struct RecoveryRebootStore {
+    let read: () -> Data?
+    let write: (Data) -> Void
+
+    private static let key = "CivoRecoveryChangesAwaitingReboot"
+    static let standard = RecoveryRebootStore(
+        read: { UserDefaults.standard.data(forKey: key) },
+        write: { UserDefaults.standard.set($0, forKey: key) }
+    )
+
+    private struct Entry: Codable {
+        let target: ConsoleTarget
+        let change: InstanceRecoveryChange
+    }
+
+    func load() -> [ConsoleTarget: InstanceRecoveryChange] {
+        guard let data = read(), let entries = try? JSONDecoder().decode([Entry].self, from: data) else { return [:] }
+        return Dictionary(entries.map { ($0.target, $0.change) }, uniquingKeysWith: { _, last in last })
+    }
+
+    func save(_ changes: [ConsoleTarget: InstanceRecoveryChange]) {
+        let entries = changes.map { Entry(target: $0.key, change: $0.value) }
+        if let data = try? JSONEncoder().encode(entries) { write(data) }
+    }
+}
+
+/// A detach the user confirmed after being told to unmount the volume. Only `confirmDetach()` creates one.
+struct ConfirmedVolumeDetach {
+    let volumeId: String
+    let target: ConsoleTarget
+
+    fileprivate init(volumeId: String, target: ConsoleTarget) {
+        self.volumeId = volumeId
+        self.target = target
+    }
 }
 
 @Observable
@@ -80,43 +147,86 @@ final class InstanceViewModel {
     var availableDiskImages: [CivoDiskImage] = []
     /// Loaded by the resize sheet itself, independent of the Create form.
     private(set) var resizeSizes = ResizeSizes.loading
+    /// nil until loaded or when loading failed; then only one instance can be created at a time.
+    private(set) var creationQuota: CivoQuota?
+    /// Where to find the initial password of the instances just created. Never contains the password.
+    var creationNotice: String?
+    /// Firewalls and networks of the region the shown instance was listed from.
+    private(set) var firewallOptions: InstanceFirewallOptions?
+    /// Why the last loading of `firewallOptions` failed, nil while it succeeded or is running.
+    private(set) var firewallOptionsError: String?
+    /// Volumes and networks of the region the shown instance was listed from.
+    private(set) var volumeOptions: InstanceVolumeOptions?
+    /// Why the last loading of `volumeOptions` failed, nil while it succeeded or is running.
+    private(set) var volumeOptionsError: String?
+    /// The recovery mode status Civo last reported per instance, or why it could not be read.
+    private var recoveryStatuses: [ConsoleTarget: Result<Bool, InstanceRecoveryStatusFailure>] = [:]
+    /// The recovery mode setting Civo last reported or accepted per instance. Outlasts a failed status load, so
+    /// Exit and the console notice stay while recovery mode was last known to be on, also after the reboot.
+    private var knownRecoveryModes: [ConsoleTarget: Bool] = [:]
+    /// Recovery mode changes Civo accepted that no reboot sent from this app has applied yet.
+    private var recoveryChangesAwaitingReboot: [ConsoleTarget: InstanceRecoveryChange] {
+        didSet { recoveryReboots.save(recoveryChangesAwaitingReboot) }
+    }
 
-    private let instanceService = CivoInstanceService()
     private let sshKeyService = CivoSSHKeyService()
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
     private let sizeService = CivoSizeService()
-    private let volumeService = CivoVolumeService()
+    private let quotaService = CivoQuotaService()
     private let credentials: InstanceCredentialStore
     private let api: any InstanceAPI
+    private let volumes: any InstanceVolumeAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
     private let loadSizes: @Sendable () async throws -> [CivoSize]
+    private let loadFirewallOptions: @Sendable (_ region: String) async throws -> InstanceFirewallOptions
     private let settingsRegion: @MainActor () -> String
     private let isAccessAllowed: @MainActor () -> Bool
     private let notificationCenter: NotificationCenter
-    private let recordActivity: @MainActor (String, ConsoleTarget) -> Void
+    private let recordActivity: @MainActor (_ action: String, _ detail: String?, ConsoleTarget) -> Void
     /// Why a confirmation was closed. Survives the next refresh, which a region change starts right away.
     @ObservationIgnored private var cancellationNotice: String?
+    /// Counts volume list loads, so only the latest one is shown.
+    @ObservationIgnored private var volumeLoads = 0
+    /// Counts recovery mode status loads per instance, so only the latest one is shown.
+    @ObservationIgnored private var recoveryLoads: [ConsoleTarget: Int] = [:]
+    /// Counts accepted recovery mode changes, so a reboot clears only the change that existed when it was sent.
+    @ObservationIgnored private var recoveryChangeCount = 0
+    @ObservationIgnored private var recoveryChangeNumbers: [ConsoleTarget: Int] = [:]
+    private let recoveryReboots: RecoveryRebootStore
     @ObservationIgnored nonisolated(unsafe) private var regionObserver: NSObjectProtocol?
 
     init(
         credentials: InstanceCredentialStore? = nil,
         api: any InstanceAPI = CivoInstanceService(),
+        volumes: any InstanceVolumeAPI = CivoVolumeService(),
+        recoveryReboots: RecoveryRebootStore = .standard,
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
         loadSizes: (@Sendable () async throws -> [CivoSize])? = nil,
+        loadFirewallOptions: (@Sendable (_ region: String) async throws -> InstanceFirewallOptions)? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
         isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
         notificationCenter: NotificationCenter = .default,
-        recordActivity: @escaping @MainActor (String, ConsoleTarget) -> Void = { action, target in
-            ActivityLog.shared.log(action, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
+        recordActivity: @escaping @MainActor (_ action: String, _ detail: String?, ConsoleTarget) -> Void = { action, detail, target in
+            ActivityLog.shared.log(action, detail: detail, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
         }
     ) {
         self.credentials = credentials ?? .shared
         self.api = api
+        self.volumes = volumes
+        self.recoveryReboots = recoveryReboots
+        recoveryChangesAwaitingReboot = recoveryReboots.load()
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
         let sizeService = CivoSizeService()
         self.loadSizes = loadSizes ?? { try await sizeService.listSizes() }
+        let firewallService = CivoFirewallService()
+        let networkService = CivoNetworkService()
+        self.loadFirewallOptions = loadFirewallOptions ?? { region in
+            async let firewalls = firewallService.listFirewalls(region: region)
+            async let networks = networkService.listNetworks(region: region)
+            return try await InstanceFirewallOptions(region: region, firewalls: firewalls, networks: networks)
+        }
         self.settingsRegion = settingsRegion
         self.isAccessAllowed = isAccessAllowed
         self.notificationCenter = notificationCenter
@@ -265,24 +375,72 @@ final class InstanceViewModel {
             saveError = CivoAPIError.userMessage(error)
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
+        do {
+            creationQuota = try await quotaService.getQuota()
+        } catch {
+            creationQuota = nil
+            Log.error("Failed to load quota for instance creation: \(error.localizedDescription)")
+        }
     }
 
+    /// The most instances one Create may request for `form`, from the quota loaded with the form data.
+    func maximumCreationCount(for form: InstanceCreationForm) -> Int {
+        InstanceBulkCreation.maximumCount(quota: creationQuota, size: size(of: form), createsPublicIp: form.createsPublicIp)
+    }
+
+    /// How many instances of the form's size fit the remaining quota, nil while no quota is loaded.
+    func creationCapacity(for form: InstanceCreationForm) -> Int? {
+        InstanceBulkCreation.capacity(quota: creationQuota, size: size(of: form), createsPublicIp: form.createsPublicIp)
+    }
+
+    private func size(of form: InstanceCreationForm) -> CivoSize? {
+        availableSizes.first { $0.name == form.size }
+    }
+
+    /// Sends the form. More than one instance is created only after `BulkCreationConfirmation` was confirmed.
     func createInstance(_ form: InstanceCreationForm) async -> Bool {
         guard let body = form.requestBody() else { return false }
+        guard isAccessAllowed() else {
+            saveError = InstanceTargetError.accessRevoked.message
+            return false
+        }
+        guard form.count <= maximumCreationCount(for: form) else {
+            saveError = String(localized: "The remaining quota does not allow this many instances. Lower the count.")
+            return false
+        }
         isSaving = true
         saveError = nil
+        creationNotice = nil
         defer { isSaving = false }
 
         do {
-            _ = try await instanceService.createInstance(body)
-            isCreatingInstance = false
+            let response = try await api.createInstance(body)
+            showCreatedInstances()
             showSuccess = true
             await refresh()
+            if response.setsInitialPassword { creationNotice = Self.initialPasswordNotice }
+            return true
+        } catch CivoAPIError.decodingError {
+            // Civo answered with success, so instances may have been created: show the list before a retry.
+            showCreatedInstances()
+            await refresh()
+            error = String(localized: "Civo accepted the request, but its answer could not be read. Check the instance list before creating again.")
+            if form.sshKeyId.isEmpty { creationNotice = Self.initialPasswordNotice }
             return true
         } catch {
             saveError = CivoAPIError.userMessage(error)
             return false
         }
+    }
+
+    /// Closes the form and returns to the list, where the new instances and the creation notice are shown.
+    private func showCreatedInstances() {
+        isCreatingInstance = false
+        selectedInstance = nil
+    }
+
+    static var initialPasswordNotice: String {
+        String(localized: "No SSH key was chosen, so Civo set an initial password. Open the instance: its detail page shows the password under Security after Touch ID or your system password.")
     }
 
     func createSSHKey(_ body: sending [String: Any]) async -> Bool {
@@ -304,7 +462,15 @@ final class InstanceViewModel {
     }
 
     func changePower(_ action: InstancePowerAction, of target: ConsoleTarget) async {
-        await perform(Self.activity(for: action), on: target) {
+        // Captured before sending: a change accepted while the reboot is on its way still needs another one.
+        let changeBeforeReboot = recoveryChangeNumbers[target]
+        await perform(Self.activity(for: action), on: target, onAccepted: {
+            // Civo documents a reboot, not a stop and start, as what applies a recovery mode change.
+            if action == .softReboot || action == .hardReboot,
+               recoveryChangeNumbers[target] == changeBeforeReboot {
+                recoveryChangesAwaitingReboot[target] = nil
+            }
+        }) {
             try await $0.changePower(action, of: target.instanceId, region: target.region)
         }
     }
@@ -316,6 +482,292 @@ final class InstanceViewModel {
         case .stop: "Stopped"
         case .softReboot: "Soft rebooted"
         case .hardReboot: "Hard rebooted"
+        }
+    }
+
+    // MARK: - Firewall
+
+    /// The firewall options loaded for the region `instance` was listed from, nil until they are loaded.
+    func firewallOptions(for instance: CivoInstance) -> InstanceFirewallOptions? {
+        guard let options = firewallOptions, let target = consoleTarget(for: instance),
+              Self.isSameRegion(options.region, target.region) else { return nil }
+        return options
+    }
+
+    /// Loads the firewalls and networks of the region `instance` was listed from.
+    func loadFirewallOptions(for instance: CivoInstance) async {
+        guard let target = consoleTarget(for: instance) else { return }
+        firewallOptionsError = nil
+        do {
+            firewallOptions = try await loadFirewallOptions(target.region)
+        } catch {
+            firewallOptionsError = CivoAPIError.userMessage(error)
+        }
+    }
+
+    /// Switches the instance to `firewallId`. The firewall list is loaded again first, so a firewall that was
+    /// deleted or is not in the instance's network is refused without a request.
+    func setFirewall(_ firewallId: String, of target: ConsoleTarget) async {
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return
+        }
+        let options: InstanceFirewallOptions
+        do {
+            options = try await loadFirewallOptions(target.region)
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return
+        }
+        firewallOptions = options
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return
+        }
+        guard let instance = instances.first(where: { $0.id == target.instanceId }),
+              let firewall = options.offered(for: instance).first(where: { $0.id == firewallId }) else {
+            error = InstanceTargetError.firewallUnavailable.message
+            return
+        }
+        do {
+            try await api.setFirewall(target.instanceId, firewallId: firewall.id, region: target.region)
+            showSuccess = true
+            recordActivity("Firewall set to %@", firewall.name, target)
+            await refresh()
+        } catch CivoAPIError.decodingError {
+            // Civo answered with success, so the change may have been made: show what the instance uses now.
+            await refresh()
+            error = [Self.unreadableFirewallChangeMessage, error].compactMap { $0 }.joined(separator: " ")
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+        }
+    }
+
+    static var unreadableFirewallChangeMessage: String {
+        String(localized: "Civo accepted the firewall change, but its answer could not be read. Check which firewall the instance uses now.")
+    }
+
+    // MARK: - Volumes
+
+    /// The volumes loaded for the region `instance` was listed from, nil until they are loaded.
+    func volumeOptions(for instance: CivoInstance) -> InstanceVolumeOptions? {
+        guard let options = volumeOptions, let target = consoleTarget(for: instance),
+              Self.isSameRegion(options.region, target.region) else { return nil }
+        return options
+    }
+
+    /// Loads the volumes and networks of the region `instance` was listed from.
+    func loadVolumeOptions(for instance: CivoInstance) async {
+        guard let target = consoleTarget(for: instance) else { return }
+        await loadVolumeOptions(region: target.region)
+    }
+
+    /// Skipped for a region other than the Settings region, such as the reload after a request that was
+    /// sent before a region change: its list would outdate the current region's load.
+    private func loadVolumeOptions(region: String) async {
+        guard Self.isSameRegion(region, settingsRegion()) else { return }
+        _ = try? await fetchVolumeOptions(region: region)
+    }
+
+    /// Loads the volumes of `region` and shows them, unless a later load started or the Settings region
+    /// changed meanwhile: an older answer must not replace a newer list or the list of another region.
+    private func fetchVolumeOptions(region: String) async throws -> InstanceVolumeOptions {
+        volumeLoads += 1
+        let load = volumeLoads
+        func isCurrent() -> Bool { load == volumeLoads && Self.isSameRegion(region, settingsRegion()) }
+        do {
+            let options = try await volumes.volumeOptions(region: region)
+            if isCurrent() {
+                volumeOptions = options
+                volumeOptionsError = nil
+            }
+            return options
+        } catch {
+            if isCurrent() { volumeOptionsError = CivoAPIError.userMessage(error) }
+            throw error
+        }
+    }
+
+    /// Attaches `volumeId` to the instance. The volumes are loaded again first, so a volume that was attached
+    /// meanwhile or is not in the instance's network and region is refused without a request.
+    func attachVolume(_ volumeId: String, to target: ConsoleTarget) async {
+        guard let volume = await currentVolume(volumeId, of: target, among: { $0.attachable(to: $1) },
+                                               otherwise: .volumeUnavailable) else { return }
+        await sendVolumeRequest("Attached volume %@", volume: volume, on: target) {
+            try await $0.attachVolume(volume.id, to: target.instanceId, region: target.region)
+        }
+    }
+
+    /// Closes the detach confirmation opened with `beginConfirmation(.detachVolume(id:name:), for:)`.
+    /// nil while no detach confirmation is open, so a detach cannot be sent without it.
+    func confirmDetach() -> ConfirmedVolumeDetach? {
+        guard let pending = pendingAction, case .detachVolume(let volumeId, _) = pending.kind else { return nil }
+        pendingAction = nil
+        return ConfirmedVolumeDetach(volumeId: volumeId, target: pending.target)
+    }
+
+    /// Detaches the confirmed volume, only if it is still attached to the instance.
+    func detachVolume(_ confirmed: ConfirmedVolumeDetach) async {
+        let target = confirmed.target
+        guard let volume = await currentVolume(confirmed.volumeId, of: target, among: { $0.attached(to: $1) },
+                                               otherwise: .volumeNotAttached) else { return }
+        await sendVolumeRequest("Detached volume %@", volume: volume, on: target) {
+            try await $0.detachVolume(volume.id, region: target.region)
+        }
+    }
+
+    /// The volume as Civo lists it right now, if the target is still valid and `among` still offers it.
+    private func currentVolume(
+        _ volumeId: String,
+        of target: ConsoleTarget,
+        among offered: (InstanceVolumeOptions, CivoInstance) -> [CivoVolume],
+        otherwise refusal: InstanceTargetError
+    ) async -> CivoVolume? {
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return nil
+        }
+        let options: InstanceVolumeOptions
+        do {
+            options = try await fetchVolumeOptions(region: target.region)
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return nil
+        }
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return nil
+        }
+        guard let instance = instances.first(where: { $0.id == target.instanceId }),
+              let volume = offered(options, instance).first(where: { $0.id == volumeId }) else {
+            error = refusal.message
+            return nil
+        }
+        return volume
+    }
+
+    /// Sends one volume request and reloads the volumes either way, so the page shows what Civo reports.
+    /// Errors such as a volume attached elsewhere in the meantime are shown as Civo returns them.
+    private func sendVolumeRequest(
+        _ activity: String,
+        volume: CivoVolume,
+        on target: ConsoleTarget,
+        _ request: (any InstanceVolumeAPI) async throws -> Void
+    ) async {
+        do {
+            try await request(volumes)
+            error = nil
+            showSuccess = true
+            recordActivity(activity, volume.name, target)
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+        }
+        await loadVolumeOptions(region: target.region)
+    }
+
+    // MARK: - Recovery mode
+
+    /// Whether recovery mode is on for `instance` as Civo last reported it, nil until it is read.
+    func recoveryMode(for instance: CivoInstance) -> Bool? {
+        guard case .success(let isEnabled) = recoveryStatus(for: instance) else { return nil }
+        return isEnabled
+    }
+
+    /// Why the recovery mode status of `instance` could not be read, nil while it was read or is loading.
+    func recoveryStatusError(for instance: CivoInstance) -> String? {
+        guard case .failure(let failure) = recoveryStatus(for: instance) else { return nil }
+        return failure.message
+    }
+
+    /// The recovery mode change Civo accepted for `instance` that still waits for a reboot.
+    func recoveryChangeAwaitingReboot(for instance: CivoInstance) -> InstanceRecoveryChange? {
+        consoleTarget(for: instance).flatMap { recoveryChangesAwaitingReboot[$0] }
+    }
+
+    /// Exit while recovery mode is on, Enter while it is off. While the status cannot be read, the setting last
+    /// known decides, so Exit stays offered after entering, also after the reboot or once Full Access is gone.
+    /// After an app restart, before Civo answered, the change still waiting for a reboot decides.
+    func offeredRecoveryChange(for instance: CivoInstance) -> InstanceRecoveryChange? {
+        let knownMode = consoleTarget(for: instance).flatMap { knownRecoveryModes[$0] }
+        guard let isOn = knownMode ?? recoveryChangeAwaitingReboot(for: instance).map({ $0 == .enter })
+        else { return nil }
+        return isOn ? .exit : .enter
+    }
+
+    private func recoveryStatus(for instance: CivoInstance) -> Result<Bool, InstanceRecoveryStatusFailure>? {
+        consoleTarget(for: instance).flatMap { recoveryStatuses[$0] }
+    }
+
+    /// Loads the recovery mode status of `instance` from the region it was listed from.
+    func loadRecoveryStatus(for instance: CivoInstance) async {
+        guard let target = consoleTarget(for: instance) else { return }
+        await loadRecoveryStatus(of: target)
+    }
+
+    /// Shows the answer unless a later load started or the Settings region changed meanwhile.
+    private func loadRecoveryStatus(of target: ConsoleTarget) async {
+        guard Self.isSameRegion(target.region, settingsRegion()) else { return }
+        let load = (recoveryLoads[target] ?? 0) + 1
+        recoveryLoads[target] = load
+        let status: Result<Bool, InstanceRecoveryStatusFailure>
+        do {
+            status = .success(try await api.recoveryStatus(of: target.instanceId, region: target.region).isEnabled)
+        } catch CivoAPIError.decodingError {
+            status = .failure(.init(message: Self.unreadableRecoveryStatusMessage))
+        } catch {
+            // A load cancelled by leaving the page is not a failure; the next load replaces it.
+            guard let message = CivoAPIError.userMessage(error) else { return }
+            status = .failure(.init(message: message))
+        }
+        guard load == recoveryLoads[target], Self.isSameRegion(target.region, settingsRegion()) else { return }
+        recoveryStatuses[target] = status
+        if case .success(let isEnabled) = status { knownRecoveryModes[target] = isEnabled }
+    }
+
+    static var unreadableRecoveryStatusMessage: String {
+        String(localized: "Civo reported the recovery mode status in an unexpected form, so it is unknown.")
+    }
+
+    /// Turns recovery mode on or off after the confirmation opened with `beginConfirmation(.recovery(_:), for:)`.
+    /// The change then waits for a reboot, which the detail page offers until one is sent from this app.
+    /// It is saved as soon as Civo accepts it, so quitting during the following reload does not lose the warning.
+    func changeRecovery(_ change: InstanceRecoveryChange, of target: ConsoleTarget) async {
+        let activity = change == .enter ? "Entered recovery mode" : "Exited recovery mode"
+        let changed = await perform(activity, on: target, onAccepted: {
+            recoveryChangeCount += 1
+            recoveryChangeNumbers[target] = recoveryChangeCount
+            recoveryChangesAwaitingReboot[target] = change
+            knownRecoveryModes[target] = change == .enter
+            // A status load sent before the change would report the old setting.
+            recoveryLoads[target, default: 0] += 1
+        }) {
+            try await $0.changeRecovery(change, of: target.instanceId, region: target.region)
+        }
+        guard changed else { return }
+        await loadRecoveryStatus(of: target)
+    }
+
+    // MARK: - Tags
+
+    /// Replaces the tags with the comma-separated `input`. Input that is invalid or holds no tag sends
+    /// nothing: only `removeAllTags(of:)` may clear the tags. Returns whether the tags were changed.
+    func setTags(_ input: String, of target: ConsoleTarget) async -> Bool {
+        let change: InstanceTagChange
+        do {
+            change = try InstanceTagChange.replacing(with: input)
+        } catch {
+            self.error = error.message
+            return false
+        }
+        return await perform("Tags set to %@", detail: change.tags.joined(separator: ", "), on: target) {
+            try await $0.setTags(target.instanceId, change, region: target.region)
+        }
+    }
+
+    /// Removes every tag. Called only from the confirmation opened with `beginConfirmation(.removeAllTags, for:)`.
+    func removeAllTags(of target: ConsoleTarget) async {
+        await perform("Removed all tags", on: target) {
+            try await $0.setTags(target.instanceId, .removeAll, region: target.region)
         }
     }
 
@@ -361,57 +813,77 @@ final class InstanceViewModel {
         return nil
     }
 
-    /// Sends one request for `target`, only if the target is still valid at this moment.
-    private func perform(_ activity: String, on target: ConsoleTarget, _ request: (any InstanceAPI) async throws -> Void) async {
+    /// Sends one request for `target`, only if the target is still valid at this moment. Returns whether it succeeded.
+    /// `onAccepted` runs as soon as Civo accepted the request, before the instances are reloaded.
+    @discardableResult
+    private func perform(
+        _ activity: String,
+        detail: String? = nil,
+        on target: ConsoleTarget,
+        onAccepted: () -> Void = {},
+        _ request: (any InstanceAPI) async throws -> Void
+    ) async -> Bool {
         if let problem = targetError(for: target) {
             error = problem.message
-            return
+            return false
         }
         do {
             try await request(api)
+            onAccepted()
             showSuccess = true
-            recordActivity(activity, target)
+            recordActivity(activity, detail, target)
             await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
-    }
-
-    func attachVolume(_ volumeId: String, instanceId: String) async {
-        do {
-            try await volumeService.attachVolume(volumeId, instanceId: instanceId)
-            showSuccess = true
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
-    }
-
-    func detachVolume(_ volumeId: String) async {
-        do {
-            try await volumeService.detachVolume(volumeId)
-            showSuccess = true
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
-    }
-
-    func removeInstance(_ target: ConsoleTarget) async {
-        guard await delete(target) else { return }
-        // Refreshing clears `error`; a warning about leftover credentials must stay visible.
-        let warning = error
-        await refresh()
-        if error == nil { error = warning }
-    }
-
-    /// Deletes the instance and, only once Civo confirmed the deletion, its saved credentials.
-    /// A failed or refused deletion keeps them. Returns whether the instance was deleted.
-    func delete(_ target: ConsoleTarget) async -> Bool {
-        error = nil
-        if let problem = targetError(for: target) {
-            error = problem.message
-            return false
-        }
-        do {
-            try await api.removeInstance(target.instanceId, region: target.region)
+            return true
         } catch {
             self.error = CivoAPIError.userMessage(error)
             return false
+        }
+    }
+
+    /// Deletes the instance confirmed in `DeleteConfirmationSheet`. Only a deletion this request made is
+    /// logged and shown as a success; the detail page of the instance closes once it is gone.
+    @discardableResult
+    func removeInstance(_ target: ConsoleTarget) async -> InstanceDeletionOutcome {
+        let outcome = await delete(target)
+        switch outcome {
+        case .failed:
+            return outcome
+        case .deleted:
+            showSuccess = true
+            recordActivity("Deleted", nil, target)
+        case .alreadyGone:
+            break
+        }
+        if selectedInstance?.id == target.instanceId { selectedInstance = nil }
+        recoveryChangesAwaitingReboot[target] = nil
+        // Refreshing replaces `error`; the notice and a warning about leftover credentials must stay visible.
+        let warning = error
+        await refresh()
+        if let warning { error = [warning, error].compactMap { $0 }.joined(separator: " ") }
+        return outcome
+    }
+
+    /// Deletes the instance and, only once it is confirmed gone, its saved credentials.
+    /// A failed or refused deletion keeps them and leaves the reason in `error`.
+    private func delete(_ target: ConsoleTarget) async -> InstanceDeletionOutcome {
+        error = nil
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return .failed
+        }
+        let outcome: InstanceDeletionOutcome
+        do {
+            try await api.removeInstance(target.instanceId, region: target.region)
+            outcome = .deleted
+        } catch CivoAPIError.httpError(404, let message) {
+            guard await isConfirmedGone(target) else {
+                error = CivoAPIError.httpError(404, message).localizedDescription
+                return .failed
+            }
+            outcome = .alreadyGone
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return .failed
         }
         do {
             try credentials.delete(InstanceCredentialKey(target))
@@ -420,7 +892,24 @@ final class InstanceViewModel {
             Log.error("Instance credentials not removed after instance deletion: \(credentialError.logDescription)")
             self.error = String(localized: "The instance was deleted, but its saved credentials could not be removed.")
         }
-        return true
+        if outcome == .alreadyGone {
+            error = [Self.alreadyDeletedMessage, error].compactMap { $0 }.joined(separator: " ")
+        }
+        return outcome
+    }
+
+    /// Whether a complete list of the target's region, loaded for this check only, no longer shows the
+    /// instance while the target is still valid. A failed or incomplete load proves nothing.
+    private func isConfirmedGone(_ target: ConsoleTarget) async -> Bool {
+        guard let list = try? await api.listInstances(region: target.region) else { return false }
+        return isAccessAllowed()
+            && Self.isSameRegion(target.region, settingsRegion())
+            && list.isComplete
+            && !list.items.contains(where: { $0.id == target.instanceId })
+    }
+
+    static var alreadyDeletedMessage: String {
+        String(localized: "The instance had already been deleted, so this request deleted nothing.")
     }
 
     /// Whether credentials may be saved for the instance, checked without authentication. A keychain

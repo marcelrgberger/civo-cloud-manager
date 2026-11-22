@@ -462,6 +462,21 @@ struct APIDecodingTests {
         let data = json.data(using: .utf8)!
         let fws = try JSONDecoder().decode([CivoFirewall].self, from: data)
         #expect(fws[0].rulesCountInt == 7)
+        #expect(fws[0].networkId == nil)
+        #expect(!fws[0].isDefault)
+    }
+
+    @Test("Decode firewall list (network_id, default as string or bool)")
+    func decodeFirewallNetworkAndDefault() throws {
+        // Fields as in the example of https://www.civo.com/api/firewall
+        let json = """
+        [{"id":"cde686be","name":"Default (all open)","rules_count":3,"default":"true","network_id":"5c16ab17"},
+         {"id":"af5f3bae","name":"test","rules_count":0,"default":"false","network_id":"5c16ab17"},
+         {"id":"b6dfca68","name":"bool","rules_count":0,"default":true}]
+        """
+        let fws = try JSONDecoder().decode([CivoFirewall].self, from: Data(json.utf8))
+        #expect(fws.map(\.networkId) == ["5c16ab17", "5c16ab17", nil])
+        #expect(fws.map(\.isDefault) == [true, false, true])
     }
 
     @Test("Decode firewall list (rules_count as int)")
@@ -1778,12 +1793,12 @@ struct InstanceCredentialVaultTests {
         let failing = InstanceEnvironment(credentials: store)
         await failing.api.failDeletion()
         await failing.vm.refresh()
-        #expect(await failing.vm.delete(consoleTarget) == false)
+        #expect(await failing.vm.removeInstance(consoleTarget) == .failed)
         #expect(try store.contains(key))
 
         let succeeding = InstanceEnvironment(credentials: store)
         await succeeding.vm.refresh()
-        #expect(await succeeding.vm.delete(consoleTarget))
+        #expect(await succeeding.vm.removeInstance(consoleTarget) == .deleted)
         #expect(await succeeding.api.calls == ["delete \(consoleInstanceId) LON1"])
         #expect(try store.contains(key) == false)
         #expect(succeeding.vm.error == nil)
@@ -1830,29 +1845,120 @@ struct InstanceCredentialVaultTests {
 private actor FakeInstanceAPI: InstanceAPI {
     var instancesByRegion: [String: [CivoInstance]]
     private(set) var calls: [String] = []
-    private var deletionFails = false
+    private var deletionError: Error?
+    private var firewallError: Error?
+    /// Civo's answer to the next create; one that cannot be decoded is reported like the API client does.
+    private var creationAnswer = Data(#"{"id": "created-1", "initial_password": "not-shown"}"#.utf8)
+    /// Civo's answer to the recovery mode status, in the string form its docs show.
+    private var recoveryAnswer = Data(#"{"result": "false"}"#.utf8)
+    private var recoveryError: Error?
+    /// Holds the next power change until the test releases it, like a request still on its way.
+    private var powerGate: ChargesServiceTests.FetchGate?
+    /// Holds the next instance listing until the test releases it, like a reload still on its way.
+    private var listingGate: ChargesServiceTests.FetchGate?
 
     init(instancesByRegion: [String: [CivoInstance]]) {
         self.instancesByRegion = instancesByRegion
     }
 
     func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
-    func failDeletion() { deletionFails = true }
+    func failDeletion(with error: Error = CivoAPIError.networkError("offline")) { deletionError = error }
+    func failFirewallChange(with error: Error) { firewallError = error }
+    func answerCreation(with answer: Data) { creationAnswer = answer }
+    func answerRecoveryStatus(with answer: String) { recoveryAnswer = Data(answer.utf8) }
+    func failRecoveryChange(with error: Error) { recoveryError = error }
+    func holdNextPowerChange(at gate: ChargesServiceTests.FetchGate) { powerGate = gate }
+    func holdNextListing(at gate: ChargesServiceTests.FetchGate) { listingGate = gate }
 
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance> {
-        PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
+        if let gate = listingGate {
+            listingGate = nil
+            await gate.suspend()
+        }
+        return PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
+    }
+
+    func createInstance(_ body: sending [String: Any]) async throws -> InstanceCreationResponse {
+        calls.append("create \(body["hostname"] as? String ?? "")")
+        do {
+            return try JSONDecoder().decode(InstanceCreationResponse.self, from: creationAnswer)
+        } catch {
+            throw CivoAPIError.decodingError(error.localizedDescription)
+        }
     }
 
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
     func changePower(_ action: InstancePowerAction, of id: String, region: String) async throws {
+        if let gate = powerGate {
+            powerGate = nil
+            await gate.suspend()
+        }
         calls.append("\(action) \(id) \(region)")
     }
     func resizeInstance(_ id: String, size: String, region: String) async throws { calls.append("resize \(id) \(region)") }
+    func setFirewall(_ id: String, firewallId: String, region: String) async throws {
+        calls.append("firewall \(id) \(firewallId) \(region)")
+        if let firewallError { throw firewallError }
+    }
+    func setTags(_ id: String, _ change: InstanceTagChange, region: String) async throws {
+        calls.append("tags \(id) [\(change.parameter)] \(region)")
+    }
 
+    func recoveryStatus(of id: String, region: String) async throws -> InstanceRecoveryStatus {
+        do {
+            return try JSONDecoder().decode(InstanceRecoveryStatus.self, from: recoveryAnswer)
+        } catch {
+            throw CivoAPIError.decodingError(error.localizedDescription)
+        }
+    }
+
+    /// Civo reports the new setting right away, although it takes effect only after a reboot.
+    func changeRecovery(_ change: InstanceRecoveryChange, of id: String, region: String) async throws {
+        if let recoveryError { throw recoveryError }
+        calls.append("recovery \(change) \(id) \(region)")
+        recoveryAnswer = Data(#"{"result": "\#(change == .enter)"}"#.utf8)
+    }
+
+    /// A successful deletion removes the instance from its region's list, as Civo does.
     func removeInstance(_ id: String, region: String) async throws {
-        struct DeletionFailed: Error {}
-        if deletionFails { throw DeletionFailed() }
+        if let deletionError { throw deletionError }
         calls.append("delete \(id) \(region)")
+        instancesByRegion[region]?.removeAll { $0.id == id }
+    }
+}
+
+/// Volume requests recorded instead of sent; Civo's list per region changes as requests succeed.
+private actor FakeVolumeAPI: InstanceVolumeAPI {
+    var volumesByRegion: [String: [CivoVolume]]
+    private(set) var calls: [String] = []
+    private var requestError: Error?
+    private var listErrors: [String: Error] = [:]
+    /// Holds the next attach until the test releases it, like a request still on its way.
+    private let attachGate: ChargesServiceTests.FetchGate?
+
+    init(volumesByRegion: [String: [CivoVolume]], attachGate: ChargesServiceTests.FetchGate? = nil) {
+        self.volumesByRegion = volumesByRegion
+        self.attachGate = attachGate
+    }
+
+    func list(_ volumes: [CivoVolume], in region: String) { volumesByRegion[region] = volumes }
+    func failRequests(with error: Error) { requestError = error }
+    func failListing(in region: String, with error: Error) { listErrors[region] = error }
+
+    func volumeOptions(region: String) async throws -> InstanceVolumeOptions {
+        if let listError = listErrors[region] { throw listError }
+        return InstanceVolumeOptions(region: region, volumes: volumesByRegion[region] ?? [], networks: InstanceEnvironment.networks)
+    }
+
+    func attachVolume(_ volumeId: String, to instanceId: String, region: String) async throws {
+        await attachGate?.suspend()
+        if let requestError { throw requestError }
+        calls.append("attach \(volumeId) \(instanceId) \(region)")
+    }
+
+    func detachVolume(_ volumeId: String, region: String) async throws {
+        if let requestError { throw requestError }
+        calls.append("detach \(volumeId) \(region)")
     }
 }
 
@@ -1865,24 +1971,63 @@ private final class InstanceEnvironment {
         from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "ACTIVE"}"#.utf8)
     )
 
+    /// The region's default network and a private one, as in https://www.civo.com/api/networks.
+    nonisolated static let networks = try! JSONDecoder().decode([CivoNetwork].self, from: Data("""
+    [{"id":"net-private","default":false,"label":"private"},
+     {"id":"net-default","default":true,"label":"Default"}]
+    """.utf8))
+
+    static let firewalls = try! JSONDecoder().decode([CivoFirewall].self, from: Data("""
+    [{"id":"fw-custom","name":"custom","rules_count":2,"default":"false","network_id":"net-default"},
+     {"id":"fw-default","name":"Default (all open)","rules_count":3,"default":"true","network_id":"net-default"},
+     {"id":"fw-private","name":"private","rules_count":1,"default":"true","network_id":"net-private"}]
+    """.utf8))
+
     var region = "LON1"
     var accessAllowed = true
     let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
+    let volumes: FakeVolumeAPI
     let center = NotificationCenter()
+    /// The firewalls Civo lists for each region.
+    var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
+    /// The sizes Civo lists for each region.
+    var sizesByRegion: [String: [CivoSize]] = [:]
     private(set) var activities: [String] = []
+    /// Kept alive for the default store: its client refers to it unowned.
+    private let keychain = FakeKeychain()
+    private let credentials: InstanceCredentialStore
+    /// What the app keeps in its defaults, held in memory so a restart can be simulated without touching disk.
+    private var storedRecoveryReboots: Data?
     private(set) var vm: InstanceViewModel!
 
-    init(credentials: InstanceCredentialStore? = nil, sizes: [CivoSize] = []) {
-        let store = credentials ?? InstanceCredentialStore(keychain: FakeKeychain().client, notificationCenter: NotificationCenter())
-        vm = InstanceViewModel(
-            credentials: store,
+    init(credentials: InstanceCredentialStore? = nil, attachGate: ChargesServiceTests.FetchGate? = nil) {
+        volumes = FakeVolumeAPI(volumesByRegion: ["LON1": InstanceVolumeTests.volumes], attachGate: attachGate)
+        self.credentials = credentials ?? InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        vm = makeViewModel()
+    }
+
+    /// A view model as after an app restart: same Civo account, defaults and keychain, nothing in memory.
+    func makeViewModel() -> InstanceViewModel {
+        InstanceViewModel(
+            credentials: credentials,
             api: api,
+            volumes: volumes,
+            recoveryReboots: RecoveryRebootStore(
+                read: { [weak self] in self?.storedRecoveryReboots },
+                write: { [weak self] in self?.storedRecoveryReboots = $0 }
+            ),
             loadSSHKeys: { [] },
-            loadSizes: { sizes },
+            loadSizes: { [weak self] region in self?.sizesByRegion[region] ?? [] },
+            loadFirewallOptions: { [weak self] region in
+                let firewalls = await self?.firewallsByRegion[region] ?? []
+                return InstanceFirewallOptions(region: region, firewalls: firewalls, networks: InstanceEnvironment.networks)
+            },
             settingsRegion: { [weak self] in self?.region ?? "" },
             isAccessAllowed: { [weak self] in self?.accessAllowed ?? false },
             notificationCenter: center,
-            recordActivity: { [weak self] action, _ in self?.activities.append(action) }
+            recordActivity: { [weak self] action, detail, _ in
+                self?.activities.append(detail.map { String(format: action, $0) } ?? action)
+            }
         )
     }
 
@@ -1896,6 +2041,27 @@ private final class InstanceEnvironment {
 @Suite("Instance action targets")
 @MainActor
 struct InstanceActionTargetTests {
+    @Test("A create started from an instance's detail page returns to the list that shows the password notice",
+          arguments: [#"{"id": "created-1", "initial_password": "not-shown"}"#, #"{"unexpected": true}"#])
+    func createReturnsToList(answer: String) async throws {
+        let env = InstanceEnvironment()
+        await env.api.answerCreation(with: Data(answer.utf8))
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.isCreatingInstance = true
+        var form = InstanceCreationForm()
+        form.hostname = "web-2"
+        form.size = "g3.small"
+        form.diskImage = "ubuntu-jammy"
+        form.networkId = "net-default"
+
+        #expect(await env.vm.createInstance(form))
+        #expect(await env.api.calls == ["create web-2"])
+        #expect(!env.vm.isCreatingInstance)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.creationNotice == InstanceViewModel.initialPasswordNotice)
+    }
+
     @Test("Actions use the region the instance was listed from, never a later Settings region")
     func capturedRegion() async throws {
         let env = InstanceEnvironment()
@@ -1959,7 +2125,7 @@ struct InstanceActionTargetTests {
         #expect(env.vm.pendingAction == nil)
         #expect(env.vm.error == InstanceTargetError.instanceMissing.message)
 
-        #expect(await env.vm.delete(target) == false)
+        #expect(await env.vm.removeInstance(target) == .failed)
         #expect(await env.api.calls.isEmpty)
     }
 
@@ -1971,7 +2137,7 @@ struct InstanceActionTargetTests {
 
         env.accessAllowed = false
         let target = try #require(env.vm.confirmPendingAction())
-        #expect(await env.vm.delete(target) == false)
+        #expect(await env.vm.removeInstance(target) == .failed)
         #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
 
         env.accessAllowed = true
@@ -1979,6 +2145,60 @@ struct InstanceActionTargetTests {
         await env.vm.changePower(.stop, of: unknownRegion)
         #expect(env.vm.error == InstanceTargetError.noRegion.message)
         #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A confirmed deletion from the detail page logs it, shows success and returns to the list")
+    func deletionFromDetail() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+
+        #expect(await env.vm.removeInstance(target) == .deleted)
+        #expect(await env.api.calls == ["delete \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Deleted"])
+        #expect(env.vm.showSuccess)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.error == nil)
+        #expect(env.vm.instances.isEmpty)
+    }
+
+    @Test("A failed deletion stays on the detail page and shows why, without logging or success",
+          arguments: [
+            CivoAPIError.networkError("offline"),
+            CivoAPIError.httpError(403, "forbidden"),
+            // Still listed, so not known to be gone.
+            CivoAPIError.httpError(404, "not found"),
+          ])
+    func failedDeletion(failure: CivoAPIError) async throws {
+        let env = InstanceEnvironment()
+        await env.api.failDeletion(with: failure)
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        #expect(await env.vm.removeInstance(target) == .failed)
+        #expect(env.vm.error == failure.localizedDescription)
+        #expect(env.vm.selectedInstance?.id == consoleInstanceId)
+        #expect(env.activities.isEmpty)
+        #expect(!env.vm.showSuccess)
+    }
+
+    @Test("An instance someone else deleted closes its page but is not logged as deleted by this request")
+    func deletionOfInstanceAlreadyGone() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.api.list([], in: "LON1")
+        await env.api.failDeletion(with: CivoAPIError.httpError(404, "not found"))
+
+        #expect(await env.vm.removeInstance(target) == .alreadyGone)
+        #expect(env.vm.error == InstanceViewModel.alreadyDeletedMessage)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.activities.isEmpty)
+        #expect(!env.vm.showSuccess)
     }
 
     @Test("A power action is sent only after confirmation, with Full Access checked when the user confirms")
@@ -2029,6 +2249,527 @@ struct InstanceActionTargetTests {
         #expect(throws: CivoAPIError.self) {
             try CivoAPIClient.resolvedQueryItems(unknownRegion.queryItems, defaultRegion: "NYC1", regionRequired: true)
         }
+    }
+}
+
+@Suite("Instance recovery mode")
+@MainActor
+struct InstanceRecoveryModeTests {
+    @Test("Enter, exit and status use PUT, DELETE and GET on the recovery path with the captured region")
+    func requests() throws {
+        let requests = [
+            ("PUT", InstanceRecoveryChange.enter.request(instanceId: consoleInstanceId, region: "LON1")),
+            ("DELETE", InstanceRecoveryChange.exit.request(instanceId: consoleInstanceId, region: "LON1")),
+            ("GET", InstanceRecoveryChange.statusRequest(instanceId: consoleInstanceId, region: "LON1")),
+        ]
+        for (method, request) in requests {
+            #expect(request.method == method)
+            #expect(request.path == "/instances/\(consoleInstanceId)/recovery")
+            let sent = try CivoAPIClient.resolvedQueryItems(request.queryItems, defaultRegion: "NYC1", regionRequired: true)
+            #expect(sent == [URLQueryItem(name: "region", value: "LON1")])
+        }
+
+        let unknownRegion = InstanceRecoveryChange.enter.request(instanceId: consoleInstanceId, region: "")
+        #expect(throws: CivoAPIError.self) {
+            try CivoAPIClient.resolvedQueryItems(unknownRegion.queryItems, defaultRegion: "NYC1", regionRequired: true)
+        }
+    }
+
+    @Test("The status is read from a string as in Civo's docs or from a boolean; anything else is refused")
+    func statusDecoding() throws {
+        let accepted = [
+            #"{"result": "true"}"#: true, #"{"result": true}"#: true, #"{"result": "TRUE"}"#: true,
+            #"{"result": "false"}"#: false, #"{"result": false}"#: false,
+        ]
+        for (json, isEnabled) in accepted {
+            #expect(try JSONDecoder().decode(InstanceRecoveryStatus.self, from: Data(json.utf8)).isEnabled == isEnabled, "\(json)")
+        }
+        for json in ["{}", #"{"result": null}"#, #"{"result": "success"}"#, #"{"result": "yes"}"#, #"{"result": 1}"#, "[]"] {
+            #expect(throws: DecodingError.self, "\(json)") {
+                try JSONDecoder().decode(InstanceRecoveryStatus.self, from: Data(json.utf8))
+            }
+        }
+    }
+
+    @Test("Entering is sent only after confirmation, with Full Access checked on confirm, and then waits for a reboot")
+    func enter() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        await env.vm.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == false)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .enter)
+
+        env.vm.beginConfirmation(.recovery(.enter), for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.changeRecovery(.enter, of: refused)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        env.accessAllowed = true
+        env.vm.beginConfirmation(.recovery(.enter), for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+        await env.vm.changeRecovery(.enter, of: target)
+        #expect(await env.api.calls == ["recovery enter \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Entered recovery mode"])
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == true)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("The reboot warning stays until a reboot is sent from the app; a stop and start or a failed reboot keep it")
+    func rebootWarning() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        await env.vm.changePower(.stop, of: target)
+        await env.vm.changePower(.start, of: target)
+        await env.vm.refresh()
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+
+        env.accessAllowed = false
+        await env.vm.changePower(.hardReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+
+        env.accessAllowed = true
+        await env.vm.changePower(.softReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        // Exiting needs a reboot again before the instance can be reached as normal.
+        await env.vm.changeRecovery(.exit, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .exit)
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == false)
+        await env.vm.changePower(.hardReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+    }
+
+    @Test("A skipped reboot is still warned about after an app restart, until a reboot or the deletion")
+    func warningSurvivesRestart() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+        await env.vm.changeRecovery(.exit, of: target)
+
+        // Civo already reports Off, but the instance still runs the recovery system until it is rebooted.
+        let restarted = env.makeViewModel()
+        await restarted.refresh()
+        await restarted.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        #expect(restarted.recoveryMode(for: InstanceEnvironment.instance) == false)
+        #expect(restarted.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .exit)
+
+        await restarted.changePower(.softReboot, of: target)
+        #expect(env.makeViewModel().recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        await restarted.changeRecovery(.enter, of: target)
+        #expect(await restarted.removeInstance(target) == .deleted)
+        let afterDeletion = env.makeViewModel()
+        await env.api.list([InstanceEnvironment.instance], in: "LON1")
+        await afterDeletion.refresh()
+        #expect(afterDeletion.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+    }
+
+    @Test("A reboot sent before a later change does not clear that change's warning")
+    func rebootBeforeLaterChange() async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        await env.api.holdNextPowerChange(at: gate)
+        let reboot = Task { await env.vm.changePower(.hardReboot, of: target) }
+        await gate.untilSuspended()
+        await env.vm.changeRecovery(.exit, of: target)
+        await gate.open()
+        await reboot.value
+
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("A status load for one instance neither replaces nor outdates another instance's status")
+    func statusPerInstance() async throws {
+        let env = InstanceEnvironment()
+        let other = try JSONDecoder().decode(CivoInstance.self, from: Data(#"{"id": "i-2", "hostname": "web-2", "status": "ACTIVE"}"#.utf8))
+        await env.api.list([InstanceEnvironment.instance, other], in: "LON1")
+        await env.vm.refresh()
+        await env.vm.loadRecoveryStatus(for: other)
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == true)
+        #expect(env.vm.recoveryMode(for: other) == false)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: other) == nil)
+    }
+
+    @Test("Without Full Access or with an unreadable status, the warning and the Exit action stay")
+    func exitStaysOffered() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        env.accessAllowed = false
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+
+        await env.api.answerRecoveryStatus(with: #"{"result": "maybe"}"#)
+        await env.vm.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == nil)
+        #expect(env.vm.recoveryStatusError(for: InstanceEnvironment.instance) == InstanceViewModel.unreadableRecoveryStatusMessage)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("After the reboot, an unreadable status keeps Exit offered, also without Full Access")
+    func exitStaysOfferedAfterReboot() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+        await env.vm.changePower(.softReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        await env.api.answerRecoveryStatus(with: #"{"result": "maybe"}"#)
+        await env.vm.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        #expect(env.vm.recoveryStatusError(for: InstanceEnvironment.instance) == InstanceViewModel.unreadableRecoveryStatusMessage)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("An accepted change is saved before the instances are reloaded, so quitting meanwhile keeps the warning")
+    func changeSavedBeforeReload() async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        await env.api.holdNextListing(at: gate)
+        let change = Task { await env.vm.changeRecovery(.enter, of: target) }
+        await gate.untilSuspended()
+        let restarted = env.makeViewModel()
+        await restarted.refresh()
+        #expect(restarted.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+
+        await gate.open()
+        await change.value
+    }
+
+    @Test("A change Civo refuses is shown as returned and neither logged nor marked as waiting for a reboot")
+    func refusedChange() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let failure = CivoAPIError.httpError(403, "forbidden")
+        await env.api.failRecoveryChange(with: failure)
+
+        await env.vm.changeRecovery(.enter, of: target)
+        #expect(env.vm.error == failure.localizedDescription)
+        #expect(env.activities.isEmpty)
+        #expect(!env.vm.showSuccess)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+    }
+}
+
+@Suite("Instance firewall change")
+@MainActor
+struct InstanceFirewallChangeTests {
+    private static func instance(_ json: String) throws -> CivoInstance {
+        try JSONDecoder().decode(CivoInstance.self, from: Data(json.utf8))
+    }
+
+    @Test("Only firewalls of the instance's network are offered; without network_id the default network counts")
+    func offeredFirewalls() throws {
+        let options = InstanceFirewallOptions(region: "LON1", firewalls: InstanceEnvironment.firewalls, networks: InstanceEnvironment.networks)
+        #expect(options.offered(for: InstanceEnvironment.instance).map(\.id) == ["fw-default", "fw-custom"])
+
+        let privateInstance = try Self.instance(#"{"id": "i-2", "network_id": "net-private"}"#)
+        #expect(options.offered(for: privateInstance).map(\.id) == ["fw-private"])
+
+        let withoutDefaultNetwork = InstanceFirewallOptions(
+            region: "LON1",
+            firewalls: InstanceEnvironment.firewalls,
+            networks: InstanceEnvironment.networks.filter { $0.isDefault != true }
+        )
+        #expect(withoutDefaultNetwork.offered(for: InstanceEnvironment.instance).isEmpty)
+    }
+
+    @Test("The set-firewall answer is accepted as an acknowledgment or an instance object, anything else is refused")
+    func setFirewallResponse() throws {
+        let accepted = [
+            #"{"result": "success"}"#,
+            #"{"id": "779d651a", "result": "success"}"#,
+            // Shortened example response of https://www.civo.com/api/instances
+            #"{"id": "779d651a", "hostname": "test", "firewall_id": "b6dfca68", "initial_password": "foobar", "status": "ACTIVE"}"#,
+        ]
+        for json in accepted {
+            _ = try JSONDecoder().decode(InstanceFirewallChangeResponse.self, from: Data(json.utf8))
+        }
+        for json in ["{}", #"{"result": "failed"}"#, #"{"id": 42}"#, "[]"] {
+            #expect(throws: DecodingError.self, "\(json)") {
+                try JSONDecoder().decode(InstanceFirewallChangeResponse.self, from: Data(json.utf8))
+            }
+        }
+    }
+
+    @Test("The change is sent with the captured region only after confirmation and logged with the firewall name")
+    func change() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.firewall, for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction?.kind == .firewall)
+        #expect(await env.api.calls.isEmpty)
+
+        let target = try #require(env.vm.confirmPendingAction())
+        await env.vm.setFirewall("fw-custom", of: target)
+        #expect(await env.api.calls == ["firewall \(consoleInstanceId) fw-custom LON1"])
+        #expect(env.activities == ["Firewall set to custom"])
+        #expect(env.vm.error == nil)
+    }
+
+    @Test("Full Access, a deleted firewall and a firewall of another network are checked when the user confirms")
+    func confirmTimeChecks() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.firewall, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+
+        env.accessAllowed = false
+        await env.vm.setFirewall("fw-custom", of: target)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+
+        env.accessAllowed = true
+        await env.vm.setFirewall("fw-private", of: target)
+        #expect(env.vm.error == InstanceTargetError.firewallUnavailable.message)
+
+        env.firewallsByRegion["LON1"] = InstanceEnvironment.firewalls.filter { $0.id != "fw-custom" }
+        await env.vm.setFirewall("fw-custom", of: target)
+        #expect(env.vm.error == InstanceTargetError.firewallUnavailable.message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.activities.isEmpty)
+    }
+
+    @Test("An unreadable answer shows a clear error and still reloads the instance")
+    func unreadableAnswer() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        let changed = try Self.instance(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "ACTIVE", "firewall_id": "fw-custom"}"#)
+        await env.api.list([changed], in: "LON1")
+        await env.api.failFirewallChange(with: CivoAPIError.decodingError("unexpected answer"))
+        await env.vm.setFirewall("fw-custom", of: target)
+
+        #expect(env.vm.selectedInstance?.firewallId == "fw-custom")
+        #expect(env.vm.error == InstanceViewModel.unreadableFirewallChangeMessage)
+        #expect(env.activities.isEmpty)
+    }
+}
+
+@Suite("Instance volumes")
+@MainActor
+struct InstanceVolumeTests {
+    /// Shaped like the list example of https://www.civo.com/api/volumes, with `cluster_id` empty when unused.
+    static let volumes = try! JSONDecoder().decode([CivoVolume].self, from: Data("""
+    [{"id":"vol-free","name":"free","network_id":"net-default","instance_id":null,"cluster_id":"","size_gb":10},
+     {"id":"vol-no-network","name":"no-network","instance_id":null,"size_gb":5},
+     {"id":"vol-mine","name":"data","network_id":"net-default","instance_id":"\(consoleInstanceId)","mountpoint":"/dev/vdb","size_gb":20},
+     {"id":"vol-elsewhere","name":"elsewhere","network_id":"net-default","instance_id":"other-instance","size_gb":20},
+     {"id":"vol-private","name":"private","network_id":"net-private","instance_id":null,"size_gb":10},
+     {"id":"vol-cluster","name":"pvc","network_id":"net-default","instance_id":null,"cluster_id":"k8s-1","size_gb":10},
+     {"id":"vol-other-region","name":"other-region","network_id":"net-default","instance_id":null,"region":"NYC1","size_gb":10}]
+    """.utf8))
+
+    @Test("Only free volumes of the instance's network and region are offered; attached ones are listed for their instance")
+    func attachableFilter() throws {
+        let options = InstanceVolumeOptions(region: "lon1", volumes: Self.volumes, networks: InstanceEnvironment.networks)
+        // Without network_id on either side the region's default network counts.
+        #expect(options.attachable(to: InstanceEnvironment.instance).map(\.id) == ["vol-free", "vol-no-network"])
+        #expect(options.attached(to: InstanceEnvironment.instance).map(\.id) == ["vol-mine"])
+
+        let privateInstance = try JSONDecoder().decode(CivoInstance.self, from: Data(#"{"id": "i-2", "network_id": "net-private"}"#.utf8))
+        #expect(options.attachable(to: privateInstance).map(\.id) == ["vol-private"])
+
+        let withoutDefaultNetwork = InstanceVolumeOptions(
+            region: "LON1",
+            volumes: Self.volumes,
+            networks: InstanceEnvironment.networks.filter { $0.isDefault != true }
+        )
+        #expect(withoutDefaultNetwork.attachable(to: InstanceEnvironment.instance).isEmpty)
+    }
+
+    @Test("Attaching sends the captured region and logs the volume; a volume that is no longer free sends nothing")
+    func attach() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.attachVolume, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+
+        await env.vm.attachVolume("vol-free", to: target)
+        #expect(await env.volumes.calls == ["attach vol-free \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Attached volume free"])
+
+        // Attached elsewhere, in another network or owned by a cluster: refused after reloading the list.
+        for volumeId in ["vol-elsewhere", "vol-private", "vol-cluster", "vol-mine"] {
+            await env.vm.attachVolume(volumeId, to: target)
+            #expect(env.vm.error == InstanceTargetError.volumeUnavailable.message, "\(volumeId)")
+        }
+
+        env.accessAllowed = false
+        await env.vm.attachVolume("vol-free", to: target)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.volumes.calls.count == 1)
+    }
+
+    @Test("Detaching needs the confirmation that asks to unmount first, and only for a volume still attached")
+    func detachNeedsConfirmation() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        #expect(env.vm.confirmDetach() == nil)
+        env.vm.beginConfirmation(.attachVolume, for: InstanceEnvironment.instance)
+        #expect(env.vm.confirmDetach() == nil)
+
+        env.vm.beginConfirmation(.detachVolume(id: "vol-mine", name: "data"), for: InstanceEnvironment.instance)
+        #expect(await env.volumes.calls.isEmpty)
+        let confirmed = try #require(env.vm.confirmDetach())
+        #expect(env.vm.pendingAction == nil)
+        await env.vm.detachVolume(confirmed)
+        #expect(await env.volumes.calls == ["detach vol-mine LON1"])
+        #expect(env.activities == ["Detached volume data"])
+
+        // Detached meanwhile by someone else: refused after reloading the list.
+        await env.volumes.list(Self.volumes.filter { $0.id != "vol-mine" }, in: "LON1")
+        env.vm.beginConfirmation(.detachVolume(id: "vol-mine", name: "data"), for: InstanceEnvironment.instance)
+        await env.vm.detachVolume(try #require(env.vm.confirmDetach()))
+        #expect(env.vm.error == InstanceTargetError.volumeNotAttached.message)
+        #expect(await env.volumes.calls.count == 1)
+    }
+
+    @Test("An attach that finishes after a region change neither replaces nor fails the new region's volumes",
+          arguments: [false, true])
+    func lateAttachAfterRegionChange(oldRegionListFails: Bool) async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment(attachGate: gate)
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let attach = Task { await env.vm.attachVolume("vol-free", to: target) }
+        await gate.untilSuspended()
+
+        await env.api.list([InstanceEnvironment.instance], in: "NYC1")
+        await env.volumes.list(Self.volumes, in: "NYC1")
+        env.changeRegion(to: "NYC1")
+        await env.vm.refresh()
+        await env.vm.loadVolumeOptions(for: InstanceEnvironment.instance)
+        #expect(env.vm.volumeOptions(for: InstanceEnvironment.instance)?.region == "NYC1")
+
+        if oldRegionListFails {
+            await env.volumes.failListing(in: "LON1", with: CivoAPIError.networkError("offline"))
+        }
+        await gate.open()
+        await attach.value
+
+        #expect(await env.volumes.calls == ["attach vol-free \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Attached volume free"])
+        #expect(env.vm.volumeOptions(for: InstanceEnvironment.instance)?.region == "NYC1")
+        #expect(env.vm.volumeOptionsError == nil)
+    }
+
+    @Test("An error from Civo is shown as returned, without logging or success")
+    func civoError() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let refusal = CivoAPIError.httpError(400, #"{"code":"volume_already_attached"}"#)
+        await env.volumes.failRequests(with: refusal)
+
+        await env.vm.attachVolume("vol-free", to: target)
+        #expect(env.vm.error == refusal.localizedDescription)
+        #expect(!env.vm.showSuccess)
+        #expect(env.activities.isEmpty)
+    }
+}
+
+@Suite("Instance tags")
+@MainActor
+struct InstanceTagTests {
+    @Test("Comma-separated input is trimmed, split, de-duplicated and sent space-separated")
+    func normalisation() throws {
+        let change = try InstanceTagChange.replacing(with: " web ,db,, web,\tprod-1 ,")
+        #expect(change.tags == ["web", "db", "prod-1"])
+        #expect(change.parameter == "web db prod-1")
+    }
+
+    @Test("A tag with a space is rejected instead of being split by Civo; input without a tag is refused")
+    func invalidInput() {
+        #expect(throws: InstanceTagInputError.containsWhitespace(["my app", "a b"])) {
+            try InstanceTagChange.replacing(with: "web, my app, a b")
+        }
+        for input in ["", "  ", ", ,"] {
+            #expect(throws: InstanceTagInputError.empty, "\(input)") { try InstanceTagChange.replacing(with: input) }
+        }
+    }
+
+    @Test("Saving sends the normalised tags with the captured region and logs them")
+    func save() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        #expect(await env.vm.setTags("web, db, web", of: target))
+        #expect(await env.api.calls == ["tags \(consoleInstanceId) [web db] LON1"])
+        #expect(env.activities == ["Tags set to web, db"])
+    }
+
+    @Test("Input without a tag or with a space sends no request, so saving can never clear the tags")
+    func emptyInputSendsNothing() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        for input in ["", " , ", "my app"] {
+            #expect(await env.vm.setTags(input, of: target) == false)
+        }
+        #expect(env.vm.error == InstanceTagInputError.containsWhitespace(["my app"]).message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.activities.isEmpty)
+    }
+
+    @Test("Only the confirmed Remove All Tags action sends empty tags, with Full Access checked on confirm")
+    func removeAll() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+
+        env.vm.beginConfirmation(.removeAllTags, for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction?.kind == .removeAllTags)
+        env.vm.cancelConfirmation()
+        #expect(await env.api.calls.isEmpty)
+
+        env.vm.beginConfirmation(.removeAllTags, for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.removeAllTags(of: refused)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+
+        env.accessAllowed = true
+        env.vm.beginConfirmation(.removeAllTags, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+        await env.vm.removeAllTags(of: target)
+        #expect(await env.api.calls == ["tags \(consoleInstanceId) [] LON1"])
+        #expect(env.activities == ["Removed all tags"])
+    }
+
+    @Test("The list filter matches part of a tag, ignoring case; an empty filter shows every instance")
+    func filter() throws {
+        let tagged = try JSONDecoder().decode(CivoInstance.self, from: Data(#"{"id": "i-1", "tags": ["Production", "web"]}"#.utf8))
+        #expect(tagged.hasTag(matching: "prod"))
+        #expect(tagged.hasTag(matching: " WEB "))
+        #expect(!tagged.hasTag(matching: "db"))
+        #expect(InstanceEnvironment.instance.hasTag(matching: ""))
+        #expect(!InstanceEnvironment.instance.hasTag(matching: "web"))
     }
 }
 
@@ -2468,5 +3209,1099 @@ struct InstanceResizeTests {
         let vm = InstanceViewModel(loadSSHKeys: { [] }, loadSizes: { throw Offline() }, isAccessAllowed: { true })
         await vm.loadResizeSizes()
         #expect(vm.resizeSizes == .failed("The Internet connection appears to be offline."))
+    }
+}
+
+@Suite("Create Instance advanced options")
+struct InstanceCreationAdvancedTests {
+    private var complete: InstanceCreationForm {
+        var form = InstanceCreationForm()
+        form.hostname = "web-1.example.com"
+        form.size = "g3.small"
+        form.diskImage = "ubuntu-jammy"
+        form.networkId = "8c97b398"
+        return form
+    }
+
+    /// Quota as in https://www.civo.com/api/quota, which sends the numbers as strings.
+    private func quota(instances: (Int, Int), cpu: (Int, Int), publicIps: (Int, Int)) throws -> CivoQuota {
+        try JSONDecoder().decode(CivoQuota.self, from: Data("""
+        {"instance_count_limit":"\(instances.0)","instance_count_usage":"\(instances.1)",
+         "cpu_core_limit":"\(cpu.0)","cpu_core_usage":"\(cpu.1)",
+         "ram_mb_limit":"204800","ram_mb_usage":"0","disk_gb_limit":"10000","disk_gb_usage":"0",
+         "public_ip_address_limit":"\(publicIps.0)","public_ip_address_usage":"\(publicIps.1)"}
+        """.utf8))
+    }
+
+    private let small = try! JSONDecoder().decode(CivoSize.self, from: Data("""
+    {"name":"g3.small","cpu_cores":2,"ram_mb":2048,"disk_gb":40}
+    """.utf8))
+
+    @Test("Empty optional fields are left out, count only above 1, and the toggle maps to public_ip")
+    func optionalFields() throws {
+        var form = complete
+        form.reverseDns = "  "
+        form.initialUser = "  "
+        form.script = " \n "
+        var body = try #require(form.requestBody())
+        #expect(body["public_ip"] as? String == "create")
+        for key in ["count", "initial_user", "reverse_dns", "script", "tags", "ssh_key_id"] {
+            #expect(body[key] == nil, "\(key) must be left out")
+        }
+
+        form.createsPublicIp = false
+        form.count = 3
+        form.initialUser = " deploy "
+        form.script = "#!/bin/sh\necho \"ready\"\n"
+        body = try #require(form.requestBody())
+        #expect(body["public_ip"] as? String == "none")
+        #expect(body["count"] as? Int == 3)
+        #expect(body["initial_user"] as? String == "deploy")
+        #expect(body["script"] as? String == "#!/bin/sh\necho \"ready\"\n")
+    }
+
+    @Test("Reverse DNS follows the hostname until it is edited")
+    func reverseDnsDefault() throws {
+        var form = complete
+        #expect(try #require(form.requestBody())["reverse_dns"] as? String == "web-1.example.com")
+        form.hostname = "web-2.example.com"
+        #expect(form.reverseDns == "web-2.example.com")
+        form.reverseDns = "ptr.example.com"
+        form.hostname = "web-3.example.com"
+        #expect(try #require(form.requestBody())["reverse_dns"] as? String == "ptr.example.com")
+    }
+
+    @Test("Tags are trimmed, deduplicated and space-separated; a tag with a space sends nothing")
+    func tags() throws {
+        var form = complete
+        form.tags = " web, prod ,, web "
+        #expect(try #require(form.requestBody())["tags"] as? String == "web prod")
+        #expect(form.tagsProblem == nil)
+
+        form.tags = "web, my tag"
+        #expect(form.requestBody() == nil)
+        #expect(form.tagsProblem != nil)
+    }
+
+    @Test("The count is limited by the tightest remaining quota and never below 1")
+    func maximumCount() throws {
+        let roomy = try quota(instances: (10, 5), cpu: (16, 10), publicIps: (10, 8))
+        #expect(InstanceBulkCreation.maximumCount(quota: roomy, size: small, createsPublicIp: false) == 3, "6 free cores, 2 each")
+        #expect(InstanceBulkCreation.maximumCount(quota: roomy, size: small, createsPublicIp: true) == 2, "2 free public IPs")
+        #expect(InstanceBulkCreation.maximumCount(quota: roomy, size: nil, createsPublicIp: false) == 5, "5 free instances")
+
+        let full = try quota(instances: (10, 10), cpu: (16, 16), publicIps: (10, 10))
+        #expect(InstanceBulkCreation.capacity(quota: full, size: small, createsPublicIp: true) == 0)
+        #expect(InstanceBulkCreation.maximumCount(quota: full, size: small, createsPublicIp: true) == 1, "Civo reports the exceeded quota")
+        #expect(InstanceBulkCreation.capacity(quota: nil, size: small, createsPublicIp: true) == nil)
+        #expect(InstanceBulkCreation.maximumCount(quota: nil, size: small, createsPublicIp: true) == 1)
+    }
+
+    @Test("More than one instance needs a confirmation with count times the hourly rate")
+    func bulkConfirmation() throws {
+        let rates = ["instance-g3.small": 0.014881]
+        #expect(BulkCreationConfirmation(count: 1, size: "g3.small", rates: rates) == nil)
+
+        let confirmation = try #require(BulkCreationConfirmation(count: 3, size: "g3.small", rates: rates))
+        #expect(abs(try #require(confirmation.totalHourlyCost) - 0.044643) < 0.000001)
+
+        let unknown = try #require(BulkCreationConfirmation(count: 2, size: "g9.custom", rates: rates))
+        #expect(unknown.totalHourlyCost == nil)
+    }
+
+    @Test("The create answer keeps only whether Civo set an initial password, for one or several instances")
+    func creationResponse() throws {
+        func decode(_ json: String) throws -> InstanceCreationResponse {
+            try JSONDecoder().decode(InstanceCreationResponse.self, from: Data(json.utf8))
+        }
+        #expect(try decode(#"{"id":"779d651a","initial_user":"root","initial_password":"foobar"}"#).setsInitialPassword)
+        #expect(try !decode(#"{"id":"779d651a","initial_password":null,"ssh_key_id":"21aa424f"}"#).setsInitialPassword)
+        #expect(try decode(#"[{"id":"a","initial_password":""},{"id":"b","initial_password":"foobar"}]"#).setsInitialPassword)
+        #expect(throws: DecodingError.self) { try decode(#"{"result":"success"}"#) }
+    }
+}
+
+// MARK: - Firewall rule editing
+
+/// Decodes a rule shaped like the list example of https://www.civo.com/api/vpc.
+private func firewallRule(_ fields: String) -> CivoRule {
+    try! JSONDecoder().decode(CivoRule.self, from: Data("{\"id\": \"rule-1\", \(fields)}".utf8))
+}
+
+private let editableRule = firewallRule(
+    #""protocol": "tcp", "start_port": "22", "end_port": "22", "cidr": ["198.51.100.0/24"], "direction": "ingress", "label": "office SSH", "action": "allow""#
+)
+
+@Suite("Firewall rule drafts")
+struct FirewallRuleDraftTests {
+    @Test("Ports must be whole numbers from 1 to 65535 with the end not below the start; ICMP may have none")
+    func portRules() {
+        func problem(_ proto: String, _ start: String, _ end: String = "") -> FirewallRuleDraftProblem? {
+            FirewallRuleDraft(proto: proto, startPort: start, endPort: end, cidr: "10.0.0.0/8", direction: "ingress").problem
+        }
+        #expect(problem("tcp", "22") == nil)
+        #expect(problem("udp", " 8000 ", "8100") == nil)
+        #expect(problem("tcp", "1", "65535") == nil)
+        #expect(problem("icmp", "") == nil)
+        #expect(problem("tcp", "") == .missingStartPort)
+        #expect(problem("udp", "0") == .invalidPort)
+        #expect(problem("tcp", "65536") == .invalidPort)
+        #expect(problem("tcp", "80", "http") == .invalidPort)
+        #expect(problem("tcp", "22-23") == .invalidPort)
+        #expect(problem("tcp", "443", "80") == .invalidPortRange)
+        #expect(problem("icmp", "", "80") == .invalidPortRange)
+        #expect(problem("all", "22") == .unknownProtocol)
+        #expect(FirewallRuleDraft(proto: "tcp", startPort: "22", cidr: "10.0.0.0/8", direction: "both").problem == .unknownDirection)
+    }
+
+    @Test("A CIDR needs a valid IPv4 or IPv6 address and a prefix length that fits it")
+    func cidrRules() {
+        for valid in ["0.0.0.0/0", "203.0.113.10/32", " 10.0.0.0/8 ", "::/0", "2001:db8::/32"] {
+            #expect(CIDRBlock(valid) != nil, "\(valid)")
+        }
+        for invalid in ["", "203.0.113.10", "203.0.113.10/33", "300.0.0.1/32", "10.0.0.0/-1", "10.0.0.0/08", "2001:db8::/129", "example.com/32", "10.0.0.0/8/8"] {
+            #expect(CIDRBlock(invalid) == nil, "\(invalid)")
+        }
+        #expect(FirewallRuleDraft(proto: "tcp", startPort: "22", cidr: "203.0.113.10", direction: "ingress").problem == .invalidCIDR)
+
+        let office = CIDRBlock("198.51.100.0/23")!
+        #expect(office.contains("198.51.101.200"))
+        #expect(!office.contains("198.51.102.1"))
+        #expect(!office.contains("2001:db8::1"))
+        #expect(CIDRBlock("2001:db8::/32")!.contains("2001:db8:ffff::1"))
+        #expect(CIDRBlock("0.0.0.0/0")!.isGlobal && CIDRBlock("::/0")!.isGlobal && !office.isGlobal)
+    }
+
+    @Test("The editor is prefilled from start/end ports, or from ports when Civo sends only those")
+    func prefill() {
+        #expect(FirewallRuleDraft(rule: editableRule) == FirewallRuleDraft(proto: "tcp", startPort: "22", cidr: "198.51.100.0/24", direction: "ingress", label: "office SSH"))
+        let legacyRange = firewallRule(#""protocol": "udp", "ports": "8000-8100", "cidr": "10.0.0.0/8", "direction": "egress""#)
+        #expect(FirewallRuleDraft(rule: legacyRange) == FirewallRuleDraft(proto: "udp", startPort: "8000", endPort: "8100", cidr: "10.0.0.0/8", direction: "egress"))
+        let icmp = firewallRule(#""protocol": "icmp", "cidr": ["0.0.0.0/0"], "direction": "ingress""#)
+        #expect(FirewallRuleDraft(rule: icmp).startPort.isEmpty)
+    }
+
+    @Test("The update sends every editable field but never the action, and a single port as start and end")
+    func requestBody() {
+        var draft = FirewallRuleDraft(rule: editableRule)
+        draft.startPort = " 2222 "
+        draft.label = ""
+        let body = draft.requestBody(region: "LON1")
+        #expect(Set(body.keys) == ["protocol", "start_port", "end_port", "cidr", "direction", "label", "region"])
+        #expect(body["start_port"] as? String == "2222")
+        #expect(body["end_port"] as? String == "2222")
+        #expect(body["cidr"] as? [String] == ["198.51.100.0/24"])
+        #expect(body["label"] as? String == "")
+        #expect(body["region"] as? String == "LON1")
+
+        let icmp = FirewallRuleDraft(proto: "icmp", startPort: "", cidr: "0.0.0.0/0", direction: "ingress").requestBody(region: "LON1")
+        #expect(icmp["start_port"] == nil && icmp["end_port"] == nil)
+    }
+
+    @Test("The comparison lists only changed fields, in before and after form")
+    func comparison() {
+        var draft = FirewallRuleDraft(rule: editableRule)
+        #expect(draft.changes(from: editableRule).isEmpty)
+        draft.endPort = "23"
+        draft.label = " office SSH "
+        #expect(draft.changes(from: editableRule) == [FirewallRuleChange(field: .ports, before: "22", after: "22-23")])
+    }
+
+    @Test("A global allow and a change of the rule that admits this Mac are warned about; label edits and deny rules are not")
+    func warnings() {
+        var global = FirewallRuleDraft(rule: editableRule)
+        global.cidr = "0.0.0.0/0"
+        #expect(global.warnings(editing: editableRule, currentIP: "203.0.113.5") == [.globalAccess])
+
+        var narrowed = FirewallRuleDraft(rule: editableRule)
+        narrowed.cidr = "198.51.100.7/32"
+        #expect(narrowed.warnings(editing: editableRule, currentIP: "198.51.100.20") == [.ownAccess])
+        #expect(narrowed.warnings(editing: editableRule, currentIP: "203.0.113.5").isEmpty)
+        #expect(narrowed.warnings(editing: editableRule, currentIP: nil) == [.ownAccessUnknown])
+
+        var relabeled = FirewallRuleDraft(rule: editableRule)
+        relabeled.label = "renamed"
+        #expect(relabeled.warnings(editing: editableRule, currentIP: "198.51.100.20").isEmpty)
+
+        let deny = firewallRule(#""protocol": "tcp", "start_port": "22", "cidr": ["198.51.100.0/24"], "direction": "ingress", "action": "deny""#)
+        var widenedDeny = FirewallRuleDraft(rule: deny)
+        widenedDeny.cidr = "0.0.0.0/0"
+        #expect(widenedDeny.warnings(editing: deny, currentIP: "203.0.113.5") == [.blocksOwnAccess])
+        var narrowedDeny = FirewallRuleDraft(rule: deny)
+        narrowedDeny.cidr = "198.51.100.7/32"
+        #expect(narrowedDeny.warnings(editing: deny, currentIP: "203.0.113.5").isEmpty)
+    }
+
+    @Test("A label may not take the prefix of rules the app opens and closes, or bulk closure would delete the rule")
+    func reservedLabel() {
+        var draft = FirewallRuleDraft(rule: editableRule)
+        draft.label = " civo-cloud-my-mac-web"
+        #expect(draft.problem == .reservedLabel)
+    }
+
+    @Test("Timer rules, rules the app opened itself and rules with several CIDRs are kept out of the editor")
+    func editability() {
+        #expect(FirewallRuleEditability(rule: editableRule, isScheduledForClosure: false) == .editable)
+        #expect(FirewallRuleEditability(rule: editableRule, isScheduledForClosure: true) == .scheduledClosure)
+        let menuBar = firewallRule(#""protocol": "tcp", "start_port": "22", "cidr": ["203.0.113.5/32"], "direction": "ingress", "label": "civo-cloud-other-mac-web""#)
+        #expect(FirewallRuleEditability(rule: menuBar, isScheduledForClosure: false) == .appManaged)
+        let several = firewallRule(#""protocol": "tcp", "start_port": "443", "cidr": ["10.0.0.0/8", "192.168.0.0/16"], "direction": "ingress""#)
+        #expect(FirewallRuleEditability(rule: several, isScheduledForClosure: false) == .multipleCIDRs)
+    }
+}
+
+/// Rule requests recorded instead of sent; Civo's rule list changes as updates succeed.
+private actor FakeFirewallRuleAPI: FirewallRuleAPI {
+    var rules: [CivoRule]
+    private(set) var calls: [String] = []
+    private var updateError: Error?
+    /// Runs while the reload is on its way, like a Settings change during the request.
+    private var duringReload: (@Sendable () async -> Void)?
+    /// Runs while the update is on its way, after it was sent.
+    private var duringUpdate: (@Sendable () async -> Void)?
+
+    init(rules: [CivoRule]) { self.rules = rules }
+
+    func replaceRules(with rules: [CivoRule]) { self.rules = rules }
+    func failUpdate(with error: Error) { updateError = error }
+    func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+    func whileUpdating(_ action: @escaping @Sendable () async -> Void) { duringUpdate = action }
+
+    func getRulesForFirewall(_ firewallId: String, region: String?, apiKey: String?) async throws -> [CivoRule] {
+        calls.append("list \(firewallId) \(region ?? "-") \(apiKey ?? "-")")
+        if let action = duringReload {
+            duringReload = nil
+            await action()
+        }
+        return rules
+    }
+
+    func updateRule(_ ruleId: String, of firewallId: String, body: sending [String: Any], region: String, apiKey: String) async throws {
+        calls.append("update \(firewallId) \(ruleId) \(region) \(apiKey) port \(body["start_port"] as? String ?? "-")")
+        if let action = duringUpdate {
+            duringUpdate = nil
+            await action()
+        }
+        if let updateError { throw updateError }
+    }
+}
+
+@Suite("Firewall rule editor")
+@MainActor
+struct FirewallRuleEditorTests {
+    static let firewall = try! JSONDecoder().decode(CivoFirewall.self, from: Data(#"{"id": "fw-1", "name": "web", "rules_count": "1"}"#.utf8))
+
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeFirewallRuleAPI(rules: [editableRule])
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        var scheduled: Set<String> = []
+        lazy var editor = FirewallRuleEditor(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            detectIP: { "203.0.113.5" },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] in activities.append("\($0.firewallName) \($0.ruleId)") }
+        )
+
+        /// Opens the editor as the rule list does, with the rules listed from LON1 with key-a.
+        func begin() {
+            editor.begin(
+                editing: editableRule, of: FirewallRuleEditorTests.firewall, region: "LON1",
+                account: CivoAccount(apiKey: "key-a"), isScheduledForClosure: { [unowned self] _, ruleId in scheduled.contains(ruleId) }
+            )
+        }
+
+        let target = FirewallRuleTarget(firewallId: "fw-1", firewallName: "web", ruleId: "rule-1", region: "LON1", account: CivoAccount(apiKey: "key-a"))
+
+        func save(_ draft: FirewallRuleDraft) async -> FirewallRuleSaveOutcome? {
+            await editor.save(draft) { [unowned self] _, ruleId in scheduled.contains(ruleId) }
+        }
+    }
+
+    private static var changedPort: FirewallRuleDraft {
+        var draft = FirewallRuleDraft(rule: editableRule)
+        draft.startPort = "2222"
+        return draft
+    }
+
+    @Test("The rule is loaded again, then updated with the captured region and account, and logged")
+    func save() async {
+        let env = Environment()
+        env.begin()
+        #expect(env.editor.session?.target == FirewallRuleTarget(firewallId: "fw-1", firewallName: "web", ruleId: "rule-1", region: "LON1", account: CivoAccount(apiKey: "key-a")))
+
+        #expect(await env.save(Self.changedPort) == .saved)
+        #expect(await env.api.calls == ["list fw-1 LON1 key-a", "update fw-1 rule-1 LON1 key-a port 2222"])
+        #expect(env.editor.session == nil)
+        #expect(env.activities == ["web rule-1"])
+    }
+
+    @Test("A rule removed meanwhile is reported and never recreated or deleted")
+    func removedRule() async {
+        let env = Environment()
+        env.begin()
+        await env.api.replaceRules(with: [])
+        #expect(await env.save(Self.changedPort) == .cancelled)
+        #expect(await env.api.calls == ["list fw-1 LON1 key-a"])
+        #expect(env.editor.notice == FirewallRuleEditError.ruleRemoved.message)
+    }
+
+    @Test("A rule changed elsewhere is not overwritten until the user saves again against its current values")
+    func conflict() async {
+        let env = Environment()
+        env.begin()
+        let changedElsewhere = firewallRule(
+            #""protocol": "tcp", "start_port": "22", "end_port": "22", "cidr": ["198.51.100.0/24"], "direction": "ingress", "label": "changed by a colleague", "action": "allow""#
+        )
+        await env.api.replaceRules(with: [changedElsewhere])
+
+        #expect(await env.save(Self.changedPort) == nil)
+        #expect(env.editor.saveError == FirewallRuleEditError.ruleChanged.message)
+        #expect(env.editor.session?.original == changedElsewhere)
+        #expect(await env.api.calls == ["list fw-1 LON1 key-a"])
+
+        #expect(await env.save(Self.changedPort) == .saved)
+        #expect(await env.api.calls.last == "update fw-1 rule-1 LON1 key-a port 2222")
+    }
+
+    @Test("A timer set on the rule after the editor opened stops the save")
+    func timerSetMeanwhile() async {
+        let env = Environment()
+        env.begin()
+        env.scheduled = ["rule-1"]
+        #expect(await env.save(Self.changedPort) == .cancelled)
+        #expect(env.editor.notice == FirewallRuleEditError.notEditable(.scheduledClosure).message)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("update") })
+
+        env.begin()
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == FirewallRuleEditError.notEditable(.scheduledClosure).message)
+    }
+
+    @Test("A region or account change closes an open editor, and one during the reload sends nothing")
+    func regionAndAccountChanges() async {
+        let env = Environment()
+        env.begin()
+        env.region = "NYC1"
+        env.notifications.post(name: .civoRegionDidChange, object: nil)
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == FirewallRuleEditError.regionChanged.message)
+
+        env.region = "LON1"
+        env.begin()
+        env.apiKey = "key-b"
+        env.notifications.post(name: .civoAPIKeyDidChange, object: nil)
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == FirewallRuleEditError.accountChanged.message)
+
+        // The rules on screen were listed with key-a; after the switch they may not be edited.
+        env.begin()
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == FirewallRuleEditError.accountChanged.message)
+
+        env.apiKey = "key-a"
+        env.begin()
+        let notifications = env.notifications
+        await env.api.whileReloading {
+            await MainActor.run {
+                env.apiKey = "key-b"
+                notifications.post(name: .civoAPIKeyDidChange, object: nil)
+            }
+        }
+        #expect(await env.save(Self.changedPort) == nil)
+        #expect(env.editor.notice == FirewallRuleEditError.accountChanged.message)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("update") })
+    }
+
+    @Test("Cancelling, or a region change away and back, while the rule reloads sends nothing")
+    func cancelledDuringReload() async {
+        let env = Environment()
+        env.begin()
+        let editor = env.editor
+        await env.api.whileReloading { await MainActor.run { editor.cancel() } }
+        #expect(await env.save(Self.changedPort) == nil)
+
+        env.begin()
+        let notifications = env.notifications
+        await env.api.whileReloading {
+            await MainActor.run {
+                env.region = "NYC1"
+                notifications.post(name: .civoRegionDidChange, object: nil)
+                env.region = "LON1"
+                notifications.post(name: .civoRegionDidChange, object: nil)
+            }
+        }
+        #expect(await env.save(Self.changedPort) == nil)
+        #expect(env.editor.session == nil)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("update") })
+    }
+
+    @Test("Full Access is checked again when saving")
+    func accessRevoked() async {
+        let env = Environment()
+        env.begin()
+        env.accessAllowed = false
+        #expect(await env.save(Self.changedPort) == .cancelled)
+        #expect(env.editor.notice == FirewallRuleEditError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A refused update keeps the editor open with Civo's reason; an unreadable or lost answer asks to check the list")
+    func failedUpdates() async {
+        let env = Environment()
+        env.begin()
+        await env.api.failUpdate(with: CivoAPIError.httpError(429, "slow down"))
+        #expect(await env.save(Self.changedPort) == nil)
+        #expect(env.editor.session != nil)
+        #expect(env.editor.saveError == CivoAPIError.userMessage(CivoAPIError.httpError(429, "slow down")))
+
+        #expect(await env.save(FirewallRuleDraft(proto: "tcp", startPort: "99999", cidr: "10.0.0.0/8", direction: "ingress")) == nil)
+        #expect(env.editor.saveError == FirewallRuleDraftProblem.invalidPort.message)
+
+        await env.api.failUpdate(with: CivoAPIError.decodingError("unexpected answer"))
+        #expect(await env.save(Self.changedPort) == .uncertain)
+        #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage(for: env.target))
+        #expect(env.activities.isEmpty)
+
+        for lost in [CivoAPIError.networkError("The request timed out."), CivoAPIError.cancelled, CivoAPIError.httpError(503, "Unavailable")] {
+            env.begin()
+            await env.api.failUpdate(with: lost)
+            #expect(await env.save(Self.changedPort) == .uncertain)
+            #expect(env.editor.session == nil)
+            #expect(env.editor.saveError == nil)
+            #expect(env.editor.notice == FirewallRuleEditor.unknownResultMessage(for: env.target))
+        }
+        #expect(env.activities.isEmpty)
+    }
+
+    @Test("A region or account change once the update was sent says so, then reports Civo's answer for that firewall")
+    func settingsChangeWhileUpdating() async throws {
+        let env = Environment()
+        env.begin()
+        let notifications = env.notifications
+        await env.api.whileUpdating {
+            await MainActor.run {
+                env.region = "NYC1"
+                notifications.post(name: .civoRegionDidChange, object: nil)
+                #expect(env.editor.session == nil)
+                #expect(env.editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
+            }
+        }
+        #expect(await env.save(Self.changedPort) == .saved)
+        #expect(env.editor.notice == FirewallRuleEditor.savedMessage(for: env.target))
+        #expect(env.activities == ["web rule-1"])
+
+        env.region = "LON1"
+        env.begin()
+        await env.api.failUpdate(with: CivoAPIError.networkError("The network connection was lost."))
+        await env.api.whileUpdating {
+            await MainActor.run {
+                env.apiKey = "key-b"
+                notifications.post(name: .civoAPIKeyDidChange, object: nil)
+                #expect(env.editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
+            }
+        }
+        #expect(await env.save(Self.changedPort) == .uncertain)
+        #expect(env.editor.notice == FirewallRuleEditor.unknownResultMessage(for: env.target))
+        #expect(env.editor.session == nil)
+        #expect(env.activities == ["web rule-1"])
+    }
+
+    @Test("An answer to an update whose editor was cancelled leaves the editor opened afterwards untouched", arguments: [
+        nil, CivoAPIError.httpError(422, "invalid"), CivoAPIError.decodingError("unexpected answer"),
+        CivoAPIError.networkError("The request timed out."), CivoAPIError.httpError(503, "Unavailable"),
+    ] as [CivoAPIError?])
+    func answerAfterCancelAndReopen(failure: CivoAPIError?) async throws {
+        let env = Environment()
+        env.begin()
+        if let failure { await env.api.failUpdate(with: failure) }
+        let editor = env.editor
+        await env.api.whileUpdating {
+            await MainActor.run {
+                editor.cancel()
+                #expect(editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
+                env.begin()
+            }
+        }
+        let cancelledSession = env.editor.session?.id
+
+        let outcome = await env.save(Self.changedPort)
+
+        #expect(env.editor.session != nil)
+        #expect(env.editor.session?.id != cancelledSession)
+        #expect(env.editor.session?.original == editableRule)
+        #expect(env.editor.saveError == nil)
+        switch failure {
+        case nil:
+            #expect(outcome == .saved)
+            #expect(env.editor.notice == FirewallRuleEditor.savedMessage(for: env.target))
+        case .decodingError?:
+            #expect(outcome == .uncertain)
+            #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage(for: env.target))
+        case let .httpError(status, message)? where status == 422:
+            #expect(outcome == .cancelled)
+            let reason = try #require(CivoAPIError.userMessage(CivoAPIError.httpError(status, message)))
+            #expect(env.editor.notice == FirewallRuleEditor.notSavedMessage(for: env.target, reason: reason))
+        case _?:
+            #expect(outcome == .uncertain)
+            #expect(env.editor.notice == FirewallRuleEditor.unknownResultMessage(for: env.target))
+        }
+        #expect(env.activities == (failure == nil ? ["web rule-1"] : []))
+    }
+}
+
+// MARK: - Kubernetes versions and upgrades
+
+/// Decodes a cluster shaped like the examples of https://www.civo.com/api/kubernetes.
+private func kubernetesCluster(id: String = "c-1", version: String, status: String = "ACTIVE", extra: String = "") -> CivoKubernetesCluster {
+    let json = #"{"id": "\#(id)", "name": "prod", "status": "\#(status)", "kubernetes_version": "\#(version)"\#(extra)}"#
+    return try! JSONDecoder().decode(CivoKubernetesCluster.self, from: Data(json.utf8))
+}
+
+private func kubernetesVersion(_ version: String, type: String = "stable", isDefault: Bool = false) -> CivoKubernetesVersion {
+    CivoKubernetesVersion(version: version, flatVersion: nil, label: "v\(version)", type: type, isDefault: isDefault, clusterType: nil)
+}
+
+@Suite("Kubernetes versions")
+struct KubernetesVersionTests {
+    @Test("Civo's list and cluster spellings read as one version and compare by number, then by build")
+    func comparison() throws {
+        let listed = try #require(KubernetesVersionNumber("1.20.0+k3s1"))
+        #expect(KubernetesVersionNumber("1.20.0-k3s1") == listed)
+        #expect(KubernetesVersionNumber("v1.20.0+k3s1") == listed)
+        #expect(KubernetesVersionNumber(" 1.20.0+K3S1 ") == listed)
+
+        func isNewer(_ lhs: String, _ rhs: String) -> Bool {
+            KubernetesVersionNumber(lhs)!.isNewer(than: KubernetesVersionNumber(rhs)!)
+        }
+        #expect(isNewer("1.20.0+k3s2", "1.20.0-k3s1"))
+        #expect(isNewer("1.21.0+k3s1", "1.20.9+k3s9"))
+        #expect(isNewer("1.10.0+k3s1", "1.9.0+k3s1"))
+        #expect(isNewer("1.20.1", "1.20.0"))
+        #expect(!isNewer("1.20.0+k3s1", "1.20.0-k3s1"))
+        #expect(!isNewer("1.19.9+k3s1", "1.20.0+k3s1"))
+    }
+
+    @Test("Unknown formats are not read, and versions of another distribution cannot be compared")
+    func unknownFormats() {
+        for unknown in ["", "latest", "1.20", "1.20.0.1", "1.2a.0", "1.20.0+", "1.20.0+k3s", "1.20.0-rc.1", "1.20.0+k3s1+k3s2", "talos-v1.5.0", "１.20.0+k3s1", "1.20.0+3s1"] {
+            #expect(KubernetesVersionNumber(unknown) == nil, "\(unknown)")
+        }
+        let k3s = KubernetesVersionNumber("1.20.0+k3s1")!
+        #expect(KubernetesVersionNumber("1.21.0+rke2r1")!.compare(to: k3s) == nil)
+        #expect(KubernetesVersionNumber("1.21.0")!.compare(to: k3s) == nil)
+    }
+
+    @Test("Only listed, not deprecated, newer versions of the same distribution are offered, newest first and each once")
+    func upgradeTargets() {
+        let catalog = [
+            kubernetesVersion("1.19.4+k3s1"),
+            kubernetesVersion("1.20.0+k3s1"),
+            kubernetesVersion("1.20.0+k3s2", type: "deprecated"),
+            kubernetesVersion("1.21.2+k3s1"),
+            CivoKubernetesVersion(version: "1.21.2-k3s1", flatVersion: nil, label: nil, type: "stable", isDefault: nil, clusterType: nil),
+            kubernetesVersion("1.22.1+k3s1", isDefault: true),
+            kubernetesVersion("1.23.0+rke2r1"),
+            kubernetesVersion("talos-v1.5.0"),
+        ]
+        let offered = try? KubernetesVersionCatalog.upgradeTargets(from: "1.20.0-k3s1", in: catalog).get()
+        #expect(offered?.map(\.version) == ["1.22.1+k3s1", "1.21.2+k3s1"])
+
+        #expect(KubernetesVersionCatalog.upgradeTargets(from: "1.22.1-k3s1", in: catalog) == .failure(.noNewerVersion))
+        #expect(KubernetesVersionCatalog.upgradeTargets(from: "1.30.0-k3s1", in: catalog) == .failure(.noNewerVersion))
+        #expect(KubernetesVersionCatalog.upgradeTargets(from: "1.20.0-beta", in: catalog) == .failure(.unknownVersionFormat("1.20.0-beta")))
+        #expect(KubernetesVersionCatalog.createOptions(in: catalog).map(\.version) == ["1.22.1+k3s1", "1.21.2+k3s1", "1.20.0+k3s1", "1.19.4+k3s1"])
+    }
+
+    @Test("A cluster that is not active, or not yet on its desired version, cannot be upgraded")
+    func blockers() {
+        #expect(KubernetesVersionCatalog.upgradeBlocker(for: kubernetesCluster(version: "1.20.0-k3s1")) == nil)
+        #expect(KubernetesVersionCatalog.upgradeBlocker(for: kubernetesCluster(version: "1.20.0-k3s1", status: "BUILDING")) == .clusterNotActive("BUILDING"))
+        let syncing = kubernetesCluster(version: "1.20.0-k3s1", extra: #", "conditions": [{"type": "ClusterVersionSync", "status": "False"}]"#)
+        #expect(KubernetesVersionCatalog.upgradeBlocker(for: syncing) == .upgradeInProgress)
+    }
+
+    @Test("The version list and the cluster's upgrade hint decode as Civo documents them")
+    func decoding() throws {
+        let json = #"[{"version": "1.20.0+k3s1", "flat_version": "1.20.0-k3s1", "label": "v1.20.0+k3s1", "type": "stable", "default": true}, {"version": "1.20.0+k3s2", "flat_version": "1.20.0-k3s2", "label": "v1.20.0+k3s2", "type": "deprecated"}]"#
+        let versions = try JSONDecoder().decode([CivoKubernetesVersion].self, from: Data(json.utf8))
+        #expect(versions.map(\.isDefault) == [true, nil])
+        #expect(versions.map(\.isDeprecated) == [false, true])
+        #expect(kubernetesCluster(version: "1.20.0-k3s1", extra: #", "upgrade_available_to": "1.21.2+k3s1""#).upgradeAvailableTo == "1.21.2+k3s1")
+    }
+
+    @Test("An upgrade sends only the version and region, never pools or applications")
+    func upgradeBody() {
+        let body = CivoKubernetesService.upgradeBody(to: "1.21.2+k3s1", region: "LON1")
+        #expect(Set(body.keys) == ["kubernetes_version", "region"])
+        #expect(body["kubernetes_version"] as? String == "1.21.2+k3s1")
+        #expect(body["region"] as? String == "LON1")
+    }
+}
+
+/// Upgrade requests recorded instead of sent.
+private actor FakeKubernetesUpgradeAPI: KubernetesUpgradeAPI {
+    var catalog = [kubernetesVersion("1.20.0+k3s1"), kubernetesVersion("1.21.2+k3s1"), kubernetesVersion("1.22.1+k3s1")]
+    var cluster = kubernetesCluster(version: "1.20.0-k3s1")
+    private(set) var calls: [String] = []
+    private var versionsError: Error?
+    private var upgradeError: Error?
+    /// Runs while the cluster is loaded again before the upgrade, like a Settings change during the request.
+    private var duringReload: (@Sendable () async -> Void)?
+    /// Runs while the upgrade is on its way, after it was sent.
+    private var duringUpgrade: (@Sendable () async -> Void)?
+
+    func replaceCluster(with cluster: CivoKubernetesCluster) { self.cluster = cluster }
+    func replaceCatalog(with catalog: [CivoKubernetesVersion]) { self.catalog = catalog }
+    func failVersions(with error: Error?) { versionsError = error }
+    func failUpgrade(with error: Error) { upgradeError = error }
+    func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+    func whileUpgrading(_ action: @escaping @Sendable () async -> Void) { duringUpgrade = action }
+
+    func listVersions(apiKey: String?) async throws -> [CivoKubernetesVersion] {
+        calls.append("versions \(apiKey ?? "-")")
+        if let versionsError { throw versionsError }
+        return catalog
+    }
+
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster {
+        calls.append("show \(id) \(region ?? "-") \(apiKey ?? "-")")
+        if let action = duringReload {
+            duringReload = nil
+            await action()
+        }
+        return cluster
+    }
+
+    func upgradeCluster(_ id: String, to version: String, region: String, apiKey: String) async throws {
+        calls.append("upgrade \(id) \(version) \(region) \(apiKey)")
+        if let action = duringUpgrade {
+            duringUpgrade = nil
+            await action()
+        }
+        if let upgradeError { throw upgradeError }
+    }
+}
+
+@Suite("Kubernetes cluster upgrade")
+@MainActor
+struct KubernetesUpgradeTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeKubernetesUpgradeAPI()
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        lazy var controller = KubernetesUpgradeController(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] target, version in activities.append("\(target.clusterName) \(target.fromVersion) \(version)") }
+        )
+        let target = KubernetesUpgradeTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"), fromVersion: "1.20.0-k3s1")
+
+        /// The notice the detail page of the cluster loaded from LON1 with key-a shows.
+        var notice: String? { controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) }
+
+        /// Opens the upgrade as the detail page does, for the cluster loaded from LON1 with key-a.
+        func begin(_ cluster: CivoKubernetesCluster = kubernetesCluster(version: "1.20.0-k3s1")) async {
+            await controller.begin(upgrading: cluster, region: "LON1", account: CivoAccount(apiKey: "key-a"))
+        }
+    }
+
+    private static let target = kubernetesVersion("1.21.2+k3s1")
+
+    @Test("After confirming, the cluster and versions are loaded again, then only the upgrade is sent and remembered, with its notice, until reached")
+    func upgrade() async {
+        let env = Environment()
+        await env.begin()
+        #expect(env.controller.session?.target == env.target)
+        #expect(env.controller.session?.targets?.map(\.version) == ["1.22.1+k3s1", "1.21.2+k3s1"])
+
+        #expect(await env.controller.upgrade(to: Self.target) == .requested)
+        #expect(await env.api.calls == ["versions key-a", "show c-1 LON1 key-a", "versions key-a", "upgrade c-1 1.21.2+k3s1 LON1 key-a"])
+        #expect(env.controller.session == nil)
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+        #expect(env.activities == ["prod 1.20.0-k3s1 1.21.2+k3s1"])
+        let account = CivoAccount(apiKey: "key-a")
+        #expect(env.controller.notice(forCluster: "c-2", region: "LON1", account: account) == nil)
+        #expect(env.controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-b")) == nil)
+
+        // Accepted is not finished: until the cluster reports the version, no second upgrade starts.
+        env.controller.clusterDidLoad(kubernetesCluster(version: "1.20.0-k3s1"), region: "LON1", account: account)
+        #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == "1.21.2+k3s1")
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+        await env.begin()
+        #expect(env.controller.session == nil)
+        #expect(env.notice == KubernetesUpgradeError.upgradeAlreadyRequested("1.21.2+k3s1").message)
+
+        // Another cluster reaching the version leaves this notice alone.
+        env.controller.clusterDidLoad(kubernetesCluster(id: "c-2", version: "1.21.2-k3s1"), region: "LON1", account: account)
+        #expect(env.notice != nil)
+
+        env.controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: account)
+        #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == nil)
+        #expect(env.notice == nil)
+    }
+
+    @Test("A cluster whose version changed, or that started an upgrade, after the sheet opened sends nothing", arguments: [
+        (kubernetesCluster(version: "1.21.2-k3s1"), KubernetesUpgradeError.clusterChanged),
+        (kubernetesCluster(version: "1.20.0-k3s1", status: "UPGRADING"), .clusterNotActive("UPGRADING")),
+    ])
+    func staleCluster(reloaded: CivoKubernetesCluster, problem: KubernetesUpgradeError) async {
+        let env = Environment()
+        await env.begin()
+        await env.api.replaceCluster(with: reloaded)
+        #expect(await env.controller.upgrade(to: Self.target) == .cancelled)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
+        #expect(env.notice == problem.message)
+    }
+
+    @Test("A version Civo no longer offers when the user confirms sends nothing")
+    func withdrawnVersion() async {
+        let env = Environment()
+        await env.begin()
+        await env.api.replaceCatalog(with: [kubernetesVersion("1.21.2+k3s1", type: "deprecated"), kubernetesVersion("1.22.1+k3s1")])
+        #expect(await env.controller.upgrade(to: Self.target) == .cancelled)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
+        #expect(env.notice == KubernetesUpgradeError.targetUnavailable("1.21.2+k3s1").message)
+    }
+
+    @Test("Revoked Full Access, or a region or key change while the cluster is loaded again, sends nothing")
+    func targetChecks() async {
+        let revoked = Environment()
+        await revoked.begin()
+        revoked.accessAllowed = false
+        #expect(await revoked.controller.upgrade(to: Self.target) == .cancelled)
+        #expect(await revoked.api.calls == ["versions key-a"])
+        #expect(revoked.notice == KubernetesUpgradeError.accessRevoked.message)
+
+        let moved = Environment()
+        await moved.begin()
+        await moved.api.whileReloading {
+            await MainActor.run {
+                moved.region = "NYC1"
+                moved.notifications.post(name: .civoRegionDidChange, object: nil)
+            }
+        }
+        #expect(await moved.controller.upgrade(to: Self.target) == nil)
+        #expect(moved.controller.session == nil)
+        #expect(moved.notice == KubernetesUpgradeError.regionChanged.message)
+        #expect(await moved.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
+
+        let rekeyed = Environment()
+        rekeyed.apiKey = "key-b"
+        await rekeyed.begin()
+        #expect(rekeyed.controller.session == nil)
+        #expect(rekeyed.notice == KubernetesUpgradeError.accountChanged.message)
+        #expect(await rekeyed.api.calls.isEmpty)
+    }
+
+    @Test("A cluster that is busy or reports an unknown version is not offered an upgrade")
+    func notOffered() async {
+        let busy = Environment()
+        await busy.begin(kubernetesCluster(version: "1.20.0-k3s1", status: "BUILDING"))
+        #expect(busy.controller.session == nil)
+        #expect(busy.notice == KubernetesUpgradeError.clusterNotActive("BUILDING").message)
+
+        let unknown = Environment()
+        await unknown.begin(kubernetesCluster(version: "next"))
+        #expect(unknown.notice == KubernetesUpgradeError.unknownVersionFormat("next").message)
+        #expect(await unknown.api.calls.isEmpty)
+
+        let newest = Environment()
+        await newest.begin(kubernetesCluster(version: "1.22.1-k3s1"))
+        #expect(newest.controller.session == nil)
+        #expect(newest.notice == KubernetesUpgradeError.noNewerVersion.message)
+    }
+
+    @Test("An unreachable version list keeps the sheet open to try again")
+    func unreachableCatalog() async {
+        let env = Environment()
+        await env.api.failVersions(with: CivoAPIError.httpError(503, "Unavailable"))
+        await env.begin()
+        #expect(env.controller.session?.targets == nil)
+        #expect(env.controller.sheetError == KubernetesUpgradeController.versionListFailedMessage(reason: CivoAPIError.userMessage(CivoAPIError.httpError(503, "Unavailable"))))
+
+        await env.api.failVersions(with: nil)
+        await env.controller.loadVersions()
+        #expect(env.controller.sheetError == nil)
+        #expect(env.controller.session?.targets?.count == 2)
+    }
+
+    @Test("A refused upgrade path keeps the sheet open with Civo's reason; an unknown result is not reported as a success")
+    func failures() async throws {
+        let refused = Environment()
+        await refused.begin()
+        await refused.api.failUpgrade(with: CivoAPIError.httpError(422, "upgrade path not allowed"))
+        #expect(await refused.controller.upgrade(to: Self.target) == nil)
+        #expect(refused.controller.session != nil)
+        #expect(refused.controller.sheetError == CivoAPIError.httpError(422, "upgrade path not allowed").localizedDescription)
+        #expect(refused.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) == nil)
+        #expect(refused.activities.isEmpty)
+
+        let lost = Environment()
+        await lost.begin()
+        await lost.api.failUpgrade(with: CivoAPIError.networkError("The request timed out."))
+        #expect(await lost.controller.upgrade(to: Self.target) == .uncertain)
+        #expect(lost.controller.session == nil)
+        #expect(lost.notice == KubernetesUpgradeController.unknownResultMessage(for: lost.target))
+        #expect(lost.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) == nil)
+        #expect(lost.activities.isEmpty)
+    }
+
+    @Test("While an upgrade is on its way, the sheet cannot be opened again, so no second upgrade is sent")
+    func noSecondUpgradeWhileSending() async {
+        let env = Environment()
+        await env.begin()
+        let controller = env.controller
+        await env.api.whileUpgrading {
+            await MainActor.run { controller.cancel() }
+            await env.begin()
+            await MainActor.run { #expect(controller.session == nil) }
+        }
+        #expect(await controller.upgrade(to: Self.target) == .requested)
+        #expect(await env.api.calls.filter { $0.hasPrefix("upgrade") }.count == 1)
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+
+        controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: CivoAccount(apiKey: "key-a"))
+        #expect(env.notice == nil)
+    }
+}
+
+/// A cluster whose pools list `pools`, keyed by pool id, as Civo's `instance_names`.
+private func kubernetesCluster(status: String = "ACTIVE", pools: KeyValuePairs<String, [String]>, extra: String = "") -> CivoKubernetesCluster {
+    let entries = pools.map { id, names in
+        #"{"id": "\#(id)", "instance_names": [\#(names.map { "\"\($0)\"" }.joined(separator: ", "))]}"#
+    }
+    return kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": [\#(entries.joined(separator: ", "))]"# + extra)
+}
+
+/// Civo's condition while a cluster is not yet on its desired version.
+private let versionSyncPending = #", "conditions": [{"type": "ClusterVersionSync", "status": "False"}]"#
+
+private actor FakeKubernetesNodeRecycleAPI: KubernetesNodeRecycleAPI {
+    var cluster = kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"], "pool-b": ["node-3"]])
+    private(set) var calls: [String] = []
+    private var showError: Error?
+    private var recycleError: Error?
+    /// Runs while the cluster is loaded again before the replacement, like a Settings change during the request.
+    private var duringReload: (@Sendable () async -> Void)?
+
+    func replaceCluster(with cluster: CivoKubernetesCluster) { self.cluster = cluster }
+    func failShow(with error: Error) { showError = error }
+    func failRecycle(with error: Error) { recycleError = error }
+    func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster {
+        calls.append("show \(id) \(region ?? "-") \(apiKey ?? "-")")
+        if let action = duringReload {
+            duringReload = nil
+            await action()
+        }
+        if let showError { throw showError }
+        return cluster
+    }
+
+    func recycleNode(_ hostname: String, inCluster id: String, region: String, apiKey: String) async throws {
+        calls.append("recycle \(id) \(hostname) \(region) \(apiKey)")
+        if let recycleError { throw recycleError }
+    }
+}
+
+@Suite("Kubernetes node replacement")
+@MainActor
+struct KubernetesNodeRecycleTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeKubernetesNodeRecycleAPI()
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        lazy var controller = KubernetesNodeRecycleController(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] target in activities.append("\(target.clusterName) \(target.hostname)") }
+        )
+        let account = CivoAccount(apiKey: "key-a")
+        let target = KubernetesNodeRecycleTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"), hostname: "node-2", poolId: "pool-a")
+
+        /// The notice the detail page of the cluster loaded from LON1 with key-a shows.
+        var notice: String? { controller.notice(forCluster: "c-1", region: "LON1", account: account) }
+        var isRequested: Bool { controller.isReplacementRequested("node-2", inCluster: "c-1", region: "LON1", account: account) }
+        var recycleCalls: [String] { get async { await api.calls.filter { $0.hasPrefix("recycle") } } }
+
+        /// Opens the confirmation as the detail page does, for the cluster loaded from LON1 with key-a.
+        func begin(_ hostname: String = "node-2", in cluster: CivoKubernetesCluster? = nil) async {
+            let shown = if let cluster { cluster } else { await api.cluster }
+            controller.begin(replacing: hostname, in: shown, region: "LON1", account: account)
+        }
+    }
+
+    @Test("A node is identified only when exactly one pool entry names its hostname")
+    func identity() throws {
+        let cluster = kubernetesCluster(pools: ["pool-a": ["node-1", "twin", "twin"], "pool-b": ["node-3", "shared"], "pool-c": ["shared"]])
+        #expect(try KubernetesNodeIdentity.pool(listing: "node-3", in: cluster).get().id == "pool-b")
+        #expect(KubernetesNodeIdentity.pool(listing: "twin", in: cluster).failure == .nodeAmbiguous("twin"))
+        #expect(KubernetesNodeIdentity.pool(listing: "shared", in: cluster).failure == .nodeAmbiguous("shared"))
+        #expect(KubernetesNodeIdentity.pool(listing: "node-9", in: cluster).failure == .nodeRemoved("node-9"))
+        #expect(KubernetesNodeIdentity.pool(listing: "NODE-3", in: cluster).failure == .nodeRemoved("NODE-3"))
+        let unlisted = kubernetesCluster(version: "1.20.0-k3s1", extra: #", "pools": [{"id": "pool-a", "instance_names": ["node-1"]}, {"id": "pool-b"}]"#)
+        #expect(KubernetesNodeIdentity.pool(listing: "node-1", in: unlisted).failure == .nodeListUnavailable)
+        #expect(KubernetesNodeIdentity.pool(listing: "node-1", in: kubernetesCluster(version: "1.20.0-k3s1")).failure == .nodeListUnavailable)
+        #expect(!KubernetesNodeRecycleController.canOffer("", in: cluster))
+        #expect(!KubernetesNodeRecycleController.canOffer("shared", in: cluster))
+        #expect(KubernetesNodeRecycleController.canOffer("node-1", in: cluster))
+
+        let body = CivoKubernetesService.recycleBody(hostname: "node-1", region: "LON1")
+        #expect(body.count == 2)
+        #expect(body["hostname"] as? String == "node-1")
+        #expect(body["region"] as? String == "LON1")
+    }
+
+    @Test("After confirming, the cluster is loaded again with the same key, then only this node is sent and shown as requested until the cluster no longer lists it")
+    func replacement() async {
+        let env = Environment()
+        await env.begin()
+        #expect(env.controller.request?.target == env.target)
+
+        #expect(await env.controller.confirm() == .requested)
+        #expect(await env.api.calls == ["show c-1 LON1 key-a", "recycle c-1 node-2 LON1 key-a"])
+        #expect(env.controller.request == nil)
+        #expect(env.notice == KubernetesNodeRecycleController.acceptedMessage(for: env.target))
+        #expect(env.activities == ["prod node-2"])
+        #expect(env.controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-b")) == nil)
+
+        // Accepted is not finished: while the cluster still lists the node, it stays requested and is not sent again.
+        env.controller.clusterDidLoad(await env.api.cluster, region: "LON1", account: env.account)
+        #expect(env.isRequested)
+        // An answer without the node names proves nothing about the node.
+        env.controller.clusterDidLoad(kubernetesCluster(version: "1.20.0-k3s1"), region: "LON1", account: env.account)
+        #expect(env.isRequested)
+        await env.begin()
+        #expect(env.controller.request == nil)
+        #expect(env.notice == KubernetesNodeRecycleError.replacementAlreadyRequested("node-2").message)
+
+        let replaced = kubernetesCluster(pools: ["pool-a": ["node-1", "node-4"], "pool-b": ["node-3"]])
+        env.controller.clusterDidLoad(replaced, region: "LON1", account: env.account)
+        #expect(!env.isRequested)
+        #expect(env.notice == nil)
+        #expect(await env.recycleCalls.count == 1)
+    }
+
+    @Test("A node that is gone, listed twice or moved, or a busy or still upgrading cluster, when the user confirms sends nothing", arguments: [
+        (kubernetesCluster(pools: ["pool-a": ["node-1"], "pool-b": ["node-3"]]), KubernetesNodeRecycleError.nodeRemoved("node-2")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"], "pool-b": ["node-2"]]), .nodeAmbiguous("node-2")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1"], "pool-b": ["node-2"]]), .nodeMoved("node-2")),
+        (kubernetesCluster(status: "SCALING", pools: ["pool-a": ["node-1", "node-2"]]), .clusterBusy("SCALING")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"]], extra: versionSyncPending), .upgradeInProgress),
+    ])
+    func staleTarget(reloaded: CivoKubernetesCluster, problem: KubernetesNodeRecycleError) async {
+        let env = Environment()
+        await env.begin()
+        await env.api.replaceCluster(with: reloaded)
+        #expect(await env.controller.confirm() == .cancelled)
+        #expect(await env.recycleCalls.isEmpty)
+        #expect(env.controller.request == nil)
+        #expect(env.notice == problem.message)
+    }
+
+    @Test("Revoked Full Access, a region change while the cluster is loaded again, a changed key, a busy or a still upgrading cluster sends nothing")
+    func targetChecks() async {
+        let revoked = Environment()
+        await revoked.begin()
+        revoked.accessAllowed = false
+        #expect(await revoked.controller.confirm() == .cancelled)
+        #expect(await revoked.api.calls.isEmpty)
+        #expect(revoked.notice == KubernetesNodeRecycleError.accessRevoked.message)
+
+        let moved = Environment()
+        await moved.begin()
+        await moved.api.whileReloading {
+            await MainActor.run {
+                moved.region = "NYC1"
+                moved.notifications.post(name: .civoRegionDidChange, object: nil)
+            }
+        }
+        #expect(await moved.controller.confirm() == nil)
+        #expect(moved.controller.request == nil)
+        #expect(moved.notice == KubernetesNodeRecycleError.regionChanged.message)
+        #expect(await moved.recycleCalls.isEmpty)
+
+        let rekeyed = Environment()
+        rekeyed.apiKey = "key-b"
+        await rekeyed.begin()
+        #expect(rekeyed.controller.request == nil)
+        #expect(rekeyed.notice == KubernetesNodeRecycleError.accountChanged.message)
+
+        let busy = Environment()
+        await busy.begin(in: kubernetesCluster(status: "UPGRADING", pools: ["pool-a": ["node-2"]]))
+        #expect(busy.controller.request == nil)
+        #expect(busy.notice == KubernetesNodeRecycleError.clusterBusy("UPGRADING").message)
+        #expect(await busy.api.calls.isEmpty)
+
+        let upgrading = Environment()
+        await upgrading.begin(in: kubernetesCluster(pools: ["pool-a": ["node-2"]], extra: versionSyncPending))
+        #expect(upgrading.controller.request == nil)
+        #expect(upgrading.notice == KubernetesNodeRecycleError.upgradeInProgress.message)
+        #expect(await upgrading.api.calls.isEmpty)
+    }
+
+    @Test("A refusal keeps the sheet open with Civo's reason; a timeout, also an HTTP 408, is reported as unknown and not sent again; a removed cluster sends nothing")
+    func failures() async {
+        let refused = Environment()
+        await refused.begin()
+        await refused.api.failRecycle(with: CivoAPIError.httpError(403, "forbidden"))
+        #expect(await refused.controller.confirm() == nil)
+        #expect(refused.controller.request != nil)
+        #expect(refused.controller.sheetError == CivoAPIError.httpError(403, "forbidden").localizedDescription)
+        #expect(!refused.isRequested)
+        #expect(refused.activities.isEmpty)
+
+        let lost = Environment()
+        await lost.begin()
+        await lost.api.failRecycle(with: CivoAPIError.networkError("The request timed out."))
+        #expect(await lost.controller.confirm() == .uncertain)
+        #expect(lost.controller.request == nil)
+        #expect(lost.notice == KubernetesNodeRecycleController.unknownResultMessage(for: lost.target))
+        #expect(!lost.isRequested)
+        #expect(lost.activities.isEmpty)
+        #expect(await lost.recycleCalls.count == 1)
+
+        let timedOut = Environment()
+        await timedOut.begin()
+        await timedOut.api.failRecycle(with: CivoAPIError.httpError(408, "Request Timeout"))
+        #expect(await timedOut.controller.confirm() == .uncertain)
+        #expect(timedOut.notice == KubernetesNodeRecycleController.unknownResultMessage(for: timedOut.target))
+
+        let removed = Environment()
+        await removed.begin()
+        await removed.api.failShow(with: CivoAPIError.httpError(404, "not found"))
+        #expect(await removed.controller.confirm() == .cancelled)
+        #expect(removed.notice == KubernetesNodeRecycleError.clusterRemoved.message)
+        #expect(await removed.recycleCalls.isEmpty)
+    }
+}
+
+private extension Result {
+    var failure: Failure? {
+        if case .failure(let error) = self { return error }
+        return nil
     }
 }

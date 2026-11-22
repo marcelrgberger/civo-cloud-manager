@@ -3,6 +3,7 @@ import SwiftUI
 struct InstanceListView: View {
     @Bindable var vm: InstanceViewModel
     @State private var credentialsTarget: ConsoleTarget?
+    @State private var tagFilter = ""
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
@@ -44,12 +45,19 @@ struct InstanceListView: View {
         }
     }
 
+    /// Filtered on this Mac only; the complete list is already loaded.
+    private var filteredInstances: [CivoInstance] {
+        vm.instances.filter { $0.hasTag(matching: tagFilter) }
+    }
+
     private var instanceList: some View {
         List {
             if vm.instances.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "desktopcomputer", title: "No Instances", message: "No compute instances found in your account.")
+            } else if filteredInstances.isEmpty && !vm.isLoading {
+                EmptyStateView(icon: "tag", title: "No instances match", message: "No instance has a tag containing this text.")
             } else {
-                ForEach(Array(vm.instances.enumerated()), id: \.element.id) { index, inst in
+                ForEach(Array(filteredInstances.enumerated()), id: \.element.id) { index, inst in
                     Button {
                         vm.selectedInstance = inst
                     } label: {
@@ -84,34 +92,45 @@ struct InstanceListView: View {
                 }
             }
         }
-        .animation(.easeOut, value: vm.instances.map(\.id))
+        .animation(.easeOut, value: filteredInstances.map(\.id))
         .safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
+                if let notice = vm.creationNotice { NoticeBanner(message: notice) { vm.creationNotice = nil } }
                 if vm.instanceCompleteness.mayBeMissingItems { IncompleteListBanner() }
+                if !vm.instances.isEmpty { tagFilterField }
             }
         }
         .navigationTitle("Instances")
         .overlay { if vm.isLoading && vm.instances.isEmpty { ProgressView("Loading instances...") } }
-        .sheet(isPresented: Binding(get: { vm.pendingAction?.kind == .delete }, set: { if !$0 { vm.cancelConfirmation() } })) {
-            if let target = vm.pendingAction?.target {
-                DeleteConfirmationSheet(
-                    resourceType: "Instance",
-                    resourceName: target.instanceName,
-                    onConfirm: {
-                        guard let target = vm.confirmPendingAction() else { return }
-                        Task { await vm.removeInstance(target) }
-                    },
-                    onCancel: { vm.cancelConfirmation() },
-                    note: vm.mayHaveSavedCredentials(target) ? "Saved credentials for this instance will be deleted as well." : nil
-                )
-            }
-        }
+        .instanceDeleteConfirmation(vm)
         .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
             if let target = credentialsTarget {
                 InstanceCredentialsView(target: target)
             }
         }
         .instancePowerConfirmation(vm)
+    }
+
+    private var tagFilterField: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "tag")
+                .foregroundStyle(.secondary)
+            TextField("Filter by tag", text: $tagFilter)
+                .textFieldStyle(.plain)
+            if !tagFilter.isEmpty {
+                Button {
+                    tagFilter = ""
+                } label: {
+                    Label("Clear tag filter", systemImage: "xmark.circle.fill")
+                        .labelStyle(.iconOnly)
+                }
+                .buttonStyle(.borderless)
+                .help("Clear tag filter")
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(.bar)
     }
 }
