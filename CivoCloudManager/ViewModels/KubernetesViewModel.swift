@@ -6,11 +6,13 @@ final class KubernetesViewModel {
     var clusters: [CivoKubernetesCluster] = []
     private(set) var clusterCompleteness = ListCompleteness()
     var selectedCluster: CivoKubernetesCluster?
-    /// The region and account `selectedCluster` was loaded from; an upgrade or a node replacement is bound to both.
+    /// The region and account `selectedCluster` was loaded from; an upgrade, a node replacement or a node pool
+    /// change is bound to both.
     private(set) var selectedClusterRegion = ""
     private(set) var selectedClusterAccount: CivoAccount?
     let upgrades = KubernetesUpgradeController()
     let nodeReplacements = KubernetesNodeRecycleController()
+    let nodePools = KubernetesNodePoolController()
     var isLoading = false
     var error: String?
 
@@ -152,6 +154,7 @@ final class KubernetesViewModel {
             selectedClusterAccount = account
             upgrades.clusterDidLoad(cluster, region: region, account: account)
             nodeReplacements.clusterDidLoad(cluster, region: region, account: account)
+            nodePools.clusterDidLoad(cluster, region: region, account: account)
             return true
         } catch {
             self.error = CivoAPIError.userMessage(error)
@@ -646,12 +649,18 @@ final class KubernetesViewModel {
         } catch { saveError = CivoAPIError.userMessage(error); return false }
     }
 
-    func updateCluster(_ id: String, body: sending [String: Any]) async -> Bool {
+    /// Saves the labels of one pool of the cluster in `target`; see `KubernetesNodePoolController.saveLabels`.
+    func updateLabels(_ labels: [String: String], shownLabels: [String: String], ofPool poolId: String, in target: KubernetesNodePoolTarget) async -> Bool {
         isSaving = true; saveError = nil; defer { isSaving = false }
-        do {
-            _ = try await service.updateCluster(id, body: body)
+        switch await nodePools.saveLabels(labels, shownLabels: shownLabels, ofPool: poolId, in: target) {
+        case .saved:
             showSuccess = true; await refresh(); return true
-        } catch { saveError = CivoAPIError.userMessage(error); return false }
+        case .notSaved(let problem):
+            saveError = problem
+            return false
+        case .cancelled:
+            return false
+        }
     }
 
     func removeCluster(_ id: String) async -> Bool {
