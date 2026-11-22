@@ -425,10 +425,15 @@ flowchart TD
     D -->|Yes| E[Save to this Mac's keychain, no iCloud sync]
     D -->|No| X[Not saved, error shown]
     B -->|Yes| F{Action}
-    F -->|Show, copy hidden value, edit| G[Touch ID or system password]
-    G --> H[Value visible or edit open for at most 30 seconds]
-    H --> I[Hidden again on timeout, close, deactivation, lock, sleep, key change]
+    F -->|Copy hidden value| GC[Touch ID or system password]
+    GC --> PC[Concealed clipboard, field stays hidden, next copy prompts again]
+    F -->|Show| GS[Touch ID or system password]
+    GS --> H[Value visible for at most 30 seconds]
     H -->|Copy revealed value| P[Concealed clipboard, no new prompt]
+    F -->|Edit| GE[Touch ID or system password]
+    GE --> E2[Edit open for at most 30 seconds]
+    H --> I[Hidden or closed again on timeout, close, deactivation, lock, sleep, key change]
+    E2 --> I
     F -->|Delete| Q[Confirmation only, no authentication]
     Q --> R[Entry removed from the keychain]
     J[Instance deleted on Civo] --> K[Saved credentials removed, error reported if that fails]
