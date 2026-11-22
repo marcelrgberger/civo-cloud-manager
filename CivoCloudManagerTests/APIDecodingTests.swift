@@ -1609,7 +1609,7 @@ private actor FakeInstanceAPI: InstanceAPI {
     }
 }
 
-/// An instance view model with a fake API, its own Settings region and notification center.
+/// An instance view model with a fake API, its own Settings region, notification center and activity log.
 @MainActor
 private final class InstanceEnvironment {
     /// Listed without its own `region`, so the target can only come from the list region.
@@ -1622,6 +1622,7 @@ private final class InstanceEnvironment {
     var accessAllowed = true
     let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
     let center = NotificationCenter()
+    private(set) var activities: [String] = []
     private(set) var vm: InstanceViewModel!
 
     init(credentials: InstanceCredentialStore? = nil) {
@@ -1632,7 +1633,8 @@ private final class InstanceEnvironment {
             loadSSHKeys: { [] },
             settingsRegion: { [weak self] in self?.region ?? "" },
             isAccessAllowed: { [weak self] in self?.accessAllowed ?? false },
-            notificationCenter: center
+            notificationCenter: center,
+            recordActivity: { [weak self] action, _ in self?.activities.append(action) }
         )
     }
 
@@ -1655,6 +1657,7 @@ struct InstanceActionTargetTests {
 
         await env.vm.stopInstance(target)
         #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Stopped"])
 
         // Settings changed, list not reloaded yet: refused, not redirected to NYC1.
         env.region = "NYC1"

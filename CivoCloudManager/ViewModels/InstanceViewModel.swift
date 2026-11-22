@@ -67,6 +67,7 @@ final class InstanceViewModel {
     private let settingsRegion: @MainActor () -> String
     private let isAccessAllowed: @MainActor () -> Bool
     private let notificationCenter: NotificationCenter
+    private let recordActivity: @MainActor (String, ConsoleTarget) -> Void
     /// Why a confirmation was closed. Survives the next refresh, which a region change starts right away.
     @ObservationIgnored private var cancellationNotice: String?
     @ObservationIgnored nonisolated(unsafe) private var regionObserver: NSObjectProtocol?
@@ -77,7 +78,10 @@ final class InstanceViewModel {
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
         isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
-        notificationCenter: NotificationCenter = .default
+        notificationCenter: NotificationCenter = .default,
+        recordActivity: @escaping @MainActor (String, ConsoleTarget) -> Void = { action, target in
+            ActivityLog.shared.log(action, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
+        }
     ) {
         self.credentials = credentials ?? .shared
         self.api = api
@@ -86,6 +90,7 @@ final class InstanceViewModel {
         self.settingsRegion = settingsRegion
         self.isAccessAllowed = isAccessAllowed
         self.notificationCenter = notificationCenter
+        self.recordActivity = recordActivity
         regionObserver = notificationCenter.addObserver(forName: .civoRegionDidChange, object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.settingsRegionDidChange() }
         }
@@ -293,7 +298,7 @@ final class InstanceViewModel {
         do {
             try await request(api)
             showSuccess = true
-            ActivityLog.shared.log(activity, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
+            recordActivity(activity, target)
             await refresh()
         } catch { self.error = CivoAPIError.userMessage(error) }
     }
