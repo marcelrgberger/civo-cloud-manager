@@ -74,6 +74,7 @@ struct InstanceDetailView: View {
                 InstanceCredentialsView(target: target)
             }
         }
+        .instancePowerConfirmation(vm)
     }
 
     private var header: some View {
@@ -301,18 +302,26 @@ struct InstanceDetailView: View {
     private func actionButtons(_ target: ConsoleTarget) -> some View {
         HStack(spacing: 10) {
             if instance.status?.lowercased() == "active" {
-                Button { Task { await vm.stopInstance(target) } } label: {
+                Button { vm.beginConfirmation(.power(.stop), for: instance) } label: {
                     Label("Stop", systemImage: "stop.circle")
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
                 .tint(.orange)
 
-                Button { Task { await vm.rebootInstance(target) } } label: {
+                Menu {
+                    Button("Soft Reboot") { vm.beginConfirmation(.power(.softReboot), for: instance) }
+                    Button("Hard Reboot...") { vm.beginConfirmation(.power(.hardReboot), for: instance) }
+                } label: {
                     Label("Reboot", systemImage: "arrow.clockwise.circle")
+                } primaryAction: {
+                    vm.beginConfirmation(.power(.softReboot), for: instance)
                 }
+                .menuStyle(.button)
                 .buttonStyle(.bordered)
                 .controlSize(.small)
+                .fixedSize()
+                .help("Click for a soft reboot, open the menu for a hard reboot")
 
                 Button {
                     vm.handOverConsoleLogin(of: instance, to: target)
@@ -324,7 +333,7 @@ struct InstanceDetailView: View {
                 .controlSize(.small)
                 .help("Open the instance console in a new window")
             } else if instance.status?.lowercased() == "shutoff" {
-                Button { Task { await vm.startInstance(target) } } label: {
+                Button { vm.beginConfirmation(.power(.start), for: instance) } label: {
                     Label("Start", systemImage: "play.circle")
                 }
                 .buttonStyle(.bordered)

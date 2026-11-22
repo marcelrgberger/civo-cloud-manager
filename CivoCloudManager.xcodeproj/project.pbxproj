@@ -65,6 +65,7 @@
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
 		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
 		5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */; };
+		C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */; };
 		5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 88320D84F47B5B7234DED63F /* PrivacyPolicy.md */; };
 		613988765DB18F19D7936F26 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */; };
 		6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150226384082E5A588939D22 /* MarkdownView.swift */; };
@@ -306,6 +307,7 @@
 		BB62487E4451FD2F578B3E9F /* K8sConnectingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConnectingView.swift; sourceTree = "<group>"; };
 		BE58D59A701E14C63EE6DB83 /* SparklineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
 		BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceListView.swift; sourceTree = "<group>"; };
+		2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstancePowerConfirmation.swift; sourceTree = "<group>"; };
 		C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDNSRecordView.swift; sourceTree = "<group>"; };
 		C17FDFD0A2757A7BFF86340C /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		C25A7DC489DFA0E4E49034B4 /* IPDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IPDetector.swift; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 				EF44F5E3DEF4B58AF3241C8A /* InstanceDetailView.swift */,
 				6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */,
 				BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */,
+				2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */,
 				F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */,
 				23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */,
 				A330325FCF5408E7D101EEE0 /* SSHKeyListView.swift */,
@@ -977,6 +980,7 @@
 				299FA7183E6D8B4656679E80 /* PasswordAccess.swift in Sources */,
 				58DC3AF42C125EB9F8FC9967 /* InstanceCredentialsView.swift in Sources */,
 				5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */,
+				C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */,
 				AAE860F53ABC3CC6A32456D1 /* SSHKeyListView.swift in Sources */,
 				F6F922A548293F13A135D42B /* CostDashboardView.swift in Sources */,
 				D2274BF5A9886FF813D32F58 /* DashboardView.swift in Sources */,

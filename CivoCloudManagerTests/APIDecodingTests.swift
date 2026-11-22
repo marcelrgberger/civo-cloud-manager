@@ -1844,9 +1844,9 @@ private actor FakeInstanceAPI: InstanceAPI {
     }
 
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
-    func stopInstance(_ id: String, region: String) async throws { calls.append("stop \(id) \(region)") }
-    func startInstance(_ id: String, region: String) async throws { calls.append("start \(id) \(region)") }
-    func rebootInstance(_ id: String, region: String) async throws { calls.append("reboot \(id) \(region)") }
+    func changePower(_ action: InstancePowerAction, of id: String, region: String) async throws {
+        calls.append("\(action) \(id) \(region)")
+    }
     func resizeInstance(_ id: String, size: String, region: String) async throws { calls.append("resize \(id) \(region)") }
 
     func removeInstance(_ id: String, region: String) async throws {
@@ -1902,13 +1902,13 @@ struct InstanceActionTargetTests {
         let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
         #expect(target.region == "LON1")
 
-        await env.vm.stopInstance(target)
+        await env.vm.changePower(.stop, of: target)
         #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
         #expect(env.activities == ["Stopped"])
 
         // Settings changed, list not reloaded yet: refused, not redirected to NYC1.
         env.region = "NYC1"
-        await env.vm.rebootInstance(target)
+        await env.vm.changePower(.softReboot, of: target)
         #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
         #expect(env.vm.error == InstanceTargetError.regionChanged.message)
 
@@ -1975,9 +1975,59 @@ struct InstanceActionTargetTests {
 
         env.accessAllowed = true
         let unknownRegion = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "web-1", region: "")
-        await env.vm.stopInstance(unknownRegion)
+        await env.vm.changePower(.stop, of: unknownRegion)
         #expect(env.vm.error == InstanceTargetError.noRegion.message)
         #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A power action is sent only after confirmation, with Full Access checked when the user confirms")
+    func powerConfirmation() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+
+        env.vm.beginConfirmation(.power(.hardReboot), for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction?.kind == .power(.hardReboot))
+        env.vm.cancelConfirmation()
+        #expect(env.vm.confirmPendingAction() == nil)
+
+        env.vm.beginConfirmation(.power(.hardReboot), for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.changePower(.hardReboot, of: refused)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.activities.isEmpty)
+
+        env.accessAllowed = true
+        for action in [InstancePowerAction.softReboot, .hardReboot] {
+            env.vm.beginConfirmation(.power(action), for: InstanceEnvironment.instance)
+            let target = try #require(env.vm.confirmPendingAction())
+            await env.vm.changePower(action, of: target)
+        }
+        #expect(await env.api.calls == ["softReboot \(consoleInstanceId) LON1", "hardReboot \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Soft rebooted", "Hard rebooted"])
+    }
+
+    @Test("Power requests use the Civo method and path and keep the captured region")
+    func powerRequests() throws {
+        let expected: [(InstancePowerAction, String, String)] = [
+            (.start, "PUT", "start"),
+            (.stop, "PUT", "stop"),
+            (.softReboot, "POST", "soft_reboots"),
+            (.hardReboot, "POST", "reboots"),
+        ]
+        for (action, method, endpoint) in expected {
+            let request = action.request(instanceId: consoleInstanceId, region: "LON1")
+            #expect(request.method == method)
+            #expect(request.path == "/instances/\(consoleInstanceId)/\(endpoint)")
+            let sent = try CivoAPIClient.resolvedQueryItems(request.queryItems, defaultRegion: "NYC1", regionRequired: true)
+            #expect(sent == [URLQueryItem(name: "region", value: "LON1")])
+        }
+
+        let unknownRegion = InstancePowerAction.hardReboot.request(instanceId: consoleInstanceId, region: "")
+        #expect(throws: CivoAPIError.self) {
+            try CivoAPIClient.resolvedQueryItems(unknownRegion.queryItems, defaultRegion: "NYC1", regionRequired: true)
+        }
     }
 }
 
