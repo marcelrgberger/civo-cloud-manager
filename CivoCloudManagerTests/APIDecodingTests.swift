@@ -5574,6 +5574,40 @@ struct ObjectStoreCredentialRequestTests {
         #expect(logs.withLock { $0.allSatisfy { !$0.contains("SYNTHETIC") } })
         #expect(!ObjectStoreCredentialChangeError.from(CivoAPIError.incompleteList("SYNTHETIC-SECRET-MARKER")).message.contains("SYNTHETIC"))
     }
+
+    @Test("The pinned network and firewall lists of the load balancer screens discard answer text and decode diagnostics")
+    func networkListRedaction() async throws {
+        let logs = OSAllocatedUnfairLock(initialState: [String]())
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [CredentialRequestStub.self]
+        let session = URLSession(configuration: config)
+        defer {
+            session.invalidateAndCancel()
+            CredentialRequestStub.handler.withLock { $0 = nil }
+        }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { "dummy" }, settingsRegion: { "LON1" }, diagnostic: { message in logs.withLock { $0.append(message) } })
+        let requests: [@Sendable () async throws -> Void] = [
+            { _ = try await CivoLoadBalancerService(api: client).listNetworks(region: "LON1", apiKey: "dummy") },
+            { _ = try await CivoNetworkService(api: client).listNetworks(region: "LON1", apiKey: "dummy") },
+            { _ = try await CivoFirewallService(api: client).listFirewalls(region: "LON1", apiKey: "dummy") },
+        ]
+        for status in [422, 200] {
+            CredentialRequestStub.handler.withLock { handler in
+                handler = { _ in (status, Data(#"[{"id":{"SYNTHETIC-SECRET-MARKER":"SYNTHETIC-ACCESS-KEY-MARKER"}}]"#.utf8)) }
+            }
+            for request in requests {
+                do {
+                    try await request()
+                    Issue.record("Expected rejection or decoding failure")
+                } catch {
+                    #expect(!String(describing: error).contains("SYNTHETIC"))
+                    #expect(!error.localizedDescription.contains("SYNTHETIC"))
+                    #expect(LoadBalancerFailure(error) == (status == 200 ? .unreadableAnswer : .rejected))
+                }
+            }
+        }
+        #expect(logs.withLock { !$0.isEmpty && $0.allSatisfy { !$0.contains("SYNTHETIC") } })
+    }
 }
 
 @MainActor
@@ -5682,6 +5716,13 @@ private func loadBalancer(
     return try! JSONDecoder().decode(CivoLoadBalancer.self, from: Data("{\(fields.joined(separator: ","))}".utf8))
 }
 
+/// The documented form with `cluster_id` reported as null.
+private func loadBalancerWithNullOwner() -> CivoLoadBalancer {
+    var object = try! JSONSerialization.jsonObject(with: JSONEncoder().encode(loadBalancer(clusterId: nil))) as! [String: Any]
+    object["cluster_id"] = NSNull()
+    return try! JSONDecoder().decode(CivoLoadBalancer.self, from: JSONSerialization.data(withJSONObject: object))
+}
+
 private func backendRow(_ ip: String, _ proto: String = "TCP", _ source: String = "443", _ target: String = "8443") -> LoadBalancerBackendRow {
     LoadBalancerBackendRow(ip: ip, proto: proto, sourcePort: source, targetPort: target)
 }
@@ -5709,11 +5750,16 @@ struct LoadBalancerDraftTests {
         #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: "cluster-1")) == .managed)
         #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: "")) == .verifiedUnmanaged)
         #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: nil)) == .unknown)
+        #expect(LoadBalancerOwnership.evaluate(loadBalancerWithNullOwner()) == .unknown)
+        #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: " ")) == .unknown)
+        let exported = try JSONSerialization.jsonObject(with: JSONEncoder().encode(loadBalancerWithNullOwner())) as? [String: Any]
+        #expect(exported?["cluster_id"] == nil)
         let legacy = try JSONDecoder().decode(CivoLoadBalancer.self, from: Data(#"{"id": "lb-2", "name": "old", "cluster_id": "", "Backends": "192.168.1.9"}"#.utf8))
         #expect(LoadBalancerOwnership.evaluate(legacy) == .unknown)
 
         #expect(LoadBalancerEditability(loadBalancer(clusterId: "cluster-1")) == .managed)
         #expect(LoadBalancerEditability(loadBalancer(clusterId: nil)) == .ownershipUnknown)
+        #expect(LoadBalancerEditability(loadBalancerWithNullOwner()) == .ownershipUnknown)
         #expect(LoadBalancerEditability(loadBalancer(state: "pending")) == .unavailable("pending"))
         #expect(LoadBalancerEditability(loadBalancer(backends: #"[{"ip": "192.168.1.3"}]"#)) == .unreadableBackends)
         #expect(LoadBalancerEditability(loadBalancer(state: "AVAILABLE")) == .editable)
@@ -5957,12 +6003,26 @@ struct LoadBalancerEditorTests {
         #expect(env.editor.notice == LoadBalancerEditError.notEditable(.managed).message)
         env.begin(loadBalancer(clusterId: nil))
         #expect(env.editor.notice == LoadBalancerEditError.notEditable(.ownershipUnknown).message)
+        env.begin(loadBalancerWithNullOwner())
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.ownershipUnknown).message)
         env.begin(context: LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "FRA1"))
         #expect(env.editor.session == nil)
         #expect(env.editor.notice == LoadBalancerEditError.staleList.message)
         env.begin(context: nil)
         #expect(env.editor.notice == LoadBalancerEditError.staleList.message)
         #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A null cluster_id in the reload before saving closes the editor and sends nothing")
+    func nullOwnerOnReload() async {
+        let env = Environment()
+        env.begin()
+        await env.api.replace(with: loadBalancerWithNullOwner())
+        #expect(await env.editor.save(Self.addedBackend) == .cancelled)
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.ownershipUnknown).message)
+        #expect(await env.api.calls == ["get lb-1 LON1 key-a"])
     }
 
     @Test("Full Access revoked, or a key or region change before or during the reload, sends nothing")

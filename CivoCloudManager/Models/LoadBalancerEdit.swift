@@ -13,11 +13,13 @@ enum LoadBalancerOwnership: Equatable, Sendable {
 
     /// Civo's cloud controller manager sets `cluster_id` on every load balancer it creates and finds its own load
     /// balancers again by that value (civo/civo-cloud-controller-manager, `createLoadBalancer` and
-    /// `loadBalancerBelongsToService`), so Civo reports it for every controller-managed one. An answer without the
-    /// field, or in the older `Backends` string form, decides nothing.
+    /// `loadBalancerBelongsToService`), so Civo reports it for every controller-managed one. Only an exactly empty
+    /// value says no cluster owns it; a missing or null field, a blank value, or an answer in the older `Backends`
+    /// string form decides nothing.
     static func evaluate(_ lb: CivoLoadBalancer) -> LoadBalancerOwnership {
-        if let clusterId = lb.clusterId, !clusterId.trimmed.isEmpty { return .managed }
-        guard lb.reportsClusterId, lb.backendEntries != nil else { return .unknown }
+        guard let clusterId = lb.clusterId else { return .unknown }
+        if !clusterId.trimmed.isEmpty { return .managed }
+        guard clusterId.isEmpty, lb.backendEntries != nil else { return .unknown }
         return .verifiedUnmanaged
     }
 }

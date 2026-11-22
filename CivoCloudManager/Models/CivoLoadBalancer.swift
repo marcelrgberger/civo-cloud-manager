@@ -19,8 +19,6 @@ struct CivoLoadBalancer: Codable, Identifiable, Equatable, Sendable {
     let backendEntries: [LoadBalancerBackend]?
     /// The comma separated `Backends` string of older answers.
     let legacyBackends: String?
-    /// Whether the answer carried `cluster_id` at all, even empty. Ownership is only decided on a reported value.
-    let reportsClusterId: Bool
 
     enum CodingKeys: String, CodingKey {
         case id, name, algorithm, state, backends
@@ -49,7 +47,6 @@ struct CivoLoadBalancer: Codable, Identifiable, Equatable, Sendable {
         serviceName = try container.decodeIfPresent(String.self, forKey: .serviceName)
         externalTrafficPolicy = try container.decodeIfPresent(String.self, forKey: .externalTrafficPolicy)
         createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
-        reportsClusterId = container.contains(.clusterId)
         // `backends` is documented as objects; a string under that key is read like the old `Backends`.
         if let entries = try? container.decodeIfPresent([LoadBalancerBackend].self, forKey: .backends) {
             backendEntries = entries
@@ -70,7 +67,7 @@ struct CivoLoadBalancer: Codable, Identifiable, Equatable, Sendable {
         try container.encodeIfPresent(publicIp, forKey: .publicIp)
         try container.encodeIfPresent(privateIp, forKey: .privateIp)
         try container.encodeIfPresent(state, forKey: .state)
-        if reportsClusterId { try container.encode(clusterId ?? "", forKey: .clusterId) }
+        try container.encodeIfPresent(clusterId, forKey: .clusterId)
         try container.encodeIfPresent(firewallId, forKey: .firewallId)
         try container.encodeIfPresent(networkId, forKey: .networkId)
         try container.encodeIfPresent(serviceName, forKey: .serviceName)
