@@ -1893,6 +1893,41 @@ private actor FakeInstanceAPI: InstanceAPI {
     }
 }
 
+/// Volume requests recorded instead of sent; Civo's list per region changes as requests succeed.
+private actor FakeVolumeAPI: InstanceVolumeAPI {
+    var volumesByRegion: [String: [CivoVolume]]
+    private(set) var calls: [String] = []
+    private var requestError: Error?
+    private var listErrors: [String: Error] = [:]
+    /// Holds the next attach until the test releases it, like a request still on its way.
+    private let attachGate: ChargesServiceTests.FetchGate?
+
+    init(volumesByRegion: [String: [CivoVolume]], attachGate: ChargesServiceTests.FetchGate? = nil) {
+        self.volumesByRegion = volumesByRegion
+        self.attachGate = attachGate
+    }
+
+    func list(_ volumes: [CivoVolume], in region: String) { volumesByRegion[region] = volumes }
+    func failRequests(with error: Error) { requestError = error }
+    func failListing(in region: String, with error: Error) { listErrors[region] = error }
+
+    func volumeOptions(region: String) async throws -> InstanceVolumeOptions {
+        if let listError = listErrors[region] { throw listError }
+        return InstanceVolumeOptions(region: region, volumes: volumesByRegion[region] ?? [], networks: InstanceEnvironment.networks)
+    }
+
+    func attachVolume(_ volumeId: String, to instanceId: String, region: String) async throws {
+        await attachGate?.suspend()
+        if let requestError { throw requestError }
+        calls.append("attach \(volumeId) \(instanceId) \(region)")
+    }
+
+    func detachVolume(_ volumeId: String, region: String) async throws {
+        if let requestError { throw requestError }
+        calls.append("detach \(volumeId) \(region)")
+    }
+}
+
 /// An instance view model with a fake API, its own Settings region, notification center and activity log.
 @MainActor
 private final class InstanceEnvironment {
@@ -1917,6 +1952,7 @@ private final class InstanceEnvironment {
     var region = "LON1"
     var accessAllowed = true
     let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
+    let volumes: FakeVolumeAPI
     let center = NotificationCenter()
     /// The firewalls Civo lists for each region.
     var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
@@ -1925,11 +1961,13 @@ private final class InstanceEnvironment {
     private let keychain = FakeKeychain()
     private(set) var vm: InstanceViewModel!
 
-    init(credentials: InstanceCredentialStore? = nil) {
+    init(credentials: InstanceCredentialStore? = nil, attachGate: ChargesServiceTests.FetchGate? = nil) {
+        volumes = FakeVolumeAPI(volumesByRegion: ["LON1": InstanceVolumeTests.volumes], attachGate: attachGate)
         let store = credentials ?? InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
         vm = InstanceViewModel(
             credentials: store,
             api: api,
+            volumes: volumes,
             loadSSHKeys: { [] },
             loadFirewallOptions: { [weak self] region in
                 let firewalls = await self?.firewallsByRegion[region] ?? []
@@ -2257,6 +2295,129 @@ struct InstanceFirewallChangeTests {
 
         #expect(env.vm.selectedInstance?.firewallId == "fw-custom")
         #expect(env.vm.error == InstanceViewModel.unreadableFirewallChangeMessage)
+        #expect(env.activities.isEmpty)
+    }
+}
+
+@Suite("Instance volumes")
+@MainActor
+struct InstanceVolumeTests {
+    /// Shaped like the list example of https://www.civo.com/api/volumes, with `cluster_id` empty when unused.
+    static let volumes = try! JSONDecoder().decode([CivoVolume].self, from: Data("""
+    [{"id":"vol-free","name":"free","network_id":"net-default","instance_id":null,"cluster_id":"","size_gb":10},
+     {"id":"vol-no-network","name":"no-network","instance_id":null,"size_gb":5},
+     {"id":"vol-mine","name":"data","network_id":"net-default","instance_id":"\(consoleInstanceId)","mountpoint":"/dev/vdb","size_gb":20},
+     {"id":"vol-elsewhere","name":"elsewhere","network_id":"net-default","instance_id":"other-instance","size_gb":20},
+     {"id":"vol-private","name":"private","network_id":"net-private","instance_id":null,"size_gb":10},
+     {"id":"vol-cluster","name":"pvc","network_id":"net-default","instance_id":null,"cluster_id":"k8s-1","size_gb":10},
+     {"id":"vol-other-region","name":"other-region","network_id":"net-default","instance_id":null,"region":"NYC1","size_gb":10}]
+    """.utf8))
+
+    @Test("Only free volumes of the instance's network and region are offered; attached ones are listed for their instance")
+    func attachableFilter() throws {
+        let options = InstanceVolumeOptions(region: "lon1", volumes: Self.volumes, networks: InstanceEnvironment.networks)
+        // Without network_id on either side the region's default network counts.
+        #expect(options.attachable(to: InstanceEnvironment.instance).map(\.id) == ["vol-free", "vol-no-network"])
+        #expect(options.attached(to: InstanceEnvironment.instance).map(\.id) == ["vol-mine"])
+
+        let privateInstance = try JSONDecoder().decode(CivoInstance.self, from: Data(#"{"id": "i-2", "network_id": "net-private"}"#.utf8))
+        #expect(options.attachable(to: privateInstance).map(\.id) == ["vol-private"])
+
+        let withoutDefaultNetwork = InstanceVolumeOptions(
+            region: "LON1",
+            volumes: Self.volumes,
+            networks: InstanceEnvironment.networks.filter { $0.isDefault != true }
+        )
+        #expect(withoutDefaultNetwork.attachable(to: InstanceEnvironment.instance).isEmpty)
+    }
+
+    @Test("Attaching sends the captured region and logs the volume; a volume that is no longer free sends nothing")
+    func attach() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.attachVolume, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+
+        await env.vm.attachVolume("vol-free", to: target)
+        #expect(await env.volumes.calls == ["attach vol-free \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Attached volume free"])
+
+        // Attached elsewhere, in another network or owned by a cluster: refused after reloading the list.
+        for volumeId in ["vol-elsewhere", "vol-private", "vol-cluster", "vol-mine"] {
+            await env.vm.attachVolume(volumeId, to: target)
+            #expect(env.vm.error == InstanceTargetError.volumeUnavailable.message, "\(volumeId)")
+        }
+
+        env.accessAllowed = false
+        await env.vm.attachVolume("vol-free", to: target)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.volumes.calls.count == 1)
+    }
+
+    @Test("Detaching needs the confirmation that asks to unmount first, and only for a volume still attached")
+    func detachNeedsConfirmation() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        #expect(env.vm.confirmDetach() == nil)
+        env.vm.beginConfirmation(.attachVolume, for: InstanceEnvironment.instance)
+        #expect(env.vm.confirmDetach() == nil)
+
+        env.vm.beginConfirmation(.detachVolume(id: "vol-mine", name: "data"), for: InstanceEnvironment.instance)
+        #expect(await env.volumes.calls.isEmpty)
+        let confirmed = try #require(env.vm.confirmDetach())
+        #expect(env.vm.pendingAction == nil)
+        await env.vm.detachVolume(confirmed)
+        #expect(await env.volumes.calls == ["detach vol-mine LON1"])
+        #expect(env.activities == ["Detached volume data"])
+
+        // Detached meanwhile by someone else: refused after reloading the list.
+        await env.volumes.list(Self.volumes.filter { $0.id != "vol-mine" }, in: "LON1")
+        env.vm.beginConfirmation(.detachVolume(id: "vol-mine", name: "data"), for: InstanceEnvironment.instance)
+        await env.vm.detachVolume(try #require(env.vm.confirmDetach()))
+        #expect(env.vm.error == InstanceTargetError.volumeNotAttached.message)
+        #expect(await env.volumes.calls.count == 1)
+    }
+
+    @Test("An attach that finishes after a region change neither replaces nor fails the new region's volumes",
+          arguments: [false, true])
+    func lateAttachAfterRegionChange(oldRegionListFails: Bool) async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment(attachGate: gate)
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let attach = Task { await env.vm.attachVolume("vol-free", to: target) }
+        await gate.untilSuspended()
+
+        await env.api.list([InstanceEnvironment.instance], in: "NYC1")
+        await env.volumes.list(Self.volumes, in: "NYC1")
+        env.changeRegion(to: "NYC1")
+        await env.vm.refresh()
+        await env.vm.loadVolumeOptions(for: InstanceEnvironment.instance)
+        #expect(env.vm.volumeOptions(for: InstanceEnvironment.instance)?.region == "NYC1")
+
+        if oldRegionListFails {
+            await env.volumes.failListing(in: "LON1", with: CivoAPIError.networkError("offline"))
+        }
+        await gate.open()
+        await attach.value
+
+        #expect(await env.volumes.calls == ["attach vol-free \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Attached volume free"])
+        #expect(env.vm.volumeOptions(for: InstanceEnvironment.instance)?.region == "NYC1")
+        #expect(env.vm.volumeOptionsError == nil)
+    }
+
+    @Test("An error from Civo is shown as returned, without logging or success")
+    func civoError() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let refusal = CivoAPIError.httpError(400, #"{"code":"volume_already_attached"}"#)
+        await env.volumes.failRequests(with: refusal)
+
+        await env.vm.attachVolume("vol-free", to: target)
+        #expect(env.vm.error == refusal.localizedDescription)
+        #expect(!env.vm.showSuccess)
         #expect(env.activities.isEmpty)
     }
 }

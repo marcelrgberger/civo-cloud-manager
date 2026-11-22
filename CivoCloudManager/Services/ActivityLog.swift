@@ -41,8 +41,9 @@ struct ActivityEntry: Codable, Identifiable, Sendable {
         case let a where a.contains("reboot") || a.contains("restart"): return "arrow.clockwise.circle.fill"
         case let a where a.contains("resize"): return "arrow.up.right.circle.fill"
         case let a where a.contains("update") || a.contains("set"): return "pencil.circle.fill"
-        case let a where a.contains("attach"): return "link.circle.fill"
+        // Before "attach", which "detach" contains.
         case let a where a.contains("detach"): return "link.badge.plus"
+        case let a where a.contains("attach"): return "link.circle.fill"
         case let a where a.contains("download"): return "arrow.down.circle.fill"
         case let a where a.contains("connect"): return "bolt.circle.fill"
         default: return "circle.fill"

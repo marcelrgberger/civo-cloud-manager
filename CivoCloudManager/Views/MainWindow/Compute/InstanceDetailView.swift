@@ -29,6 +29,9 @@ struct InstanceDetailView: View {
                 networkSection
                 sshSection
                 securitySection
+                InstanceVolumesSection(instance: instance, vm: vm)
+                    .opacity(appeared ? 1 : 0)
+                    .animation(.easeOut(duration: 0.3).delay(0.28), value: appeared)
                 metadataSection
             }
             .padding(24)
@@ -42,7 +45,12 @@ struct InstanceDetailView: View {
                 Button("Back", systemImage: "chevron.backward") { onBack() }
             }
             ToolbarItem(placement: .automatic) {
-                Button { Task { await vm.refresh() } } label: {
+                Button {
+                    Task {
+                        await vm.refresh()
+                        await vm.loadVolumeOptions(for: instance)
+                    }
+                } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
             }

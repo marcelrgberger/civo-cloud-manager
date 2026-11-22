@@ -70,6 +70,7 @@
 		C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */; };
 		A93D1E7E0C5F4B2A9D3E0001 /* InstanceDeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */; };
 		8F56319FA5CB4748B937D594 /* InstanceFirewallSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */; };
+		92C63FAD21F04A028A042827 /* InstanceVolumesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */; };
 		548C91570A6FB0A5508C6D17 /* InstanceTagsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */; };
 		5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 88320D84F47B5B7234DED63F /* PrivacyPolicy.md */; };
 		613988765DB18F19D7936F26 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */; };
@@ -317,6 +318,7 @@
 		A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDeleteConfirmation.swift; sourceTree = "<group>"; };
 		2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstancePowerConfirmation.swift; sourceTree = "<group>"; };
 		8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceFirewallSheet.swift; sourceTree = "<group>"; };
+		83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceVolumesSection.swift; sourceTree = "<group>"; };
 		899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTagsEditor.swift; sourceTree = "<group>"; };
 		C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDNSRecordView.swift; sourceTree = "<group>"; };
 		C17FDFD0A2757A7BFF86340C /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TermsOfService.md; sourceTree = "<group>"; };
@@ -750,6 +752,7 @@
 				A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */,
 				2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */,
 				8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */,
+				83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */,
 				899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */,
 				F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */,
 				23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */,
@@ -1000,6 +1003,7 @@
 				A93D1E7E0C5F4B2A9D3E0001 /* InstanceDeleteConfirmation.swift in Sources */,
 				C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */,
 				8F56319FA5CB4748B937D594 /* InstanceFirewallSheet.swift in Sources */,
+				92C63FAD21F04A028A042827 /* InstanceVolumesSection.swift in Sources */,
 				548C91570A6FB0A5508C6D17 /* InstanceTagsEditor.swift in Sources */,
 				AAE860F53ABC3CC6A32456D1 /* SSHKeyListView.swift in Sources */,
 				F6F922A548293F13A135D42B /* CostDashboardView.swift in Sources */,

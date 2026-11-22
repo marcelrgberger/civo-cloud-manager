@@ -250,6 +250,7 @@ struct HelpSection {
             "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent.",
             "Resize instances with the visual size picker grid.",
             "'Change...' next to the firewall in the Security box switches the instance to another firewall of its network. A second confirmation follows; Full Access, the region and the firewall list are checked again before anything is sent. The new rules apply right away and can block SSH or other access.",
+            "The Volumes box lists the volumes attached to the instance. 'Attach Volume...' offers only volumes that are not attached and are in the network and region of the instance; the volume then still has to be mounted on the instance; format it only if it is new and empty. 'Detach...' asks for confirmation; unmount the volume in the operating system of the instance first. Full Access, the region and the volume list are checked again before anything is sent.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",
             "Edit tags inline in the Actions & Metadata box. Separate tags with commas; a tag cannot contain spaces. Saving never clears the tags: only 'Remove All Tags...' does that, after a confirmation.",
