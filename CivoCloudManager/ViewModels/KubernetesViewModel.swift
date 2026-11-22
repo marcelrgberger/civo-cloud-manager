@@ -4,6 +4,7 @@ import Foundation
 @MainActor
 final class KubernetesViewModel {
     var clusters: [CivoKubernetesCluster] = []
+    private(set) var clusterCompleteness = ListCompleteness()
     var selectedCluster: CivoKubernetesCluster?
     var isLoading = false
     var error: String?
@@ -71,8 +72,11 @@ final class KubernetesViewModel {
         defer { isLoading = false }
 
         do {
-            clusters = try await service.listClusters()
+            let clusterList = try await service.listClusters()
+            clusters = clusterList.items
+            clusterCompleteness.update(with: clusterList)
         } catch {
+            clusterCompleteness.update(after: error)
             self.error = CivoAPIError.userMessage(error)
         }
 

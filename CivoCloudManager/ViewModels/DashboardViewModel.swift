@@ -61,16 +61,16 @@ final class DashboardViewModel {
         async let loadBalancers = loadBalancerService.listLoadBalancers()
         async let networks = networkService.listNetworks()
 
-        do { clusterCount = try await clusters.count } catch {
+        do { clusterCount = try await clusters.completeItems().count } catch {
             if let msg = CivoAPIError.userMessage(error) { warnings.append("Kubernetes: \(msg)") }
         }
-        do { databaseCount = try await databases.count } catch {
+        do { databaseCount = try await databases.completeItems().count } catch {
             if let msg = CivoAPIError.userMessage(error) { warnings.append("Databases: \(msg)") }
         }
         do { volumeCount = try await volumes.count } catch {
             if let msg = CivoAPIError.userMessage(error) { warnings.append("Volumes: \(msg)") }
         }
-        do { objectStoreCount = try await objectStores.count } catch {
+        do { objectStoreCount = try await objectStores.completeItems().count } catch {
             if let msg = CivoAPIError.userMessage(error) { warnings.append("Object Stores: \(msg)") }
         }
         do { loadBalancerCount = try await loadBalancers.count } catch {

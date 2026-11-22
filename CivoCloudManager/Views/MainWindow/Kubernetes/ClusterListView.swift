@@ -101,7 +101,10 @@ struct ClusterListView: View {
         }
         .animation(.easeOut, value: vm.clusters.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            VStack(spacing: 0) {
+                if let error = vm.error { ErrorBanner(message: error) }
+                if vm.clusterCompleteness.mayBeMissingItems { IncompleteListBanner() }
+            }
         }
         .navigationTitle("Kubernetes Clusters")
         .overlay {

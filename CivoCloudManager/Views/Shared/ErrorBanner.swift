@@ -21,3 +21,22 @@ struct ErrorBanner: View {
         .transition(.move(edge: .top).combined(with: .opacity))
     }
 }
+
+/// Warns that a list stopped before its last page, so entries may be missing.
+struct IncompleteListBanner: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "exclamationmark.circle.fill")
+                .foregroundStyle(.orange)
+            Text(CivoAPIError.incompleteListMessage)
+                .font(.caption)
+            Spacer()
+        }
+        .padding(10)
+        .background(.orange.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .padding(.horizontal)
+        .padding(.top, 8)
+        .transition(.move(edge: .top).combined(with: .opacity))
+    }
+}

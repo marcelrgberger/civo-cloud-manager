@@ -58,7 +58,10 @@ struct DatabaseListView: View {
         }
         .animation(.easeOut, value: vm.databases.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            VStack(spacing: 0) {
+                if let error = vm.error { ErrorBanner(message: error) }
+                if vm.databaseCompleteness.mayBeMissingItems { IncompleteListBanner() }
+            }
         }
         .navigationTitle("Databases")
         .overlay { if vm.isLoading && vm.databases.isEmpty { ProgressView("Loading databases...") } }

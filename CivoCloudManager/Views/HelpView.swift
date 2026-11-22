@@ -92,6 +92,7 @@ struct HelpSection {
             "Select your region (e.g. fra1, lon1, nyc1).",
             "Choose which firewalls to manage and set the port for each.",
             "Click 'Dashboard' in the menu bar popover to open the full management window.",
+            "Resource lists load every page from Civo. An orange notice means not all pages could be loaded and results may be missing; refresh to try again.",
         ]),
         HelpSection(title: "Menu Bar", icon: "menubar.rectangle", items: [
             "Green shield: All firewalls closed.",

@@ -7,6 +7,12 @@ enum CivoAPIError: LocalizedError {
     case decodingError(String)
     case networkError(String)
     case cancelled
+    /// Paging stopped before the last page; the detail is the reason, if any.
+    case incompleteList(String?)
+
+    static var incompleteListMessage: String {
+        String(localized: "Some results may be missing because not all pages could be loaded from Civo.")
+    }
 
     /// Returns true if this error should be silently ignored (e.g. request cancelled during navigation)
     static func isCancelled(_ error: Error) -> Bool {
@@ -49,6 +55,10 @@ enum CivoAPIError: LocalizedError {
             return "Failed to parse API response: \(detail)"
         case .cancelled:
             return ""  // Empty = suppress in UI
+        case .incompleteList(let detail):
+            let message = Self.incompleteListMessage
+            guard let detail, !detail.isEmpty else { return message }
+            return "\(message) \(detail)"
         case .networkError(let detail):
             if detail.contains("cancelled") {
                 return ""  // Empty = suppress in UI
@@ -74,6 +84,35 @@ struct PaginatedResponse<T: Decodable & Sendable>: Decodable, Sendable {
     enum CodingKeys: String, CodingKey {
         case items, page, pages
         case perPage = "per_page"
+    }
+}
+
+/// A list gathered from all pages of a paginated endpoint.
+struct PaginatedList<T: Sendable>: Sendable {
+    let items: [T]
+    /// False when paging stopped early (page cap, repeated or non-advancing page), so items may be missing.
+    let isComplete: Bool
+
+    /// The items, or an error for callers that must not act on a partial list.
+    func completeItems() throws -> [T] {
+        guard isComplete else { throw CivoAPIError.incompleteList(nil) }
+        return items
+    }
+}
+
+/// Whether the list a screen shows may be missing entries, carried from one load attempt to the next.
+struct ListCompleteness: Equatable, Sendable {
+    private(set) var mayBeMissingItems = false
+
+    /// A finished load states exactly whether every page arrived.
+    mutating func update<T>(with list: PaginatedList<T>) {
+        mayBeMissingItems = !list.isComplete
+    }
+
+    /// A cancelled load never confirmed the shown list, so it stays flagged until a later load finishes.
+    /// Other failures are reported as errors and keep the last state.
+    mutating func update(after error: Error) {
+        if CivoAPIError.isCancelled(error) { mayBeMissingItems = true }
     }
 }
 
@@ -140,16 +179,19 @@ final class CivoAPIClient: Sendable {
         try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired)
     }
 
-    /// GET a paginated list (API returns `{ items: [...] }`).
-    func getPaginatedList<T: Decodable & Sendable>(
+    /// GET every page of a paginated list (API returns `{ page, per_page, pages, items }`).
+    /// Region and API key are fixed before the first page, so a Settings change mid-way cannot mix accounts or regions.
+    func getPaginatedList<T: Decodable & Identifiable & Sendable>(
         path: String,
         queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true
-    ) async throws -> [T] {
-        let response: PaginatedResponse<T> = try await execute(
-            "GET", path: path, queryItems: queryItems, regionRequired: regionRequired
-        )
-        return response.items
+    ) async throws -> PaginatedList<T> {
+        let apiKey = CivoConfig.shared.apiKey
+        guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
+        let filters = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
+        return try await Self.collectPages(filters: filters) { pageQuery in
+            try await self.execute("GET", path: path, queryItems: pageQuery, regionRequired: regionRequired, apiKey: apiKey)
+        }
     }
 
     /// GET a plain array list (API returns `[...]`).
@@ -211,6 +253,48 @@ final class CivoAPIClient: Sendable {
         } catch {
             return false
         }
+    }
+
+    // MARK: - Pagination
+
+    /// Page size and page cap follow Civo's own Go client (civogo): 100 per page, at most 100 pages.
+    static let pageSize = 100
+    static let maxPages = 100
+
+    /// Fetches pages from 1 on, each with the same filters, until the last page.
+    /// Without `pages` metadata only an empty page proves the end. A repeated or non-advancing page,
+    /// or reaching `maxPages`, returns the items so far as incomplete. A failed page throws; nothing partial is returned.
+    static func collectPages<T: Identifiable & Sendable>(
+        filters: [URLQueryItem],
+        maxPages: Int = maxPages,
+        fetchPage: ([URLQueryItem]) async throws -> PaginatedResponse<T>
+    ) async throws -> PaginatedList<T> {
+        let baseQuery = filters.filter { $0.name != "page" && $0.name != "per_page" }
+        var items: [T] = []
+        var seenIDs = Set<T.ID>()
+        for page in 1...max(maxPages, 1) {
+            let response: PaginatedResponse<T>
+            do {
+                response = try await fetchPage(baseQuery + [
+                    URLQueryItem(name: "page", value: String(page)),
+                    URLQueryItem(name: "per_page", value: String(pageSize)),
+                ])
+            } catch where page > 1 && !CivoAPIError.isCancelled(error) {
+                throw CivoAPIError.incompleteList(error.localizedDescription)
+            }
+            if Task.isCancelled { throw CivoAPIError.cancelled }
+            if let reportedPage = response.page, reportedPage != page {
+                return PaginatedList(items: items, isComplete: false)
+            }
+            let newItems = response.items.filter { seenIDs.insert($0.id).inserted }
+            if newItems.isEmpty && !response.items.isEmpty {
+                return PaginatedList(items: items, isComplete: false)
+            }
+            items += newItems
+            let isLastPage = response.pages.map { page >= $0 } ?? response.items.isEmpty
+            if isLastPage { return PaginatedList(items: items, isComplete: true) }
+        }
+        return PaginatedList(items: items, isComplete: false)
     }
 
     // MARK: - Core

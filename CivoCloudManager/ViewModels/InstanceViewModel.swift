@@ -35,6 +35,7 @@ struct PendingInstanceAction: Equatable {
 @MainActor
 final class InstanceViewModel {
     var instances: [CivoInstance] = []
+    private(set) var instanceCompleteness = ListCompleteness()
     var sshKeys: [CivoSSHKey] = []
     var isLoading = false
     var error: String?
@@ -111,10 +112,17 @@ final class InstanceViewModel {
             async let insts = api.listInstances(region: region.isEmpty ? nil : region)
             async let keys = loadSSHKeys()
 
-            let loaded = try await insts
+            let instanceList: PaginatedList<CivoInstance>
+            do {
+                instanceList = try await insts
+            } catch {
+                instanceCompleteness.update(after: error)
+                throw error
+            }
             // A region change while loading starts its own refresh; this list belongs to the old region.
             guard Self.isSameRegion(region, settingsRegion()) else { return }
-            instances = loaded
+            instances = instanceList.items
+            instanceCompleteness.update(with: instanceList)
             instancesRegion = region
             updateSelection()
             dropInvalidPendingAction()

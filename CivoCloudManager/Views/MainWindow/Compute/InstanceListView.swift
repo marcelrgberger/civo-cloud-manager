@@ -85,7 +85,10 @@ struct InstanceListView: View {
         }
         .animation(.easeOut, value: vm.instances.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            VStack(spacing: 0) {
+                if let error = vm.error { ErrorBanner(message: error) }
+                if vm.instanceCompleteness.mayBeMissingItems { IncompleteListBanner() }
+            }
         }
         .navigationTitle("Instances")
         .overlay { if vm.isLoading && vm.instances.isEmpty { ProgressView("Loading instances...") } }

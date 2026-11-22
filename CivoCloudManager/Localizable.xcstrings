@@ -83731,6 +83731,206 @@
         }
       }
     },
+    "Some results may be missing because not all pages could be loaded from Civo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some results may be missing because not all pages could be loaded from Civo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einige Ergebnisse fehlen möglicherweise, weil nicht alle Seiten von Civo geladen werden konnten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es posible que falten algunos resultados porque no se pudieron cargar todas las páginas de Civo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Certains résultats peuvent manquer, car toutes les pages n'ont pas pu être chargées depuis Civo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alcuni risultati potrebbero mancare perché non è stato possibile caricare tutte le pagine da Civo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sommige resultaten ontbreken mogelijk omdat niet alle pagina's van Civo konden worden geladen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Może brakować niektórych wyników, ponieważ nie udało się wczytać wszystkich stron z Civo."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alguns resultados podem estar em falta porque não foi possível carregar todas as páginas do Civo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分结果可能缺失，因为未能从 Civo 加载所有页面。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo からすべてのページを読み込めなかったため、一部の結果が欠けている可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo에서 모든 페이지를 불러오지 못해 일부 결과가 누락되었을 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قد تكون بعض النتائج مفقودة لأنه تعذر تحميل جميع الصفحات من Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कुछ परिणाम गायब हो सकते हैं क्योंकि Civo से सभी पेज लोड नहीं हो सके।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beberapa hasil mungkin tidak ada karena tidak semua halaman dapat dimuat dari Civo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo'dan tüm sayfalar yüklenemediği için bazı sonuçlar eksik olabilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Некоторые результаты могут отсутствовать, так как не удалось загрузить все страницы из Civo."
+          }
+        }
+      }
+    },
+    "Resource lists load every page from Civo. An orange notice means not all pages could be loaded and results may be missing; refresh to try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource lists load every page from Civo. An orange notice means not all pages could be loaded and results may be missing; refresh to try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressourcenlisten laden alle Seiten von Civo. Ein oranger Hinweis bedeutet, dass nicht alle Seiten geladen werden konnten und Ergebnisse fehlen können; aktualisieren Sie die Liste, um es erneut zu versuchen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las listas de recursos cargan todas las páginas de Civo. Un aviso naranja indica que no se pudieron cargar todas las páginas y que pueden faltar resultados; actualiza para volver a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les listes de ressources chargent toutes les pages depuis Civo. Un avis orange signifie que toutes les pages n'ont pas pu être chargées et que des résultats peuvent manquer ; actualisez pour réessayer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli elenchi delle risorse caricano tutte le pagine da Civo. Un avviso arancione indica che non è stato possibile caricare tutte le pagine e che potrebbero mancare dei risultati; aggiorna per riprovare."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resourcelijsten laden alle pagina's van Civo. Een oranje melding betekent dat niet alle pagina's konden worden geladen en dat er resultaten kunnen ontbreken; vernieuw om het opnieuw te proberen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listy zasobów wczytują wszystkie strony z Civo. Pomarańczowy komunikat oznacza, że nie udało się wczytać wszystkich stron i może brakować wyników; odśwież, aby spróbować ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As listas de recursos carregam todas as páginas do Civo. Um aviso laranja significa que não foi possível carregar todas as páginas e que podem faltar resultados; atualize para tentar novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资源列表会从 Civo 加载所有页面。橙色提示表示未能加载所有页面，结果可能不完整；请刷新以重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リソース一覧は Civo からすべてのページを読み込みます。オレンジ色の通知は、一部のページを読み込めず結果が欠けている可能性があることを示します。更新して再試行してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리소스 목록은 Civo에서 모든 페이지를 불러옵니다. 주황색 알림은 일부 페이지를 불러오지 못해 결과가 누락되었을 수 있음을 뜻합니다. 새로 고쳐 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحمّل قوائم الموارد جميع الصفحات من Civo. يعني التنبيه البرتقالي أنه تعذر تحميل جميع الصفحات وقد تكون بعض النتائج مفقودة؛ حدّث القائمة للمحاولة مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संसाधन सूचियाँ Civo से सभी पेज लोड करती हैं। नारंगी सूचना का अर्थ है कि सभी पेज लोड नहीं हो सके और कुछ परिणाम गायब हो सकते हैं; फिर से प्रयास करने के लिए रीफ़्रेश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daftar sumber daya memuat semua halaman dari Civo. Pemberitahuan oranye berarti tidak semua halaman dapat dimuat dan beberapa hasil mungkin tidak ada; muat ulang untuk mencoba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaynak listeleri Civo'dan tüm sayfaları yükler. Turuncu bir bildirim, tüm sayfaların yüklenemediği ve bazı sonuçların eksik olabileceği anlamına gelir; yeniden denemek için yenileyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Списки ресурсов загружают все страницы из Civo. Оранжевое уведомление означает, что не все страницы удалось загрузить и часть результатов может отсутствовать; обновите список, чтобы повторить попытку."
+          }
+        }
+      }
+    },
     "A console session is requested for one hour. If a session is already active, it is reused and may end sooner." : {
       "localizations" : {
         "en" : {

@@ -3,7 +3,7 @@ import Foundation
 /// Requests for one existing instance. Each takes the region the instance was listed from,
 /// never the current Settings region, so a later region change cannot redirect them.
 protocol InstanceAPI: Sendable {
-    func listInstances(region: String?) async throws -> [CivoInstance]
+    func listInstances(region: String?) async throws -> PaginatedList<CivoInstance>
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws
     func stopInstance(_ id: String, region: String) async throws
     func startInstance(_ id: String, region: String) async throws
@@ -15,7 +15,7 @@ protocol InstanceAPI: Sendable {
 final class CivoInstanceService: InstanceAPI {
     private let api = CivoAPIClient.shared
 
-    func listInstances(region: String? = nil) async throws -> [CivoInstance] {
+    func listInstances(region: String? = nil) async throws -> PaginatedList<CivoInstance> {
         var queryItems: [URLQueryItem]? = nil
         if let region { queryItems = [URLQueryItem(name: "region", value: region)] }
         return try await api.getPaginatedList(path: "/instances", queryItems: queryItems)

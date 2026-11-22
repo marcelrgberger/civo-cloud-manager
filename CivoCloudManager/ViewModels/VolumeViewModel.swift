@@ -18,8 +18,10 @@ final class VolumeViewModel {
     var showSuccess = false
 
     var instances: [CivoInstance] = []
+    private(set) var objectStoreCompleteness = ListCompleteness()
     var availableNetworks: [CivoNetwork] = []
     var credentials: [CivoObjectStoreCredential] = []
+    private(set) var credentialCompleteness = ListCompleteness()
     var isCreatingCredential = false
 
     // Pause/Resume
@@ -49,9 +51,13 @@ final class VolumeViewModel {
             async let creds = objectStoreService.listCredentials()
 
             volumes = try await vols
-            instances = try await insts
-            objectStores = try await stores
-            credentials = try await creds
+            instances = try await insts.items
+            let storeList = try await stores
+            let credentialList = try await creds
+            objectStores = storeList.items
+            credentials = credentialList.items
+            objectStoreCompleteness.update(with: storeList)
+            credentialCompleteness.update(with: credentialList)
 
             // Check if vault exists
             vaultEnabled = objectStores.contains { $0.name == ObjectStorePauseService.vaultName }
@@ -64,6 +70,8 @@ final class VolumeViewModel {
                 Log.error("Failed to load paused stores: \(error.localizedDescription)")
             }
         } catch {
+            objectStoreCompleteness.update(after: error)
+            credentialCompleteness.update(after: error)
             self.error = CivoAPIError.userMessage(error)
             Log.error("Storage refresh failed: \(error.localizedDescription)")
         }

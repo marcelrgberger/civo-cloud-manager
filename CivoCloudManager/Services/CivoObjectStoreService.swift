@@ -5,7 +5,7 @@ final class CivoObjectStoreService: Sendable {
 
     // MARK: - Object Stores
 
-    func listObjectStores() async throws -> [CivoObjectStore] {
+    func listObjectStores() async throws -> PaginatedList<CivoObjectStore> {
         try await api.getPaginatedList(path: "/objectstores")
     }
 
@@ -27,7 +27,7 @@ final class CivoObjectStoreService: Sendable {
 
     // MARK: - Credentials
 
-    func listCredentials() async throws -> [CivoObjectStoreCredential] {
+    func listCredentials() async throws -> PaginatedList<CivoObjectStoreCredential> {
         try await api.getPaginatedList(path: "/objectstore/credentials")
     }
 
