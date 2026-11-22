@@ -90,7 +90,7 @@ struct InstanceListView: View {
         .safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
-                if vm.instancesIncomplete { IncompleteListBanner() }
+                if vm.instanceCompleteness.mayBeMissingItems { IncompleteListBanner() }
             }
         }
         .navigationTitle("Instances")

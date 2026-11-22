@@ -103,7 +103,7 @@ struct ClusterListView: View {
         .safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
-                if vm.clustersIncomplete { IncompleteListBanner() }
+                if vm.clusterCompleteness.mayBeMissingItems { IncompleteListBanner() }
             }
         }
         .navigationTitle("Kubernetes Clusters")

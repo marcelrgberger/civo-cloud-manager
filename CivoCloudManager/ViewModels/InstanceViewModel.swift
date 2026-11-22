@@ -4,8 +4,7 @@ import Foundation
 @MainActor
 final class InstanceViewModel {
     var instances: [CivoInstance] = []
-    /// True when the last loaded instance list stopped before its last page.
-    private(set) var instancesIncomplete = false
+    private(set) var instanceCompleteness = ListCompleteness()
     var sshKeys: [CivoSSHKey] = []
     var isLoading = false
     var error: String?
@@ -49,9 +48,15 @@ final class InstanceViewModel {
             async let insts = instanceService.listInstances(region: region.isEmpty ? nil : region)
             async let keys = sshKeyService.listSSHKeys()
 
-            let instanceList = try await insts
+            let instanceList: PaginatedList<CivoInstance>
+            do {
+                instanceList = try await insts
+            } catch {
+                instanceCompleteness.update(after: error)
+                throw error
+            }
             instances = instanceList.items
-            instancesIncomplete = !instanceList.isComplete
+            instanceCompleteness.update(with: instanceList)
             instancesRegion = region
             sshKeys = try await keys
 

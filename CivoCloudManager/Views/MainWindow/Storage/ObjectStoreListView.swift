@@ -237,7 +237,7 @@ struct ObjectStoreListView: View {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
                 if let pauseError = vm.pauseError { ErrorBanner(message: pauseError) }
-                if vm.objectStoresIncomplete { IncompleteListBanner() }
+                if vm.objectStoreCompleteness.mayBeMissingItems || vm.credentialCompleteness.mayBeMissingItems { IncompleteListBanner() }
 
                 // Enable vault banner
                 if !vm.vaultEnabled && !vm.isLoading && !vm.visibleObjectStores.isEmpty {

@@ -40,7 +40,10 @@ struct CredentialListView: View {
         }
         .animation(.easeOut, value: vm.credentials.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            VStack(spacing: 0) {
+                if let error = vm.error { ErrorBanner(message: error) }
+                if vm.credentialCompleteness.mayBeMissingItems { IncompleteListBanner() }
+            }
         }
         .navigationTitle("Object Store Credentials")
         .task {

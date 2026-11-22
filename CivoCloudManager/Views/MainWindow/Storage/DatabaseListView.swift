@@ -60,7 +60,7 @@ struct DatabaseListView: View {
         .safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
-                if vm.databasesIncomplete { IncompleteListBanner() }
+                if vm.databaseCompleteness.mayBeMissingItems { IncompleteListBanner() }
             }
         }
         .navigationTitle("Databases")

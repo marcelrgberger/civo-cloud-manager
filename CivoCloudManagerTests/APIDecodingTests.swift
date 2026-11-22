@@ -1801,4 +1801,25 @@ struct PaginationTests {
         } throws: { CivoAPIError.isCancelled($0) }
         #expect(await stub.requestedPages == ["1"])
     }
+
+    @Test("A screen's list stays flagged after a cancelled load until a load finishes completely")
+    func completenessAcrossLoads() {
+        var completeness = ListCompleteness()
+        #expect(!completeness.mayBeMissingItems)
+
+        completeness.update(after: CancellationError())
+        #expect(completeness.mayBeMissingItems, "a load cancelled before any result must not look complete")
+
+        completeness.update(with: PaginatedList(items: Self.items("a"), isComplete: true))
+        #expect(!completeness.mayBeMissingItems)
+
+        completeness.update(after: URLError(.cancelled))
+        #expect(completeness.mayBeMissingItems, "a cancelled refresh must not present the older list as current")
+
+        completeness.update(with: PaginatedList(items: Self.items("a"), isComplete: false))
+        #expect(completeness.mayBeMissingItems)
+
+        completeness.update(after: CivoAPIError.httpError(500, ""))
+        #expect(completeness.mayBeMissingItems, "a reported failure keeps the last state")
+    }
 }

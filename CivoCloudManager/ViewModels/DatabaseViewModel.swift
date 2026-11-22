@@ -4,8 +4,7 @@ import Foundation
 @MainActor
 final class DatabaseViewModel {
     var databases: [CivoDatabase] = []
-    /// True when the last loaded database list stopped before its last page.
-    private(set) var databasesIncomplete = false
+    private(set) var databaseCompleteness = ListCompleteness()
     var isLoading = false
     var error: String?
 
@@ -32,8 +31,9 @@ final class DatabaseViewModel {
         do {
             let databaseList = try await service.listDatabases()
             databases = databaseList.items
-            databasesIncomplete = !databaseList.isComplete
+            databaseCompleteness.update(with: databaseList)
         } catch {
+            databaseCompleteness.update(after: error)
             self.error = CivoAPIError.userMessage(error)
             Log.error("Database list failed: \(error.localizedDescription)")
         }

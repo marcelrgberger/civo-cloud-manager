@@ -100,6 +100,22 @@ struct PaginatedList<T: Sendable>: Sendable {
     }
 }
 
+/// Whether the list a screen shows may be missing entries, carried from one load attempt to the next.
+struct ListCompleteness: Equatable, Sendable {
+    private(set) var mayBeMissingItems = false
+
+    /// A finished load states exactly whether every page arrived.
+    mutating func update<T>(with list: PaginatedList<T>) {
+        mayBeMissingItems = !list.isComplete
+    }
+
+    /// A cancelled load never confirmed the shown list, so it stays flagged until a later load finishes.
+    /// Other failures are reported as errors and keep the last state.
+    mutating func update(after error: Error) {
+        if CivoAPIError.isCancelled(error) { mayBeMissingItems = true }
+    }
+}
+
 /// Simple result from DELETE operations.
 struct CivoResult: Decodable, Sendable {
     let result: String?
