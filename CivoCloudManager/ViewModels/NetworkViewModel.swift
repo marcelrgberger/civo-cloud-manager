@@ -19,6 +19,9 @@ final class NetworkViewModel {
     var selectedFirewall: CivoFirewall?
     var selectedLoadBalancer: CivoLoadBalancer?
     var rules: [CivoRule] = []
+    /// The region and account `rules` were loaded from; a rule edit is bound to both.
+    private(set) var rulesRegion = ""
+    private(set) var rulesAccount: CivoAccount?
 
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
@@ -109,7 +112,11 @@ final class NetworkViewModel {
         defer { isLoading = false }
 
         do {
-            rules = try await firewallService.getRulesForFirewall(firewallId)
+            let region = CivoConfig.shared.region
+            let apiKey = CivoConfig.shared.apiKey
+            rules = try await firewallService.getRulesForFirewall(firewallId, region: region, apiKey: apiKey)
+            rulesRegion = region
+            rulesAccount = CivoAccount(apiKey: apiKey)
         } catch {
             self.error = CivoAPIError.userMessage(error)
         }

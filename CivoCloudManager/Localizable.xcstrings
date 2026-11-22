@@ -97064,6 +97064,4106 @@
           }
         }
       }
+    },
+    "Edit Rule" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Rule"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regel bearbeiten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar regla"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier la règle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica regola"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regel bewerken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytuj regułę"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar regra"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑规则"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ルールを編集"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "규칙 편집"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل القاعدة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नियम संपादित करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Aturan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuralı Düzenle"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редактировать правило"
+          }
+        }
+      }
+    },
+    "Before and After" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before and After"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorher und nachher"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes y después"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avant et après"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prima e dopo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voor en na"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przed i po"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes e depois"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改前后"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更前と変更後"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경 전후"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبل وبعد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पहले और बाद में"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sebelum dan Sesudah"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önce ve Sonra"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "До и после"
+          }
+        }
+      }
+    },
+    "No changes yet." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No changes yet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Änderungen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay cambios."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune modification pour l'instant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancora nessuna modifica."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nog geen wijzigingen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brak zmian."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda sem alterações."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚无更改。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだ変更はありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 변경 사항이 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا توجد تغييرات بعد."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अभी तक कोई बदलाव नहीं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Belum ada perubahan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Henüz değişiklik yok."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменений пока нет."
+          }
+        }
+      }
+    },
+    "Field" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Champ"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pole"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字段"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "項目"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "항목"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحقل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ील्ड"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alan"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поле"
+          }
+        }
+      }
+    },
+    "Before" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorher"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avant"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prima"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voor"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przed"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改前"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更前"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경 전"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पहले"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sebelum"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önce"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "До"
+          }
+        }
+      }
+    },
+    "After" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachher"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Después"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depois"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改后"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更後"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경 후"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बाद में"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesudah"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sonra"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "После"
+          }
+        }
+      }
+    },
+    "Ports" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ports"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ports"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puertos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ports"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porte"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poorten"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porty"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portas"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端口"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポート"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포트"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنافذ"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पोर्ट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portlar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Порты"
+          }
+        }
+      }
+    },
+    "none" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "none"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "keine"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ninguno"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aucun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nessuno"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "geen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "brak"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nenhum"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "なし"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "없음"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا شيء"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कोई नहीं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tidak ada"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yok"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "нет"
+          }
+        }
+      }
+    },
+    "Save this rule change?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save this rule change?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Regeländerung speichern?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Guardar este cambio de la regla?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer cette modification de la règle ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvare questa modifica della regola?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze regelwijziging opslaan?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisać tę zmianę reguły?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar esta alteração da regra?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存此规则更改？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このルールの変更を保存しますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 규칙 변경을 저장하시겠습니까?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد حفظ هذا التغيير على القاعدة؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्या यह नियम परिवर्तन सहेजें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan perubahan aturan ini?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu kural değişikliği kaydedilsin mi?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить это изменение правила?"
+          }
+        }
+      }
+    },
+    "Save Anyway" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Anyway"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trotzdem speichern"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar de todos modos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer quand même"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva comunque"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toch opslaan"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisz mimo to"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar mesmo assim"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仍然保存"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "それでも保存"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "그래도 저장"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحفظ على أي حال"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फिर भी सहेजें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tetap Simpan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yine de Kaydet"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Всё равно сохранить"
+          }
+        }
+      }
+    },
+    "Civo does not allow changing the action of an existing rule." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo does not allow changing the action of an existing rule."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo erlaubt nicht, die Aktion einer bestehenden Regel zu ändern."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no permite cambiar la acción de una regla existente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ne permet pas de modifier l'action d'une règle existante."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non consente di modificare l'azione di una regola esistente."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo staat niet toe dat de actie van een bestaande regel wordt gewijzigd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie pozwala zmienić działania istniejącej reguły."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo não permite alterar a ação de uma regra existente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 不允许更改现有规则的操作。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo では既存のルールのアクションを変更できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo에서는 기존 규칙의 작업을 변경할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تسمح Civo بتغيير إجراء قاعدة موجودة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo किसी मौजूदा नियम की कार्रवाई बदलने की अनुमति नहीं देता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo tidak mengizinkan perubahan tindakan pada aturan yang sudah ada."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo, mevcut bir kuralın eylemini değiştirmeye izin vermez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo не позволяет изменить действие существующего правила."
+          }
+        }
+      }
+    },
+    "Choose TCP, UDP or ICMP as the protocol." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose TCP, UDP or ICMP as the protocol."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle TCP, UDP oder ICMP als Protokoll."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige TCP, UDP o ICMP como protocolo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez TCP, UDP ou ICMP comme protocole."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli TCP, UDP o ICMP come protocollo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies TCP, UDP of ICMP als protocol."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz TCP, UDP lub ICMP jako protokół."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha TCP, UDP ou ICMP como protocolo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择 TCP、UDP 或 ICMP 作为协议。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プロトコルとして TCP、UDP、ICMP のいずれかを選択してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "프로토콜로 TCP, UDP 또는 ICMP를 선택하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر TCP أو UDP أو ICMP كبروتوكول."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रोटोकॉल के रूप में TCP, UDP या ICMP चुनें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih TCP, UDP, atau ICMP sebagai protokol."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protokol olarak TCP, UDP veya ICMP seçin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите протокол TCP, UDP или ICMP."
+          }
+        }
+      }
+    },
+    "Choose ingress or egress as the direction." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose ingress or egress as the direction."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ingress oder egress als Richtung."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige ingress o egress como dirección."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez ingress ou egress comme direction."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli ingress o egress come direzione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies ingress of egress als richting."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz ingress lub egress jako kierunek."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha ingress ou egress como direção."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择 ingress 或 egress 作为方向。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "方向として ingress または egress を選択してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방향으로 ingress 또는 egress를 선택하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر ingress أو egress كاتجاه."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "दिशा के रूप में ingress या egress चुनें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih ingress atau egress sebagai arah."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yön olarak ingress veya egress seçin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите направление ingress или egress."
+          }
+        }
+      }
+    },
+    "TCP and UDP rules need a start port." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP and UDP rules need a start port."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP- und UDP-Regeln brauchen einen Startport."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las reglas TCP y UDP necesitan un puerto inicial."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les règles TCP et UDP nécessitent un port de début."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le regole TCP e UDP richiedono una porta iniziale."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP- en UDP-regels hebben een startpoort nodig."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reguły TCP i UDP wymagają portu początkowego."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As regras TCP e UDP precisam de uma porta inicial."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP 和 UDP 规则需要起始端口。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP と UDP のルールには開始ポートが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP 및 UDP 규칙에는 시작 포트가 필요합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتاج قواعد TCP وUDP إلى منفذ بداية."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP और UDP नियमों के लिए प्रारंभ पोर्ट आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan TCP dan UDP memerlukan port awal."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TCP ve UDP kuralları bir başlangıç portu gerektirir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для правил TCP и UDP нужен начальный порт."
+          }
+        }
+      }
+    },
+    "Ports must be whole numbers from 1 to 65535." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ports must be whole numbers from 1 to 65535."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ports müssen ganze Zahlen von 1 bis 65535 sein."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los puertos deben ser números enteros de 1 a 65535."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les ports doivent être des nombres entiers de 1 à 65535."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le porte devono essere numeri interi da 1 a 65535."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poorten moeten gehele getallen van 1 tot en met 65535 zijn."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porty muszą być liczbami całkowitymi od 1 do 65535."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As portas devem ser números inteiros de 1 a 65535."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端口必须是 1 到 65535 之间的整数。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポートは 1 から 65535 までの整数で指定してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포트는 1에서 65535 사이의 정수여야 합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب أن تكون المنافذ أعدادًا صحيحة من 1 إلى 65535."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पोर्ट 1 से 65535 तक की पूर्ण संख्याएँ होने चाहिए।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port harus berupa bilangan bulat dari 1 sampai 65535."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portlar 1 ile 65535 arasında tam sayı olmalıdır."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Порты должны быть целыми числами от 1 до 65535."
+          }
+        }
+      }
+    },
+    "The end port needs a start port and must not be lower than it." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The end port needs a start port and must not be lower than it."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Endport braucht einen Startport und darf nicht kleiner sein als dieser."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El puerto final necesita un puerto inicial y no puede ser menor que él."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le port de fin nécessite un port de début et ne doit pas lui être inférieur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La porta finale richiede una porta iniziale e non può essere inferiore a essa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De eindpoort heeft een startpoort nodig en mag niet lager zijn dan die."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port końcowy wymaga portu początkowego i nie może być od niego niższy."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A porta final precisa de uma porta inicial e não pode ser inferior a ela."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束端口需要起始端口，且不能小于起始端口。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "終了ポートには開始ポートが必要で、開始ポートより小さくできません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "끝 포트에는 시작 포트가 필요하며 시작 포트보다 작을 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يحتاج منفذ النهاية إلى منفذ بداية ويجب ألا يكون أصغر منه."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अंतिम पोर्ट के लिए प्रारंभ पोर्ट आवश्यक है और वह उससे कम नहीं हो सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port akhir memerlukan port awal dan tidak boleh lebih kecil darinya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitiş portu bir başlangıç portu gerektirir ve ondan küçük olamaz."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для конечного порта нужен начальный порт, и он не может быть меньше начального."
+          }
+        }
+      }
+    },
+    "Enter the CIDR as an address with prefix length, such as 203.0.113.10/32." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the CIDR as an address with prefix length, such as 203.0.113.10/32."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib den CIDR als Adresse mit Präfixlänge ein, zum Beispiel 203.0.113.10/32."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduce el CIDR como dirección con longitud de prefijo, por ejemplo 203.0.113.10/32."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saisissez le CIDR sous forme d'adresse avec longueur de préfixe, par exemple 203.0.113.10/32."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserisci il CIDR come indirizzo con lunghezza del prefisso, ad esempio 203.0.113.10/32."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voer de CIDR in als adres met prefixlengte, bijvoorbeeld 203.0.113.10/32."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wpisz CIDR jako adres z długością prefiksu, na przykład 203.0.113.10/32."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduza o CIDR como endereço com comprimento de prefixo, por exemplo 203.0.113.10/32."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请以带前缀长度的地址形式输入 CIDR，例如 203.0.113.10/32。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CIDR はプレフィックス長付きのアドレスで入力してください（例: 203.0.113.10/32）。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CIDR은 접두사 길이를 포함한 주소로 입력하세요. 예: 203.0.113.10/32"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل CIDR كعنوان مع طول البادئة، مثل 203.0.113.10/32."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CIDR को प्रीफ़िक्स लंबाई वाले पते के रूप में दर्ज करें, जैसे 203.0.113.10/32।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan CIDR sebagai alamat dengan panjang prefiks, misalnya 203.0.113.10/32."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CIDR'yi önek uzunluğuyla birlikte bir adres olarak girin, örneğin 203.0.113.10/32."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите CIDR как адрес с длиной префикса, например 203.0.113.10/32."
+          }
+        }
+      }
+    },
+    "After this change the rule admits traffic from every address on the internet." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After this change the rule admits traffic from every address on the internet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dieser Änderung lässt die Regel Datenverkehr von jeder Adresse im Internet zu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tras este cambio, la regla admite tráfico de cualquier dirección de internet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après cette modification, la règle autorise le trafic depuis n'importe quelle adresse d'Internet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo questa modifica la regola ammette traffico da qualsiasi indirizzo di internet."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na deze wijziging laat de regel verkeer van elk adres op internet toe."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po tej zmianie reguła przepuszcza ruch z każdego adresu w internecie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Após esta alteração, a regra admite tráfego de qualquer endereço da internet."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此更改后，该规则将允许来自互联网上任何地址的流量。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この変更後、ルールはインターネット上のすべてのアドレスからの通信を許可します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 변경 후에는 규칙이 인터넷의 모든 주소에서 오는 트래픽을 허용합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعد هذا التغيير تسمح القاعدة بحركة المرور من أي عنوان على الإنترنت."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस बदलाव के बाद नियम इंटरनेट के हर पते से ट्रैफ़िक की अनुमति देगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setelah perubahan ini, aturan mengizinkan lalu lintas dari setiap alamat di internet."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu değişiklikten sonra kural, internetteki her adresten gelen trafiğe izin verir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "После этого изменения правило пропускает трафик с любого адреса в интернете."
+          }
+        }
+      }
+    },
+    "This rule currently admits your own public IP address. After the change you may lose access, for example over SSH." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This rule currently admits your own public IP address. After the change you may lose access, for example over SSH."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Regel lässt derzeit deine eigene öffentliche IP-Adresse zu. Nach der Änderung kannst du den Zugang verlieren, zum Beispiel über SSH."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta regla admite actualmente tu propia dirección IP pública. Tras el cambio podrías perder el acceso, por ejemplo por SSH."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette règle autorise actuellement votre propre adresse IP publique. Après la modification, vous risquez de perdre l'accès, par exemple via SSH."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questa regola ammette attualmente il tuo indirizzo IP pubblico. Dopo la modifica potresti perdere l'accesso, ad esempio tramite SSH."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze regel laat momenteel je eigen openbare IP-adres toe. Na de wijziging kun je de toegang verliezen, bijvoorbeeld via SSH."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta reguła przepuszcza obecnie Twój publiczny adres IP. Po zmianie możesz stracić dostęp, na przykład przez SSH."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta regra admite atualmente o seu próprio endereço IP público. Após a alteração, poderá perder o acesso, por exemplo por SSH."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此规则当前允许你自己的公网 IP 地址。更改后你可能会失去访问权限，例如 SSH。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このルールは現在、あなた自身のパブリック IP アドレスを許可しています。変更後は SSH などでアクセスできなくなる可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 규칙은 현재 내 공인 IP 주소를 허용합니다. 변경 후에는 SSH 등으로 접근하지 못할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسمح هذه القاعدة حاليًا بعنوان IP العام الخاص بك. بعد التغيير قد تفقد الوصول، على سبيل المثال عبر SSH."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह नियम अभी आपके अपने सार्वजनिक IP पते की अनुमति देता है। बदलाव के बाद आपकी पहुँच जा सकती है, उदाहरण के लिए SSH पर।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan ini saat ini mengizinkan alamat IP publik Anda sendiri. Setelah perubahan, Anda mungkin kehilangan akses, misalnya melalui SSH."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu kural şu anda kendi genel IP adresinize izin veriyor. Değişiklikten sonra örneğin SSH üzerinden erişiminizi kaybedebilirsiniz."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это правило сейчас пропускает ваш собственный публичный IP-адрес. После изменения вы можете потерять доступ, например по SSH."
+          }
+        }
+      }
+    },
+    "Your public IP address could not be detected, so it is unknown whether this change ends your own access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your public IP address could not be detected, so it is unknown whether this change ends your own access."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine öffentliche IP-Adresse konnte nicht ermittelt werden, daher ist unbekannt, ob diese Änderung deinen eigenen Zugang beendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo detectar tu dirección IP pública, así que no se sabe si este cambio termina tu propio acceso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre adresse IP publique n'a pas pu être détectée ; on ne sait donc pas si cette modification met fin à votre propre accès."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato possibile rilevare il tuo indirizzo IP pubblico, quindi non si sa se questa modifica interrompe il tuo accesso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je openbare IP-adres kon niet worden bepaald, dus het is onbekend of deze wijziging je eigen toegang beëindigt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się wykryć Twojego publicznego adresu IP, więc nie wiadomo, czy ta zmiana odetnie Twój dostęp."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível detetar o seu endereço IP público, por isso não se sabe se esta alteração termina o seu próprio acesso."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法检测你的公网 IP 地址，因此无法确定此更改是否会终止你自己的访问。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パブリック IP アドレスを検出できなかったため、この変更で自分のアクセスが失われるかどうかは不明です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공인 IP 주소를 확인할 수 없어 이 변경으로 내 접근이 끊어지는지 알 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر اكتشاف عنوان IP العام الخاص بك، لذا لا يُعرف ما إذا كان هذا التغيير سينهي وصولك."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपका सार्वजनिक IP पता पता नहीं चल सका, इसलिए यह अज्ञात है कि यह बदलाव आपकी अपनी पहुँच समाप्त करता है या नहीं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alamat IP publik Anda tidak dapat dideteksi, jadi tidak diketahui apakah perubahan ini mengakhiri akses Anda sendiri."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genel IP adresiniz algılanamadı, bu yüzden bu değişikliğin kendi erişiminizi sonlandırıp sonlandırmadığı bilinmiyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось определить ваш публичный IP-адрес, поэтому неизвестно, лишит ли это изменение вас доступа."
+          }
+        }
+      }
+    },
+    "The app opens and closes this rule itself, so it cannot be edited." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app opens and closes this rule itself, so it cannot be edited."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App öffnet und schließt diese Regel selbst, daher kann sie nicht bearbeitet werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La app abre y cierra esta regla por sí misma, así que no se puede editar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app ouvre et ferme cette règle elle-même, elle ne peut donc pas être modifiée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app apre e chiude questa regola da sola, quindi non può essere modificata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De app opent en sluit deze regel zelf, daarom kan hij niet worden bewerkt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplikacja sama otwiera i zamyka tę regułę, więc nie można jej edytować."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A app abre e fecha esta regra por si própria, por isso não pode ser editada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此规则由应用自行打开和关闭，因此无法编辑。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このルールはアプリ自身が開閉するため、編集できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 규칙은 앱이 직접 열고 닫으므로 편집할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يفتح التطبيق هذه القاعدة ويغلقها بنفسه، لذا لا يمكن تعديلها."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ऐप यह नियम स्वयं खोलता और बंद करता है, इसलिए इसे संपादित नहीं किया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplikasi membuka dan menutup aturan ini sendiri, jadi aturan ini tidak dapat diedit."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulama bu kuralı kendisi açıp kapatır, bu yüzden düzenlenemez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение само открывает и закрывает это правило, поэтому его нельзя редактировать."
+          }
+        }
+      }
+    },
+    "A timer will close this rule, so it cannot be edited." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A timer will close this rule, so it cannot be edited."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Timer wird diese Regel schließen, daher kann sie nicht bearbeitet werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un temporizador cerrará esta regla, así que no se puede editar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un minuteur fermera cette règle, elle ne peut donc pas être modifiée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un timer chiuderà questa regola, quindi non può essere modificata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een timer sluit deze regel, daarom kan hij niet worden bewerkt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licznik czasu zamknie tę regułę, więc nie można jej edytować."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um temporizador irá fechar esta regra, por isso não pode ser editada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "计时器将关闭此规则，因此无法编辑。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイマーがこのルールを閉じるため、編集できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "타이머가 이 규칙을 닫을 예정이므로 편집할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيغلق مؤقّت هذه القاعدة، لذا لا يمكن تعديلها."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक टाइमर यह नियम बंद करेगा, इसलिए इसे संपादित नहीं किया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer akan menutup aturan ini, jadi aturan ini tidak dapat diedit."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir zamanlayıcı bu kuralı kapatacak, bu yüzden düzenlenemez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это правило закроет таймер, поэтому его нельзя редактировать."
+          }
+        }
+      }
+    },
+    "This rule has several CIDR ranges and cannot be edited here." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This rule has several CIDR ranges and cannot be edited here."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Regel hat mehrere CIDR-Bereiche und kann hier nicht bearbeitet werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta regla tiene varios rangos CIDR y no se puede editar aquí."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette règle comporte plusieurs plages CIDR et ne peut pas être modifiée ici."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questa regola ha più intervalli CIDR e non può essere modificata qui."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze regel heeft meerdere CIDR-bereiken en kan hier niet worden bewerkt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta reguła ma kilka zakresów CIDR i nie można jej tutaj edytować."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta regra tem vários intervalos CIDR e não pode ser editada aqui."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此规则包含多个 CIDR 范围，无法在此编辑。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このルールには複数の CIDR 範囲があるため、ここでは編集できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 규칙에는 CIDR 범위가 여러 개 있어 여기서 편집할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتوي هذه القاعدة على عدة نطاقات CIDR ولا يمكن تعديلها هنا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस नियम में कई CIDR रेंज हैं और इसे यहाँ संपादित नहीं किया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan ini memiliki beberapa rentang CIDR dan tidak dapat diedit di sini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu kuralda birden fazla CIDR aralığı var ve burada düzenlenemez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У этого правила несколько диапазонов CIDR, его нельзя редактировать здесь."
+          }
+        }
+      }
+    },
+    "Editing firewall rules requires Full Access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editing firewall rules requires Full Access."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Bearbeiten von Firewall-Regeln erfordert Vollzugriff."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar reglas de firewall requiere Acceso completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification des règles de pare-feu nécessite l'Accès complet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica delle regole del firewall richiede l'Accesso completo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het bewerken van firewallregels vereist Volledige toegang."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edytowanie reguł zapory sieciowej wymaga Pełnego dostępu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editar regras de firewall requer Acesso total."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑防火墙规则需要完整访问权限。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォールルールの編集にはフルアクセスが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 규칙을 편집하려면 전체 액세스가 필요합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتطلب تعديل قواعد جدار الحماية الوصول الكامل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल नियम संपादित करने के लिए पूर्ण एक्सेस आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengedit aturan firewall memerlukan Akses Penuh."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik duvarı kurallarını düzenlemek Tam Erişim gerektirir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для редактирования правил брандмауэра требуется полный доступ."
+          }
+        }
+      }
+    },
+    "The region of this firewall is unknown. Reload the rules and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region of this firewall is unknown. Reload the rules and try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region dieser Firewall ist unbekannt. Lade die Regeln neu und versuche es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región de este firewall es desconocida. Vuelve a cargar las reglas e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région de ce pare-feu est inconnue. Rechargez les règles et réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione di questo firewall è sconosciuta. Ricarica le regole e riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio van deze firewall is onbekend. Laad de regels opnieuw en probeer het nogmaals."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region tej zapory sieciowej jest nieznany. Załaduj reguły ponownie i spróbuj jeszcze raz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região deste firewall é desconhecida. Recarregue as regras e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此防火墙的区域未知。请重新加载规则后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このファイアウォールのリージョンが不明です。ルールを再読み込みして、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 방화벽의 리전을 알 수 없습니다. 규칙을 다시 불러온 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منطقة جدار الحماية هذا غير معروفة. أعد تحميل القواعد وحاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस फ़ायरवॉल का क्षेत्र अज्ञात है। नियम फिर से लोड करें और दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah firewall ini tidak diketahui. Muat ulang aturan dan coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu güvenlik duvarının bölgesi bilinmiyor. Kuralları yeniden yükleyip tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион этого брандмауэра неизвестен. Обновите правила и повторите попытку."
+          }
+        }
+      }
+    },
+    "The region changed, so the rule edit was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region changed, so the rule edit was cancelled. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region hat sich geändert, daher wurde die Regelbearbeitung abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región ha cambiado, así que se canceló la edición de la regla. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région a changé, la modification de la règle a donc été annulée. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione è cambiata, quindi la modifica della regola è stata annullata. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio is gewijzigd, daarom is het bewerken van de regel geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region się zmienił, więc edycja reguły została anulowana. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região mudou, por isso a edição da regra foi cancelada. Nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "区域已更改，因此规则编辑已取消。未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リージョンが変更されたため、ルールの編集をキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리전이 변경되어 규칙 편집이 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّرت المنطقة، لذلك أُلغي تعديل القاعدة. لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्षेत्र बदल गया, इसलिए नियम संपादन रद्द कर दिया गया। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah berubah, jadi pengeditan aturan dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölge değişti, bu nedenle kural düzenlemesi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион изменился, поэтому редактирование правила отменено. Ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The API key changed, so the rule edit was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The API key changed, so the rule edit was cancelled. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der API-Schlüssel hat sich geändert, daher wurde die Regelbearbeitung abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clave API ha cambiado, así que se canceló la edición de la regla. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clé API a changé, la modification de la règle a donc été annulée. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La chiave API è cambiata, quindi la modifica della regola è stata annullata. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De API-sleutel is gewijzigd, daarom is het bewerken van de regel geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klucz API się zmienił, więc edycja reguły została anulowana. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A chave API mudou, por isso a edição da regra foi cancelada. Nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 密钥已更改，因此规则编辑已取消。未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API キーが変更されたため、ルールの編集をキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 키가 변경되어 규칙 편집이 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّر مفتاح API، لذلك أُلغي تعديل القاعدة. لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API कुंजी बदल गई, इसलिए नियम संपादन रद्द कर दिया गया। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunci API berubah, jadi pengeditan aturan dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API anahtarı değişti, bu nedenle kural düzenlemesi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-ключ изменился, поэтому редактирование правила отменено. Ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The rule no longer exists, so nothing was changed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule no longer exists, so nothing was changed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regel existiert nicht mehr, daher wurde nichts geändert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regla ya no existe, así que no se cambió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La règle n'existe plus, rien n'a donc été modifié."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regola non esiste più, quindi non è stato modificato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regel bestaat niet meer, daarom is er niets gewijzigd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reguła już nie istnieje, więc nic nie zostało zmienione."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A regra já não existe, por isso nada foi alterado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该规则已不存在，因此未做任何更改。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このルールはもう存在しないため、何も変更されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "규칙이 더 이상 존재하지 않아 아무것도 변경되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تعد القاعدة موجودة، لذا لم يُغيَّر أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह नियम अब मौजूद नहीं है, इसलिए कुछ भी नहीं बदला गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan tidak ada lagi, jadi tidak ada yang diubah."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kural artık mevcut değil, bu yüzden hiçbir şey değiştirilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правило больше не существует, поэтому ничего не изменено."
+          }
+        }
+      }
+    },
+    "The rule was changed elsewhere in the meantime. Check the comparison against its current values and save again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule was changed elsewhere in the meantime. Check the comparison against its current values and save again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regel wurde inzwischen anderswo geändert. Prüfe den Vergleich mit ihren aktuellen Werten und speichere erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regla se cambió en otro lugar mientras tanto. Revisa la comparación con sus valores actuales y guarda de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La règle a été modifiée ailleurs entre-temps. Vérifiez la comparaison avec ses valeurs actuelles et enregistrez à nouveau."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nel frattempo la regola è stata modificata altrove. Controlla il confronto con i valori attuali e salva di nuovo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regel is intussen elders gewijzigd. Controleer de vergelijking met de huidige waarden en sla opnieuw op."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reguła została w międzyczasie zmieniona gdzie indziej. Sprawdź porównanie z jej bieżącymi wartościami i zapisz ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entretanto, a regra foi alterada noutro lado. Verifique a comparação com os valores atuais e guarde novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该规则在此期间已在其他地方被更改。请对照其当前值检查对比后再次保存。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このルールはその間に別の場所で変更されました。現在の値との比較を確認して、もう一度保存してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "그사이 다른 곳에서 규칙이 변경되었습니다. 현재 값과의 비교를 확인한 후 다시 저장하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تغيير القاعدة في مكان آخر في هذه الأثناء. راجع المقارنة مع قيمها الحالية واحفظ مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस बीच नियम कहीं और बदल दिया गया। उसके मौजूदा मानों से तुलना जाँचें और फिर से सहेजें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan telah diubah di tempat lain sementara itu. Periksa perbandingan dengan nilai saat ini dan simpan lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kural bu arada başka bir yerde değiştirildi. Güncel değerleriyle karşılaştırmayı kontrol edip yeniden kaydedin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тем временем правило было изменено в другом месте. Проверьте сравнение с его текущими значениями и сохраните снова."
+          }
+        }
+      }
+    },
+    "Nothing was changed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing was changed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es wurde nichts geändert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se cambió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rien n'a été modifié."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato modificato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is niets gewijzigd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nic nie zostało zmienione."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada foi alterado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未做任何更改。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "何も変更されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경된 내용이 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُغيَّر أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कुछ भी नहीं बदला गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ada yang diubah."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiçbir şey değiştirilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ничего не изменено."
+          }
+        }
+      }
+    },
+    "Updated firewall rule" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated firewall rule"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall-Regel aktualisiert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regla de firewall actualizada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Règle de pare-feu mise à jour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regola del firewall aggiornata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewallregel bijgewerkt"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaktualizowano regułę zapory sieciowej"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regra de firewall atualizada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已更新防火墙规则"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォールルールを更新しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 규칙을 업데이트함"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث قاعدة جدار الحماية"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल नियम अपडेट किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan firewall diperbarui"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik duvarı kuralı güncellendi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правило брандмауэра обновлено"
+          }
+        }
+      }
+    },
+    "Right-click a rule and choose 'Edit Rule' to change its protocol, ports, CIDR, direction or label. The action cannot be changed. A comparison shows the values before and after." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Right-click a rule and choose 'Edit Rule' to change its protocol, ports, CIDR, direction or label. The action cannot be changed. A comparison shows the values before and after."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klicke mit der rechten Maustaste auf eine Regel und wähle 'Regel bearbeiten', um Protokoll, Ports, CIDR, Richtung oder Label zu ändern. Die Aktion lässt sich nicht ändern. Ein Vergleich zeigt die Werte vorher und nachher."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haz clic derecho en una regla y elige 'Editar regla' para cambiar su protocolo, puertos, CIDR, dirección o etiqueta. La acción no se puede cambiar. Una comparación muestra los valores antes y después."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faites un clic droit sur une règle et choisissez 'Modifier la règle' pour changer son protocole, ses ports, son CIDR, sa direction ou son libellé. L'action ne peut pas être modifiée. Une comparaison affiche les valeurs avant et après."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fai clic destro su una regola e scegli 'Modifica regola' per cambiarne protocollo, porte, CIDR, direzione o etichetta. L'azione non può essere modificata. Un confronto mostra i valori prima e dopo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik met de rechtermuisknop op een regel en kies 'Regel bewerken' om protocol, poorten, CIDR, richting of label te wijzigen. De actie kan niet worden gewijzigd. Een vergelijking toont de waarden voor en na."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kliknij regułę prawym przyciskiem myszy i wybierz 'Edytuj regułę', aby zmienić protokół, porty, CIDR, kierunek lub etykietę. Działania nie można zmienić. Porównanie pokazuje wartości przed i po."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique com o botão direito numa regra e escolha 'Editar regra' para alterar o protocolo, as portas, o CIDR, a direção ou a etiqueta. A ação não pode ser alterada. Uma comparação mostra os valores antes e depois."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右键点击规则并选择'编辑规则'，即可更改其协议、端口、CIDR、方向或标签。操作无法更改。对比会显示修改前后的值。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ルールを右クリックして'ルールを編集'を選ぶと、プロトコル、ポート、CIDR、方向、ラベルを変更できます。アクションは変更できません。比較で変更前と変更後の値が表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "규칙을 마우스 오른쪽 버튼으로 클릭하고 '규칙 편집'을 선택하면 프로토콜, 포트, CIDR, 방향 또는 라벨을 변경할 수 있습니다. 작업은 변경할 수 없습니다. 비교 화면에 변경 전후 값이 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انقر بزر الماوس الأيمن على قاعدة واختر 'تعديل القاعدة' لتغيير البروتوكول أو المنافذ أو CIDR أو الاتجاه أو التصنيف. لا يمكن تغيير الإجراء. تعرض المقارنة القيم قبل التغيير وبعده."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किसी नियम पर राइट-क्लिक करें और उसका प्रोटोकॉल, पोर्ट, CIDR, दिशा या लेबल बदलने के लिए 'नियम संपादित करें' चुनें। कार्रवाई नहीं बदली जा सकती। तुलना पहले और बाद के मान दिखाती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik kanan sebuah aturan dan pilih 'Edit Aturan' untuk mengubah protokol, port, CIDR, arah, atau labelnya. Tindakan tidak dapat diubah. Perbandingan menampilkan nilai sebelum dan sesudah."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir kurala sağ tıklayıp protokolünü, portlarını, CIDR'sini, yönünü veya etiketini değiştirmek için 'Kuralı Düzenle'yi seçin. Eylem değiştirilemez. Karşılaştırma, önceki ve sonraki değerleri gösterir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Щёлкните правило правой кнопкой мыши и выберите 'Редактировать правило', чтобы изменить протокол, порты, CIDR, направление или метку. Действие изменить нельзя. Сравнение показывает значения до и после."
+          }
+        }
+      }
+    },
+    "Saving loads the rule again first. A removed rule is not recreated, and a rule changed elsewhere is shown with its current values to save again. Allowing every address or changing the rule that admits your own IP asks for confirmation." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving loads the rule again first. A removed rule is not recreated, and a rule changed elsewhere is shown with its current values to save again. Allowing every address or changing the rule that admits your own IP asks for confirmation."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Speichern wird die Regel zuerst neu geladen. Eine entfernte Regel wird nicht neu angelegt, und eine anderswo geänderte Regel wird mit ihren aktuellen Werten zum erneuten Speichern angezeigt. Eine Freigabe für alle Adressen oder eine Änderung der Regel, die deine eigene IP zulässt, muss bestätigt werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al guardar, la regla se vuelve a cargar primero. Una regla eliminada no se vuelve a crear, y una regla cambiada en otro lugar se muestra con sus valores actuales para guardarla de nuevo. Permitir todas las direcciones o cambiar la regla que admite tu propia IP pide confirmación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À l'enregistrement, la règle est d'abord rechargée. Une règle supprimée n'est pas recréée, et une règle modifiée ailleurs est affichée avec ses valeurs actuelles pour être enregistrée à nouveau. Autoriser toutes les adresses ou modifier la règle qui autorise votre propre IP demande une confirmation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al salvataggio la regola viene prima ricaricata. Una regola rimossa non viene ricreata e una regola modificata altrove viene mostrata con i valori attuali per salvarla di nuovo. Consentire tutti gli indirizzi o modificare la regola che ammette il tuo IP richiede una conferma."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij opslaan wordt de regel eerst opnieuw geladen. Een verwijderde regel wordt niet opnieuw aangemaakt, en een elders gewijzigde regel wordt met de huidige waarden getoond om opnieuw op te slaan. Alle adressen toestaan of de regel wijzigen die je eigen IP toelaat, vraagt om bevestiging."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przy zapisie reguła jest najpierw ponownie ładowana. Usunięta reguła nie jest tworzona od nowa, a reguła zmieniona gdzie indziej jest pokazywana z bieżącymi wartościami do ponownego zapisu. Zezwolenie na wszystkie adresy lub zmiana reguły przepuszczającej Twój IP wymaga potwierdzenia."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao guardar, a regra é primeiro recarregada. Uma regra removida não é recriada, e uma regra alterada noutro lado é mostrada com os valores atuais para guardar novamente. Permitir todos os endereços ou alterar a regra que admite o seu próprio IP pede confirmação."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存时会先重新加载规则。已删除的规则不会被重新创建，在其他地方被更改的规则会显示其当前值以便再次保存。允许所有地址或更改允许你自己 IP 的规则时需要确认。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存すると、まずルールが再読み込みされます。削除されたルールは再作成されず、別の場所で変更されたルールは現在の値で表示され、もう一度保存できます。すべてのアドレスを許可する変更や、自分の IP を許可しているルールの変更では確認が求められます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장하면 먼저 규칙을 다시 불러옵니다. 삭제된 규칙은 다시 만들지 않으며, 다른 곳에서 변경된 규칙은 현재 값으로 표시되어 다시 저장할 수 있습니다. 모든 주소를 허용하거나 내 IP를 허용하는 규칙을 변경하면 확인을 요청합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند الحفظ تُعاد تحميل القاعدة أولًا. لا تُعاد إنشاء قاعدة محذوفة، وتُعرض القاعدة التي تغيّرت في مكان آخر بقيمها الحالية لحفظها مرة أخرى. يتطلب السماح لكل العناوين أو تغيير القاعدة التي تسمح بعنوان IP الخاص بك تأكيدًا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सहेजते समय पहले नियम फिर से लोड होता है। हटाया गया नियम दोबारा नहीं बनाया जाता, और कहीं और बदला गया नियम उसके मौजूदा मानों के साथ फिर से सहेजने के लिए दिखाया जाता है। सभी पतों की अनुमति देने या आपके अपने IP की अनुमति देने वाले नियम को बदलने पर पुष्टि माँगी जाती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat menyimpan, aturan dimuat ulang terlebih dahulu. Aturan yang dihapus tidak dibuat ulang, dan aturan yang diubah di tempat lain ditampilkan dengan nilai saat ini untuk disimpan lagi. Mengizinkan semua alamat atau mengubah aturan yang mengizinkan IP Anda sendiri memerlukan konfirmasi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydederken kural önce yeniden yüklenir. Silinmiş bir kural yeniden oluşturulmaz, başka bir yerde değiştirilmiş bir kural ise yeniden kaydetmek için güncel değerleriyle gösterilir. Tüm adreslere izin vermek veya kendi IP'nize izin veren kuralı değiştirmek onay ister."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При сохранении правило сначала загружается заново. Удалённое правило не создаётся снова, а правило, изменённое в другом месте, показывается с текущими значениями для повторного сохранения. Разрешение для всех адресов или изменение правила, пропускающего ваш IP, требует подтверждения."
+          }
+        }
+      }
+    },
+    "Rules the app opens and closes itself, from the menu bar, a timer or the Kubernetes connection, show a lock and cannot be edited." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules the app opens and closes itself, from the menu bar, a timer or the Kubernetes connection, show a lock and cannot be edited."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regeln, die die App selbst öffnet und schließt, über die Menüleiste, einen Timer oder die Kubernetes-Verbindung, zeigen ein Schloss und können nicht bearbeitet werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las reglas que la app abre y cierra por sí misma, desde la barra de menús, un temporizador o la conexión de Kubernetes, muestran un candado y no se pueden editar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les règles que l'app ouvre et ferme elle-même, depuis la barre des menus, un minuteur ou la connexion Kubernetes, affichent un cadenas et ne peuvent pas être modifiées."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le regole che l'app apre e chiude da sola, dalla barra dei menu, da un timer o dalla connessione Kubernetes, mostrano un lucchetto e non possono essere modificate."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regels die de app zelf opent en sluit, via de menubalk, een timer of de Kubernetes-verbinding, tonen een slot en kunnen niet worden bewerkt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reguły, które aplikacja sama otwiera i zamyka, z paska menu, licznika czasu lub połączenia Kubernetes, mają kłódkę i nie można ich edytować."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As regras que a app abre e fecha por si própria, a partir da barra de menus, de um temporizador ou da ligação Kubernetes, mostram um cadeado e não podem ser editadas."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由应用自行打开和关闭的规则（来自菜单栏、计时器或 Kubernetes 连接）会显示锁形图标，且无法编辑。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバー、タイマー、Kubernetes 接続からアプリ自身が開閉するルールには鍵のアイコンが表示され、編集できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메뉴 막대, 타이머 또는 Kubernetes 연결을 통해 앱이 직접 열고 닫는 규칙에는 자물쇠가 표시되며 편집할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "القواعد التي يفتحها التطبيق ويغلقها بنفسه، من شريط القوائم أو مؤقّت أو اتصال Kubernetes، تعرض قفلًا ولا يمكن تعديلها."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जिन नियमों को ऐप स्वयं खोलता और बंद करता है, मेनू बार, टाइमर या Kubernetes कनेक्शन से, उन पर ताला दिखता है और उन्हें संपादित नहीं किया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan yang dibuka dan ditutup sendiri oleh aplikasi, dari bilah menu, timer, atau koneksi Kubernetes, menampilkan gembok dan tidak dapat diedit."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulamanın menü çubuğu, bir zamanlayıcı veya Kubernetes bağlantısı üzerinden kendisi açıp kapattığı kurallar kilit simgesi gösterir ve düzenlenemez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правила, которые приложение само открывает и закрывает из строки меню, по таймеру или через подключение Kubernetes, отмечены замком и не редактируются."
+          }
+        }
+      }
+    },
+    "Labels starting with civo-cloud- are reserved for rules the app opens and closes itself." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Labels starting with civo-cloud- are reserved for rules the app opens and closes itself."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Labels, die mit civo-cloud- beginnen, sind Regeln vorbehalten, die die App selbst öffnet und schließt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las etiquetas que empiezan por civo-cloud- están reservadas para las reglas que la app abre y cierra por sí misma."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les libellés commençant par civo-cloud- sont réservés aux règles que l'app ouvre et ferme elle-même."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le etichette che iniziano con civo-cloud- sono riservate alle regole che l'app apre e chiude da sola."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Labels die met civo-cloud- beginnen, zijn gereserveerd voor regels die de app zelf opent en sluit."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etykiety zaczynające się od civo-cloud- są zarezerwowane dla reguł, które aplikacja sama otwiera i zamyka."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As etiquetas que começam por civo-cloud- estão reservadas para regras que a app abre e fecha por si própria."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以 civo-cloud- 开头的标签保留给应用自行打开和关闭的规则。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "civo-cloud- で始まるラベルは、アプリ自身が開閉するルール用に予約されています。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "civo-cloud-로 시작하는 라벨은 앱이 직접 열고 닫는 규칙용으로 예약되어 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التصنيفات التي تبدأ بـ civo-cloud- محجوزة للقواعد التي يفتحها التطبيق ويغلقها بنفسه."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "civo-cloud- से शुरू होने वाले लेबल उन नियमों के लिए आरक्षित हैं जिन्हें ऐप स्वयं खोलता और बंद करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label yang diawali civo-cloud- dicadangkan untuk aturan yang dibuka dan ditutup sendiri oleh aplikasi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "civo-cloud- ile başlayan etiketler, uygulamanın kendisi açıp kapattığı kurallara ayrılmıştır."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метки, начинающиеся с civo-cloud-, зарезервированы для правил, которые приложение само открывает и закрывает."
+          }
+        }
+      }
+    },
+    "After this change the rule may block your own public IP address, for example over SSH." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After this change the rule may block your own public IP address, for example over SSH."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach dieser Änderung kann die Regel deine eigene öffentliche IP-Adresse blockieren, zum Beispiel über SSH."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tras este cambio, la regla puede bloquear tu propia dirección IP pública, por ejemplo por SSH."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après cette modification, la règle risque de bloquer votre propre adresse IP publique, par exemple via SSH."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo questa modifica la regola potrebbe bloccare il tuo indirizzo IP pubblico, ad esempio tramite SSH."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na deze wijziging kan de regel je eigen openbare IP-adres blokkeren, bijvoorbeeld via SSH."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po tej zmianie reguła może zablokować Twój publiczny adres IP, na przykład przez SSH."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Após esta alteração, a regra pode bloquear o seu próprio endereço IP público, por exemplo por SSH."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此更改后，该规则可能会阻止你自己的公网 IP 地址，例如 SSH。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この変更後、ルールが SSH などであなた自身のパブリック IP アドレスをブロックする可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 변경 후에는 규칙이 SSH 등에서 내 공인 IP 주소를 차단할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعد هذا التغيير قد تحظر القاعدة عنوان IP العام الخاص بك، على سبيل المثال عبر SSH."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस बदलाव के बाद नियम आपके अपने सार्वजनिक IP पते को रोक सकता है, उदाहरण के लिए SSH पर।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setelah perubahan ini, aturan dapat memblokir alamat IP publik Anda sendiri, misalnya melalui SSH."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu değişiklikten sonra kural, örneğin SSH üzerinden kendi genel IP adresinizi engelleyebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "После этого изменения правило может заблокировать ваш собственный публичный IP-адрес, например для SSH."
+          }
+        }
+      }
+    },
+    "Civo accepted the rule change in firewall “%@”, but its answer could not be read. Check the rule in the list." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the rule change in firewall “%@”, but its answer could not be read. Check the rule in the list."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat die Regeländerung in der Firewall „%@“ angenommen, aber die Antwort konnte nicht gelesen werden. Prüfe die Regel in der Liste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó el cambio de la regla en el firewall “%@”, pero no se pudo leer su respuesta. Comprueba la regla en la lista."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté la modification de la règle du pare-feu « %@ », mais sa réponse n'a pas pu être lue. Vérifiez la règle dans la liste."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato la modifica della regola nel firewall “%@”, ma non è stato possibile leggere la risposta. Controlla la regola nell'elenco."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de regelwijziging in firewall “%@” geaccepteerd, maar het antwoord kon niet worden gelezen. Controleer de regel in de lijst."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło zmianę reguły w zaporze „%@”, ale nie udało się odczytać odpowiedzi. Sprawdź regułę na liście."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou a alteração da regra no firewall “%@”, mas não foi possível ler a resposta. Verifique a regra na lista."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受防火墙“%@”中的规则更改，但无法读取其响应。请在列表中检查该规则。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo はファイアウォール「%@」のルール変更を受け付けましたが、応答を読み取れませんでした。一覧でルールを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 방화벽 “%@”의 규칙 변경을 수락했지만 응답을 읽을 수 없습니다. 목록에서 규칙을 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo تغيير القاعدة في جدار الحماية “%@”، لكن تعذّرت قراءة ردّها. تحقّق من القاعدة في القائمة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने फ़ायरवॉल “%@” में नियम बदलाव स्वीकार कर लिया, लेकिन उसका जवाब पढ़ा नहीं जा सका। सूची में नियम जाँचें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima perubahan aturan di firewall “%@”, tetapi jawabannya tidak dapat dibaca. Periksa aturan di daftar."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo, “%@” güvenlik duvarındaki kural değişikliğini kabul etti, ancak yanıtı okunamadı. Listedeki kuralı kontrol edin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo принял изменение правила в брандмауэре «%@», но его ответ не удалось прочитать. Проверьте правило в списке."
+          }
+        }
+      }
+    },
+    "The rule change in firewall “%@” was already sent and can no longer be cancelled. Its result is shown here once Civo answers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule change in firewall “%@” was already sent and can no longer be cancelled. Its result is shown here once Civo answers."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeländerung in der Firewall „%@“ wurde bereits gesendet und lässt sich nicht mehr abbrechen. Das Ergebnis erscheint hier, sobald Civo antwortet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cambio de la regla en el firewall “%@” ya se envió y ya no se puede cancelar. Su resultado se mostrará aquí cuando Civo responda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification de la règle du pare-feu « %@ » a déjà été envoyée et ne peut plus être annulée. Son résultat s'affichera ici dès que Civo répondra."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica della regola nel firewall “%@” è già stata inviata e non può più essere annullata. Il risultato verrà mostrato qui non appena Civo risponde."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regelwijziging in firewall “%@” is al verzonden en kan niet meer worden geannuleerd. Het resultaat verschijnt hier zodra Civo antwoordt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana reguły w zaporze „%@” została już wysłana i nie można jej anulować. Wynik pojawi się tutaj, gdy Civo odpowie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração da regra no firewall “%@” já foi enviada e não pode mais ser cancelada. O resultado aparecerá aqui assim que a Civo responder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%@”中的规则更改已发送，无法再取消。Civo 响应后，结果将显示在此处。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%@」のルール変更はすでに送信されたため、キャンセルできません。Civo が応答すると、結果がここに表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%@”의 규칙 변경은 이미 전송되어 더 이상 취소할 수 없습니다. Civo가 응답하면 결과가 여기에 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أُرسل تغيير القاعدة في جدار الحماية “%@” بالفعل ولم يعد من الممكن إلغاؤه. ستظهر النتيجة هنا بمجرد أن تردّ Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%@” में नियम बदलाव पहले ही भेजा जा चुका है और अब रद्द नहीं किया जा सकता। Civo के जवाब देते ही नतीजा यहाँ दिखेगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan aturan di firewall “%@” sudah dikirim dan tidak dapat dibatalkan lagi. Hasilnya akan ditampilkan di sini setelah Civo menjawab."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” güvenlik duvarındaki kural değişikliği zaten gönderildi ve artık iptal edilemez. Sonuç, Civo yanıt verdiğinde burada gösterilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение правила в брандмауэре «%@» уже отправлено и больше не может быть отменено. Результат появится здесь, как только Civo ответит."
+          }
+        }
+      }
+    },
+    "The rule change in firewall “%@” was saved." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule change in firewall “%@” was saved."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeländerung in der Firewall „%@“ wurde gespeichert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se guardó el cambio de la regla en el firewall “%@”."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification de la règle du pare-feu « %@ » a été enregistrée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica della regola nel firewall “%@” è stata salvata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regelwijziging in firewall “%@” is opgeslagen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana reguły w zaporze „%@” została zapisana."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração da regra no firewall “%@” foi salva."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%@”中的规则更改已保存。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%@」のルール変更を保存しました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%@”의 규칙 변경이 저장되었습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حُفظ تغيير القاعدة في جدار الحماية “%@”."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%@” में नियम बदलाव सहेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan aturan di firewall “%@” telah disimpan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” güvenlik duvarındaki kural değişikliği kaydedildi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение правила в брандмауэре «%@» сохранено."
+          }
+        }
+      }
+    },
+    "The rule change in firewall “%@” was not saved: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule change in firewall “%1$@” was not saved: %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeländerung in der Firewall „%1$@“ wurde nicht gespeichert: %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se guardó el cambio de la regla en el firewall “%1$@”: %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification de la règle du pare-feu « %1$@ » n'a pas été enregistrée : %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica della regola nel firewall “%1$@” non è stata salvata: %2$@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regelwijziging in firewall “%1$@” is niet opgeslagen: %2$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana reguły w zaporze „%1$@” nie została zapisana: %2$@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração da regra no firewall “%1$@” não foi salva: %2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%1$@”中的规则更改未保存：%2$@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%1$@」のルール変更は保存されませんでした：%2$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%1$@”의 규칙 변경이 저장되지 않았습니다: %2$@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُحفظ تغيير القاعدة في جدار الحماية “%1$@”: %2$@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%1$@” में नियम बदलाव सहेजा नहीं गया: %2$@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan aturan di firewall “%1$@” tidak disimpan: %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%1$@” güvenlik duvarındaki kural değişikliği kaydedilmedi: %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение правила в брандмауэре «%1$@» не сохранено: %2$@"
+          }
+        }
+      }
+    },
+    "The result of the rule change in firewall “%@” is unknown. Check the rule in the list." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The result of the rule change in firewall “%@” is unknown. Check the rule in the list."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis der Regeländerung in der Firewall „%@“ ist unbekannt. Prüfe die Regel in der Liste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se desconoce el resultado del cambio de la regla en el firewall “%@”. Comprueba la regla en la lista."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le résultat de la modification de la règle du pare-feu « %@ » est inconnu. Vérifiez la règle dans la liste."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il risultato della modifica della regola nel firewall “%@” è sconosciuto. Controlla la regola nell'elenco."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resultaat van de regelwijziging in firewall “%@” is onbekend. Controleer de regel in de lijst."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wynik zmiany reguły w zaporze „%@” jest nieznany. Sprawdź regułę na liście."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O resultado da alteração da regra no firewall “%@” é desconhecido. Verifique a regra na lista."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%@”中规则更改的结果未知。请在列表中检查该规则。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%@」のルール変更の結果は不明です。一覧でルールを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%@”의 규칙 변경 결과를 알 수 없습니다. 목록에서 규칙을 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نتيجة تغيير القاعدة في جدار الحماية “%@” غير معروفة. تحقّق من القاعدة في القائمة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%@” में नियम बदलाव का नतीजा पता नहीं है। सूची में नियम जाँचें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasil perubahan aturan di firewall “%@” tidak diketahui. Periksa aturan di daftar."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” güvenlik duvarındaki kural değişikliğinin sonucu bilinmiyor. Listedeki kuralı kontrol edin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результат изменения правила в брандмауэре «%@» неизвестен. Проверьте правило в списке."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

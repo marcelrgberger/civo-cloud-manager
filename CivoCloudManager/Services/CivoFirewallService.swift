@@ -1,6 +1,12 @@
 import Foundation
 
-final class CivoFirewallService: Sendable {
+/// The rule requests of the rule editor, each pinned to the account and region the edit was started in.
+protocol FirewallRuleAPI: Sendable {
+    func getRulesForFirewall(_ firewallId: String, region: String?, apiKey: String?) async throws -> [CivoRule]
+    func updateRule(_ ruleId: String, of firewallId: String, body: sending [String: Any], region: String, apiKey: String) async throws
+}
+
+final class CivoFirewallService: FirewallRuleAPI, Sendable {
     private let api = CivoAPIClient.shared
 
     func listFirewalls(region: String? = nil) async throws -> [CivoFirewall] {
@@ -19,12 +25,24 @@ final class CivoFirewallService: Sendable {
         try await api.delete(path: "/firewalls/\(id)")
     }
 
-    func getRulesForFirewall(_ firewallId: String, region: String? = nil) async throws -> [CivoRule] {
+    /// `apiKey` pins the request to one account instead of reading the current key.
+    func getRulesForFirewall(_ firewallId: String, region: String? = nil, apiKey: String? = nil) async throws -> [CivoRule] {
         var queryItems: [URLQueryItem]? = nil
         if let region {
             queryItems = [URLQueryItem(name: "region", value: region)]
         }
-        return try await api.getArray(path: "/firewalls/\(firewallId)/rules", queryItems: queryItems)
+        return try await api.getArray(path: "/firewalls/\(firewallId)/rules", queryItems: queryItems, apiKey: apiKey)
+    }
+
+    /// `PUT /v2/firewalls/:firewall_id/rules/:rule_id`; https://www.civo.com/api/vpc documents the path
+    /// under its `/v2/vpc/firewalls` alias and answers with `{"id": ..., "result": "success"}`.
+    func updateRule(_ ruleId: String, of firewallId: String, body: sending [String: Any], region: String, apiKey: String) async throws {
+        let _: CivoResult = try await api.put(
+            path: "/firewalls/\(firewallId)/rules/\(ruleId)",
+            body: body,
+            queryItems: [URLQueryItem(name: "region", value: region)],
+            apiKey: apiKey
+        )
     }
 
     @discardableResult

@@ -216,13 +216,15 @@ final class CivoAPIClient: Sendable {
     }
 
     /// PUT with a JSON body.
+    /// `apiKey` pins the request to one account instead of reading the current key.
     func put<T: Decodable>(
         path: String,
         body: [String: Any],
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey: String? = nil
     ) async throws -> T {
-        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired)
+        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey)
     }
 
     /// Any method with an optional JSON body, for callers that choose the method per request.
