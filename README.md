@@ -466,7 +466,7 @@ flowchart TD
 
 ## Cost estimates
 
-The cost dashboard offers This Month, Last Month, Last Quarter and This Year. Civo bills in UTC, so `ChargePeriod` computes every period on UTC calendar boundaries. Last Quarter keeps its existing meaning: the start of the month three months ago until now, that is three full months plus the current month so far.
+The cost dashboard offers This Month, Last Month, Last Quarter and This Year. Civo bills in UTC, so `ChargePeriod` computes every period on UTC calendar boundaries. A calendar boundary can therefore fall a few hours before or after midnight in the local time zone. This Month, Last Quarter and This Year end at the current moment; only Last Month ends on a UTC month boundary. The app deliberately keeps UTC and does not convert period boundaries to local time (product decision of 22 November 2026, #98). Last Quarter keeps its existing meaning: the start of the month three months ago until now, that is three full months plus the current month so far.
 
 Civo rejects over-long `/charges` ranges with HTTP 400 `parameter_date_range_too_long`, so `ChargeWindowPlanner` splits a period into one request per calendar month. Internally every window is half-open; `ChargeWindow.lastIncludedSecond` sends the last whole second before the next window as the inclusive `to`, so adjacent requests never count the same boundary. `CivoChargesService` concatenates the windows and the dashboard sums them into one total.
 

@@ -195,6 +195,7 @@ struct HelpSection {
             "Breakdown by resource type with percentage bars.",
             "Breakdown by individual resource with usage hours.",
             "'Edit Rates' lets you customize hourly pricing if needed.",
+            "Calendar boundaries use UTC rather than local time, so they can fall a few hours before or after local midnight. This Month, Last Quarter and This Year include the current month so far; Last Month covers the previous complete UTC month.",
             "Periods spanning several months are loaded month by month in UTC, Civo's billing time zone, and added up to one total without counting a month boundary twice.",
             "Last Quarter covers the three previous calendar months plus the current month so far.",
             "Completed months are cached locally per Civo account and reused. The current month and any month not cached yet are loaded from Civo.",
