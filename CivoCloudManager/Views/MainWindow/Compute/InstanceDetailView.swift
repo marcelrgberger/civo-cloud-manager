@@ -487,13 +487,22 @@ struct InstanceDetailView: View {
             }
             .frame(maxWidth: .infinity, minHeight: 80)
         case .loaded:
-            let sizes = eligibleResizeSizes
-            if sizes.isEmpty {
+            switch resizeOptions {
+            case nil, .comparisonUnavailable:
+                VStack(spacing: 8) {
+                    Text("Civo did not report the CPU, RAM and disk of this instance or its current size, so the app cannot tell which sizes are larger.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                    Button("Reload") { Task { await vm.reloadResizeComparison() } }
+                }
+                .frame(maxWidth: .infinity, minHeight: 80)
+            case .larger(let sizes) where sizes.isEmpty:
                 Text("No larger instance size is available for this instance.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, minHeight: 80)
-            } else {
+            case .larger(let sizes):
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Only larger sizes are shown. Civo cannot resize an instance to a smaller size.")
                         .font(.caption)
@@ -507,13 +516,13 @@ struct InstanceDetailView: View {
     }
 
     /// From the sizes of the region captured when Resize was started.
-    private var eligibleResizeSizes: [CivoSize] {
-        guard let target = vm.pendingAction?.target else { return [] }
-        return vm.eligibleResizeSizes(for: target)
+    private var resizeOptions: ResizeOptions? {
+        guard let target = vm.pendingAction?.target else { return nil }
+        return vm.resizeOptions(for: target)
     }
 
     private var selectedResizeSize: CivoSize? {
-        eligibleResizeSizes.first { $0.name == resizeSize }
+        resizeOptions?.sizes.first { $0.name == resizeSize }
     }
 
     /// nil while no size is selected or either rate is unknown, which hides the row.

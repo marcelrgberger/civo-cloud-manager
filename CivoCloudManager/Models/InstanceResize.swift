@@ -7,23 +7,25 @@ import Foundation
 /// size is offered only when none of them is smaller and at least one is larger than the instance has now.
 /// Quota and region are checked by Civo, whose error is shown.
 enum InstanceResize {
-    /// App policy, not a Civo rule: neither the Civo API documentation, its CLI nor its Terraform provider
-    /// states which statuses allow a resize, so the app offers it only for ACTIVE instances. civogo maps an
-    /// API error `instance_state_must_be_active_or_shutoff`, but does not say which actions return it.
+    /// Product policy recorded on ticket #89 (2026-11-22): the app offers a resize only for ACTIVE instances.
+    /// This is the app's own conservative choice, not a Civo rule. Neither the Civo API documentation, its CLI
+    /// nor its Terraform provider states which statuses allow a resize, and civogo's API error
+    /// `instance_state_must_be_active_or_shutoff` does not say which actions return it, so other statuses such
+    /// as SHUTOFF are not offered until a source establishes them.
     static func isAllowed(status: String?) -> Bool {
         status?.caseInsensitiveCompare("active") == .orderedSame
     }
 
-    /// Selectable, larger instance sizes, smallest first. Empty unless the current CPU, RAM and disk are
-    /// all known, because otherwise no size can be shown not to be smaller.
-    static func eligibleSizes(_ sizes: [CivoSize], for instance: CivoInstance) -> [CivoSize] {
+    /// The selectable, larger instance sizes, or `.comparisonUnavailable` unless the current CPU, RAM and disk
+    /// are all known, because otherwise no size can be shown not to be smaller.
+    static func options(_ sizes: [CivoSize], for instance: CivoInstance) -> ResizeOptions {
         let currentSize = sizes.first { $0.name == instance.size }
         guard let cpu = instance.cpuCores ?? currentSize?.effectiveCpu,
               let ram = instance.ramMb ?? currentSize?.effectiveRam,
-              let disk = instance.diskGb ?? currentSize?.effectiveDisk else { return [] }
+              let disk = instance.diskGb ?? currentSize?.effectiveDisk else { return .comparisonUnavailable }
         let current = [cpu, ram, disk]
 
-        return sizes
+        return .larger(sizes
             .compactMap { size in dimensions(of: size).map { (size, $0) } }
             .filter { size, offered in
                 size.selectable != false
@@ -33,7 +35,7 @@ enum InstanceResize {
                     && offered != current
             }
             .sorted { $0.1.lexicographicallyPrecedes($1.1) }
-            .map(\.0)
+            .map(\.0))
     }
 
     /// `/v2/sizes` also lists Kubernetes and database sizes: a live LON1 response on 2026-11-22 typed them
@@ -53,6 +55,18 @@ enum InstanceResize {
     private static func dimensions(of size: CivoSize) -> [Int]? {
         guard let cpu = size.effectiveCpu, let ram = size.effectiveRam, let disk = size.effectiveDisk else { return nil }
         return [cpu, ram, disk]
+    }
+}
+
+/// What the resize sheet can offer an instance.
+enum ResizeOptions: Equatable {
+    /// Selectable, larger instance sizes, smallest first. Empty only when the comparison found none.
+    case larger([CivoSize])
+    /// The current CPU, RAM or disk of the instance is unknown, so no size can be shown not to be smaller.
+    case comparisonUnavailable
+
+    var sizes: [CivoSize] {
+        if case .larger(let sizes) = self { sizes } else { [] }
     }
 }
 

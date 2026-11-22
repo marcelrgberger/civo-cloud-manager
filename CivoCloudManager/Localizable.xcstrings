@@ -1,6 +1,106 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Civo did not report the CPU, RAM and disk of this instance or its current size, so the app cannot tell which sizes are larger." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُبلغ Civo عن المعالج والذاكرة والقرص لهذا المثيل أو عن حجمه الحالي، لذلك لا يستطيع التطبيق تحديد الأحجام الأكبر."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat CPU, RAM und Festplatte dieser Instanz oder ihre aktuelle Größe nicht gemeldet, daher kann die App nicht feststellen, welche Größen größer sind."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo did not report the CPU, RAM and disk of this instance or its current size, so the app cannot tell which sizes are larger."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no indicó la CPU, la RAM y el disco de esta instancia ni su tamaño actual, así que la app no puede determinar qué tamaños son mayores."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo n'a pas indiqué le CPU, la RAM et le disque de cette instance ni sa taille actuelle, l'app ne peut donc pas déterminer quelles tailles sont plus grandes."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने इस इंस्टेंस का CPU, RAM और डिस्क या उसका वर्तमान आकार नहीं बताया, इसलिए ऐप यह तय नहीं कर सकता कि कौन-से आकार बड़े हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo tidak melaporkan CPU, RAM, dan disk instans ini atau ukurannya saat ini, sehingga aplikasi tidak dapat menentukan ukuran mana yang lebih besar."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non ha indicato CPU, RAM e disco di questa istanza né la sua dimensione attuale, quindi l'app non può stabilire quali dimensioni sono più grandi."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo がこのインスタンスの CPU、RAM、ディスク、または現在のサイズを報告しなかったため、アプリはどのサイズが大きいかを判断できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 이 인스턴스의 CPU, RAM, 디스크 또는 현재 크기를 알려 주지 않아 앱이 어떤 크기가 더 큰지 판단할 수 없습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de CPU, het RAM en de schijf van deze instantie of de huidige grootte niet gemeld, dus de app kan niet bepalen welke groottes groter zijn."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie podało procesora, pamięci RAM i dysku tej instancji ani jej obecnego rozmiaru, więc aplikacja nie może ustalić, które rozmiary są większe."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo não indicou a CPU, a RAM e o disco desta instância nem o seu tamanho atual, por isso a app não consegue determinar que tamanhos são maiores."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo не сообщил процессор, память и диск этого инстанса или его текущий размер, поэтому приложение не может определить, какие размеры больше."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bu örneğin CPU, RAM ve diskini ya da mevcut boyutunu bildirmedi, bu nedenle uygulama hangi boyutların daha büyük olduğunu belirleyemiyor."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 未报告此实例的 CPU、内存和磁盘或其当前规格，因此此应用无法判断哪些规格更大。"
+          }
+        }
+      }
+    },
     "Family Sharing is enabled." : {
       "localizations" : {
         "en" : {
@@ -505,6 +605,106 @@
         }
       },
       "extractionState" : "manual"
+    },
+    "Reload" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة التحميل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neu laden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reload"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recargar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recharger"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फिर से लोड करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muat Ulang"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricarica"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再読み込み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 불러오기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opnieuw laden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wczytaj ponownie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recarregar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузить снова"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeniden Yükle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新载入"
+          }
+        }
+      }
     },
     "The private key was exported, but its encrypted backup could not be saved. Keep the exported file safe." : {
       "localizations" : {
@@ -114782,102 +114982,102 @@
         }
       }
     },
-    "Resize a running instance from its detail view. The app offers Resize only while an instance is running, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent." : {
+    "Resize a running instance from its detail view. Offering Resize only while an instance is running is this app's policy, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent. If Civo did not report the CPU, RAM and disk of the instance or its size, the app says that it cannot compare sizes; Reload loads the instance and the sizes again." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "غيّر حجم مثيل قيد التشغيل من عرض تفاصيله. يعرض التطبيق تغيير الحجم فقط أثناء تشغيل المثيل، لأن Civo لا يوثّق الحالات الأخرى التي تسمح به. تُعرض الأحجام الأكبر فقط، مع التغيير المقدر في التكلفة وفق أسعارك بالساعة لشهر من 730 ساعة، ويتم تأكيد تغيير الحجم قبل إرساله."
+            "value" : "غيّر حجم مثيل قيد التشغيل من عرض تفاصيله. عرض تغيير الحجم فقط أثناء تشغيل المثيل هو سياسة هذا التطبيق، لأن Civo لا يوثّق الحالات الأخرى التي تسمح به. تُعرض الأحجام الأكبر فقط، مع التغيير المقدر في التكلفة وفق أسعارك بالساعة لشهر من 730 ساعة، ويتم تأكيد تغيير الحجم قبل إرساله. إذا لم يُبلغ Civo عن المعالج والذاكرة والقرص للمثيل أو عن حجمه، يوضح التطبيق أنه لا يستطيع مقارنة الأحجام؛ ويعيد زر إعادة التحميل تحميل المثيل والأحجام."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ändere die Größe einer laufenden Instanz in ihrer Detailansicht. Die App bietet die Größenänderung nur an, solange eine Instanz läuft, weil Civo nicht dokumentiert, welche anderen Status sie erlauben. Angeboten werden nur größere Größen, mit der geschätzten Kostenänderung aus deinen Stundensätzen für einen Monat mit 730 Stunden, und die Größenänderung wird vor dem Senden bestätigt."
+            "value" : "Ändere die Größe einer laufenden Instanz in ihrer Detailansicht. Dass die Größenänderung nur angeboten wird, solange eine Instanz läuft, ist eine Regel dieser App, weil Civo nicht dokumentiert, welche anderen Status sie erlauben. Angeboten werden nur größere Größen, mit der geschätzten Kostenänderung aus deinen Stundensätzen für einen Monat mit 730 Stunden, und die Größenänderung wird vor dem Senden bestätigt. Hat Civo CPU, RAM und Festplatte der Instanz oder ihre Größe nicht gemeldet, sagt die App, dass sie die Größen nicht vergleichen kann; Neu laden lädt die Instanz und die Größen erneut."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resize a running instance from its detail view. The app offers Resize only while an instance is running, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent."
+            "value" : "Resize a running instance from its detail view. Offering Resize only while an instance is running is this app's policy, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent. If Civo did not report the CPU, RAM and disk of the instance or its size, the app says that it cannot compare sizes; Reload loads the instance and the sizes again."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redimensiona una instancia en ejecución desde su vista de detalle. La app solo ofrece redimensionar mientras una instancia está en ejecución, porque Civo no documenta qué otros estados lo permiten. Solo se ofrecen tamaños mayores, con el cambio de coste estimado según tus tarifas por hora en un mes de 730 horas, y el cambio se confirma antes de enviarse."
+            "value" : "Redimensiona una instancia en ejecución desde su vista de detalle. Ofrecer el redimensionamiento solo mientras una instancia está en ejecución es una norma de esta app, porque Civo no documenta qué otros estados lo permiten. Solo se ofrecen tamaños mayores, con el cambio de coste estimado según tus tarifas por hora en un mes de 730 horas, y el cambio se confirma antes de enviarse. Si Civo no indicó la CPU, la RAM y el disco de la instancia ni su tamaño, la app indica que no puede comparar tamaños; Recargar vuelve a cargar la instancia y los tamaños."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redimensionnez une instance en cours d'exécution depuis sa vue détaillée. L'app ne propose le redimensionnement que pendant qu'une instance est en cours d'exécution, car Civo ne documente pas quels autres statuts le permettent. Seules des tailles plus grandes sont proposées, avec la variation de coût estimée d'après vos tarifs horaires sur un mois de 730 heures, et le redimensionnement est confirmé avant l'envoi."
+            "value" : "Redimensionnez une instance en cours d'exécution depuis sa vue détaillée. Ne proposer le redimensionnement que pendant qu'une instance est en cours d'exécution est une règle de cette app, car Civo ne documente pas quels autres statuts le permettent. Seules des tailles plus grandes sont proposées, avec la variation de coût estimée d'après vos tarifs horaires sur un mois de 730 heures, et le redimensionnement est confirmé avant l'envoi. Si Civo n'a pas indiqué le CPU, la RAM et le disque de l'instance ni sa taille, l'app indique qu'elle ne peut pas comparer les tailles ; Recharger charge à nouveau l'instance et les tailles."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "किसी चल रहे इंस्टेंस का आकार उसके विवरण दृश्य से बदलें। ऐप आकार बदलने का विकल्प केवल तब देता है जब इंस्टेंस चल रहा हो, क्योंकि Civo यह दस्तावेज़ नहीं करता कि कौन-सी अन्य स्थितियाँ इसकी अनुमति देती हैं। केवल बड़े आकार दिखाए जाते हैं, आपकी प्रति घंटा दरों से 730 घंटे के महीने का अनुमानित लागत अंतर दिखता है, और भेजने से पहले आकार बदलने की पुष्टि की जाती है।"
+            "value" : "किसी चल रहे इंस्टेंस का आकार उसके विवरण दृश्य से बदलें। आकार बदलने का विकल्प केवल इंस्टेंस के चलते समय देना इस ऐप की नीति है, क्योंकि Civo यह दस्तावेज़ नहीं करता कि कौन-सी अन्य स्थितियाँ इसकी अनुमति देती हैं। केवल बड़े आकार दिखाए जाते हैं, आपकी प्रति घंटा दरों से 730 घंटे के महीने का अनुमानित लागत अंतर दिखता है, और भेजने से पहले आकार बदलने की पुष्टि की जाती है। यदि Civo ने इंस्टेंस का CPU, RAM और डिस्क या उसका आकार नहीं बताया, तो ऐप बताता है कि वह आकारों की तुलना नहीं कर सकता; फिर से लोड करें इंस्टेंस और आकारों को दोबारा लोड करता है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ubah ukuran instans yang sedang berjalan dari tampilan detailnya. Aplikasi hanya menawarkan perubahan ukuran saat instans sedang berjalan, karena Civo tidak mendokumentasikan status lain mana yang mengizinkannya. Hanya ukuran yang lebih besar yang ditawarkan, dengan perkiraan perubahan biaya dari tarif per jam Anda untuk bulan 730 jam, dan perubahan ukuran dikonfirmasi sebelum dikirim."
+            "value" : "Ubah ukuran instans yang sedang berjalan dari tampilan detailnya. Menawarkan perubahan ukuran hanya saat instans sedang berjalan adalah kebijakan aplikasi ini, karena Civo tidak mendokumentasikan status lain mana yang mengizinkannya. Hanya ukuran yang lebih besar yang ditawarkan, dengan perkiraan perubahan biaya dari tarif per jam Anda untuk bulan 730 jam, dan perubahan ukuran dikonfirmasi sebelum dikirim. Jika Civo tidak melaporkan CPU, RAM, dan disk instans atau ukurannya, aplikasi menyatakan bahwa ukuran tidak dapat dibandingkan; Muat Ulang memuat instans dan ukuran lagi."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ridimensiona un'istanza in esecuzione dalla sua vista di dettaglio. L'app offre il ridimensionamento solo mentre un'istanza è in esecuzione, perché Civo non documenta quali altri stati lo consentono. Sono offerte solo dimensioni più grandi, con la variazione di costo stimata in base alle tue tariffe orarie su un mese di 730 ore, e il ridimensionamento viene confermato prima dell'invio."
+            "value" : "Ridimensiona un'istanza in esecuzione dalla sua vista di dettaglio. Offrire il ridimensionamento solo mentre un'istanza è in esecuzione è una regola di questa app, perché Civo non documenta quali altri stati lo consentono. Sono offerte solo dimensioni più grandi, con la variazione di costo stimata in base alle tue tariffe orarie su un mese di 730 ore, e il ridimensionamento viene confermato prima dell'invio. Se Civo non ha indicato CPU, RAM e disco dell'istanza né la sua dimensione, l'app segnala che non può confrontare le dimensioni; Ricarica carica di nuovo l'istanza e le dimensioni."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "実行中のインスタンスのサイズは詳細ビューから変更できます。Civo は他のどの状態でサイズ変更できるかを文書化していないため、このアプリではインスタンスの実行中にのみサイズ変更を提供します。より大きなサイズのみが表示され、時間単価に基づく730時間の月あたりの見積もり費用差も示されます。送信前に確認が求められます。"
+            "value" : "実行中のインスタンスのサイズは詳細ビューから変更できます。インスタンスの実行中にのみサイズ変更を提供するのはこのアプリの方針です。Civo は他のどの状態でサイズ変更できるかを文書化していないためです。より大きなサイズのみが表示され、時間単価に基づく730時間の月あたりの見積もり費用差も示されます。送信前に確認が求められます。Civo がインスタンスの CPU、RAM、ディスク、またはサイズを報告しなかった場合、アプリはサイズを比較できないことを表示します。再読み込みでインスタンスとサイズを再度読み込みます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "실행 중인 인스턴스의 크기는 상세 보기에서 조정합니다. Civo가 다른 어떤 상태에서 크기 조정이 가능한지 문서화하지 않으므로, 앱은 인스턴스가 실행 중일 때만 크기 조정을 제공합니다. 더 큰 크기만 제공되며, 시간당 요금 기준 730시간 월의 예상 비용 변화가 표시되고, 전송 전에 확인을 요청합니다."
+            "value" : "실행 중인 인스턴스의 크기는 상세 보기에서 조정합니다. 인스턴스가 실행 중일 때만 크기 조정을 제공하는 것은 이 앱의 정책입니다. Civo가 다른 어떤 상태에서 크기 조정이 가능한지 문서화하지 않기 때문입니다. 더 큰 크기만 제공되며, 시간당 요금 기준 730시간 월의 예상 비용 변화가 표시되고, 전송 전에 확인을 요청합니다. Civo가 인스턴스의 CPU, RAM, 디스크 또는 크기를 알려 주지 않으면 앱은 크기를 비교할 수 없다고 표시하며, 다시 불러오기로 인스턴스와 크기를 다시 불러옵니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wijzig het formaat van een actieve instantie in de detailweergave. De app biedt formaatwijziging alleen aan zolang een instantie actief is, omdat Civo niet documenteert welke andere statussen dit toestaan. Alleen grotere groottes worden aangeboden, met de geschatte kostenwijziging op basis van je uurtarieven over een maand van 730 uur, en de wijziging wordt bevestigd voordat deze wordt verzonden."
+            "value" : "Wijzig het formaat van een actieve instantie in de detailweergave. Dat formaatwijziging alleen wordt aangeboden zolang een instantie actief is, is een regel van deze app, omdat Civo niet documenteert welke andere statussen dit toestaan. Alleen grotere groottes worden aangeboden, met de geschatte kostenwijziging op basis van je uurtarieven over een maand van 730 uur, en de wijziging wordt bevestigd voordat deze wordt verzonden. Als Civo de CPU, het RAM en de schijf van de instantie of de grootte niet heeft gemeld, meldt de app dat de groottes niet te vergelijken zijn; Opnieuw laden laadt de instantie en de groottes opnieuw."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zmień rozmiar działającej instancji w jej widoku szczegółów. Aplikacja oferuje zmianę rozmiaru tylko wtedy, gdy instancja działa, ponieważ Civo nie dokumentuje, które inne stany na nią pozwalają. Oferowane są tylko większe rozmiary, z szacowaną zmianą kosztu według Twoich stawek godzinowych dla miesiąca 730 godzin, a zmiana jest potwierdzana przed wysłaniem."
+            "value" : "Zmień rozmiar działającej instancji w jej widoku szczegółów. Oferowanie zmiany rozmiaru tylko wtedy, gdy instancja działa, jest zasadą tej aplikacji, ponieważ Civo nie dokumentuje, które inne stany na nią pozwalają. Oferowane są tylko większe rozmiary, z szacowaną zmianą kosztu według Twoich stawek godzinowych dla miesiąca 730 godzin, a zmiana jest potwierdzana przed wysłaniem. Jeśli Civo nie podało procesora, pamięci RAM i dysku instancji ani jej rozmiaru, aplikacja informuje, że nie może porównać rozmiarów; Wczytaj ponownie wczytuje instancję i rozmiary jeszcze raz."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redimensione uma instância em execução na sua vista de detalhes. A app só oferece o redimensionamento enquanto uma instância está em execução, porque a Civo não documenta que outros estados o permitem. Só são oferecidos tamanhos maiores, com a variação de custo estimada pelas suas tarifas por hora num mês de 730 horas, e o redimensionamento é confirmado antes do envio."
+            "value" : "Redimensione uma instância em execução na sua vista de detalhes. Oferecer o redimensionamento só enquanto uma instância está em execução é uma regra desta app, porque a Civo não documenta que outros estados o permitem. Só são oferecidos tamanhos maiores, com a variação de custo estimada pelas suas tarifas por hora num mês de 730 horas, e o redimensionamento é confirmado antes do envio. Se a Civo não indicou a CPU, a RAM e o disco da instância nem o seu tamanho, a app indica que não consegue comparar tamanhos; Recarregar volta a carregar a instância e os tamanhos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Размер работающего инстанса меняется в его подробном представлении. Приложение предлагает изменение размера только для работающего инстанса, так как Civo не документирует, какие другие статусы это допускают. Предлагаются только размеры больше текущего, с оценкой изменения стоимости по вашим почасовым тарифам за месяц из 730 часов, а изменение подтверждается перед отправкой."
+            "value" : "Размер работающего инстанса меняется в его подробном представлении. Предлагать изменение размера только для работающего инстанса - правило этого приложения, так как Civo не документирует, какие другие статусы это допускают. Предлагаются только размеры больше текущего, с оценкой изменения стоимости по вашим почасовым тарифам за месяц из 730 часов, а изменение подтверждается перед отправкой. Если Civo не сообщил процессор, память и диск инстанса или его размер, приложение сообщает, что не может сравнить размеры; Загрузить снова заново загружает инстанс и размеры."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Çalışan bir örneği ayrıntı görünümünden yeniden boyutlandırın. Uygulama yeniden boyutlandırmayı yalnızca örnek çalışırken sunar, çünkü Civo başka hangi durumların buna izin verdiğini belgelemez. Yalnızca daha büyük boyutlar sunulur, saatlik ücretlerinize göre 730 saatlik bir ay için tahmini maliyet değişikliği gösterilir ve yeniden boyutlandırma gönderilmeden önce onaylanır."
+            "value" : "Çalışan bir örneği ayrıntı görünümünden yeniden boyutlandırın. Yeniden boyutlandırmayı yalnızca örnek çalışırken sunmak bu uygulamanın kuralıdır, çünkü Civo başka hangi durumların buna izin verdiğini belgelemez. Yalnızca daha büyük boyutlar sunulur, saatlik ücretlerinize göre 730 saatlik bir ay için tahmini maliyet değişikliği gösterilir ve yeniden boyutlandırma gönderilmeden önce onaylanır. Civo örneğin CPU, RAM ve diskini ya da boyutunu bildirmediyse uygulama boyutları karşılaştıramadığını belirtir; Yeniden Yükle örneği ve boyutları yeniden yükler."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在详情视图中调整正在运行的实例的大小。由于 Civo 未说明其他哪些状态允许调整大小，此应用仅在实例运行时提供调整大小。仅提供更大的规格，并按你的每小时费率以每月 730 小时显示估算的费用变化，发送前需确认。"
+            "value" : "在详情视图中调整正在运行的实例的大小。仅在实例运行时提供调整大小是此应用的规则，因为 Civo 未说明其他哪些状态允许调整大小。仅提供更大的规格，并按你的每小时费率以每月 730 小时显示估算的费用变化，发送前需确认。如果 Civo 未报告实例的 CPU、内存和磁盘或其规格，应用会说明无法比较规格；重新载入会再次载入实例和规格。"
           }
         }
       }

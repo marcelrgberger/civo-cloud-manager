@@ -1994,6 +1994,8 @@ private final class InstanceEnvironment {
     var sizesByRegion: [String: [CivoSize]] = [:]
     var sizeLoadError: Error?
     private(set) var sizeRequests: [String] = []
+    /// Set to hold every size load until the test finishes it, so loads can complete in any order.
+    var heldSizeLoads: HeldSizeLoads?
     private(set) var activities: [String] = []
     /// Kept alive for the default store: its client refers to it unowned.
     private let keychain = FakeKeychain()
@@ -2033,8 +2035,9 @@ private final class InstanceEnvironment {
         )
     }
 
-    private func listSizes(in region: String) throws -> [CivoSize] {
+    private func listSizes(in region: String) async throws -> [CivoSize] {
         sizeRequests.append(region)
+        if let heldSizeLoads { return try await heldSizeLoads.hold() }
         if let sizeLoadError { throw sizeLoadError }
         return sizesByRegion[region] ?? []
     }
@@ -3130,22 +3133,46 @@ private func resizableInstance(status: String = "ACTIVE", size: String? = "g3.me
     ))
 }
 
+/// Size loads waiting for the test to finish them, in the order they were started.
+@MainActor
+private final class HeldSizeLoads {
+    private var waiting: [CheckedContinuation<[CivoSize], Error>] = []
+    private(set) var started = 0
+
+    func hold() async throws -> [CivoSize] {
+        try await withCheckedThrowingContinuation { waiting.append($0); started += 1 }
+    }
+
+    /// Finishes the `index`th load started, counting from 0.
+    func finish(_ index: Int, with result: Result<[CivoSize], Error>) {
+        waiting[index].resume(with: result)
+    }
+}
+
+private struct Offline: LocalizedError {
+    var errorDescription: String? { "The Internet connection appears to be offline." }
+}
+
 @Suite("Instance resize")
 @MainActor
 struct InstanceResizeTests {
     @Test("Only selectable, larger instance sizes are offered, with or without a type other than Instance")
     func eligibleSizes() {
-        let offered = InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance()).map(\.name)
+        let offered = InstanceResize.options(documentedSizes, for: resizableInstance()).sizes.map(\.name)
         // g3.small is smaller, g4s.medium is not larger, g4c.large has less disk, g3.xlarge is not selectable,
         // kube, k3s and db sizes are other products.
         #expect(offered == ["g3.large", "g4p.small", "g4s.2xlarge"])
     }
 
-    @Test("Without its own specs, the instance is compared by its listed size; with neither, nothing is offered")
+    @Test("Without its own specs, the instance is compared by its listed size; with neither, the comparison is unavailable")
     func unknownCurrentSpecs() {
-        let bySize = InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance(specs: false)).map(\.name)
+        let bySize = InstanceResize.options(documentedSizes, for: resizableInstance(specs: false)).sizes.map(\.name)
         #expect(bySize == ["g3.large", "g4p.small", "g4s.2xlarge"])
-        #expect(InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance(size: nil, specs: false)).isEmpty)
+        #expect(InstanceResize.options(documentedSizes, for: resizableInstance(size: nil, specs: false)) == .comparisonUnavailable)
+        #expect(InstanceResize.options(documentedSizes, for: resizableInstance(size: "g9.unlisted", specs: false)) == .comparisonUnavailable)
+        // Only a completed comparison may report that no larger size exists.
+        let largest = resizableInstance(size: "g4s.2xlarge", specs: false)
+        #expect(InstanceResize.options(documentedSizes, for: largest) == .larger([]))
     }
 
     @Test("App policy: Resize is offered only for a running instance")
@@ -3184,8 +3211,8 @@ struct InstanceResizeTests {
         env.region = "NYC1"
         await env.vm.loadResizeSizes()
         #expect(env.sizeRequests == ["LON1"])
-        #expect(env.vm.eligibleResizeSizes(for: target).map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
-        #expect(env.vm.eligibleResizeSizes(for: ConsoleTarget(instanceId: target.instanceId, instanceName: target.instanceName, region: "NYC1")).isEmpty)
+        #expect(env.vm.resizeOptions(for: target)?.sizes.map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+        #expect(env.vm.resizeOptions(for: ConsoleTarget(instanceId: target.instanceId, instanceName: target.instanceName, region: "NYC1")) == nil)
     }
 
     @Test("A resize keeps the captured region, after Full Access is checked on confirm")
@@ -3204,6 +3231,8 @@ struct InstanceResizeTests {
 
         env.accessAllowed = true
         env.vm.beginConfirmation(.resize, for: resizableInstance())
+        #expect(env.vm.resizeSizes == .loading)
+        await env.vm.loadResizeSizes()
         let target = try #require(env.vm.confirmPendingAction())
         env.region = "NYC1"
         await env.vm.resizeInstance(target, size: "g3.large")
@@ -3236,7 +3265,6 @@ struct InstanceResizeTests {
 
     @Test("A failed size load is shown instead of an empty grid")
     func failedSizeLoad() async {
-        struct Offline: LocalizedError { var errorDescription: String? { "The Internet connection appears to be offline." } }
         let env = InstanceEnvironment()
         env.sizeLoadError = Offline()
         await env.api.list([resizableInstance()], in: "LON1")
@@ -3244,6 +3272,54 @@ struct InstanceResizeTests {
         env.vm.beginConfirmation(.resize, for: resizableInstance())
         await env.vm.loadResizeSizes()
         #expect(env.vm.resizeSizes == .failed("The Internet connection appears to be offline."))
+    }
+
+    @Test("A load that finishes after the sheet was closed and opened again changes nothing", arguments: [false, true])
+    func lateLoadOfClosedSheet(lateLoadFails: Bool) async throws {
+        let env = InstanceEnvironment()
+        let held = HeldSizeLoads()
+        env.heldSizeLoads = held
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        // Not cancelled, like a Retry task that outlives its sheet.
+        let closedSheetLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 1 }
+        env.vm.cancelConfirmation()
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        let target = try #require(env.vm.pendingAction?.target)
+        #expect(env.vm.resizeSizes == .loading)
+        let openSheetLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 2 }
+        held.finish(1, with: .success(documentedSizes))
+        await openSheetLoad.value
+
+        held.finish(0, with: lateLoadFails ? .failure(Offline()) : .success([]))
+        await closedSheetLoad.value
+        #expect(env.vm.resizeSizes == .loaded(documentedSizes, region: "LON1"))
+        #expect(env.vm.resizeOptions(for: target)?.sizes.map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+    }
+
+    @Test("Only the newest load of an open sheet is shown, so an earlier one that fails after Retry changes nothing")
+    func loadSupersededByRetry() async throws {
+        let env = InstanceEnvironment()
+        let held = HeldSizeLoads()
+        env.heldSizeLoads = held
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+
+        let firstLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 1 }
+        let retry = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 2 }
+        held.finish(1, with: .success(documentedSizes))
+        await retry.value
+        held.finish(0, with: .failure(Offline()))
+        await firstLoad.value
+        #expect(env.vm.resizeSizes == .loaded(documentedSizes, region: "LON1"))
     }
 }
 
