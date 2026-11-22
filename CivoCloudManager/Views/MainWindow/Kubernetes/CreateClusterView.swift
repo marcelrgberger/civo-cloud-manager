@@ -56,7 +56,7 @@ struct CreateClusterView: View {
 
             marketplaceSection
 
-            if !vm.marketplace.selection.isEmpty {
+            if !vm.marketplace.state.selection.isEmpty {
                 MarketplaceReviewSection(vm: vm)
             }
 
@@ -70,10 +70,10 @@ struct CreateClusterView: View {
         .navigationTitle("Create Kubernetes Cluster")
         .task { await vm.loadFormData() }
         .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
-            Task { await vm.reloadMarketplace() }
+            Task { await vm.marketplace.reload() }
         }
         .onReceive(NotificationCenter.default.publisher(for: .civoRegionDidChange)) { _ in
-            Task { await vm.reloadMarketplace() }
+            Task { await vm.marketplace.reload() }
         }
         .sheet(isPresented: $isChoosingApplications) {
             MarketplacePickerView(vm: vm)
@@ -96,17 +96,17 @@ struct CreateClusterView: View {
                         _ = await vm.createCluster(body)
                     }
                 }
-                .disabled(name.isEmpty || vm.isSaving || !vm.marketplace.canSubmit)
+                .disabled(name.isEmpty || vm.isSaving || !vm.marketplace.state.canSubmit)
             }
         }
     }
 
     private var marketplaceSection: some View {
         Section {
-            if vm.marketplace.catalog != nil {
+            if vm.marketplace.state.catalog != nil {
                 Button("Choose Applications...") { isChoosingApplications = true }
             }
-            if vm.marketplace.selection.isEmpty, !vm.isLoadingMarketplace {
+            if vm.marketplace.state.selection.isEmpty, !vm.marketplace.isLoading {
                 Text("No additional applications selected. Civo may still install its default applications.")
                     .foregroundStyle(.secondary)
             }
@@ -133,13 +133,13 @@ private struct MarketplaceReviewSection: View {
     @Bindable var vm: KubernetesViewModel
 
     var body: some View {
-        let issues = vm.marketplace.issues
+        let issues = vm.marketplace.state.issues
         Section {
-            ForEach(vm.marketplace.selection.choices, id: \.id) { choice in
+            ForEach(vm.marketplace.state.selection.choices, id: \.id) { choice in
                 MarketplaceReviewRow(vm: vm, choice: choice, issue: issues[choice.id])
             }
         } header: {
-            Text("Applications to install: \(vm.marketplace.selection.choices.count)")
+            Text("Applications to install: \(vm.marketplace.state.selection.choices.count)")
         } footer: {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Applications may create resources that incur additional Civo charges; this app does not calculate those charges.")
@@ -181,11 +181,11 @@ private struct MarketplaceReviewRow: View {
                     Label(issue.label, systemImage: "exclamationmark.triangle.fill")
                         .font(.caption)
                         .foregroundStyle(.orange)
-                    if issue == .detailsChanged || issue == .contextChanged {
-                        Button("Use Current Details") { vm.acceptMarketplaceApplicationAgain(choice.id) }
+                    if issue == .detailsChanged || issue == .contextChanged, vm.marketplace.state.isCatalogCurrent {
+                        Button("Use Current Details") { vm.marketplace.acceptAgain(choice.id) }
                     }
                 }
-                Button("Remove") { vm.removeMarketplaceApplication(choice.id) }
+                Button("Remove") { vm.marketplace.remove(choice.id) }
             }
             if let description = choice.description {
                 Text("Description from Civo")

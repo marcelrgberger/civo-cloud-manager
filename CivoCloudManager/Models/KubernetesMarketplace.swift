@@ -310,8 +310,9 @@ struct MarketplaceSelection: Equatable, Sendable {
         return choices.map(\.entry).joined(separator: ",")
     }
 
-    /// What changed for each choice in `catalog`, loaded under `context`, compared with what the user saw.
-    func issues(against catalog: MarketplaceCatalog, loadedIn context: MarketplaceContext) -> [String: MarketplaceSelectionIssue] {
+    /// What changed for each choice in `catalog` compared with what the user saw, for a cluster created under
+    /// `context`.
+    func issues(against catalog: MarketplaceCatalog, for context: MarketplaceContext) -> [String: MarketplaceSelectionIssue] {
         var issues: [String: MarketplaceSelectionIssue] = [:]
         for choice in choices {
             guard let app = catalog.application(withID: choice.id), app.availability == .selectable else {
@@ -340,14 +341,26 @@ struct MarketplaceSelection: Equatable, Sendable {
 struct MarketplaceCreateState: Equatable {
     private(set) var catalog: MarketplaceCatalog?
     private(set) var catalogContext: MarketplaceContext?
+    /// The account and region Settings point to now, which can differ from `catalogContext` after a failed reload.
+    private(set) var currentContext: MarketplaceContext?
     private(set) var loadedAt: Date?
     /// The safe reason of the last failed load; the previous catalog and choices stay as they were.
     private(set) var loadError: String?
     private(set) var selection = MarketplaceSelection()
 
+    /// Whether the shown catalog was loaded for the current account and region, so choices can be made from it.
+    var isCatalogCurrent: Bool { catalogContext != nil && catalogContext == currentContext }
+
+    /// Settings now point to `context`; choices made under another account or region are marked until reviewed
+    /// against a catalog loaded for `context`.
+    mutating func targetChanged(to context: MarketplaceContext) {
+        currentContext = context
+    }
+
     mutating func catalogLoaded(_ catalog: MarketplaceCatalog, in context: MarketplaceContext, at date: Date) {
         self.catalog = catalog
         catalogContext = context
+        currentContext = context
         loadedAt = date
         loadError = nil
     }
@@ -356,10 +369,11 @@ struct MarketplaceCreateState: Equatable {
         loadError = message
     }
 
-    /// Chooses an application from the shown catalog; only selectable applications and their listed plans.
+    /// Chooses an application from the shown catalog; only selectable applications and their listed plans, and
+    /// only while the catalog is the one loaded for the current account and region.
     mutating func choose(_ application: CivoMarketplaceApplication, plan: String?) {
-        guard let catalogContext, application.availability == .selectable,
-              plan.map { application.plans.contains($0) } ?? application.plans.isEmpty else { return }
+        guard let catalogContext, isCatalogCurrent, application.availability == .selectable,
+              plan.map({ application.plans.contains($0) }) ?? application.plans.isEmpty else { return }
         selection.choose(application, plan: plan, context: catalogContext)
     }
 
@@ -368,15 +382,15 @@ struct MarketplaceCreateState: Equatable {
     }
 
     /// Chooses the application again as the shown catalog lists it now, which resolves `.detailsChanged` and
-    /// `.contextChanged`.
+    /// `.contextChanged` once the catalog was loaded for the current account and region.
     mutating func acceptAgain(_ id: String) {
         guard let choice = selection.choice(for: id), let app = catalog?.application(withID: id) else { return }
         choose(app, plan: choice.plan)
     }
 
     var issues: [String: MarketplaceSelectionIssue] {
-        guard let catalog, let catalogContext else { return [:] }
-        return selection.issues(against: catalog, loadedIn: catalogContext)
+        guard let catalog, let context = currentContext ?? catalogContext else { return [:] }
+        return selection.issues(against: catalog, for: context)
     }
 
     /// Whether the cluster can be created with the current choices; an empty selection always can.

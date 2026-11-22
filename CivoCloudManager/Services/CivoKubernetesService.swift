@@ -21,7 +21,14 @@ protocol KubernetesNodePoolAPI: Sendable {
     func updatePools(_ pools: [CivoNodePoolSpec], inCluster id: String, region: String, apiKey: String) async throws
 }
 
-final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAPI, KubernetesNodePoolAPI, Sendable {
+/// The requests of Create Cluster's marketplace part. Creating is pinned to the account and region the chosen
+/// applications were reviewed for.
+protocol KubernetesClusterCreateAPI: Sendable {
+    func listApplications(apiKey: String?) async throws -> [RawMarketplaceEntry]
+    func createCluster(_ body: sending [String: Any], region: String, apiKey: String) async throws
+}
+
+final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAPI, KubernetesNodePoolAPI, KubernetesClusterCreateAPI, Sendable {
     private let api = CivoAPIClient.shared
 
     func listClusters(region: String? = nil) async throws -> PaginatedList<CivoKubernetesCluster> {
@@ -46,8 +53,17 @@ final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAP
         try await api.getArray(path: "/kubernetes/applications", regionRequired: false, apiKey: apiKey)
     }
 
-    func createCluster(_ body: [String: Any]) async throws -> CivoKubernetesCluster {
-        try await api.post(path: "/kubernetes/clusters", body: body)
+    /// `POST /v2/kubernetes/clusters` in `region` with `apiKey`, never the account or region Settings point to
+    /// by the time the request is built.
+    func createCluster(_ body: sending [String: Any], region: String, apiKey: String) async throws {
+        var body = body
+        body["region"] = region
+        let _: CivoKubernetesCluster = try await api.post(
+            path: "/kubernetes/clusters",
+            body: body,
+            queryItems: [URLQueryItem(name: "region", value: region)],
+            apiKey: apiKey
+        )
     }
 
     /// `PUT /v2/kubernetes/clusters/:id` with the complete desired state of the pools, built by `KubernetesNodePoolPlan`.

@@ -28,10 +28,7 @@ final class KubernetesViewModel {
     /// Set when the version list could not be loaded; Civo's default version is used then.
     var versionListError: String?
     /// Civo's marketplace list and the applications chosen in Create Cluster.
-    private(set) var marketplace = MarketplaceCreateState()
-    private(set) var isLoadingMarketplace = false
-    /// Counts catalog requests, so only the answer to the latest one is applied.
-    private var marketplaceRequest = 0
+    let marketplace = KubernetesMarketplaceController()
 
     // K8s API state
     var k8sNodes: [K8sNode] = []
@@ -106,7 +103,11 @@ final class KubernetesViewModel {
         }
     }
 
+    /// Starts a new Create Cluster form: the marketplace part is reset before anything is awaited, so nothing
+    /// from an earlier form can be chosen or sent while the lists load.
     func loadFormData() async {
+        marketplace.beginForm()
+        async let catalog: Void = marketplace.reload()
         do {
             async let nets = networkService.listNetworks()
             async let sizes = sizeService.listSizes()
@@ -122,49 +123,7 @@ final class KubernetesViewModel {
             availableVersions = []
             versionListError = CivoAPIError.userMessage(error)
         }
-        marketplace = MarketplaceCreateState()
-        await reloadMarketplace()
-    }
-
-    /// Loads Civo's marketplace list again with the current account and region. A failed load keeps the list and
-    /// the choices the user already reviewed.
-    func reloadMarketplace() async {
-        marketplaceRequest += 1
-        let request = marketplaceRequest
-        let apiKey = CivoConfig.shared.apiKey
-        let context = Self.marketplaceContext(apiKey: apiKey)
-        isLoadingMarketplace = true
-        let result: Result<MarketplaceCatalog, Error>
-        do {
-            result = .success(try MarketplaceCatalog(validating: try await service.listApplications(apiKey: apiKey)))
-        } catch {
-            result = .failure(error)
-        }
-        guard request == marketplaceRequest else { return }
-        isLoadingMarketplace = false
-        switch result {
-        case .success(let catalog):
-            marketplace.catalogLoaded(catalog, in: context, at: .now)
-        case .failure(let error):
-            guard let message = MarketplaceFailure.message(for: error) else { return }
-            marketplace.catalogFailed(message)
-        }
-    }
-
-    func chooseMarketplaceApplication(_ application: CivoMarketplaceApplication, plan: String?) {
-        marketplace.choose(application, plan: plan)
-    }
-
-    func removeMarketplaceApplication(_ id: String) {
-        marketplace.remove(id)
-    }
-
-    func acceptMarketplaceApplicationAgain(_ id: String) {
-        marketplace.acceptAgain(id)
-    }
-
-    private static func marketplaceContext(apiKey: String = CivoConfig.shared.apiKey) -> MarketplaceContext {
-        MarketplaceContext(account: CivoAccount(apiKey: apiKey), region: CivoConfig.shared.region)
+        await catalog
     }
 
     func loadClusterDetail(_ id: String) async {
@@ -689,16 +648,12 @@ final class KubernetesViewModel {
 
     // MARK: - CRUD
 
-    /// Creates the cluster with the chosen marketplace applications, as long as they were chosen under the
-    /// current account and region.
+    /// Creates the cluster with the chosen marketplace applications, in the account and region they were
+    /// reviewed for; see `KubernetesMarketplaceController.createCluster`.
     func createCluster(_ body: sending [String: Any]) async -> Bool {
         isSaving = true; saveError = nil; defer { isSaving = false }
-        var body = body
         do {
-            if let applications = try marketplace.applicationsField(in: Self.marketplaceContext()) {
-                body["applications"] = applications
-            }
-            _ = try await service.createCluster(body)
+            try await marketplace.createCluster(body)
             isCreating = false; showSuccess = true; await refresh(); return true
         } catch { saveError = MarketplaceFailure.message(for: error); return false }
     }

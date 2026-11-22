@@ -5041,3 +5041,141 @@ struct KubernetesMarketplaceTests {
         #expect(MarketplaceFailure.message(for: CivoAPIError.cancelled) == nil)
     }
 }
+
+/// Create Cluster requests recorded instead of sent. Each list request takes the next scripted answer; a held
+/// answer waits until it is released, like a slow request.
+private actor FakeClusterCreateAPI: KubernetesClusterCreateAPI {
+    enum Answer: Sendable {
+        case list(String)
+        case fail(String)
+        case held(String)
+    }
+
+    private var answers: [Answer] = []
+    private var waiting: CheckedContinuation<Void, Never>?
+    private(set) var created: [String] = []
+
+    var isHolding: Bool { waiting != nil }
+
+    func script(_ answers: [Answer]) { self.answers = answers }
+
+    func release() {
+        waiting?.resume()
+        waiting = nil
+    }
+
+    func listApplications(apiKey: String?) async throws -> [RawMarketplaceEntry] {
+        switch answers.removeFirst() {
+        case .list(let json):
+            return try marketplaceEntries(json)
+        case .fail(let reason):
+            throw CivoAPIError.networkError(reason)
+        case .held(let json):
+            await withCheckedContinuation { waiting = $0 }
+            return try marketplaceEntries(json)
+        }
+    }
+
+    func createCluster(_ body: sending [String: Any], region: String, apiKey: String) async throws {
+        created.append("\(region) \(apiKey) \(body["applications"] as? String ?? "-")")
+    }
+}
+
+@Suite("Kubernetes marketplace in Create Cluster")
+@MainActor
+struct KubernetesMarketplaceControllerTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeClusterCreateAPI()
+        var apiKey = "key-a"
+        var region = "LON1"
+        /// Runs once right after the region is read, like a Settings change while Create is under way.
+        var afterRegionRead: (() -> Void)?
+        lazy var controller = KubernetesMarketplaceController(
+            api: api,
+            apiKey: { [unowned self] in apiKey },
+            region: { [unowned self] in
+                defer { afterRegionRead?(); afterRegionRead = nil }
+                return region
+            }
+        )
+
+        func waitUntilHolding() async {
+            while !(await api.isHolding) { await Task.yield() }
+        }
+    }
+
+    @Test("Create goes to the account and region the choices were checked against, even if Settings change meanwhile")
+    func createIsPinned() async throws {
+        let env = Environment()
+        await env.api.script([.list(#"[{"name": "Longhorn", "version": "1"}]"#)])
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "Longhorn")), plan: nil)
+
+        env.afterRegionRead = { env.apiKey = "key-b"; env.region = "FRA1" }
+        try await env.controller.createCluster(["name": "c"])
+        #expect(await env.api.created == ["LON1 key-a Longhorn"])
+
+        await #expect(throws: MarketplaceSelectionError.contextChanged) { try await env.controller.createCluster(["name": "c"]) }
+        #expect(await env.api.created.count == 1)
+    }
+
+    @Test("A new form starts empty before anything loads, and a late answer for an earlier form changes nothing")
+    func formLifecycle() async throws {
+        let env = Environment()
+        await env.api.script([
+            .list(#"[{"name": "A"}]"#),
+            .held(#"[{"name": "Old"}]"#),
+            .list(#"[{"name": "C"}]"#),
+        ])
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "A")), plan: nil)
+
+        env.controller.beginForm()
+        #expect(env.controller.state == MarketplaceCreateState())
+        let earlier = Task { await env.controller.reload() }
+        await env.waitUntilHolding()
+
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "C")), plan: nil)
+        await env.api.release()
+        await earlier.value
+
+        #expect(env.controller.state.catalog?.applications.map(\.name) == ["C"])
+        #expect(env.controller.state.selection.choices.map(\.name) == ["C"])
+        #expect(!env.controller.isLoading)
+        try await env.controller.createCluster(["name": "c"])
+        #expect(await env.api.created == ["LON1 key-a C"])
+    }
+
+    @Test("After a region change whose reload fails, the choices stay marked and Create stays blocked until reviewed")
+    func targetChangeWithFailedReload() async throws {
+        let env = Environment()
+        let catalog = #"[{"name": "A", "version": "1"}, {"name": "B", "version": "1"}]"#
+        await env.api.script([.list(catalog), .fail("offline"), .list(catalog)])
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "A")), plan: nil)
+
+        env.region = "FRA1"
+        await env.controller.reload()
+        let shown = try #require(env.controller.state.catalog)
+        #expect(env.controller.state.loadError != nil && !env.controller.state.isCatalogCurrent)
+        #expect(env.controller.state.issues == ["A": .contextChanged] && !env.controller.state.canSubmit)
+        env.controller.choose(try #require(shown.application(withID: "B")), plan: nil)
+        env.controller.acceptAgain("A")
+        #expect(env.controller.state.selection.choices.map(\.name) == ["A"])
+        #expect(env.controller.state.issues == ["A": .contextChanged])
+        await #expect(throws: MarketplaceSelectionError.needsReview) { try await env.controller.createCluster(["name": "c"]) }
+
+        await env.controller.reload()
+        #expect(env.controller.state.issues == ["A": .contextChanged])
+        env.controller.acceptAgain("A")
+        #expect(env.controller.state.canSubmit)
+        try await env.controller.createCluster(["name": "c"])
+        #expect(await env.api.created == ["FRA1 key-a A"])
+    }
+}

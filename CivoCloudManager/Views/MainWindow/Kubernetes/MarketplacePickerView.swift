@@ -16,7 +16,7 @@ struct MarketplacePickerView: View {
                 MarketplaceCatalogStatus(vm: vm)
             }
 
-            if let catalog = vm.marketplace.catalog {
+            if let catalog = vm.marketplace.state.catalog {
                 let matches = catalog.search(query)
                 Section {
                     if matches.isEmpty {
@@ -44,7 +44,7 @@ private struct MarketplacePickerRow: View {
     @Bindable var vm: KubernetesViewModel
     let application: CivoMarketplaceApplication
 
-    private var choice: MarketplaceChoice? { vm.marketplace.selection.choice(for: application.id) }
+    private var choice: MarketplaceChoice? { vm.marketplace.state.selection.choice(for: application.id) }
     private var isSelectable: Bool { application.availability == .selectable }
 
     var body: some View {
@@ -95,7 +95,7 @@ private struct MarketplacePickerRow: View {
                     .foregroundStyle(.orange)
             }
         }
-        .disabled(!isSelectable)
+        .disabled(!isSelectable || !vm.marketplace.state.isCatalogCurrent)
         .accessibilityElement(children: .combine)
     }
 
@@ -121,9 +121,9 @@ private struct MarketplacePickerRow: View {
             get: { choice != nil },
             set: { chosen in
                 if chosen {
-                    vm.chooseMarketplaceApplication(application, plan: nil)
+                    vm.marketplace.choose(application, plan: nil)
                 } else {
-                    vm.removeMarketplaceApplication(application.id)
+                    vm.marketplace.remove(application.id)
                 }
             }
         )
@@ -134,26 +134,26 @@ private struct MarketplacePickerRow: View {
             get: { choice?.plan },
             set: { plan in
                 if let plan {
-                    vm.chooseMarketplaceApplication(application, plan: plan)
+                    vm.marketplace.choose(application, plan: plan)
                 } else {
-                    vm.removeMarketplaceApplication(application.id)
+                    vm.marketplace.remove(application.id)
                 }
             }
         )
     }
 }
 
-/// Whether Civo's marketplace list loaded completely, partly or not at all, with Reload.
+/// Whether Civo's marketplace list loaded completely, partly or not at all, with Reload whenever no load is running.
 struct MarketplaceCatalogStatus: View {
     @Bindable var vm: KubernetesViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            if vm.isLoadingMarketplace {
+            if vm.marketplace.isLoading {
                 ProgressView("Loading marketplace applications...")
                     .controlSize(.small)
-            } else if let catalog = vm.marketplace.catalog {
-                if let error = vm.marketplace.loadError, let loadedAt = vm.marketplace.loadedAt {
+            } else if let catalog = vm.marketplace.state.catalog {
+                if let error = vm.marketplace.state.loadError, let loadedAt = vm.marketplace.state.loadedAt {
                     Label("The list could not be refreshed; details shown are from \(loadedAt.formatted(date: .omitted, time: .shortened)). \(error)", systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.orange)
                 }
@@ -161,12 +161,12 @@ struct MarketplaceCatalogStatus: View {
                     Label("Entries from Civo that could not be used or are incomplete: \(catalog.unusableEntryCount)", systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.orange)
                 }
-            } else if let error = vm.marketplace.loadError {
+            } else if let error = vm.marketplace.state.loadError {
                 Label("The list of marketplace applications could not be loaded. \(error)", systemImage: "exclamationmark.triangle")
                     .foregroundStyle(.orange)
             }
-            if !vm.isLoadingMarketplace, vm.marketplace.catalog == nil || vm.marketplace.loadError != nil {
-                Button("Reload") { Task { await vm.reloadMarketplace() } }
+            if !vm.marketplace.isLoading {
+                Button("Reload") { Task { await vm.marketplace.reload() } }
             }
         }
         .font(.caption)
