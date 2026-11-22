@@ -9,6 +9,9 @@ struct CostDashboardView: View {
     @State private var model = CostChargesViewModel()
     @State private var period: ChargePeriod = .currentMonth
     @State private var showRateEditor = false
+    /// A running manual Refresh. A newer load cancels it, so a superseded refresh cannot
+    /// write its completed months to the cache after the newer load did.
+    @State private var refreshTask: Task<Void, Never>?
 
     /// Restarts the load, cancelling the running one, when the period or the account changes.
     private struct LoadKey: Hashable {
@@ -83,7 +86,7 @@ struct CostDashboardView: View {
                                 .foregroundStyle(.secondary)
                                 .multilineTextAlignment(.center)
                             Button("Retry") {
-                                Task { await loadCharges() }
+                                refreshTask = Task { await loadCharges(trigger: .manualRefresh) }
                             }
                             .buttonStyle(.bordered)
                         }
@@ -121,14 +124,18 @@ struct CostDashboardView: View {
             .padding(20)
         }
         .navigationTitle("Costs")
-        .task(id: LoadKey(period: period, accountGeneration: model.accountGeneration)) { await loadCharges() }
+        .task(id: LoadKey(period: period, accountGeneration: model.accountGeneration)) {
+            refreshTask?.cancel()
+            await loadCharges()
+        }
         .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
+            refreshTask?.cancel()
             model.apiKeyDidChange()
         }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
-                    Task { await loadCharges() }
+                    refreshTask = Task { await loadCharges(trigger: .manualRefresh) }
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
@@ -246,7 +253,7 @@ struct CostDashboardView: View {
 
     // MARK: - Data
 
-    private func loadCharges() async {
-        await model.load(period)
+    private func loadCharges(trigger: ChargeLoadTrigger = .automatic) async {
+        await model.load(period, trigger: trigger)
     }
 }

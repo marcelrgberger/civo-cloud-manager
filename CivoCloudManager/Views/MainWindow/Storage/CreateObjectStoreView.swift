@@ -21,6 +21,11 @@ struct CreateObjectStoreView: View {
                     }
                 }
                 .help("Assign existing credentials or create new ones automatically")
+                if vm.credentialCompleteness.mayBeMissingItems {
+                    Text(CivoAPIError.incompleteListMessage)
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
             }
 
             if let error = vm.saveError {

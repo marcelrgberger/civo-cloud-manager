@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import Security
 
@@ -10,6 +11,17 @@ private enum ConfigKey {
 extension Notification.Name {
     /// Posted after the stored API key changes, so open console windows can stop using the old account.
     static let civoAPIKeyDidChange = Notification.Name("CivoCloudManager.apiKeyDidChange")
+    /// Posted after the Settings region changes, so captured instance targets of the old region are dropped.
+    static let civoRegionDidChange = Notification.Name("CivoCloudManager.regionDidChange")
+}
+
+/// The account of an API key, held as a SHA-256 fingerprint so the key itself is not kept.
+struct CivoAccount: Equatable, Sendable {
+    private let fingerprint: SHA256.Digest
+
+    init(apiKey: String) {
+        fingerprint = SHA256.hash(data: Data(apiKey.utf8))
+    }
 }
 
 final class CivoConfig: @unchecked Sendable {
@@ -29,7 +41,11 @@ final class CivoConfig: @unchecked Sendable {
 
     var region: String {
         get { UserDefaults.standard.string(forKey: ConfigKey.region) ?? "" }
-        set { UserDefaults.standard.set(newValue, forKey: ConfigKey.region) }
+        set {
+            guard newValue != region else { return }
+            UserDefaults.standard.set(newValue, forKey: ConfigKey.region)
+            NotificationCenter.default.post(name: .civoRegionDidChange, object: nil)
+        }
     }
 
     var hasAPIKey: Bool { !apiKey.isEmpty }

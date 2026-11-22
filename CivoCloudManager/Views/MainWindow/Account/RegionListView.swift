@@ -54,6 +54,12 @@ struct RegionListView: View {
                                         resourceBadge("cylinder.split.1x2", counts.databases, .purple)
                                         resourceBadge("point.3.connected.trianglepath.dotted", counts.networks, .green)
                                         resourceBadge("cylinder", counts.volumes, .orange)
+                                        if counts.hasIncompleteList {
+                                            Image(systemName: "exclamationmark.circle.fill")
+                                                .font(.caption2)
+                                                .foregroundStyle(.orange)
+                                                .help(CivoAPIError.incompleteListMessage)
+                                        }
                                     }
                                 }
                             }

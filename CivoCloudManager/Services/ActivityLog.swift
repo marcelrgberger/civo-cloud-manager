@@ -7,20 +7,29 @@ struct ActivityEntry: Codable, Identifiable, Sendable {
     let resourceName: String
     let resourceId: String
     let action: String
+    /// Fills the `%@` of `action`, such as a resource name that is never translated.
+    let detail: String?
 
-    init(resourceType: String, resourceName: String, resourceId: String, action: String) {
+    init(resourceType: String, resourceName: String, resourceId: String, action: String, detail: String? = nil) {
         self.id = UUID()
         self.timestamp = Date()
         self.resourceType = resourceType
         self.resourceName = resourceName
         self.resourceId = resourceId
         self.action = action
+        self.detail = detail
     }
 
     var timeAgo: String {
         let interval = Date().timeIntervalSince(timestamp)
         if interval < 60 { return String(localized: "Just now") }
         return timestamp.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
+    }
+
+    /// `action` is stored in English so `icon` keeps matching it; it is translated only where shown.
+    var localizedAction: String {
+        let localized = Bundle.main.localizedString(forKey: action, value: action, table: nil)
+        return detail.map { String(format: localized, $0) } ?? localized
     }
 
     var icon: String {
@@ -32,10 +41,12 @@ struct ActivityEntry: Codable, Identifiable, Sendable {
         case let a where a.contains("reboot") || a.contains("restart"): return "arrow.clockwise.circle.fill"
         case let a where a.contains("resize"): return "arrow.up.right.circle.fill"
         case let a where a.contains("update") || a.contains("set"): return "pencil.circle.fill"
-        case let a where a.contains("attach"): return "link.circle.fill"
+        // Before "attach", which "detach" contains.
         case let a where a.contains("detach"): return "link.badge.plus"
+        case let a where a.contains("attach"): return "link.circle.fill"
         case let a where a.contains("download"): return "arrow.down.circle.fill"
         case let a where a.contains("connect"): return "bolt.circle.fill"
+        case let a where a.contains("recovery"): return "lifepreserver.fill"
         default: return "circle.fill"
         }
     }
@@ -54,12 +65,13 @@ final class ActivityLog {
         load()
     }
 
-    func log(_ action: String, resourceType: String, resourceName: String, resourceId: String = "") {
+    func log(_ action: String, detail: String? = nil, resourceType: String, resourceName: String, resourceId: String = "") {
         let entry = ActivityEntry(
             resourceType: resourceType,
             resourceName: resourceName,
             resourceId: resourceId,
-            action: action
+            action: action,
+            detail: detail
         )
         entries.insert(entry, at: 0)
         if entries.count > maxEntries { entries = Array(entries.prefix(maxEntries)) }

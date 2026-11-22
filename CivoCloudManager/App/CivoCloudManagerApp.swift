@@ -36,6 +36,7 @@ struct CivoCloudManagerApp: App {
 
         Window("Civo Cloud Manager", id: "main") {
             MainWindowView()
+                .environment(appState.firewallClosures)
                 .onDisappear { hideFromDockIfNoWindows() }
         }
         .defaultSize(width: 1100, height: 700)
