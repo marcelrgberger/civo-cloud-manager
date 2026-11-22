@@ -7,7 +7,9 @@ protocol FirewallRuleAPI: Sendable {
 }
 
 final class CivoFirewallService: FirewallRuleAPI, Sendable {
-    private let api = CivoAPIClient.shared
+    private let api: CivoAPIClient
+
+    init(api: CivoAPIClient = .shared) { self.api = api }
 
     func listFirewalls(region: String? = nil) async throws -> [CivoFirewall] {
         var queryItems: [URLQueryItem]? = nil
@@ -15,6 +17,11 @@ final class CivoFirewallService: FirewallRuleAPI, Sendable {
             queryItems = [URLQueryItem(name: "region", value: region)]
         }
         return try await api.getArray(path: "/firewalls", queryItems: queryItems)
+    }
+
+    /// Pinned to one account and region. Civo's answer text and decoding details stay out of errors and the log.
+    func listFirewalls(region: String, apiKey: String) async throws -> [CivoFirewall] {
+        try await api.getArray(path: "/firewalls", queryItems: [URLQueryItem(name: "region", value: region)], apiKey: apiKey, redactDiagnostics: true)
     }
 
     func createFirewall(_ body: [String: Any]) async throws -> CivoFirewall {

@@ -28,6 +28,8 @@
 		1D6E0750575C50DCBF61A11B /* CivoFirewallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3B983A59EFD4C3E70560F6 /* CivoFirewallService.swift */; };
 		1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */; };
 		62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */; };
+		07603E847C2ACB0EF9479043 /* LoadBalancerCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */; };
+		185D78EB3644C0FED48529D4 /* LoadBalancerEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */; };
 		123000000000000000000002 /* ObjectStoreCredentialSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */; };
 		1F53D892FB96A5B8444E7CE1 /* K8sMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6573B0CCE355C008B097BE98 /* K8sMetrics.swift */; };
 		26AE2B95EE1C325878952853 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */; };
@@ -66,6 +68,8 @@
 		5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */; };
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
 		304ED48A654AEAA516C7178C /* FirewallRuleEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */; };
+		B7E98BF22C98E6CD637204F2 /* LoadBalancerFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */; };
+		1D291856D4A9E5B0CC1A30D9 /* LoadBalancerEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */; };
 		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
 		CAC862CBA6BD0ED49BED5FF9 /* InstanceResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4043D620B2952DB90BD27713 /* InstanceResize.swift */; };
 		FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */; };
@@ -171,6 +175,9 @@
 		EC5AAB7DC191448F60CD7959 /* VolumeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6B375E3D2A3808726F712 /* VolumeListView.swift */; };
 		EFA7E70AB8444AE2999DC969 /* CreateRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */; };
 		144D14E2D568F9258659A21F /* EditRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */; };
+		190D3168FEF4E84E1065F9F3 /* LoadBalancerBackendTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */; };
+		285634D8FC741DFF0D894A38 /* EditLoadBalancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */; };
+		1B26A10A5910CF28408332CA /* CreateLoadBalancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */; };
 		F05AD484AF3628B9D2B9C577 /* CivoDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0E621B8A284E2DEA9AD09B /* CivoDatabaseService.swift */; };
 		F13E64C912A91CE2F8FD8012 /* ObjectStoreBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F803DCD5E699794A5E2F38 /* ObjectStoreBrowserView.swift */; };
 		F509E7FC3A31BA71147F314D /* LoadBalancerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CA8D131FFE0C87209269A /* LoadBalancerListView.swift */; };
@@ -233,6 +240,8 @@
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
 		00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEdit.swift; sourceTree = "<group>"; };
+		AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerFailure.swift; sourceTree = "<group>"; };
+		1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEdit.swift; sourceTree = "<group>"; };
 		A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCreationForm.swift; sourceTree = "<group>"; };
 		4043D620B2952DB90BD27713 /* InstanceResize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceResize.swift; sourceTree = "<group>"; };
 		DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceBulkCreation.swift; sourceTree = "<group>"; };
@@ -318,6 +327,8 @@
 		982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDatabaseView.swift; sourceTree = "<group>"; };
 		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
 		42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEditor.swift; sourceTree = "<group>"; };
+		C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerCreateController.swift; sourceTree = "<group>"; };
+		528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEditor.swift; sourceTree = "<group>"; };
 		123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreCredentialSwitcher.swift; sourceTree = "<group>"; };
 		9A0D734E5AADEC5426048D0D /* NetworkListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		9B01D46854B56A4823DA0330 /* QuotaGauge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
@@ -339,6 +350,9 @@
 		B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetwork.swift; sourceTree = "<group>"; };
 		B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateRuleView.swift; sourceTree = "<group>"; };
 		30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditRuleView.swift; sourceTree = "<group>"; };
+		5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerBackendTable.swift; sourceTree = "<group>"; };
+		41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditLoadBalancerView.swift; sourceTree = "<group>"; };
+		A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateLoadBalancerView.swift; sourceTree = "<group>"; };
 		B438532CEAB87ACE7FE3EAD9 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
 		B5732ED7605F4B787E59C7E8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B603EEEBA9DCFD1B87098CAF /* RateEditorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RateEditorView.swift; sourceTree = "<group>"; };
@@ -671,6 +685,8 @@
 				91D3FE5178B355A3C67F83C3 /* KubernetesMarketplaceController.swift */,
 				982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */,
 				42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */,
+				C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */,
+				528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */,
 				123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */,
 				08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */,
 				51B062260472FCFDFF253E9F /* VolumeViewModel.swift */,
@@ -695,6 +711,9 @@
 				9D863C92BB8355FC86FD7921 /* CreateNetworkView.swift */,
 				B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */,
 				30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */,
+				5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */,
+				41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */,
+				A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */,
 				139202D046776B2447E7538A /* DomainListView.swift */,
 				05845953997D598F9CF53203 /* FirewallDetailView.swift */,
 				F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */,
@@ -778,6 +797,8 @@
 				EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */,
 				229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */,
 				00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */,
+				AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */,
+				1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */,
 				837D1AE2173B4355ACCED79B /* HelmRelease.swift */,
 				3AF890BB389705BC2A4C42E1 /* IPPreset.swift */,
 				A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */,
@@ -997,6 +1018,8 @@
 				5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */,
 				5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */,
 				304ED48A654AEAA516C7178C /* FirewallRuleEdit.swift in Sources */,
+				B7E98BF22C98E6CD637204F2 /* LoadBalancerFailure.swift in Sources */,
+				1D291856D4A9E5B0CC1A30D9 /* LoadBalancerEdit.swift in Sources */,
 				78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */,
 				CAC862CBA6BD0ED49BED5FF9 /* InstanceResize.swift in Sources */,
 				FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */,
@@ -1054,6 +1077,8 @@
 				58BB53CB110E0C5EFA08BC3E /* KubernetesMarketplaceController.swift in Sources */,
 				1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */,
 				62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */,
+				07603E847C2ACB0EF9479043 /* LoadBalancerCreateController.swift in Sources */,
+				185D78EB3644C0FED48529D4 /* LoadBalancerEditor.swift in Sources */,
 				123000000000000000000002 /* ObjectStoreCredentialSwitcher.swift in Sources */,
 				A0F4E426FF1D7B3A27BB7796 /* RegionViewModel.swift in Sources */,
 				548833FEB722C3B9F7FE72CF /* VolumeViewModel.swift in Sources */,
@@ -1097,6 +1122,9 @@
 				2AB1468AFB1AA9D0DD469304 /* CreateNetworkView.swift in Sources */,
 				EFA7E70AB8444AE2999DC969 /* CreateRuleView.swift in Sources */,
 				144D14E2D568F9258659A21F /* EditRuleView.swift in Sources */,
+				190D3168FEF4E84E1065F9F3 /* LoadBalancerBackendTable.swift in Sources */,
+				285634D8FC741DFF0D894A38 /* EditLoadBalancerView.swift in Sources */,
+				1B26A10A5910CF28408332CA /* CreateLoadBalancerView.swift in Sources */,
 				892FCB7DC09D656750106A3A /* DomainListView.swift in Sources */,
 				F8E59DF15B5E473A3E1EB661 /* FirewallDetailView.swift in Sources */,
 				827BF0CFC34CB7D5CA8417BD /* FirewallListView.swift in Sources */,

@@ -158,7 +158,12 @@ struct HelpSection {
             "Create networks with a label and optional CIDR range.",
             "Default network cannot be deleted.",
             "Expand a domain to see DNS records. Add, edit, or delete records inline.",
-            "Load balancers show algorithm, IPs, traffic policy, and backend list.",
+            "Load balancers show algorithm, IPs, traffic policy and every backend with IP address, protocol and ports.",
+            "'New Load Balancer' creates one with a name, a network, an algorithm, an optional traffic policy and a table of backends. A new load balancer creates ongoing charges on your Civo account. The form stays bound to the account and region it was opened with.",
+            "If Civo's answer to a new load balancer is unclear, a banner says it may have been created. Check the list before trying again; the app never sends the request a second time.",
+            "'Edit' in a load balancer's details changes its name, its algorithm and a traffic policy Civo reports, and adds backends. Existing backends stay unchanged. A comparison shows the values before and after.",
+            "Saving loads the load balancer again first. A removed one is not recreated, and one changed elsewhere is shown with its current values to save again. Afterwards Civo's values are read back; a difference from the request is reported and never corrected automatically.",
+            "Load balancers managed by Kubernetes, and those whose owner Civo's answer does not show, can only be viewed. Change a Kubernetes load balancer through its Kubernetes Service.",
         ]),
         HelpSection(title: "Database Credentials", icon: "lock.shield", items: [
             "Click a database to see its detail view with connection info, config, and credentials.",
