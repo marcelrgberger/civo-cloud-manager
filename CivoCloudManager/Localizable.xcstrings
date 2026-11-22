@@ -84531,102 +84531,102 @@
         }
       }
     },
-    "Every period, including the current month, starts and ends on a UTC month boundary, so it can begin or end a few hours before or after local midnight." : {
+    "Calendar boundaries use UTC rather than local time, so they can fall a few hours before or after local midnight. This Month, Last Quarter and This Year include the current month so far; Last Month covers the previous complete UTC month." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Every period, including the current month, starts and ends on a UTC month boundary, so it can begin or end a few hours before or after local midnight."
+            "value" : "Calendar boundaries use UTC rather than local time, so they can fall a few hours before or after local midnight. This Month, Last Quarter and This Year include the current month so far; Last Month covers the previous complete UTC month."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jeder Zeitraum, auch der laufende Monat, beginnt und endet an einer Monatsgrenze in UTC. Er kann daher einige Stunden vor oder nach Mitternacht Ortszeit beginnen oder enden."
+            "value" : "Kalendergrenzen richten sich nach UTC statt nach der Ortszeit und können daher einige Stunden vor oder nach Mitternacht Ortszeit liegen. Dieser Monat, Letztes Quartal und Dieses Jahr umfassen den laufenden Monat bis jetzt; Letzter Monat umfasst den vorherigen vollständigen Monat in UTC."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cada periodo, incluido el mes en curso, empieza y termina en un límite de mes en UTC, por lo que puede comenzar o terminar unas horas antes o después de la medianoche local."
+            "value" : "Los límites del calendario usan UTC en lugar de la hora local, por lo que pueden caer unas horas antes o después de la medianoche local. Este mes, Último trimestre y Este año incluyen el mes actual hasta ahora; Mes pasado abarca el mes UTC completo anterior."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chaque période, y compris le mois en cours, commence et se termine à une limite de mois en UTC. Elle peut donc débuter ou finir quelques heures avant ou après minuit, heure locale."
+            "value" : "Les limites du calendrier utilisent l'UTC et non l'heure locale ; elles peuvent donc tomber quelques heures avant ou après minuit, heure locale. Ce mois-ci, Le trimestre dernier et Cette année incluent le mois en cours jusqu'à maintenant ; Le mois dernier couvre le mois UTC complet précédent."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ogni periodo, incluso il mese in corso, inizia e termina a un confine di mese in UTC. Può quindi iniziare o finire alcune ore prima o dopo la mezzanotte locale."
+            "value" : "I confini del calendario usano l'UTC anziché l'ora locale, quindi possono cadere alcune ore prima o dopo la mezzanotte locale. Questo mese, Ultimo trimestre e Quest'anno includono il mese corrente fino a ora; Mese scorso copre il mese UTC completo precedente."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elke periode, ook de lopende maand, begint en eindigt op een maandgrens in UTC. Een periode kan daardoor enkele uren voor of na middernacht lokale tijd beginnen of eindigen."
+            "value" : "Kalendergrenzen gebruiken UTC in plaats van lokale tijd en kunnen daardoor enkele uren voor of na middernacht lokale tijd liggen. Deze maand, Vorig kwartaal en Dit jaar omvatten de huidige maand tot nu toe; Vorige maand omvat de vorige volledige UTC-maand."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Każdy okres, także bieżący miesiąc, zaczyna się i kończy na granicy miesiąca w UTC. Może więc zaczynać się lub kończyć kilka godzin przed północą lub po północy czasu lokalnego."
+            "value" : "Granice kalendarzowe są liczone w UTC, a nie w czasie lokalnym, więc mogą przypadać kilka godzin przed północą lub po północy czasu lokalnego. Ten miesiąc, Poprzedni kwartał i Ten rok obejmują bieżący miesiąc do teraz; Poprzedni miesiąc obejmuje poprzedni pełny miesiąc w UTC."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cada período, incluindo o mês atual, começa e termina num limite de mês em UTC. Por isso, pode começar ou terminar algumas horas antes ou depois da meia-noite local."
+            "value" : "Os limites do calendário usam UTC em vez da hora local, por isso podem ficar algumas horas antes ou depois da meia-noite local. Este mês, Último trimestre e Este ano incluem o mês atual até agora; Mês passado abrange o mês UTC completo anterior."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "每个时间段（包括本月）都以 UTC 月份边界开始和结束，因此可能比当地时间午夜早或晚几个小时开始或结束。"
+            "value" : "日历边界使用 UTC 而非当地时间，因此可能比当地午夜早或晚几个小时。本月、上季度和今年包括当月截至目前的部分；上月涵盖上一个完整的 UTC 月份。"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当月を含むすべての期間は UTC の月の境界で始まり、終わります。そのため、現地時間の午前0時より数時間早く、または遅く始まったり終わったりすることがあります。"
+            "value" : "暦の境界には現地時間ではなく UTC を使用するため、現地時間の午前0時より数時間早く、または遅くなることがあります。今月、前四半期、今年には今月のこれまでの分が含まれ、先月は直前の UTC の1か月全体が対象です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이번 달을 포함한 모든 기간은 UTC 월 경계에서 시작하고 끝납니다. 따라서 현지 시간 자정보다 몇 시간 이르거나 늦게 시작하거나 끝날 수 있습니다."
+            "value" : "달력 경계는 현지 시간이 아닌 UTC를 사용하므로 현지 자정보다 몇 시간 이르거나 늦을 수 있습니다. 이번 달, 지난 분기, 올해는 이번 달의 현재까지를 포함하며, 지난 달은 이전의 완전한 UTC 월을 포함합니다."
           }
         },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تبدأ كل فترة، بما فيها الشهر الحالي، وتنتهي عند حد شهري بتوقيت UTC، لذا قد تبدأ أو تنتهي قبل منتصف الليل بالتوقيت المحلي أو بعده ببضع ساعات."
+            "value" : "تعتمد حدود التقويم على توقيت UTC بدلاً من التوقيت المحلي، لذا قد تقع قبل منتصف الليل بالتوقيت المحلي أو بعده ببضع ساعات. تشمل فترات هذا الشهر والربع الماضي وهذا العام الشهر الحالي حتى الآن، بينما يغطي الشهر الماضي الشهر الكامل السابق بتوقيت UTC."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "हर अवधि, मौजूदा महीने सहित, UTC में महीने की सीमा पर शुरू और खत्म होती है, इसलिए वह स्थानीय समय की आधी रात से कुछ घंटे पहले या बाद में शुरू या खत्म हो सकती है।"
+            "value" : "कैलेंडर की सीमाएँ स्थानीय समय के बजाय UTC पर आधारित हैं, इसलिए वे स्थानीय आधी रात से कुछ घंटे पहले या बाद में पड़ सकती हैं। यह माह, पिछली तिमाही और यह वर्ष में अब तक का वर्तमान महीना शामिल है; पिछला माह UTC के पिछले पूरे महीने को कवर करता है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setiap periode, termasuk bulan berjalan, dimulai dan berakhir pada batas bulan dalam UTC, sehingga dapat dimulai atau berakhir beberapa jam sebelum atau sesudah tengah malam waktu setempat."
+            "value" : "Batas kalender menggunakan UTC, bukan waktu setempat, sehingga dapat jatuh beberapa jam sebelum atau sesudah tengah malam waktu setempat. Bulan Ini, Kuartal Lalu, dan Tahun Ini mencakup bulan berjalan hingga saat ini; Bulan Lalu mencakup satu bulan UTC penuh sebelumnya."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Geçerli ay dahil her dönem, UTC'deki bir ay sınırında başlar ve biter. Bu nedenle yerel saatle gece yarısından birkaç saat önce veya sonra başlayıp bitebilir."
+            "value" : "Takvim sınırları yerel saat yerine UTC'yi kullanır, bu nedenle yerel gece yarısından birkaç saat önce veya sonra denk gelebilir. Bu Ay, Geçen Çeyrek ve Bu Yıl, içinde bulunulan ayın şimdiye kadarki kısmını içerir; Geçen Ay ise önceki tam UTC ayını kapsar."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Каждый период, включая текущий месяц, начинается и заканчивается на границе месяца по UTC, поэтому он может начинаться или заканчиваться на несколько часов раньше или позже местной полуночи."
+            "value" : "Границы календаря рассчитываются по UTC, а не по местному времени, поэтому они могут приходиться на несколько часов раньше или позже местной полуночи. Этот месяц, прошлый квартал и этот год включают текущий месяц на данный момент; прошлый месяц охватывает предыдущий полный месяц по UTC."
           }
         }
       }
