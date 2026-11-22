@@ -23,6 +23,11 @@ struct ActivityEntry: Codable, Identifiable, Sendable {
         return timestamp.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated))
     }
 
+    /// `action` is stored in English so `icon` keeps matching it; it is translated only where shown.
+    var localizedAction: String {
+        Bundle.main.localizedString(forKey: action, value: action, table: nil)
+    }
+
     var icon: String {
         switch action.lowercased() {
         case let a where a.contains("create"): return "plus.circle.fill"

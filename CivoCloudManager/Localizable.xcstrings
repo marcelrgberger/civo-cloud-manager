@@ -72295,106 +72295,106 @@
       },
       "extractionState" : "manual"
     },
-    "Right-click an instance to Stop, Start, or Reboot it via the context menu." : {
+    "Right-click an instance to stop, start, soft reboot or hard reboot it via the context menu. Each of these actions asks for confirmation first." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Right-click an instance to Stop, Start, or Reboot it via the context menu."
+            "value" : "Right-click an instance to stop, start, soft reboot or hard reboot it via the context menu. Each of these actions asks for confirmation first."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rechtsklick auf eine Instanz, um sie über das Kontextmenü zu stoppen, zu starten oder neu zu starten."
+            "value" : "Rechtsklick auf eine Instanz, um sie über das Kontextmenü zu stoppen, zu starten, sanft oder hart neu zu starten. Jede dieser Aktionen fragt vorher nach einer Bestätigung."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Haz clic derecho en una instancia para Detener, Iniciar o Reiniciar desde el menú contextual."
+            "value" : "Haz clic derecho en una instancia para detenerla, iniciarla o reiniciarla de forma suave o forzada desde el menú contextual. Cada una de estas acciones pide confirmación antes."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clic droit sur une instance pour l’Arrêter, la Démarrer ou la Redémarrer via le menu contextuel."
+            "value" : "Faites un clic droit sur une instance pour l'arrêter, la démarrer ou effectuer un redémarrage logiciel ou forcé via le menu contextuel. Chacune de ces actions demande d'abord une confirmation."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clic destro su un'istanza per Arresta, Avvia o Riavvia tramite menu contestuale."
+            "value" : "Fai clic destro su un'istanza per arrestarla, avviarla o eseguire un riavvio soft o forzato dal menu contestuale. Ognuna di queste azioni chiede prima una conferma."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik met rechts op een instantie om deze te Stoppen, Starten of Herstarten via het contextmenu."
+            "value" : "Klik met de rechtermuisknop op een instantie om haar via het contextmenu te stoppen, te starten of zacht of geforceerd te herstarten. Elk van deze acties vraagt eerst om bevestiging."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kliknij prawym przyciskiem na instancji, aby Zatrzymać, Uruchomić lub Uruchomić ponownie przez menu kontekstowe."
+            "value" : "Kliknij instancję prawym przyciskiem myszy, aby ją zatrzymać, uruchomić albo wykonać miękki lub twardy restart z menu kontekstowego. Każda z tych akcji najpierw prosi o potwierdzenie."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clique direito numa instância para Parar, Iniciar ou Reiniciar pelo menu de contexto."
+            "value" : "Clique com o botão direito numa instância para pará-la, iniciá-la ou fazer um reinício suave ou forçado pelo menu de contexto. Cada uma dessas ações pede confirmação antes."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "右键实例通过菜单可“停止”、“启动”或“重启”。"
+            "value" : "右键点击实例，可通过上下文菜单停止、启动、软重启或硬重启实例。每个操作都会先请求确认。"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "インスタンスを右クリックし、コンテキストメニューから「停止」「開始」「再起動」が可能です。"
+            "value" : "インスタンスを右クリックすると、コンテキストメニューから停止、開始、ソフトリブート、ハードリブートを実行できます。いずれの操作も実行前に確認を求めます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "인스턴스를 우클릭해 ‘중지’, ‘시작’, ‘재부팅’할 수 있습니다."
+            "value" : "인스턴스를 마우스 오른쪽 버튼으로 클릭하면 컨텍스트 메뉴에서 중지, 시작, 소프트 재부팅 또는 하드 재부팅할 수 있습니다. 각 작업은 먼저 확인을 요청합니다."
           }
         },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "انقر بزر الفأرة الأيمن على مثيل لإيقافه أو تشغيله أو إعادة تشغيله عبر القائمة السياقية."
+            "value" : "انقر بزر الماوس الأيمن على مثيل لإيقافه أو بدئه أو إعادة تشغيله بشكل مرن أو قسري عبر قائمة السياق. يطلب كل إجراء من هذه الإجراءات التأكيد أولاً."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "इंस्टेंस पर राइट-क्लिक कर संदर्भ मेनू से 'रोकें', 'प्रारंभ करें' या 'रीबूट करें' चुनें।"
+            "value" : "किसी इंस्टेंस पर राइट-क्लिक करके संदर्भ मेनू से उसे रोकें, प्रारंभ करें, सॉफ़्ट रीबूट या हार्ड रीबूट करें। इनमें से हर क्रिया पहले पुष्टि मांगती है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik kanan pada instance untuk Berhenti, Mulai, atau Mulai Ulang melalui menu konteks."
+            "value" : "Klik kanan instans untuk menghentikan, memulai, atau memulai ulang secara lunak maupun paksa melalui menu konteks. Setiap tindakan ini meminta konfirmasi terlebih dahulu."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bir sunucuyu sağ tıklayarak açılan menüden Durdur, Başlat veya Yeniden Başlat işlemlerini yapabilirsiniz."
+            "value" : "Bağlam menüsünden durdurmak, başlatmak ya da yazılımsal veya zorla yeniden başlatmak için bir sunucuya sağ tıklayın. Bu işlemlerin her biri önce onay ister."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Кликните правой кнопкой по инстансу для «Остановить», «Запустить» или «Перезагрузить» через контекстное меню."
+            "value" : "Щёлкните экземпляр правой кнопкой мыши, чтобы через контекстное меню остановить, запустить, мягко или жёстко перезагрузить его. Каждое из этих действий сначала запрашивает подтверждение."
           }
         }
-      },
-      "extractionState" : "manual"
+      }
     },
     "Right-click any resource and select 'Delete' to start." : {
       "localizations" : {
@@ -74012,106 +74012,106 @@
       },
       "extractionState" : "manual"
     },
-    "Start, Stop, Reboot instances from the detail view." : {
+    "Start, Stop and Reboot instances from the detail view. Reboot restarts the instance through its operating system; its menu also offers a hard reboot for an instance that no longer responds, which may lose unsaved data." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start, Stop, Reboot instances from the detail view."
+            "value" : "Start, Stop and Reboot instances from the detail view. Reboot restarts the instance through its operating system; its menu also offers a hard reboot for an instance that no longer responds, which may lose unsaved data."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instanzen aus der Detailansicht starten, stoppen oder neu starten."
+            "value" : "Instanzen in der Detailansicht starten, stoppen und neu starten. Neustart startet die Instanz über ihr Betriebssystem neu; das zugehörige Menü bietet zusätzlich einen harten Neustart für eine Instanz, die nicht mehr reagiert. Dabei können nicht gespeicherte Daten verloren gehen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicia, detén o reinicia instancias desde la vista de detalle."
+            "value" : "Inicia, detén y reinicia instancias desde la vista de detalle. Reiniciar reinicia la instancia a través de su sistema operativo; su menú también ofrece un reinicio forzado para una instancia que ya no responde, con el que se pueden perder datos no guardados."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Démarrez, arrêtez ou redémarrez les instances depuis le détail."
+            "value" : "Démarrez, arrêtez et redémarrez les instances depuis la vue détaillée. Redémarrer relance l'instance par son système d'exploitation ; son menu propose aussi un redémarrage forcé pour une instance qui ne répond plus, ce qui peut entraîner la perte de données non enregistrées."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avvia, Arresta, Riavvia le istanze dalla vista dettagli."
+            "value" : "Avvia, arresta e riavvia le istanze dalla vista dettagli. Riavvia riavvia l'istanza tramite il suo sistema operativo; il suo menu offre anche un riavvio forzato per un'istanza che non risponde più, con possibile perdita di dati non salvati."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Starten, Stoppen, Herstarten van instanties vanuit de detailweergave."
+            "value" : "Start, stop en herstart instanties vanuit de detailweergave. Herstarten start de instantie via haar besturingssysteem opnieuw; het bijbehorende menu biedt ook een geforceerde herstart voor een instantie die niet meer reageert, waarbij niet-opgeslagen gegevens verloren kunnen gaan."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uruchamiaj, zatrzymuj i restartuj instancje z widoku szczegółów."
+            "value" : "Uruchamiaj, zatrzymuj i uruchamiaj ponownie instancje z widoku szczegółów. Uruchom ponownie restartuje instancję przez jej system operacyjny; jego menu oferuje też twardy restart dla instancji, która nie odpowiada, co może spowodować utratę niezapisanych danych."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicie, pare ou reinicie instâncias a partir do detalhe."
+            "value" : "Inicie, pare e reinicie instâncias na vista de detalhes. Reiniciar reinicia a instância pelo seu sistema operacional; o menu também oferece um reinício forçado para uma instância que não responde mais, o que pode causar a perda de dados não salvos."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可在详情页启动、停止、重启实例。"
+            "value" : "在详情视图中启动、停止和重启实例。重启会通过实例的操作系统重新启动；其菜单还为不再响应的实例提供硬重启，这可能会丢失未保存的数据。"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "詳細画面からインスタンスの「開始」「停止」「再起動」が可能です。"
+            "value" : "詳細ビューからインスタンスを開始、停止、再起動できます。再起動はオペレーティングシステム経由でインスタンスを再起動します。そのメニューでは、応答しなくなったインスタンス向けのハードリブートも選べますが、保存されていないデータが失われる可能性があります。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상세 보기에서 인스턴스 ‘시작’, ‘중지’, ‘재부팅’ 가능."
+            "value" : "상세 보기에서 인스턴스를 시작, 중지, 재부팅할 수 있습니다. 재부팅은 운영 체제를 통해 인스턴스를 다시 시작하며, 해당 메뉴에서는 더 이상 응답하지 않는 인스턴스를 위한 하드 재부팅도 제공합니다. 이 경우 저장하지 않은 데이터가 손실될 수 있습니다."
           }
         },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ابدأ، أوقف، أو أعد تشغيل المثيلات من عرض التفاصيل."
+            "value" : "ابدأ المثيلات وأوقفها وأعد تشغيلها من عرض التفاصيل. تعيد إعادة التشغيل تشغيل المثيل عبر نظام التشغيل الخاص به، وتوفر قائمتها أيضًا إعادة تشغيل قسرية لمثيل لم يعد يستجيب، وقد يؤدي ذلك إلى فقدان البيانات غير المحفوظة."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "विवरण दृश्य से इंस्टेंस प्रारंभ करें, रोकें या रीबूट करें।"
+            "value" : "विवरण दृश्य से इंस्टेंस प्रारंभ करें, रोकें और रीबूट करें। रीबूट इंस्टेंस को उसके ऑपरेटिंग सिस्टम के माध्यम से पुनः प्रारंभ करता है; इसका मेनू उस इंस्टेंस के लिए हार्ड रीबूट भी देता है जो अब प्रतिक्रिया नहीं देता, जिससे बिना सहेजा गया डेटा खो सकता है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mulai, Berhenti, Mulai Ulang instance dari tampilan detail."
+            "value" : "Mulai, hentikan, dan mulai ulang instans dari tampilan detail. Mulai Ulang memulai ulang instans melalui sistem operasinya; menunya juga menyediakan mulai ulang paksa untuk instans yang tidak lagi merespons, yang dapat menghilangkan data yang belum disimpan."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detay görünümünden sunucuları Başlat, Durdur veya Yeniden Başlat."
+            "value" : "Sunucuları ayrıntı görünümünden başlatın, durdurun ve yeniden başlatın. Yeniden başlatma, sunucuyu işletim sistemi üzerinden yeniden başlatır; menüsü ayrıca artık yanıt vermeyen bir sunucu için zorla yeniden başlatma sunar. Bu durumda kaydedilmemiş veriler kaybolabilir."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Запускайте, останавливайте и перезагружайте инстансы из подробного просмотра."
+            "value" : "Запускайте, останавливайте и перезагружайте экземпляры в подробном представлении. Перезагрузка перезапускает экземпляр средствами его операционной системы; в её меню есть также жёсткая перезагрузка для экземпляра, который больше не отвечает, при этом несохранённые данные могут быть потеряны."
           }
         }
-      },
-      "extractionState" : "manual"
+      }
     },
     "Tests all 16 Civo API endpoints with response time." : {
       "localizations" : {
@@ -86027,6 +86027,1716 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "实例操作始终发送到加载实例列表时所在的区域。如果在确认窗口打开期间区域发生变化或实例已不在列表中，该操作将被取消，且不会发送任何内容。"
+          }
+        }
+      }
+    },
+    "Soft Reboot" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soft Reboot"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanfter Neustart"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicio suave"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrage logiciel"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvio soft"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zachte herstart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miękki restart"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinício suave"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "软重启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソフトリブート"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "소프트 재부팅"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة تشغيل مرنة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सॉफ़्ट रीबूट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai Ulang Lunak"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yazılımsal Yeniden Başlatma"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мягкая перезагрузка"
+          }
+        }
+      }
+    },
+    "Hard Reboot" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard Reboot"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harter Neustart"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicio forzado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrage forcé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvio forzato"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geforceerde herstart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twardy restart"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinício forçado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "硬重启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ハードリブート"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "하드 재부팅"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة تشغيل قسرية"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हार्ड रीबूट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai Ulang Paksa"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorla Yeniden Başlatma"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жёсткая перезагрузка"
+          }
+        }
+      }
+    },
+    "Hard Reboot..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard Reboot..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harter Neustart..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicio forzado..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrage forcé..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvio forzato..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geforceerde herstart..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twardy restart..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinício forçado..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "硬重启..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ハードリブート..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "하드 재부팅..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة تشغيل قسرية..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हार्ड रीबूट..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai Ulang Paksa..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorla Yeniden Başlatma..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жёсткая перезагрузка..."
+          }
+        }
+      }
+    },
+    "Click for a soft reboot, open the menu for a hard reboot" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click for a soft reboot, open the menu for a hard reboot"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klicken für einen sanften Neustart, Menü öffnen für einen harten Neustart"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haz clic para un reinicio suave; abre el menú para un reinicio forzado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cliquez pour un redémarrage logiciel, ouvrez le menu pour un redémarrage forcé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fai clic per un riavvio soft, apri il menu per un riavvio forzato"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik voor een zachte herstart, open het menu voor een geforceerde herstart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kliknij, aby wykonać miękki restart; otwórz menu, aby wykonać twardy restart"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique para um reinício suave; abra o menu para um reinício forçado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击进行软重启，打开菜单进行硬重启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリックでソフトリブート、メニューを開くとハードリブート"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클릭하면 소프트 재부팅, 메뉴를 열면 하드 재부팅"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انقر لإعادة تشغيل مرنة، أو افتح القائمة لإعادة تشغيل قسرية"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सॉफ़्ट रीबूट के लिए क्लिक करें, हार्ड रीबूट के लिए मेनू खोलें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik untuk mulai ulang lunak, buka menu untuk mulai ulang paksa"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yazılımsal yeniden başlatma için tıklayın, zorla yeniden başlatma için menüyü açın"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите для мягкой перезагрузки, откройте меню для жёсткой перезагрузки"
+          }
+        }
+      }
+    },
+    "Start %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ starten?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Iniciar %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avviare %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ starten?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uruchomić %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动 %@？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ を開始しますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@을(를) 시작할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بدء %@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ प्रारंभ करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ başlatılsın mı?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустить %@?"
+          }
+        }
+      }
+    },
+    "Stop %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ stoppen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Detener %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrestare %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ stoppen?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymać %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parar %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止 %@？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ を停止しますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@을(를) 중지할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف %@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ रोकें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hentikan %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ durdurulsun mu?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить %@?"
+          }
+        }
+      }
+    },
+    "Soft reboot %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soft reboot %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ sanft neu starten?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Reiniciar %@ de forma suave?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrage logiciel de %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvio soft di %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ zacht herstarten?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonać miękki restart %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar %@ de forma suave?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "软重启 %@？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ をソフトリブートしますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@을(를) 소프트 재부팅할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة تشغيل %@ بشكل مرن؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ को सॉफ़्ट रीबूट करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai ulang lunak %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ yazılımsal olarak yeniden başlatılsın mı?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мягко перезагрузить %@?"
+          }
+        }
+      }
+    },
+    "Hard reboot %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard reboot %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ hart neu starten?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Forzar el reinicio de %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forcer le redémarrage de %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forzare il riavvio di %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ geforceerd herstarten?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wykonać twardy restart %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forçar o reinício de %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "硬重启 %@？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ をハードリブートしますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@을(를) 하드 재부팅할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة تشغيل %@ قسريًا؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ को हार्ड रीबूट करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai ulang paksa %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ zorla yeniden başlatılsın mı?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жёстко перезагрузить %@?"
+          }
+        }
+      }
+    },
+    "The instance will be powered on." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance will be powered on."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz wird eingeschaltet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia se encenderá."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance sera mise sous tension."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza verrà accesa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie wordt ingeschakeld."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancja zostanie włączona."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância será ligada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例将开机。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスの電源が入ります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스의 전원이 켜집니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم تشغيل المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस चालू हो जाएगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans akan dinyalakan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu açılacak."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экземпляр будет включён."
+          }
+        }
+      }
+    },
+    "The instance will be shut down until you start it again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance will be shut down until you start it again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz wird heruntergefahren, bis du sie wieder startest."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia se apagará hasta que la vuelvas a iniciar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance sera arrêtée jusqu'à ce que vous la redémarriez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza verrà spenta finché non la riavvii."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie wordt afgesloten totdat je haar opnieuw start."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancja zostanie wyłączona, dopóki nie uruchomisz jej ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância será desligada até que você a inicie novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例将关机，直到你再次启动它。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再度開始するまで、インスタンスはシャットダウンされたままになります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 시작할 때까지 인스턴스가 종료됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم إيقاف تشغيل المثيل حتى تبدأه مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस तब तक बंद रहेगा जब तक आप इसे फिर से प्रारंभ नहीं करते।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans akan dimatikan sampai Anda memulainya lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu, siz yeniden başlatana kadar kapatılacak."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экземпляр будет выключен, пока вы снова его не запустите."
+          }
+        }
+      }
+    },
+    "The instance will be restarted through its operating system." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance will be restarted through its operating system."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz wird über ihr Betriebssystem neu gestartet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia se reiniciará a través de su sistema operativo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance sera redémarrée par son système d'exploitation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza verrà riavviata tramite il suo sistema operativo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie wordt via haar besturingssysteem herstart."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancja zostanie uruchomiona ponownie przez swój system operacyjny."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância será reiniciada pelo seu sistema operacional."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例将通过其操作系统重启。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスはオペレーティングシステム経由で再起動されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스가 운영 체제를 통해 다시 시작됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ستتم إعادة تشغيل المثيل عبر نظام التشغيل الخاص به."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस को उसके ऑपरेटिंग सिस्टम के माध्यम से पुनः प्रारंभ किया जाएगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans akan dimulai ulang melalui sistem operasinya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu, işletim sistemi üzerinden yeniden başlatılacak."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экземпляр будет перезапущен средствами его операционной системы."
+          }
+        }
+      }
+    },
+    "The instance will be reset immediately, without shutting down its operating system. Unsaved work and data not yet written to disk may be lost." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance will be reset immediately, without shutting down its operating system. Unsaved work and data not yet written to disk may be lost."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz wird sofort zurückgesetzt, ohne ihr Betriebssystem herunterzufahren. Nicht gespeicherte Arbeit und Daten, die noch nicht auf die Festplatte geschrieben wurden, können verloren gehen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia se restablecerá de inmediato, sin apagar su sistema operativo. Se pueden perder el trabajo no guardado y los datos que aún no se hayan escrito en el disco."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance sera réinitialisée immédiatement, sans arrêter son système d'exploitation. Le travail non enregistré et les données pas encore écrites sur le disque peuvent être perdus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza verrà reimpostata immediatamente, senza arrestare il sistema operativo. Il lavoro non salvato e i dati non ancora scritti su disco potrebbero andare persi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie wordt direct gereset, zonder het besturingssysteem af te sluiten. Niet-opgeslagen werk en gegevens die nog niet naar de schijf zijn geschreven, kunnen verloren gaan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancja zostanie natychmiast zresetowana bez zamykania systemu operacyjnego. Niezapisana praca i dane, które nie zostały jeszcze zapisane na dysku, mogą zostać utracone."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância será redefinida imediatamente, sem desligar o sistema operacional. Trabalhos não salvos e dados ainda não gravados no disco podem ser perdidos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例将立即重置，不会关闭其操作系统。未保存的工作以及尚未写入磁盘的数据可能会丢失。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスはオペレーティングシステムをシャットダウンせずに直ちにリセットされます。保存されていない作業や、まだディスクに書き込まれていないデータが失われる可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스가 운영 체제를 종료하지 않고 즉시 재설정됩니다. 저장하지 않은 작업과 아직 디스크에 기록되지 않은 데이터가 손실될 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ستتم إعادة ضبط المثيل فورًا دون إيقاف تشغيل نظام التشغيل. قد يتم فقدان العمل غير المحفوظ والبيانات التي لم تُكتب بعد على القرص."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस को उसके ऑपरेटिंग सिस्टम को बंद किए बिना तुरंत रीसेट किया जाएगा। बिना सहेजा गया काम और वह डेटा जो अभी तक डिस्क पर नहीं लिखा गया है, खो सकता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans akan langsung disetel ulang tanpa mematikan sistem operasinya. Pekerjaan yang belum disimpan dan data yang belum ditulis ke disk dapat hilang."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu, işletim sistemi kapatılmadan hemen sıfırlanacak. Kaydedilmemiş çalışmalar ve henüz diske yazılmamış veriler kaybolabilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экземпляр будет немедленно сброшен без завершения работы операционной системы. Несохранённая работа и данные, ещё не записанные на диск, могут быть потеряны."
+          }
+        }
+      }
+    },
+    "Started" : {
+      "comment" : "Instance activity log entry for a power action",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Started"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestartet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avviata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uruchomiono"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已启动"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시작됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم البدء"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रारंभ किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimulai"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlatıldı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запущен"
+          }
+        }
+      }
+    },
+    "Stopped" : {
+      "comment" : "Instance activity log entry for a power action",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopped"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestoppt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detenida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêtée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrestata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestopt"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zatrzymano"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已停止"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "중지됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الإيقاف"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रोका गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dihentikan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durduruldu"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановлен"
+          }
+        }
+      }
+    },
+    "Rebooted" : {
+      "comment" : "Instance activity log entry for a power action",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rebooted"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neu gestartet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavviata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrestartowano"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已重启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再起動済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재부팅됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت إعادة التشغيل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रीबूट किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimulai ulang"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeniden başlatıldı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перезагружен"
+          }
+        }
+      }
+    },
+    "Soft rebooted" : {
+      "comment" : "Instance activity log entry for a power action",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soft rebooted"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanft neu gestartet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciada de forma suave"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrée (logiciel)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavviata (soft)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zacht herstart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miękko zrestartowano"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciada de forma suave"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已软重启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソフトリブート済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "소프트 재부팅됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت إعادة التشغيل المرنة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सॉफ़्ट रीबूट किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimulai ulang secara lunak"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yazılımsal olarak yeniden başlatıldı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мягко перезагружен"
+          }
+        }
+      }
+    },
+    "Hard rebooted" : {
+      "comment" : "Instance activity log entry for a power action",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard rebooted"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hart neu gestartet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciada de forma forzada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrée (forcé)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavviata (forzato)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geforceerd herstart"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Twardo zrestartowano"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciada de forma forçada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已硬重启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ハードリブート済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "하드 재부팅됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمت إعادة التشغيل القسرية"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हार्ड रीबूट किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimulai ulang secara paksa"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zorla yeniden başlatıldı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жёстко перезагружен"
           }
         }
       }

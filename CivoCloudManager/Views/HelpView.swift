@@ -111,7 +111,7 @@ struct HelpSection {
             "Click an instance to see CPU, RAM, Disk specs, IPs, initial password, and tags.",
             "Initial password has a show/hide toggle for security.",
             "Showing or copying the initial password requires Touch ID or the system password. It hides again after 30 seconds, when the app becomes inactive, and when the screen locks or the Mac sleeps.",
-            "Right-click an instance to Stop, Start, or Reboot it via the context menu.",
+            "Right-click an instance to stop, start, soft reboot or hard reboot it via the context menu. Each of these actions asks for confirmation first.",
             "Create Instance stays disabled until hostname, size, disk image and network are set. The default network is preselected, and only firewalls of the selected network are offered.",
             "Add SSH keys by pasting the public key.",
         ]),
@@ -231,7 +231,7 @@ struct HelpSection {
             "'Export' restores a key from the app's backup storage to your chosen location.",
         ]),
         HelpSection(title: "Instance Management", icon: "desktopcomputer", items: [
-            "Start, Stop, Reboot instances from the detail view.",
+            "Start, Stop and Reboot instances from the detail view. Reboot restarts the instance through its operating system; its menu also offers a hard reboot for an instance that no longer responds, which may lose unsaved data.",
             "Open Console opens the console of an active instance in its own window (Full Access). Log in with a password of a user on the instance.",
             "Closing the console window only disconnects you. 'End session' ends the console session on Civo for everyone.",
             "A console session is requested for one hour. If a session is already active, it is reused and may end sooner.",

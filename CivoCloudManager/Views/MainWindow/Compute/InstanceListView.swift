@@ -65,8 +65,9 @@ struct InstanceListView: View {
                     .contextMenu {
                         if let target = vm.consoleTarget(for: inst) {
                             if inst.status?.lowercased() == "active" {
-                                Button("Stop") { Task { await vm.stopInstance(target) } }
-                                Button("Reboot") { Task { await vm.rebootInstance(target) } }
+                                Button("Stop") { vm.beginConfirmation(.power(.stop), for: inst) }
+                                Button("Soft Reboot") { vm.beginConfirmation(.power(.softReboot), for: inst) }
+                                Button("Hard Reboot...") { vm.beginConfirmation(.power(.hardReboot), for: inst) }
                                 Button("Open Console") {
                                     vm.handOverConsoleLogin(of: inst, to: target)
                                     openWindow(id: "console", value: target)
@@ -74,7 +75,7 @@ struct InstanceListView: View {
                             }
                             Button("Credentials…") { credentialsTarget = target }
                             if inst.status?.lowercased() == "shutoff" {
-                                Button("Start") { Task { await vm.startInstance(target) } }
+                                Button("Start") { vm.beginConfirmation(.power(.start), for: inst) }
                             }
                         }
                         Divider()
@@ -111,5 +112,6 @@ struct InstanceListView: View {
                 InstanceCredentialsView(target: target)
             }
         }
+        .instancePowerConfirmation(vm)
     }
 }

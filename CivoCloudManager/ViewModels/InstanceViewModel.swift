@@ -23,8 +23,9 @@ enum InstanceTargetError: Error, Equatable {
 
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
-    enum Kind {
+    enum Kind: Equatable {
         case resize, delete
+        case power(InstancePowerAction)
     }
 
     let kind: Kind
@@ -274,16 +275,20 @@ final class InstanceViewModel {
         }
     }
 
-    func stopInstance(_ target: ConsoleTarget) async {
-        await perform("Stopped", on: target) { try await $0.stopInstance(target.instanceId, region: target.region) }
+    func changePower(_ action: InstancePowerAction, of target: ConsoleTarget) async {
+        await perform(Self.activity(for: action), on: target) {
+            try await $0.changePower(action, of: target.instanceId, region: target.region)
+        }
     }
 
-    func startInstance(_ target: ConsoleTarget) async {
-        await perform("Started", on: target) { try await $0.startInstance(target.instanceId, region: target.region) }
-    }
-
-    func rebootInstance(_ target: ConsoleTarget) async {
-        await perform("Rebooted", on: target) { try await $0.rebootInstance(target.instanceId, region: target.region) }
+    /// Stored in English; the activity log translates it when shown.
+    private static func activity(for action: InstancePowerAction) -> String {
+        switch action {
+        case .start: "Started"
+        case .stop: "Stopped"
+        case .softReboot: "Soft rebooted"
+        case .hardReboot: "Hard rebooted"
+        }
     }
 
     func updateInstance(_ target: ConsoleTarget, reverseDns: String) async {

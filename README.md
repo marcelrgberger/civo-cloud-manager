@@ -12,7 +12,7 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | --- | --- |
 | Menu bar | Open/close access for the current public IP, per-firewall ports, bulk actions, named IP presets, timed access, refresh every 60 seconds |
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
-| Compute | Create/delete instances, start/stop/reboot, resize, reverse DNS, tags, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
+| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), resize, reverse DNS, tags, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
 | Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
 | Networking | Networks, firewall rules, load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |
@@ -367,9 +367,9 @@ The network picker preselects the network that `GET /v2/networks` flags as `defa
 
 ## Instance action targets
 
-Every instance action (stop, start, reboot, resize, reverse DNS, delete, console and credentials) starts from a `ConsoleTarget` captured by `InstanceViewModel.consoleTarget(for:)`: the instance ID with the region the instance list was fetched from. Requests send that region explicitly, so a later Settings region never redirects them. Right before each request, `targetError(for:)` checks the target again and refuses it without sending anything when Full Access has ended, the region is unknown, the Settings region or the loaded list region no longer matches, or the instance is missing from the reloaded list. The reason is shown in the error banner.
+Every instance action (stop, start, soft reboot, hard reboot, resize, reverse DNS, delete, console and credentials) starts from a `ConsoleTarget` captured by `InstanceViewModel.consoleTarget(for:)`: the instance ID with the region the instance list was fetched from. Requests send that region explicitly, so a later Settings region never redirects them. Right before each request, `targetError(for:)` checks the target again and refuses it without sending anything when Full Access has ended, the region is unknown, the Settings region or the loaded list region no longer matches, or the instance is missing from the reloaded list. The reason is shown in the error banner.
 
-Actions that need a confirmation (resize, delete) are held as `pendingAction`. A Settings region change (`civoRegionDidChange`) or a reload that invalidates the target closes the confirmation and shows why. A selection from another region, or one missing from the reloaded list, is cleared. Later instance actions reuse the same capture, confirmation and check.
+Actions that need a confirmation (start, stop, soft reboot, hard reboot, resize, delete) are held as `pendingAction`. A Settings region change (`civoRegionDidChange`) or a reload that invalidates the target closes the confirmation and shows why. A selection from another region, or one missing from the reloaded list, is cleared. Later instance actions reuse the same capture, confirmation and check.
 
 ```mermaid
 flowchart TD
@@ -382,6 +382,19 @@ flowchart TD
     F -->|Full Access, region or instance no longer valid| G[Refuse, show reason, send nothing]
     F -->|Valid| H[Send request with captured region]
 ```
+
+## Power actions
+
+Start, stop, soft reboot and hard reboot are `InstancePowerAction` values. `request(instanceId:region:)` builds the request with the captured region ([Civo API](https://www.civo.com/api/instances)):
+
+| Action | Request | Activity log |
+|---|---|---|
+| Start | `PUT /v2/instances/:id/start` | Started |
+| Stop | `PUT /v2/instances/:id/stop` | Stopped |
+| Soft reboot | `POST /v2/instances/:id/soft_reboots` | Soft rebooted |
+| Hard reboot | `POST /v2/instances/:id/reboots` | Hard rebooted |
+
+The detail view shows Reboot as a menu button: a click asks for a soft reboot, the menu also offers Hard Reboot. The list context menu offers both entries. Every power action opens a confirmation first; the hard reboot button uses the destructive style and warns that unsaved work and data not yet written to disk may be lost. Confirming runs the checks above again, including Full Access. A 404 for a deleted instance, a 4xx for an instance in a state that does not allow the action, `noRegion` and network errors are shown in the error banner.
 
 ## Instance console
 
