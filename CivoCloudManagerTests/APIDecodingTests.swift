@@ -5574,6 +5574,40 @@ struct ObjectStoreCredentialRequestTests {
         #expect(logs.withLock { $0.allSatisfy { !$0.contains("SYNTHETIC") } })
         #expect(!ObjectStoreCredentialChangeError.from(CivoAPIError.incompleteList("SYNTHETIC-SECRET-MARKER")).message.contains("SYNTHETIC"))
     }
+
+    @Test("The pinned network and firewall lists of the load balancer screens discard answer text and decode diagnostics")
+    func networkListRedaction() async throws {
+        let logs = OSAllocatedUnfairLock(initialState: [String]())
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [CredentialRequestStub.self]
+        let session = URLSession(configuration: config)
+        defer {
+            session.invalidateAndCancel()
+            CredentialRequestStub.handler.withLock { $0 = nil }
+        }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { "dummy" }, settingsRegion: { "LON1" }, diagnostic: { message in logs.withLock { $0.append(message) } })
+        let requests: [@Sendable () async throws -> Void] = [
+            { _ = try await CivoLoadBalancerService(api: client).listNetworks(region: "LON1", apiKey: "dummy") },
+            { _ = try await CivoNetworkService(api: client).listNetworks(region: "LON1", apiKey: "dummy") },
+            { _ = try await CivoFirewallService(api: client).listFirewalls(region: "LON1", apiKey: "dummy") },
+        ]
+        for status in [422, 200] {
+            CredentialRequestStub.handler.withLock { handler in
+                handler = { _ in (status, Data(#"[{"id":{"SYNTHETIC-SECRET-MARKER":"SYNTHETIC-ACCESS-KEY-MARKER"}}]"#.utf8)) }
+            }
+            for request in requests {
+                do {
+                    try await request()
+                    Issue.record("Expected rejection or decoding failure")
+                } catch {
+                    #expect(!String(describing: error).contains("SYNTHETIC"))
+                    #expect(!error.localizedDescription.contains("SYNTHETIC"))
+                    #expect(LoadBalancerFailure(error) == (status == 200 ? .unreadableAnswer : .rejected))
+                }
+            }
+        }
+        #expect(logs.withLock { !$0.isEmpty && $0.allSatisfy { !$0.contains("SYNTHETIC") } })
+    }
 }
 
 @MainActor
@@ -5661,5 +5695,545 @@ extension ObjectStoreCredentialChangeTests {
         #expect(vm.pausedStores.isEmpty)
         vm.operationGate.end(token)
         #expect(!vm.operationGate.isBusy)
+    }
+}
+
+// MARK: - Load balancers
+
+private let documentedBackends = #"[{"ip": "192.168.1.3", "protocol": "TCP", "source_port": 80, "target_port": 8080, "health_check_port": 10256}]"#
+
+/// A load balancer in the documented answer form of https://www.civo.com/api/vpc. `clusterId: nil` leaves the field out.
+private func loadBalancer(
+    name: String = "web-lb", clusterId: String? = "", state: String = "available", policy: String? = "Cluster",
+    algorithm: String = "round_robin", backends: String = documentedBackends
+) -> CivoLoadBalancer {
+    var fields = [
+        #""id": "lb-1""#, #""name": "\#(name)""#, #""network_id": "net-1""#, #""algorithm": "\#(algorithm)""#,
+        #""state": "\#(state)""#, #""public_ip": "74.220.0.1""#, #""backends": \#(backends)"#,
+    ]
+    if let clusterId { fields.append(#""cluster_id": "\#(clusterId)""#) }
+    if let policy { fields.append(#""external_traffic_policy": "\#(policy)""#) }
+    return try! JSONDecoder().decode(CivoLoadBalancer.self, from: Data("{\(fields.joined(separator: ","))}".utf8))
+}
+
+/// The documented form with `cluster_id` reported as null.
+private func loadBalancerWithNullOwner() -> CivoLoadBalancer {
+    var object = try! JSONSerialization.jsonObject(with: JSONEncoder().encode(loadBalancer(clusterId: nil))) as! [String: Any]
+    object["cluster_id"] = NSNull()
+    return try! JSONDecoder().decode(CivoLoadBalancer.self, from: JSONSerialization.data(withJSONObject: object))
+}
+
+private func backendRow(_ ip: String, _ proto: String = "TCP", _ source: String = "443", _ target: String = "8443") -> LoadBalancerBackendRow {
+    LoadBalancerBackendRow(ip: ip, proto: proto, sourcePort: source, targetPort: target)
+}
+
+@Suite("Load balancer model and drafts")
+struct LoadBalancerDraftTests {
+    @Test("The documented backend objects decode, keep every field for the export, and the old string form still reads")
+    func decodingContract() throws {
+        let lb = loadBalancer()
+        #expect(lb.backendEntries == [LoadBalancerBackend(ip: "192.168.1.3", protocol: "TCP", sourcePort: 80, targetPort: 8080, healthCheckPort: 10256)])
+        #expect(lb.backendList == ["192.168.1.3"])
+        #expect(lb.networkId == "net-1")
+        let exported = try JSONDecoder().decode(CivoLoadBalancer.self, from: JSONEncoder().encode(lb))
+        #expect(exported == lb)
+
+        let legacy = try JSONDecoder().decode(CivoLoadBalancer.self, from: Data(#"{"id": "lb-2", "name": "old", "Backends": "192.168.1.9, 192.168.1.23"}"#.utf8))
+        #expect(legacy.backendEntries == nil)
+        #expect(legacy.backendList == ["192.168.1.9", "192.168.1.23"])
+        let unpadded = try JSONDecoder().decode(CivoLoadBalancer.self, from: Data(#"{"id": "lb-3", "name": "none"}"#.utf8))
+        #expect(unpadded.backendList.isEmpty)
+    }
+
+    @Test("Only a reported, empty cluster_id in the documented form makes a load balancer editable")
+    func ownership() throws {
+        #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: "cluster-1")) == .managed)
+        #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: "")) == .verifiedUnmanaged)
+        #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: nil)) == .unknown)
+        #expect(LoadBalancerOwnership.evaluate(loadBalancerWithNullOwner()) == .unknown)
+        #expect(LoadBalancerOwnership.evaluate(loadBalancer(clusterId: " ")) == .unknown)
+        let exported = try JSONSerialization.jsonObject(with: JSONEncoder().encode(loadBalancerWithNullOwner())) as? [String: Any]
+        #expect(exported?["cluster_id"] == nil)
+        let legacy = try JSONDecoder().decode(CivoLoadBalancer.self, from: Data(#"{"id": "lb-2", "name": "old", "cluster_id": "", "Backends": "192.168.1.9"}"#.utf8))
+        #expect(LoadBalancerOwnership.evaluate(legacy) == .unknown)
+
+        #expect(LoadBalancerEditability(loadBalancer(clusterId: "cluster-1")) == .managed)
+        #expect(LoadBalancerEditability(loadBalancer(clusterId: nil)) == .ownershipUnknown)
+        #expect(LoadBalancerEditability(loadBalancerWithNullOwner()) == .ownershipUnknown)
+        #expect(LoadBalancerEditability(loadBalancer(state: "pending")) == .unavailable("pending"))
+        #expect(LoadBalancerEditability(loadBalancer(backends: #"[{"ip": "192.168.1.3"}]"#)) == .unreadableBackends)
+        #expect(LoadBalancerEditability(loadBalancer(state: "AVAILABLE")) == .editable)
+    }
+
+    @Test("Backend validation", arguments: [
+        ([backendRow("10.0.0.5")], [LoadBalancerDraftProblem]()),
+        ([], [.noBackends]),
+        ([backendRow("10.0.0")], [.invalidIP]),
+        ([backendRow("fe80::1%en0")], [.invalidIP]),
+        ([backendRow("10.0.0.5", "TCP", "0", "8443")], [.invalidPort]),
+        ([backendRow("10.0.0.5", "TCP", "443", "65536")], [.invalidPort]),
+        ([backendRow("10.0.0.5", "ICMP")], [.unknownProtocol]),
+        ([backendRow("10.0.0.5"), backendRow("10.0.0.5")], [.duplicateBackend]),
+        ([backendRow("2001:db8::1"), backendRow("2001:0DB8:0:0:0:0:0:1")], [.duplicateBackend]),
+        ([backendRow("10.0.0.5", "TCP", "443", "8443"), backendRow("10.0.0.5", "TCP", "443", "9443")], []),
+        ([backendRow("10.0.0.5", "TCP"), backendRow("10.0.0.5", "UDP")], []),
+    ])
+    func validation(rows: [LoadBalancerBackendRow], expected: [LoadBalancerDraftProblem]) {
+        var draft = LoadBalancerDraft()
+        draft.name = "web"
+        draft.networkId = "net-1"
+        draft.backends = rows
+        #expect(draft.problems() == expected)
+    }
+
+    @Test("A new form needs a name and a network, and an added backend may not repeat an existing one")
+    func formProblems() {
+        #expect(LoadBalancerDraft().problems() == [.emptyName, .noNetwork, .invalidIP, .invalidPort])
+        var edit = LoadBalancerDraft(editing: loadBalancer())
+        edit.backends = [backendRow("192.168.1.3", "TCP", "80", "8080")]
+        #expect(edit.problems(editing: loadBalancer()) == [.duplicateBackend])
+    }
+
+    @Test("An edit sends only changed settings and, with added backends, every existing backend unchanged")
+    func updateBody() throws {
+        let lb = loadBalancer()
+        var draft = LoadBalancerDraft(editing: lb)
+        #expect(draft.changes(from: lb).isEmpty)
+        #expect(draft.updateBody(for: lb, region: "LON1").keys.sorted() == ["region"])
+
+        draft.algorithm = "least_connections"
+        draft.backends = [backendRow("10.0.0.5")]
+        #expect(draft.changes(from: lb).map(\.field) == [.algorithm, .addedBackend(0)])
+        let body = draft.updateBody(for: lb, region: "LON1")
+        #expect(body.keys.sorted() == ["algorithm", "backends", "region"])
+        let sent = try #require(body["backends"] as? [[String: Any]])
+        #expect(sent.count == 2)
+        #expect(sent[0]["ip"] as? String == "192.168.1.3")
+        #expect(sent[0]["health_check_port"] as? Int == 10256)
+        #expect(sent[1]["source_port"] as? Int == 443)
+    }
+
+    @Test("A traffic policy Civo did not report is neither offered, compared nor sent; a known one can change")
+    func trafficPolicy() {
+        let unreported = loadBalancer(policy: nil)
+        var draft = LoadBalancerDraft(editing: unreported)
+        #expect(draft.trafficPolicy == nil)
+        draft.name = "renamed"
+        #expect(draft.changes(from: unreported).map(\.field) == [.name])
+        #expect(draft.updateBody(for: unreported, region: "LON1")["external_traffic_policy"] == nil)
+
+        let reported = loadBalancer(policy: "Cluster")
+        var change = LoadBalancerDraft(editing: reported)
+        change.trafficPolicy = .local
+        #expect(change.updateBody(for: reported, region: "LON1")["external_traffic_policy"] as? String == "Local")
+
+        var create = LoadBalancerDraft()
+        #expect(create.createBody(region: "LON1")["external_traffic_policy"] == nil)
+        create.trafficPolicy = .cluster
+        #expect(create.createBody(region: "LON1")["external_traffic_policy"] as? String == "Cluster")
+    }
+
+    @Test("The read back counts backends, so a requested one that is missing is reported, whatever the order")
+    func mismatch() {
+        let lb = loadBalancer()
+        var draft = LoadBalancerDraft(editing: lb)
+        draft.backends = [backendRow("10.0.0.5")]
+        let added = draft.backends[0].backend
+
+        let both = loadBalancer(backends: #"[{"ip": "10.0.0.5", "protocol": "TCP", "source_port": 443, "target_port": 8443}, \#(documentedBackends.dropFirst().dropLast())]"#)
+        #expect(draft.mismatch(in: both, requestedFrom: lb) == nil)
+        #expect(draft.mismatch(in: lb, requestedFrom: lb) == LoadBalancerMismatch(fields: [], missingBackends: [added], unexpectedBackends: []))
+
+        // Settings the edit left alone, and the health check port it sent back, must come back unchanged too.
+        let otherAlgorithm = loadBalancer(algorithm: "least_connections", backends: #"[{"ip": "10.0.0.5", "protocol": "TCP", "source_port": 443, "target_port": 8443}, \#(documentedBackends.dropFirst().dropLast())]"#)
+        #expect(draft.mismatch(in: otherAlgorithm, requestedFrom: lb)?.fields == [.algorithm])
+        let droppedHealthCheck = loadBalancer(backends: #"[{"ip": "10.0.0.5", "protocol": "TCP", "source_port": 443, "target_port": 8443}, {"ip": "192.168.1.3", "protocol": "TCP", "source_port": 80, "target_port": 8080}]"#)
+        #expect(draft.mismatch(in: droppedHealthCheck, requestedFrom: lb)?.missingBackends == lb.backendEntries)
+    }
+}
+
+/// Civo's load balancer endpoints in memory. An update is applied like Civo would, unless an answer is set.
+private actor FakeLoadBalancerAPI: LoadBalancerAPI {
+    var stored: CivoLoadBalancer?
+    var networks: [CivoNetwork]
+    private(set) var calls: [String] = []
+    private var getErrors: [Error] = []
+    private var listError: Error?
+    private var writeError: Error?
+    private var appliesWrites = true
+    private var readBackError: Error?
+    private var readBackAnswer: CivoLoadBalancer?
+    private var duringGet: (@Sendable () async -> Void)?
+    private var duringCreate: (@Sendable () async -> Void)?
+
+    init(stored: CivoLoadBalancer?, networks: [CivoNetwork] = []) {
+        self.stored = stored
+        self.networks = networks
+    }
+
+    func replace(with lb: CivoLoadBalancer?) { stored = lb }
+    func failGets(with errors: Error...) { getErrors = errors }
+    func failList(with error: Error) { listError = error }
+    func failWrites(with error: Error, applying: Bool = false) { writeError = error; appliesWrites = applying }
+    func failReadBack(with error: Error) { readBackError = error }
+    func answerReadBack(with lb: CivoLoadBalancer) { readBackAnswer = lb }
+    func whileGetting(_ action: @escaping @Sendable () async -> Void) { duringGet = action }
+    func whileCreating(_ action: @escaping @Sendable () async -> Void) { duringCreate = action }
+
+    func listLoadBalancers(region: String, apiKey: String) async throws -> [CivoLoadBalancer] {
+        calls.append("list \(region) \(apiKey)")
+        if let listError { throw listError }
+        return stored.map { [$0] } ?? []
+    }
+
+    func getLoadBalancer(_ id: String, region: String, apiKey: String) async throws -> CivoLoadBalancer {
+        calls.append("get \(id) \(region) \(apiKey)")
+        if let action = duringGet {
+            duringGet = nil
+            await action()
+        }
+        if !getErrors.isEmpty { throw getErrors.removeFirst() }
+        guard let stored, stored.id == id else { throw CivoAPIError.httpError(404, "") }
+        return stored
+    }
+
+    func listNetworks(region: String, apiKey: String) async throws -> [CivoNetwork] {
+        calls.append("networks \(region) \(apiKey)")
+        return networks
+    }
+
+    func createLoadBalancer(body: sending [String: Any], region: String, apiKey: String) async throws -> CivoLoadBalancer {
+        calls.append("create \(region) \(apiKey) \(body["name"] as? String ?? "-")")
+        if let action = duringCreate {
+            duringCreate = nil
+            await action()
+        }
+        if let writeError { throw writeError }
+        return loadBalancer(name: body["name"] as? String ?? "", state: "")
+    }
+
+    func updateLoadBalancer(_ id: String, body: sending [String: Any], region: String, apiKey: String) async throws -> CivoLoadBalancer {
+        calls.append("update \(id) \(region) \(apiKey) \(body.keys.sorted().joined(separator: ","))")
+        let current = try #require(stored)
+        if appliesWrites { stored = try Self.applying(body, to: current) }
+        if let readBackError { getErrors = [readBackError] }
+        if let readBackAnswer { stored = readBackAnswer }
+        if let writeError { throw writeError }
+        return try #require(stored)
+    }
+
+    /// The load balancer with the sent fields replaced.
+    private static func applying(_ body: [String: Any], to lb: CivoLoadBalancer) throws -> CivoLoadBalancer {
+        var json = try #require(try JSONSerialization.jsonObject(with: JSONEncoder().encode(lb)) as? [String: Any])
+        for (key, value) in body where key != "region" { json[key] = value }
+        return try JSONDecoder().decode(CivoLoadBalancer.self, from: JSONSerialization.data(withJSONObject: json))
+    }
+}
+
+/// Text in a synthetic error that must never reach the screen, the log or the activity history.
+private let leakSentinels = ["SENTINEL-KEY", "SENTINEL-TOKEN", "https://api.civo.com/v2/sentinel"]
+private let leakingRefusal = CivoAPIError.httpError(422, "api_key=SENTINEL-KEY token=SENTINEL-TOKEN https://api.civo.com/v2/sentinel")
+private let leakingDecoding = CivoAPIError.decodingError("SENTINEL-TOKEN at https://api.civo.com/v2/sentinel")
+
+private func leaks(_ texts: [String?]) -> Bool {
+    texts.compactMap { $0 }.contains { text in leakSentinels.contains { text.contains($0) } }
+}
+
+@Suite("Load balancer editor")
+@MainActor
+struct LoadBalancerEditorTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api: FakeLoadBalancerAPI
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        var diagnostics: [String] = []
+        lazy var editor = LoadBalancerEditor(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] action, target in activities.append("\(action) \(target.name)") },
+            diagnostics: { [unowned self] in diagnostics.append($0) }
+        )
+
+        init(_ lb: CivoLoadBalancer = loadBalancer()) {
+            api = FakeLoadBalancerAPI(stored: lb)
+        }
+
+        static let listContext = LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "LON1")
+
+        /// Opens the editor as the detail view does, for a list loaded from LON1 with key-a.
+        func begin(_ lb: CivoLoadBalancer = loadBalancer(), context: LoadBalancerContext? = listContext) {
+            editor.begin(editing: lb, context: context)
+        }
+
+        var texts: [String?] { [editor.saveError, editor.notice] + activities + diagnostics }
+    }
+
+    private static var addedBackend: LoadBalancerDraft {
+        var draft = LoadBalancerDraft(editing: loadBalancer())
+        draft.name = "web-lb-2"
+        draft.backends = [backendRow("10.0.0.5")]
+        return draft
+    }
+
+    @Test("The load balancer is loaded again, updated with the captured account and region, read back and logged")
+    func save() async throws {
+        let env = Environment()
+        env.begin()
+        let outcome = await env.editor.save(Self.addedBackend)
+        guard case .saved(let confirmed)? = outcome else { Issue.record("not saved: \(String(describing: outcome))"); return }
+        #expect(confirmed.name == "web-lb-2")
+        #expect(confirmed.backendList == ["192.168.1.3", "10.0.0.5"])
+        #expect(await env.api.calls == ["get lb-1 LON1 key-a", "update lb-1 LON1 key-a backends,name,region", "get lb-1 LON1 key-a"])
+        #expect(env.editor.session == nil)
+        #expect(env.activities == ["Updated load balancer web-lb"])
+    }
+
+    @Test("Managed, unverified or stale load balancers are not opened, and a list from another region is refused")
+    func notOffered() async {
+        let env = Environment()
+        env.begin(loadBalancer(clusterId: "cluster-1"))
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.managed).message)
+        env.begin(loadBalancer(clusterId: nil))
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.ownershipUnknown).message)
+        env.begin(loadBalancerWithNullOwner())
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.ownershipUnknown).message)
+        env.begin(context: LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "FRA1"))
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.staleList.message)
+        env.begin(context: nil)
+        #expect(env.editor.notice == LoadBalancerEditError.staleList.message)
+        #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A null cluster_id in the reload before saving closes the editor and sends nothing")
+    func nullOwnerOnReload() async {
+        let env = Environment()
+        env.begin()
+        await env.api.replace(with: loadBalancerWithNullOwner())
+        #expect(await env.editor.save(Self.addedBackend) == .cancelled)
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.ownershipUnknown).message)
+        #expect(await env.api.calls == ["get lb-1 LON1 key-a"])
+    }
+
+    @Test("Full Access revoked, or a key or region change before or during the reload, sends nothing")
+    func targetChanges() async {
+        let env = Environment()
+        env.begin()
+        env.accessAllowed = false
+        #expect(await env.editor.save(Self.addedBackend) == .cancelled)
+        #expect(env.editor.notice == LoadBalancerEditError.accessRevoked.message)
+
+        env.accessAllowed = true
+        env.begin()
+        await env.api.whileGetting { await MainActor.run { env.region = "FRA1" } }
+        #expect(await env.editor.save(Self.addedBackend) == .cancelled)
+        #expect(env.editor.notice == LoadBalancerEditError.regionChanged.message)
+
+        env.region = "LON1"
+        env.begin()
+        env.apiKey = "key-b"
+        env.notifications.post(name: .civoAPIKeyDidChange, object: nil)
+        #expect(env.editor.session == nil)
+        #expect(env.editor.notice == LoadBalancerEditError.accountChanged.message)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("update") })
+    }
+
+    @Test("A removed load balancer is reported and not recreated; one now managed by Kubernetes is left alone")
+    func removedOrManaged() async {
+        let env = Environment()
+        env.begin()
+        await env.api.replace(with: nil)
+        #expect(await env.editor.save(Self.addedBackend) == .cancelled)
+        #expect(env.editor.notice == LoadBalancerEditError.removed.message)
+
+        await env.api.replace(with: loadBalancer(clusterId: "cluster-1"))
+        env.begin()
+        #expect(await env.editor.save(Self.addedBackend) == .cancelled)
+        #expect(env.editor.notice == LoadBalancerEditError.notEditable(.managed).message)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("update") })
+    }
+
+    @Test("A load balancer changed elsewhere is not overwritten until the user saves again against its current values")
+    func conflict() async {
+        let env = Environment()
+        env.begin()
+        let changed = loadBalancer(algorithm: "least_connections")
+        await env.api.replace(with: changed)
+        #expect(await env.editor.save(Self.addedBackend) == nil)
+        #expect(env.editor.saveError == LoadBalancerEditError.changedElsewhere.message)
+        #expect(env.editor.session?.original == changed)
+        #expect(await env.api.calls == ["get lb-1 LON1 key-a"])
+
+        guard case .saved? = await env.editor.save(Self.addedBackend) else { Issue.record("not saved"); return }
+    }
+
+    @Test("Only an unreadable answer falls back to the list; any other reload failure sends nothing")
+    func reloadFallback() async {
+        let env = Environment()
+        env.begin()
+        await env.api.failGets(with: CivoAPIError.decodingError(""))
+        guard case .saved? = await env.editor.save(Self.addedBackend) else { Issue.record("not saved"); return }
+        #expect(await env.api.calls.prefix(2) == ["get lb-1 LON1 key-a", "list LON1 key-a"])
+
+        let failing = Environment()
+        failing.begin()
+        await failing.api.failGets(with: CivoAPIError.httpError(503, ""))
+        #expect(await failing.editor.save(Self.addedBackend) == nil)
+        #expect(failing.editor.saveError == LoadBalancerFailure.serverIssue.message)
+        #expect(failing.editor.session != nil)
+        #expect(await failing.api.calls == ["get lb-1 LON1 key-a"])
+    }
+
+    @Test("A refusal keeps the editor open without leaking Civo's answer; an unclear result is read back, never resent")
+    func updateFailures() async {
+        let env = Environment()
+        env.begin()
+        await env.api.failWrites(with: leakingRefusal)
+        #expect(await env.editor.save(Self.addedBackend) == nil)
+        #expect(env.editor.session != nil)
+        #expect(env.editor.saveError != nil)
+        #expect(env.activities.isEmpty)
+        #expect(!leaks(env.texts))
+
+        for error in [CivoAPIError.httpError(500, "SENTINEL-TOKEN"), leakingDecoding, CivoAPIError.networkError("SENTINEL-KEY")] {
+            let unclear = Environment()
+            unclear.begin()
+            await unclear.api.failWrites(with: error, applying: false)
+            guard case .mismatch(let mismatch)? = await unclear.editor.save(Self.addedBackend) else { Issue.record("not reported for \(error)"); continue }
+            #expect(mismatch.fields == [.name])
+            #expect(mismatch.missingBackends.map(\.ip) == ["10.0.0.5"])
+            #expect(await unclear.api.calls.filter { $0.hasPrefix("update") }.count == 1)
+            #expect(unclear.activities == ["Load balancer update not confirmed web-lb"])
+            #expect(!leaks(unclear.texts))
+        }
+    }
+
+    @Test("A read back with a backend the app cannot read is reported without quoting Civo's text")
+    func unreadableReadBack() async {
+        let env = Environment()
+        env.begin()
+        await env.api.answerReadBack(with: loadBalancer(backends: #"[{"ip": "SENTINEL-TOKEN", "protocol": "TCP", "source_port": 1, "target_port": 1}]"#))
+        guard case .mismatch? = await env.editor.save(Self.addedBackend) else { Issue.record("not reported"); return }
+        #expect(env.editor.notice != nil)
+        #expect(!leaks(env.texts))
+    }
+
+    @Test("A failed read back leaves the result unverified, even after Civo accepted the update")
+    func unverified() async {
+        let env = Environment()
+        env.begin()
+        await env.api.failReadBack(with: CivoAPIError.httpError(503, "SENTINEL-TOKEN"))
+        #expect(await env.editor.save(Self.addedBackend) == .unverified)
+        #expect(await env.api.calls.filter { $0.hasPrefix("update") }.count == 1)
+        #expect(env.editor.notice?.contains("could not be confirmed") == true)
+        #expect(env.activities == ["Load balancer update not confirmed web-lb"])
+        #expect(!leaks(env.texts))
+    }
+}
+
+@Suite("Load balancer create form")
+@MainActor
+struct LoadBalancerCreateTests {
+    static let network = try! JSONDecoder().decode(CivoNetwork.self, from: Data(#"{"id": "net-1", "label": "default", "default": true}"#.utf8))
+
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeLoadBalancerAPI(stored: nil, networks: [LoadBalancerCreateTests.network])
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        var diagnostics: [String] = []
+        lazy var creator = LoadBalancerCreateController(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            recordActivity: { [unowned self] action, name, _ in activities.append("\(action) \(name)") },
+            diagnostics: { [unowned self] in diagnostics.append($0) }
+        )
+
+        var texts: [String?] { [creator.error] + creator.unresolved.map(\.message) + activities + diagnostics }
+    }
+
+    private static var draft: LoadBalancerDraft {
+        var draft = LoadBalancerDraft()
+        draft.name = "web"
+        draft.networkId = "net-1"
+        draft.backends = [backendRow("10.0.0.5")]
+        return draft
+    }
+
+    @Test("Two quick confirmations send one request to the account and region the form was opened with")
+    func singleFlight() async {
+        let env = Environment()
+        await env.creator.beginForm()
+        await env.api.whileCreating { @MainActor in
+            #expect(await env.creator.create(Self.draft) == .alreadyInFlight)
+            await env.creator.beginForm()
+        }
+        #expect(await env.creator.create(Self.draft) == .created(id: "lb-1"))
+        #expect(await env.api.calls == ["networks LON1 key-a", "create LON1 key-a web"])
+        #expect(env.creator.form == nil)
+        #expect(env.activities == ["Created load balancer web"])
+    }
+
+    @Test("Full Access revoked, or a key or region change since the form opened, sends nothing")
+    func refusals() async {
+        let env = Environment()
+        await env.creator.beginForm()
+        env.accessAllowed = false
+        #expect(await env.creator.create(Self.draft) == .refused)
+        env.accessAllowed = true
+        env.region = "FRA1"
+        #expect(await env.creator.create(Self.draft) == .refused)
+        env.region = "LON1"
+        env.apiKey = "key-b"
+        #expect(await env.creator.create(Self.draft) == .refused)
+        #expect(env.creator.error != nil)
+        #expect(await env.api.calls == ["networks LON1 key-a"])
+    }
+
+    @Test("A refusal keeps the form for another try; an unclear answer is recorded as possibly created")
+    func outcomes() async {
+        let env = Environment()
+        await env.creator.beginForm()
+        await env.api.failWrites(with: leakingRefusal)
+        #expect(await env.creator.create(Self.draft) == .rejected)
+        #expect(env.creator.form != nil)
+        #expect(env.activities.isEmpty)
+        #expect(!leaks(env.texts))
+
+        for error in [CivoAPIError.httpError(502, "SENTINEL-TOKEN"), CivoAPIError.httpError(408, ""), leakingDecoding, CivoAPIError.cancelled] {
+            let unclear = Environment()
+            await unclear.creator.beginForm()
+            await unclear.api.failWrites(with: error)
+            #expect(await unclear.creator.create(Self.draft) == .unknown)
+            #expect(unclear.creator.form == nil)
+            #expect(unclear.creator.unresolved(in: LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "LON1")).map(\.wasCreated) == [false])
+            #expect(unclear.creator.unresolved(in: LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "FRA1")).isEmpty)
+            #expect(unclear.activities == ["Create load balancer not confirmed web"])
+            #expect(!leaks(unclear.texts))
+        }
+    }
+
+    @Test("A region change while the request is on its way keeps its result for the region it was sent to")
+    func targetChangeInFlight() async {
+        let env = Environment()
+        await env.creator.beginForm()
+        await env.api.whileCreating { await MainActor.run { env.region = "FRA1" } }
+        #expect(await env.creator.create(Self.draft) == .created(id: "lb-1"))
+        let sentTo = LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "LON1")
+        #expect(env.creator.unresolved(in: sentTo).map(\.wasCreated) == [true])
     }
 }

@@ -32,7 +32,7 @@ This is the delivered 2.2.0 scope (release ticket #72). It was not planned in th
 |---------|-----------|----|--------|--------|
 | **Instance Snapshots** | list / create / show / restore / remove | Section in InstanceDetail + 3 sheets | M | High |
 | **Reserved IPs** | list / create / assign / unassign / remove | New nav item | M | Medium |
-| **Load Balancer Create + Backends** | create LB, CRUD backends | CreateLB form + backend editor | M | Medium |
+| **Load Balancer Create + Backends** | Implemented in #120: `POST /v2/loadbalancers`, `PUT /v2/loadbalancers/:id`; backends are part of the load balancer, no endpoints of their own | Create sheet with backend table; editor for name, algorithm, a reported traffic policy and added backends. Removing or changing existing backends is not offered yet, since Civo does not document whether an update replaces the list | M | Medium |
 | **K8s Node-Pools (dedicated)** | create / scale / list / delete | Extension in ClusterDetail | M | High (K8s users) |
 | K8s Marketplace Apps | list / install | Browser + install sheet | M | Medium |
 
