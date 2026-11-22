@@ -472,24 +472,28 @@ final class InstanceViewModel {
         await loadVolumeOptions(region: target.region)
     }
 
+    /// Skipped for a region other than the Settings region, such as the reload after a request that was
+    /// sent before a region change: its list would outdate the current region's load.
     private func loadVolumeOptions(region: String) async {
+        guard Self.isSameRegion(region, settingsRegion()) else { return }
         _ = try? await fetchVolumeOptions(region: region)
     }
 
-    /// Loads the volumes of `region` and shows them, unless a later load started meanwhile:
-    /// an older answer must not replace a newer list.
+    /// Loads the volumes of `region` and shows them, unless a later load started or the Settings region
+    /// changed meanwhile: an older answer must not replace a newer list or the list of another region.
     private func fetchVolumeOptions(region: String) async throws -> InstanceVolumeOptions {
         volumeLoads += 1
         let load = volumeLoads
+        func isCurrent() -> Bool { load == volumeLoads && Self.isSameRegion(region, settingsRegion()) }
         do {
             let options = try await volumes.volumeOptions(region: region)
-            if load == volumeLoads {
+            if isCurrent() {
                 volumeOptions = options
                 volumeOptionsError = nil
             }
             return options
         } catch {
-            if load == volumeLoads { volumeOptionsError = CivoAPIError.userMessage(error) }
+            if isCurrent() { volumeOptionsError = CivoAPIError.userMessage(error) }
             throw error
         }
     }

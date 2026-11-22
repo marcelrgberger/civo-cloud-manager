@@ -1898,19 +1898,26 @@ private actor FakeVolumeAPI: InstanceVolumeAPI {
     var volumesByRegion: [String: [CivoVolume]]
     private(set) var calls: [String] = []
     private var requestError: Error?
+    private var listErrors: [String: Error] = [:]
+    /// Holds the next attach until the test releases it, like a request still on its way.
+    private let attachGate: ChargesServiceTests.FetchGate?
 
-    init(volumesByRegion: [String: [CivoVolume]]) {
+    init(volumesByRegion: [String: [CivoVolume]], attachGate: ChargesServiceTests.FetchGate? = nil) {
         self.volumesByRegion = volumesByRegion
+        self.attachGate = attachGate
     }
 
     func list(_ volumes: [CivoVolume], in region: String) { volumesByRegion[region] = volumes }
     func failRequests(with error: Error) { requestError = error }
+    func failListing(in region: String, with error: Error) { listErrors[region] = error }
 
     func volumeOptions(region: String) async throws -> InstanceVolumeOptions {
-        InstanceVolumeOptions(region: region, volumes: volumesByRegion[region] ?? [], networks: InstanceEnvironment.networks)
+        if let listError = listErrors[region] { throw listError }
+        return InstanceVolumeOptions(region: region, volumes: volumesByRegion[region] ?? [], networks: InstanceEnvironment.networks)
     }
 
     func attachVolume(_ volumeId: String, to instanceId: String, region: String) async throws {
+        await attachGate?.suspend()
         if let requestError { throw requestError }
         calls.append("attach \(volumeId) \(instanceId) \(region)")
     }
@@ -1945,7 +1952,7 @@ private final class InstanceEnvironment {
     var region = "LON1"
     var accessAllowed = true
     let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
-    let volumes = FakeVolumeAPI(volumesByRegion: ["LON1": InstanceVolumeTests.volumes])
+    let volumes: FakeVolumeAPI
     let center = NotificationCenter()
     /// The firewalls Civo lists for each region.
     var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
@@ -1954,7 +1961,8 @@ private final class InstanceEnvironment {
     private let keychain = FakeKeychain()
     private(set) var vm: InstanceViewModel!
 
-    init(credentials: InstanceCredentialStore? = nil) {
+    init(credentials: InstanceCredentialStore? = nil, attachGate: ChargesServiceTests.FetchGate? = nil) {
+        volumes = FakeVolumeAPI(volumesByRegion: ["LON1": InstanceVolumeTests.volumes], attachGate: attachGate)
         let store = credentials ?? InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
         vm = InstanceViewModel(
             credentials: store,
@@ -2368,6 +2376,35 @@ struct InstanceVolumeTests {
         await env.vm.detachVolume(try #require(env.vm.confirmDetach()))
         #expect(env.vm.error == InstanceTargetError.volumeNotAttached.message)
         #expect(await env.volumes.calls.count == 1)
+    }
+
+    @Test("An attach that finishes after a region change neither replaces nor fails the new region's volumes",
+          arguments: [false, true])
+    func lateAttachAfterRegionChange(oldRegionListFails: Bool) async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment(attachGate: gate)
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let attach = Task { await env.vm.attachVolume("vol-free", to: target) }
+        await gate.untilSuspended()
+
+        await env.api.list([InstanceEnvironment.instance], in: "NYC1")
+        await env.volumes.list(Self.volumes, in: "NYC1")
+        env.changeRegion(to: "NYC1")
+        await env.vm.refresh()
+        await env.vm.loadVolumeOptions(for: InstanceEnvironment.instance)
+        #expect(env.vm.volumeOptions(for: InstanceEnvironment.instance)?.region == "NYC1")
+
+        if oldRegionListFails {
+            await env.volumes.failListing(in: "LON1", with: CivoAPIError.networkError("offline"))
+        }
+        await gate.open()
+        await attach.value
+
+        #expect(await env.volumes.calls == ["attach vol-free \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Attached volume free"])
+        #expect(env.vm.volumeOptions(for: InstanceEnvironment.instance)?.region == "NYC1")
+        #expect(env.vm.volumeOptionsError == nil)
     }
 
     @Test("An error from Civo is shown as returned, without logging or success")
