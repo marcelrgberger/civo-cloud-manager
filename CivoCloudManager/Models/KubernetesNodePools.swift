@@ -277,10 +277,11 @@ enum KubernetesNodePoolPlan {
     }
 
     /// Whether Civo was asked for pools the cluster does not report yet, by any client or an earlier session.
-    /// The pools sent are built from the reported ones, so sending them now would undo that request. Unknown,
-    /// and so not assumed, while Civo does not report `required_pools`.
+    /// The pools sent are built from the reported ones, so sending them now would undo that request; an empty
+    /// `required_pools` is the request to delete every pool. Unknown, and so not assumed, while Civo does not
+    /// report `required_pools`.
     static func hasOutstandingChange(_ cluster: CivoKubernetesCluster) -> Bool {
-        guard let required = cluster.requiredPools, !required.isEmpty else { return false }
+        guard let required = cluster.requiredPools else { return false }
         let reported = cluster.pools ?? []
         guard Set(required.map(\.id)) == Set(reported.map(\.id)) else { return true }
         return required.contains { wanted in

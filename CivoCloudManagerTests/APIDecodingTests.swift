@@ -4486,35 +4486,39 @@ struct KubernetesNodePoolTests {
         #expect(await pending.sentPools.count == 1)
     }
 
-    @Test("Pools Civo was asked for but does not report yet, requested by another client, block pool and label saves; settled required pools do not")
+    @Test("Pools Civo was asked for but does not report yet, requested by another client, block pool and label saves; settled or unreported required pools do not")
     func outstandingChange() async {
         let pools: [(id: String, size: String, count: Int)] = [("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 2)]
+        #expect(KubernetesNodePoolPlan.busyStatus(of: poolCluster(pools)) == nil)
         #expect(KubernetesNodePoolPlan.busyStatus(of: poolCluster(pools, extra: requiredPools(pools))) == nil)
         let grownElsewhere = poolCluster(pools, extra: requiredPools([("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 4)]))
         let addedElsewhere = poolCluster(pools, extra: requiredPools(pools + [("pool-c", "g4s.kube.large", 1)]))
-        #expect(KubernetesNodePoolPlan.busyStatus(of: grownElsewhere) == .poolChangeOutstanding)
-        #expect(KubernetesNodePoolPlan.busyStatus(of: addedElsewhere) == .poolChangeOutstanding)
+        let emptiedElsewhere = poolCluster(pools, extra: requiredPools([]))
 
-        let opening = Environment()
-        await opening.begin(grownElsewhere)
-        #expect(opening.controller.session == nil)
-        #expect(opening.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
+        for outstanding in [grownElsewhere, addedElsewhere, emptiedElsewhere] {
+            #expect(KubernetesNodePoolPlan.busyStatus(of: outstanding) == .poolChangeOutstanding)
 
-        let scaling = Environment()
-        await scaling.begin()
-        scaling.controller.edit { $0.setCount(5, ofPool: "pool-a") }
-        await scaling.api.replaceCluster(with: grownElsewhere)
-        #expect(await scaling.controller.save(confirmingRemoval: false) == .cancelled)
-        #expect(scaling.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
+            let opening = Environment()
+            await opening.begin(outstanding)
+            #expect(opening.controller.session == nil)
+            #expect(opening.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
 
-        let relabeling = Environment()
-        await relabeling.api.replaceCluster(with: addedElsewhere)
-        let target = KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: relabeling.account)
-        #expect(await relabeling.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-a"], ofPool: "pool-a", in: target)
-            == .notSaved(KubernetesNodePoolError.poolChangeOutstanding.message))
+            let scaling = Environment()
+            await scaling.begin()
+            scaling.controller.edit { $0.setCount(5, ofPool: "pool-a") }
+            await scaling.api.replaceCluster(with: outstanding)
+            #expect(await scaling.controller.save(confirmingRemoval: false) == .cancelled)
+            #expect(scaling.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
 
-        for env in [opening, scaling, relabeling] {
-            #expect(await env.sentPools.isEmpty)
+            let relabeling = Environment()
+            await relabeling.api.replaceCluster(with: outstanding)
+            let target = KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: relabeling.account)
+            #expect(await relabeling.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-a"], ofPool: "pool-a", in: target)
+                == .notSaved(KubernetesNodePoolError.poolChangeOutstanding.message))
+
+            for env in [opening, scaling, relabeling] {
+                #expect(await env.sentPools.isEmpty)
+            }
         }
     }
 
