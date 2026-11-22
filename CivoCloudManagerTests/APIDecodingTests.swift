@@ -1990,6 +1990,12 @@ private final class InstanceEnvironment {
     let center = NotificationCenter()
     /// The firewalls Civo lists for each region.
     var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
+    /// The sizes Civo lists for each region, and the regions they were requested for.
+    var sizesByRegion: [String: [CivoSize]] = [:]
+    var sizeLoadError: Error?
+    private(set) var sizeRequests: [String] = []
+    /// Set to hold every size load until the test finishes it, so loads can complete in any order.
+    var heldSizeLoads: HeldSizeLoads?
     private(set) var activities: [String] = []
     /// Kept alive for the default store: its client refers to it unowned.
     private let keychain = FakeKeychain()
@@ -2015,6 +2021,7 @@ private final class InstanceEnvironment {
                 write: { [weak self] in self?.storedRecoveryReboots = $0 }
             ),
             loadSSHKeys: { [] },
+            loadSizes: { [weak self] region in try await self?.listSizes(in: region) ?? [] },
             loadFirewallOptions: { [weak self] region in
                 let firewalls = await self?.firewallsByRegion[region] ?? []
                 return InstanceFirewallOptions(region: region, firewalls: firewalls, networks: InstanceEnvironment.networks)
@@ -2026,6 +2033,13 @@ private final class InstanceEnvironment {
                 self?.activities.append(detail.map { String(format: action, $0) } ?? action)
             }
         )
+    }
+
+    private func listSizes(in region: String) async throws -> [CivoSize] {
+        sizeRequests.append(region)
+        if let heldSizeLoads { return try await heldSizeLoads.hold() }
+        if let sizeLoadError { throw sizeLoadError }
+        return sizesByRegion[region] ?? []
     }
 
     /// Changes the Settings region the way `CivoConfig` does.
@@ -3087,6 +3101,225 @@ struct InstanceCreationFormTests {
         form.networkId = "5c16ab17"
         #expect(form.firewallId.isEmpty)
         #expect(try #require(form.requestBody())["firewall_id"] == nil)
+    }
+}
+
+// MARK: - Instance resize
+
+/// Sizes in the documented `/v2/sizes` payload, without `type` (https://www.civo.com/api/sizes), and typed ones.
+/// A live LON1 response types sizes `Instance`, `Kubernetes` or `Database`; `Performance` stands for any other type.
+private let documentedSizes = try! JSONDecoder().decode([CivoSize].self, from: Data("""
+[{"name":"g3.small","nice_name":"Small","cpu_cores":1,"ram_mb":2048,"disk_gb":25,"description":"Small","selectable":true},
+ {"name":"g3.medium","nice_name":"Medium","cpu_cores":2,"ram_mb":4096,"disk_gb":50,"description":"Medium","selectable":true},
+ {"name":"g3.large","nice_name":"Large","cpu_cores":4,"ram_mb":8192,"disk_gb":100,"description":"Large","selectable":true},
+ {"name":"g4s.medium","nice_name":"Medium Standard","cpu_cores":2,"ram_mb":4096,"disk_gb":50,"description":"Medium","selectable":true},
+ {"name":"g4c.large","nice_name":"Large CPU","cpu_cores":8,"ram_mb":16384,"disk_gb":40,"description":"Less disk","selectable":true},
+ {"name":"g3.xlarge","nice_name":"Extra Large","cpu_cores":6,"ram_mb":16384,"disk_gb":150,"description":"Retired","selectable":false},
+ {"name":"g4s.kube.large","nice_name":"Large Kube","cpu_cores":4,"ram_mb":8192,"disk_gb":60,"description":"Kube","selectable":true},
+ {"name":"g3.db.large","nice_name":"Large DB","cpu_cores":4,"ram_mb":8192,"disk_gb":160,"description":"DB","selectable":true},
+ {"name":"g4s.2xlarge","nice_name":"2XL","type":"Instance","cpu_cores":8,"ram_mb":32768,"disk_gb":200,"selectable":true},
+ {"name":"g4p.small","nice_name":"Small Performance","type":"Performance","cpu_cores":4,"ram_mb":16384,"disk_gb":100,"selectable":true},
+ {"name":"g3.k3s.large","nice_name":"Large K3s","cpu_cores":4,"ram_mb":8192,"disk_gb":60,"selectable":true},
+ {"name":"g3.db.xlarge","nice_name":"XL DB","type":"Database","cpu_cores":8,"ram_mb":32768,"disk_gb":320,"selectable":true},
+ {"name":"g4s.kube.2xlarge","nice_name":"2XL Kube","type":"Kubernetes","cpu_cores":8,"ram_mb":32768,"disk_gb":200,"selectable":true}]
+""".utf8))
+
+/// A running `g3.medium` instance, as listed by `/v2/instances`.
+private func resizableInstance(status: String = "ACTIVE", size: String? = "g3.medium", specs: Bool = true) -> CivoInstance {
+    let specFields = specs ? #", "cpu_cores": 2, "ram_mb": 4096, "disk_gb": 50"# : ""
+    let sizeField = size.map { #", "size": "\#($0)""# } ?? ""
+    return try! JSONDecoder().decode(CivoInstance.self, from: Data(
+        #"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "\#(status)"\#(sizeField)\#(specFields)}"#.utf8
+    ))
+}
+
+/// Size loads waiting for the test to finish them, in the order they were started.
+@MainActor
+private final class HeldSizeLoads {
+    private var waiting: [CheckedContinuation<[CivoSize], Error>] = []
+    private(set) var started = 0
+
+    func hold() async throws -> [CivoSize] {
+        try await withCheckedThrowingContinuation { waiting.append($0); started += 1 }
+    }
+
+    /// Finishes the `index`th load started, counting from 0.
+    func finish(_ index: Int, with result: Result<[CivoSize], Error>) {
+        waiting[index].resume(with: result)
+    }
+}
+
+private struct Offline: LocalizedError {
+    var errorDescription: String? { "The Internet connection appears to be offline." }
+}
+
+@Suite("Instance resize")
+@MainActor
+struct InstanceResizeTests {
+    @Test("Only selectable, larger instance sizes are offered, with or without a type other than Instance")
+    func eligibleSizes() {
+        let offered = InstanceResize.options(documentedSizes, for: resizableInstance()).sizes.map(\.name)
+        // g3.small is smaller, g4s.medium is not larger, g4c.large has less disk, g3.xlarge is not selectable,
+        // kube, k3s and db sizes are other products.
+        #expect(offered == ["g3.large", "g4p.small", "g4s.2xlarge"])
+    }
+
+    @Test("Without its own specs, the instance is compared by its listed size; with neither, the comparison is unavailable")
+    func unknownCurrentSpecs() {
+        let bySize = InstanceResize.options(documentedSizes, for: resizableInstance(specs: false)).sizes.map(\.name)
+        #expect(bySize == ["g3.large", "g4p.small", "g4s.2xlarge"])
+        #expect(InstanceResize.options(documentedSizes, for: resizableInstance(size: nil, specs: false)) == .comparisonUnavailable)
+        #expect(InstanceResize.options(documentedSizes, for: resizableInstance(size: "g9.unlisted", specs: false)) == .comparisonUnavailable)
+        // Only a completed comparison may report that no larger size exists.
+        let largest = resizableInstance(size: "g4s.2xlarge", specs: false)
+        #expect(InstanceResize.options(documentedSizes, for: largest) == .larger([]))
+    }
+
+    @Test("App policy: Resize is offered only for a running instance")
+    func allowedStatuses() {
+        #expect(InstanceResize.isAllowed(status: "ACTIVE"))
+        for status in ["SHUTOFF", "BUILDING", "REBOOTING", "ERROR", nil] {
+            #expect(!InstanceResize.isAllowed(status: status))
+        }
+    }
+
+    @Test("The cost change uses the shared rate lookup and a 730-hour month; a missing or zero rate hides it")
+    func costEstimate() throws {
+        let rates = ["instance-g3.medium": 0.029762, "instance-g3.large": 0.059524, "instance-g4s.medium": 0]
+        let current = CivoCharge.hourlyRate(forSize: "g3.medium", in: rates)
+        let estimate = try #require(ResizeCostEstimate(currentHourly: current, newHourly: CivoCharge.hourlyRate(forSize: "g3.large", in: rates)))
+        #expect(abs(estimate.hourlyDifference - 0.029762) < 0.000001)
+        #expect(abs(estimate.monthlyDifference - 21.72626) < 0.0001)
+
+        #expect(CivoCharge.hourlyRate(forSize: "g4s.medium", in: rates) == nil)
+        #expect(ResizeCostEstimate(currentHourly: current, newHourly: CivoCharge.hourlyRate(forSize: "g4s.medium", in: rates)) == nil)
+        #expect(ResizeCostEstimate(currentHourly: nil, newHourly: 0.059524) == nil)
+    }
+
+    /// Regression for the empty picker of 2026-11-22: the sheet showed only the sizes the Create form had loaded,
+    /// filtered to the type `Instance`.
+    @Test("The sheet loads the sizes of the captured region itself, without the Create form")
+    func sizesOfCapturedRegion() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes, "NYC1": []]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        #expect(env.vm.availableSizes.isEmpty)
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        let target = try #require(env.vm.pendingAction?.target)
+        env.region = "NYC1"
+        await env.vm.loadResizeSizes()
+        #expect(env.sizeRequests == ["LON1"])
+        #expect(env.vm.resizeOptions(for: target)?.sizes.map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+        #expect(env.vm.resizeOptions(for: ConsoleTarget(instanceId: target.instanceId, instanceName: target.instanceName, region: "NYC1")) == nil)
+    }
+
+    @Test("A resize keeps the captured region, after Full Access is checked on confirm")
+    func confirmedResize() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.resizeInstance(refused, size: "g3.large")
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+
+        env.accessAllowed = true
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        #expect(env.vm.resizeSizes == .loading)
+        await env.vm.loadResizeSizes()
+        let target = try #require(env.vm.confirmPendingAction())
+        env.region = "NYC1"
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+        env.region = "LON1"
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(await env.api.calls == ["resize \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Resized to g3.large"])
+    }
+
+    @Test("A smaller size, or an instance that stopped while the sheet was open, is refused before sending")
+    func refusedResize() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        let target = try #require(env.vm.confirmPendingAction())
+
+        await env.vm.resizeInstance(target, size: "g3.small")
+        #expect(env.vm.error == InstanceResizeError.sizeNotEligible.message)
+
+        await env.api.list([resizableInstance(status: "SHUTOFF")], in: "LON1")
+        await env.vm.refresh()
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(env.vm.error == InstanceResizeError.notRunning.message)
+        #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A failed size load is shown instead of an empty grid")
+    func failedSizeLoad() async {
+        let env = InstanceEnvironment()
+        env.sizeLoadError = Offline()
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        #expect(env.vm.resizeSizes == .failed("The Internet connection appears to be offline."))
+    }
+
+    @Test("A load that finishes after the sheet was closed and opened again changes nothing", arguments: [false, true])
+    func lateLoadOfClosedSheet(lateLoadFails: Bool) async throws {
+        let env = InstanceEnvironment()
+        let held = HeldSizeLoads()
+        env.heldSizeLoads = held
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        // Not cancelled, like a Retry task that outlives its sheet.
+        let closedSheetLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 1 }
+        env.vm.cancelConfirmation()
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        let target = try #require(env.vm.pendingAction?.target)
+        #expect(env.vm.resizeSizes == .loading)
+        let openSheetLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 2 }
+        held.finish(1, with: .success(documentedSizes))
+        await openSheetLoad.value
+
+        held.finish(0, with: lateLoadFails ? .failure(Offline()) : .success([]))
+        await closedSheetLoad.value
+        #expect(env.vm.resizeSizes == .loaded(documentedSizes, region: "LON1"))
+        #expect(env.vm.resizeOptions(for: target)?.sizes.map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+    }
+
+    @Test("Only the newest load of an open sheet is shown, so an earlier one that fails after Retry changes nothing")
+    func loadSupersededByRetry() async throws {
+        let env = InstanceEnvironment()
+        let held = HeldSizeLoads()
+        env.heldSizeLoads = held
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+
+        let firstLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 1 }
+        let retry = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 2 }
+        held.finish(1, with: .success(documentedSizes))
+        await retry.value
+        held.finish(0, with: .failure(Offline()))
+        await firstLoad.value
+        #expect(env.vm.resizeSizes == .loaded(documentedSizes, region: "LON1"))
     }
 }
 
@@ -4181,5 +4414,414 @@ private extension Result {
     var failure: Failure? {
         if case .failure(let error) = self { return error }
         return nil
+    }
+}
+
+/// A cluster whose pools state size, node count, labels and taints, as Civo's cluster detail does.
+private func poolCluster(status: String = "ACTIVE", _ pools: [(id: String, size: String, count: Int)], extra: String = "") -> CivoKubernetesCluster {
+    kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": \#(poolEntries(pools))"# + extra)
+}
+
+/// Civo's `required_pools`: the pools it was last asked for, stated like the reported ones.
+private func requiredPools(_ pools: [(id: String, size: String, count: Int)]) -> String {
+    #", "required_pools": \#(poolEntries(pools))"#
+}
+
+private func poolEntries(_ pools: [(id: String, size: String, count: Int)]) -> String {
+    let entries = pools.map { pool in
+        #"{"id": "\#(pool.id)", "size": "\#(pool.size)", "count": \#(pool.count), "labels": {"team": "\#(pool.id)"}, "taints": [{"key": "dedicated", "value": "\#(pool.id)", "effect": "NoSchedule"}], "public_ip_node_pool": false}"#
+    }
+    return "[\(entries.joined(separator: ", "))]"
+}
+
+private let twoPools = poolCluster([("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 2)])
+
+private func nodeSize(_ name: String) -> CivoSize {
+    try! JSONDecoder().decode(CivoSize.self, from: Data(#"{"name": "\#(name)", "type": "Kubernetes", "cpu_cores": 2, "ram_mb": 4096, "disk_gb": 50}"#.utf8))
+}
+
+/// Node pool requests recorded instead of sent.
+private actor FakeKubernetesNodePoolAPI: KubernetesNodePoolAPI {
+    var cluster = twoPools
+    var sizes = [nodeSize("g4s.kube.small"), nodeSize("g4s.kube.medium"), nodeSize("g4s.kube.large")]
+    private(set) var calls: [String] = []
+    private(set) var sentPools: [[CivoNodePoolSpec]] = []
+    private var updateError: Error?
+    private var showError: Error?
+    /// Runs while the cluster is loaded again before saving, like a Settings change during the request.
+    private var duringReload: (@Sendable () async -> Void)?
+
+    func replaceCluster(with cluster: CivoKubernetesCluster) { self.cluster = cluster }
+    func replaceSizes(with sizes: [CivoSize]) { self.sizes = sizes }
+    func failUpdate(with error: Error) { updateError = error }
+    func failShow(with error: Error) { showError = error }
+    func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster {
+        calls.append("show \(id) \(region ?? "-") \(apiKey ?? "-")")
+        if let action = duringReload {
+            duringReload = nil
+            await action()
+        }
+        if let showError { throw showError }
+        return cluster
+    }
+
+    func listSizes(region: String, apiKey: String) async throws -> [CivoSize] {
+        calls.append("sizes \(region) \(apiKey)")
+        return sizes
+    }
+
+    func quota(apiKey: String) async throws -> CivoQuota {
+        calls.append("quota \(apiKey)")
+        throw CivoAPIError.httpError(500, "unavailable")
+    }
+
+    func updatePools(_ pools: [CivoNodePoolSpec], inCluster id: String, region: String, apiKey: String) async throws {
+        calls.append("update \(id) \(region) \(apiKey)")
+        sentPools.append(pools)
+        if let updateError { throw updateError }
+    }
+}
+
+@Suite("Kubernetes node pools")
+@MainActor
+struct KubernetesNodePoolTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeKubernetesNodePoolAPI()
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        /// What the editor showed for a removal while the save was loading the cluster again.
+        var removalShownWhileSaving: Bool?
+        lazy var controller = KubernetesNodePoolController(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            hourlyRates: { ["kube-node-g4s.kube.small": 0.5] },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] target, changes in activities.append("\(target.clusterName) \(changes.count)") }
+        )
+        let account = CivoAccount(apiKey: "key-a")
+
+        /// The notice the detail page of the cluster loaded from LON1 with key-a shows.
+        var notice: String? { controller.notice(forCluster: "c-1", region: "LON1", account: account) }
+        var sentPools: [[CivoNodePoolSpec]] { get async { await api.sentPools } }
+
+        /// Opens the editor as the detail page does, for the cluster loaded from LON1 with key-a.
+        func begin(_ cluster: CivoKubernetesCluster = twoPools) async {
+            await controller.begin(editing: cluster, region: "LON1", account: account)
+        }
+    }
+
+    private static let shown = try! KubernetesNodePoolPlan.currentPools(of: twoPools).get()
+
+    @Test("The desired state keeps untouched pools as Civo reports them now, with their sizes, labels and taints, and leaves out only the removed pool")
+    func desiredState() throws {
+        let addedElsewhere = poolCluster([("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 2), ("pool-c", "g4s.kube.large", 1)])
+        let changes: [KubernetesNodePoolChange] = [
+            .scale(poolId: "pool-a", size: "g4s.kube.small", from: 3, to: 5),
+            .add(poolId: "new-1", size: "g4s.kube.large", count: 2),
+        ]
+        let pools = try KubernetesNodePoolPlan.desiredPools(applying: changes, shownPools: Self.shown, to: addedElsewhere).get()
+        #expect(pools.map(\.id) == ["pool-a", "pool-b", "pool-c", "new-1"])
+        #expect(pools.map(\.count) == [5, 2, 1, 2])
+        #expect(pools.map(\.size) == ["g4s.kube.small", "g4s.kube.medium", "g4s.kube.large", "g4s.kube.large"])
+        #expect(pools[1] == CivoNodePoolSpec(twoPools.pools![1]))
+        #expect(pools[0].labels == ["team": "pool-a"])
+
+        let removal = try KubernetesNodePoolPlan.desiredPools(
+            applying: [.remove(poolId: "pool-b", size: "g4s.kube.medium", count: 2)], shownPools: Self.shown, to: addedElsewhere
+        ).get()
+        #expect(removal.map(\.id) == ["pool-a", "pool-c"])
+
+        // The request carries pools and region only, each pool with what it had, so a kept pool loses nothing.
+        let body = try CivoKubernetesService.poolsBody(pools, region: "LON1")
+        #expect(Set(body.keys) == ["pools", "region"])
+        let kept = try #require((body["pools"] as? [[String: Any]])?[1])
+        #expect(kept["id"] as? String == "pool-b")
+        #expect(kept["size"] as? String == "g4s.kube.medium")
+        #expect(kept["count"] as? Int == 2)
+        #expect(kept["labels"] as? [String: String] == ["team": "pool-b"])
+        #expect(kept["taints"] as? [[String: String]] == [["key": "dedicated", "value": "pool-b", "effect": "NoSchedule"]])
+        #expect(kept["public_ip_node_pool"] as? Bool == false)
+        let added = try #require((body["pools"] as? [[String: Any]])?[3])
+        #expect(Set(added.keys) == ["id", "size", "count"])
+    }
+
+    @Test("A changed pool that differs from the one shown, a pool gone or an id taken aborts; no empty pool list is ever sent", arguments: [
+        (poolCluster([("pool-a", "g4s.kube.small", 4), ("pool-b", "g4s.kube.medium", 2)]), KubernetesNodePoolError.poolChanged("pool-a")),
+        (poolCluster([("pool-a", "g4s.kube.large", 3), ("pool-b", "g4s.kube.medium", 2)]), .poolChanged("pool-a")),
+        (poolCluster([("pool-b", "g4s.kube.medium", 2)]), .poolRemoved("pool-a")),
+        (poolCluster([("pool-a", "g4s.kube.small", 3), ("new-1", "g4s.kube.small", 1)]), .poolIdTaken("new-1")),
+        (kubernetesCluster(version: "1.20.0-k3s1", extra: #", "pools": [{"id": "pool-a", "count": 3}]"#), .poolStateUnknown("pool-a")),
+        (kubernetesCluster(version: "1.20.0-k3s1"), .poolListUnavailable),
+    ])
+    func staleState(reloaded: CivoKubernetesCluster, problem: KubernetesNodePoolError) {
+        let changes: [KubernetesNodePoolChange] = [
+            .scale(poolId: "pool-a", size: "g4s.kube.small", from: 3, to: 1),
+            .add(poolId: "new-1", size: "g4s.kube.small", count: 1),
+        ]
+        #expect(KubernetesNodePoolPlan.desiredPools(applying: changes, shownPools: Self.shown, to: reloaded).failure == problem)
+    }
+
+    @Test("Neither the draft nor the plan removes the last pool, and an empty pool list is refused before it is sent")
+    func neverEmpty() {
+        var draft = KubernetesNodePoolDraft(shownPools: Self.shown)
+        draft.remove("pool-a")
+        draft.remove("pool-b")
+        #expect(draft.changes == [.remove(poolId: "pool-a", size: "g4s.kube.small", count: 3)])
+        draft.setCount(0, ofPool: "pool-b")
+        #expect(draft.count(ofPool: "pool-b") == 2)
+
+        let all: [KubernetesNodePoolChange] = [.remove(poolId: "pool-a", size: "g4s.kube.small", count: 3), .remove(poolId: "pool-b", size: "g4s.kube.medium", count: 2)]
+        #expect(KubernetesNodePoolPlan.desiredPools(applying: all, shownPools: Self.shown, to: twoPools).failure == .removesAllPools)
+        #expect(throws: KubernetesNodePoolError.removesAllPools) { try CivoKubernetesService.poolsBody([], region: "LON1") }
+    }
+
+    @Test("A missing rate is never counted as zero: its row and the total show that no estimate exists")
+    func costWithMissingRate() {
+        let rates = ["kube-node-g4s.kube.small": 0.5]
+        let known = KubernetesNodePoolCostEstimate(changes: [
+            .scale(poolId: "pool-a", size: "g4s.kube.small", from: 3, to: 5),
+            .remove(poolId: "pool-x", size: "g4s.kube.small", count: 1),
+        ], rates: rates)
+        #expect(known.totalHourlyDelta == 0.5)
+
+        let partial = KubernetesNodePoolCostEstimate(changes: [
+            .scale(poolId: "pool-a", size: "g4s.kube.small", from: 3, to: 5),
+            .add(poolId: "new-1", size: "g4s.kube.gpu", count: 2),
+        ], rates: rates)
+        #expect(partial.rows.map(\.hourlyDelta) == [1.0, nil])
+        #expect(partial.totalHourlyDelta == nil)
+        #expect(partial.knownHourlyDelta == 1.0)
+        #expect(KubernetesNodePoolCostEstimate.rowText(partial.rows[1]) == String(localized: "No hourly rate is known for size \("g4s.kube.gpu")"))
+        #expect(!partial.totalText.contains(KubernetesNodePoolCostEstimate.formatted(0)))
+
+        let unknown = KubernetesNodePoolCostEstimate(changes: [.add(poolId: "new-1", size: "g4s.kube.gpu", count: 2)], rates: rates)
+        #expect(unknown.totalText == String(localized: "No hourly rate is known for the sizes involved, so no cost change can be estimated."))
+    }
+
+    @Test("Only added nodes count against the quota, removed ones are not counted as freed")
+    func quotaShortfall() throws {
+        let quota = try JSONDecoder().decode(CivoQuota.self, from: Data("""
+        {"instance_count_limit":"10","instance_count_usage":"8","cpu_core_limit":"20","cpu_core_usage":"10",
+         "ram_mb_limit":"204800","ram_mb_usage":"0","disk_gb_limit":"1000","disk_gb_usage":"0"}
+        """.utf8))
+        let changes: [KubernetesNodePoolChange] = [
+            .scale(poolId: "pool-a", size: "g4s.kube.small", from: 3, to: 5),
+            .add(poolId: "new-1", size: "g4s.kube.small", count: 1),
+            .remove(poolId: "pool-b", size: "g4s.kube.small", count: 4),
+        ]
+        let shortfalls = KubernetesNodePoolQuotaShortfall.shortfalls(for: changes, sizes: [nodeSize("g4s.kube.small")], quota: quota)
+        #expect(shortfalls == [KubernetesNodePoolQuotaShortfall(resource: .instances, needed: 3, free: 2)])
+    }
+
+    @Test("The label editor sends every pool as reported now and changes only the labels of its pool; changed labels or a removed pool save nothing")
+    func labelEditor() throws {
+        let pools = try KubernetesNodePoolPlan.relabeling(pool: "pool-b", from: ["team": "pool-b"], to: ["tier": "batch"], in: twoPools).get()
+        var expected = Self.shown
+        expected[1].labels = ["tier": "batch"]
+        #expect(pools == expected)
+
+        #expect(KubernetesNodePoolPlan.relabeling(pool: "pool-b", from: [:], to: ["tier": "batch"], in: twoPools).failure == .labelsChanged("pool-b"))
+        #expect(KubernetesNodePoolPlan.relabeling(pool: "pool-x", from: [:], to: [:], in: twoPools).failure == .poolRemoved("pool-x"))
+    }
+
+    @Test("After confirming, the cluster is loaded again with the same key and the whole desired state is sent once; it stays requested until the cluster reports it")
+    func save() async throws {
+        let env = Environment()
+        await env.begin()
+        #expect(env.controller.session?.target == KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: env.account))
+        env.controller.edit { $0.setCount(5, ofPool: "pool-a") }
+        env.controller.edit { $0.addPool(size: "g4s.kube.large", count: 1) }
+        let added = try #require(env.controller.session?.draft.additions.first?.id)
+
+        #expect(await env.controller.save(confirmingRemoval: false) == .requested)
+        // The cluster is loaded last before the update, so the desired state is built from the newest pools.
+        #expect(await env.api.calls == ["sizes LON1 key-a", "quota key-a", "sizes LON1 key-a", "show c-1 LON1 key-a", "update c-1 LON1 key-a"])
+        #expect(await env.sentPools.first?.map(\.id) == ["pool-a", "pool-b", added])
+        #expect(await env.sentPools.first?.map(\.count) == [5, 2, 1])
+        #expect(env.controller.session == nil)
+        #expect(env.notice == KubernetesNodePoolController.acceptedMessage)
+        #expect(env.activities == ["prod 2"])
+
+        // Accepted is not finished: until the cluster reports the counts, no second change is opened.
+        await env.begin()
+        #expect(env.controller.session == nil)
+        #expect(env.notice == KubernetesNodePoolError.changeAlreadyPending.message)
+        let halfway = poolCluster([("pool-a", "g4s.kube.small", 5), ("pool-b", "g4s.kube.medium", 2), (added, "g4s.kube.large", 0)])
+        env.controller.clusterDidLoad(halfway, region: "LON1", account: env.account)
+        #expect(env.controller.isChangePending(forCluster: "c-1", region: "LON1", account: env.account))
+        // Only the changed pools are compared, so an untouched pool scaled elsewhere does not keep it pending.
+        let reached = poolCluster([("pool-a", "g4s.kube.small", 5), ("pool-b", "g4s.kube.medium", 4), (added, "g4s.kube.large", 1)])
+        env.controller.clusterDidLoad(reached, region: "LON1", account: env.account)
+        #expect(!env.controller.isChangePending(forCluster: "c-1", region: "LON1", account: env.account))
+        #expect(await env.sentPools.count == 1)
+    }
+
+    @Test("Changes that delete nodes are sent only once the user confirmed them separately, and the draft is fixed while saving")
+    func removalNeedsConfirmation() async {
+        let env = Environment()
+        await env.begin()
+        env.controller.edit { $0.remove("pool-b") }
+        #expect(env.controller.removesNodes)
+        #expect(await env.controller.save(confirmingRemoval: false) == nil)
+        #expect(await env.sentPools.isEmpty)
+        #expect(env.controller.session != nil)
+
+        await env.api.whileReloading {
+            await MainActor.run {
+                env.controller.edit { $0.keep("pool-b") }
+                env.removalShownWhileSaving = env.controller.session?.draft.isRemoved("pool-b")
+            }
+        }
+        #expect(await env.controller.save(confirmingRemoval: true) == .requested)
+        #expect(env.removalShownWhileSaving == true)
+        #expect(await env.sentPools.first?.map(\.id) == ["pool-a"])
+    }
+
+    @Test("Label saves are bound to the account and region they were opened with, wait for pending pool changes and send nothing on a change while loading")
+    func labelSaves() async throws {
+        let target = KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"))
+        let saved = Environment()
+        #expect(await saved.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .saved)
+        #expect(await saved.api.calls == ["show c-1 LON1 key-a", "update c-1 LON1 key-a"])
+        #expect(await saved.sentPools.first?.map(\.labels) == [["team": "pool-a"], ["tier": "batch"]])
+
+        let stale = Environment()
+        #expect(await stale.controller.saveLabels([:], shownLabels: ["team": "other"], ofPool: "pool-b", in: target) == .notSaved(KubernetesNodePoolError.labelsChanged("pool-b").message))
+
+        let moved = Environment()
+        await moved.api.whileReloading {
+            await MainActor.run { moved.region = "NYC1" }
+        }
+        #expect(await moved.controller.saveLabels([:], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .notSaved(KubernetesNodePoolError.regionChanged.message))
+
+        let pending = Environment()
+        await pending.begin()
+        pending.controller.edit { $0.setCount(4, ofPool: "pool-a") }
+        #expect(await pending.controller.save(confirmingRemoval: false) == .requested)
+        #expect(await pending.controller.saveLabels([:], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .notSaved(KubernetesNodePoolError.changeAlreadyPending.message))
+
+        // A cancelled reload is neither a save nor a refusal, so the editor keeps the labels.
+        let cancelled = Environment()
+        await cancelled.api.failShow(with: CivoAPIError.cancelled)
+        #expect(await cancelled.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .cancelled)
+
+        for env in [stale, moved, cancelled] {
+            #expect(await env.sentPools.isEmpty)
+        }
+        #expect(await pending.sentPools.count == 1)
+    }
+
+    @Test("Pools Civo was asked for but does not report yet, requested by another client, block pool and label saves; settled or unreported required pools do not")
+    func outstandingChange() async {
+        let pools: [(id: String, size: String, count: Int)] = [("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 2)]
+        #expect(KubernetesNodePoolPlan.busyStatus(of: poolCluster(pools)) == nil)
+        #expect(KubernetesNodePoolPlan.busyStatus(of: poolCluster(pools, extra: requiredPools(pools))) == nil)
+        let grownElsewhere = poolCluster(pools, extra: requiredPools([("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 4)]))
+        let addedElsewhere = poolCluster(pools, extra: requiredPools(pools + [("pool-c", "g4s.kube.large", 1)]))
+        let emptiedElsewhere = poolCluster(pools, extra: requiredPools([]))
+
+        for outstanding in [grownElsewhere, addedElsewhere, emptiedElsewhere] {
+            #expect(KubernetesNodePoolPlan.busyStatus(of: outstanding) == .poolChangeOutstanding)
+
+            let opening = Environment()
+            await opening.begin(outstanding)
+            #expect(opening.controller.session == nil)
+            #expect(opening.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
+
+            let scaling = Environment()
+            await scaling.begin()
+            scaling.controller.edit { $0.setCount(5, ofPool: "pool-a") }
+            await scaling.api.replaceCluster(with: outstanding)
+            #expect(await scaling.controller.save(confirmingRemoval: false) == .cancelled)
+            #expect(scaling.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
+
+            let relabeling = Environment()
+            await relabeling.api.replaceCluster(with: outstanding)
+            let target = KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: relabeling.account)
+            #expect(await relabeling.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-a"], ofPool: "pool-a", in: target)
+                == .notSaved(KubernetesNodePoolError.poolChangeOutstanding.message))
+
+            for env in [opening, scaling, relabeling] {
+                #expect(await env.sentPools.isEmpty)
+            }
+        }
+    }
+
+    @Test("A changed pool, a busy cluster, a size Civo no longer offers, revoked Full Access or a region change while loading sends nothing")
+    func nothingSent() async {
+        let stale = Environment()
+        await stale.begin()
+        stale.controller.edit { $0.setCount(1, ofPool: "pool-a") }
+        await stale.api.replaceCluster(with: poolCluster([("pool-a", "g4s.kube.small", 4), ("pool-b", "g4s.kube.medium", 2)]))
+        #expect(await stale.controller.save(confirmingRemoval: true) == .cancelled)
+        #expect(stale.notice == KubernetesNodePoolError.poolChanged("pool-a").message)
+
+        let busy = Environment()
+        await busy.begin()
+        busy.controller.edit { $0.setCount(4, ofPool: "pool-a") }
+        await busy.api.replaceCluster(with: poolCluster(status: "SCALING", [("pool-a", "g4s.kube.small", 3)]))
+        #expect(await busy.controller.save(confirmingRemoval: false) == .cancelled)
+        #expect(busy.notice == KubernetesNodePoolError.clusterBusy("SCALING").message)
+
+        let withdrawn = Environment()
+        await withdrawn.begin()
+        withdrawn.controller.edit { $0.addPool(size: "g4s.kube.large", count: 1) }
+        await withdrawn.api.replaceSizes(with: [nodeSize("g4s.kube.small")])
+        #expect(await withdrawn.controller.save(confirmingRemoval: false) == .cancelled)
+        #expect(withdrawn.notice == KubernetesNodePoolError.sizeUnavailable("g4s.kube.large").message)
+
+        let revoked = Environment()
+        await revoked.begin()
+        revoked.controller.edit { $0.setCount(4, ofPool: "pool-a") }
+        revoked.accessAllowed = false
+        #expect(await revoked.controller.save(confirmingRemoval: false) == .cancelled)
+        #expect(revoked.notice == KubernetesNodePoolError.accessRevoked.message)
+
+        let moved = Environment()
+        await moved.begin()
+        moved.controller.edit { $0.setCount(4, ofPool: "pool-a") }
+        await moved.api.whileReloading {
+            await MainActor.run {
+                moved.region = "NYC1"
+                moved.notifications.post(name: .civoRegionDidChange, object: nil)
+            }
+        }
+        #expect(await moved.controller.save(confirmingRemoval: false) == nil)
+        #expect(moved.controller.session == nil)
+        #expect(moved.notice == KubernetesNodePoolError.regionChanged.message)
+
+        for env in [stale, busy, withdrawn, revoked, moved] {
+            #expect(await env.sentPools.isEmpty)
+        }
+    }
+
+    @Test("A refusal keeps the editor open with Civo's reason; a timeout is reported as unknown and not sent again")
+    func failures() async {
+        let refused = Environment()
+        await refused.begin()
+        refused.controller.edit { $0.setCount(9, ofPool: "pool-a") }
+        await refused.api.failUpdate(with: CivoAPIError.httpError(403, "quota exceeded"))
+        #expect(await refused.controller.save(confirmingRemoval: false) == nil)
+        #expect(refused.controller.session != nil)
+        #expect(refused.controller.sheetError == CivoAPIError.httpError(403, "quota exceeded").localizedDescription)
+        #expect(!refused.controller.isChangePending(forCluster: "c-1", region: "LON1", account: refused.account))
+
+        let lost = Environment()
+        await lost.begin()
+        lost.controller.edit { $0.setCount(4, ofPool: "pool-a") }
+        await lost.api.failUpdate(with: CivoAPIError.httpError(408, "Request Timeout"))
+        #expect(await lost.controller.save(confirmingRemoval: false) == .uncertain)
+        #expect(lost.controller.session == nil)
+        #expect(lost.notice == KubernetesNodePoolController.unknownResultMessage)
+        #expect(lost.activities.isEmpty)
+        #expect(await lost.sentPools.count == 1)
     }
 }

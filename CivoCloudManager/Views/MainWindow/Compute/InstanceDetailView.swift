@@ -10,6 +10,7 @@ struct InstanceDetailView: View {
     @State private var copiedPassword = false
     @State private var credentialsTarget: ConsoleTarget?
     @State private var resizeSize = ""
+    @State private var confirmingResize = false
     /// Set while the reverse DNS is edited, captured when editing starts.
     @State private var reverseDnsTarget: ConsoleTarget?
     @State private var reverseDnsValue = ""
@@ -401,14 +402,16 @@ struct InstanceDetailView: View {
             .controlSize(.small)
             .help("Save a username and password for this instance in this Mac's keychain")
 
-            Button {
-                resizeSize = instance.size ?? ""
-                vm.beginConfirmation(.resize, for: instance)
-            } label: {
-                Label("Resize", systemImage: "arrow.up.right.circle")
+            if InstanceResize.isAllowed(status: instance.status) {
+                Button {
+                    resizeSize = ""
+                    vm.beginConfirmation(.resize, for: instance)
+                } label: {
+                    Label("Resize", systemImage: "arrow.up.right.circle")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
             }
-            .buttonStyle(.bordered)
-            .controlSize(.small)
 
             Spacer()
 
@@ -434,25 +437,115 @@ struct InstanceDetailView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            SizePickerGrid(sizes: vm.availableSizes, selectedSize: $resizeSize, filterPrefix: "Instance")
+            resizeSizeChoice
                 .frame(maxHeight: 300)
+
+            if let estimate = resizeCostEstimate {
+                resizeCostRow(estimate)
+            }
 
             HStack {
                 Button("Cancel") { vm.cancelConfirmation() }
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("Resize") {
-                    guard let target = vm.confirmPendingAction() else { return }
-                    let size = resizeSize
-                    Task { await vm.resizeInstance(target, size: size) }
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(resizeSize.isEmpty || resizeSize == instance.size)
-                .keyboardShortcut(.defaultAction)
+                Button("Resize...") { confirmingResize = true }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(selectedResizeSize == nil)
+                    .keyboardShortcut(.defaultAction)
             }
         }
         .padding(24)
         .frame(width: 500)
+        .task { await vm.loadResizeSizes() }
+        .alert(
+            Text("Resize \(instance.name) to \(selectedResizeSize?.displayName ?? resizeSize)?"),
+            isPresented: $confirmingResize
+        ) {
+            Button("Resize") {
+                guard let target = vm.confirmPendingAction() else { return }
+                let size = resizeSize
+                Task { await vm.resizeInstance(target, size: size) }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("The instance will be rebooted and billed at the new size from then on.")
+        }
+    }
+
+    @ViewBuilder
+    private var resizeSizeChoice: some View {
+        switch vm.resizeSizes {
+        case .loading:
+            ProgressView("Loading sizes...")
+                .frame(maxWidth: .infinity, minHeight: 80)
+        case .failed(let message):
+            VStack(spacing: 8) {
+                Text(message)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                Button("Retry") { Task { await vm.loadResizeSizes() } }
+            }
+            .frame(maxWidth: .infinity, minHeight: 80)
+        case .loaded:
+            switch resizeOptions {
+            case nil, .comparisonUnavailable:
+                VStack(spacing: 8) {
+                    Text("Civo did not report the CPU, RAM and disk of this instance or its current size, so the app cannot tell which sizes are larger.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                    Button("Reload") { Task { await vm.reloadResizeComparison() } }
+                }
+                .frame(maxWidth: .infinity, minHeight: 80)
+            case .larger(let sizes) where sizes.isEmpty:
+                Text("No larger instance size is available for this instance.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, minHeight: 80)
+            case .larger(let sizes):
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Only larger sizes are shown. Civo cannot resize an instance to a smaller size.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    ScrollView {
+                        SizePickerGrid(sizes: sizes, selectedSize: $resizeSize)
+                    }
+                }
+            }
+        }
+    }
+
+    /// From the sizes of the region captured when Resize was started.
+    private var resizeOptions: ResizeOptions? {
+        guard let target = vm.pendingAction?.target else { return nil }
+        return vm.resizeOptions(for: target)
+    }
+
+    private var selectedResizeSize: CivoSize? {
+        resizeOptions?.sizes.first { $0.name == resizeSize }
+    }
+
+    /// nil while no size is selected or either rate is unknown, which hides the row.
+    private var resizeCostEstimate: ResizeCostEstimate? {
+        guard let current = instance.size, let selected = selectedResizeSize else { return nil }
+        return ResizeCostEstimate(
+            currentHourly: CivoCharge.hourlyRate(forSize: current),
+            newHourly: CivoCharge.hourlyRate(forSize: selected.name)
+        )
+    }
+
+    private func resizeCostRow(_ estimate: ResizeCostEstimate) -> some View {
+        let rate = FloatingPointFormatStyle<Double>.Currency(code: "USD").precision(.fractionLength(2...4))
+        let hourly = rate.sign(strategy: .always())
+        let monthly = FloatingPointFormatStyle<Double>.Currency(code: "USD").precision(.fractionLength(2)).sign(strategy: .always())
+        return Label {
+            Text("Estimate: \(estimate.currentHourly.formatted(rate)) to \(estimate.newHourly.formatted(rate)) per hour, a change of \(estimate.hourlyDifference.formatted(hourly)) per hour and \(estimate.monthlyDifference.formatted(monthly)) per month (730 hours)")
+        } icon: {
+            Image(systemName: "dollarsign.circle")
+        }
+        .font(.caption)
+        .foregroundStyle(.secondary)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func passwordRow(_ password: String) -> some View {

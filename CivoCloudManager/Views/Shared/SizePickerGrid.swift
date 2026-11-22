@@ -26,8 +26,9 @@ struct SizePickerGrid: View {
         selectedType ?? sizeTypes.first ?? ""
     }
 
+    /// Sizes without a `type`, as in the documented payload, cannot be grouped and stay in every tab.
     private var filteredSizes: [CivoSize] {
-        applicableSizes.filter { $0.type == activeType }
+        applicableSizes.filter { $0.type == nil || $0.type == activeType }
     }
 
     var body: some View {
@@ -77,17 +78,6 @@ private struct SizeCard: View {
     let size: CivoSize
     let isSelected: Bool
 
-    private var hourlyRate: Double? {
-        // Try exact match, then partial match on size name
-        let rates = CivoCharge.hourlyRates
-        if let rate = rates[size.name] { return rate }
-        // Match by looking for the size code in charge keys
-        for (key, rate) in rates {
-            if key.hasSuffix(size.name) || key.contains(size.name) { return rate }
-        }
-        return nil
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             // Specs row
@@ -98,7 +88,7 @@ private struct SizeCard: View {
             }
 
             // Price
-            if let rate = hourlyRate {
+            if let rate = CivoCharge.hourlyRate(forSize: size.name) {
                 HStack(alignment: .firstTextBaseline, spacing: 2) {
                     Text("$\(rate, specifier: "%.2f")")
                         .font(.system(.title3, design: .rounded).bold())
@@ -109,7 +99,7 @@ private struct SizeCard: View {
 
                     Spacer()
 
-                    Text("~$\(rate * 730, specifier: "%.0f")/mo")
+                    Text("~$\(rate * CivoCharge.hoursPerMonth, specifier: "%.0f")/mo")
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }

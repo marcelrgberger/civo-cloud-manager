@@ -30,6 +30,28 @@ enum InstanceTargetError: Error, Equatable {
     }
 }
 
+/// Why a resize was refused before anything was sent.
+enum InstanceResizeError: Error, Equatable {
+    case notRunning
+    case sizeNotEligible
+
+    var message: String {
+        switch self {
+        case .notRunning:
+            String(localized: "This app resizes only running instances. Nothing was sent.")
+        case .sizeNotEligible:
+            String(localized: "The selected size is no longer available as a larger size for this instance. Nothing was sent.")
+        }
+    }
+}
+
+/// Sizes loaded for the resize sheet, with the region Civo listed them for.
+enum ResizeSizes: Equatable {
+    case loading
+    case loaded([CivoSize], region: String)
+    case failed(String)
+}
+
 /// What a confirmed instance deletion did.
 enum InstanceDeletionOutcome: Equatable {
     /// Civo confirmed that this request deleted the instance.
@@ -51,6 +73,8 @@ struct PendingInstanceAction: Equatable {
 
     let kind: Kind
     let target: ConsoleTarget
+    /// Tells two confirmations of the same kind and target apart, such as a resize sheet closed and opened again.
+    let id = UUID()
 }
 
 /// Why the recovery mode status of an instance could not be read.
@@ -112,7 +136,15 @@ final class InstanceViewModel {
     /// Region the current `instances` were fetched from.
     private(set) var instancesRegion = ""
     /// Dropped with a message as soon as its target is no longer valid.
-    private(set) var pendingAction: PendingInstanceAction?
+    private(set) var pendingAction: PendingInstanceAction? {
+        didSet {
+            guard oldValue?.id != pendingAction?.id else { return }
+            // A size load of the previous confirmation must not publish into this one. The sizes stay while
+            // nothing is pending, because a confirmed resize checks its size against them.
+            resizeSizesLoadID = nil
+            if pendingAction?.kind == .resize { resizeSizes = .loading }
+        }
+    }
     var isCreatingInstance = false
     var isCreatingSSHKey = false
     var isSaving = false
@@ -123,6 +155,10 @@ final class InstanceViewModel {
     var availableFirewalls: [CivoFirewall] = []
     var availableSizes: [CivoSize] = []
     var availableDiskImages: [CivoDiskImage] = []
+    /// Loaded by the resize sheet itself, independent of the Create form.
+    private(set) var resizeSizes = ResizeSizes.loading
+    /// The newest size load of the current resize confirmation; only its result is published.
+    private var resizeSizesLoadID: UUID?
     /// nil until loaded or when loading failed; then only one instance can be created at a time.
     private(set) var creationQuota: CivoQuota?
     /// Where to find the initial password of the instances just created. Never contains the password.
@@ -154,6 +190,7 @@ final class InstanceViewModel {
     private let api: any InstanceAPI
     private let volumes: any InstanceVolumeAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
+    private let loadSizes: @Sendable (_ region: String) async throws -> [CivoSize]
     private let loadFirewallOptions: @Sendable (_ region: String) async throws -> InstanceFirewallOptions
     private let settingsRegion: @MainActor () -> String
     private let isAccessAllowed: @MainActor () -> Bool
@@ -177,6 +214,7 @@ final class InstanceViewModel {
         volumes: any InstanceVolumeAPI = CivoVolumeService(),
         recoveryReboots: RecoveryRebootStore = .standard,
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
+        loadSizes: (@Sendable (_ region: String) async throws -> [CivoSize])? = nil,
         loadFirewallOptions: (@Sendable (_ region: String) async throws -> InstanceFirewallOptions)? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
         isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
@@ -192,6 +230,8 @@ final class InstanceViewModel {
         recoveryChangesAwaitingReboot = recoveryReboots.load()
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
+        let sizeService = CivoSizeService()
+        self.loadSizes = loadSizes ?? { region in try await sizeService.listSizes(region: region) }
         let firewallService = CivoFirewallService()
         let networkService = CivoNetworkService()
         self.loadFirewallOptions = loadFirewallOptions ?? { region in
@@ -749,10 +789,62 @@ final class InstanceViewModel {
         }
     }
 
+    /// Loads the sizes of the region captured for the pending resize, so neither the Create form nor a
+    /// later Settings region decides what the sheet offers.
+    /// A load that finishes after its sheet was closed, or after a newer load was started, publishes nothing,
+    /// whether or not it was cancelled.
+    func loadResizeSizes() async {
+        guard let pending = pendingAction, pending.kind == .resize else { return }
+        let region = pending.target.region
+        let loadID = UUID()
+        resizeSizesLoadID = loadID
+        resizeSizes = .loading
+        let result: ResizeSizes
+        do {
+            result = .loaded(try await loadSizes(region), region: region)
+        } catch {
+            // nil for a cancelled load: the sheet was closed.
+            guard let message = CivoAPIError.userMessage(error) else { return }
+            result = .failed(message)
+        }
+        guard pendingAction?.id == pending.id, resizeSizesLoadID == loadID else { return }
+        resizeSizes = result
+    }
+
+    /// Lists the instances again, then their sizes, for a sheet that could not compare sizes. Loads no sizes
+    /// if the sheet was closed or opened again during the refresh.
+    func reloadResizeComparison() async {
+        guard let pending = pendingAction, pending.kind == .resize else { return }
+        await refresh()
+        guard pendingAction?.id == pending.id else { return }
+        await loadResizeSizes()
+    }
+
+    /// What the listed instance of `target` may be resized to, only from sizes loaded for the target's region.
+    /// nil while no such sizes are loaded or the instance is no longer listed.
+    func resizeOptions(for target: ConsoleTarget) -> ResizeOptions? {
+        guard case .loaded(let sizes, let region) = resizeSizes, region == target.region,
+              let instance = instances.first(where: { $0.id == target.instanceId }) else { return nil }
+        return InstanceResize.options(sizes, for: instance)
+    }
+
+    /// After the target checks, checks the status and size again on the current list, so an instance that
+    /// stopped or changed size while the sheet was open is not resized.
     func resizeInstance(_ target: ConsoleTarget, size: String) async {
+        if targetError(for: target) == nil, let problem = resizeError(for: target, size: size) {
+            error = problem.message
+            return
+        }
         await perform("Resized to \(size)", on: target) {
             try await $0.resizeInstance(target.instanceId, size: size, region: target.region)
         }
+    }
+
+    private func resizeError(for target: ConsoleTarget, size: String) -> InstanceResizeError? {
+        guard let instance = instances.first(where: { $0.id == target.instanceId }) else { return nil }
+        guard InstanceResize.isAllowed(status: instance.status) else { return .notRunning }
+        guard resizeOptions(for: target)?.sizes.contains(where: { $0.name == size }) == true else { return .sizeNotEligible }
+        return nil
     }
 
     /// Sends one request for `target`, only if the target is still valid at this moment. Returns whether it succeeded.

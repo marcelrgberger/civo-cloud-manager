@@ -22,6 +22,9 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
     let cniPlugin: String?
     let createdAt: String?
     let pools: [CivoNodePool]?
+    /// The pools Civo was last asked for, as named in its Go client `civogo`; they differ from `pools` until
+    /// Civo has applied that request.
+    let requiredPools: [CivoNodePool]?
     let installedApplications: [CivoK8sApp]?
     let conditions: [CivoK8sCondition]?
     let kubeconfig: String?
@@ -42,6 +45,7 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
         case namespace
         case cniPlugin = "cni_plugin"
         case createdAt = "created_at"
+        case requiredPools = "required_pools"
         case installedApplications = "installed_applications"
         case kubeconfig
     }
@@ -71,7 +75,7 @@ struct CivoNodePool: Codable, Identifiable, Sendable {
     }
 }
 
-struct CivoNodeTaint: Codable, Sendable {
+struct CivoNodeTaint: Codable, Equatable, Sendable {
     let key: String?
     let value: String?
     let effect: String?
