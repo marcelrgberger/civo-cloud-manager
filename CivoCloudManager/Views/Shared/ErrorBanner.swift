@@ -40,3 +40,31 @@ struct IncompleteListBanner: View {
         .transition(.move(edge: .top).combined(with: .opacity))
     }
 }
+
+/// Information the user should read once, closed with its own button.
+struct NoticeBanner: View {
+    let message: String
+    let onDismiss: () -> Void
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "info.circle.fill")
+                .foregroundStyle(.blue)
+            Text(message)
+                .font(.caption)
+            Spacer()
+            Button(action: onDismiss) {
+                Label("Close", systemImage: "xmark.circle.fill")
+                    .labelStyle(.iconOnly)
+            }
+            .buttonStyle(.borderless)
+            .help("Close")
+        }
+        .padding(10)
+        .background(.blue.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .padding(.horizontal)
+        .padding(.top, 8)
+        .transition(.move(edge: .top).combined(with: .opacity))
+    }
+}

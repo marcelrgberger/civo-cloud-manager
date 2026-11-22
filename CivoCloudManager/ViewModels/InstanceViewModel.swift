@@ -59,17 +59,21 @@ final class InstanceViewModel {
     var availableFirewalls: [CivoFirewall] = []
     var availableSizes: [CivoSize] = []
     var availableDiskImages: [CivoDiskImage] = []
+    /// nil until loaded or when loading failed; then only one instance can be created at a time.
+    private(set) var creationQuota: CivoQuota?
+    /// Where to find the initial password of the instances just created. Never contains the password.
+    var creationNotice: String?
     /// Firewalls and networks of the region the shown instance was listed from.
     private(set) var firewallOptions: InstanceFirewallOptions?
     /// Why the last loading of `firewallOptions` failed, nil while it succeeded or is running.
     private(set) var firewallOptionsError: String?
 
-    private let instanceService = CivoInstanceService()
     private let sshKeyService = CivoSSHKeyService()
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
     private let sizeService = CivoSizeService()
     private let volumeService = CivoVolumeService()
+    private let quotaService = CivoQuotaService()
     private let credentials: InstanceCredentialStore
     private let api: any InstanceAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
@@ -253,24 +257,72 @@ final class InstanceViewModel {
             saveError = CivoAPIError.userMessage(error)
             Log.error("Failed to load form data: \(error.localizedDescription)")
         }
+        do {
+            creationQuota = try await quotaService.getQuota()
+        } catch {
+            creationQuota = nil
+            Log.error("Failed to load quota for instance creation: \(error.localizedDescription)")
+        }
     }
 
+    /// The most instances one Create may request for `form`, from the quota loaded with the form data.
+    func maximumCreationCount(for form: InstanceCreationForm) -> Int {
+        InstanceBulkCreation.maximumCount(quota: creationQuota, size: size(of: form), createsPublicIp: form.createsPublicIp)
+    }
+
+    /// How many instances of the form's size fit the remaining quota, nil while no quota is loaded.
+    func creationCapacity(for form: InstanceCreationForm) -> Int? {
+        InstanceBulkCreation.capacity(quota: creationQuota, size: size(of: form), createsPublicIp: form.createsPublicIp)
+    }
+
+    private func size(of form: InstanceCreationForm) -> CivoSize? {
+        availableSizes.first { $0.name == form.size }
+    }
+
+    /// Sends the form. More than one instance is created only after `BulkCreationConfirmation` was confirmed.
     func createInstance(_ form: InstanceCreationForm) async -> Bool {
         guard let body = form.requestBody() else { return false }
+        guard isAccessAllowed() else {
+            saveError = InstanceTargetError.accessRevoked.message
+            return false
+        }
+        guard form.count <= maximumCreationCount(for: form) else {
+            saveError = String(localized: "The remaining quota does not allow this many instances. Lower the count.")
+            return false
+        }
         isSaving = true
         saveError = nil
+        creationNotice = nil
         defer { isSaving = false }
 
         do {
-            _ = try await instanceService.createInstance(body)
-            isCreatingInstance = false
+            let response = try await api.createInstance(body)
+            showCreatedInstances()
             showSuccess = true
             await refresh()
+            if response.setsInitialPassword { creationNotice = Self.initialPasswordNotice }
+            return true
+        } catch CivoAPIError.decodingError {
+            // Civo answered with success, so instances may have been created: show the list before a retry.
+            showCreatedInstances()
+            await refresh()
+            error = String(localized: "Civo accepted the request, but its answer could not be read. Check the instance list before creating again.")
+            if form.sshKeyId.isEmpty { creationNotice = Self.initialPasswordNotice }
             return true
         } catch {
             saveError = CivoAPIError.userMessage(error)
             return false
         }
+    }
+
+    /// Closes the form and returns to the list, where the new instances and the creation notice are shown.
+    private func showCreatedInstances() {
+        isCreatingInstance = false
+        selectedInstance = nil
+    }
+
+    static var initialPasswordNotice: String {
+        String(localized: "No SSH key was chosen, so Civo set an initial password. Open the instance: its detail page shows the password under Security after Touch ID or your system password.")
     }
 
     func createSSHKey(_ body: sending [String: Any]) async -> Bool {

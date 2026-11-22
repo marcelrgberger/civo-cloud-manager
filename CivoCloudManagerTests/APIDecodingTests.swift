@@ -1847,6 +1847,8 @@ private actor FakeInstanceAPI: InstanceAPI {
     private(set) var calls: [String] = []
     private var deletionFails = false
     private var firewallError: Error?
+    /// Civo's answer to the next create; one that cannot be decoded is reported like the API client does.
+    private var creationAnswer = Data(#"{"id": "created-1", "initial_password": "not-shown"}"#.utf8)
 
     init(instancesByRegion: [String: [CivoInstance]]) {
         self.instancesByRegion = instancesByRegion
@@ -1855,9 +1857,19 @@ private actor FakeInstanceAPI: InstanceAPI {
     func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
     func failDeletion() { deletionFails = true }
     func failFirewallChange(with error: Error) { firewallError = error }
+    func answerCreation(with answer: Data) { creationAnswer = answer }
 
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance> {
         PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
+    }
+
+    func createInstance(_ body: sending [String: Any]) async throws -> InstanceCreationResponse {
+        calls.append("create \(body["hostname"] as? String ?? "")")
+        do {
+            return try JSONDecoder().decode(InstanceCreationResponse.self, from: creationAnswer)
+        } catch {
+            throw CivoAPIError.decodingError(error.localizedDescription)
+        }
     }
 
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
@@ -1939,6 +1951,27 @@ private final class InstanceEnvironment {
 @Suite("Instance action targets")
 @MainActor
 struct InstanceActionTargetTests {
+    @Test("A create started from an instance's detail page returns to the list that shows the password notice",
+          arguments: [#"{"id": "created-1", "initial_password": "not-shown"}"#, #"{"unexpected": true}"#])
+    func createReturnsToList(answer: String) async throws {
+        let env = InstanceEnvironment()
+        await env.api.answerCreation(with: Data(answer.utf8))
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.isCreatingInstance = true
+        var form = InstanceCreationForm()
+        form.hostname = "web-2"
+        form.size = "g3.small"
+        form.diskImage = "ubuntu-jammy"
+        form.networkId = "net-default"
+
+        #expect(await env.vm.createInstance(form))
+        #expect(await env.api.calls == ["create web-2"])
+        #expect(!env.vm.isCreatingInstance)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.creationNotice == InstanceViewModel.initialPasswordNotice)
+    }
+
     @Test("Actions use the region the instance was listed from, never a later Settings region")
     func capturedRegion() async throws {
         let env = InstanceEnvironment()
@@ -2569,5 +2602,114 @@ struct InstanceCreationFormTests {
         form.networkId = "5c16ab17"
         #expect(form.firewallId.isEmpty)
         #expect(try #require(form.requestBody())["firewall_id"] == nil)
+    }
+}
+
+@Suite("Create Instance advanced options")
+struct InstanceCreationAdvancedTests {
+    private var complete: InstanceCreationForm {
+        var form = InstanceCreationForm()
+        form.hostname = "web-1.example.com"
+        form.size = "g3.small"
+        form.diskImage = "ubuntu-jammy"
+        form.networkId = "8c97b398"
+        return form
+    }
+
+    /// Quota as in https://www.civo.com/api/quota, which sends the numbers as strings.
+    private func quota(instances: (Int, Int), cpu: (Int, Int), publicIps: (Int, Int)) throws -> CivoQuota {
+        try JSONDecoder().decode(CivoQuota.self, from: Data("""
+        {"instance_count_limit":"\(instances.0)","instance_count_usage":"\(instances.1)",
+         "cpu_core_limit":"\(cpu.0)","cpu_core_usage":"\(cpu.1)",
+         "ram_mb_limit":"204800","ram_mb_usage":"0","disk_gb_limit":"10000","disk_gb_usage":"0",
+         "public_ip_address_limit":"\(publicIps.0)","public_ip_address_usage":"\(publicIps.1)"}
+        """.utf8))
+    }
+
+    private let small = try! JSONDecoder().decode(CivoSize.self, from: Data("""
+    {"name":"g3.small","cpu_cores":2,"ram_mb":2048,"disk_gb":40}
+    """.utf8))
+
+    @Test("Empty optional fields are left out, count only above 1, and the toggle maps to public_ip")
+    func optionalFields() throws {
+        var form = complete
+        form.reverseDns = "  "
+        form.initialUser = "  "
+        form.script = " \n "
+        var body = try #require(form.requestBody())
+        #expect(body["public_ip"] as? String == "create")
+        for key in ["count", "initial_user", "reverse_dns", "script", "tags", "ssh_key_id"] {
+            #expect(body[key] == nil, "\(key) must be left out")
+        }
+
+        form.createsPublicIp = false
+        form.count = 3
+        form.initialUser = " deploy "
+        form.script = "#!/bin/sh\necho \"ready\"\n"
+        body = try #require(form.requestBody())
+        #expect(body["public_ip"] as? String == "none")
+        #expect(body["count"] as? Int == 3)
+        #expect(body["initial_user"] as? String == "deploy")
+        #expect(body["script"] as? String == "#!/bin/sh\necho \"ready\"\n")
+    }
+
+    @Test("Reverse DNS follows the hostname until it is edited")
+    func reverseDnsDefault() throws {
+        var form = complete
+        #expect(try #require(form.requestBody())["reverse_dns"] as? String == "web-1.example.com")
+        form.hostname = "web-2.example.com"
+        #expect(form.reverseDns == "web-2.example.com")
+        form.reverseDns = "ptr.example.com"
+        form.hostname = "web-3.example.com"
+        #expect(try #require(form.requestBody())["reverse_dns"] as? String == "ptr.example.com")
+    }
+
+    @Test("Tags are trimmed, deduplicated and space-separated; a tag with a space sends nothing")
+    func tags() throws {
+        var form = complete
+        form.tags = " web, prod ,, web "
+        #expect(try #require(form.requestBody())["tags"] as? String == "web prod")
+        #expect(form.tagsProblem == nil)
+
+        form.tags = "web, my tag"
+        #expect(form.requestBody() == nil)
+        #expect(form.tagsProblem != nil)
+    }
+
+    @Test("The count is limited by the tightest remaining quota and never below 1")
+    func maximumCount() throws {
+        let roomy = try quota(instances: (10, 5), cpu: (16, 10), publicIps: (10, 8))
+        #expect(InstanceBulkCreation.maximumCount(quota: roomy, size: small, createsPublicIp: false) == 3, "6 free cores, 2 each")
+        #expect(InstanceBulkCreation.maximumCount(quota: roomy, size: small, createsPublicIp: true) == 2, "2 free public IPs")
+        #expect(InstanceBulkCreation.maximumCount(quota: roomy, size: nil, createsPublicIp: false) == 5, "5 free instances")
+
+        let full = try quota(instances: (10, 10), cpu: (16, 16), publicIps: (10, 10))
+        #expect(InstanceBulkCreation.capacity(quota: full, size: small, createsPublicIp: true) == 0)
+        #expect(InstanceBulkCreation.maximumCount(quota: full, size: small, createsPublicIp: true) == 1, "Civo reports the exceeded quota")
+        #expect(InstanceBulkCreation.capacity(quota: nil, size: small, createsPublicIp: true) == nil)
+        #expect(InstanceBulkCreation.maximumCount(quota: nil, size: small, createsPublicIp: true) == 1)
+    }
+
+    @Test("More than one instance needs a confirmation with count times the hourly rate")
+    func bulkConfirmation() throws {
+        let rates = ["instance-g3.small": 0.014881]
+        #expect(BulkCreationConfirmation(count: 1, size: "g3.small", rates: rates) == nil)
+
+        let confirmation = try #require(BulkCreationConfirmation(count: 3, size: "g3.small", rates: rates))
+        #expect(abs(try #require(confirmation.totalHourlyCost) - 0.044643) < 0.000001)
+
+        let unknown = try #require(BulkCreationConfirmation(count: 2, size: "g9.custom", rates: rates))
+        #expect(unknown.totalHourlyCost == nil)
+    }
+
+    @Test("The create answer keeps only whether Civo set an initial password, for one or several instances")
+    func creationResponse() throws {
+        func decode(_ json: String) throws -> InstanceCreationResponse {
+            try JSONDecoder().decode(InstanceCreationResponse.self, from: Data(json.utf8))
+        }
+        #expect(try decode(#"{"id":"779d651a","initial_user":"root","initial_password":"foobar"}"#).setsInitialPassword)
+        #expect(try !decode(#"{"id":"779d651a","initial_password":null,"ssh_key_id":"21aa424f"}"#).setsInitialPassword)
+        #expect(try decode(#"[{"id":"a","initial_password":""},{"id":"b","initial_password":"foobar"}]"#).setsInitialPassword)
+        #expect(throws: DecodingError.self) { try decode(#"{"result":"success"}"#) }
     }
 }
