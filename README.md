@@ -12,7 +12,7 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | --- | --- |
 | Menu bar | Open/close access for the current public IP, per-firewall ports, bulk actions, named IP presets, timed access, refresh every 60 seconds |
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
-| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), resize, firewall change within the instance network (confirmed first), reverse DNS, tags, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
+| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), resize, firewall change within the instance network (confirmed first), reverse DNS, tag editing (removing all tags is confirmed first) and a tag filter on the instance list, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
 | Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
 | Networking | Networks, firewall rules, load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |

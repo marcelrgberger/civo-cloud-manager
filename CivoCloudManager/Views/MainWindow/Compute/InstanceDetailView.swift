@@ -326,10 +326,8 @@ struct InstanceDetailView: View {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                     infoRow("Instance ID", instance.id)
                     infoRow("Created", instance.createdAt ?? "—")
-                    if let tags = instance.tags, !tags.isEmpty {
-                        infoRow("Tags", tags.joined(separator: ", "))
-                    }
                 }
+                InstanceTagsEditor(instance: instance, vm: vm)
             }
             .padding(8)
         }
