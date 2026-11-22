@@ -1959,3 +1959,83 @@ struct ConcealedTextFieldTests {
         #expect(window.fieldEditor(true, for: field) is ConcealedFieldEditor)
     }
 }
+
+@Suite("Create Instance required fields")
+struct InstanceCreationFormTests {
+    /// Network list as in the example of https://www.civo.com/api/networks.
+    private let networks = try! JSONDecoder().decode([CivoNetwork].self, from: Data("""
+    [{"id":"8c97b398","default":false,"name":"cust-433e075e-4393-my-network","label":"my-network"},
+     {"id":"5c16ab17","default":true,"name":"cust-433e075e-808d-default","label":"Default"}]
+    """.utf8))
+
+    private var complete: InstanceCreationForm {
+        var form = InstanceCreationForm()
+        form.hostname = " web-1.example.com "
+        form.size = "g3.small"
+        form.diskImage = "ubuntu-jammy"
+        form.networkId = "8c97b398"
+        return form
+    }
+
+    @Test("A missing or blank required field produces no request", arguments: [
+        \InstanceCreationForm.hostname, \.size, \.diskImage, \.networkId,
+    ])
+    func missingField(_ field: any WritableKeyPath<InstanceCreationForm, String> & Sendable) {
+        var form = complete
+        form[keyPath: field] = ""
+        #expect(!form.isComplete)
+        #expect(form.requestBody() == nil)
+    }
+
+    @Test("Hostnames that are blank or contain whitespace produce no request", arguments: ["   ", "web 1"])
+    func invalidHostname(_ hostname: String) {
+        var form = complete
+        form.hostname = hostname
+        #expect(form.requestBody() == nil)
+    }
+
+    @Test("A complete form sends every required field and the trimmed hostname")
+    func completeBody() throws {
+        let body = try #require(complete.requestBody())
+        #expect(body["hostname"] as? String == "web-1.example.com")
+        #expect(body["size"] as? String == "g3.small")
+        #expect(body["template_id"] as? String == "ubuntu-jammy")
+        #expect(body["network_id"] as? String == "8c97b398")
+        #expect(body["firewall_id"] == nil)
+    }
+
+    @Test("The default network is resolved and sent as network_id instead of being left out")
+    func defaultNetwork() throws {
+        var form = complete
+        form.networkId = ""
+        form.selectDefaultNetwork(from: networks)
+        #expect(try #require(form.requestBody())["network_id"] as? String == "5c16ab17")
+
+        form.networkId = "8c97b398"
+        form.selectDefaultNetwork(from: networks)
+        #expect(form.networkId == "8c97b398")
+
+        form.networkId = "removed-network"
+        form.selectDefaultNetwork(from: networks.filter { $0.isDefault != true })
+        #expect(form.networkId.isEmpty)
+        #expect(form.requestBody() == nil)
+    }
+
+    @Test("Only firewalls of the selected network are offered, and a network change drops the firewall")
+    func firewallFilter() throws {
+        let firewalls = try JSONDecoder().decode([CivoFirewall].self, from: Data("""
+        [{"id":"fw-default","name":"Default (all open)","rules_count":3,"network_id":"5c16ab17"},
+         {"id":"fw-custom","name":"custom","rules_count":0,"network_id":"8c97b398"},
+         {"id":"fw-unknown","name":"no-network","rules_count":0}]
+        """.utf8))
+        #expect(InstanceCreationForm.firewalls(firewalls, in: "5c16ab17").map(\.id) == ["fw-default"])
+        #expect(InstanceCreationForm.firewalls(firewalls, in: "8c97b398").map(\.id) == ["fw-custom"])
+
+        var form = complete
+        form.firewallId = "fw-custom"
+        #expect(try #require(form.requestBody())["firewall_id"] as? String == "fw-custom")
+        form.networkId = "5c16ab17"
+        #expect(form.firewallId.isEmpty)
+        #expect(try #require(form.requestBody())["firewall_id"] == nil)
+    }
+}

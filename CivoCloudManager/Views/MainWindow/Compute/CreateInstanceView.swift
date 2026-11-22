@@ -2,19 +2,13 @@ import SwiftUI
 
 struct CreateInstanceView: View {
     @Bindable var vm: InstanceViewModel
-    @State private var hostname = ""
-    @State private var size = ""
-    @State private var diskImage = ""
-    @State private var networkId = ""
-    @State private var firewallId = ""
-    @State private var sshKeyId = ""
-    @State private var tags = ""
+    @State private var form = InstanceCreationForm()
 
     var body: some View {
         Form {
             Section("Instance Details") {
-                TextField("Hostname", text: $hostname)
-                Picker("Disk Image", selection: $diskImage) {
+                TextField("Hostname", text: $form.hostname)
+                Picker("Disk Image", selection: $form.diskImage) {
                     Text("Select an image").tag("")
                     ForEach(vm.availableDiskImages) { img in
                         Text(img.displayName).tag(img.id)
@@ -23,26 +17,26 @@ struct CreateInstanceView: View {
             }
 
             Section("Select Size") {
-                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $size, filterPrefix: "Instance")
+                SizePickerGrid(sizes: vm.availableSizes, selectedSize: $form.size, filterPrefix: "Instance")
             }
 
             Section("Networking") {
-                Picker("Network", selection: $networkId) {
-                    Text("Default").tag("")
+                Picker("Network", selection: $form.networkId) {
+                    Text("Select a network").tag("")
                     ForEach(vm.availableNetworks) { net in
                         Text(net.displayName).tag(net.id)
                     }
                 }
-                Picker("Firewall", selection: $firewallId) {
+                Picker("Firewall", selection: $form.firewallId) {
                     Text("Default").tag("")
-                    ForEach(vm.availableFirewalls) { fw in
+                    ForEach(InstanceCreationForm.firewalls(vm.availableFirewalls, in: form.networkId)) { fw in
                         Text(fw.name).tag(fw.id)
                     }
                 }
             }
 
             Section("Authentication") {
-                Picker("SSH Key", selection: $sshKeyId) {
+                Picker("SSH Key", selection: $form.sshKeyId) {
                     Text("None").tag("")
                     ForEach(vm.sshKeys) { key in
                         Text(key.name).tag(key.id)
@@ -51,7 +45,14 @@ struct CreateInstanceView: View {
             }
 
             Section("Tags") {
-                TextField("Tags (comma-separated)", text: $tags)
+                TextField("Tags (comma-separated)", text: $form.tags)
+            }
+
+            if !form.isComplete {
+                Section {
+                    Text("Hostname, size, disk image and network are required.")
+                        .foregroundStyle(.secondary)
+                }
             }
 
             if let error = vm.saveError {
@@ -62,27 +63,19 @@ struct CreateInstanceView: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Create Instance")
-        .task { await vm.loadFormData() }
+        .task {
+            await vm.loadFormData()
+            form.selectDefaultNetwork(from: vm.availableNetworks)
+        }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") { vm.isCreatingInstance = false }
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Create") {
-                    Task {
-                        var body: [String: Any] = ["hostname": hostname]
-                        if !size.isEmpty { body["size"] = size }
-                        if !diskImage.isEmpty { body["template_id"] = diskImage }
-                        if !networkId.isEmpty { body["network_id"] = networkId }
-                        if !firewallId.isEmpty { body["firewall_id"] = firewallId }
-                        if !sshKeyId.isEmpty { body["ssh_key_id"] = sshKeyId }
-                        if !tags.isEmpty {
-                            body["tags"] = tags.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }.joined(separator: " ")
-                        }
-                        _ = await vm.createInstance(body)
-                    }
+                    Task { _ = await vm.createInstance(form) }
                 }
-                .disabled(hostname.isEmpty || vm.isSaving)
+                .disabled(!form.isComplete || vm.isSaving)
             }
         }
     }

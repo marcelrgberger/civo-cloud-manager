@@ -84831,6 +84831,306 @@
         }
       }
     },
+    "Select a network" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a network"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerk auswählen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar una red"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionner un réseau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona una rete"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer een netwerk"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz sieć"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecionar uma rede"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择网络"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ネットワークを選択"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "네트워크 선택"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر شبكة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नेटवर्क चुनें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih jaringan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir ağ seçin"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите сеть"
+          }
+        }
+      }
+    },
+    "Hostname, size, disk image and network are required." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostname, size, disk image and network are required."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostname, Größe, Disk-Image und Netzwerk sind erforderlich."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se requieren el nombre de host, el tamaño, la imagen de disco y la red."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nom d'hôte, la taille, l'image disque et le réseau sont obligatoires."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome host, dimensione, immagine disco e rete sono obbligatori."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostnaam, grootte, schijfimage en netwerk zijn verplicht."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa hosta, rozmiar, obraz dysku i sieć są wymagane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nome do host, o tamanho, a imagem de disco e a rede são obrigatórios."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主机名、规格、磁盘映像和网络为必填项。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホスト名、サイズ、ディスクイメージ、ネットワークは必須です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "호스트명, 크기, 디스크 이미지, 네트워크는 필수입니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المضيف والحجم وصورة القرص والشبكة مطلوبة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "होस्टनेम, आकार, डिस्क इमेज और नेटवर्क आवश्यक हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama host, ukuran, citra disk, dan jaringan wajib diisi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana bilgisayar adı, boyut, disk imajı ve ağ zorunludur."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя хоста, размер, образ диска и сеть обязательны."
+          }
+        }
+      }
+    },
+    "Create Instance stays disabled until hostname, size, disk image and network are set. The default network is preselected, and only firewalls of the selected network are offered." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Instance stays disabled until hostname, size, disk image and network are set. The default network is preselected, and only firewalls of the selected network are offered."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instanz erstellen bleibt deaktiviert, bis Hostname, Größe, Disk-Image und Netzwerk gesetzt sind. Das Standardnetzwerk ist vorausgewählt, und es werden nur Firewalls des gewählten Netzwerks angeboten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear instancia permanece desactivado hasta que se definan el nombre de host, el tamaño, la imagen de disco y la red. La red predeterminada viene preseleccionada y solo se ofrecen los firewalls de la red seleccionada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer une instance reste désactivé tant que le nom d'hôte, la taille, l'image disque et le réseau ne sont pas définis. Le réseau par défaut est présélectionné, et seuls les pare-feu du réseau choisi sont proposés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea istanza resta disattivato finché nome host, dimensione, immagine disco e rete non sono impostati. La rete predefinita è preselezionata e vengono proposti solo i firewall della rete selezionata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instantie aanmaken blijft uitgeschakeld tot hostnaam, grootte, schijfimage en netwerk zijn ingesteld. Het standaardnetwerk is vooraf geselecteerd en alleen firewalls van het gekozen netwerk worden aangeboden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utwórz instancję pozostaje nieaktywne, dopóki nie zostaną ustawione nazwa hosta, rozmiar, obraz dysku i sieć. Sieć domyślna jest wstępnie wybrana, a dostępne są tylko zapory sieciowe wybranej sieci."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar instância permanece desativado até que o nome do host, o tamanho, a imagem de disco e a rede estejam definidos. A rede predefinida vem pré-selecionada e só são oferecidos os firewalls da rede selecionada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在设置主机名、规格、磁盘映像和网络之前，创建实例保持禁用。默认网络已预先选择，并且只提供所选网络中的防火墙。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホスト名、サイズ、ディスクイメージ、ネットワークを設定するまで、インスタンスを作成は無効のままです。デフォルトのネットワークがあらかじめ選択され、選択したネットワークのファイアウォールのみが表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "호스트명, 크기, 디스크 이미지, 네트워크를 설정할 때까지 인스턴스 생성은 비활성화된 상태로 유지됩니다. 기본 네트워크가 미리 선택되며, 선택한 네트워크의 방화벽만 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يبقى إنشاء مثيل معطلًا حتى يتم تعيين اسم المضيف والحجم وصورة القرص والشبكة. تكون الشبكة الافتراضية محددة مسبقًا، ولا تُعرض إلا جدران الحماية الخاصة بالشبكة المحددة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "होस्टनेम, आकार, डिस्क इमेज और नेटवर्क सेट होने तक इंस्टेंस बनाएं निष्क्रिय रहता है। डिफ़ॉल्ट नेटवर्क पहले से चुना रहता है, और केवल चुने गए नेटवर्क के फ़ायरवॉल दिखाए जाते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buat Instance tetap nonaktif sampai nama host, ukuran, citra disk, dan jaringan ditetapkan. Jaringan default sudah dipilih sebelumnya, dan hanya firewall dari jaringan yang dipilih yang ditawarkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana bilgisayar adı, boyut, disk imajı ve ağ ayarlanana kadar Sunucu Oluştur devre dışı kalır. Varsayılan ağ önceden seçilidir ve yalnızca seçilen ağın güvenlik duvarları sunulur."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка Создать экземпляр остается неактивной, пока не заданы имя хоста, размер, образ диска и сеть. Сеть по умолчанию выбрана заранее, и предлагаются только брандмауэры выбранной сети."
+          }
+        }
+      }
+    },
     "Instance actions require Full Access." : {
       "localizations" : {
         "en" : {

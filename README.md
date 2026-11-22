@@ -358,6 +358,12 @@ classDiagram
     LegalView --> LegalDocument
 ```
 
+## Create instance
+
+`POST /v2/instances` requires `hostname`, `size`, `network_id` and `template_id` ([Civo API](https://www.civo.com/api/instances)). `InstanceCreationForm` builds the request body and returns none while one of them is missing, so Create stays disabled and no request is sent. The hostname is trimmed and must not contain whitespace; a fully qualified domain name is not enforced.
+
+The network picker preselects the network that `GET /v2/networks` flags as `default` and always sends its ID as `network_id`, as the official Go client does (`civogo` `NewInstanceConfig` via `GetDefaultNetwork`). If no network is flagged as default, the user has to pick one. The firewall picker lists only firewalls whose `network_id` matches the selected network, and changing the network clears the chosen firewall. Leaving the firewall on Default omits `firewall_id`; in the default network Civo then uses the default firewall. API errors such as an exceeded quota are shown in the form.
+
 ## Instance action targets
 
 Every instance action (stop, start, reboot, resize, reverse DNS, delete, console and credentials) starts from a `ConsoleTarget` captured by `InstanceViewModel.consoleTarget(for:)`: the instance ID with the region the instance list was fetched from. Requests send that region explicitly, so a later Settings region never redirects them. Right before each request, `targetError(for:)` checks the target again and refuses it without sending anything when Full Access has ended, the region is unknown, the Settings region or the loaded list region no longer matches, or the instance is missing from the reloaded list. The reason is shown in the error banner.
@@ -547,7 +553,7 @@ Remaining architecture limitations include mutable shared API configuration acro
 
 ## Validation
 
-The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault and the concealed text field. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
+The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field and the Create Instance required fields, default network and firewall filter. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests
@@ -586,6 +592,7 @@ A native Xcode Release build additionally verifies target membership and resourc
 | `CivoCloudManager/Views/MainWindow/Compute/PasswordAccess.swift` | Shared owner authentication, relocking and concealed clipboard |
 | `CivoCloudManager/Services/CivoChargesService.swift` | UTC periods, monthly charge windows and the account-scoped month cache |
 | `CivoCloudManager/ViewModels/CostChargesViewModel.swift` | Latest-load-only charges for the cost dashboard |
+| `CivoCloudManager/Models/InstanceCreationForm.swift` | Create Instance required fields, default network and firewall filter |
 | `CivoCloudManager/Views/AppState.swift` | Menu bar state and persistent firewall closure queue/jobs |
 | `CivoCloudManager/Views/MenuBarView.swift` | Menu controls, closure errors and Retry |
 | `CivoCloudManager/Views/MainWindow/` | Resource screens and creation forms |

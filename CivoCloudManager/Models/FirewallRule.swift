@@ -7,6 +7,7 @@ struct CivoFirewall: Codable, Identifiable, Sendable {
     let id: String
     let name: String
     let rulesCount: String
+    let networkId: String?
     /// Region this firewall belongs to (set after decoding, not from API JSON).
     var region: String = ""
 
@@ -17,12 +18,14 @@ extension CivoFirewall {
     enum CodingKeys: String, CodingKey {
         case id, name
         case rulesCount = "rules_count"
+        case networkId = "network_id"
     }
 
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
         name = try c.decode(String.self, forKey: .name)
+        networkId = try c.decodeIfPresent(String.self, forKey: .networkId)
         // rules_count can be String or Int depending on the API version
         if let s = try? c.decode(String.self, forKey: .rulesCount) {
             rulesCount = s
