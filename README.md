@@ -411,7 +411,7 @@ sequenceDiagram
 
 - **Local only.** `InstanceCredentialStore` writes a generic-password item to the data-protection keychain of this Mac under the service `de.berger-rosenstock.CivoCloudManager.instance-credentials`, with `kSecAttrSynchronizable` off (no iCloud Keychain) and `kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly`. Username and password are both inside the protected item data, not in item attributes. The app's own keychain access group is declared in `CivoCloudManager.entitlements`; a missing entitlement is reported, not hidden.
 - **Key.** `InstanceCredentialKey` is the normalized region plus the instance ID, so renaming an instance keeps its entry and equal names in different regions never share one.
-- **Authentication.** Items are created with `.userPresence`. Showing, copying and starting an edit each need Touch ID or the system password; `InstanceCredentialVault` reuses that authenticated context for the read and the save of one edit. Revealed values and open edits are dropped after 30 seconds and on the same kind of events as the initial password (timeout, closing the sheet or window, app deactivation, screen lock, sleep, API key change). Results of an authentication that finishes after such an invalidation are discarded.
+- **Authentication.** Items are created with `.userPresence`. Creating an entry does not prompt: `InstanceCredentialVault` only checks that this Mac can authenticate its owner (`DeviceOwner.canAuthenticate`) and refuses to save otherwise, because nobody could read the entry again. Revealing a value, copying a hidden value and starting an edit each need Touch ID or the system password; the vault reuses that authenticated context for the read and the save of one edit. Copying a value that is already revealed uses the visible value without another prompt. Deleting reveals nothing, so it needs only a confirmation, no authentication. Revealed values and open edits are dropped after 30 seconds and on the same kind of events as the initial password (timeout, closing the sheet or window, app deactivation, screen lock, sleep, API key change). Results of an authentication that finishes after such an invalidation are discarded.
 - **Clipboard.** Copies go through the same concealed, auto-clearing pasteboard as the initial password. The edit fields route copy and cut through it as well and block other export paths.
 - **Existence check.** Without authentication the app only asks whether an item exists. A signed build can answer "interaction not allowed" for an existing protected item; that answer counts as "may exist" and never reveals a value.
 - **Console.** The console window shows saved credentials next to the initial login for manual entry, because copy and paste do not reach the remote screen.
@@ -421,12 +421,16 @@ sequenceDiagram
 flowchart TD
     A[Credentials in detail view or list menu] --> B{Entry exists?}
     B -->|No| C[Enter username and password]
-    C --> D[Touch ID or system password]
-    D --> E[Save to this Mac's keychain, no iCloud sync]
-    B -->|Yes| F[Show, copy, edit or delete]
-    F --> G[Touch ID or system password per action]
+    C --> D{Mac can authenticate its owner?}
+    D -->|Yes| E[Save to this Mac's keychain, no iCloud sync]
+    D -->|No| X[Not saved, error shown]
+    B -->|Yes| F{Action}
+    F -->|Show, copy hidden value, edit| G[Touch ID or system password]
     G --> H[Value visible or edit open for at most 30 seconds]
     H --> I[Hidden again on timeout, close, deactivation, lock, sleep, key change]
+    H -->|Copy revealed value| P[Concealed clipboard, no new prompt]
+    F -->|Delete| Q[Confirmation only, no authentication]
+    Q --> R[Entry removed from the keychain]
     J[Instance deleted on Civo] --> K[Saved credentials removed, error reported if that fails]
 ```
 
