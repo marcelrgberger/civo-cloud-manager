@@ -153,7 +153,8 @@ classDiagram
         +resolvedQueryItems(queryItems, defaultRegion, regionRequired)
         +get(path)
         +getArray(path)
-        +getPaginatedList(path)
+        +getPaginatedList(path) PaginatedList
+        +collectPages(filters, maxPages, fetchPage) PaginatedList
         +post(path, body)
         +put(path, body)
         +delete(path)
@@ -460,11 +461,24 @@ This summarizes the populated-store path; empty stores use a shorter path. Verif
 
 Application Support paths resolve inside the app's sandbox when sandboxed. The network-client entitlement permits API access; user exports use user-selected locations. Launch at Login uses `SMAppService`.
 
-Remaining architecture limitations include mutable shared API configuration across multi-request workflows, services coupled to shared clients, and `getPaginatedList` currently returning one response page rather than traversing every page. A failed firewall status lookup still produces a closed/unknown model state, so that display is not proof of server-side closure. The local trial timestamp is not tamper-resistant. These limitations are distinct from the four completed TLS, query-region, timed-closure and SSH-preservation fixes.
+Remaining architecture limitations include mutable shared API configuration across multi-request workflows and services coupled to shared clients. A failed firewall status lookup still produces a closed/unknown model state, so that display is not proof of server-side closure. The local trial timestamp is not tamper-resistant. These limitations are distinct from the four completed TLS, query-region, timed-closure and SSH-preservation fixes.
+
+## Paginated lists
+
+Instances, Kubernetes clusters, databases, object stores and object store credentials come from paginated Civo endpoints. `getPaginatedList` fixes region and API key once, then requests `page=1, 2, ...` with `per_page=100` and the same filters until the page count reported in `pages`. Without `pages`, only an empty page ends the list. Page size and the cap of 100 pages follow Civo's Go client `civogo`.
+
+| Situation | Result |
+| --- | --- |
+| A page after the first fails | `CivoAPIError.incompleteList` with the reason; the view keeps its previous list and shows the error |
+| A page reports another page number or repeats only known items | Paging stops; the list is marked incomplete |
+| 100 pages reached before the end | The list is marked incomplete |
+| The task is cancelled | `CivoAPIError.cancelled`; no partial list is applied |
+
+Incomplete lists show an orange notice in the instance, cluster, database and object store lists, and an orange mark next to the region counts. The Dashboard counts and the object store pause/resume workflow use `completeItems()`, which refuses an incomplete list instead of counting or acting on part of it.
 
 ## Validation
 
-The current suite contains **58 tests in nine suites**: response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, and the console session lifecycle. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
+The current suite contains **92 tests in 14 suites**, including response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console session lifecycle, the instance credential vault and complete pagination. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests

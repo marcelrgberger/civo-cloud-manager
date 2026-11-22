@@ -1656,3 +1656,149 @@ struct ConcealedTextFieldTests {
         #expect(window.fieldEditor(true, for: field) is ConcealedFieldEditor)
     }
 }
+
+@Suite("Complete pagination")
+struct PaginationTests {
+    struct Item: Decodable, Identifiable, Sendable, Equatable {
+        let id: String
+    }
+
+    /// Serves canned pages and records the query of every request.
+    actor PageStub {
+        private(set) var queries: [[URLQueryItem]] = []
+        private let respond: @Sendable (Int) throws -> PaginatedResponse<Item>
+
+        init(respond: @escaping @Sendable (Int) throws -> PaginatedResponse<Item>) {
+            self.respond = respond
+        }
+
+        func fetch(_ query: [URLQueryItem]) throws -> PaginatedResponse<Item> {
+            queries.append(query)
+            let page = Int(query.first { $0.name == "page" }?.value ?? "") ?? 0
+            return try respond(page)
+        }
+
+        var requestedPages: [String?] { queries.map { $0.first { $0.name == "page" }?.value } }
+    }
+
+    static func items(_ ids: String...) -> [Item] { ids.map(Item.init) }
+
+    @Test("Pages 1 to 3 are merged in order and paging stops at the reported page count")
+    func mergesAllPages() async throws {
+        let stub = PageStub { page in
+            PaginatedResponse(items: Self.items("\(page)a", "\(page)b"), page: page, perPage: nil, pages: 3)
+        }
+        let list = try await CivoAPIClient.collectPages(filters: []) { try await stub.fetch($0) }
+        #expect(list.isComplete)
+        #expect(list.items.map(\.id) == ["1a", "1b", "2a", "2b", "3a", "3b"])
+        #expect(await stub.requestedPages == ["1", "2", "3"])
+    }
+
+    @Test("Region and filters are sent unchanged with every page; caller page values are replaced")
+    func preservesFilters() async throws {
+        let stub = PageStub { page in
+            PaginatedResponse(items: Self.items("\(page)"), page: page, perPage: nil, pages: 2)
+        }
+        let filters = [
+            URLQueryItem(name: "tags", value: "web prod"),
+            URLQueryItem(name: "page", value: "7"),
+            URLQueryItem(name: "region", value: "LON1"),
+        ]
+        _ = try await CivoAPIClient.collectPages(filters: filters) { try await stub.fetch($0) }
+        let expectedFilters = [URLQueryItem(name: "tags", value: "web prod"), URLQueryItem(name: "region", value: "LON1")]
+        for (index, query) in await stub.queries.enumerated() {
+            #expect(query == expectedFilters + [
+                URLQueryItem(name: "page", value: String(index + 1)),
+                URLQueryItem(name: "per_page", value: String(CivoAPIClient.pageSize)),
+            ])
+        }
+    }
+
+    @Test("A failing later page throws an incomplete-list error and returns nothing partial")
+    func intermediateFailure() async throws {
+        let stub = PageStub { page in
+            if page == 2 { throw CivoAPIError.httpError(500, "") }
+            return PaginatedResponse(items: Self.items("\(page)"), page: page, perPage: nil, pages: 3)
+        }
+        await #expect {
+            _ = try await CivoAPIClient.collectPages(filters: []) { try await stub.fetch($0) }
+        } throws: { error in
+            guard case .incompleteList(let detail) = error as? CivoAPIError else { return false }
+            return detail?.contains("HTTP 500") == true
+        }
+        #expect(await stub.requestedPages == ["1", "2"])
+    }
+
+    @Test("A failing first page keeps its own error")
+    func firstPageFailure() async throws {
+        let stub = PageStub { _ in throw CivoAPIError.httpError(401, "") }
+        await #expect {
+            _ = try await CivoAPIClient.collectPages(filters: []) { try await stub.fetch($0) }
+        } throws: { error in
+            guard case .httpError(401, _) = error as? CivoAPIError else { return false }
+            return true
+        }
+    }
+
+    @Test("A page that reports another page number stops paging as incomplete")
+    func nonAdvancingPage() async throws {
+        let stub = PageStub { page in
+            PaginatedResponse(items: Self.items("\(page)"), page: 1, perPage: nil, pages: 5)
+        }
+        let list = try await CivoAPIClient.collectPages(filters: []) { try await stub.fetch($0) }
+        #expect(!list.isComplete)
+        #expect(list.items.map(\.id) == ["1"])
+        #expect(await stub.requestedPages == ["1", "2"])
+    }
+
+    @Test("A page repeating already seen items stops paging as incomplete")
+    func repeatedPage() async throws {
+        let stub = PageStub { _ in
+            PaginatedResponse(items: Self.items("a", "b"), page: nil, perPage: nil, pages: nil)
+        }
+        let list = try await CivoAPIClient.collectPages(filters: []) { try await stub.fetch($0) }
+        #expect(!list.isComplete)
+        #expect(list.items.map(\.id) == ["a", "b"])
+        #expect(await stub.requestedPages == ["1", "2"])
+    }
+
+    @Test("Without page metadata a full page is not the end; only an empty page completes the list")
+    func missingPagesMetadata() async throws {
+        let stub = PageStub { page in
+            PaginatedResponse(items: page == 1 ? Self.items("a") : [], page: nil, perPage: nil, pages: nil)
+        }
+        let list = try await CivoAPIClient.collectPages(filters: []) { try await stub.fetch($0) }
+        #expect(list.isComplete)
+        #expect(list.items.map(\.id) == ["a"])
+        #expect(await stub.requestedPages == ["1", "2"])
+    }
+
+    @Test("Reaching the page cap returns the loaded items as incomplete", arguments: [Int?.none, 10])
+    func pageCap(reportedPages: Int?) async throws {
+        let stub = PageStub { page in
+            PaginatedResponse(items: Self.items("\(page)"), page: page, perPage: nil, pages: reportedPages)
+        }
+        let list = try await CivoAPIClient.collectPages(filters: [], maxPages: 3) { try await stub.fetch($0) }
+        #expect(!list.isComplete)
+        #expect(list.items.map(\.id) == ["1", "2", "3"])
+        #expect(throws: CivoAPIError.self) { try list.completeItems() }
+    }
+
+    @Test("Cancellation during a page fetch ends with a cancelled error, also on the last page", arguments: [1, 3])
+    func cancellation(reportedPages: Int) async throws {
+        let stub = PageStub { page in
+            PaginatedResponse(items: Self.items("\(page)"), page: page, perPage: nil, pages: reportedPages)
+        }
+        let task = Task {
+            try await CivoAPIClient.collectPages(filters: []) { query in
+                let response = try await stub.fetch(query)
+                withUnsafeCurrentTask { $0?.cancel() }
+                return response
+            }
+        }
+        await #expect {
+            _ = try await task.value
+        } throws: { CivoAPIError.isCancelled($0) }
+        #expect(await stub.requestedPages == ["1"])
+    }
+}

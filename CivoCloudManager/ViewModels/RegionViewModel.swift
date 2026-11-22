@@ -7,6 +7,8 @@ struct RegionResourceCounts: Sendable {
     var networks: Int?
     var volumes: Int?
     var isLoading = false
+    /// True when a paginated list behind one of the counts failed or stopped before its last page.
+    var hasIncompleteList = false
 
     var total: Int {
         (instances ?? 0) + (clusters ?? 0) + (databases ?? 0) + (networks ?? 0) + (volumes ?? 0)
@@ -56,9 +58,14 @@ final class RegionViewModel {
                     async let dbs = CivoDatabaseService().listDatabases(region: code)
                     async let nets = CivoNetworkService().listNetworks(region: code)
                     async let vols = CivoVolumeService().listVolumes(region: code)
-                    counts.instances = (try? await insts)?.count
-                    counts.clusters = (try? await clusters)?.count
-                    counts.databases = (try? await dbs)?.count
+                    let instanceList = try? await insts
+                    let clusterList = try? await clusters
+                    let databaseList = try? await dbs
+                    counts.instances = instanceList?.items.count
+                    counts.clusters = clusterList?.items.count
+                    counts.databases = databaseList?.items.count
+                    counts.hasIncompleteList = [instanceList?.isComplete, clusterList?.isComplete, databaseList?.isComplete]
+                        .contains { $0 != true }
                     counts.networks = (try? await nets)?.count
                     counts.volumes = (try? await vols)?.count
                     return (code, counts)

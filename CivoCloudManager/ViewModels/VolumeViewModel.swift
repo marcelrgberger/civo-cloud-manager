@@ -18,6 +18,8 @@ final class VolumeViewModel {
     var showSuccess = false
 
     var instances: [CivoInstance] = []
+    /// True when the last loaded object store or credential list stopped before its last page.
+    private(set) var objectStoresIncomplete = false
     var availableNetworks: [CivoNetwork] = []
     var credentials: [CivoObjectStoreCredential] = []
     var isCreatingCredential = false
@@ -49,9 +51,12 @@ final class VolumeViewModel {
             async let creds = objectStoreService.listCredentials()
 
             volumes = try await vols
-            instances = try await insts
-            objectStores = try await stores
-            credentials = try await creds
+            instances = try await insts.items
+            let storeList = try await stores
+            let credentialList = try await creds
+            objectStores = storeList.items
+            credentials = credentialList.items
+            objectStoresIncomplete = !storeList.isComplete || !credentialList.isComplete
 
             // Check if vault exists
             vaultEnabled = objectStores.contains { $0.name == ObjectStorePauseService.vaultName }

@@ -51,12 +51,12 @@ final class ObjectStorePauseService: Sendable {
     // MARK: - Vault Setup
 
     func findVault() async throws -> CivoObjectStore? {
-        let stores = try await storeService.listObjectStores()
+        let stores = try await storeService.listObjectStores().completeItems()
         return stores.first { $0.name == Self.vaultName }
     }
 
     func findVaultCredential() async throws -> CivoObjectStoreCredential? {
-        let creds = try await storeService.listCredentials()
+        let creds = try await storeService.listCredentials().completeItems()
         return creds.first { $0.name == Self.vaultCredentialName }
     }
 
@@ -271,7 +271,7 @@ final class ObjectStorePauseService: Sendable {
 
         // 3. Recreate original store (or use existing if already created from a prior attempt)
         progress(PauseProgress(phase: .preparing, currentFile: 0, totalFiles: 0, currentFileName: "Creating \(paused.originalName)...", bytesCopied: 0, bytesTotal: 0))
-        let existingStores = try await storeService.listObjectStores()
+        let existingStores = try await storeService.listObjectStores().completeItems()
         let readyStore: CivoObjectStore
         if let existing = existingStores.first(where: { $0.name == paused.originalName }) {
             let credentialMismatch = existing.credentialId != paused.credentialId && paused.credentialId != nil
@@ -419,7 +419,7 @@ final class ObjectStorePauseService: Sendable {
             return ak
         }
         // Strategy 3: Search all credentials for one matching the store name
-        let allCreds = try await storeService.listCredentials()
+        let allCreds = try await storeService.listCredentials().completeItems()
         if let match = allCreds.first(where: { $0.name == paused.originalName }) {
             Log.info("Resume: matched credential by name '\(match.name ?? "")'")
             return match.accessKeyId
@@ -461,7 +461,7 @@ final class ObjectStorePauseService: Sendable {
         var manifest = try await loadManifest(vaultClient: client, vaultBucket: vault.name)
 
         // Clean up manifest entries for fully restored stores (check .restored flag)
-        let activeStoreNames = Set((try? await storeService.listObjectStores())?.map(\.name) ?? [])
+        let activeStoreNames = Set((try? await storeService.listObjectStores().completeItems())?.map(\.name) ?? [])
         var repaired = false
         var idsToRemove: Set<String> = []
         let candidateStores = manifest.stores.filter { activeStoreNames.contains($0.originalName) }

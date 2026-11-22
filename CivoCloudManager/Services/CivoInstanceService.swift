@@ -3,7 +3,7 @@ import Foundation
 final class CivoInstanceService: Sendable {
     private let api = CivoAPIClient.shared
 
-    func listInstances(region: String? = nil) async throws -> [CivoInstance] {
+    func listInstances(region: String? = nil) async throws -> PaginatedList<CivoInstance> {
         var queryItems: [URLQueryItem]? = nil
         if let region { queryItems = [URLQueryItem(name: "region", value: region)] }
         return try await api.getPaginatedList(path: "/instances", queryItems: queryItems)

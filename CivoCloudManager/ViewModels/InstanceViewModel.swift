@@ -4,6 +4,8 @@ import Foundation
 @MainActor
 final class InstanceViewModel {
     var instances: [CivoInstance] = []
+    /// True when the last loaded instance list stopped before its last page.
+    private(set) var instancesIncomplete = false
     var sshKeys: [CivoSSHKey] = []
     var isLoading = false
     var error: String?
@@ -47,7 +49,9 @@ final class InstanceViewModel {
             async let insts = instanceService.listInstances(region: region.isEmpty ? nil : region)
             async let keys = sshKeyService.listSSHKeys()
 
-            instances = try await insts
+            let instanceList = try await insts
+            instances = instanceList.items
+            instancesIncomplete = !instanceList.isComplete
             instancesRegion = region
             sshKeys = try await keys
 
