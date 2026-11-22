@@ -3531,7 +3531,7 @@ struct FirewallRuleEditorTests {
         #expect(await env.api.calls.isEmpty)
     }
 
-    @Test("A refused update keeps the editor open with Civo's reason; an unreadable answer asks to check the list")
+    @Test("A refused update keeps the editor open with Civo's reason; an unreadable or lost answer asks to check the list")
     func failedUpdates() async {
         let env = Environment()
         env.begin()
@@ -3546,6 +3546,16 @@ struct FirewallRuleEditorTests {
         await env.api.failUpdate(with: CivoAPIError.decodingError("unexpected answer"))
         #expect(await env.save(Self.changedPort) == .uncertain)
         #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage(for: env.target))
+        #expect(env.activities.isEmpty)
+
+        for lost in [CivoAPIError.networkError("The request timed out."), CivoAPIError.cancelled, CivoAPIError.httpError(503, "Unavailable")] {
+            env.begin()
+            await env.api.failUpdate(with: lost)
+            #expect(await env.save(Self.changedPort) == .uncertain)
+            #expect(env.editor.session == nil)
+            #expect(env.editor.saveError == nil)
+            #expect(env.editor.notice == FirewallRuleEditor.unknownResultMessage(for: env.target))
+        }
         #expect(env.activities.isEmpty)
     }
 
@@ -3568,7 +3578,7 @@ struct FirewallRuleEditorTests {
 
         env.region = "LON1"
         env.begin()
-        await env.api.failUpdate(with: CivoAPIError.httpError(500, "down"))
+        await env.api.failUpdate(with: CivoAPIError.networkError("The network connection was lost."))
         await env.api.whileUpdating {
             await MainActor.run {
                 env.apiKey = "key-b"
@@ -3576,15 +3586,15 @@ struct FirewallRuleEditorTests {
                 #expect(env.editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
             }
         }
-        #expect(await env.save(Self.changedPort) == .cancelled)
-        let reason = try #require(CivoAPIError.userMessage(CivoAPIError.httpError(500, "down")))
-        #expect(env.editor.notice == FirewallRuleEditor.notSavedMessage(for: env.target, reason: reason))
+        #expect(await env.save(Self.changedPort) == .uncertain)
+        #expect(env.editor.notice == FirewallRuleEditor.unknownResultMessage(for: env.target))
         #expect(env.editor.session == nil)
         #expect(env.activities == ["web rule-1"])
     }
 
     @Test("An answer to an update whose editor was cancelled leaves the editor opened afterwards untouched", arguments: [
         nil, CivoAPIError.httpError(422, "invalid"), CivoAPIError.decodingError("unexpected answer"),
+        CivoAPIError.networkError("The request timed out."), CivoAPIError.httpError(503, "Unavailable"),
     ] as [CivoAPIError?])
     func answerAfterCancelAndReopen(failure: CivoAPIError?) async throws {
         let env = Environment()
@@ -3613,10 +3623,14 @@ struct FirewallRuleEditorTests {
         case .decodingError?:
             #expect(outcome == .uncertain)
             #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage(for: env.target))
-        case let failure?:
+        case let .httpError(status, message)? where status == 422:
             #expect(outcome == .cancelled)
-            let reason = try #require(CivoAPIError.userMessage(failure))
+            let reason = try #require(CivoAPIError.userMessage(CivoAPIError.httpError(status, message)))
             #expect(env.editor.notice == FirewallRuleEditor.notSavedMessage(for: env.target, reason: reason))
+        case _?:
+            #expect(outcome == .uncertain)
+            #expect(env.editor.notice == FirewallRuleEditor.unknownResultMessage(for: env.target))
         }
+        #expect(env.activities == (failure == nil ? ["web rule-1"] : []))
     }
 }

@@ -47,7 +47,7 @@ enum FirewallRuleEditError: Error, Equatable {
 /// How a save ended. The editor stays open, and `saveError` explains why, when `save` returns nil.
 enum FirewallRuleSaveOutcome: Equatable {
     case saved
-    /// Civo accepted the request but its answer could not be read; the rule may have been changed.
+    /// The request was sent but no refusal came back, or Civo's answer could not be read; the rule may have been changed.
     case uncertain
     /// The edit was closed without a change; `notice` explains why.
     case cancelled
@@ -226,19 +226,19 @@ final class FirewallRuleEditor {
             if self.session?.id == session.id { self.session = nil }
             notice = Self.unreadableUpdateMessage(for: target)
             return .uncertain
-        } catch {
-            let reason = CivoAPIError.userMessage(error)
+        } catch let refusal as CivoAPIError where Self.provesRuleUnchanged(refusal) {
+            let reason = refusal.localizedDescription
             guard self.session?.id == session.id else {
-                // Without Civo's reason, such as when the request was cancelled, the rule may have been changed.
-                guard let reason else {
-                    notice = Self.unknownResultMessage(for: target)
-                    return .uncertain
-                }
                 notice = Self.notSavedMessage(for: target, reason: reason)
                 return .cancelled
             }
             saveError = reason
             return nil
+        } catch {
+            // A lost connection, a cancelled request or a server error may follow a change Civo already applied.
+            if self.session?.id == session.id { self.session = nil }
+            notice = Self.unknownResultMessage(for: target)
+            return .uncertain
         }
         recordActivity(target)
         if self.session?.id == session.id {
@@ -267,6 +267,12 @@ final class FirewallRuleEditor {
 
     static func notSavedMessage(for target: FirewallRuleTarget, reason: String) -> String {
         String(localized: "The rule change in firewall “\(target.firewallName)” was not saved: \(reason)")
+    }
+
+    /// Only a refusal of the request proves that Civo left the rule as it was.
+    private static func provesRuleUnchanged(_ error: CivoAPIError) -> Bool {
+        guard case .httpError(let status, _) = error else { return false }
+        return (400..<500).contains(status)
     }
 
     private func close(_ problem: FirewallRuleEditError) -> FirewallRuleSaveOutcome {
