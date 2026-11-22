@@ -274,7 +274,7 @@
 		9208F7C3043B470D09B6E5F2 /* K8sPodListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sPodListView.swift; sourceTree = "<group>"; };
 		93A67F276CE2F62C20312CD2 /* CivoInstance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoInstance.swift; sourceTree = "<group>"; };
 		94407D39E1C196B6486FC650 /* CivoChargesService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoChargesService.swift; sourceTree = "<group>"; };
-		96055EB467318C4CD630D27C /* Civo Cloud Manager.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Civo Cloud Manager.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CivoCloudManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96924B1B50C19D9665E1D252 /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDatabaseView.swift; sourceTree = "<group>"; };
 		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
@@ -514,7 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				C88D540C390C2B2F89971D0D /* Civo Cloud Manager.app */,
-				96055EB467318C4CD630D27C /* Civo Cloud Manager.xctest */,
+				96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -798,7 +798,7 @@
 			);
 			name = CivoCloudManagerTests;
 			productName = CivoCloudManagerTests;
-			productReference = 96055EB467318C4CD630D27C /* Civo Cloud Manager.xctest */;
+			productReference = 96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		8C1FD72A050E4F08DB9A1650 /* CivoCloudManager */ = {
@@ -1319,7 +1319,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManagerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Civo Cloud Manager.app/Contents/MacOS/Civo Cloud Manager";
 			};
@@ -1408,7 +1411,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManagerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Civo Cloud Manager.app/Contents/MacOS/Civo Cloud Manager";
 			};
@@ -1431,6 +1437,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_MODULE_NAME = CivoCloudManager;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1452,6 +1459,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_MODULE_NAME = CivoCloudManager;
 				SDKROOT = macosx;
 			};
 			name = Release;
