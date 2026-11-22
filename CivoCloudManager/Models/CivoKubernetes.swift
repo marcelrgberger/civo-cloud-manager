@@ -81,17 +81,39 @@ struct CivoNodeTaint: Codable, Equatable, Sendable {
     let effect: String?
 }
 
+/// An entry of `installed_applications`. Its `configuration` and `post_install` can hold generated passwords and
+/// are never read.
 struct CivoK8sApp: Codable, Identifiable, Sendable {
     let application: String?
     let name: String?
     let version: String?
     let maintainer: String?
     let description: String?
+    /// Civo's `installed`; nil when it is missing or not a boolean.
+    let installedFlag: Bool?
+    let plan: String?
 
     var id: String { name ?? application ?? "unknown-app" }
 
+    var state: InstalledApplicationState { InstalledApplicationState(installedFlag: installedFlag) }
+
+    /// The chosen plan; Civo reports an empty string for an application without one.
+    var planLabel: String? { plan?.isEmpty == false ? plan : nil }
+
     enum CodingKeys: String, CodingKey {
-        case application, name, version, maintainer, description
+        case application, name, version, maintainer, description, plan
+        case installedFlag = "installed"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        application = try container.decodeIfPresent(String.self, forKey: .application)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        version = try container.decodeIfPresent(String.self, forKey: .version)
+        maintainer = try container.decodeIfPresent(String.self, forKey: .maintainer)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        installedFlag = try? container.decode(Bool.self, forKey: .installedFlag)
+        plan = try? container.decode(String.self, forKey: .plan)
     }
 }
 
