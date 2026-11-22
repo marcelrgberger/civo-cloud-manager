@@ -239,6 +239,7 @@ struct HelpSection {
             "Saved credentials are also shown in the console window so you can type them in. Copy and paste are not available in the console.",
             "Saved credentials hold only a username and a password. SSH keys and certificates are not stored there; manage SSH keys under SSH Keys.",
             "Deleting an instance also deletes its saved credentials. If they cannot be removed, the app shows an error.",
+            "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent.",
             "Resize instances with the visual size picker grid.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",

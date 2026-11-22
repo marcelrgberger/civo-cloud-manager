@@ -84830,6 +84830,506 @@
           }
         }
       }
+    },
+    "Instance actions require Full Access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance actions require Full Access."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتطلب إجراءات المثيلات الوصول الكامل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktionen für Instanzen erfordern Vollzugriff."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las acciones de instancias requieren Acceso completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les actions sur les instances nécessitent l'Accès complet."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस कार्रवाइयों के लिए पूर्ण एक्सेस आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tindakan instance memerlukan Akses Penuh."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le azioni sulle istanze richiedono l'Accesso completo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスの操作にはフルアクセスが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 작업에는 전체 액세스가 필요합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acties voor instanties vereisen Volledige toegang."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Działania na instancjach wymagają Pełnego dostępu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As ações de instâncias requerem Acesso total."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для действий с инстансами требуется полный доступ."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu işlemleri Tam Erişim gerektirir."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例操作需要完整访问权限。"
+          }
+        }
+      }
+    },
+    "The region of this instance is unknown. Reload the list and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region of this instance is unknown. Reload the list and try again."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منطقة هذا المثيل غير معروفة. أعد تحميل القائمة وحاول مرة أخرى."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region dieser Instanz ist unbekannt. Lade die Liste neu und versuche es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región de esta instancia es desconocida. Vuelve a cargar la lista e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région de cette instance est inconnue. Rechargez la liste et réessayez."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस का क्षेत्र अज्ञात है। सूची फिर से लोड करें और दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah instance ini tidak diketahui. Muat ulang daftar dan coba lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione di questa istanza è sconosciuta. Ricarica l'elenco e riprova."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのリージョンが不明です。一覧を再読み込みして、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스의 리전을 알 수 없습니다. 목록을 다시 불러온 후 다시 시도하세요."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio van deze instantie is onbekend. Laad de lijst opnieuw en probeer het nogmaals."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region tej instancji jest nieznany. Załaduj listę ponownie i spróbuj jeszcze raz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região desta instância é desconhecida. Recarregue a lista e tente novamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион этого инстанса неизвестен. Обновите список и повторите попытку."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu sunucunun bölgesi bilinmiyor. Listeyi yeniden yükleyip tekrar deneyin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此实例的区域未知。请重新加载列表后重试。"
+          }
+        }
+      }
+    },
+    "The region changed, so the instance action was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region changed, so the instance action was cancelled. Nothing was sent."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّرت المنطقة، لذلك أُلغي إجراء المثيل. لم يُرسَل أي شيء."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region hat sich geändert, daher wurde die Aktion für die Instanz abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región ha cambiado, así que se canceló la acción de la instancia. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région a changé, l'action sur l'instance a donc été annulée. Rien n'a été envoyé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्षेत्र बदल गया, इसलिए इंस्टेंस कार्रवाई रद्द कर दी गई। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah berubah, jadi tindakan instance dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione è cambiata, quindi l'azione sull'istanza è stata annullata. Non è stato inviato nulla."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リージョンが変更されたため、インスタンスの操作をキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리전이 변경되어 인스턴스 작업이 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio is gewijzigd, daarom is de actie voor de instantie geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region się zmienił, więc działanie na instancji zostało anulowane. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região mudou, por isso a ação da instância foi cancelada. Nada foi enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион изменился, поэтому действие с инстансом отменено. Ничего не отправлено."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölge değişti, bu nedenle sunucu işlemi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "区域已更改，因此实例操作已取消。未发送任何内容。"
+          }
+        }
+      }
+    },
+    "The instance is no longer in the list, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance is no longer in the list, so nothing was sent."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يعد المثيل موجودًا في القائمة، لذلك لم يُرسَل أي شيء."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz ist nicht mehr in der Liste, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia ya no está en la lista, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance ne figure plus dans la liste, rien n'a donc été envoyé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस अब सूची में नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance tidak lagi ada di daftar, jadi tidak ada yang dikirim."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza non è più nell'elenco, quindi non è stato inviato nulla."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスが一覧にないため、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스가 더 이상 목록에 없으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie staat niet meer in de lijst, daarom is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancji nie ma już na liście, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância já não está na lista, por isso nada foi enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инстанса больше нет в списке, поэтому ничего не отправлено."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu artık listede değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该实例已不在列表中，因此未发送任何内容。"
+          }
+        }
+      }
+    },
+    "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُرسَل إجراءات المثيلات دائمًا إلى المنطقة التي حُمّلت منها قائمة المثيلات. إذا تغيّرت المنطقة أو لم يعد المثيل مدرجًا أثناء فتح نافذة تأكيد، يُلغى الإجراء ولا يُرسَل أي شيء."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktionen für Instanzen gehen immer an die Region, aus der die Instanzliste geladen wurde. Ändert sich die Region oder ist die Instanz nicht mehr in der Liste, während eine Bestätigung offen ist, wird die Aktion abgebrochen und nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las acciones de instancias siempre van a la región desde la que se cargó la lista de instancias. Si la región cambia o la instancia ya no aparece en la lista mientras hay una confirmación abierta, la acción se cancela y no se envía nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les actions sur les instances vont toujours vers la région depuis laquelle la liste des instances a été chargée. Si la région change ou si l'instance ne figure plus dans la liste pendant qu'une confirmation est ouverte, l'action est annulée et rien n'est envoyé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस कार्रवाइयाँ हमेशा उसी क्षेत्र में भेजी जाती हैं जिससे इंस्टेंस सूची लोड की गई थी। यदि पुष्टि खुली रहते हुए क्षेत्र बदल जाए या इंस्टेंस सूची में न रहे, तो कार्रवाई रद्द हो जाती है और कुछ भी नहीं भेजा जाता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tindakan instance selalu dikirim ke wilayah tempat daftar instance dimuat. Jika wilayah berubah atau instance tidak lagi ada di daftar saat konfirmasi terbuka, tindakan dibatalkan dan tidak ada yang dikirim."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le azioni sulle istanze vanno sempre alla regione da cui è stato caricato l'elenco delle istanze. Se la regione cambia o l'istanza non è più nell'elenco mentre una conferma è aperta, l'azione viene annullata e non viene inviato nulla."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスの操作は、常にインスタンス一覧を読み込んだリージョンに送信されます。確認画面を開いている間にリージョンが変わったり、インスタンスが一覧からなくなったりした場合、操作はキャンセルされ、何も送信されません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 작업은 항상 인스턴스 목록을 불러온 리전으로 전송됩니다. 확인 창이 열려 있는 동안 리전이 변경되거나 인스턴스가 목록에서 사라지면 작업이 취소되고 아무것도 전송되지 않습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acties voor instanties gaan altijd naar de regio waaruit de lijst met instanties is geladen. Als de regio verandert of de instantie niet meer in de lijst staat terwijl een bevestiging open is, wordt de actie geannuleerd en wordt er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Działania na instancjach trafiają zawsze do regionu, z którego załadowano listę instancji. Jeśli region się zmieni lub instancji nie będzie już na liście, gdy otwarte jest potwierdzenie, działanie zostanie anulowane i nic nie zostanie wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As ações de instâncias vão sempre para a região a partir da qual a lista de instâncias foi carregada. Se a região mudar ou a instância deixar de estar na lista enquanto uma confirmação está aberta, a ação é cancelada e nada é enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Действия с инстансами всегда отправляются в регион, из которого загружен список инстансов. Если регион изменится или инстанса больше не будет в списке, пока открыто подтверждение, действие отменяется и ничего не отправляется."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu işlemleri her zaman sunucu listesinin yüklendiği bölgeye gönderilir. Bir onay açıkken bölge değişirse veya sunucu artık listede değilse, işlem iptal edilir ve hiçbir şey gönderilmez."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例操作始终发送到加载实例列表时所在的区域。如果在确认窗口打开期间区域发生变化或实例已不在列表中，该操作将被取消，且不会发送任何内容。"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

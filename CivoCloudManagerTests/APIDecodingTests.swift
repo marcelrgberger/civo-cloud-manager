@@ -1677,25 +1677,22 @@ struct InstanceCredentialVaultTests {
 
     @Test("Saved credentials go only after Civo confirmed the instance deletion")
     func instanceDeletion() async throws {
-        let instance = try JSONDecoder().decode(
-            CivoInstance.self,
-            from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "region": "LON1"}"#.utf8)
-        )
-        struct DeletionFailed: Error {}
         let keychain = FakeKeychain()
         let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
         try store.create(credential, for: key)
 
-        let failing = InstanceViewModel(credentials: store, deleteInstance: { _ in throw DeletionFailed() })
-        #expect(await failing.delete(instance) == false)
+        let failing = InstanceEnvironment(credentials: store)
+        await failing.api.failDeletion()
+        await failing.vm.refresh()
+        #expect(await failing.vm.delete(consoleTarget) == false)
         #expect(try store.contains(key))
 
-        var deleted: [String] = []
-        let succeeding = InstanceViewModel(credentials: store, deleteInstance: { deleted.append($0) })
-        #expect(await succeeding.delete(instance))
-        #expect(deleted == [consoleInstanceId])
+        let succeeding = InstanceEnvironment(credentials: store)
+        await succeeding.vm.refresh()
+        #expect(await succeeding.vm.delete(consoleTarget))
+        #expect(await succeeding.api.calls == ["delete \(consoleInstanceId) LON1"])
         #expect(try store.contains(key) == false)
-        #expect(succeeding.error == nil)
+        #expect(succeeding.vm.error == nil)
     }
 
     @Test("An edit holding the stored values ends after its time and needs a new authentication")
@@ -1732,6 +1729,161 @@ struct InstanceCredentialVaultTests {
         let relocks = vault.relocks
         vault.invalidate()
         #expect(vault.relocks == relocks + 1)
+    }
+}
+
+/// Instance requests recorded instead of sent; each call names the region it was sent to.
+private actor FakeInstanceAPI: InstanceAPI {
+    var instancesByRegion: [String: [CivoInstance]]
+    private(set) var calls: [String] = []
+    private var deletionFails = false
+
+    init(instancesByRegion: [String: [CivoInstance]]) {
+        self.instancesByRegion = instancesByRegion
+    }
+
+    func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
+    func failDeletion() { deletionFails = true }
+
+    func listInstances(region: String?) async throws -> [CivoInstance] {
+        instancesByRegion[region ?? ""] ?? []
+    }
+
+    func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
+    func stopInstance(_ id: String, region: String) async throws { calls.append("stop \(id) \(region)") }
+    func startInstance(_ id: String, region: String) async throws { calls.append("start \(id) \(region)") }
+    func rebootInstance(_ id: String, region: String) async throws { calls.append("reboot \(id) \(region)") }
+    func resizeInstance(_ id: String, size: String, region: String) async throws { calls.append("resize \(id) \(region)") }
+
+    func removeInstance(_ id: String, region: String) async throws {
+        struct DeletionFailed: Error {}
+        if deletionFails { throw DeletionFailed() }
+        calls.append("delete \(id) \(region)")
+    }
+}
+
+/// An instance view model with a fake API, its own Settings region, notification center and activity log.
+@MainActor
+private final class InstanceEnvironment {
+    /// Listed without its own `region`, so the target can only come from the list region.
+    static let instance = try! JSONDecoder().decode(
+        CivoInstance.self,
+        from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "ACTIVE"}"#.utf8)
+    )
+
+    var region = "LON1"
+    var accessAllowed = true
+    let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
+    let center = NotificationCenter()
+    private(set) var activities: [String] = []
+    private(set) var vm: InstanceViewModel!
+
+    init(credentials: InstanceCredentialStore? = nil) {
+        let store = credentials ?? InstanceCredentialStore(keychain: FakeKeychain().client, notificationCenter: NotificationCenter())
+        vm = InstanceViewModel(
+            credentials: store,
+            api: api,
+            loadSSHKeys: { [] },
+            settingsRegion: { [weak self] in self?.region ?? "" },
+            isAccessAllowed: { [weak self] in self?.accessAllowed ?? false },
+            notificationCenter: center,
+            recordActivity: { [weak self] action, _ in self?.activities.append(action) }
+        )
+    }
+
+    /// Changes the Settings region the way `CivoConfig` does.
+    func changeRegion(to region: String) {
+        self.region = region
+        center.post(name: .civoRegionDidChange, object: nil)
+    }
+}
+
+@Suite("Instance action targets")
+@MainActor
+struct InstanceActionTargetTests {
+    @Test("Actions use the region the instance was listed from, never a later Settings region")
+    func capturedRegion() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        #expect(target.region == "LON1")
+
+        await env.vm.stopInstance(target)
+        #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Stopped"])
+
+        // Settings changed, list not reloaded yet: refused, not redirected to NYC1.
+        env.region = "NYC1"
+        await env.vm.rebootInstance(target)
+        #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+
+        // After reloading NYC1 the old instance yields no target, so nothing can fall back to NYC1.
+        await env.vm.refresh()
+        #expect(env.vm.consoleTarget(for: InstanceEnvironment.instance) == nil)
+    }
+
+    @Test("A region change while a confirmation is open cancels it, tells the user and sends nothing")
+    func regionChangeCancelsConfirmation() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.beginConfirmation(.resize, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.pendingAction?.target)
+
+        env.changeRegion(to: "NYC1")
+        #expect(env.vm.pendingAction == nil)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+        #expect(env.vm.confirmPendingAction() == nil)
+
+        // The old list is still shown until it is reloaded, but no new confirmation opens for it.
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction == nil)
+
+        // A confirm button that still holds the old target is refused as well.
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(await env.api.calls.isEmpty)
+
+        // The reason stays visible through the refresh that the region change starts.
+        await env.vm.refresh()
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+    }
+
+    @Test("A selection missing from the reloaded list is cleared and its target refused")
+    func staleSelection() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.pendingAction?.target)
+
+        await env.api.list([], in: "LON1")
+        await env.vm.refresh()
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.pendingAction == nil)
+        #expect(env.vm.error == InstanceTargetError.instanceMissing.message)
+
+        #expect(await env.vm.delete(target) == false)
+        #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("Full Access and the region are checked again when the user confirms")
+    func confirmTimeChecks() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+
+        env.accessAllowed = false
+        let target = try #require(env.vm.confirmPendingAction())
+        #expect(await env.vm.delete(target) == false)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+
+        env.accessAllowed = true
+        let unknownRegion = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "web-1", region: "")
+        await env.vm.stopInstance(unknownRegion)
+        #expect(env.vm.error == InstanceTargetError.noRegion.message)
+        #expect(await env.api.calls.isEmpty)
     }
 }
 
