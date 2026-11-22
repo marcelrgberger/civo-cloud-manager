@@ -49,7 +49,7 @@ enum FirewallRuleSaveOutcome: Equatable {
     case saved
     /// Civo accepted the request but its answer could not be read; the rule may have been changed.
     case uncertain
-    /// The edit was refused and closed; `notice` explains why.
+    /// The edit was closed without a change; `notice` explains why.
     case cancelled
 }
 
@@ -68,6 +68,8 @@ final class FirewallRuleEditor {
 
     private(set) var session: Session?
     private(set) var isSaving = false
+    /// The session whose update is on its way to Civo. It can no longer be called back.
+    private var sendingSessionId: UUID?
     private(set) var saveError: String?
     /// Why the last edit was closed without saving, shown above the rule list.
     private(set) var notice: String?
@@ -143,6 +145,9 @@ final class FirewallRuleEditor {
     }
 
     func cancel() {
+        if let session, session.id == sendingSessionId {
+            notice = Self.awaitingAnswerMessage(for: session.target)
+        }
         session = nil
         saveError = nil
     }
@@ -211,23 +216,57 @@ final class FirewallRuleEditor {
             return nil
         }
 
+        // From here on the editor may be closed, and another one opened, before Civo answers. The answer then
+        // leaves the later editor alone and is reported as a notice naming the firewall.
+        sendingSessionId = session.id
+        defer { sendingSessionId = nil }
         do {
             try await api.updateRule(target.ruleId, of: target.firewallId, body: draft.requestBody(region: target.region), region: target.region, apiKey: key)
         } catch CivoAPIError.decodingError {
-            self.session = nil
-            notice = Self.unreadableUpdateMessage
+            if self.session?.id == session.id { self.session = nil }
+            notice = Self.unreadableUpdateMessage(for: target)
             return .uncertain
         } catch {
-            saveError = CivoAPIError.userMessage(error)
+            let reason = CivoAPIError.userMessage(error)
+            guard self.session?.id == session.id else {
+                // Without Civo's reason, such as when the request was cancelled, the rule may have been changed.
+                guard let reason else {
+                    notice = Self.unknownResultMessage(for: target)
+                    return .uncertain
+                }
+                notice = Self.notSavedMessage(for: target, reason: reason)
+                return .cancelled
+            }
+            saveError = reason
             return nil
         }
-        self.session = nil
         recordActivity(target)
+        if self.session?.id == session.id {
+            self.session = nil
+        } else {
+            notice = Self.savedMessage(for: target)
+        }
         return .saved
     }
 
-    static var unreadableUpdateMessage: String {
-        String(localized: "Civo accepted the rule change, but its answer could not be read. Check the rule in the list.")
+    static func unreadableUpdateMessage(for target: FirewallRuleTarget) -> String {
+        String(localized: "Civo accepted the rule change in firewall “\(target.firewallName)”, but its answer could not be read. Check the rule in the list.")
+    }
+
+    static func awaitingAnswerMessage(for target: FirewallRuleTarget) -> String {
+        String(localized: "The rule change in firewall “\(target.firewallName)” was already sent and can no longer be cancelled. Its result is shown here once Civo answers.")
+    }
+
+    static func savedMessage(for target: FirewallRuleTarget) -> String {
+        String(localized: "The rule change in firewall “\(target.firewallName)” was saved.")
+    }
+
+    static func unknownResultMessage(for target: FirewallRuleTarget) -> String {
+        String(localized: "The result of the rule change in firewall “\(target.firewallName)” is unknown. Check the rule in the list.")
+    }
+
+    static func notSavedMessage(for target: FirewallRuleTarget, reason: String) -> String {
+        String(localized: "The rule change in firewall “\(target.firewallName)” was not saved: \(reason)")
     }
 
     private func close(_ problem: FirewallRuleEditError) -> FirewallRuleSaveOutcome {
@@ -238,7 +277,11 @@ final class FirewallRuleEditor {
     }
 
     private func dropInvalidSession() {
-        guard let target = session?.target, let problem = targetError(for: target) else { return }
-        _ = close(problem)
+        guard let session, let problem = targetError(for: session.target) else { return }
+        if session.id == sendingSessionId {
+            cancel()
+        } else {
+            _ = close(problem)
+        }
     }
 }

@@ -100065,106 +100065,6 @@
         }
       }
     },
-    "Civo accepted the rule change, but its answer could not be read. Check the rule in the list." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo accepted the rule change, but its answer could not be read. Check the rule in the list."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo hat die Regeländerung angenommen, aber die Antwort konnte nicht gelesen werden. Prüfe die Regel in der Liste."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo aceptó el cambio de la regla, pero no se pudo leer su respuesta. Comprueba la regla en la lista."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo a accepté la modification de la règle, mais sa réponse n'a pas pu être lue. Vérifiez la règle dans la liste."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo ha accettato la modifica della regola, ma non è stato possibile leggere la risposta. Controlla la regola nell'elenco."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo heeft de regelwijziging geaccepteerd, maar het antwoord kon niet worden gelezen. Controleer de regel in de lijst."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo przyjęło zmianę reguły, ale nie udało się odczytać odpowiedzi. Sprawdź regułę na liście."
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A Civo aceitou a alteração da regra, mas não foi possível ler a resposta. Verifique a regra na lista."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo 已接受规则更改，但无法读取其响应。请在列表中检查该规则。"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo はルールの変更を受け付けましたが、応答を読み取れませんでした。一覧でルールを確認してください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo가 규칙 변경을 수락했지만 응답을 읽을 수 없습니다. 목록에서 규칙을 확인하세요."
-          }
-        },
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "قبلت Civo تغيير القاعدة، لكن تعذّرت قراءة ردّها. تحقّق من القاعدة في القائمة."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo ने नियम बदलाव स्वीकार कर लिया, लेकिन उसका जवाब पढ़ा नहीं जा सका। सूची में नियम जाँचें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo menerima perubahan aturan, tetapi jawabannya tidak dapat dibaca. Periksa aturan di daftar."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo kural değişikliğini kabul etti, ancak yanıtı okunamadı. Listedeki kuralı kontrol edin."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Civo принял изменение правила, но его ответ не удалось прочитать. Проверьте правило в списке."
-          }
-        }
-      }
-    },
     "Updated firewall rule" : {
       "localizations" : {
         "en" : {
@@ -100761,6 +100661,506 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "После этого изменения правило может заблокировать ваш собственный публичный IP-адрес, например для SSH."
+          }
+        }
+      }
+    },
+    "Civo accepted the rule change in firewall “%@”, but its answer could not be read. Check the rule in the list." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the rule change in firewall “%@”, but its answer could not be read. Check the rule in the list."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat die Regeländerung in der Firewall „%@“ angenommen, aber die Antwort konnte nicht gelesen werden. Prüfe die Regel in der Liste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó el cambio de la regla en el firewall “%@”, pero no se pudo leer su respuesta. Comprueba la regla en la lista."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté la modification de la règle du pare-feu « %@ », mais sa réponse n'a pas pu être lue. Vérifiez la règle dans la liste."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato la modifica della regola nel firewall “%@”, ma non è stato possibile leggere la risposta. Controlla la regola nell'elenco."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de regelwijziging in firewall “%@” geaccepteerd, maar het antwoord kon niet worden gelezen. Controleer de regel in de lijst."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło zmianę reguły w zaporze „%@”, ale nie udało się odczytać odpowiedzi. Sprawdź regułę na liście."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou a alteração da regra no firewall “%@”, mas não foi possível ler a resposta. Verifique a regra na lista."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受防火墙“%@”中的规则更改，但无法读取其响应。请在列表中检查该规则。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo はファイアウォール「%@」のルール変更を受け付けましたが、応答を読み取れませんでした。一覧でルールを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 방화벽 “%@”의 규칙 변경을 수락했지만 응답을 읽을 수 없습니다. 목록에서 규칙을 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo تغيير القاعدة في جدار الحماية “%@”، لكن تعذّرت قراءة ردّها. تحقّق من القاعدة في القائمة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने फ़ायरवॉल “%@” में नियम बदलाव स्वीकार कर लिया, लेकिन उसका जवाब पढ़ा नहीं जा सका। सूची में नियम जाँचें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima perubahan aturan di firewall “%@”, tetapi jawabannya tidak dapat dibaca. Periksa aturan di daftar."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo, “%@” güvenlik duvarındaki kural değişikliğini kabul etti, ancak yanıtı okunamadı. Listedeki kuralı kontrol edin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo принял изменение правила в брандмауэре «%@», но его ответ не удалось прочитать. Проверьте правило в списке."
+          }
+        }
+      }
+    },
+    "The rule change in firewall “%@” was already sent and can no longer be cancelled. Its result is shown here once Civo answers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule change in firewall “%@” was already sent and can no longer be cancelled. Its result is shown here once Civo answers."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeländerung in der Firewall „%@“ wurde bereits gesendet und lässt sich nicht mehr abbrechen. Das Ergebnis erscheint hier, sobald Civo antwortet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cambio de la regla en el firewall “%@” ya se envió y ya no se puede cancelar. Su resultado se mostrará aquí cuando Civo responda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification de la règle du pare-feu « %@ » a déjà été envoyée et ne peut plus être annulée. Son résultat s'affichera ici dès que Civo répondra."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica della regola nel firewall “%@” è già stata inviata e non può più essere annullata. Il risultato verrà mostrato qui non appena Civo risponde."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regelwijziging in firewall “%@” is al verzonden en kan niet meer worden geannuleerd. Het resultaat verschijnt hier zodra Civo antwoordt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana reguły w zaporze „%@” została już wysłana i nie można jej anulować. Wynik pojawi się tutaj, gdy Civo odpowie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração da regra no firewall “%@” já foi enviada e não pode mais ser cancelada. O resultado aparecerá aqui assim que a Civo responder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%@”中的规则更改已发送，无法再取消。Civo 响应后，结果将显示在此处。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%@」のルール変更はすでに送信されたため、キャンセルできません。Civo が応答すると、結果がここに表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%@”의 규칙 변경은 이미 전송되어 더 이상 취소할 수 없습니다. Civo가 응답하면 결과가 여기에 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أُرسل تغيير القاعدة في جدار الحماية “%@” بالفعل ولم يعد من الممكن إلغاؤه. ستظهر النتيجة هنا بمجرد أن تردّ Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%@” में नियम बदलाव पहले ही भेजा जा चुका है और अब रद्द नहीं किया जा सकता। Civo के जवाब देते ही नतीजा यहाँ दिखेगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan aturan di firewall “%@” sudah dikirim dan tidak dapat dibatalkan lagi. Hasilnya akan ditampilkan di sini setelah Civo menjawab."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” güvenlik duvarındaki kural değişikliği zaten gönderildi ve artık iptal edilemez. Sonuç, Civo yanıt verdiğinde burada gösterilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение правила в брандмауэре «%@» уже отправлено и больше не может быть отменено. Результат появится здесь, как только Civo ответит."
+          }
+        }
+      }
+    },
+    "The rule change in firewall “%@” was saved." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule change in firewall “%@” was saved."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeländerung in der Firewall „%@“ wurde gespeichert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se guardó el cambio de la regla en el firewall “%@”."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification de la règle du pare-feu « %@ » a été enregistrée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica della regola nel firewall “%@” è stata salvata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regelwijziging in firewall “%@” is opgeslagen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana reguły w zaporze „%@” została zapisana."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração da regra no firewall “%@” foi salva."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%@”中的规则更改已保存。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%@」のルール変更を保存しました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%@”의 규칙 변경이 저장되었습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حُفظ تغيير القاعدة في جدار الحماية “%@”."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%@” में नियम बदलाव सहेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan aturan di firewall “%@” telah disimpan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” güvenlik duvarındaki kural değişikliği kaydedildi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение правила в брандмауэре «%@» сохранено."
+          }
+        }
+      }
+    },
+    "The rule change in firewall “%@” was not saved: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rule change in firewall “%1$@” was not saved: %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeländerung in der Firewall „%1$@“ wurde nicht gespeichert: %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se guardó el cambio de la regla en el firewall “%1$@”: %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification de la règle du pare-feu « %1$@ » n'a pas été enregistrée : %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modifica della regola nel firewall “%1$@” non è stata salvata: %2$@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regelwijziging in firewall “%1$@” is niet opgeslagen: %2$@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana reguły w zaporze „%1$@” nie została zapisana: %2$@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração da regra no firewall “%1$@” não foi salva: %2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%1$@”中的规则更改未保存：%2$@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%1$@」のルール変更は保存されませんでした：%2$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%1$@”의 규칙 변경이 저장되지 않았습니다: %2$@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُحفظ تغيير القاعدة في جدار الحماية “%1$@”: %2$@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%1$@” में नियम बदलाव सहेजा नहीं गया: %2$@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan aturan di firewall “%1$@” tidak disimpan: %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%1$@” güvenlik duvarındaki kural değişikliği kaydedilmedi: %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменение правила в брандмауэре «%1$@» не сохранено: %2$@"
+          }
+        }
+      }
+    },
+    "The result of the rule change in firewall “%@” is unknown. Check the rule in the list." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The result of the rule change in firewall “%@” is unknown. Check the rule in the list."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis der Regeländerung in der Firewall „%@“ ist unbekannt. Prüfe die Regel in der Liste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se desconoce el resultado del cambio de la regla en el firewall “%@”. Comprueba la regla en la lista."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le résultat de la modification de la règle du pare-feu « %@ » est inconnu. Vérifiez la règle dans la liste."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il risultato della modifica della regola nel firewall “%@” è sconosciuto. Controlla la regola nell'elenco."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resultaat van de regelwijziging in firewall “%@” is onbekend. Controleer de regel in de lijst."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wynik zmiany reguły w zaporze „%@” jest nieznany. Sprawdź regułę na liście."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O resultado da alteração da regra no firewall “%@” é desconhecido. Verifique a regra na lista."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙“%@”中规则更改的结果未知。请在列表中检查该规则。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォール「%@」のルール変更の結果は不明です。一覧でルールを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 “%@”의 규칙 변경 결과를 알 수 없습니다. 목록에서 규칙을 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نتيجة تغيير القاعدة في جدار الحماية “%@” غير معروفة. تحقّق من القاعدة في القائمة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल “%@” में नियम बदलाव का नतीजा पता नहीं है। सूची में नियम जाँचें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasil perubahan aturan di firewall “%@” tidak diketahui. Periksa aturan di daftar."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” güvenlik duvarındaki kural değişikliğinin sonucu bilinmiyor. Listedeki kuralı kontrol edin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результат изменения правила в брандмауэре «%@» неизвестен. Проверьте правило в списке."
           }
         }
       }

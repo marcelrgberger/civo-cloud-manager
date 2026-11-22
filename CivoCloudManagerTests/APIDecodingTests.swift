@@ -3335,12 +3335,15 @@ private actor FakeFirewallRuleAPI: FirewallRuleAPI {
     private var updateError: Error?
     /// Runs while the reload is on its way, like a Settings change during the request.
     private var duringReload: (@Sendable () async -> Void)?
+    /// Runs while the update is on its way, after it was sent.
+    private var duringUpdate: (@Sendable () async -> Void)?
 
     init(rules: [CivoRule]) { self.rules = rules }
 
     func replaceRules(with rules: [CivoRule]) { self.rules = rules }
     func failUpdate(with error: Error) { updateError = error }
     func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+    func whileUpdating(_ action: @escaping @Sendable () async -> Void) { duringUpdate = action }
 
     func getRulesForFirewall(_ firewallId: String, region: String?, apiKey: String?) async throws -> [CivoRule] {
         calls.append("list \(firewallId) \(region ?? "-") \(apiKey ?? "-")")
@@ -3353,6 +3356,10 @@ private actor FakeFirewallRuleAPI: FirewallRuleAPI {
 
     func updateRule(_ ruleId: String, of firewallId: String, body: sending [String: Any], region: String, apiKey: String) async throws {
         calls.append("update \(firewallId) \(ruleId) \(region) \(apiKey) port \(body["start_port"] as? String ?? "-")")
+        if let action = duringUpdate {
+            duringUpdate = nil
+            await action()
+        }
         if let updateError { throw updateError }
     }
 }
@@ -3388,6 +3395,8 @@ struct FirewallRuleEditorTests {
                 account: CivoAccount(apiKey: "key-a"), isScheduledForClosure: { [unowned self] _, ruleId in scheduled.contains(ruleId) }
             )
         }
+
+        let target = FirewallRuleTarget(firewallId: "fw-1", firewallName: "web", ruleId: "rule-1", region: "LON1", account: CivoAccount(apiKey: "key-a"))
 
         func save(_ draft: FirewallRuleDraft) async -> FirewallRuleSaveOutcome? {
             await editor.save(draft) { [unowned self] _, ruleId in scheduled.contains(ruleId) }
@@ -3536,7 +3545,78 @@ struct FirewallRuleEditorTests {
 
         await env.api.failUpdate(with: CivoAPIError.decodingError("unexpected answer"))
         #expect(await env.save(Self.changedPort) == .uncertain)
-        #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage)
+        #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage(for: env.target))
         #expect(env.activities.isEmpty)
+    }
+
+    @Test("A region or account change once the update was sent says so, then reports Civo's answer for that firewall")
+    func settingsChangeWhileUpdating() async throws {
+        let env = Environment()
+        env.begin()
+        let notifications = env.notifications
+        await env.api.whileUpdating {
+            await MainActor.run {
+                env.region = "NYC1"
+                notifications.post(name: .civoRegionDidChange, object: nil)
+                #expect(env.editor.session == nil)
+                #expect(env.editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
+            }
+        }
+        #expect(await env.save(Self.changedPort) == .saved)
+        #expect(env.editor.notice == FirewallRuleEditor.savedMessage(for: env.target))
+        #expect(env.activities == ["web rule-1"])
+
+        env.region = "LON1"
+        env.begin()
+        await env.api.failUpdate(with: CivoAPIError.httpError(500, "down"))
+        await env.api.whileUpdating {
+            await MainActor.run {
+                env.apiKey = "key-b"
+                notifications.post(name: .civoAPIKeyDidChange, object: nil)
+                #expect(env.editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
+            }
+        }
+        #expect(await env.save(Self.changedPort) == .cancelled)
+        let reason = try #require(CivoAPIError.userMessage(CivoAPIError.httpError(500, "down")))
+        #expect(env.editor.notice == FirewallRuleEditor.notSavedMessage(for: env.target, reason: reason))
+        #expect(env.editor.session == nil)
+        #expect(env.activities == ["web rule-1"])
+    }
+
+    @Test("An answer to an update whose editor was cancelled leaves the editor opened afterwards untouched", arguments: [
+        nil, CivoAPIError.httpError(422, "invalid"), CivoAPIError.decodingError("unexpected answer"),
+    ] as [CivoAPIError?])
+    func answerAfterCancelAndReopen(failure: CivoAPIError?) async throws {
+        let env = Environment()
+        env.begin()
+        if let failure { await env.api.failUpdate(with: failure) }
+        let editor = env.editor
+        await env.api.whileUpdating {
+            await MainActor.run {
+                editor.cancel()
+                #expect(editor.notice == FirewallRuleEditor.awaitingAnswerMessage(for: env.target))
+                env.begin()
+            }
+        }
+        let cancelledSession = env.editor.session?.id
+
+        let outcome = await env.save(Self.changedPort)
+
+        #expect(env.editor.session != nil)
+        #expect(env.editor.session?.id != cancelledSession)
+        #expect(env.editor.session?.original == editableRule)
+        #expect(env.editor.saveError == nil)
+        switch failure {
+        case nil:
+            #expect(outcome == .saved)
+            #expect(env.editor.notice == FirewallRuleEditor.savedMessage(for: env.target))
+        case .decodingError?:
+            #expect(outcome == .uncertain)
+            #expect(env.editor.notice == FirewallRuleEditor.unreadableUpdateMessage(for: env.target))
+        case let failure?:
+            #expect(outcome == .cancelled)
+            let reason = try #require(CivoAPIError.userMessage(failure))
+            #expect(env.editor.notice == FirewallRuleEditor.notSavedMessage(for: env.target, reason: reason))
+        }
     }
 }
