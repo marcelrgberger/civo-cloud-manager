@@ -7,6 +7,11 @@ private enum ConfigKey {
     static let keychainAccount = "apikey"
 }
 
+extension Notification.Name {
+    /// Posted after the stored API key changes, so open console windows can stop using the old account.
+    static let civoAPIKeyDidChange = Notification.Name("CivoCloudManager.apiKeyDidChange")
+}
+
 final class CivoConfig: @unchecked Sendable {
     static let shared = CivoConfig()
 
@@ -16,7 +21,10 @@ final class CivoConfig: @unchecked Sendable {
 
     var apiKey: String {
         get { readKeychain() ?? "" }
-        set { writeKeychain(newValue) }
+        set {
+            writeKeychain(newValue)
+            NotificationCenter.default.post(name: .civoAPIKeyDidChange, object: nil)
+        }
     }
 
     var region: String {

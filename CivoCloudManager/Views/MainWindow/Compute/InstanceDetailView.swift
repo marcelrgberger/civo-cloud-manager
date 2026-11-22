@@ -1,17 +1,19 @@
-import LocalAuthentication
 import SwiftUI
 
 struct InstanceDetailView: View {
     let instance: CivoInstance
     @Bindable var vm: InstanceViewModel
     let onBack: () -> Void
+    @Environment(\.openWindow) private var openWindow
     @State private var appeared = false
-    @State private var showPassword = false
-    @State private var hidePasswordTask: Task<Void, Never>?
+    @State private var passwordAccess = PasswordAccess()
+    @State private var copiedPassword = false
     @State private var showResize = false
+    @State private var credentialsTarget: ConsoleTarget?
     @State private var resizeTarget = ""
     @State private var editingReverseDns = false
     @State private var reverseDnsValue = ""
+    private let store = StoreManager.shared
 
     private var sshKeyName: String {
         guard let keyId = instance.sshKeyId else { return "" }
@@ -45,18 +47,26 @@ struct InstanceDetailView: View {
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
         }
-        .onChange(of: showPassword) { _, visible in
-            hidePasswordTask?.cancel()
-            if visible {
-                hidePasswordTask = Task {
-                    try? await Task.sleep(for: .seconds(30))
-                    guard !Task.isCancelled else { return }
-                    showPassword = false
-                }
-            }
+        .relocksPassword(passwordAccess)
+        .onChange(of: instance.id) { passwordAccess.invalidate() }
+        .onChange(of: store.isFullAccessUnlocked) { _, unlocked in
+            if !unlocked { passwordAccess.invalidate() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
+            passwordAccess.invalidate()
+        }
+        .task(id: copiedPassword) {
+            guard copiedPassword else { return }
+            try? await Task.sleep(for: .seconds(2))
+            if !Task.isCancelled { copiedPassword = false }
         }
         .sheet(isPresented: $showResize) {
             resizeSheet
+        }
+        .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
+            if let target = credentialsTarget {
+                InstanceCredentialsView(target: target)
+            }
         }
     }
 
@@ -220,26 +230,9 @@ struct InstanceDetailView: View {
                         Text("Initial Password")
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        HStack {
-                            if showPassword {
-                                Text(password)
-                                    .font(.subheadline.monospaced())
-                                    .textSelection(.enabled)
-                            } else {
-                                Text(String(repeating: "*", count: 12))
-                                    .font(.subheadline.monospaced())
-                            }
-                            Button {
-                                if showPassword {
-                                    showPassword = false
-                                } else {
-                                    authenticateAndShowPassword()
-                                }
-                            } label: {
-                                Image(systemName: showPassword ? "eye.slash" : "eye")
-                                    .font(.caption)
-                            }
-                            .buttonStyle(.borderless)
+                        passwordRow(password)
+                        if passwordAccess.isDeviceAuthenticationUnavailable {
+                            DeviceAuthenticationRequiredHint()
                         }
                     }
                 }
@@ -267,6 +260,18 @@ struct InstanceDetailView: View {
                         }
                         .buttonStyle(.bordered)
                         .controlSize(.small)
+
+                        if let target = vm.consoleTarget(for: instance) {
+                            Button {
+                                vm.handOverConsoleLogin(of: instance, to: target)
+                                openWindow(id: "console", value: target)
+                            } label: {
+                                Label("Open Console", systemImage: "terminal")
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.small)
+                            .help("Open the instance console in a new window")
+                        }
                     } else if instance.status?.lowercased() == "shutoff" {
                         Button { Task { await vm.startInstance(instance.id) } } label: {
                             Label("Start", systemImage: "play.circle")
@@ -274,6 +279,18 @@ struct InstanceDetailView: View {
                         .buttonStyle(.bordered)
                         .controlSize(.small)
                         .tint(.green)
+                    }
+
+                    // Unlike the console, available in every state, so credentials can be kept up to date.
+                    if let target = vm.consoleTarget(for: instance) {
+                        Button {
+                            credentialsTarget = target
+                        } label: {
+                            Label("Credentials…", systemImage: "key")
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .help("Save a username and password for this instance in this Mac's keychain")
                     }
 
                     Button {
@@ -357,23 +374,43 @@ struct InstanceDetailView: View {
         .frame(width: 500)
     }
 
-    private func authenticateAndShowPassword() {
-        let context = LAContext()
-        var error: NSError?
-        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
-            showPassword = true
-            return
-        }
-        Task {
-            do {
-                let success = try await context.evaluatePolicy(
-                    .deviceOwnerAuthentication,
-                    localizedReason: String(localized: "View instance password")
-                )
-                if success { showPassword = true }
-            } catch {
-                Log.error("Touch ID failed: \(error.localizedDescription)")
+    private func passwordRow(_ password: String) -> some View {
+        HStack {
+            // Not selectable: copying goes through `SecretPasteboard` only.
+            if passwordAccess.isRevealed {
+                Text(verbatim: password)
+                    .font(.subheadline.monospaced())
+            } else {
+                Text(verbatim: String(repeating: "*", count: 12))
+                    .font(.subheadline.monospaced())
             }
+            Button {
+                if passwordAccess.isRevealed {
+                    passwordAccess.hide()
+                } else {
+                    Task { await passwordAccess.reveal() }
+                }
+            } label: {
+                Label(
+                    passwordAccess.isRevealed ? "Hide password" : "Show password",
+                    systemImage: passwordAccess.isRevealed ? "eye.slash" : "eye"
+                )
+                .labelStyle(.iconOnly)
+                .font(.caption)
+            }
+            .buttonStyle(.borderless)
+            .help(passwordAccess.isRevealed ? "Hide password" : "Show password")
+            Button {
+                Task {
+                    if await passwordAccess.copy(password) { copiedPassword = true }
+                }
+            } label: {
+                Label("Copy password", systemImage: copiedPassword ? "checkmark" : "doc.on.doc")
+                    .labelStyle(.iconOnly)
+                    .font(.caption)
+            }
+            .buttonStyle(.borderless)
+            .help("Copy password")
         }
     }
 
