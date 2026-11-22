@@ -1869,6 +1869,9 @@ private actor FakeInstanceAPI: InstanceAPI {
         calls.append("firewall \(id) \(firewallId) \(region)")
         if let firewallError { throw firewallError }
     }
+    func setTags(_ id: String, _ change: InstanceTagChange, region: String) async throws {
+        calls.append("tags \(id) [\(change.parameter)] \(region)")
+    }
 
     func removeInstance(_ id: String, region: String) async throws {
         struct DeletionFailed: Error {}
@@ -2165,6 +2168,87 @@ struct InstanceFirewallChangeTests {
         #expect(env.vm.selectedInstance?.firewallId == "fw-custom")
         #expect(env.vm.error == InstanceViewModel.unreadableFirewallChangeMessage)
         #expect(env.activities.isEmpty)
+    }
+}
+
+@Suite("Instance tags")
+@MainActor
+struct InstanceTagTests {
+    @Test("Comma-separated input is trimmed, split, de-duplicated and sent space-separated")
+    func normalisation() throws {
+        let change = try InstanceTagChange.replacing(with: " web ,db,, web,\tprod-1 ,")
+        #expect(change.tags == ["web", "db", "prod-1"])
+        #expect(change.parameter == "web db prod-1")
+    }
+
+    @Test("A tag with a space is rejected instead of being split by Civo; input without a tag is refused")
+    func invalidInput() {
+        #expect(throws: InstanceTagInputError.containsWhitespace(["my app", "a b"])) {
+            try InstanceTagChange.replacing(with: "web, my app, a b")
+        }
+        for input in ["", "  ", ", ,"] {
+            #expect(throws: InstanceTagInputError.empty, "\(input)") { try InstanceTagChange.replacing(with: input) }
+        }
+    }
+
+    @Test("Saving sends the normalised tags with the captured region and logs them")
+    func save() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        #expect(await env.vm.setTags("web, db, web", of: target))
+        #expect(await env.api.calls == ["tags \(consoleInstanceId) [web db] LON1"])
+        #expect(env.activities == ["Tags set to web, db"])
+    }
+
+    @Test("Input without a tag or with a space sends no request, so saving can never clear the tags")
+    func emptyInputSendsNothing() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        for input in ["", " , ", "my app"] {
+            #expect(await env.vm.setTags(input, of: target) == false)
+        }
+        #expect(env.vm.error == InstanceTagInputError.containsWhitespace(["my app"]).message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.activities.isEmpty)
+    }
+
+    @Test("Only the confirmed Remove All Tags action sends empty tags, with Full Access checked on confirm")
+    func removeAll() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+
+        env.vm.beginConfirmation(.removeAllTags, for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction?.kind == .removeAllTags)
+        env.vm.cancelConfirmation()
+        #expect(await env.api.calls.isEmpty)
+
+        env.vm.beginConfirmation(.removeAllTags, for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.removeAllTags(of: refused)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+
+        env.accessAllowed = true
+        env.vm.beginConfirmation(.removeAllTags, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+        await env.vm.removeAllTags(of: target)
+        #expect(await env.api.calls == ["tags \(consoleInstanceId) [] LON1"])
+        #expect(env.activities == ["Removed all tags"])
+    }
+
+    @Test("The list filter matches part of a tag, ignoring case; an empty filter shows every instance")
+    func filter() throws {
+        let tagged = try JSONDecoder().decode(CivoInstance.self, from: Data(#"{"id": "i-1", "tags": ["Production", "web"]}"#.utf8))
+        #expect(tagged.hasTag(matching: "prod"))
+        #expect(tagged.hasTag(matching: " WEB "))
+        #expect(!tagged.hasTag(matching: "db"))
+        #expect(InstanceEnvironment.instance.hasTag(matching: ""))
+        #expect(!InstanceEnvironment.instance.hasTag(matching: "web"))
     }
 }
 

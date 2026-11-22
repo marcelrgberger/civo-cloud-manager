@@ -51,6 +51,7 @@ protocol InstanceAPI: Sendable {
     func changePower(_ action: InstancePowerAction, of id: String, region: String) async throws
     func resizeInstance(_ id: String, size: String, region: String) async throws
     func setFirewall(_ id: String, firewallId: String, region: String) async throws
+    func setTags(_ id: String, _ change: InstanceTagChange, region: String) async throws
     func removeInstance(_ id: String, region: String) async throws
 }
 
@@ -85,6 +86,15 @@ final class CivoInstanceService: InstanceAPI {
         let _: InstanceFirewallChangeResponse = try await api.put(
             path: "/instances/\(id)/firewall",
             body: ["firewall_id": firewallId, "region": region],
+            queryItems: Self.pinned(region)
+        )
+    }
+
+    /// Always sends `tags`: Civo removes all tags when it is missing. Civo requires the region in the body as well.
+    func setTags(_ id: String, _ change: InstanceTagChange, region: String) async throws {
+        let _: CivoResult = try await api.put(
+            path: "/instances/\(id)/tags",
+            body: ["tags": change.parameter, "region": region],
             queryItems: Self.pinned(region)
         )
     }

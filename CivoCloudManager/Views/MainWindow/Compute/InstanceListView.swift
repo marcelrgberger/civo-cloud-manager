@@ -3,6 +3,7 @@ import SwiftUI
 struct InstanceListView: View {
     @Bindable var vm: InstanceViewModel
     @State private var credentialsTarget: ConsoleTarget?
+    @State private var tagFilter = ""
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
@@ -44,12 +45,19 @@ struct InstanceListView: View {
         }
     }
 
+    /// Filtered on this Mac only; the complete list is already loaded.
+    private var filteredInstances: [CivoInstance] {
+        vm.instances.filter { $0.hasTag(matching: tagFilter) }
+    }
+
     private var instanceList: some View {
         List {
             if vm.instances.isEmpty && !vm.isLoading {
                 EmptyStateView(icon: "desktopcomputer", title: "No Instances", message: "No compute instances found in your account.")
+            } else if filteredInstances.isEmpty && !vm.isLoading {
+                EmptyStateView(icon: "tag", title: "No instances match", message: "No instance has a tag containing this text.")
             } else {
-                ForEach(Array(vm.instances.enumerated()), id: \.element.id) { index, inst in
+                ForEach(Array(filteredInstances.enumerated()), id: \.element.id) { index, inst in
                     Button {
                         vm.selectedInstance = inst
                     } label: {
@@ -84,11 +92,12 @@ struct InstanceListView: View {
                 }
             }
         }
-        .animation(.easeOut, value: vm.instances.map(\.id))
+        .animation(.easeOut, value: filteredInstances.map(\.id))
         .safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
                 if vm.instanceCompleteness.mayBeMissingItems { IncompleteListBanner() }
+                if !vm.instances.isEmpty { tagFilterField }
             }
         }
         .navigationTitle("Instances")
@@ -113,5 +122,27 @@ struct InstanceListView: View {
             }
         }
         .instancePowerConfirmation(vm)
+    }
+
+    private var tagFilterField: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "tag")
+                .foregroundStyle(.secondary)
+            TextField("Filter by tag", text: $tagFilter)
+                .textFieldStyle(.plain)
+            if !tagFilter.isEmpty {
+                Button {
+                    tagFilter = ""
+                } label: {
+                    Label("Clear tag filter", systemImage: "xmark.circle.fill")
+                        .labelStyle(.iconOnly)
+                }
+                .buttonStyle(.borderless)
+                .help("Clear tag filter")
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(.bar)
     }
 }

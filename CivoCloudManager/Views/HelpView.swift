@@ -248,6 +248,8 @@ struct HelpSection {
             "'Change...' next to the firewall in the Security box switches the instance to another firewall of its network. A second confirmation follows; Full Access, the region and the firewall list are checked again before anything is sent. The new rules apply right away and can block SSH or other access.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",
+            "Edit tags inline in the Actions & Metadata box. Separate tags with commas; a tag cannot contain spaces. Saving never clears the tags: only 'Remove All Tags...' does that, after a confirmation.",
+            "Filter the instance list by tag with the field above the list. The filter runs on this Mac and matches part of a tag, ignoring case.",
             "Activity log shows recent actions with timestamps.",
             "Auto-refresh while instance is building (every 5 seconds).",
         ]),

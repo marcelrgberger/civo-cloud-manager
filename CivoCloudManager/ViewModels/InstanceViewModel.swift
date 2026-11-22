@@ -27,7 +27,7 @@ enum InstanceTargetError: Error, Equatable {
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
-        case resize, delete, firewall
+        case resize, delete, firewall, removeAllTags
         case power(InstancePowerAction)
     }
 
@@ -369,6 +369,30 @@ final class InstanceViewModel {
         String(localized: "Civo accepted the firewall change, but its answer could not be read. Check which firewall the instance uses now.")
     }
 
+    // MARK: - Tags
+
+    /// Replaces the tags with the comma-separated `input`. Input that is invalid or holds no tag sends
+    /// nothing: only `removeAllTags(of:)` may clear the tags. Returns whether the tags were changed.
+    func setTags(_ input: String, of target: ConsoleTarget) async -> Bool {
+        let change: InstanceTagChange
+        do {
+            change = try InstanceTagChange.replacing(with: input)
+        } catch {
+            self.error = error.message
+            return false
+        }
+        return await perform("Tags set to %@", detail: change.tags.joined(separator: ", "), on: target) {
+            try await $0.setTags(target.instanceId, change, region: target.region)
+        }
+    }
+
+    /// Removes every tag. Called only from the confirmation opened with `beginConfirmation(.removeAllTags, for:)`.
+    func removeAllTags(of target: ConsoleTarget) async {
+        await perform("Removed all tags", on: target) {
+            try await $0.setTags(target.instanceId, .removeAll, region: target.region)
+        }
+    }
+
     func updateInstance(_ target: ConsoleTarget, reverseDns: String) async {
         await perform("Set Reverse DNS to \(reverseDns)", on: target) {
             try await $0.updateInstance(target.instanceId, body: ["reverse_dns": reverseDns], region: target.region)
@@ -381,18 +405,28 @@ final class InstanceViewModel {
         }
     }
 
-    /// Sends one request for `target`, only if the target is still valid at this moment.
-    private func perform(_ activity: String, on target: ConsoleTarget, _ request: (any InstanceAPI) async throws -> Void) async {
+    /// Sends one request for `target`, only if the target is still valid at this moment. Returns whether it succeeded.
+    @discardableResult
+    private func perform(
+        _ activity: String,
+        detail: String? = nil,
+        on target: ConsoleTarget,
+        _ request: (any InstanceAPI) async throws -> Void
+    ) async -> Bool {
         if let problem = targetError(for: target) {
             error = problem.message
-            return
+            return false
         }
         do {
             try await request(api)
             showSuccess = true
-            recordActivity(activity, nil, target)
+            recordActivity(activity, detail, target)
             await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
+            return true
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return false
+        }
     }
 
     func attachVolume(_ volumeId: String, instanceId: String) async {
