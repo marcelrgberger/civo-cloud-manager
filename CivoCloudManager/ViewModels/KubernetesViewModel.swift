@@ -27,6 +27,11 @@ final class KubernetesViewModel {
     var availableVersions: [CivoKubernetesVersion] = []
     /// Set when the version list could not be loaded; Civo's default version is used then.
     var versionListError: String?
+    /// Civo's marketplace list and the applications chosen in Create Cluster.
+    private(set) var marketplace = MarketplaceCreateState()
+    private(set) var isLoadingMarketplace = false
+    /// Counts catalog requests, so only the answer to the latest one is applied.
+    private var marketplaceRequest = 0
 
     // K8s API state
     var k8sNodes: [K8sNode] = []
@@ -117,6 +122,49 @@ final class KubernetesViewModel {
             availableVersions = []
             versionListError = CivoAPIError.userMessage(error)
         }
+        marketplace = MarketplaceCreateState()
+        await reloadMarketplace()
+    }
+
+    /// Loads Civo's marketplace list again with the current account and region. A failed load keeps the list and
+    /// the choices the user already reviewed.
+    func reloadMarketplace() async {
+        marketplaceRequest += 1
+        let request = marketplaceRequest
+        let apiKey = CivoConfig.shared.apiKey
+        let context = Self.marketplaceContext(apiKey: apiKey)
+        isLoadingMarketplace = true
+        let result: Result<MarketplaceCatalog, Error>
+        do {
+            result = .success(try MarketplaceCatalog(validating: try await service.listApplications(apiKey: apiKey)))
+        } catch {
+            result = .failure(error)
+        }
+        guard request == marketplaceRequest else { return }
+        isLoadingMarketplace = false
+        switch result {
+        case .success(let catalog):
+            marketplace.catalogLoaded(catalog, in: context, at: .now)
+        case .failure(let error):
+            guard let message = MarketplaceFailure.message(for: error) else { return }
+            marketplace.catalogFailed(message)
+        }
+    }
+
+    func chooseMarketplaceApplication(_ application: CivoMarketplaceApplication, plan: String?) {
+        marketplace.choose(application, plan: plan)
+    }
+
+    func removeMarketplaceApplication(_ id: String) {
+        marketplace.remove(id)
+    }
+
+    func acceptMarketplaceApplicationAgain(_ id: String) {
+        marketplace.acceptAgain(id)
+    }
+
+    private static func marketplaceContext(apiKey: String = CivoConfig.shared.apiKey) -> MarketplaceContext {
+        MarketplaceContext(account: CivoAccount(apiKey: apiKey), region: CivoConfig.shared.region)
     }
 
     func loadClusterDetail(_ id: String) async {
@@ -641,12 +689,18 @@ final class KubernetesViewModel {
 
     // MARK: - CRUD
 
+    /// Creates the cluster with the chosen marketplace applications, as long as they were chosen under the
+    /// current account and region.
     func createCluster(_ body: sending [String: Any]) async -> Bool {
         isSaving = true; saveError = nil; defer { isSaving = false }
+        var body = body
         do {
+            if let applications = try marketplace.applicationsField(in: Self.marketplaceContext()) {
+                body["applications"] = applications
+            }
             _ = try await service.createCluster(body)
             isCreating = false; showSuccess = true; await refresh(); return true
-        } catch { saveError = CivoAPIError.userMessage(error); return false }
+        } catch { saveError = MarketplaceFailure.message(for: error); return false }
     }
 
     /// Saves the labels of one pool of the cluster in `target`; see `KubernetesNodePoolController.saveLabels`.

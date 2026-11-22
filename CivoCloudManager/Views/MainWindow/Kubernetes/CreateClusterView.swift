@@ -9,7 +9,7 @@ struct CreateClusterView: View {
     @State private var kubernetesVersion = ""
     @State private var nodeSize = ""
     @State private var nodeCount = 3
-    @State private var applications = ""
+    @State private var isChoosingApplications = false
 
     private let cniOptions = ["flannel", "cilium"]
 
@@ -54,9 +54,10 @@ struct CreateClusterView: View {
                 }
             }
 
-            Section("Marketplace Apps") {
-                TextField("Apps (comma-separated)", text: $applications)
-                    .help("e.g. Traefik-v2-nodeport, metrics-server")
+            marketplaceSection
+
+            if !vm.marketplace.selection.isEmpty {
+                MarketplaceReviewSection(vm: vm)
             }
 
             if let error = vm.saveError {
@@ -68,6 +69,15 @@ struct CreateClusterView: View {
         .formStyle(.grouped)
         .navigationTitle("Create Kubernetes Cluster")
         .task { await vm.loadFormData() }
+        .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
+            Task { await vm.reloadMarketplace() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .civoRegionDidChange)) { _ in
+            Task { await vm.reloadMarketplace() }
+        }
+        .sheet(isPresented: $isChoosingApplications) {
+            MarketplacePickerView(vm: vm)
+        }
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") { vm.isCreating = false }
@@ -83,17 +93,27 @@ struct CreateClusterView: View {
                         if !kubernetesVersion.isEmpty { body["kubernetes_version"] = kubernetesVersion }
                         if !nodeSize.isEmpty { body["target_nodes_size"] = nodeSize }
                         if !networkId.isEmpty { body["network_id"] = networkId }
-                        if !applications.isEmpty {
-                            let apps = applications.split(separator: ",").map {
-                                ["application": $0.trimmingCharacters(in: .whitespaces)]
-                            }
-                            body["applications"] = apps
-                        }
                         _ = await vm.createCluster(body)
                     }
                 }
-                .disabled(name.isEmpty || vm.isSaving)
+                .disabled(name.isEmpty || vm.isSaving || !vm.marketplace.canSubmit)
             }
+        }
+    }
+
+    private var marketplaceSection: some View {
+        Section {
+            if vm.marketplace.catalog != nil {
+                Button("Choose Applications...") { isChoosingApplications = true }
+            }
+            if vm.marketplace.selection.isEmpty, !vm.isLoadingMarketplace {
+                Text("No additional applications selected. Civo may still install its default applications.")
+                    .foregroundStyle(.secondary)
+            }
+        } header: {
+            Text("Marketplace Apps")
+        } footer: {
+            MarketplaceCatalogStatus(vm: vm)
         }
     }
 
@@ -105,5 +125,84 @@ struct CreateClusterView: View {
             return String(localized: "Civo default sends no version, so Civo installs the version it marks as default, currently \(civoDefault.label ?? civoDefault.version).")
         }
         return String(localized: "Civo default sends no version, so Civo installs its default version.")
+    }
+}
+
+/// The chosen applications as they will be sent, directly above Create, with what changed since they were chosen.
+private struct MarketplaceReviewSection: View {
+    @Bindable var vm: KubernetesViewModel
+
+    var body: some View {
+        let issues = vm.marketplace.issues
+        Section {
+            ForEach(vm.marketplace.selection.choices, id: \.id) { choice in
+                MarketplaceReviewRow(vm: vm, choice: choice, issue: issues[choice.id])
+            }
+        } header: {
+            Text("Applications to install: \(vm.marketplace.selection.choices.count)")
+        } footer: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Applications may create resources that incur additional Civo charges; this app does not calculate those charges.")
+                if !issues.isEmpty {
+                    Text(MarketplaceSelectionError.needsReview.message)
+                        .foregroundStyle(.red)
+                }
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+    }
+}
+
+private struct MarketplaceReviewRow: View {
+    @Bindable var vm: KubernetesViewModel
+    let choice: MarketplaceChoice
+    let issue: MarketplaceSelectionIssue?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(verbatim: choice.name)
+                        .font(.subheadline.weight(.medium))
+                    if let plan = choice.plan {
+                        Text("Plan: \(plan)")
+                            .font(.caption)
+                    }
+                    if let version = choice.version {
+                        Text("Version: \(version)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+                Spacer()
+                if let issue {
+                    Label(issue.label, systemImage: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                    if issue == .detailsChanged || issue == .contextChanged {
+                        Button("Use Current Details") { vm.acceptMarketplaceApplicationAgain(choice.id) }
+                    }
+                }
+                Button("Remove") { vm.removeMarketplaceApplication(choice.id) }
+            }
+            if let description = choice.description {
+                Text("Description from Civo")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text(verbatim: description)
+                    .font(.caption)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .textSelection(.enabled)
+            }
+            if !choice.dependencies.isEmpty {
+                Text("Civo lists these dependencies: \(choice.dependencies.joined(separator: ", ")). This app does not know whether Civo installs them for you.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(.vertical, 2)
     }
 }

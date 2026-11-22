@@ -94,6 +94,7 @@
 		71D77DA989DA3B6D59A255A3 /* ClusterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541FD48B68AB64C17DAEF5F2 /* ClusterDetailView.swift */; };
 		73B424698FAA739D40320F7C /* CivoKubernetes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */; };
 		56452F95D600F3377ADF4E4D /* KubernetesVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982ABA282A573568B63318CD /* KubernetesVersion.swift */; };
+		25E21CD64765AD09704F9D37 /* KubernetesMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */; };
 		D3B024D8D833B3C72659BAF7 /* KubernetesNodeRecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */; };
 		685E20B3C41386425CFA0742 /* KubernetesNodePools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */; };
 		753975F3D82D9435CD26F674 /* DatabaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85983282A122A979440979C5 /* DatabaseDetailView.swift */; };
@@ -160,6 +161,7 @@
 		E6A6AF911D33CCFEEE0A3AF6 /* K8sWorkload.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730A1AEFCAFE05E6012ADE3 /* K8sWorkload.swift */; };
 		E7F063AAE44EB61F9CBD888F /* CreateClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FFA22F094F0014BBCE2A8F /* CreateClusterView.swift */; };
 		49C662B2D81C9DA7CE6E4ACD /* UpgradeClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */; };
+		8F738926268E183E74C4A0CF /* MarketplacePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */; };
 		73D8F3A619D220549AC4A2A8 /* RecycleNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */; };
 		2284B689A3B625FAF46585AC /* EditNodePoolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29CB2E3467730D081A8F818 /* EditNodePoolsView.swift */; };
 		EC3E72BAEDE07422A50EF33E /* QuickSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */; };
@@ -268,6 +270,7 @@
 		5531411EA45415DC78696414 /* CreateDomainView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDomainView.swift; sourceTree = "<group>"; };
 		59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetes.swift; sourceTree = "<group>"; };
 		982ABA282A573568B63318CD /* KubernetesVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesVersion.swift; sourceTree = "<group>"; };
+		FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesMarketplace.swift; sourceTree = "<group>"; };
 		9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodeRecycle.swift; sourceTree = "<group>"; };
 		B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodePools.swift; sourceTree = "<group>"; };
 		5AD7C8749E56550EFAB908BA /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/Impressum.md; sourceTree = "<group>"; };
@@ -381,6 +384,7 @@
 		F22ABFE0D58271BEF1C782B6 /* KubeconfigParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubeconfigParser.swift; sourceTree = "<group>"; };
 		F2FFA22F094F0014BBCE2A8F /* CreateClusterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateClusterView.swift; sourceTree = "<group>"; };
 		8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UpgradeClusterView.swift; sourceTree = "<group>"; };
+		0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarketplacePickerView.swift; sourceTree = "<group>"; };
 		FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecycleNodeView.swift; sourceTree = "<group>"; };
 		F29CB2E3467730D081A8F818 /* EditNodePoolsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditNodePoolsView.swift; sourceTree = "<group>"; };
 		F41379F596E3D4C00FCFD675 /* DomainViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DomainViewModel.swift; sourceTree = "<group>"; };
@@ -719,6 +723,7 @@
 				F42F5740ED2DAB63A6C76059 /* ClusterListView.swift */,
 				F2FFA22F094F0014BBCE2A8F /* CreateClusterView.swift */,
 				8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */,
+				0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */,
 				FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */,
 				F29CB2E3467730D081A8F818 /* EditNodePoolsView.swift */,
 				C50E6CD15E3F39C39FE6FAA9 /* EditLabelsView.swift */,
@@ -750,6 +755,7 @@
 				2741081E16DA45499D7C4901 /* CivoConsole.swift */,
 				59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */,
 				982ABA282A573568B63318CD /* KubernetesVersion.swift */,
+				FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */,
 				9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */,
 				B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */,
 				4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */,
@@ -968,6 +974,7 @@
 				C7311014833E428FABCEEA60 /* CivoConsole.swift in Sources */,
 				73B424698FAA739D40320F7C /* CivoKubernetes.swift in Sources */,
 				56452F95D600F3377ADF4E4D /* KubernetesVersion.swift in Sources */,
+				25E21CD64765AD09704F9D37 /* KubernetesMarketplace.swift in Sources */,
 				D3B024D8D833B3C72659BAF7 /* KubernetesNodeRecycle.swift in Sources */,
 				685E20B3C41386425CFA0742 /* KubernetesNodePools.swift in Sources */,
 				031CB4D60A65F48F84CEC130 /* CivoLoadBalancer.swift in Sources */,
@@ -1064,6 +1071,7 @@
 				BF1DF65ED69D37793CA9C5F0 /* ClusterListView.swift in Sources */,
 				E7F063AAE44EB61F9CBD888F /* CreateClusterView.swift in Sources */,
 				49C662B2D81C9DA7CE6E4ACD /* UpgradeClusterView.swift in Sources */,
+				8F738926268E183E74C4A0CF /* MarketplacePickerView.swift in Sources */,
 				73D8F3A619D220549AC4A2A8 /* RecycleNodeView.swift in Sources */,
 				2284B689A3B625FAF46585AC /* EditNodePoolsView.swift in Sources */,
 				4778BBCA885824866A8DAFD7 /* EditLabelsView.swift in Sources */,

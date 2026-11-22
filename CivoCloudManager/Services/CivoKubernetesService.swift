@@ -40,6 +40,12 @@ final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAP
         try await api.getArray(path: "/kubernetes/versions", regionRequired: false, apiKey: apiKey)
     }
 
+    /// `GET /v2/kubernetes/applications`, documented without parameters. Each entry is read on its own, so only a
+    /// failed request or an answer that is not a list fails the load.
+    func listApplications(apiKey: String? = nil) async throws -> [RawMarketplaceEntry] {
+        try await api.getArray(path: "/kubernetes/applications", regionRequired: false, apiKey: apiKey)
+    }
+
     func createCluster(_ body: [String: Any]) async throws -> CivoKubernetesCluster {
         try await api.post(path: "/kubernetes/clusters", body: body)
     }

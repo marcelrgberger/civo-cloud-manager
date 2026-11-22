@@ -992,12 +992,15 @@ struct ClusterDetailView: View {
                                 Text(app.name ?? app.application ?? "Unknown")
                                     .font(.subheadline.weight(.medium))
                                 if let version = app.version {
-                                    Text(version)
+                                    Text(app.planLabel.map { "\(version) - \($0)" } ?? version)
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
                             }
                             Spacer()
+                            Text(app.state.label)
+                                .font(.caption)
+                                .foregroundStyle(app.state == .installed ? Color.secondary : Color.orange)
                         }
                         .padding(.vertical, 2)
                         .modifier(StaggeredAppear(index: index))
