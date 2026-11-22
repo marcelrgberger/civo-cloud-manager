@@ -1990,8 +1990,10 @@ private final class InstanceEnvironment {
     let center = NotificationCenter()
     /// The firewalls Civo lists for each region.
     var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
-    /// The sizes Civo lists for each region.
+    /// The sizes Civo lists for each region, and the regions they were requested for.
     var sizesByRegion: [String: [CivoSize]] = [:]
+    var sizeLoadError: Error?
+    private(set) var sizeRequests: [String] = []
     private(set) var activities: [String] = []
     /// Kept alive for the default store: its client refers to it unowned.
     private let keychain = FakeKeychain()
@@ -2017,7 +2019,7 @@ private final class InstanceEnvironment {
                 write: { [weak self] in self?.storedRecoveryReboots = $0 }
             ),
             loadSSHKeys: { [] },
-            loadSizes: { [weak self] region in self?.sizesByRegion[region] ?? [] },
+            loadSizes: { [weak self] region in try await self?.listSizes(in: region) ?? [] },
             loadFirewallOptions: { [weak self] region in
                 let firewalls = await self?.firewallsByRegion[region] ?? []
                 return InstanceFirewallOptions(region: region, firewalls: firewalls, networks: InstanceEnvironment.networks)
@@ -2029,6 +2031,12 @@ private final class InstanceEnvironment {
                 self?.activities.append(detail.map { String(format: action, $0) } ?? action)
             }
         )
+    }
+
+    private func listSizes(in region: String) throws -> [CivoSize] {
+        sizeRequests.append(region)
+        if let sizeLoadError { throw sizeLoadError }
+        return sizesByRegion[region] ?? []
     }
 
     /// Changes the Settings region the way `CivoConfig` does.
@@ -3095,7 +3103,8 @@ struct InstanceCreationFormTests {
 
 // MARK: - Instance resize
 
-/// Sizes in the documented `/v2/sizes` payload, without `type` (https://www.civo.com/api/sizes).
+/// Sizes in the documented `/v2/sizes` payload, without `type` (https://www.civo.com/api/sizes), and typed ones.
+/// A live LON1 response types sizes `Instance`, `Kubernetes` or `Database`; `Performance` stands for any other type.
 private let documentedSizes = try! JSONDecoder().decode([CivoSize].self, from: Data("""
 [{"name":"g3.small","nice_name":"Small","cpu_cores":1,"ram_mb":2048,"disk_gb":25,"description":"Small","selectable":true},
  {"name":"g3.medium","nice_name":"Medium","cpu_cores":2,"ram_mb":4096,"disk_gb":50,"description":"Medium","selectable":true},
@@ -3106,6 +3115,9 @@ private let documentedSizes = try! JSONDecoder().decode([CivoSize].self, from: D
  {"name":"g4s.kube.large","nice_name":"Large Kube","cpu_cores":4,"ram_mb":8192,"disk_gb":60,"description":"Kube","selectable":true},
  {"name":"g3.db.large","nice_name":"Large DB","cpu_cores":4,"ram_mb":8192,"disk_gb":160,"description":"DB","selectable":true},
  {"name":"g4s.2xlarge","nice_name":"2XL","type":"Instance","cpu_cores":8,"ram_mb":32768,"disk_gb":200,"selectable":true},
+ {"name":"g4p.small","nice_name":"Small Performance","type":"Performance","cpu_cores":4,"ram_mb":16384,"disk_gb":100,"selectable":true},
+ {"name":"g3.k3s.large","nice_name":"Large K3s","cpu_cores":4,"ram_mb":8192,"disk_gb":60,"selectable":true},
+ {"name":"g3.db.xlarge","nice_name":"XL DB","type":"Database","cpu_cores":8,"ram_mb":32768,"disk_gb":320,"selectable":true},
  {"name":"g4s.kube.2xlarge","nice_name":"2XL Kube","type":"Kubernetes","cpu_cores":8,"ram_mb":32768,"disk_gb":200,"selectable":true}]
 """.utf8))
 
@@ -3121,18 +3133,18 @@ private func resizableInstance(status: String = "ACTIVE", size: String? = "g3.me
 @Suite("Instance resize")
 @MainActor
 struct InstanceResizeTests {
-    @Test("Only selectable, larger instance sizes are offered, also without a size type")
+    @Test("Only selectable, larger instance sizes are offered, with or without a type other than Instance")
     func eligibleSizes() {
         let offered = InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance()).map(\.name)
         // g3.small is smaller, g4s.medium is not larger, g4c.large has less disk, g3.xlarge is not selectable,
-        // kube and db sizes are other products.
-        #expect(offered == ["g3.large", "g4s.2xlarge"])
+        // kube, k3s and db sizes are other products.
+        #expect(offered == ["g3.large", "g4p.small", "g4s.2xlarge"])
     }
 
     @Test("Without its own specs, the instance is compared by its listed size; with neither, nothing is offered")
     func unknownCurrentSpecs() {
         let bySize = InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance(specs: false)).map(\.name)
-        #expect(bySize == ["g3.large", "g4s.2xlarge"])
+        #expect(bySize == ["g3.large", "g4p.small", "g4s.2xlarge"])
         #expect(InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance(size: nil, specs: false)).isEmpty)
     }
 
@@ -3157,15 +3169,33 @@ struct InstanceResizeTests {
         #expect(ResizeCostEstimate(currentHourly: nil, newHourly: 0.059524) == nil)
     }
 
-    @Test("The sheet loads sizes itself and a resize keeps the captured region, after Full Access is checked on confirm")
-    func confirmedResize() async throws {
-        let env = InstanceEnvironment(sizes: documentedSizes)
+    /// Regression for the empty picker of 2026-11-22: the sheet showed only the sizes the Create form had loaded,
+    /// filtered to the type `Instance`.
+    @Test("The sheet loads the sizes of the captured region itself, without the Create form")
+    func sizesOfCapturedRegion() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes, "NYC1": []]
         await env.api.list([resizableInstance()], in: "LON1")
         await env.vm.refresh()
-        await env.vm.loadResizeSizes()
-        #expect(env.vm.eligibleResizeSizes(for: resizableInstance()).map(\.name) == ["g3.large", "g4s.2xlarge"])
+        #expect(env.vm.availableSizes.isEmpty)
 
         env.vm.beginConfirmation(.resize, for: resizableInstance())
+        let target = try #require(env.vm.pendingAction?.target)
+        env.region = "NYC1"
+        await env.vm.loadResizeSizes()
+        #expect(env.sizeRequests == ["LON1"])
+        #expect(env.vm.eligibleResizeSizes(for: target).map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+        #expect(env.vm.eligibleResizeSizes(for: ConsoleTarget(instanceId: target.instanceId, instanceName: target.instanceName, region: "NYC1")).isEmpty)
+    }
+
+    @Test("A resize keeps the captured region, after Full Access is checked on confirm")
+    func confirmedResize() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
         env.accessAllowed = false
         let refused = try #require(env.vm.confirmPendingAction())
         await env.vm.resizeInstance(refused, size: "g3.large")
@@ -3186,11 +3216,12 @@ struct InstanceResizeTests {
 
     @Test("A smaller size, or an instance that stopped while the sheet was open, is refused before sending")
     func refusedResize() async throws {
-        let env = InstanceEnvironment(sizes: documentedSizes)
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes]
         await env.api.list([resizableInstance()], in: "LON1")
         await env.vm.refresh()
-        await env.vm.loadResizeSizes()
         env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
         let target = try #require(env.vm.confirmPendingAction())
 
         await env.vm.resizeInstance(target, size: "g3.small")
@@ -3206,9 +3237,13 @@ struct InstanceResizeTests {
     @Test("A failed size load is shown instead of an empty grid")
     func failedSizeLoad() async {
         struct Offline: LocalizedError { var errorDescription: String? { "The Internet connection appears to be offline." } }
-        let vm = InstanceViewModel(loadSSHKeys: { [] }, loadSizes: { throw Offline() }, isAccessAllowed: { true })
-        await vm.loadResizeSizes()
-        #expect(vm.resizeSizes == .failed("The Internet connection appears to be offline."))
+        let env = InstanceEnvironment()
+        env.sizeLoadError = Offline()
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        #expect(env.vm.resizeSizes == .failed("The Internet connection appears to be offline."))
     }
 }
 

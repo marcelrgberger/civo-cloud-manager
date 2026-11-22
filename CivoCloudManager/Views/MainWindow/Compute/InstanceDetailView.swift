@@ -487,7 +487,7 @@ struct InstanceDetailView: View {
             }
             .frame(maxWidth: .infinity, minHeight: 80)
         case .loaded:
-            let sizes = vm.eligibleResizeSizes(for: instance)
+            let sizes = eligibleResizeSizes
             if sizes.isEmpty {
                 Text("No larger instance size is available for this instance.")
                     .font(.callout)
@@ -506,8 +506,14 @@ struct InstanceDetailView: View {
         }
     }
 
+    /// From the sizes of the region captured when Resize was started.
+    private var eligibleResizeSizes: [CivoSize] {
+        guard let target = vm.pendingAction?.target else { return [] }
+        return vm.eligibleResizeSizes(for: target)
+    }
+
     private var selectedResizeSize: CivoSize? {
-        vm.eligibleResizeSizes(for: instance).first { $0.name == resizeSize }
+        eligibleResizeSizes.first { $0.name == resizeSize }
     }
 
     /// nil while no size is selected or either rate is unknown, which hides the row.

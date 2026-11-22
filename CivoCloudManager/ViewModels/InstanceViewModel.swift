@@ -45,10 +45,10 @@ enum InstanceResizeError: Error, Equatable {
     }
 }
 
-/// Sizes loaded for the resize sheet.
+/// Sizes loaded for the resize sheet, with the region Civo listed them for.
 enum ResizeSizes: Equatable {
     case loading
-    case loaded([CivoSize])
+    case loaded([CivoSize], region: String)
     case failed(String)
 }
 
@@ -178,7 +178,7 @@ final class InstanceViewModel {
     private let api: any InstanceAPI
     private let volumes: any InstanceVolumeAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
-    private let loadSizes: @Sendable () async throws -> [CivoSize]
+    private let loadSizes: @Sendable (_ region: String) async throws -> [CivoSize]
     private let loadFirewallOptions: @Sendable (_ region: String) async throws -> InstanceFirewallOptions
     private let settingsRegion: @MainActor () -> String
     private let isAccessAllowed: @MainActor () -> Bool
@@ -202,7 +202,7 @@ final class InstanceViewModel {
         volumes: any InstanceVolumeAPI = CivoVolumeService(),
         recoveryReboots: RecoveryRebootStore = .standard,
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
-        loadSizes: (@Sendable () async throws -> [CivoSize])? = nil,
+        loadSizes: (@Sendable (_ region: String) async throws -> [CivoSize])? = nil,
         loadFirewallOptions: (@Sendable (_ region: String) async throws -> InstanceFirewallOptions)? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
         isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
@@ -219,7 +219,7 @@ final class InstanceViewModel {
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
         let sizeService = CivoSizeService()
-        self.loadSizes = loadSizes ?? { try await sizeService.listSizes() }
+        self.loadSizes = loadSizes ?? { region in try await sizeService.listSizes(region: region) }
         let firewallService = CivoFirewallService()
         let networkService = CivoNetworkService()
         self.loadFirewallOptions = loadFirewallOptions ?? { region in
@@ -777,10 +777,14 @@ final class InstanceViewModel {
         }
     }
 
+    /// Loads the sizes of the region captured for the pending resize, so neither the Create form nor a
+    /// later Settings region decides what the sheet offers.
     func loadResizeSizes() async {
+        guard let pending = pendingAction, pending.kind == .resize else { return }
+        let region = pending.target.region
         resizeSizes = .loading
         do {
-            resizeSizes = .loaded(try await loadSizes())
+            resizeSizes = .loaded(try await loadSizes(region), region: region)
         } catch {
             // nil for a cancelled load: the sheet was closed.
             guard let message = CivoAPIError.userMessage(error) else { return }
@@ -788,9 +792,10 @@ final class InstanceViewModel {
         }
     }
 
-    /// Sizes `instance` may be resized to, from the sizes loaded for the resize sheet.
-    func eligibleResizeSizes(for instance: CivoInstance) -> [CivoSize] {
-        guard case .loaded(let sizes) = resizeSizes else { return [] }
+    /// Sizes the listed instance of `target` may be resized to, only from sizes loaded for the target's region.
+    func eligibleResizeSizes(for target: ConsoleTarget) -> [CivoSize] {
+        guard case .loaded(let sizes, let region) = resizeSizes, region == target.region,
+              let instance = instances.first(where: { $0.id == target.instanceId }) else { return [] }
         return InstanceResize.eligibleSizes(sizes, for: instance)
     }
 
@@ -809,7 +814,7 @@ final class InstanceViewModel {
     private func resizeError(for target: ConsoleTarget, size: String) -> InstanceResizeError? {
         guard let instance = instances.first(where: { $0.id == target.instanceId }) else { return nil }
         guard InstanceResize.isAllowed(status: instance.status) else { return .notRunning }
-        guard eligibleResizeSizes(for: instance).contains(where: { $0.name == size }) else { return .sizeNotEligible }
+        guard eligibleResizeSizes(for: target).contains(where: { $0.name == size }) else { return .sizeNotEligible }
         return nil
     }
 

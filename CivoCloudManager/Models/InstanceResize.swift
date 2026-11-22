@@ -36,15 +36,18 @@ enum InstanceResize {
             .map(\.0)
     }
 
-    /// The documented size payload has no `type`. Without one, a size counts as an instance size unless
-    /// its name carries Civo's Kubernetes or database marker, for example `g4s.kube.small` or `g3.db.small`.
+    /// `/v2/sizes` also lists Kubernetes and database sizes: a live LON1 response on 2026-11-22 typed them
+    /// `Kubernetes` and `Database` and named them `g4s.kube.small`, `g3.k3s.small` or `g3.db.small`. Only those are
+    /// left out. Any other or missing `type` counts as an instance size, so a type the app does not know yet,
+    /// or the untyped documented payload, never empties the picker.
     private static func isInstanceSize(_ size: CivoSize) -> Bool {
-        if let type = size.type, !type.isEmpty {
-            return type.caseInsensitiveCompare("instance") == .orderedSame
-        }
+        if let type = size.type?.lowercased(), otherProductTypes.contains(type) { return false }
         let name = size.name.lowercased()
-        return !name.contains(".kube.") && !name.contains(".db.")
+        return !otherProductNameMarkers.contains { name.contains($0) }
     }
+
+    private static let otherProductTypes: Set<String> = ["kubernetes", "database"]
+    private static let otherProductNameMarkers = [".kube.", ".k3s.", ".db."]
 
     /// nil when CPU, RAM or disk is unknown: such a size cannot be shown not to be smaller.
     private static func dimensions(of size: CivoSize) -> [Int]? {
