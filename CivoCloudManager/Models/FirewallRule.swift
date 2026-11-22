@@ -8,6 +8,8 @@ struct CivoFirewall: Codable, Identifiable, Sendable {
     let name: String
     let rulesCount: String
     let networkId: String?
+    /// Whether this is the default firewall of its network.
+    let isDefault: Bool
     /// Region this firewall belongs to (set after decoding, not from API JSON).
     var region: String = ""
 
@@ -19,6 +21,7 @@ extension CivoFirewall {
         case id, name
         case rulesCount = "rules_count"
         case networkId = "network_id"
+        case isDefault = "default"
     }
 
     init(from decoder: Decoder) throws {
@@ -26,6 +29,12 @@ extension CivoFirewall {
         id = try c.decode(String.self, forKey: .id)
         name = try c.decode(String.self, forKey: .name)
         networkId = try c.decodeIfPresent(String.self, forKey: .networkId)
+        // https://www.civo.com/api/firewall sends default as the string "true" or "false"
+        if let flag = try? c.decode(Bool.self, forKey: .isDefault) {
+            isDefault = flag
+        } else {
+            isDefault = (try? c.decode(String.self, forKey: .isDefault))?.lowercased() == "true"
+        }
         // rules_count can be String or Int depending on the API version
         if let s = try? c.decode(String.self, forKey: .rulesCount) {
             rulesCount = s
@@ -34,6 +43,33 @@ extension CivoFirewall {
         } else {
             rulesCount = "0"
         }
+    }
+}
+
+// MARK: - Firewall of an instance
+
+/// The firewalls and networks of the region an instance was listed from.
+/// Civo only accepts a firewall that exists in the instance's network.
+struct InstanceFirewallOptions: Sendable {
+    let region: String
+    let firewalls: [CivoFirewall]
+    let networks: [CivoNetwork]
+
+    /// The instance's network, or the region's default network when Civo reports none.
+    func networkId(of instance: CivoInstance) -> String? {
+        if let id = instance.networkId, !id.isEmpty { return id }
+        return networks.first { $0.isDefault == true }?.id
+    }
+
+    /// The firewalls the instance may be switched to, the network's default firewall first.
+    func offered(for instance: CivoInstance) -> [CivoFirewall] {
+        guard let networkId = networkId(of: instance) else { return [] }
+        return InstanceCreationForm.firewalls(firewalls, in: networkId)
+            .sorted { $0.isDefault && !$1.isDefault }
+    }
+
+    func firewall(withId id: String?) -> CivoFirewall? {
+        firewalls.first { $0.id == id }
     }
 }
 

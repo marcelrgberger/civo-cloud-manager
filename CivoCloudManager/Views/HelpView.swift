@@ -245,6 +245,7 @@ struct HelpSection {
             "Deleting an instance also deletes its saved credentials. If they cannot be removed, the app shows an error.",
             "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent.",
             "Resize instances with the visual size picker grid.",
+            "'Change...' next to the firewall in the Security box switches the instance to another firewall of its network. A second confirmation follows; Full Access, the region and the firewall list are checked again before anything is sent. The new rules apply right away and can block SSH or other access.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",
             "Activity log shows recent actions with timestamps.",

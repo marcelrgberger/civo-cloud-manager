@@ -6,6 +6,7 @@ enum InstanceTargetError: Error, Equatable {
     case noRegion
     case regionChanged
     case instanceMissing
+    case firewallUnavailable
 
     var message: String {
         switch self {
@@ -17,6 +18,8 @@ enum InstanceTargetError: Error, Equatable {
             String(localized: "The region changed, so the instance action was cancelled. Nothing was sent.")
         case .instanceMissing:
             String(localized: "The instance is no longer in the list, so nothing was sent.")
+        case .firewallUnavailable:
+            String(localized: "The selected firewall is no longer in the network of this instance, so nothing was sent.")
         }
     }
 }
@@ -24,7 +27,7 @@ enum InstanceTargetError: Error, Equatable {
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
-        case resize, delete
+        case resize, delete, firewall
         case power(InstancePowerAction)
     }
 
@@ -56,6 +59,10 @@ final class InstanceViewModel {
     var availableFirewalls: [CivoFirewall] = []
     var availableSizes: [CivoSize] = []
     var availableDiskImages: [CivoDiskImage] = []
+    /// Firewalls and networks of the region the shown instance was listed from.
+    private(set) var firewallOptions: InstanceFirewallOptions?
+    /// Why the last loading of `firewallOptions` failed, nil while it succeeded or is running.
+    private(set) var firewallOptionsError: String?
 
     private let instanceService = CivoInstanceService()
     private let sshKeyService = CivoSSHKeyService()
@@ -66,10 +73,11 @@ final class InstanceViewModel {
     private let credentials: InstanceCredentialStore
     private let api: any InstanceAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
+    private let loadFirewallOptions: @Sendable (_ region: String) async throws -> InstanceFirewallOptions
     private let settingsRegion: @MainActor () -> String
     private let isAccessAllowed: @MainActor () -> Bool
     private let notificationCenter: NotificationCenter
-    private let recordActivity: @MainActor (String, ConsoleTarget) -> Void
+    private let recordActivity: @MainActor (_ action: String, _ detail: String?, ConsoleTarget) -> Void
     /// Why a confirmation was closed. Survives the next refresh, which a region change starts right away.
     @ObservationIgnored private var cancellationNotice: String?
     @ObservationIgnored nonisolated(unsafe) private var regionObserver: NSObjectProtocol?
@@ -78,17 +86,25 @@ final class InstanceViewModel {
         credentials: InstanceCredentialStore? = nil,
         api: any InstanceAPI = CivoInstanceService(),
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
+        loadFirewallOptions: (@Sendable (_ region: String) async throws -> InstanceFirewallOptions)? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
         isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
         notificationCenter: NotificationCenter = .default,
-        recordActivity: @escaping @MainActor (String, ConsoleTarget) -> Void = { action, target in
-            ActivityLog.shared.log(action, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
+        recordActivity: @escaping @MainActor (_ action: String, _ detail: String?, ConsoleTarget) -> Void = { action, detail, target in
+            ActivityLog.shared.log(action, detail: detail, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
         }
     ) {
         self.credentials = credentials ?? .shared
         self.api = api
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
+        let firewallService = CivoFirewallService()
+        let networkService = CivoNetworkService()
+        self.loadFirewallOptions = loadFirewallOptions ?? { region in
+            async let firewalls = firewallService.listFirewalls(region: region)
+            async let networks = networkService.listNetworks(region: region)
+            return try await InstanceFirewallOptions(region: region, firewalls: firewalls, networks: networks)
+        }
         self.settingsRegion = settingsRegion
         self.isAccessAllowed = isAccessAllowed
         self.notificationCenter = notificationCenter
@@ -291,6 +307,68 @@ final class InstanceViewModel {
         }
     }
 
+    // MARK: - Firewall
+
+    /// The firewall options loaded for the region `instance` was listed from, nil until they are loaded.
+    func firewallOptions(for instance: CivoInstance) -> InstanceFirewallOptions? {
+        guard let options = firewallOptions, let target = consoleTarget(for: instance),
+              Self.isSameRegion(options.region, target.region) else { return nil }
+        return options
+    }
+
+    /// Loads the firewalls and networks of the region `instance` was listed from.
+    func loadFirewallOptions(for instance: CivoInstance) async {
+        guard let target = consoleTarget(for: instance) else { return }
+        firewallOptionsError = nil
+        do {
+            firewallOptions = try await loadFirewallOptions(target.region)
+        } catch {
+            firewallOptionsError = CivoAPIError.userMessage(error)
+        }
+    }
+
+    /// Switches the instance to `firewallId`. The firewall list is loaded again first, so a firewall that was
+    /// deleted or is not in the instance's network is refused without a request.
+    func setFirewall(_ firewallId: String, of target: ConsoleTarget) async {
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return
+        }
+        let options: InstanceFirewallOptions
+        do {
+            options = try await loadFirewallOptions(target.region)
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return
+        }
+        firewallOptions = options
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return
+        }
+        guard let instance = instances.first(where: { $0.id == target.instanceId }),
+              let firewall = options.offered(for: instance).first(where: { $0.id == firewallId }) else {
+            error = InstanceTargetError.firewallUnavailable.message
+            return
+        }
+        do {
+            try await api.setFirewall(target.instanceId, firewallId: firewall.id, region: target.region)
+            showSuccess = true
+            recordActivity("Firewall set to %@", firewall.name, target)
+            await refresh()
+        } catch CivoAPIError.decodingError {
+            // Civo answered with success, so the change may have been made: show what the instance uses now.
+            await refresh()
+            error = [Self.unreadableFirewallChangeMessage, error].compactMap { $0 }.joined(separator: " ")
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+        }
+    }
+
+    static var unreadableFirewallChangeMessage: String {
+        String(localized: "Civo accepted the firewall change, but its answer could not be read. Check which firewall the instance uses now.")
+    }
+
     func updateInstance(_ target: ConsoleTarget, reverseDns: String) async {
         await perform("Set Reverse DNS to \(reverseDns)", on: target) {
             try await $0.updateInstance(target.instanceId, body: ["reverse_dns": reverseDns], region: target.region)
@@ -312,7 +390,7 @@ final class InstanceViewModel {
         do {
             try await request(api)
             showSuccess = true
-            recordActivity(activity, target)
+            recordActivity(activity, nil, target)
             await refresh()
         } catch { self.error = CivoAPIError.userMessage(error) }
     }

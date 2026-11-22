@@ -69,6 +69,13 @@ struct InstanceDetailView: View {
         )) {
             resizeSheet
         }
+        .sheet(isPresented: Binding(
+            get: { vm.pendingAction?.kind == .firewall && vm.pendingAction?.target.instanceId == instance.id },
+            set: { if !$0 { vm.cancelConfirmation() } }
+        )) {
+            InstanceFirewallSheet(instance: instance, vm: vm)
+        }
+        .task(id: instance.id) { await vm.loadFirewallOptions(for: instance) }
         .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
             if let target = credentialsTarget {
                 InstanceCredentialsView(target: target)
@@ -233,7 +240,7 @@ struct InstanceDetailView: View {
     private var securitySection: some View {
         GroupBox("Security") {
             VStack(alignment: .leading, spacing: 10) {
-                infoRow("Firewall ID", instance.firewallId ?? String(localized: "Default"))
+                firewallRow
                 if let password = instance.initialPassword, !password.isEmpty {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Initial Password")
@@ -250,6 +257,38 @@ struct InstanceDetailView: View {
         }
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.25), value: appeared)
+    }
+
+    /// The firewall's name once the firewall list is loaded, with its ID below.
+    private var firewallRow: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Firewall")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                if let name = vm.firewallOptions(for: instance)?.firewall(withId: instance.firewallId)?.name {
+                    Text(verbatim: name)
+                        .font(.subheadline)
+                        .textSelection(.enabled)
+                }
+                Text(instance.firewallId ?? String(localized: "Default"))
+                    .font(.caption.monospaced())
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+                if let message = vm.firewallOptionsError {
+                    Text(verbatim: message)
+                        .font(.caption2)
+                        .foregroundStyle(.red)
+                }
+            }
+            Spacer()
+            if vm.consoleTarget(for: instance) != nil {
+                Button("Change...") { vm.beginConfirmation(.firewall, for: instance) }
+                    .buttonStyle(.bordered)
+                    .controlSize(.small)
+                    .help("Use another firewall of this instance's network")
+            }
+        }
     }
 
     private var metadataSection: some View {
