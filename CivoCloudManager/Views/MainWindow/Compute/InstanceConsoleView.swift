@@ -27,7 +27,7 @@ struct InstanceConsoleView: View {
                     ConsoleWebView(
                         url: connection.url,
                         target: vm.target,
-                        onAttach: { vm.webViewDidAttach(connectionID: connection.id, teardown: $0) },
+                        onAttach: { vm.webViewDidAttach(connectionID: connection.id, unloader: $0) },
                         onFinish: { vm.pageDidLoad(connectionID: connection.id) },
                         onFailure: { vm.pageDidFail(connectionID: connection.id) }
                     )
@@ -357,8 +357,8 @@ struct InstanceConsoleView: View {
 private struct ConsoleWebView: NSViewRepresentable {
     let url: URL
     let target: ConsoleTarget
-    /// Hands the view model a synchronous teardown, used before any End session request is sent.
-    let onAttach: (@escaping @MainActor () -> Void) -> Void
+    /// Hands the view model the page unloader, which End session awaits before sending DELETE.
+    let onAttach: (any ConsolePageUnloading) -> Void
     let onFinish: () -> Void
     let onFailure: () -> Void
 
@@ -371,10 +371,9 @@ private struct ConsoleWebView: NSViewRepresentable {
         webView.navigationDelegate = context.coordinator
         webView.uiDelegate = context.coordinator
         webView.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData))
-        onAttach { [weak webView] in
-            guard let webView else { return }
-            Self.tearDown(webView)
-        }
+        let unloader = ConsolePageUnloader(webView: webView)
+        context.coordinator.unloader = unloader
+        onAttach(unloader)
         return webView
     }
 
@@ -383,18 +382,7 @@ private struct ConsoleWebView: NSViewRepresentable {
     }
 
     static func dismantleNSView(_ webView: WKWebView, coordinator: Coordinator) {
-        tearDown(webView)
-    }
-
-    /// Detaches callbacks, stops loading and starts unloading the page (and its WebSocket) by navigating
-    /// away. WebKit completes the unload asynchronously; there is no public API to await the socket close.
-    @MainActor
-    static func tearDown(_ webView: WKWebView) {
-        webView.navigationDelegate = nil
-        webView.uiDelegate = nil
-        webView.stopLoading()
-        webView.loadHTMLString("", baseURL: nil)
-        webView.isHidden = true
+        coordinator.unloader?.start()
     }
 
     func makeCoordinator() -> Coordinator { Coordinator(parent: self) }
@@ -405,6 +393,7 @@ private struct ConsoleWebView: NSViewRepresentable {
         private static let frameLoadInterruptedByPolicyChange = 102
 
         var parent: ConsoleWebView
+        var unloader: ConsolePageUnloader?
         private var hasFinishedLoading = false
 
         init(parent: ConsoleWebView) { self.parent = parent }
@@ -457,5 +446,88 @@ private struct ConsoleWebView: NSViewRepresentable {
             if interruptedByPolicy && hasFinishedLoading { return }
             parent.onFailure()
         }
+    }
+}
+
+/// Unloads the noVNC page by navigating its web view to an empty document. Unloading a document
+/// closes its WebSockets, so the console connection ends from the app side. Takes over as navigation
+/// delegate, allows only the empty document and keeps the web view alive until the unload is done.
+@MainActor
+final class ConsolePageUnloader: NSObject, ConsolePageUnloading, WKNavigationDelegate {
+    /// A hung web content process must not block End session.
+    static let defaultTimeout: Duration = .seconds(2)
+
+    private let webView: WKWebView
+    private let timeout: Duration
+    private var blankNavigation: WKNavigation?
+    private var timeoutTask: Task<Void, Never>?
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+    private var isStarted = false
+    private var isUnloaded = false
+
+    init(webView: WKWebView, timeout: Duration = defaultTimeout) {
+        self.webView = webView
+        self.timeout = timeout
+    }
+
+    func start() {
+        guard !isStarted else { return }
+        isStarted = true
+        webView.uiDelegate = nil
+        webView.navigationDelegate = self
+        webView.stopLoading()
+        webView.isHidden = true
+        blankNavigation = webView.loadHTMLString("", baseURL: nil)
+        guard blankNavigation != nil else { return finish() }
+        // Holds the unloader and its web view until the unload is done, even after SwiftUI dismantles the view.
+        timeoutTask = Task { [timeout] in
+            try? await Task.sleep(for: timeout)
+            guard !Task.isCancelled, !self.isUnloaded else { return }
+            Log.warning("Console page did not unload in time")
+            self.finish()
+        }
+    }
+
+    func waitUntilUnloaded() async {
+        guard isStarted, !isUnloaded else { return }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+
+    private func finish() {
+        guard !isUnloaded else { return }
+        isUnloaded = true
+        timeoutTask?.cancel()
+        timeoutTask = nil
+        // Stays the navigation delegate, so a page that outlived a timed-out unload is still confined.
+        let resumed = waiters
+        waiters = []
+        resumed.forEach { $0.resume() }
+    }
+
+    // MARK: - WKNavigationDelegate
+
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void
+    ) {
+        decisionHandler(navigationAction.request.url?.absoluteString == "about:blank" ? .allow : .cancel)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if navigation === blankNavigation { finish() }
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        if navigation === blankNavigation { finish() }
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        if navigation === blankNavigation { finish() }
+    }
+
+    /// Without a web content process the page and its sockets are gone.
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        finish()
     }
 }

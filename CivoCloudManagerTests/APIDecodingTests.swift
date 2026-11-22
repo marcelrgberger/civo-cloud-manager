@@ -1,6 +1,8 @@
 import AppKit
 import Foundation
+import Network
 import Testing
+import WebKit
 import Security
 import CryptoKit
 import LocalAuthentication
@@ -844,6 +846,36 @@ private actor FakeConsoleAPI: ConsoleAPI {
     }
 }
 
+/// Page unloader whose unload finishes only when the test says so.
+@MainActor
+private final class FakePageUnloader: ConsolePageUnloading {
+    private let order: EventOrder?
+    private var waiter: CheckedContinuation<Void, Never>?
+    private var isUnloaded = false
+    private(set) var started = false
+    var isWaiting: Bool { waiter != nil }
+
+    init(order: EventOrder? = nil) { self.order = order }
+
+    func start() {
+        guard !started else { return }
+        started = true
+        order?.append("unload")
+    }
+
+    func waitUntilUnloaded() async {
+        guard !isUnloaded else { return }
+        await withCheckedContinuation { waiter = $0 }
+        order?.append("unloaded")
+    }
+
+    func finish() {
+        isUnloaded = true
+        waiter?.resume()
+        waiter = nil
+    }
+}
+
 private actor SleepRecorder {
     private(set) var sleeps: [Duration] = []
     func record(_ duration: Duration) { sleeps.append(duration) }
@@ -1010,6 +1042,101 @@ private func waitUntil(_ condition: @MainActor () async -> Bool) async {
     Issue.record("Condition not met")
 }
 
+/// Local WebSocket server that records whether the client sent a close frame.
+@MainActor
+private final class WebSocketFixture {
+    private let listener: NWListener
+    private var connections: [NWConnection] = []
+    private(set) var isConnected = false
+    private(set) var receivedCloseFrame = false
+
+    init() throws {
+        let parameters = NWParameters.tcp
+        parameters.defaultProtocolStack.applicationProtocols.insert(NWProtocolWebSocket.Options(), at: 0)
+        parameters.requiredLocalEndpoint = .hostPort(host: .ipv4(.loopback), port: .any)
+        listener = try NWListener(using: parameters)
+        listener.newConnectionHandler = { [weak self] connection in
+            MainActor.assumeIsolated { self?.accept(connection) }
+        }
+    }
+
+    func start() async throws -> UInt16 {
+        listener.start(queue: .main)
+        try await poll { self.listener.state == .ready }
+        return try #require(listener.port?.rawValue)
+    }
+
+    func stop() {
+        connections.forEach { $0.cancel() }
+        listener.cancel()
+    }
+
+    private func accept(_ connection: NWConnection) {
+        connections.append(connection)
+        connection.stateUpdateHandler = { [weak self] state in
+            MainActor.assumeIsolated {
+                if case .ready = state { self?.isConnected = true }
+            }
+        }
+        connection.start(queue: .main)
+        receive(on: connection)
+    }
+
+    private func receive(on connection: NWConnection) {
+        connection.receiveMessage { [weak self] _, context, _, error in
+            MainActor.assumeIsolated {
+                guard let self, error == nil else { return }
+                let metadata = context?.protocolMetadata(definition: NWProtocolWebSocket.definition) as? NWProtocolWebSocket.Metadata
+                if metadata?.opcode == .close {
+                    self.receivedCloseFrame = true
+                } else {
+                    self.receive(on: connection)
+                }
+            }
+        }
+    }
+}
+
+@MainActor
+private func poll(timeout: Duration = .seconds(10), _ condition: @MainActor () -> Bool) async throws {
+    let clock = ContinuousClock()
+    let deadline = clock.now + timeout
+    while !condition() && clock.now < deadline { try await Task.sleep(for: .milliseconds(10)) }
+    try #require(condition())
+}
+
+@Suite("Console page unload")
+@MainActor
+struct ConsolePageUnloadTests {
+    @Test("Unloading closes the page's WebSocket with a close frame and returns well before the timeout")
+    func closesWebSocketBeforeReturning() async throws {
+        let server = try WebSocketFixture()
+        defer { server.stop() }
+        let port = try await server.start()
+
+        let config = WKWebViewConfiguration()
+        config.websiteDataStore = .nonPersistent()
+        let webView = WKWebView(frame: .zero, configuration: config)
+        webView.loadHTMLString("<script>window.socket = new WebSocket('ws://127.0.0.1:\(port)')</script>", baseURL: nil)
+        try await poll { server.isConnected }
+        #expect(!server.receivedCloseFrame)
+
+        let unloader = ConsolePageUnloader(webView: webView, timeout: .seconds(30))
+        let clock = ContinuousClock()
+        let started = clock.now
+        unloader.start()
+        unloader.start()
+        await unloader.waitUntilUnloaded()
+        #expect(clock.now - started < .seconds(10))
+
+        // The frame travels through WebKit's network process, so its receipt is awaited separately.
+        try await poll(timeout: .seconds(2)) { server.receivedCloseFrame }
+        #expect(webView.isHidden)
+        // A later wait, for example from a second End session, returns immediately.
+        await unloader.waitUntilUnloaded()
+    }
+}
+
 @Suite("Console session lifecycle")
 @MainActor
 struct ConsoleLifecycleTests {
@@ -1020,28 +1147,38 @@ struct ConsoleLifecycleTests {
         #expect(env.vm.phase == .loading)
         let url = try #require(env.vm.connection?.url)
         #expect(url.absoluteString.contains("token=jwt-1"))
+        let unloader = FakePageUnloader()
+        env.vm.webViewDidAttach(connectionID: try #require(env.vm.connection).id, unloader: unloader)
 
         env.vm.closeLocally()
+        #expect(unloader.started)
         #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .disconnected)
         #expect(await env.api.endCalls == 0)
         #expect(env.activities == ["Opened console"])
     }
 
-    @Test("End session runs the web view teardown before DELETE is sent")
-    func endDetachesFirst() async throws {
+    @Test("End session unloads the page and sends DELETE only after the unload finished")
+    func endUnloadsFirst() async throws {
         let env = ConsoleEnvironment()
         await env.connectAndSettle()
         let connection = try #require(env.vm.connection)
-        env.vm.webViewDidAttach(connectionID: connection.id) { env.api.order.append("teardown") }
+        let unloader = FakePageUnloader(order: env.api.order)
+        env.vm.webViewDidAttach(connectionID: connection.id, unloader: unloader)
         await env.api.configure(holdEnd: true)
 
         let ending = Task { await env.vm.endSession() }
-        await waitUntil { await env.api.endCalls == 1 }
-        #expect(env.api.order.all == ["teardown", "delete"])
+        await waitUntil { unloader.isWaiting }
+        #expect(env.api.order.all == ["unload"])
         #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .ending)
         await env.vm.endSession()
+        #expect(await env.api.endCalls == 0)
+
+        unloader.finish()
+        await waitUntil { await env.api.endCalls == 1 }
+        #expect(env.api.order.all == ["unload", "unloaded", "delete"])
+        #expect(env.vm.phase == .ending)
         #expect(await env.api.endCalls == 1)
 
         await env.api.releaseEnds()
@@ -1065,6 +1202,22 @@ struct ConsoleLifecycleTests {
         #expect(failing.vm.phase == .endFailed(.server(502)))
         #expect(failing.vm.connection == nil)
         #expect(!failing.activities.contains { $0.contains("Ended") })
+    }
+
+    @Test("A confirmed End session still sends DELETE when the window closes during the unload")
+    func endSurvivesWindowCloseWhileUnloading() async throws {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        let unloader = FakePageUnloader()
+        env.vm.webViewDidAttach(connectionID: try #require(env.vm.connection).id, unloader: unloader)
+
+        let ending = Task { await env.vm.endSession() }
+        await waitUntil { unloader.isWaiting }
+        env.vm.closeLocally()
+        unloader.finish()
+        await ending.value
+        #expect(await env.api.endCalls == 1)
+        #expect(env.vm.phase == .disconnected)
     }
 
     @Test("A session that arrives after the window closed is ignored, not used or deleted")
@@ -1104,12 +1257,12 @@ struct ConsoleLifecycleTests {
         await env.connectAndSettle()
         let old = try #require(env.vm.connection)
         await env.connectAndSettle()
-        var staleTornDown = false
-        env.vm.webViewDidAttach(connectionID: old.id) { staleTornDown = true }
+        let staleUnloader = FakePageUnloader()
+        env.vm.webViewDidAttach(connectionID: old.id, unloader: staleUnloader)
         env.vm.pageDidFail(connectionID: old.id)
         env.vm.pageDidLoad(connectionID: old.id)
 
-        #expect(staleTornDown)
+        #expect(staleUnloader.started)
         #expect(env.vm.connection != nil)
         #expect(env.vm.phase == .loading)
     }

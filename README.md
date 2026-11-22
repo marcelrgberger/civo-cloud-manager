@@ -366,8 +366,8 @@ The app uses the API-key path only: `PUT /v2/instances/{id}/vnc?region={r}&durat
 
 | Action | Effect |
 | --- | --- |
-| Close the window | Disconnects locally only. The Civo session stays active until it expires (requested for 1 hour). No DELETE, because the API cannot prove who owns a session. |
-| End session | `DELETE .../vnc` ends the session on Civo for everyone, including a dashboard console. A 404 counts as already ended. A failed DELETE is reported as such and is not logged as ended. |
+| Close the window | Disconnects locally only. The web view unloads the noVNC page, which closes its WebSocket. The Civo session stays active until it expires (requested for 1 hour). No DELETE, because the API cannot prove who owns a session. |
+| End session | First unloads the noVNC page and waits until WebKit reports the empty replacement page loaded, so the page's WebSocket is closed by the app (at most 2 seconds; a hung web content process does not block the end). Then `DELETE .../vnc` ends the session on Civo for everyone, including a dashboard console. Closing the window during that wait does not cancel the confirmed end. A 404 counts as already ended. A failed DELETE is reported as such and is not logged as ended. |
 | Reconnect | Repeats the PUT, fetches a fresh JWT and waits again. It does not only refresh the JWT, so an expired session is restarted. |
 
 Every start requests `duration=1h`. When a session is already active, Civo returns it; Civo does not document whether that resets the remaining time, so the app does not promise a fresh hour on reuse.
@@ -397,9 +397,10 @@ sequenceDiagram
     end
     W->>V: WKWebView loads noVNC page
     alt Window closed
-        W-->>W: Detach web view, keep server session
+        W-->>W: Unload page (closes WebSocket), keep server session
     else End session
-        W-->>W: Detach web view first
+        W->>V: Unload page, WebSocket closed
+        W-->>W: Wait for unload (max 2 s)
         W->>A: DELETE /instances/{id}/vnc?region
         A-->>W: 200 ended / 404 already ended / error reported
     end
