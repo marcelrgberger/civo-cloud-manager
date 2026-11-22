@@ -29,7 +29,7 @@ enum InstanceResizeError: Error, Equatable {
     var message: String {
         switch self {
         case .notRunning:
-            String(localized: "Only a running instance can be resized. Nothing was sent.")
+            String(localized: "This app resizes only running instances. Nothing was sent.")
         case .sizeNotEligible:
             String(localized: "The selected size is no longer available as a larger size for this instance. Nothing was sent.")
         }
@@ -333,7 +333,6 @@ final class InstanceViewModel {
             // nil for a cancelled load: the sheet was closed.
             guard let message = CivoAPIError.userMessage(error) else { return }
             resizeSizes = .failed(message)
-            Log.error("Failed to load sizes for resize: \(error.localizedDescription)")
         }
     }
 

@@ -7,8 +7,8 @@ import Foundation
 /// size is offered only when none of them is smaller and at least one is larger than the instance has now.
 /// Quota and region are checked by Civo, whose error is shown.
 enum InstanceResize {
-    /// Civo documents no status rule for resizing. Its Terraform provider resizes running instances and waits
-    /// for them to be ACTIVE again, so only ACTIVE is offered.
+    /// App policy, not a Civo rule: neither the Civo API documentation, its CLI nor its Terraform provider
+    /// states which statuses allow a resize, so the app offers it only for ACTIVE instances.
     static func isAllowed(status: String?) -> Bool {
         status?.caseInsensitiveCompare("active") == .orderedSame
     }

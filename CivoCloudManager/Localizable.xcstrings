@@ -88240,102 +88240,102 @@
         }
       }
     },
-    "Only a running instance can be resized. Nothing was sent." : {
+    "This app resizes only running instances. Nothing was sent." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يمكن تغيير حجم المثيل قيد التشغيل فقط. لم يتم إرسال أي شيء."
+            "value" : "لا يغيّر هذا التطبيق حجم سوى المثيلات قيد التشغيل. لم يتم إرسال أي شيء."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nur eine laufende Instanz kann in der Größe geändert werden. Es wurde nichts gesendet."
+            "value" : "Diese App ändert die Größe nur bei laufenden Instanzen. Es wurde nichts gesendet."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Only a running instance can be resized. Nothing was sent."
+            "value" : "This app resizes only running instances. Nothing was sent."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solo se puede redimensionar una instancia en ejecución. No se envió nada."
+            "value" : "Esta app solo redimensiona instancias en ejecución. No se envió nada."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seule une instance en cours d'exécution peut être redimensionnée. Rien n'a été envoyé."
+            "value" : "Cette app ne redimensionne que les instances en cours d'exécution. Rien n'a été envoyé."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "केवल चल रहे इंस्टेंस का आकार बदला जा सकता है। कुछ भी नहीं भेजा गया।"
+            "value" : "यह ऐप केवल चल रहे इंस्टेंस का आकार बदलता है। कुछ भी नहीं भेजा गया।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hanya instans yang sedang berjalan yang dapat diubah ukurannya. Tidak ada yang dikirim."
+            "value" : "Aplikasi ini hanya mengubah ukuran instans yang sedang berjalan. Tidak ada yang dikirim."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solo un'istanza in esecuzione può essere ridimensionata. Non è stato inviato nulla."
+            "value" : "Questa app ridimensiona solo le istanze in esecuzione. Non è stato inviato nulla."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "サイズを変更できるのは実行中のインスタンスのみです。何も送信されていません。"
+            "value" : "このアプリがサイズを変更するのは実行中のインスタンスのみです。何も送信されていません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "실행 중인 인스턴스만 크기를 조정할 수 있습니다. 아무것도 전송되지 않았습니다."
+            "value" : "이 앱은 실행 중인 인스턴스만 크기를 조정합니다. 아무것도 전송되지 않았습니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alleen een actieve instantie kan van formaat worden gewijzigd. Er is niets verzonden."
+            "value" : "Deze app wijzigt alleen het formaat van actieve instanties. Er is niets verzonden."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rozmiar można zmienić tylko dla działającej instancji. Nic nie zostało wysłane."
+            "value" : "Ta aplikacja zmienia rozmiar tylko działających instancji. Nic nie zostało wysłane."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apenas uma instância em execução pode ser redimensionada. Nada foi enviado."
+            "value" : "Esta app só redimensiona instâncias em execução. Nada foi enviado."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Изменить размер можно только у работающего инстанса. Ничего не отправлено."
+            "value" : "Это приложение меняет размер только работающих инстансов. Ничего не отправлено."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yalnızca çalışan bir örnek yeniden boyutlandırılabilir. Hiçbir şey gönderilmedi."
+            "value" : "Bu uygulama yalnızca çalışan örnekleri yeniden boyutlandırır. Hiçbir şey gönderilmedi."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "只有正在运行的实例才能调整大小。未发送任何请求。"
+            "value" : "此应用仅调整正在运行的实例的大小。未发送任何请求。"
           }
         }
       }
@@ -88440,102 +88440,102 @@
         }
       }
     },
-    "Resize a running instance from its detail view. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent." : {
+    "Resize a running instance from its detail view. The app offers Resize only while an instance is running, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "غيّر حجم مثيل قيد التشغيل من عرض تفاصيله. تُعرض الأحجام الأكبر فقط، مع التغيير المقدر في التكلفة وفق أسعارك بالساعة لشهر من 730 ساعة، ويتم تأكيد تغيير الحجم قبل إرساله."
+            "value" : "غيّر حجم مثيل قيد التشغيل من عرض تفاصيله. يعرض التطبيق تغيير الحجم فقط أثناء تشغيل المثيل، لأن Civo لا يوثّق الحالات الأخرى التي تسمح به. تُعرض الأحجام الأكبر فقط، مع التغيير المقدر في التكلفة وفق أسعارك بالساعة لشهر من 730 ساعة، ويتم تأكيد تغيير الحجم قبل إرساله."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ändere die Größe einer laufenden Instanz in ihrer Detailansicht. Angeboten werden nur größere Größen, mit der geschätzten Kostenänderung aus deinen Stundensätzen für einen Monat mit 730 Stunden, und die Größenänderung wird vor dem Senden bestätigt."
+            "value" : "Ändere die Größe einer laufenden Instanz in ihrer Detailansicht. Die App bietet die Größenänderung nur an, solange eine Instanz läuft, weil Civo nicht dokumentiert, welche anderen Status sie erlauben. Angeboten werden nur größere Größen, mit der geschätzten Kostenänderung aus deinen Stundensätzen für einen Monat mit 730 Stunden, und die Größenänderung wird vor dem Senden bestätigt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resize a running instance from its detail view. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent."
+            "value" : "Resize a running instance from its detail view. The app offers Resize only while an instance is running, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redimensiona una instancia en ejecución desde su vista de detalle. Solo se ofrecen tamaños mayores, con el cambio de coste estimado según tus tarifas por hora en un mes de 730 horas, y el cambio se confirma antes de enviarse."
+            "value" : "Redimensiona una instancia en ejecución desde su vista de detalle. La app solo ofrece redimensionar mientras una instancia está en ejecución, porque Civo no documenta qué otros estados lo permiten. Solo se ofrecen tamaños mayores, con el cambio de coste estimado según tus tarifas por hora en un mes de 730 horas, y el cambio se confirma antes de enviarse."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redimensionnez une instance en cours d'exécution depuis sa vue détaillée. Seules des tailles plus grandes sont proposées, avec la variation de coût estimée d'après vos tarifs horaires sur un mois de 730 heures, et le redimensionnement est confirmé avant l'envoi."
+            "value" : "Redimensionnez une instance en cours d'exécution depuis sa vue détaillée. L'app ne propose le redimensionnement que pendant qu'une instance est en cours d'exécution, car Civo ne documente pas quels autres statuts le permettent. Seules des tailles plus grandes sont proposées, avec la variation de coût estimée d'après vos tarifs horaires sur un mois de 730 heures, et le redimensionnement est confirmé avant l'envoi."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "किसी चल रहे इंस्टेंस का आकार उसके विवरण दृश्य से बदलें। केवल बड़े आकार दिखाए जाते हैं, आपकी प्रति घंटा दरों से 730 घंटे के महीने का अनुमानित लागत अंतर दिखता है, और भेजने से पहले आकार बदलने की पुष्टि की जाती है।"
+            "value" : "किसी चल रहे इंस्टेंस का आकार उसके विवरण दृश्य से बदलें। ऐप आकार बदलने का विकल्प केवल तब देता है जब इंस्टेंस चल रहा हो, क्योंकि Civo यह दस्तावेज़ नहीं करता कि कौन-सी अन्य स्थितियाँ इसकी अनुमति देती हैं। केवल बड़े आकार दिखाए जाते हैं, आपकी प्रति घंटा दरों से 730 घंटे के महीने का अनुमानित लागत अंतर दिखता है, और भेजने से पहले आकार बदलने की पुष्टि की जाती है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ubah ukuran instans yang sedang berjalan dari tampilan detailnya. Hanya ukuran yang lebih besar yang ditawarkan, dengan perkiraan perubahan biaya dari tarif per jam Anda untuk bulan 730 jam, dan perubahan ukuran dikonfirmasi sebelum dikirim."
+            "value" : "Ubah ukuran instans yang sedang berjalan dari tampilan detailnya. Aplikasi hanya menawarkan perubahan ukuran saat instans sedang berjalan, karena Civo tidak mendokumentasikan status lain mana yang mengizinkannya. Hanya ukuran yang lebih besar yang ditawarkan, dengan perkiraan perubahan biaya dari tarif per jam Anda untuk bulan 730 jam, dan perubahan ukuran dikonfirmasi sebelum dikirim."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ridimensiona un'istanza in esecuzione dalla sua vista di dettaglio. Sono offerte solo dimensioni più grandi, con la variazione di costo stimata in base alle tue tariffe orarie su un mese di 730 ore, e il ridimensionamento viene confermato prima dell'invio."
+            "value" : "Ridimensiona un'istanza in esecuzione dalla sua vista di dettaglio. L'app offre il ridimensionamento solo mentre un'istanza è in esecuzione, perché Civo non documenta quali altri stati lo consentono. Sono offerte solo dimensioni più grandi, con la variazione di costo stimata in base alle tue tariffe orarie su un mese di 730 ore, e il ridimensionamento viene confermato prima dell'invio."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "実行中のインスタンスのサイズは詳細ビューから変更できます。より大きなサイズのみが表示され、時間単価に基づく730時間の月あたりの見積もり費用差も示されます。送信前に確認が求められます。"
+            "value" : "実行中のインスタンスのサイズは詳細ビューから変更できます。Civo は他のどの状態でサイズ変更できるかを文書化していないため、このアプリではインスタンスの実行中にのみサイズ変更を提供します。より大きなサイズのみが表示され、時間単価に基づく730時間の月あたりの見積もり費用差も示されます。送信前に確認が求められます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "실행 중인 인스턴스의 크기는 상세 보기에서 조정합니다. 더 큰 크기만 제공되며, 시간당 요금 기준 730시간 월의 예상 비용 변화가 표시되고, 전송 전에 확인을 요청합니다."
+            "value" : "실행 중인 인스턴스의 크기는 상세 보기에서 조정합니다. Civo가 다른 어떤 상태에서 크기 조정이 가능한지 문서화하지 않으므로, 앱은 인스턴스가 실행 중일 때만 크기 조정을 제공합니다. 더 큰 크기만 제공되며, 시간당 요금 기준 730시간 월의 예상 비용 변화가 표시되고, 전송 전에 확인을 요청합니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wijzig het formaat van een actieve instantie in de detailweergave. Alleen grotere groottes worden aangeboden, met de geschatte kostenwijziging op basis van je uurtarieven over een maand van 730 uur, en de wijziging wordt bevestigd voordat deze wordt verzonden."
+            "value" : "Wijzig het formaat van een actieve instantie in de detailweergave. De app biedt formaatwijziging alleen aan zolang een instantie actief is, omdat Civo niet documenteert welke andere statussen dit toestaan. Alleen grotere groottes worden aangeboden, met de geschatte kostenwijziging op basis van je uurtarieven over een maand van 730 uur, en de wijziging wordt bevestigd voordat deze wordt verzonden."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zmień rozmiar działającej instancji w jej widoku szczegółów. Oferowane są tylko większe rozmiary, z szacowaną zmianą kosztu według Twoich stawek godzinowych dla miesiąca 730 godzin, a zmiana jest potwierdzana przed wysłaniem."
+            "value" : "Zmień rozmiar działającej instancji w jej widoku szczegółów. Aplikacja oferuje zmianę rozmiaru tylko wtedy, gdy instancja działa, ponieważ Civo nie dokumentuje, które inne stany na nią pozwalają. Oferowane są tylko większe rozmiary, z szacowaną zmianą kosztu według Twoich stawek godzinowych dla miesiąca 730 godzin, a zmiana jest potwierdzana przed wysłaniem."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redimensione uma instância em execução na sua vista de detalhes. Só são oferecidos tamanhos maiores, com a variação de custo estimada pelas suas tarifas por hora num mês de 730 horas, e o redimensionamento é confirmado antes do envio."
+            "value" : "Redimensione uma instância em execução na sua vista de detalhes. A app só oferece o redimensionamento enquanto uma instância está em execução, porque a Civo não documenta que outros estados o permitem. Só são oferecidos tamanhos maiores, com a variação de custo estimada pelas suas tarifas por hora num mês de 730 horas, e o redimensionamento é confirmado antes do envio."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Размер работающего инстанса меняется в его подробном представлении. Предлагаются только размеры больше текущего, с оценкой изменения стоимости по вашим почасовым тарифам за месяц из 730 часов, а изменение подтверждается перед отправкой."
+            "value" : "Размер работающего инстанса меняется в его подробном представлении. Приложение предлагает изменение размера только для работающего инстанса, так как Civo не документирует, какие другие статусы это допускают. Предлагаются только размеры больше текущего, с оценкой изменения стоимости по вашим почасовым тарифам за месяц из 730 часов, а изменение подтверждается перед отправкой."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Çalışan bir örneği ayrıntı görünümünden yeniden boyutlandırın. Yalnızca daha büyük boyutlar sunulur, saatlik ücretlerinize göre 730 saatlik bir ay için tahmini maliyet değişikliği gösterilir ve yeniden boyutlandırma gönderilmeden önce onaylanır."
+            "value" : "Çalışan bir örneği ayrıntı görünümünden yeniden boyutlandırın. Uygulama yeniden boyutlandırmayı yalnızca örnek çalışırken sunar, çünkü Civo başka hangi durumların buna izin verdiğini belgelemez. Yalnızca daha büyük boyutlar sunulur, saatlik ücretlerinize göre 730 saatlik bir ay için tahmini maliyet değişikliği gösterilir ve yeniden boyutlandırma gönderilmeden önce onaylanır."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在详情视图中调整正在运行的实例的大小。仅提供更大的规格，并按你的每小时费率以每月 730 小时显示估算的费用变化，发送前需确认。"
+            "value" : "在详情视图中调整正在运行的实例的大小。由于 Civo 未说明其他哪些状态允许调整大小，此应用仅在实例运行时提供调整大小。仅提供更大的规格，并按你的每小时费率以每月 730 小时显示估算的费用变化，发送前需确认。"
           }
         }
       }

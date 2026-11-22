@@ -2395,7 +2395,7 @@ struct InstanceResizeTests {
         #expect(InstanceResize.eligibleSizes(documentedSizes, for: resizableInstance(size: nil, specs: false)).isEmpty)
     }
 
-    @Test("Resize is offered only for a running instance")
+    @Test("App policy: Resize is offered only for a running instance")
     func allowedStatuses() {
         #expect(InstanceResize.isAllowed(status: "ACTIVE"))
         for status in ["SHUTOFF", "BUILDING", "REBOOTING", "ERROR", nil] {

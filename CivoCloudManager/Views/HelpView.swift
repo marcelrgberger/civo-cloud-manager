@@ -244,7 +244,7 @@ struct HelpSection {
             "Saved credentials hold only a username and a password. SSH keys and certificates are not stored there; manage SSH keys under SSH Keys.",
             "Deleting an instance also deletes its saved credentials. If they cannot be removed, the app shows an error.",
             "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent.",
-            "Resize a running instance from its detail view. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent.",
+            "Resize a running instance from its detail view. The app offers Resize only while an instance is running, because Civo does not document which other statuses allow it. Only larger sizes are offered, with the estimated cost change from your hourly rates over a 730-hour month, and the resize is confirmed before it is sent.",
             "SSH access command with correct key path and copy button.",
             "Edit Reverse DNS inline.",
             "Activity log shows recent actions with timestamps.",
