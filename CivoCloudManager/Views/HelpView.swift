@@ -122,6 +122,8 @@ struct HelpSection {
             "Click a cluster to see details: version, API endpoint, conditions, node pools, apps.",
             "Click 'Upgrade...' on a cluster to move it to a newer Kubernetes version from Civo's list. Only newer versions are offered, since Civo does not support downgrades. Civo's own recommendation is preselected, and you confirm the current and the target version before anything is sent.",
             "Civo decides whether an upgrade path is allowed and may refuse it. After Civo accepts the request, the cluster shows the requested upgrade until it reports the new version; refresh to see its status. The app never upgrades a cluster on its own.",
+            "Open a node pool and click 'Replace node...' next to a worker node to have Civo delete it and create a new one, for example when restarting pods or deployments does not help. The button appears only for nodes whose hostname is listed exactly once in the cluster.",
+            "Before anything is sent, the dialog shows cluster, region and hostname and warns that workloads on the node are interrupted and its local data is lost. The node is not drained first. After Civo accepts the request, the node shows 'Replacement requested' until the cluster no longer lists it; refresh to see its status. Nothing is retried automatically.",
             "When creating a cluster, pick a Kubernetes version or keep 'Civo default', which sends no version so Civo installs its default one.",
             "The K8s API connects automatically when you select a cluster (no manual button needed).",
             "An animated progress view shows 5 connection steps: firewall, kubeconfig, certificates, API server, metrics.",

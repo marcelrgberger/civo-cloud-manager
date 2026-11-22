@@ -6,10 +6,11 @@ final class KubernetesViewModel {
     var clusters: [CivoKubernetesCluster] = []
     private(set) var clusterCompleteness = ListCompleteness()
     var selectedCluster: CivoKubernetesCluster?
-    /// The region and account `selectedCluster` was loaded from; an upgrade is bound to both.
+    /// The region and account `selectedCluster` was loaded from; an upgrade or a node replacement is bound to both.
     private(set) var selectedClusterRegion = ""
     private(set) var selectedClusterAccount: CivoAccount?
     let upgrades = KubernetesUpgradeController()
+    let nodeReplacements = KubernetesNodeRecycleController()
     var isLoading = false
     var error: String?
 
@@ -150,6 +151,7 @@ final class KubernetesViewModel {
             selectedClusterRegion = region
             selectedClusterAccount = account
             upgrades.clusterDidLoad(cluster, region: region, account: account)
+            nodeReplacements.clusterDidLoad(cluster, region: region, account: account)
             return true
         } catch {
             self.error = CivoAPIError.userMessage(error)

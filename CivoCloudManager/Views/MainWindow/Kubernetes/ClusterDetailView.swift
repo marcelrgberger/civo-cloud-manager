@@ -29,6 +29,7 @@ struct ClusterDetailView: View {
     }
 
     private var upgrades: KubernetesUpgradeController { vm.upgrades }
+    private var nodeReplacements: KubernetesNodeRecycleController { vm.nodeReplacements }
 
     /// The version an accepted upgrade is heading for, until the cluster reports it.
     private var requestedVersion: String? {
@@ -40,6 +41,9 @@ struct ClusterDetailView: View {
             VStack(alignment: .leading, spacing: 20) {
                 header
                 if let notice = upgrades.notice(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
+                    ErrorBanner(message: notice)
+                }
+                if let notice = nodeReplacements.notice(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
                     ErrorBanner(message: notice)
                 }
                 if let metrics = vm.clusterMetrics {
@@ -103,6 +107,14 @@ struct ClusterDetailView: View {
                     Task { await upgrade(to: version) }
                 }
                 .frame(minWidth: 480, minHeight: 380)
+            }
+        }
+        .sheet(isPresented: Binding(get: { nodeReplacements.request != nil }, set: { if !$0 { nodeReplacements.cancel() } })) {
+            if let request = nodeReplacements.request {
+                RecycleNodeView(controller: nodeReplacements, request: request) {
+                    Task { await replaceNode() }
+                }
+                .frame(minWidth: 480, minHeight: 360)
             }
         }
         .sheet(isPresented: $showDeleteConfirmation) {
@@ -169,6 +181,13 @@ struct ClusterDetailView: View {
     private func upgrade(to version: CivoKubernetesVersion) async {
         guard let outcome = await upgrades.upgrade(to: version), outcome != .cancelled else { return }
         await vm.reloadSelectedCluster(cluster.id)
+    }
+
+    /// Civo has only accepted the request; the reloaded cluster and node list show how the replacement proceeds.
+    private func replaceNode() async {
+        guard let outcome = await nodeReplacements.confirm(), outcome != .cancelled else { return }
+        await vm.reloadSelectedCluster(cluster.id)
+        if vm.isK8sConnected { await vm.loadNodes() }
     }
 
     // MARK: - Stats
@@ -781,30 +800,33 @@ struct ClusterDetailView: View {
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
                     ForEach(Array(names.enumerated()), id: \.offset) { _, name in
-                        Button {
-                            Task {
-                                if vm.k8sNodes.isEmpty {
-                                    await vm.connectToCluster(cluster.id)
-                                    await vm.loadNodes()
+                        HStack(spacing: 8) {
+                            Button {
+                                Task {
+                                    if vm.k8sNodes.isEmpty {
+                                        await vm.connectToCluster(cluster.id)
+                                        await vm.loadNodes()
+                                    }
+                                    if let node = vm.k8sNodes.first(where: { $0.name == name }) {
+                                        vm.selectedNode = node
+                                    }
                                 }
-                                if let node = vm.k8sNodes.first(where: { $0.name == name }) {
-                                    vm.selectedNode = node
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "desktopcomputer")
+                                        .font(.caption)
+                                        .foregroundStyle(.blue)
+                                    Text(name)
+                                        .font(.caption.monospaced())
+                                    Spacer()
+                                    Image(systemName: "chevron.forward")
+                                        .font(.caption2)
+                                        .foregroundStyle(.tertiary)
                                 }
                             }
-                        } label: {
-                            HStack(spacing: 6) {
-                                Image(systemName: "desktopcomputer")
-                                    .font(.caption)
-                                    .foregroundStyle(.blue)
-                                Text(name)
-                                    .font(.caption.monospaced())
-                                Spacer()
-                                Image(systemName: "chevron.forward")
-                                    .font(.caption2)
-                                    .foregroundStyle(.tertiary)
-                            }
+                            .buttonStyle(.plain)
+                            nodeReplacementControl(name)
                         }
-                        .buttonStyle(.plain)
                     }
                 }
             }
@@ -866,6 +888,25 @@ struct ClusterDetailView: View {
         }
         .padding(.vertical, 8)
         .padding(.leading, 28)
+    }
+
+    /// "Replace node..." only for a hostname that names exactly one node of the cluster; once Civo accepted a
+    /// replacement, the node shows it as requested until the cluster no longer lists it.
+    @ViewBuilder
+    private func nodeReplacementControl(_ hostname: String) -> some View {
+        if nodeReplacements.isReplacementRequested(hostname, inCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
+            Label("Replacement requested", systemImage: "clock.arrow.circlepath")
+                .font(.caption)
+                .foregroundStyle(.orange)
+        } else if KubernetesNodeRecycleController.canOffer(hostname, in: cluster) {
+            Button("Replace node...", systemImage: "arrow.triangle.2.circlepath") {
+                nodeReplacements.begin(replacing: hostname, in: cluster, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount)
+            }
+            .font(.caption)
+            .buttonStyle(.borderless)
+            .help("Replace this worker node with a new one")
+            .disabled(nodeReplacements.request != nil || nodeReplacements.isSending)
+        }
     }
 
     private func labelsForPool(_ pool: CivoNodePool) -> [String: String] {
