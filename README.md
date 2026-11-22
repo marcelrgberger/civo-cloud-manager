@@ -571,6 +571,9 @@ The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover
 
 ```bash
 swift test --scratch-path /tmp/civo-tests
+xcodebuild -project CivoCloudManager.xcodeproj -scheme CivoCloudManager \
+  -destination 'platform=macOS' -derivedDataPath /tmp/civo-xcode-tests \
+  CODE_SIGNING_ALLOWED=NO test
 python3 scripts/check_legal_localizations.py
 python3 scripts/test_legal_localizations.py
 python3 scripts/check_app_localizations.py
