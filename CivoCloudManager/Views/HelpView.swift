@@ -195,6 +195,7 @@ struct HelpSection {
             "Breakdown by resource type with percentage bars.",
             "Breakdown by individual resource with usage hours.",
             "'Edit Rates' lets you customize hourly pricing if needed.",
+            "Every period, including the current month, starts and ends on a UTC month boundary, so it can begin or end a few hours before or after local midnight.",
             "Periods spanning several months are loaded month by month in UTC, Civo's billing time zone, and added up to one total without counting a month boundary twice.",
             "Last Quarter covers the three previous calendar months plus the current month so far.",
             "Completed months are cached locally per Civo account and reused. The current month and any month not cached yet are loaded from Civo.",

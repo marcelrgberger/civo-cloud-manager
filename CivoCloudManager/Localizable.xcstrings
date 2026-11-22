@@ -84531,6 +84531,106 @@
         }
       }
     },
+    "Every period, including the current month, starts and ends on a UTC month boundary, so it can begin or end a few hours before or after local midnight." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every period, including the current month, starts and ends on a UTC month boundary, so it can begin or end a few hours before or after local midnight."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeder Zeitraum, auch der laufende Monat, beginnt und endet an einer Monatsgrenze in UTC. Er kann daher einige Stunden vor oder nach Mitternacht Ortszeit beginnen oder enden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada periodo, incluido el mes en curso, empieza y termina en un límite de mes en UTC, por lo que puede comenzar o terminar unas horas antes o después de la medianoche local."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chaque période, y compris le mois en cours, commence et se termine à une limite de mois en UTC. Elle peut donc débuter ou finir quelques heures avant ou après minuit, heure locale."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ogni periodo, incluso il mese in corso, inizia e termina a un confine di mese in UTC. Può quindi iniziare o finire alcune ore prima o dopo la mezzanotte locale."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elke periode, ook de lopende maand, begint en eindigt op een maandgrens in UTC. Een periode kan daardoor enkele uren voor of na middernacht lokale tijd beginnen of eindigen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Każdy okres, także bieżący miesiąc, zaczyna się i kończy na granicy miesiąca w UTC. Może więc zaczynać się lub kończyć kilka godzin przed północą lub po północy czasu lokalnego."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cada período, incluindo o mês atual, começa e termina num limite de mês em UTC. Por isso, pode começar ou terminar algumas horas antes ou depois da meia-noite local."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每个时间段（包括本月）都以 UTC 月份边界开始和结束，因此可能比当地时间午夜早或晚几个小时开始或结束。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当月を含むすべての期間は UTC の月の境界で始まり、終わります。そのため、現地時間の午前0時より数時間早く、または遅く始まったり終わったりすることがあります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이번 달을 포함한 모든 기간은 UTC 월 경계에서 시작하고 끝납니다. 따라서 현지 시간 자정보다 몇 시간 이르거나 늦게 시작하거나 끝날 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تبدأ كل فترة، بما فيها الشهر الحالي، وتنتهي عند حد شهري بتوقيت UTC، لذا قد تبدأ أو تنتهي قبل منتصف الليل بالتوقيت المحلي أو بعده ببضع ساعات."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हर अवधि, मौजूदा महीने सहित, UTC में महीने की सीमा पर शुरू और खत्म होती है, इसलिए वह स्थानीय समय की आधी रात से कुछ घंटे पहले या बाद में शुरू या खत्म हो सकती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setiap periode, termasuk bulan berjalan, dimulai dan berakhir pada batas bulan dalam UTC, sehingga dapat dimulai atau berakhir beberapa jam sebelum atau sesudah tengah malam waktu setempat."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçerli ay dahil her dönem, UTC'deki bir ay sınırında başlar ve biter. Bu nedenle yerel saatle gece yarısından birkaç saat önce veya sonra başlayıp bitebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Каждый период, включая текущий месяц, начинается и заканчивается на границе месяца по UTC, поэтому он может начинаться или заканчиваться на несколько часов раньше или позже местной полуночи."
+          }
+        }
+      }
+    },
     "Periods spanning several months are loaded month by month in UTC, Civo's billing time zone, and added up to one total without counting a month boundary twice." : {
       "localizations" : {
         "en" : {
