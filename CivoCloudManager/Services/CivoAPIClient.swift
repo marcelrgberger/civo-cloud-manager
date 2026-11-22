@@ -247,9 +247,10 @@ final class CivoAPIClient: Sendable {
         path: String,
         queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true,
-        apiKey: String? = nil
+        apiKey: String? = nil,
+        redactDiagnostics: Bool = false
     ) async throws -> [T] {
-        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey)
+        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey, redactDiagnostics: redactDiagnostics)
     }
 
     /// POST with a JSON body.
@@ -259,9 +260,10 @@ final class CivoAPIClient: Sendable {
         body: [String: Any],
         queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true,
-        apiKey: String? = nil
+        apiKey: String? = nil,
+        redactDiagnostics: Bool = false
     ) async throws -> T {
-        try await execute("POST", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey)
+        try await execute("POST", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey, redactDiagnostics: redactDiagnostics)
     }
 
     /// PUT with a JSON body.
@@ -271,9 +273,10 @@ final class CivoAPIClient: Sendable {
         body: [String: Any],
         queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true,
-        apiKey: String? = nil
+        apiKey: String? = nil,
+        redactDiagnostics: Bool = false
     ) async throws -> T {
-        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey)
+        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired, apiKey: apiKey, redactDiagnostics: redactDiagnostics)
     }
 
     /// Any method with an optional JSON body, for callers that choose the method per request.

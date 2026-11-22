@@ -9,12 +9,13 @@ protocol FirewallRuleAPI: Sendable {
 final class CivoFirewallService: FirewallRuleAPI, Sendable {
     private let api = CivoAPIClient.shared
 
-    func listFirewalls(region: String? = nil) async throws -> [CivoFirewall] {
+    /// `apiKey` pins the request to one account instead of reading the current key.
+    func listFirewalls(region: String? = nil, apiKey: String? = nil) async throws -> [CivoFirewall] {
         var queryItems: [URLQueryItem]? = nil
         if let region {
             queryItems = [URLQueryItem(name: "region", value: region)]
         }
-        return try await api.getArray(path: "/firewalls", queryItems: queryItems)
+        return try await api.getArray(path: "/firewalls", queryItems: queryItems, apiKey: apiKey)
     }
 
     func createFirewall(_ body: [String: Any]) async throws -> CivoFirewall {

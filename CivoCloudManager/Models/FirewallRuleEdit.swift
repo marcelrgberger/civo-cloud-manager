@@ -279,7 +279,8 @@ struct CIDRBlock: Equatable, Sendable {
         return true
     }
 
-    private static func bytes(of address: String) -> [UInt8]? {
+    /// The 4 bytes of an IPv4 or the 16 bytes of an IPv6 address, nil for anything else, including scoped addresses.
+    static func bytes(of address: String) -> [UInt8]? {
         var v4 = in_addr()
         if inet_pton(AF_INET, address, &v4) == 1 {
             return withUnsafeBytes(of: &v4) { Array($0) }

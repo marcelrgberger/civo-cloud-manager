@@ -7,9 +7,9 @@ struct LoadBalancerListView: View {
     var body: some View {
         Group {
             if let lb = vm.selectedLoadBalancer {
-                LoadBalancerDetailView(lb: lb) {
+                LoadBalancerDetailView(lb: lb, vm: vm) {
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
-                        vm.selectedLoadBalancer = nil
+                        vm.selectLoadBalancer(nil)
                     }
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -22,13 +22,38 @@ struct LoadBalancerListView: View {
         .task { await vm.refresh() }
         .toolbar {
             ToolbarItem(placement: .automatic) {
+                Button {
+                    Task { await creator.beginForm() }
+                } label: {
+                    Label("New Load Balancer", systemImage: "plus")
+                }
+                .help("New Load Balancer")
+                .disabled(creator.isSubmitting || creator.form != nil)
+            }
+            ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
                     .help("Reload data from API")
                     .disabled(vm.isLoading)
             }
         }
         .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }
+        .sheet(isPresented: Binding(get: { creator.form != nil }, set: { if !$0 { creator.endForm() } })) {
+            CreateLoadBalancerView(creator: creator) { outcome in
+                switch outcome {
+                case .created:
+                    vm.showSuccess = true
+                    Task { await vm.refresh() }
+                case .unknown:
+                    Task { await vm.refresh() }
+                case .refused, .rejected, .alreadyInFlight:
+                    break
+                }
+            }
+            .frame(minWidth: 620, minHeight: 560)
+        }
     }
+
+    private var creator: LoadBalancerCreateController { vm.loadBalancerCreator }
 
     private var lbList: some View {
         List {
@@ -37,7 +62,7 @@ struct LoadBalancerListView: View {
             } else {
                 ForEach(Array(vm.loadBalancers.enumerated()), id: \.element.id) { index, lb in
                     Button {
-                        vm.selectedLoadBalancer = lb
+                        vm.selectLoadBalancer(lb)
                     } label: {
                         ResourceListRow(
                             icon: "arrow.triangle.branch",
@@ -56,7 +81,16 @@ struct LoadBalancerListView: View {
         }
         .animation(.easeOut, value: vm.loadBalancers.map(\.id))
         .safeAreaInset(edge: .top) {
-            if let error = vm.error { ErrorBanner(message: error) }
+            VStack(spacing: 0) {
+                if let error = vm.error { ErrorBanner(message: error) }
+                ForEach(creator.unresolved(in: vm.loadBalancersContext)) { result in
+                    HStack {
+                        ErrorBanner(message: result.message)
+                        Button("Dismiss") { creator.dismiss(result.id) }
+                            .padding(.trailing, 8)
+                    }
+                }
+            }
         }
         .navigationTitle("Load Balancers")
         .overlay { if vm.isLoading && vm.loadBalancers.isEmpty { ProgressView("Loading load balancers...") } }
