@@ -410,6 +410,16 @@ Start, stop, soft reboot and hard reboot are `InstancePowerAction` values. `requ
 
 The detail view shows Reboot as a menu button: a click asks for a soft reboot, the menu also offers Hard Reboot. The list context menu offers both entries. Every power action opens a confirmation first; the hard reboot button uses the destructive style and warns that unsaved work and data not yet written to disk may be lost. Confirming runs the checks above again, including Full Access. A 404 for a deleted instance, a 4xx for an instance in a state that does not allow the action, `noRegion` and network errors are shown in the error banner.
 
+## Deleting an instance
+
+**Delete...** in the detail view's Actions & Metadata box and **Delete** in the list's context menu open the same `DeleteConfirmationSheet`, which asks for the instance name. Delete is kept apart from the power actions: it is permanent and leaves the detail page. Confirming runs the target checks above again, including Full Access, then sends `DELETE /v2/instances/:id?region=` with the captured region. `InstanceViewModel.removeInstance(_:)` returns an `InstanceDeletionOutcome`:
+
+| Outcome | When | Result |
+|---|---|---|
+| `deleted` | Civo answered with success | Saved credentials removed, activity "Deleted" logged, success shown, back to the list |
+| `alreadyGone` | Civo answered 404 and the complete list of the target region, loaded again, no longer shows the instance | Saved credentials removed, nothing logged, a notice says this request deleted nothing, back to the list |
+| `failed` | Refused before sending, any other error, or a 404 while the instance is still listed or the reload failed or was incomplete | Nothing logged, the error is shown, the detail page stays open |
+
 ## Instance console
 
 Active instances offer **Open Console** in the detail view and the list's context menu. The console opens in its own window and requires Full Access; the window checks access itself and detaches the console if access ends while it is open.

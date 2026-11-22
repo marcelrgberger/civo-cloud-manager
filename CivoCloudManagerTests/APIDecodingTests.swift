@@ -1793,12 +1793,12 @@ struct InstanceCredentialVaultTests {
         let failing = InstanceEnvironment(credentials: store)
         await failing.api.failDeletion()
         await failing.vm.refresh()
-        #expect(await failing.vm.delete(consoleTarget) == false)
+        #expect(await failing.vm.removeInstance(consoleTarget) == .failed)
         #expect(try store.contains(key))
 
         let succeeding = InstanceEnvironment(credentials: store)
         await succeeding.vm.refresh()
-        #expect(await succeeding.vm.delete(consoleTarget))
+        #expect(await succeeding.vm.removeInstance(consoleTarget) == .deleted)
         #expect(await succeeding.api.calls == ["delete \(consoleInstanceId) LON1"])
         #expect(try store.contains(key) == false)
         #expect(succeeding.vm.error == nil)
@@ -1845,7 +1845,7 @@ struct InstanceCredentialVaultTests {
 private actor FakeInstanceAPI: InstanceAPI {
     var instancesByRegion: [String: [CivoInstance]]
     private(set) var calls: [String] = []
-    private var deletionFails = false
+    private var deletionError: Error?
     private var firewallError: Error?
     /// Civo's answer to the next create; one that cannot be decoded is reported like the API client does.
     private var creationAnswer = Data(#"{"id": "created-1", "initial_password": "not-shown"}"#.utf8)
@@ -1855,7 +1855,7 @@ private actor FakeInstanceAPI: InstanceAPI {
     }
 
     func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
-    func failDeletion() { deletionFails = true }
+    func failDeletion(with error: Error = CivoAPIError.networkError("offline")) { deletionError = error }
     func failFirewallChange(with error: Error) { firewallError = error }
     func answerCreation(with answer: Data) { creationAnswer = answer }
 
@@ -1885,10 +1885,11 @@ private actor FakeInstanceAPI: InstanceAPI {
         calls.append("tags \(id) [\(change.parameter)] \(region)")
     }
 
+    /// A successful deletion removes the instance from its region's list, as Civo does.
     func removeInstance(_ id: String, region: String) async throws {
-        struct DeletionFailed: Error {}
-        if deletionFails { throw DeletionFailed() }
+        if let deletionError { throw deletionError }
         calls.append("delete \(id) \(region)")
+        instancesByRegion[region]?.removeAll { $0.id == id }
     }
 }
 
@@ -1920,10 +1921,12 @@ private final class InstanceEnvironment {
     /// The firewalls Civo lists for each region.
     var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
     private(set) var activities: [String] = []
+    /// Kept alive for the default store: its client refers to it unowned.
+    private let keychain = FakeKeychain()
     private(set) var vm: InstanceViewModel!
 
     init(credentials: InstanceCredentialStore? = nil) {
-        let store = credentials ?? InstanceCredentialStore(keychain: FakeKeychain().client, notificationCenter: NotificationCenter())
+        let store = credentials ?? InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
         vm = InstanceViewModel(
             credentials: store,
             api: api,
@@ -2035,7 +2038,7 @@ struct InstanceActionTargetTests {
         #expect(env.vm.pendingAction == nil)
         #expect(env.vm.error == InstanceTargetError.instanceMissing.message)
 
-        #expect(await env.vm.delete(target) == false)
+        #expect(await env.vm.removeInstance(target) == .failed)
         #expect(await env.api.calls.isEmpty)
     }
 
@@ -2047,7 +2050,7 @@ struct InstanceActionTargetTests {
 
         env.accessAllowed = false
         let target = try #require(env.vm.confirmPendingAction())
-        #expect(await env.vm.delete(target) == false)
+        #expect(await env.vm.removeInstance(target) == .failed)
         #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
 
         env.accessAllowed = true
@@ -2055,6 +2058,60 @@ struct InstanceActionTargetTests {
         await env.vm.changePower(.stop, of: unknownRegion)
         #expect(env.vm.error == InstanceTargetError.noRegion.message)
         #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A confirmed deletion from the detail page logs it, shows success and returns to the list")
+    func deletionFromDetail() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+
+        #expect(await env.vm.removeInstance(target) == .deleted)
+        #expect(await env.api.calls == ["delete \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Deleted"])
+        #expect(env.vm.showSuccess)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.error == nil)
+        #expect(env.vm.instances.isEmpty)
+    }
+
+    @Test("A failed deletion stays on the detail page and shows why, without logging or success",
+          arguments: [
+            CivoAPIError.networkError("offline"),
+            CivoAPIError.httpError(403, "forbidden"),
+            // Still listed, so not known to be gone.
+            CivoAPIError.httpError(404, "not found"),
+          ])
+    func failedDeletion(failure: CivoAPIError) async throws {
+        let env = InstanceEnvironment()
+        await env.api.failDeletion(with: failure)
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        #expect(await env.vm.removeInstance(target) == .failed)
+        #expect(env.vm.error == failure.localizedDescription)
+        #expect(env.vm.selectedInstance?.id == consoleInstanceId)
+        #expect(env.activities.isEmpty)
+        #expect(!env.vm.showSuccess)
+    }
+
+    @Test("An instance someone else deleted closes its page but is not logged as deleted by this request")
+    func deletionOfInstanceAlreadyGone() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.api.list([], in: "LON1")
+        await env.api.failDeletion(with: CivoAPIError.httpError(404, "not found"))
+
+        #expect(await env.vm.removeInstance(target) == .alreadyGone)
+        #expect(env.vm.error == InstanceViewModel.alreadyDeletedMessage)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.activities.isEmpty)
+        #expect(!env.vm.showSuccess)
     }
 
     @Test("A power action is sent only after confirmation, with Full Access checked when the user confirms")

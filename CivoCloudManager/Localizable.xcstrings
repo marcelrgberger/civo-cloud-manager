@@ -92749,6 +92749,509 @@
           }
         }
       }
+    },
+    "Delete..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwijderen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हटाएं..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapus..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sil..."
+          }
+        }
+      }
+    },
+    "Permanently delete this instance" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permanently delete this instance"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Instanz dauerhaft löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar esta instancia de forma permanente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer définitivement cette instance"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina definitivamente questa istanza"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze instantie permanent verwijderen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trwale usuń tę instancję"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir esta instância permanentemente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "永久删除此实例"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスを完全に削除"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스를 영구적으로 삭제"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف هذا المثيل نهائيًا"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस को स्थायी रूप से हटाएं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapus instans ini secara permanen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Безвозвратно удалить этот инстанс"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu örneği kalıcı olarak sil"
+          }
+        }
+      }
+    },
+    "Deleted" : {
+      "comment" : "Instance activity log entry",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deleted"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelöscht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwijderd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usunięto"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluída"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已删除"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제함"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الحذف"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "हटाया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dihapus"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалён"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silindi"
+          }
+        }
+      }
+    },
+    "The instance had already been deleted, so this request deleted nothing." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance had already been deleted, so this request deleted nothing."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz war bereits gelöscht, daher hat diese Anfrage nichts gelöscht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia ya se había eliminado, por lo que esta solicitud no eliminó nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance avait déjà été supprimée, cette requête n'a donc rien supprimé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza era già stata eliminata, quindi questa richiesta non ha eliminato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie was al verwijderd, dus dit verzoek heeft niets verwijderd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancja została już usunięta, więc to żądanie niczego nie usunęło."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância já havia sido excluída, portanto esta solicitação não excluiu nada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该实例此前已被删除，因此本次请求未删除任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスはすでに削除されていたため、このリクエストでは何も削除されませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스가 이미 삭제되어 있었으므로 이 요청으로 삭제된 것은 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كان المثيل محذوفًا بالفعل، لذلك لم يحذف هذا الطلب أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस पहले ही हटाया जा चुका था, इसलिए इस अनुरोध ने कुछ नहीं हटाया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans sudah dihapus sebelumnya, jadi permintaan ini tidak menghapus apa pun."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инстанс уже был удалён, поэтому этот запрос ничего не удалил."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Örnek zaten silinmişti, bu nedenle bu istek hiçbir şey silmedi."
+          }
+        }
+      }
+    },
+    "'Delete...' in the Actions & Metadata box deletes the instance permanently after you type its name, as in the list's context menu. Only after Civo confirmed the deletion is it logged and the page returns to the list. If it fails, the error is shown and the page stays open." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Delete...' in the Actions & Metadata box deletes the instance permanently after you type its name, as in the list's context menu. Only after Civo confirmed the deletion is it logged and the page returns to the list. If it fails, the error is shown and the page stays open."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Löschen...' im Bereich Aktionen & Metadaten löscht die Instanz dauerhaft, nachdem du ihren Namen eingegeben hast, wie im Kontextmenü der Liste. Erst wenn Civo das Löschen bestätigt hat, wird es protokolliert und die Seite kehrt zur Liste zurück. Schlägt es fehl, wird der Fehler angezeigt und die Seite bleibt geöffnet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Eliminar...' en el cuadro Acciones y metadatos elimina la instancia de forma permanente después de escribir su nombre, como en el menú contextual de la lista. Solo cuando Civo confirma la eliminación se registra y la página vuelve a la lista. Si falla, se muestra el error y la página permanece abierta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Supprimer...' dans la zone Actions et métadonnées supprime définitivement l'instance après la saisie de son nom, comme dans le menu contextuel de la liste. La suppression n'est journalisée et la page ne revient à la liste qu'une fois que Civo l'a confirmée. En cas d'échec, l'erreur s'affiche et la page reste ouverte."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Elimina...' nel riquadro Azioni e metadati elimina definitivamente l'istanza dopo aver digitato il suo nome, come nel menu contestuale dell'elenco. Solo dopo che Civo ha confermato l'eliminazione viene registrata e la pagina torna all'elenco. Se non riesce, viene mostrato l'errore e la pagina resta aperta."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Verwijderen...' in het vak Acties en metadata verwijdert de instantie permanent nadat je de naam hebt getypt, zoals in het contextmenu van de lijst. Pas nadat Civo de verwijdering heeft bevestigd, wordt deze gelogd en keert de pagina terug naar de lijst. Als het mislukt, wordt de fout getoond en blijft de pagina open."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Usuń...' w polu Akcje i metadane trwale usuwa instancję po wpisaniu jej nazwy, tak jak w menu kontekstowym listy. Dopiero gdy Civo potwierdzi usunięcie, zostaje ono zapisane w dzienniku, a strona wraca do listy. W razie niepowodzenia wyświetlany jest błąd, a strona pozostaje otwarta."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Excluir...' na caixa Ações e metadados exclui a instância permanentemente depois que você digita o nome dela, como no menu de contexto da lista. Somente depois que a Civo confirma a exclusão ela é registrada e a página volta à lista. Se falhar, o erro é exibido e a página permanece aberta."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作与元数据框中的'删除...'会在你输入实例名称后永久删除该实例，与列表的上下文菜单相同。只有在 Civo 确认删除后，才会记录此操作并返回列表。如果删除失败，会显示错误，页面保持打开。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクションとメタデータ欄の'削除...'は、リストのコンテキストメニューと同様に、インスタンス名を入力した後にインスタンスを完全に削除します。Civo が削除を確認した後にのみ記録され、リストに戻ります。失敗した場合はエラーが表示され、ページは開いたままです。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'작업 및 메타데이터' 상자의 '삭제...'는 목록의 컨텍스트 메뉴와 마찬가지로 인스턴스 이름을 입력한 후 인스턴스를 영구적으로 삭제합니다. Civo가 삭제를 확인한 후에만 기록되고 목록으로 돌아갑니다. 실패하면 오류가 표시되고 페이지는 열린 상태로 유지됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يحذف 'حذف...' في مربع الإجراءات والبيانات الوصفية المثيل نهائيًا بعد كتابة اسمه، كما في القائمة السياقية للقائمة. لا يُسجَّل الحذف ولا تعود الصفحة إلى القائمة إلا بعد أن تؤكد Civo الحذف. إذا فشل، يُعرض الخطأ وتبقى الصفحة مفتوحة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कार्रवाइयां और मेटाडेटा बॉक्स में 'हटाएं...' इंस्टेंस का नाम टाइप करने के बाद उसे स्थायी रूप से हटा देता है, जैसा सूची के संदर्भ मेनू में होता है। Civo के हटाने की पुष्टि करने के बाद ही इसे लॉग किया जाता है और पेज सूची पर लौटता है। विफल होने पर त्रुटि दिखाई जाती है और पेज खुला रहता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Hapus...' di kotak Tindakan & Metadata menghapus instans secara permanen setelah Anda mengetik namanya, seperti di menu konteks daftar. Penghapusan baru dicatat dan halaman kembali ke daftar setelah Civo mengonfirmasinya. Jika gagal, kesalahan ditampilkan dan halaman tetap terbuka."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Удалить...' в разделе Действия и метаданные безвозвратно удаляет инстанс после ввода его имени, как в контекстном меню списка. Только после подтверждения удаления со стороны Civo оно записывается в журнал и страница возвращается к списку. При ошибке она отображается, а страница остаётся открытой."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eylemler ve Meta Veriler kutusundaki 'Sil...', listenin bağlam menüsünde olduğu gibi, adını yazdıktan sonra örneği kalıcı olarak siler. Silme ancak Civo onayladıktan sonra kaydedilir ve sayfa listeye döner. Başarısız olursa hata gösterilir ve sayfa açık kalır."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

@@ -82,6 +82,7 @@ struct InstanceDetailView: View {
             }
         }
         .instancePowerConfirmation(vm)
+        .instanceDeleteConfirmation(vm)
     }
 
     private var header: some View {
@@ -396,6 +397,18 @@ struct InstanceDetailView: View {
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
+
+            Spacer()
+
+            // Apart from the power actions: deleting is permanent and asks for the instance name.
+            Button(role: .destructive) {
+                vm.beginConfirmation(.delete, for: instance)
+            } label: {
+                Label("Delete...", systemImage: "trash")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+            .help("Permanently delete this instance")
         }
     }
 

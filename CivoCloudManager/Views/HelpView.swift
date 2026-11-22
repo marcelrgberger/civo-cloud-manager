@@ -245,6 +245,7 @@ struct HelpSection {
             "Add, edit or delete saved credentials with 'Credentials' in the instance detail view or the instance list context menu, for running and stopped instances. An open edit closes after 30 seconds.",
             "Saved credentials are also shown in the console window so you can type them in. Copy and paste are not available in the console.",
             "Saved credentials hold only a username and a password. SSH keys and certificates are not stored there; manage SSH keys under SSH Keys.",
+            "'Delete...' in the Actions & Metadata box deletes the instance permanently after you type its name, as in the list's context menu. Only after Civo confirmed the deletion is it logged and the page returns to the list. If it fails, the error is shown and the page stays open.",
             "Deleting an instance also deletes its saved credentials. If they cannot be removed, the app shows an error.",
             "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent.",
             "Resize instances with the visual size picker grid.",

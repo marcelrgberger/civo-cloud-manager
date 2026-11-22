@@ -24,6 +24,16 @@ enum InstanceTargetError: Error, Equatable {
     }
 }
 
+/// What a confirmed instance deletion did.
+enum InstanceDeletionOutcome: Equatable {
+    /// Civo confirmed that this request deleted the instance.
+    case deleted
+    /// Civo no longer knew the instance and the complete list of its region no longer shows it.
+    case alreadyGone
+    /// Nothing is known to be deleted; the reason is in `error`.
+    case failed
+}
+
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
@@ -497,27 +507,49 @@ final class InstanceViewModel {
         } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
-    func removeInstance(_ target: ConsoleTarget) async {
-        guard await delete(target) else { return }
-        // Refreshing clears `error`; a warning about leftover credentials must stay visible.
+    /// Deletes the instance confirmed in `DeleteConfirmationSheet`. Only a deletion this request made is
+    /// logged and shown as a success; the detail page of the instance closes once it is gone.
+    @discardableResult
+    func removeInstance(_ target: ConsoleTarget) async -> InstanceDeletionOutcome {
+        let outcome = await delete(target)
+        switch outcome {
+        case .failed:
+            return outcome
+        case .deleted:
+            showSuccess = true
+            recordActivity("Deleted", nil, target)
+        case .alreadyGone:
+            break
+        }
+        if selectedInstance?.id == target.instanceId { selectedInstance = nil }
+        // Refreshing replaces `error`; the notice and a warning about leftover credentials must stay visible.
         let warning = error
         await refresh()
-        if error == nil { error = warning }
+        if let warning { error = [warning, error].compactMap { $0 }.joined(separator: " ") }
+        return outcome
     }
 
-    /// Deletes the instance and, only once Civo confirmed the deletion, its saved credentials.
-    /// A failed or refused deletion keeps them. Returns whether the instance was deleted.
-    func delete(_ target: ConsoleTarget) async -> Bool {
+    /// Deletes the instance and, only once it is confirmed gone, its saved credentials.
+    /// A failed or refused deletion keeps them and leaves the reason in `error`.
+    private func delete(_ target: ConsoleTarget) async -> InstanceDeletionOutcome {
         error = nil
         if let problem = targetError(for: target) {
             error = problem.message
-            return false
+            return .failed
         }
+        let outcome: InstanceDeletionOutcome
         do {
             try await api.removeInstance(target.instanceId, region: target.region)
+            outcome = .deleted
+        } catch CivoAPIError.httpError(404, let message) {
+            guard await isConfirmedGone(target) else {
+                error = CivoAPIError.httpError(404, message).localizedDescription
+                return .failed
+            }
+            outcome = .alreadyGone
         } catch {
             self.error = CivoAPIError.userMessage(error)
-            return false
+            return .failed
         }
         do {
             try credentials.delete(InstanceCredentialKey(target))
@@ -526,7 +558,24 @@ final class InstanceViewModel {
             Log.error("Instance credentials not removed after instance deletion: \(credentialError.logDescription)")
             self.error = String(localized: "The instance was deleted, but its saved credentials could not be removed.")
         }
-        return true
+        if outcome == .alreadyGone {
+            error = [Self.alreadyDeletedMessage, error].compactMap { $0 }.joined(separator: " ")
+        }
+        return outcome
+    }
+
+    /// Whether a complete list of the target's region, loaded for this check only, no longer shows the
+    /// instance while the target is still valid. A failed or incomplete load proves nothing.
+    private func isConfirmedGone(_ target: ConsoleTarget) async -> Bool {
+        guard let list = try? await api.listInstances(region: target.region) else { return false }
+        return isAccessAllowed()
+            && Self.isSameRegion(target.region, settingsRegion())
+            && list.isComplete
+            && !list.items.contains(where: { $0.id == target.instanceId })
+    }
+
+    static var alreadyDeletedMessage: String {
+        String(localized: "The instance had already been deleted, so this request deleted nothing.")
     }
 
     /// Whether credentials may be saved for the instance, checked without authentication. A keychain

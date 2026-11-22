@@ -103,20 +103,7 @@ struct InstanceListView: View {
         }
         .navigationTitle("Instances")
         .overlay { if vm.isLoading && vm.instances.isEmpty { ProgressView("Loading instances...") } }
-        .sheet(isPresented: Binding(get: { vm.pendingAction?.kind == .delete }, set: { if !$0 { vm.cancelConfirmation() } })) {
-            if let target = vm.pendingAction?.target {
-                DeleteConfirmationSheet(
-                    resourceType: "Instance",
-                    resourceName: target.instanceName,
-                    onConfirm: {
-                        guard let target = vm.confirmPendingAction() else { return }
-                        Task { await vm.removeInstance(target) }
-                    },
-                    onCancel: { vm.cancelConfirmation() },
-                    note: vm.mayHaveSavedCredentials(target) ? "Saved credentials for this instance will be deleted as well." : nil
-                )
-            }
-        }
+        .instanceDeleteConfirmation(vm)
         .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
             if let target = credentialsTarget {
                 InstanceCredentialsView(target: target)
