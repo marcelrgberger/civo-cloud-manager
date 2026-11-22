@@ -471,7 +471,7 @@ The cost dashboard offers This Month, Last Month, Last Quarter and This Year. Ci
 
 Civo rejects over-long `/charges` ranges with HTTP 400 `parameter_date_range_too_long`, so `ChargeWindowPlanner` splits a period into one request per calendar month. Internally every window is half-open; `ChargeWindow.lastIncludedSecond` sends the last whole second before the next window as the inclusive `to`, so adjacent requests never count the same boundary. `CivoChargesService` concatenates the windows and the dashboard sums them into one total.
 
-Completed months are cached as `CivoCloudManager/ChargesCache/<scope>/<yyyy-MM>.json` under Application Support. The scope is a SHA-256 hash of the API key, so the key itself is never written to disk and another account never reads these files. Cached completed months are reused; the open month and every month without a readable cache file are fetched. A failed cache write only costs a later re-fetch. Older, unscoped cache entries in UserDefaults are removed.
+Completed months are cached as `CivoCloudManager/ChargesCache/<scope>/<yyyy-MM>.json` under Application Support. The scope is a SHA-256 hash of the API key, so the key itself is never written to disk and another account never reads these files. `ChargeCachePolicy` decides when a cached completed month is reused (product decision of 22 November 2026, #99): an automatic load re-fetches the last completed month until 7 days after it ends, older completed months stay fixed, and the Refresh button re-fetches every month of the selected period, including completed months. Every fetched completed month replaces its cache file. The open month and every month without a readable cache file are always fetched. A failed re-fetch fails the load and leaves the cache file untouched. A failed cache write only costs a later re-fetch. Older, unscoped cache entries in UserDefaults are removed.
 
 `ChargeAccount` pins the API key for a whole load, so a key change during the load can neither send later requests with the new key nor file charges under the old account. `CostChargesViewModel` publishes only the latest load and clears the displayed charges on an account change. Load errors are shown as fixed localized messages, not as raw API responses.
 
@@ -479,7 +479,7 @@ Completed months are cached as `CivoCloudManager/ChargesCache/<scope>/<yyyy-MM>.
 flowchart TD
     A[Selected period] --> B[UTC date range]
     B --> C[Split into calendar-month windows]
-    C --> D{Completed month cached for this account?}
+    C --> D{Completed month cached for this account, ended at least 7 days ago and no manual Refresh?}
     D -->|Yes| E[Use cached charges]
     D -->|No| F[GET /charges with inclusive last second]
     F --> G{Completed month?}

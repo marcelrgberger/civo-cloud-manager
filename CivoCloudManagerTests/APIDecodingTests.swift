@@ -1356,7 +1356,9 @@ struct ChargesServiceTests {
         func save(_ charges: [CivoCharge], scope: String, month: String) { entries.withLock { $0["\(scope)/\(month)"] = charges } }
     }
 
-    private static func service(store: MemoryStore, apiKey: String, requests: OSAllocatedUnfairLock<[ChargeWindow]>) -> CivoChargesService {
+    private static func service(
+        store: MemoryStore, apiKey: String, requests: OSAllocatedUnfairLock<[ChargeWindow]>, now: Date = now
+    ) -> CivoChargesService {
         CivoChargesService(
             fetch: { window, _ in
                 requests.withLock { $0.append(window) }
@@ -1439,6 +1441,71 @@ struct ChargesServiceTests {
         #expect(requests.withLock { $0 } == [ChargeWindow(from: Self.date("2026-11-01T00:00:00Z"), to: Self.now)])
         #expect(second.reduce(0) { $0 + $1.numHours } == expectedHours)
         #expect(store.entries.withLock { $0.keys.sorted() } == ["2026-08", "2026-09", "2026-10"].map { "\(Self.scopeA)/\($0)" })
+    }
+
+    private static let staleCharge = charge(id: 99, hours: 1)
+
+    /// A store whose completed months August to October 2026 already hold stale charges.
+    private static func storeWithStaleMonths() -> MemoryStore {
+        let store = MemoryStore()
+        for month in ["2026-08", "2026-09", "2026-10"] {
+            store.save([staleCharge], scope: scopeA, month: month)
+        }
+        return store
+    }
+
+    @Test("The last completed month is re-fetched for 7 days after it ends, older months stay fixed", arguments: [
+        ("2026-11-01T00:00:00Z", true),
+        ("2026-11-07T23:59:59Z", true),
+        ("2026-11-08T00:00:00Z", false),
+        ("2026-11-19T14:57:00Z", false),
+    ])
+    func lastCompletedMonthRefetch(now: String, refetchesOctober: Bool) async throws {
+        let now = Self.date(now)
+        let store = Self.storeWithStaleMonths()
+        let requests = OSAllocatedUnfairLock(initialState: [ChargeWindow]())
+        let service = Self.service(store: store, apiKey: "key-a", requests: requests, now: now)
+
+        let charges = try await service.charges(for: .lastQuarter)
+
+        let october = ChargeWindow(from: Self.date("2026-10-01T00:00:00Z"), to: Self.date("2026-11-01T00:00:00Z"))
+        let openMonth = ChargeWindow(from: Self.date("2026-11-01T00:00:00Z"), to: now)
+        let expected = (refetchesOctober ? [october] : []) + (openMonth.from < openMonth.to ? [openMonth] : [])
+        #expect(requests.withLock { $0 } == expected)
+        #expect(charges.filter { $0.id == Self.staleCharge.id }.count == (refetchesOctober ? 2 : 3))
+        let cachedOctober = store.load(scope: Self.scopeA, month: "2026-10")
+        #expect(cachedOctober?.first?.id == (refetchesOctober ? 1 : Self.staleCharge.id))
+    }
+
+    @Test("Manual Refresh re-fetches every month in range, including completed months, and updates the cache")
+    func manualRefresh() async throws {
+        let store = Self.storeWithStaleMonths()
+        let requests = OSAllocatedUnfairLock(initialState: [ChargeWindow]())
+        let service = Self.service(store: store, apiKey: "key-a", requests: requests)
+
+        let charges = try await service.charges(for: .lastQuarter, trigger: .manualRefresh)
+
+        let range = ChargePeriod.lastQuarter.dateRange(now: Self.now)
+        #expect(requests.withLock { $0 } == ChargeWindowPlanner.monthlyWindows(from: range.from, to: range.to))
+        #expect(charges.allSatisfy { $0.id != Self.staleCharge.id })
+        for month in ["2026-08", "2026-09", "2026-10"] {
+            #expect(store.load(scope: Self.scopeA, month: month)?.first?.id == 1)
+        }
+    }
+
+    @Test("A failed re-fetch fails the load and keeps the cached month")
+    func failedRefetchKeepsCache() async {
+        struct Unavailable: Error {}
+        let store = Self.storeWithStaleMonths()
+        let service = CivoChargesService(
+            fetch: { _, _ in throw Unavailable() },
+            store: store,
+            account: { ChargeAccount(apiKey: "key-a") },
+            now: { Self.now }
+        )
+
+        await #expect(throws: Unavailable.self) { try await service.charges(for: .lastMonth, trigger: .manualRefresh) }
+        #expect(store.load(scope: Self.scopeA, month: "2026-10")?.first?.id == Self.staleCharge.id)
     }
 
     @Test("Another API key does not see cached charges; without a key nothing is cached")

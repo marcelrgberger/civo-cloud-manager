@@ -23,7 +23,7 @@ final class CostChargesViewModel {
 
     var currentDate: Date { service.currentDate }
 
-    func load(_ period: ChargePeriod) async {
+    func load(_ period: ChargePeriod, trigger: ChargeLoadTrigger = .automatic) async {
         latestLoad += 1
         let load = latestLoad
         isLoading = true
@@ -32,7 +32,7 @@ final class CostChargesViewModel {
         defer { if load == latestLoad { isLoading = false } }
 
         do {
-            let loaded = try await service.charges(for: period)
+            let loaded = try await service.charges(for: period, trigger: trigger)
             guard load == latestLoad else { return }
             charges = loaded
         } catch {
