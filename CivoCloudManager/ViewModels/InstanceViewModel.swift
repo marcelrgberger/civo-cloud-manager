@@ -7,6 +7,8 @@ enum InstanceTargetError: Error, Equatable {
     case regionChanged
     case instanceMissing
     case firewallUnavailable
+    case volumeUnavailable
+    case volumeNotAttached
 
     var message: String {
         switch self {
@@ -20,6 +22,10 @@ enum InstanceTargetError: Error, Equatable {
             String(localized: "The instance is no longer in the list, so nothing was sent.")
         case .firewallUnavailable:
             String(localized: "The selected firewall is no longer in the network of this instance, so nothing was sent.")
+        case .volumeUnavailable:
+            String(localized: "The selected volume is no longer free in the network of this instance, so nothing was sent.")
+        case .volumeNotAttached:
+            String(localized: "The volume is no longer attached to this instance, so nothing was sent.")
         }
     }
 }
@@ -37,12 +43,24 @@ enum InstanceDeletionOutcome: Equatable {
 /// An instance action waiting for the user's confirmation, with the target captured when it was started.
 struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
-        case resize, delete, firewall, removeAllTags
+        case resize, delete, firewall, removeAllTags, attachVolume
         case power(InstancePowerAction)
+        case detachVolume(id: String, name: String)
     }
 
     let kind: Kind
     let target: ConsoleTarget
+}
+
+/// A detach the user confirmed after being told to unmount the volume. Only `confirmDetach()` creates one.
+struct ConfirmedVolumeDetach {
+    let volumeId: String
+    let target: ConsoleTarget
+
+    fileprivate init(volumeId: String, target: ConsoleTarget) {
+        self.volumeId = volumeId
+        self.target = target
+    }
 }
 
 @Observable
@@ -77,15 +95,19 @@ final class InstanceViewModel {
     private(set) var firewallOptions: InstanceFirewallOptions?
     /// Why the last loading of `firewallOptions` failed, nil while it succeeded or is running.
     private(set) var firewallOptionsError: String?
+    /// Volumes and networks of the region the shown instance was listed from.
+    private(set) var volumeOptions: InstanceVolumeOptions?
+    /// Why the last loading of `volumeOptions` failed, nil while it succeeded or is running.
+    private(set) var volumeOptionsError: String?
 
     private let sshKeyService = CivoSSHKeyService()
     private let networkService = CivoNetworkService()
     private let firewallService = CivoFirewallService()
     private let sizeService = CivoSizeService()
-    private let volumeService = CivoVolumeService()
     private let quotaService = CivoQuotaService()
     private let credentials: InstanceCredentialStore
     private let api: any InstanceAPI
+    private let volumes: any InstanceVolumeAPI
     private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
     private let loadFirewallOptions: @Sendable (_ region: String) async throws -> InstanceFirewallOptions
     private let settingsRegion: @MainActor () -> String
@@ -94,11 +116,14 @@ final class InstanceViewModel {
     private let recordActivity: @MainActor (_ action: String, _ detail: String?, ConsoleTarget) -> Void
     /// Why a confirmation was closed. Survives the next refresh, which a region change starts right away.
     @ObservationIgnored private var cancellationNotice: String?
+    /// Counts volume list loads, so only the latest one is shown.
+    @ObservationIgnored private var volumeLoads = 0
     @ObservationIgnored nonisolated(unsafe) private var regionObserver: NSObjectProtocol?
 
     init(
         credentials: InstanceCredentialStore? = nil,
         api: any InstanceAPI = CivoInstanceService(),
+        volumes: any InstanceVolumeAPI = CivoVolumeService(),
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
         loadFirewallOptions: (@Sendable (_ region: String) async throws -> InstanceFirewallOptions)? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
@@ -110,6 +135,7 @@ final class InstanceViewModel {
     ) {
         self.credentials = credentials ?? .shared
         self.api = api
+        self.volumes = volumes
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
         let firewallService = CivoFirewallService()
@@ -431,6 +457,120 @@ final class InstanceViewModel {
         String(localized: "Civo accepted the firewall change, but its answer could not be read. Check which firewall the instance uses now.")
     }
 
+    // MARK: - Volumes
+
+    /// The volumes loaded for the region `instance` was listed from, nil until they are loaded.
+    func volumeOptions(for instance: CivoInstance) -> InstanceVolumeOptions? {
+        guard let options = volumeOptions, let target = consoleTarget(for: instance),
+              Self.isSameRegion(options.region, target.region) else { return nil }
+        return options
+    }
+
+    /// Loads the volumes and networks of the region `instance` was listed from.
+    func loadVolumeOptions(for instance: CivoInstance) async {
+        guard let target = consoleTarget(for: instance) else { return }
+        await loadVolumeOptions(region: target.region)
+    }
+
+    private func loadVolumeOptions(region: String) async {
+        _ = try? await fetchVolumeOptions(region: region)
+    }
+
+    /// Loads the volumes of `region` and shows them, unless a later load started meanwhile:
+    /// an older answer must not replace a newer list.
+    private func fetchVolumeOptions(region: String) async throws -> InstanceVolumeOptions {
+        volumeLoads += 1
+        let load = volumeLoads
+        do {
+            let options = try await volumes.volumeOptions(region: region)
+            if load == volumeLoads {
+                volumeOptions = options
+                volumeOptionsError = nil
+            }
+            return options
+        } catch {
+            if load == volumeLoads { volumeOptionsError = CivoAPIError.userMessage(error) }
+            throw error
+        }
+    }
+
+    /// Attaches `volumeId` to the instance. The volumes are loaded again first, so a volume that was attached
+    /// meanwhile or is not in the instance's network and region is refused without a request.
+    func attachVolume(_ volumeId: String, to target: ConsoleTarget) async {
+        guard let volume = await currentVolume(volumeId, of: target, among: { $0.attachable(to: $1) },
+                                               otherwise: .volumeUnavailable) else { return }
+        await sendVolumeRequest("Attached volume %@", volume: volume, on: target) {
+            try await $0.attachVolume(volume.id, to: target.instanceId, region: target.region)
+        }
+    }
+
+    /// Closes the detach confirmation opened with `beginConfirmation(.detachVolume(id:name:), for:)`.
+    /// nil while no detach confirmation is open, so a detach cannot be sent without it.
+    func confirmDetach() -> ConfirmedVolumeDetach? {
+        guard let pending = pendingAction, case .detachVolume(let volumeId, _) = pending.kind else { return nil }
+        pendingAction = nil
+        return ConfirmedVolumeDetach(volumeId: volumeId, target: pending.target)
+    }
+
+    /// Detaches the confirmed volume, only if it is still attached to the instance.
+    func detachVolume(_ confirmed: ConfirmedVolumeDetach) async {
+        let target = confirmed.target
+        guard let volume = await currentVolume(confirmed.volumeId, of: target, among: { $0.attached(to: $1) },
+                                               otherwise: .volumeNotAttached) else { return }
+        await sendVolumeRequest("Detached volume %@", volume: volume, on: target) {
+            try await $0.detachVolume(volume.id, region: target.region)
+        }
+    }
+
+    /// The volume as Civo lists it right now, if the target is still valid and `among` still offers it.
+    private func currentVolume(
+        _ volumeId: String,
+        of target: ConsoleTarget,
+        among offered: (InstanceVolumeOptions, CivoInstance) -> [CivoVolume],
+        otherwise refusal: InstanceTargetError
+    ) async -> CivoVolume? {
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return nil
+        }
+        let options: InstanceVolumeOptions
+        do {
+            options = try await fetchVolumeOptions(region: target.region)
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+            return nil
+        }
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return nil
+        }
+        guard let instance = instances.first(where: { $0.id == target.instanceId }),
+              let volume = offered(options, instance).first(where: { $0.id == volumeId }) else {
+            error = refusal.message
+            return nil
+        }
+        return volume
+    }
+
+    /// Sends one volume request and reloads the volumes either way, so the page shows what Civo reports.
+    /// Errors such as a volume attached elsewhere in the meantime are shown as Civo returns them.
+    private func sendVolumeRequest(
+        _ activity: String,
+        volume: CivoVolume,
+        on target: ConsoleTarget,
+        _ request: (any InstanceVolumeAPI) async throws -> Void
+    ) async {
+        do {
+            try await request(volumes)
+            error = nil
+            showSuccess = true
+            recordActivity(activity, volume.name, target)
+        } catch {
+            self.error = CivoAPIError.userMessage(error)
+        }
+        await loadVolumeOptions(region: target.region)
+    }
+
     // MARK: - Tags
 
     /// Replaces the tags with the comma-separated `input`. Input that is invalid or holds no tag sends
@@ -489,22 +629,6 @@ final class InstanceViewModel {
             self.error = CivoAPIError.userMessage(error)
             return false
         }
-    }
-
-    func attachVolume(_ volumeId: String, instanceId: String) async {
-        do {
-            try await volumeService.attachVolume(volumeId, instanceId: instanceId)
-            showSuccess = true
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
-    }
-
-    func detachVolume(_ volumeId: String) async {
-        do {
-            try await volumeService.detachVolume(volumeId)
-            showSuccess = true
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
     /// Deletes the instance confirmed in `DeleteConfirmationSheet`. Only a deletion this request made is

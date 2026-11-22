@@ -93252,6 +93252,1810 @@
           }
         }
       }
+    },
+    "Attach Volume..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attach Volume..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume anhängen..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar volumen..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attacher un volume..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collega volume..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume koppelen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podłącz wolumen..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anexar volume..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボリュームを接続..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "볼륨 연결..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "挂载卷..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إرفاق وحدة تخزين..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वॉल्यूम जोड़ें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasang Volume..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disk Bağla..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключить том..."
+          }
+        }
+      }
+    },
+    "Attach Volume" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attach Volume"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume anhängen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar volumen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attacher un volume"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collega volume"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume koppelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podłącz wolumen"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anexar volume"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボリュームを接続"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "볼륨 연결"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "挂载卷"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إرفاق وحدة تخزين"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वॉल्यूम जोड़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasang Volume"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disk Bağla"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключить том"
+          }
+        }
+      }
+    },
+    "Attach" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attach"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anhängen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attacher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collega"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koppelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podłącz"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anexar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "挂载"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إرفاق"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जोड़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasang"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bağla"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключить"
+          }
+        }
+      }
+    },
+    "Detach" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detach"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trennen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Détacher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scollega"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontkoppelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odłącz"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desanexar"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切断"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "분리"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卸载"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فصل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अलग करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lepas"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayır"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить"
+          }
+        }
+      }
+    },
+    "Detach..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detach..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trennen..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Détacher..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scollega..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontkoppelen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odłącz..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desanexar..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切断..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "분리..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卸载..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فصل..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अलग करें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lepas..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayır..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить..."
+          }
+        }
+      }
+    },
+    "Detach %@ from %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detach %@ from %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ von %2$@ trennen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Desconectar %1$@ de %2$@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Détacher %1$@ de %2$@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scollegare %1$@ da %2$@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ ontkoppelen van %2$@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odłączyć %1$@ od %2$@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desanexar %1$@ de %2$@?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ から %1$@ を切断しますか?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@에서 %1$@을(를) 분리하시겠습니까?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要从 %2$@ 卸载 %1$@ 吗?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد فصل %1$@ عن %2$@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ को %2$@ से अलग करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lepas %1$@ dari %2$@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, %2$@ örneğinden ayrılsın mı?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить %1$@ от %2$@?"
+          }
+        }
+      }
+    },
+    "Unmount the volume in the operating system of the instance first. Detaching a volume that is still mounted can lose data that was not yet written to it." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unmount the volume in the operating system of the instance first. Detaching a volume that is still mounted can lose data that was not yet written to it."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hängen Sie das Volume zuerst im Betriebssystem der Instanz aus. Wird ein noch eingehängtes Volume getrennt, können Daten verloren gehen, die noch nicht darauf geschrieben wurden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primero desmonta el volumen en el sistema operativo de la instancia. Si desconectas un volumen que sigue montado, se pueden perder datos que aún no se habían escrito en él."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démontez d'abord le volume dans le système d'exploitation de l'instance. Détacher un volume encore monté peut faire perdre des données qui n'y ont pas encore été écrites."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smonta prima il volume nel sistema operativo dell'istanza. Scollegando un volume ancora montato si possono perdere dati non ancora scritti su di esso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ontkoppel het volume eerst in het besturingssysteem van de instantie. Als je een volume ontkoppelt dat nog is aangekoppeld, kunnen gegevens verloren gaan die er nog niet naar waren geschreven."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najpierw odmontuj wolumen w systemie operacyjnym instancji. Odłączenie wolumenu, który jest nadal zamontowany, może spowodować utratę danych, które nie zostały jeszcze na nim zapisane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primeiro desmonte o volume no sistema operacional da instância. Desanexar um volume que ainda está montado pode causar a perda de dados que ainda não foram gravados nele."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まずインスタンスのオペレーティングシステムでボリュームをアンマウントしてください。マウントされたままのボリュームを切断すると、まだ書き込まれていないデータが失われる可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "먼저 인스턴스의 운영 체제에서 볼륨을 마운트 해제하세요. 아직 마운트된 볼륨을 분리하면 아직 기록되지 않은 데이터가 손실될 수 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先在实例的操作系统中卸除该卷的挂载。卸载仍处于挂载状态的卷可能会丢失尚未写入的数据。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ألغِ تحميل وحدة التخزين في نظام تشغيل المثيل أولاً. قد يؤدي فصل وحدة تخزين لا تزال محمّلة إلى فقدان بيانات لم تُكتب عليها بعد."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पहले इंस्टेंस के ऑपरेटिंग सिस्टम में वॉल्यूम को अनमाउंट करें। अभी भी माउंट किए गए वॉल्यूम को अलग करने से वह डेटा खो सकता है जो उस पर अभी तक नहीं लिखा गया था।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lepaskan kaitan (unmount) volume di sistem operasi instance terlebih dahulu. Melepas volume yang masih terpasang dapat menghilangkan data yang belum ditulis ke volume tersebut."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önce diski örneğin işletim sisteminde ayırın (unmount). Hâlâ bağlı olan bir diski ayırmak, henüz diske yazılmamış verilerin kaybolmasına neden olabilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сначала отмонтируйте том в операционной системе инстанса. Отключение тома, который всё ещё смонтирован, может привести к потере данных, ещё не записанных на него."
+          }
+        }
+      }
+    },
+    "No volume is attached to this instance." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No volume is attached to this instance."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An diese Instanz ist kein Volume angehängt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay ningún volumen conectado a esta instancia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun volume n'est attaché à cette instance."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun volume è collegato a questa istanza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen volume aan deze instantie gekoppeld."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do tej instancji nie jest podłączony żaden wolumen."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum volume está anexado a esta instância."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスに接続されているボリュームはありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스에 연결된 볼륨이 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此实例未挂载任何卷。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا توجد وحدة تخزين مرفقة بهذا المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस से कोई वॉल्यूम जुड़ा नहीं है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ada volume yang terpasang pada instance ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu örneğe bağlı disk yok."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "К этому инстансу не подключён ни один том."
+          }
+        }
+      }
+    },
+    "Attach a free volume of this instance's network" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attach a free volume of this instance's network"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein freies Volume aus dem Netzwerk dieser Instanz anhängen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conectar un volumen libre de la red de esta instancia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attacher un volume libre du réseau de cette instance"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collega un volume libero della rete di questa istanza"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een vrij volume uit het netwerk van deze instantie koppelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podłącz wolny wolumen z sieci tej instancji"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anexar um volume livre da rede desta instância"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのネットワークにある空きボリュームを接続"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스 네트워크의 사용 가능한 볼륨 연결"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "挂载此实例网络中的空闲卷"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إرفاق وحدة تخزين حرة من شبكة هذا المثيل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस के नेटवर्क का कोई खाली वॉल्यूम जोड़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasang volume bebas dari jaringan instance ini"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu örneğin ağındaki boş bir diski bağla"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключить свободный том из сети этого инстанса"
+          }
+        }
+      }
+    },
+    "Detach this volume from the instance" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detach this volume from the instance"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Volume von der Instanz trennen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar este volumen de la instancia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Détacher ce volume de l'instance"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scollega questo volume dall'istanza"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit volume van de instantie ontkoppelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odłącz ten wolumen od instancji"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desanexar este volume da instância"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このボリュームをインスタンスから切断"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 볼륨을 인스턴스에서 분리"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从实例卸载此卷"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فصل وحدة التخزين هذه عن المثيل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस वॉल्यूम को इंस्टेंस से अलग करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lepas volume ini dari instance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu diski örnekten ayır"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключить этот том от инстанса"
+          }
+        }
+      }
+    },
+    "Only volumes that are not attached and are in the network and region of this instance are listed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only volumes that are not attached and are in the network and region of this instance are listed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es werden nur Volumes angezeigt, die nicht angehängt sind und im Netzwerk und in der Region dieser Instanz liegen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo se muestran los volúmenes que no están conectados y que están en la red y la región de esta instancia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuls les volumes non attachés situés dans le réseau et la région de cette instance sont affichés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sono elencati solo i volumi non collegati che si trovano nella rete e nella regione di questa istanza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alleen volumes die niet zijn gekoppeld en in het netwerk en de regio van deze instantie liggen, worden getoond."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyświetlane są tylko wolumeny, które nie są podłączone i znajdują się w sieci i regionie tej instancji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "São listados apenas volumes que não estão anexados e estão na rede e na região desta instância."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続されておらず、このインスタンスと同じネットワークとリージョンにあるボリュームのみが表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결되지 않았고 이 인스턴스의 네트워크와 리전에 있는 볼륨만 표시됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅列出未挂载且位于此实例网络和区域中的卷。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُعرض فقط وحدات التخزين غير المرفقة الموجودة في شبكة هذا المثيل ومنطقته."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "केवल वे वॉल्यूम दिखाए जाते हैं जो जुड़े नहीं हैं और इस इंस्टेंस के नेटवर्क और रीजन में हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya volume yang tidak terpasang dan berada di jaringan serta region instance ini yang ditampilkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca bağlı olmayan ve bu örneğin ağında ve bölgesinde bulunan diskler listelenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показаны только неподключённые тома из сети и региона этого инстанса."
+          }
+        }
+      }
+    },
+    "No free volume was found in the network of this instance." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No free volume was found in the network of this instance."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Netzwerk dieser Instanz wurde kein freies Volume gefunden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontró ningún volumen libre en la red de esta instancia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun volume libre n'a été trouvé dans le réseau de cette instance."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun volume libero trovato nella rete di questa istanza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen vrij volume gevonden in het netwerk van deze instantie."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono wolnego wolumenu w sieci tej instancji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenhum volume livre foi encontrado na rede desta instância."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのネットワークに空きボリュームが見つかりませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스의 네트워크에서 사용 가능한 볼륨을 찾을 수 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在此实例的网络中未找到空闲卷。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُعثر على وحدة تخزين حرة في شبكة هذا المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस के नेटवर्क में कोई खाली वॉल्यूम नहीं मिला।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ditemukan volume bebas di jaringan instance ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu örneğin ağında boş disk bulunamadı."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В сети этого инстанса не найден свободный том."
+          }
+        }
+      }
+    },
+    "The selected volume is no longer free in the network of this instance, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected volume is no longer free in the network of this instance, so nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das ausgewählte Volume ist im Netzwerk dieser Instanz nicht mehr frei, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El volumen seleccionado ya no está libre en la red de esta instancia, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le volume sélectionné n'est plus libre dans le réseau de cette instance, rien n'a donc été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il volume selezionato non è più libero nella rete di questa istanza, quindi non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het geselecteerde volume is niet meer vrij in het netwerk van deze instantie, dus er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybrany wolumen nie jest już wolny w sieci tej instancji, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O volume selecionado não está mais livre na rede desta instância, então nada foi enviado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択したボリュームはこのインスタンスのネットワークで空きではなくなったため、何も送信されませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 볼륨이 더 이상 이 인스턴스의 네트워크에서 사용 가능하지 않으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选卷在此实例的网络中已不再空闲,因此未发送任何内容。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تعد وحدة التخزين المحددة حرة في شبكة هذا المثيل، لذلك لم يُرسل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चुना गया वॉल्यूम अब इस इंस्टेंस के नेटवर्क में खाली नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume yang dipilih tidak lagi bebas di jaringan instance ini, jadi tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçilen disk artık bu örneğin ağında boş değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбранный том больше не свободен в сети этого инстанса, поэтому ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The volume is no longer attached to this instance, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The volume is no longer attached to this instance, so nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Volume ist nicht mehr an diese Instanz angehängt, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El volumen ya no está conectado a esta instancia, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le volume n'est plus attaché à cette instance, rien n'a donc été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il volume non è più collegato a questa istanza, quindi non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het volume is niet meer aan deze instantie gekoppeld, dus er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wolumen nie jest już podłączony do tej instancji, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O volume não está mais anexado a esta instância, então nada foi enviado."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボリュームはこのインスタンスに接続されていないため、何も送信されませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "볼륨이 더 이상 이 인스턴스에 연결되어 있지 않으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该卷已不再挂载到此实例,因此未发送任何内容。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تعد وحدة التخزين مرفقة بهذا المثيل، لذلك لم يُرسل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वॉल्यूम अब इस इंस्टेंस से जुड़ा नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume tidak lagi terpasang pada instance ini, jadi tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disk artık bu örneğe bağlı değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Том больше не подключён к этому инстансу, поэтому ничего не отправлено."
+          }
+        }
+      }
+    },
+    "Attached volume %@" : {
+      "comment" : "Instance activity log entry after attaching a volume; %@ is the volume name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attached volume %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ angehängt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volumen %@ conectado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ attaché"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ collegato"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ gekoppeld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podłączono wolumen %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ anexado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボリューム %@ を接続"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "볼륨 %@ 연결됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已挂载卷 %@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم إرفاق وحدة التخزين %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वॉल्यूम %@ जोड़ा गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ dipasang"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ diski bağlandı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Том %@ подключён"
+          }
+        }
+      }
+    },
+    "Detached volume %@" : {
+      "comment" : "Instance activity log entry after detaching a volume; %@ is the volume name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detached volume %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ getrennt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volumen %@ desconectado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ détaché"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ scollegato"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ ontkoppeld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odłączono wolumen %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ desanexado"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボリューム %@ を切断"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "볼륨 %@ 분리됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已卸载卷 %@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم فصل وحدة التخزين %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वॉल्यूम %@ अलग किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volume %@ dilepas"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ diski ayrıldı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Том %@ отключён"
+          }
+        }
+      }
+    },
+    "After attaching, mount the volume in the operating system of the instance. Format it only if it is new and empty, otherwise its data is lost." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After attaching, mount the volume in the operating system of the instance. Format it only if it is new and empty, otherwise its data is lost."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hängen Sie das Volume nach dem Anhängen im Betriebssystem der Instanz ein. Formatieren Sie es nur, wenn es neu und leer ist, sonst gehen seine Daten verloren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Después de conectarlo, monta el volumen en el sistema operativo de la instancia. Formatéalo solo si es nuevo y está vacío; de lo contrario, se perderán sus datos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Après l'avoir attaché, montez le volume dans le système d'exploitation de l'instance. Ne le formatez que s'il est nouveau et vide, sinon ses données sont perdues."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dopo averlo collegato, monta il volume nel sistema operativo dell'istanza. Formattalo solo se è nuovo e vuoto, altrimenti i suoi dati vanno persi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koppel het volume na het koppelen aan in het besturingssysteem van de instantie. Formatteer het alleen als het nieuw en leeg is, anders gaan de gegevens erop verloren."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po podłączeniu zamontuj wolumen w systemie operacyjnym instancji. Formatuj go tylko wtedy, gdy jest nowy i pusty, w przeciwnym razie jego dane zostaną utracone."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depois de anexar, monte o volume no sistema operacional da instância. Formate-o apenas se for novo e estiver vazio; caso contrário, seus dados serão perdidos."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続後、インスタンスのオペレーティングシステムでボリュームをマウントしてください。フォーマットは新しく空のボリュームの場合のみ行ってください。そうでない場合、データが失われます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결한 후 인스턴스의 운영 체제에서 볼륨을 마운트하세요. 새 빈 볼륨인 경우에만 포맷하세요. 그렇지 않으면 데이터가 손실됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将卷连接到实例后,请在实例的操作系统中挂载该卷。仅当卷是新的空卷时才格式化,否则其数据会丢失。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعد الإرفاق، حمّل وحدة التخزين في نظام تشغيل المثيل. لا تهيئها إلا إذا كانت جديدة وفارغة، وإلا ستُفقد بياناتها."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जोड़ने के बाद, इंस्टेंस के ऑपरेटिंग सिस्टम में वॉल्यूम को माउंट करें। इसे केवल तभी फ़ॉर्मैट करें जब यह नया और खाली हो, वरना इसका डेटा खो जाएगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setelah dipasang, mount volume di sistem operasi instance. Format volume hanya jika masih baru dan kosong, jika tidak datanya akan hilang."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bağladıktan sonra diski örneğin işletim sisteminde bağlayın (mount). Diski yalnızca yeni ve boşsa biçimlendirin, aksi takdirde verileri kaybolur."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "После подключения смонтируйте том в операционной системе инстанса. Форматируйте его, только если он новый и пустой, иначе его данные будут потеряны."
+          }
+        }
+      }
+    },
+    "The Volumes box lists the volumes attached to the instance. 'Attach Volume...' offers only volumes that are not attached and are in the network and region of the instance; the volume then still has to be mounted on the instance; format it only if it is new and empty. 'Detach...' asks for confirmation; unmount the volume in the operating system of the instance first. Full Access, the region and the volume list are checked again before anything is sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Volumes box lists the volumes attached to the instance. 'Attach Volume...' offers only volumes that are not attached and are in the network and region of the instance; the volume then still has to be mounted on the instance; format it only if it is new and empty. 'Detach...' asks for confirmation; unmount the volume in the operating system of the instance first. Full Access, the region and the volume list are checked again before anything is sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Bereich Volumes zeigt die an die Instanz angehängten Volumes. 'Volume anhängen...' bietet nur Volumes an, die nicht angehängt sind und im Netzwerk und in der Region der Instanz liegen; danach muss das Volume auf der Instanz noch eingehängt werden; formatieren Sie es nur, wenn es neu und leer ist. 'Trennen...' fragt vorher nach; hängen Sie das Volume zuerst im Betriebssystem der Instanz aus. Full Access, die Region und die Volume-Liste werden erneut geprüft, bevor etwas gesendet wird."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cuadro Volúmenes muestra los volúmenes conectados a la instancia. 'Conectar volumen...' solo ofrece volúmenes que no están conectados y que están en la red y la región de la instancia; después, el volumen aún debe montarse en la instancia; formatéalo solo si es nuevo y está vacío. 'Desconectar...' pide confirmación; primero desmonta el volumen en el sistema operativo de la instancia. Full Access, la región y la lista de volúmenes se comprueban de nuevo antes de enviar nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La zone Volumes affiche les volumes attachés à l'instance. 'Attacher un volume...' ne propose que des volumes non attachés situés dans le réseau et la région de l'instance ; le volume doit ensuite encore être monté sur l'instance ; ne le formatez que s'il est nouveau et vide. 'Détacher...' demande une confirmation ; démontez d'abord le volume dans le système d'exploitation de l'instance. Full Access, la région et la liste des volumes sont vérifiés à nouveau avant tout envoi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il riquadro Volumi elenca i volumi collegati all'istanza. 'Collega volume...' offre solo volumi non collegati che si trovano nella rete e nella regione dell'istanza; il volume deve poi ancora essere montato sull'istanza; formattalo solo se è nuovo e vuoto. 'Scollega...' chiede una conferma; smonta prima il volume nel sistema operativo dell'istanza. Full Access, la regione e l'elenco dei volumi vengono verificati di nuovo prima di inviare qualsiasi cosa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het vak Volumes toont de volumes die aan de instantie zijn gekoppeld. 'Volume koppelen...' biedt alleen volumes aan die niet zijn gekoppeld en in het netwerk en de regio van de instantie liggen; daarna moet het volume op de instantie nog worden aangekoppeld; formatteer het alleen als het nieuw en leeg is. 'Ontkoppelen...' vraagt eerst om bevestiging; ontkoppel het volume eerst in het besturingssysteem van de instantie. Full Access, de regio en de volumelijst worden opnieuw gecontroleerd voordat er iets wordt verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekcja Wolumeny pokazuje wolumeny podłączone do instancji. 'Podłącz wolumen...' oferuje tylko wolumeny, które nie są podłączone i znajdują się w sieci i regionie instancji; następnie wolumen trzeba jeszcze zamontować na instancji; formatuj go tylko wtedy, gdy jest nowy i pusty. 'Odłącz...' prosi o potwierdzenie; najpierw odmontuj wolumen w systemie operacyjnym instancji. Full Access, region i lista wolumenów są sprawdzane ponownie, zanim cokolwiek zostanie wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A caixa Volumes lista os volumes anexados à instância. 'Anexar volume...' oferece apenas volumes que não estão anexados e estão na rede e na região da instância; depois, o volume ainda precisa ser montado na instância; formate-o apenas se for novo e estiver vazio. 'Desanexar...' pede confirmação; primeiro desmonte o volume no sistema operacional da instância. O Full Access, a região e a lista de volumes são verificados novamente antes de qualquer envio."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボリュームボックスには、インスタンスに接続されたボリュームが表示されます。'ボリュームを接続...' では、接続されておらず、インスタンスと同じネットワークとリージョンにあるボリュームのみが提示されます。接続後も、ボリュームはインスタンス上でマウントする必要があります。フォーマットは新しく空のボリュームの場合のみ行ってください。'切断...' では確認が表示されます。先にインスタンスのオペレーティングシステムでボリュームをアンマウントしてください。何かを送信する前に、Full Access、リージョン、ボリューム一覧が再度確認されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "볼륨 상자에는 인스턴스에 연결된 볼륨이 표시됩니다. '볼륨 연결...'은 연결되지 않았고 인스턴스의 네트워크와 리전에 있는 볼륨만 제공합니다. 연결 후에도 볼륨은 인스턴스에서 마운트해야 합니다. 새 빈 볼륨인 경우에만 포맷하세요. '분리...'는 확인을 요청합니다. 먼저 인스턴스의 운영 체제에서 볼륨을 마운트 해제하세요. 무엇이든 전송하기 전에 Full Access, 리전, 볼륨 목록을 다시 확인합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卷区域列出挂载到实例的卷。'挂载卷...' 仅提供未挂载且位于实例网络和区域中的卷;挂载后,仍需在实例上挂载该卷;仅当卷是新的空卷时才格式化。'卸载...' 会先请求确认;请先在实例的操作系统中卸除该卷的挂载。发送任何内容之前,会再次检查 Full Access、区域和卷列表。"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعرض مربع وحدات التخزين وحدات التخزين المرفقة بالمثيل. يعرض 'إرفاق وحدة تخزين...' فقط وحدات التخزين غير المرفقة الموجودة في شبكة المثيل ومنطقته؛ وبعد ذلك لا يزال يجب تحميل وحدة التخزين على المثيل؛ لا تهيئها إلا إذا كانت جديدة وفارغة. يطلب 'فصل...' التأكيد؛ ألغِ تحميل وحدة التخزين في نظام تشغيل المثيل أولاً. يتم التحقق من Full Access والمنطقة وقائمة وحدات التخزين مرة أخرى قبل إرسال أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वॉल्यूम्स बॉक्स इंस्टेंस से जुड़े वॉल्यूम दिखाता है। 'वॉल्यूम जोड़ें...' केवल वे वॉल्यूम पेश करता है जो जुड़े नहीं हैं और इंस्टेंस के नेटवर्क और रीजन में हैं; इसके बाद वॉल्यूम को इंस्टेंस पर माउंट करना होगा; इसे केवल तभी फ़ॉर्मैट करें जब यह नया और खाली हो। 'अलग करें...' पुष्टि मांगता है; पहले इंस्टेंस के ऑपरेटिंग सिस्टम में वॉल्यूम को अनमाउंट करें। कुछ भी भेजने से पहले Full Access, रीजन और वॉल्यूम सूची फिर से जांची जाती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kotak Volume menampilkan volume yang terpasang pada instance. 'Pasang Volume...' hanya menawarkan volume yang tidak terpasang dan berada di jaringan serta region instance; setelah itu volume masih harus di-mount di instance; format volume hanya jika masih baru dan kosong. 'Lepas...' meminta konfirmasi; lepaskan kaitan (unmount) volume di sistem operasi instance terlebih dahulu. Full Access, region, dan daftar volume diperiksa lagi sebelum apa pun dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diskler kutusu örneğe bağlı diskleri listeler. 'Disk Bağla...' yalnızca bağlı olmayan ve örneğin ağında ve bölgesinde bulunan diskleri sunar; ardından diskin örnekte yine de bağlanması (mount) gerekir; diski yalnızca yeni ve boşsa biçimlendirin. 'Ayır...' onay ister; önce diski örneğin işletim sisteminde ayırın (unmount). Herhangi bir şey gönderilmeden önce Full Access, bölge ve disk listesi yeniden kontrol edilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В блоке Тома показаны тома, подключённые к инстансу. 'Подключить том...' предлагает только неподключённые тома из сети и региона инстанса; после этого том ещё нужно смонтировать на инстансе; форматируйте его, только если он новый и пустой. 'Отключить...' запрашивает подтверждение; сначала отмонтируйте том в операционной системе инстанса. Full Access, регион и список томов проверяются ещё раз, прежде чем что-либо будет отправлено."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
