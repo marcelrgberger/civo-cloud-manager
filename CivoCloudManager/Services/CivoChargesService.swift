@@ -85,6 +85,27 @@ enum ChargeWindowPlanner {
 
 // MARK: - Local cache
 
+/// What started a load.
+enum ChargeLoadTrigger: Sendable {
+    /// Opening the dashboard or changing the period.
+    case automatic
+    /// The Refresh button.
+    case manualRefresh
+}
+
+/// Decides when a cached completed month may be reused (product decision of 22 November 2026, #99).
+enum ChargeCachePolicy {
+    /// Charges of a month can still change shortly after it ends, so the last completed month
+    /// is re-fetched until this many days after its end. Older completed months stay fixed.
+    static let settlingDays = 7
+
+    static func mayReuseCache(forCompletedMonth window: ChargeWindow, now: Date, trigger: ChargeLoadTrigger) -> Bool {
+        guard trigger == .automatic else { return false }
+        let settledAt = ChargeCalendar.utc.date(byAdding: .day, value: settlingDays, to: window.to)!
+        return now >= settledAt
+    }
+}
+
 protocol ChargesCacheStore: Sendable {
     func load(scope: String, month: String) -> [CivoCharge]?
     func save(_ charges: [CivoCharge], scope: String, month: String)
@@ -166,9 +187,10 @@ struct CivoChargesService: Sendable {
 
     var currentDate: Date { now() }
 
-    /// Loads all charges of `period`. Completed months come from the local cache when present;
-    /// the open month and anything missing is fetched in windows Civo accepts.
-    func charges(for period: ChargePeriod) async throws -> [CivoCharge] {
+    /// Loads all charges of `period` in windows Civo accepts. Completed months come from the
+    /// local cache when `ChargeCachePolicy` allows it; everything else is fetched, and fetched
+    /// completed months replace their cache entry.
+    func charges(for period: ChargePeriod, trigger: ChargeLoadTrigger = .automatic) async throws -> [CivoCharge] {
         let now = now()
         let range = period.dateRange(now: now)
         let account = account()
@@ -179,11 +201,15 @@ struct CivoChargesService: Sendable {
             try Task.checkCancellation()
             let month = ChargeCalendar.monthKey(window.from)
             let isCompletedMonth = ChargeWindowPlanner.isFullMonth(window) && window.to <= now
-            if isCompletedMonth, let scope, let cached = store.load(scope: scope, month: month) {
+            if isCompletedMonth, let scope,
+               ChargeCachePolicy.mayReuseCache(forCompletedMonth: window, now: now, trigger: trigger),
+               let cached = store.load(scope: scope, month: month) {
                 result += cached
                 continue
             }
             let fetched = try await fetch(window, account)
+            // A superseded load must not overwrite the cache a newer load may already have written.
+            try Task.checkCancellation()
             if isCompletedMonth, let scope {
                 store.save(fetched, scope: scope, month: month)
             }

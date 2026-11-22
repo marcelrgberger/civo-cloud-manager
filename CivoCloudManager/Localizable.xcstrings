@@ -85031,102 +85031,202 @@
         }
       }
     },
-    "Completed months are cached locally per Civo account and reused. The current month and any month not cached yet are loaded from Civo." : {
+    "Completed months are cached locally per Civo account. The month that just ended is loaded again from Civo for 7 days after it ends; older completed months stay fixed. The current month and any month not cached yet are always loaded from Civo." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Completed months are cached locally per Civo account and reused. The current month and any month not cached yet are loaded from Civo."
+            "value" : "Completed months are cached locally per Civo account. The month that just ended is loaded again from Civo for 7 days after it ends; older completed months stay fixed. The current month and any month not cached yet are always loaded from Civo."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abgeschlossene Monate werden pro Civo-Konto lokal zwischengespeichert und wiederverwendet. Der laufende Monat und noch nicht gespeicherte Monate werden von Civo geladen."
+            "value" : "Abgeschlossene Monate werden pro Civo-Konto lokal zwischengespeichert. Der gerade beendete Monat wird noch 7 Tage nach seinem Ende erneut von Civo geladen; ältere abgeschlossene Monate bleiben unverändert. Der laufende Monat und noch nicht gespeicherte Monate werden immer von Civo geladen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los meses completados se guardan en caché localmente por cuenta de Civo y se reutilizan. El mes actual y los meses aún no guardados se cargan desde Civo."
+            "value" : "Los meses completados se guardan en caché localmente por cuenta de Civo. El mes que acaba de terminar se vuelve a cargar desde Civo durante los 7 días posteriores a su fin; los meses completados anteriores no cambian. El mes actual y los meses aún no guardados siempre se cargan desde Civo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les mois terminés sont mis en cache localement par compte Civo et réutilisés. Le mois en cours et les mois pas encore en cache sont chargés depuis Civo."
+            "value" : "Les mois terminés sont mis en cache localement par compte Civo. Le mois qui vient de se terminer est rechargé depuis Civo pendant les 7 jours qui suivent sa fin ; les mois terminés plus anciens restent figés. Le mois en cours et les mois pas encore en cache sont toujours chargés depuis Civo."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I mesi conclusi vengono memorizzati localmente per ogni account Civo e riutilizzati. Il mese corrente e i mesi non ancora memorizzati vengono caricati da Civo."
+            "value" : "I mesi conclusi vengono memorizzati localmente per ogni account Civo. Il mese appena concluso viene ricaricato da Civo per 7 giorni dopo la sua fine; i mesi conclusi più vecchi restano invariati. Il mese corrente e i mesi non ancora memorizzati vengono sempre caricati da Civo."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Afgesloten maanden worden per Civo-account lokaal in de cache bewaard en hergebruikt. De huidige maand en maanden die nog niet in de cache staan, worden bij Civo geladen."
+            "value" : "Afgesloten maanden worden per Civo-account lokaal in de cache bewaard. De maand die net is afgelopen, wordt tot 7 dagen na het einde opnieuw bij Civo geladen; oudere afgesloten maanden blijven ongewijzigd. De huidige maand en maanden die nog niet in de cache staan, worden altijd bij Civo geladen."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zakończone miesiące są przechowywane lokalnie w pamięci podręcznej osobno dla każdego konta Civo i używane ponownie. Bieżący miesiąc i miesiące jeszcze niezapisane są wczytywane z Civo."
+            "value" : "Zakończone miesiące są przechowywane lokalnie w pamięci podręcznej osobno dla każdego konta Civo. Miesiąc, który właśnie się zakończył, jest ponownie wczytywany z Civo przez 7 dni po jego zakończeniu; starsze zakończone miesiące pozostają bez zmian. Bieżący miesiąc i miesiące jeszcze niezapisane są zawsze wczytywane z Civo."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Os meses concluídos ficam em cache localmente por conta Civo e são reutilizados. O mês atual e os meses ainda sem cache são carregados da Civo."
+            "value" : "Os meses concluídos ficam em cache localmente por conta Civo. O mês que acabou de terminar é carregado novamente da Civo durante 7 dias após o seu fim; os meses concluídos mais antigos permanecem fixos. O mês atual e os meses ainda sem cache são sempre carregados da Civo."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已结束的月份会按 Civo 账户在本地缓存并重复使用。当月以及尚未缓存的月份会从 Civo 加载。"
+            "value" : "已结束的月份会按 Civo 账户在本地缓存。刚结束的月份在结束后的 7 天内会从 Civo 重新加载；更早的已结束月份保持不变。当月以及尚未缓存的月份始终从 Civo 加载。"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "完了した月は Civo アカウントごとにローカルにキャッシュされ、再利用されます。今月とまだキャッシュされていない月は Civo から読み込まれます。"
+            "value" : "完了した月は Civo アカウントごとにローカルにキャッシュされます。終わったばかりの月は、終了後 7 日間は Civo から再読み込みされます。それより前の完了した月は固定されます。今月とまだキャッシュされていない月は常に Civo から読み込まれます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "지난 달은 Civo 계정별로 로컬에 캐시되어 다시 사용됩니다. 이번 달과 아직 캐시되지 않은 달은 Civo에서 불러옵니다."
+            "value" : "지난 달은 Civo 계정별로 로컬에 캐시됩니다. 방금 끝난 달은 끝난 후 7일 동안 Civo에서 다시 불러오며, 그보다 이전의 지난 달은 고정됩니다. 이번 달과 아직 캐시되지 않은 달은 항상 Civo에서 불러옵니다."
           }
         },
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تُخزَّن الأشهر المكتملة مؤقتًا محليًا لكل حساب Civo ويُعاد استخدامها. يُحمَّل الشهر الحالي وأي شهر لم يُخزَّن بعد من Civo."
+            "value" : "تُخزَّن الأشهر المكتملة مؤقتًا محليًا لكل حساب Civo. يُعاد تحميل الشهر الذي انتهى للتو من Civo لمدة 7 أيام بعد انتهائه، أما الأشهر المكتملة الأقدم فتبقى ثابتة. يُحمَّل الشهر الحالي وأي شهر لم يُخزَّن بعد من Civo دائمًا."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "पूरे हो चुके महीने हर Civo खाते के लिए स्थानीय रूप से कैश किए जाते हैं और फिर से उपयोग होते हैं। वर्तमान महीना और अभी तक कैश न हुए महीने Civo से लोड किए जाते हैं।"
+            "value" : "पूरे हो चुके महीने हर Civo खाते के लिए स्थानीय रूप से कैश किए जाते हैं। अभी समाप्त हुआ महीना समाप्त होने के 7 दिन बाद तक Civo से फिर से लोड किया जाता है; उससे पुराने पूरे हो चुके महीने नहीं बदलते। वर्तमान महीना और अभी तक कैश न हुए महीने हमेशा Civo से लोड किए जाते हैं।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bulan yang sudah selesai disimpan dalam cache lokal per akun Civo dan digunakan kembali. Bulan berjalan dan bulan yang belum ada di cache dimuat dari Civo."
+            "value" : "Bulan yang sudah selesai disimpan dalam cache lokal per akun Civo. Bulan yang baru saja berakhir dimuat ulang dari Civo selama 7 hari setelah berakhir; bulan selesai yang lebih lama tetap tidak berubah. Bulan berjalan dan bulan yang belum ada di cache selalu dimuat dari Civo."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tamamlanan aylar her Civo hesabı için yerel olarak önbelleğe alınır ve yeniden kullanılır. İçinde bulunulan ay ve henüz önbellekte olmayan aylar Civo'dan yüklenir."
+            "value" : "Tamamlanan aylar her Civo hesabı için yerel olarak önbelleğe alınır. Yeni biten ay, bitiminden sonraki 7 gün boyunca Civo'dan yeniden yüklenir; daha eski tamamlanan aylar sabit kalır. İçinde bulunulan ay ve henüz önbellekte olmayan aylar her zaman Civo'dan yüklenir."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Завершённые месяцы кэшируются локально для каждой учётной записи Civo и используются повторно. Текущий месяц и ещё не кэшированные месяцы загружаются из Civo."
+            "value" : "Завершённые месяцы кэшируются локально для каждой учётной записи Civo. Только что закончившийся месяц повторно загружается из Civo в течение 7 дней после его окончания; более ранние завершённые месяцы остаются неизменными. Текущий месяц и ещё не кэшированные месяцы всегда загружаются из Civo."
+          }
+        }
+      }
+    },
+    "Refresh loads every month of the selected period again from Civo, including completed months, and updates the cache." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh loads every month of the selected period again from Civo, including completed months, and updates the cache."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualisieren lädt jeden Monat des gewählten Zeitraums erneut von Civo, auch abgeschlossene Monate, und aktualisiert den Zwischenspeicher."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar vuelve a cargar desde Civo todos los meses del periodo seleccionado, incluidos los meses completados, y actualiza la caché."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualiser recharge depuis Civo chaque mois de la période sélectionnée, y compris les mois terminés, et met à jour le cache."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna ricarica da Civo ogni mese del periodo selezionato, compresi i mesi conclusi, e aggiorna la cache."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vernieuwen laadt elke maand van de gekozen periode opnieuw bij Civo, ook afgesloten maanden, en werkt de cache bij."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odśwież ponownie wczytuje z Civo każdy miesiąc wybranego okresu, także zakończone miesiące, i aktualizuje pamięć podręczną."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar carrega novamente da Civo todos os meses do período selecionado, incluindo os meses concluídos, e atualiza o cache."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新会从 Civo 重新加载所选期间的每个月份（包括已结束的月份），并更新缓存。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新を押すと、選択した期間のすべての月 (完了した月を含む) が Civo から再読み込みされ、キャッシュが更新されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새로고침은 선택한 기간의 모든 달(지난 달 포함)을 Civo에서 다시 불러오고 캐시를 업데이트합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعيد التحديث تحميل كل شهر من الفترة المحددة من Civo، بما في ذلك الأشهر المكتملة، ويحدّث ذاكرة التخزين المؤقت."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिफ्रेश करें बटन चुनी गई अवधि का हर महीना, पूरे हो चुके महीनों सहित, Civo से फिर से लोड करता है और कैश को अपडेट करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muat Ulang memuat lagi setiap bulan dari periode yang dipilih dari Civo, termasuk bulan yang sudah selesai, dan memperbarui cache."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yenile, seçilen dönemin her ayını, tamamlanan aylar dahil, Civo'dan yeniden yükler ve önbelleği günceller."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка Обновить заново загружает из Civo каждый месяц выбранного периода, включая завершённые месяцы, и обновляет кэш."
           }
         }
       }
