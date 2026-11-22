@@ -119577,6 +119577,3206 @@
           }
         }
       }
+    },
+    "Changing credentials requires Full Access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changing credentials requires Full Access."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Ändern der Zugangsdaten ist Vollzugriff erforderlich."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar las credenciales requiere acceso completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modification des identifiants nécessite un accès complet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per cambiare le credenziali è necessario l'accesso completo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voor het wijzigen van inloggegevens is volledige toegang vereist."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana poświadczeń wymaga pełnego dostępu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar as credenciais requer acesso completo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для смены учетных данных нужен полный доступ."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik bilgilerini değiştirmek için Tam Erişim gerekir."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengubah kredensial memerlukan Akses Penuh."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتطلب تغيير بيانات الاعتماد وصولا كاملا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रेडेंशियल बदलने के लिए पूर्ण एक्सेस आवश्यक है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証情報の変更にはフルアクセスが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자격 증명을 변경하려면 전체 액세스가 필요합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改凭据需要完全访问权限。"
+          }
+        }
+      }
+    },
+    "The account or region changed. Reopen the credential change. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The account or region changed. Reopen the credential change. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Konto oder die Region wurde geändert. Öffne den Zugangsdatenwechsel erneut. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La cuenta o región ha cambiado. Vuelve a abrir el cambio de credenciales. No se ha enviado nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le compte ou la région a changé. Rouvrez la modification des identifiants. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'account o la regione è cambiato. Riapri la modifica delle credenziali. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het account of de regio is gewijzigd. Open de wijziging opnieuw. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto lub region uległ zmianie. Otwórz ponownie zmianę poświadczeń. Nic nie wysłano."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A conta ou região mudou. Abra novamente a alteração de credenciais. Nada foi enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аккаунт или регион изменился. Откройте смену учетных данных заново. Ничего не отправлено."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap veya bölge değişti. Kimlik bilgisi değişikliğini yeniden açın. Hiçbir şey gönderilmedi."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akun atau wilayah berubah. Buka kembali perubahan kredensial. Tidak ada yang dikirim."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغير الحساب أو المنطقة. افتح تغيير بيانات الاعتماد مجددا. لم يتم إرسال شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खाता या क्षेत्र बदल गया है। क्रेडेंशियल परिवर्तन फिर खोलें। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウントまたはリージョンが変更されました。認証情報の変更を開き直してください。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정 또는 리전이 변경되었습니다. 자격 증명 변경을 다시 여세요. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账户或区域已更改。请重新打开凭据更改。未发送任何内容。"
+          }
+        }
+      }
+    },
+    "Reload the storage list first." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reload the storage list first."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade zuerst die Speicherliste neu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primero vuelve a cargar la lista de almacenamiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechargez d'abord la liste du stockage."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricarica prima l'elenco dello storage."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laad eerst de opslaglijst opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najpierw odśwież listę magazynów."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recarregue primeiro a lista de armazenamento."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сначала обновите список хранилищ."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önce depolama listesini yeniden yükleyin."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muat ulang daftar penyimpanan terlebih dahulu."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أعد تحميل قائمة التخزين أولا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पहले स्टोरेज सूची फिर लोड करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まずストレージ一覧を再読み込みしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "먼저 스토리지 목록을 새로 고치세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先重新加载存储列表。"
+          }
+        }
+      }
+    },
+    "The object store changed. Reload its details before changing credentials." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The object store changed. Reload its details before changing credentials."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Object Store wurde geändert. Lade vor dem Zugangsdatenwechsel seine Details neu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El almacén de objetos ha cambiado. Recarga sus detalles antes de cambiar las credenciales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le stockage objet a changé. Rechargez ses détails avant de modifier les identifiants."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo storage a oggetti è cambiato. Ricarica i dettagli prima di cambiare le credenziali."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De objectopslag is gewijzigd. Laad de details opnieuw voordat je de inloggegevens wijzigt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazyn obiektów uległ zmianie. Odśwież jego szczegóły przed zmianą poświadczeń."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O armazenamento de objetos mudou. Recarregue os detalhes antes de alterar as credenciais."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хранилище объектов изменилось. Обновите его сведения перед сменой учетных данных."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesne deposu değişti. Kimlik bilgilerini değiştirmeden önce ayrıntıları yeniden yükleyin."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penyimpanan objek berubah. Muat ulang detailnya sebelum mengubah kredensial."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغير مخزن الكائنات. أعد تحميل تفاصيله قبل تغيير بيانات الاعتماد."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ऑब्जेक्ट स्टोर बदल गया है। क्रेडेंशियल बदलने से पहले उसके विवरण फिर लोड करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オブジェクトストアが変更されました。認証情報を変更する前に詳細を再読み込みしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오브젝트 스토어가 변경되었습니다. 자격 증명을 변경하기 전에 세부 정보를 새로 고치세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对象存储已更改。更改凭据前请重新加载其详细信息。"
+          }
+        }
+      }
+    },
+    "The selected credential is no longer available or usable in this region." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected credential is no longer available or usable in this region."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die gewählten Zugangsdaten sind in dieser Region nicht mehr verfügbar oder verwendbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La credencial seleccionada ya no está disponible o no se puede usar en esta región."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les identifiants sélectionnés ne sont plus disponibles ou utilisables dans cette région."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La credenziale selezionata non è più disponibile o utilizzabile in questa regione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De geselecteerde inloggegevens zijn niet meer beschikbaar of bruikbaar in deze regio."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybrane poświadczenia nie są już dostępne lub nie można ich użyć w tym regionie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A credencial selecionada já não está disponível ou utilizável nesta região."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбранные учетные данные больше недоступны или непригодны в этом регионе."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçilen kimlik bilgisi bu bölgede artık mevcut veya kullanılabilir değil."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial yang dipilih tidak lagi tersedia atau dapat digunakan di wilayah ini."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات الاعتماد المحددة لم تعد متاحة أو قابلة للاستخدام في هذه المنطقة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चुना गया क्रेडेंशियल इस क्षेत्र में अब उपलब्ध या उपयोग योग्य नहीं है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択した認証情報はこのリージョンでは利用できなくなりました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 자격 증명을 이 리전에서 더 이상 사용할 수 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选凭据在此区域已不可用或无法使用。"
+          }
+        }
+      }
+    },
+    "The credential list is incomplete. Reload it before changing credentials." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The credential list is incomplete. Reload it before changing credentials."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Zugangsdatenliste ist unvollständig. Lade sie vor dem Wechsel neu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La lista de credenciales está incompleta. Recárgala antes de cambiar las credenciales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La liste des identifiants est incomplète. Rechargez-la avant de les modifier."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'elenco delle credenziali è incompleto. Ricaricalo prima di cambiare le credenziali."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De lijst met inloggegevens is onvolledig. Laad deze opnieuw voordat je wijzigt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista poświadczeń jest niepełna. Odśwież ją przed zmianą poświadczeń."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A lista de credenciais está incompleta. Recarregue-a antes de alterar as credenciais."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Список учетных данных неполон. Обновите его перед сменой."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik bilgisi listesi eksik. Değişiklik yapmadan önce yeniden yükleyin."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daftar kredensial tidak lengkap. Muat ulang sebelum mengubah kredensial."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قائمة بيانات الاعتماد غير مكتملة. أعد تحميلها قبل التغيير."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रेडेंशियल सूची अधूरी है। क्रेडेंशियल बदलने से पहले इसे फिर लोड करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証情報の一覧が不完全です。変更する前に再読み込みしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자격 증명 목록이 불완전합니다. 변경하기 전에 새로 고치세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "凭据列表不完整。更改凭据前请重新加载。"
+          }
+        }
+      }
+    },
+    "Pause or resume is still running." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause or resume is still running."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausieren oder Fortsetzen läuft noch."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La pausa o reanudación sigue en curso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mise en pause ou la reprise est toujours en cours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La pausa o la ripresa è ancora in corso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pauzeren of hervatten is nog bezig."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wstrzymywanie lub wznawianie nadal trwa."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A pausa ou retoma ainda está em curso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приостановка или возобновление еще выполняется."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duraklatma veya devam ettirme sürüyor."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proses jeda atau lanjutkan masih berjalan."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تزال عملية الإيقاف المؤقت أو الاستئناف جارية."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रोकने या फिर शुरू करने की प्रक्रिया अभी चल रही है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一時停止または再開がまだ実行中です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일시 중지 또는 재개가 아직 진행 중입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停或恢复操作仍在进行中。"
+          }
+        }
+      }
+    },
+    "Another storage change is still running." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another storage change is still running."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine andere Speicheränderung läuft noch."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otro cambio de almacenamiento sigue en curso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une autre modification du stockage est en cours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un'altra modifica dello storage è ancora in corso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er wordt nog een andere opslagwijziging uitgevoerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inna zmiana magazynu nadal trwa."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outra alteração de armazenamento ainda está em curso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другое изменение хранилища еще выполняется."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başka bir depolama değişikliği sürüyor."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan penyimpanan lain masih berjalan."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يزال تغيير آخر في التخزين جاريا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्टोरेज का कोई अन्य परिवर्तन अभी चल रहा है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別のストレージ変更がまだ実行中です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다른 스토리지 변경이 아직 진행 중입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "另一项存储更改仍在进行中。"
+          }
+        }
+      }
+    },
+    "A transfer or file listing is still running." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A transfer or file listing is still running."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Übertragung oder Dateiauflistung läuft noch."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una transferencia o listado de archivos sigue en curso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un transfert ou un chargement de fichiers est encore en cours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un trasferimento o un elenco di file è ancora in corso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er wordt nog een overdracht of bestandslijst uitgevoerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer lub pobieranie listy plików nadal trwa."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma transferência ou listagem de ficheiros ainda está em curso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Передача или получение списка файлов еще выполняется."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktarım veya dosya listeleme sürüyor."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfer atau pemuatan daftar file masih berjalan."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يزال نقل الملفات أو عرض قائمتها جاريا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ट्रांसफ़र या फ़ाइल सूची लोड करने की प्रक्रिया अभी चल रही है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "転送またはファイル一覧の取得がまだ実行中です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전송 또는 파일 목록 불러오기가 아직 진행 중입니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "传输或文件列表加载仍在进行中。"
+          }
+        }
+      }
+    },
+    "Only a ready object store can change credentials." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only a ready object store can change credentials."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur bei einem bereiten Object Store können die Zugangsdaten geändert werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo un almacén de objetos listo puede cambiar de credenciales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seul un stockage objet prêt peut changer d'identifiants."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo uno storage a oggetti pronto può cambiare credenziali."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alleen een gereedstaande objectopslag kan van inloggegevens veranderen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poświadczenia można zmienić tylko dla gotowego magazynu obiektów."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Só um armazenamento de objetos pronto pode alterar credenciais."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сменить учетные данные можно только у готового хранилища объектов."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca hazır bir nesne deposunun kimlik bilgileri değiştirilebilir."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya penyimpanan objek yang siap yang dapat mengubah kredensial."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن تغيير بيانات الاعتماد فقط لمخزن كائنات جاهز."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "केवल तैयार ऑब्जेक्ट स्टोर के क्रेडेंशियल बदले जा सकते हैं।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "準備完了のオブジェクトストアのみ認証情報を変更できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "준비된 오브젝트 스토어만 자격 증명을 변경할 수 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只有就绪的对象存储才能更改凭据。"
+          }
+        }
+      }
+    },
+    "The pause vault cannot change credentials." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The pause vault cannot change credentials."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Zugangsdaten des Pausenarchivs können nicht geändert werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pueden cambiar las credenciales del almacén de pausa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les identifiants du coffre de pause ne peuvent pas être modifiés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le credenziali del deposito di pausa non possono essere cambiate."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De inloggegevens van de pauzekluis kunnen niet worden gewijzigd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie można zmienić poświadczeń skarbca wstrzymania."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As credenciais do cofre de pausa não podem ser alteradas."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нельзя изменить учетные данные хранилища архива приостановки."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duraklatma kasasının kimlik bilgileri değiştirilemez."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial brankas jeda tidak dapat diubah."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يمكن تغيير بيانات اعتماد مخزن الإيقاف المؤقت."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पॉज़ वॉल्ट के क्रेडेंशियल नहीं बदले जा सकते।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一時停止用ボールトの認証情報は変更できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일시 중지 보관소의 자격 증명은 변경할 수 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法更改暂停保管库的凭据。"
+          }
+        }
+      }
+    },
+    "The request may have been applied, but the new assignment could not be confirmed. It was not sent again. Check again before using this object store." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The request may have been applied, but the new assignment could not be confirmed. It was not sent again. Check again before using this object store."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Anfrage wurde möglicherweise angewendet, aber die neue Zuordnung konnte nicht bestätigt werden. Sie wurde nicht erneut gesendet. Prüfe erneut, bevor du diesen Object Store verwendest."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La solicitud puede haberse aplicado, pero no se pudo confirmar la nueva asignación. No se ha reenviado. Comprueba de nuevo antes de usar este almacén de objetos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La demande a peut-être été appliquée, mais la nouvelle attribution n'a pas pu être confirmée. Elle n'a pas été renvoyée. Vérifiez à nouveau avant d'utiliser ce stockage objet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La richiesta potrebbe essere stata applicata, ma la nuova assegnazione non è stata confermata. Non è stata inviata di nuovo. Verifica nuovamente prima di usare questo storage a oggetti."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het verzoek is mogelijk toegepast, maar de nieuwe toewijzing kon niet worden bevestigd. Het is niet opnieuw verzonden. Controleer opnieuw voordat je deze objectopslag gebruikt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żądanie mogło zostać zastosowane, ale nie udało się potwierdzić nowego przypisania. Nie wysłano go ponownie. Sprawdź ponownie przed użyciem tego magazynu obiektów."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O pedido pode ter sido aplicado, mas a nova atribuição não pôde ser confirmada. Não foi reenviado. Verifique novamente antes de usar este armazenamento de objetos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос мог быть применен, но новое назначение не подтверждено. Повторной отправки не было. Проверьте еще раз перед использованием хранилища."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İstek uygulanmış olabilir ancak yeni atama doğrulanamadı. Tekrar gönderilmedi. Bu nesne deposunu kullanmadan önce tekrar kontrol edin."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permintaan mungkin telah diterapkan, tetapi penetapan baru belum dapat dikonfirmasi. Permintaan tidak dikirim ulang. Periksa lagi sebelum menggunakan penyimpanan objek ini."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربما تم تطبيق الطلب، لكن تعذر تأكيد التعيين الجديد. لم تتم إعادة إرساله. تحقق مجددا قبل استخدام مخزن الكائنات هذا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अनुरोध लागू हो सकता है, लेकिन नए असाइनमेंट की पुष्टि नहीं हो सकी। इसे फिर नहीं भेजा गया। इस ऑब्जेक्ट स्टोर का उपयोग करने से पहले फिर जाँचें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リクエストは適用された可能性がありますが、新しい割り当てを確認できませんでした。再送信はしていません。このオブジェクトストアを使用する前に再確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "요청이 적용되었을 수 있지만 새 할당을 확인하지 못했습니다. 다시 전송하지 않았습니다. 이 오브젝트 스토어를 사용하기 전에 다시 확인하세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求可能已应用，但无法确认新的分配。请求未重新发送。使用此对象存储前请再次检查。"
+          }
+        }
+      }
+    },
+    "Access denied. Your API key may not have permission for this action." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access denied. Your API key may not have permission for this action."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugriff verweigert. Dein API-Schlüssel hat möglicherweise keine Berechtigung für diese Aktion."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceso denegado. Es posible que tu clave API no tenga permiso para esta acción."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accès refusé. Votre clé API n'a peut-être pas l'autorisation pour cette action."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accesso negato. La tua chiave API potrebbe non avere l'autorizzazione per questa azione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toegang geweigerd. Je API-sleutel heeft mogelijk geen toestemming voor deze actie."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odmowa dostępu. Twój klucz API może nie mieć uprawnień do tej operacji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acesso negado. A sua chave API pode não ter permissão para esta ação."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступ запрещен. У вашего ключа API может не быть разрешения на это действие."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erişim reddedildi. API anahtarınızın bu işlem için izni olmayabilir."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akses ditolak. Kunci API Anda mungkin tidak memiliki izin untuk tindakan ini."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم رفض الوصول. قد لا يملك مفتاح API إذنا لهذا الإجراء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक्सेस अस्वीकृत। आपकी API कुंजी को इस कार्रवाई की अनुमति नहीं हो सकती है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクセスが拒否されました。APIキーにこの操作の権限がない可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "액세스가 거부되었습니다. API 키에 이 작업 권한이 없을 수 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "访问被拒绝。您的 API 密钥可能没有执行此操作的权限。"
+          }
+        }
+      }
+    },
+    "Civo rejected the credential change. Reload the store and credentials." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo rejected the credential change. Reload the store and credentials."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat den Zugangsdatenwechsel abgelehnt. Lade Store und Zugangsdaten neu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo rechazó el cambio de credenciales. Recarga el almacén y las credenciales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a refusé le changement d'identifiants. Rechargez le stockage et les identifiants."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha rifiutato il cambio di credenziali. Ricarica lo storage e le credenziali."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de wijziging afgewezen. Laad de opslag en inloggegevens opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo odrzuciło zmianę poświadczeń. Odśwież magazyn i poświadczenia."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo rejeitou a alteração de credenciais. Recarregue o armazenamento e as credenciais."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo отклонил смену учетных данных. Обновите хранилище и учетные данные."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo kimlik bilgisi değişikliğini reddetti. Depoyu ve kimlik bilgilerini yeniden yükleyin."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menolak perubahan kredensial. Muat ulang penyimpanan dan kredensial."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رفض Civo تغيير بيانات الاعتماد. أعد تحميل المخزن وبيانات الاعتماد."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने क्रेडेंशियल परिवर्तन अस्वीकार कर दिया। स्टोर और क्रेडेंशियल फिर लोड करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoが認証情報の変更を拒否しました。ストアと認証情報を再読み込みしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 자격 증명 변경을 거부했습니다. 스토어와 자격 증명을 새로 고치세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 拒绝了凭据更改。请重新加载存储和凭据。"
+          }
+        }
+      }
+    },
+    "The storage request failed. Check your connection and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The storage request failed. Check your connection and try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Speicheranfrage ist fehlgeschlagen. Prüfe deine Verbindung und versuche es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La solicitud de almacenamiento falló. Comprueba la conexión e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La demande de stockage a échoué. Vérifiez votre connexion et réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La richiesta di storage non è riuscita. Controlla la connessione e riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het opslagverzoek is mislukt. Controleer je verbinding en probeer het opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żądanie magazynu nie powiodło się. Sprawdź połączenie i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O pedido de armazenamento falhou. Verifique a ligação e tente novamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос к хранилищу не удался. Проверьте соединение и повторите попытку."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Depolama isteği başarısız oldu. Bağlantınızı kontrol edip tekrar deneyin."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permintaan penyimpanan gagal. Periksa koneksi Anda dan coba lagi."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل طلب التخزين. تحقق من اتصالك وحاول مجددا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्टोरेज अनुरोध विफल हुआ। अपना कनेक्शन जाँचें और फिर प्रयास करें।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ストレージリクエストが失敗しました。接続を確認して再試行してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스토리지 요청이 실패했습니다. 연결을 확인하고 다시 시도하세요."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储请求失败。请检查连接后重试。"
+          }
+        }
+      }
+    },
+    "The credential change was cancelled before sending." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The credential change was cancelled before sending."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Zugangsdatenwechsel wurde vor dem Senden abgebrochen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cambio de credenciales se canceló antes del envío."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le changement d'identifiants a été annulé avant l'envoi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cambio di credenziali è stato annullato prima dell'invio."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De wijziging van inloggegevens is vóór verzending geannuleerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmiana poświadczeń została anulowana przed wysłaniem."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração de credenciais foi cancelada antes do envio."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смена учетных данных отменена до отправки."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik bilgisi değişikliği gönderilmeden iptal edildi."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan kredensial dibatalkan sebelum dikirim."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم إلغاء تغيير بيانات الاعتماد قبل الإرسال."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रेडेंशियल परिवर्तन भेजने से पहले रद्द कर दिया गया।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証情報の変更は送信前にキャンセルされました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자격 증명 변경이 전송 전에 취소되었습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "凭据更改已在发送前取消。"
+          }
+        }
+      }
+    },
+    "Unknown credential" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown credential"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannte Zugangsdaten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credencial desconocida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identifiants inconnus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credenziale sconosciuta"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onbekende inloggegevens"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieznane poświadczenia"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credencial desconhecida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неизвестные учетные данные"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilinmeyen kimlik bilgisi"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial tidak dikenal"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات اعتماد غير معروفة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अज्ञात क्रेडेंशियल"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不明な認証情報"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알 수 없는 자격 증명"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知凭据"
+          }
+        }
+      }
+    },
+    "Change Credential" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Credential"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugangsdaten ändern"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar credencial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changer les identifiants"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia credenziale"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggegevens wijzigen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień poświadczenia"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar credencial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сменить учетные данные"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik Bilgisini Değiştir"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubah Kredensial"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير بيانات الاعتماد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रेडेंशियल बदलें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証情報を変更"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자격 증명 변경"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改凭据"
+          }
+        }
+      }
+    },
+    "Object Store" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Object Store"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Object Store"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almacén de objetos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stockage objet"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage a oggetti"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Objectopslag"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magazyn obiektów"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Armazenamento de objetos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хранилище объектов"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesne Deposu"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penyimpanan Objek"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مخزن الكائنات"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ऑब्जेक्ट स्टोर"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オブジェクトストア"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오브젝트 스토어"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对象存储"
+          }
+        }
+      }
+    },
+    "Current credential" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current credential"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Zugangsdaten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credencial actual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identifiants actuels"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credenziale attuale"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huidige inloggegevens"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obecne poświadczenia"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credencial atual"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущие учетные данные"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mevcut kimlik bilgisi"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial saat ini"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات الاعتماد الحالية"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वर्तमान क्रेडेंशियल"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在の認証情報"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 자격 증명"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前凭据"
+          }
+        }
+      }
+    },
+    "New credential" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New credential"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Zugangsdaten"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nueva credencial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveaux identifiants"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuova credenziale"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe inloggegevens"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nowe poświadczenia"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nova credencial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новые учетные данные"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni kimlik bilgisi"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial baru"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات الاعتماد الجديدة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नया क्रेडेंशियल"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい認証情報"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새 자격 증명"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新凭据"
+          }
+        }
+      }
+    },
+    "Select credential" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select credential"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugangsdaten auswählen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar credencial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionner les identifiants"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona credenziale"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggegevens selecteren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz poświadczenia"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecionar credencial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите учетные данные"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik bilgisi seçin"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih kredensial"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر بيانات الاعتماد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रेडेंशियल चुनें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証情報を選択"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자격 증명 선택"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择凭据"
+          }
+        }
+      }
+    },
+    "Other credentials exist, but none can be used (suspended or not ready)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other credentials exist, but none can be used (suspended or not ready)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere Zugangsdaten sind vorhanden, aber keine sind verwendbar (gesperrt oder nicht bereit)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hay otras credenciales, pero ninguna se puede usar (suspendidas o no listas)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "D'autres identifiants existent, mais aucun n'est utilisable (suspendus ou non prêts)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esistono altre credenziali, ma nessuna è utilizzabile (sospesa o non pronta)."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er zijn andere inloggegevens, maar geen is bruikbaar (opgeschort of niet gereed)."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Istnieją inne poświadczenia, ale żadnych nie można użyć (zawieszone lub niegotowe)."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Existem outras credenciais, mas nenhuma pode ser usada (suspensa ou não pronta)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Есть другие учетные данные, но они непригодны (приостановлены или не готовы)."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başka kimlik bilgileri var ancak hiçbiri kullanılamıyor (askıya alınmış veya hazır değil)."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ada kredensial lain, tetapi tidak ada yang dapat digunakan (ditangguhkan atau belum siap)."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توجد بيانات اعتماد أخرى، لكن لا يمكن استخدام أي منها (معلقة أو غير جاهزة)."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अन्य क्रेडेंशियल मौजूद हैं, लेकिन कोई भी उपयोग योग्य नहीं है (निलंबित या तैयार नहीं)।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "他の認証情報はありますが、使用できません（一時停止中または準備未完了）。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다른 자격 증명이 있지만 사용할 수 없습니다(중지되었거나 준비되지 않음)."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存在其他凭据，但均不可用（已暂停或尚未就绪）。"
+          }
+        }
+      }
+    },
+    "No other credential is available in this region." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No other credential is available in this region."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In dieser Region sind keine anderen Zugangsdaten verfügbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay otra credencial disponible en esta región."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun autre identifiant n'est disponible dans cette région."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non sono disponibili altre credenziali in questa regione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er zijn geen andere inloggegevens beschikbaar in deze regio."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W tym regionie nie ma innych poświadczeń."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não há outra credencial disponível nesta região."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В этом регионе нет других учетных данных."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu bölgede başka kimlik bilgisi yok."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ada kredensial lain yang tersedia di wilayah ini."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تتوفر بيانات اعتماد أخرى في هذه المنطقة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस क्षेत्र में कोई अन्य क्रेडेंशियल उपलब्ध नहीं है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このリージョンには他の認証情報がありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 리전에 다른 자격 증명이 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此区域没有其他可用凭据。"
+          }
+        }
+      }
+    },
+    "Other S3 clients that use the old credential must be updated to the new one. The old credential is not deleted." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other S3 clients that use the old credential must be updated to the new one. The old credential is not deleted."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere S3-Clients, die die alten Zugangsdaten verwenden, müssen auf die neuen umgestellt werden. Die alten Zugangsdaten werden nicht gelöscht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los demás clientes S3 que usan la credencial anterior deben actualizarse a la nueva. La credencial anterior no se elimina."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les autres clients S3 utilisant les anciens identifiants doivent passer aux nouveaux. Les anciens identifiants ne sont pas supprimés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli altri client S3 che usano la vecchia credenziale devono passare alla nuova. La vecchia credenziale non viene eliminata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere S3-clients die de oude inloggegevens gebruiken, moeten worden bijgewerkt naar de nieuwe. De oude inloggegevens worden niet verwijderd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inne klienty S3 korzystające ze starych poświadczeń muszą przejść na nowe. Stare poświadczenia nie są usuwane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os outros clientes S3 que usam a credencial antiga têm de ser atualizados para a nova. A credencial antiga não é eliminada."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другие клиенты S3, использующие старые учетные данные, нужно перевести на новые. Старые учетные данные не удаляются."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eski kimlik bilgisini kullanan diğer S3 istemcileri yeni bilgiye güncellenmelidir. Eski kimlik bilgisi silinmez."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klien S3 lain yang menggunakan kredensial lama harus diperbarui ke yang baru. Kredensial lama tidak dihapus."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب تحديث عملاء S3 الآخرين الذين يستخدمون بيانات الاعتماد القديمة لاستخدام الجديدة. لن يتم حذف بيانات الاعتماد القديمة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पुराने क्रेडेंशियल का उपयोग करने वाले अन्य S3 क्लाइंट को नए क्रेडेंशियल पर अपडेट करना होगा। पुराना क्रेडेंशियल हटाया नहीं जाएगा।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "古い認証情報を使用する他のS3クライアントは、新しい認証情報に更新する必要があります。古い認証情報は削除されません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기존 자격 증명을 사용하는 다른 S3 클라이언트는 새 자격 증명으로 업데이트해야 합니다. 기존 자격 증명은 삭제되지 않습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用旧凭据的其他 S3 客户端必须更新为新凭据。旧凭据不会被删除。"
+          }
+        }
+      }
+    },
+    "Check again" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check again"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erneut prüfen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprobar de nuevo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier à nouveau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica di nuovo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opnieuw controleren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprawdź ponownie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificar novamente"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить снова"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekrar kontrol et"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periksa lagi"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحقق مجددا"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फिर जाँचें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再確認"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 확인"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再次检查"
+          }
+        }
+      }
+    },
+    "Change Credential..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Credential..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugangsdaten ändern..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar credencial..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changer les identifiants..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia credenziale..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggegevens wijzigen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień poświadczenia..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar credencial..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сменить учетные данные..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kimlik Bilgisini Değiştir..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubah Kredensial..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير بيانات الاعتماد..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्रेडेंशियल बदलें..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "認証情報を変更..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자격 증명 변경..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改凭据..."
+          }
+        }
+      }
+    },
+    "Use 'Change Credential...' in an active object store's details to choose an existing, usable credential from the same region. Full Access is checked again when you confirm." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use 'Change Credential...' in an active object store's details to choose an existing, usable credential from the same region. Full Access is checked again when you confirm."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle in den Details eines aktiven Object Stores 'Zugangsdaten ändern...', um vorhandene, verwendbare Zugangsdaten derselben Region auszuwählen. Beim Bestätigen wird der Vollzugriff erneut geprüft."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa 'Cambiar credencial...' en los detalles de un almacén de objetos activo para elegir una credencial existente y utilizable de la misma región. El acceso completo se comprueba de nuevo al confirmar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisez 'Changer les identifiants...' dans les détails d'un stockage objet actif pour choisir des identifiants existants et utilisables de la même région. L'accès complet est vérifié à nouveau lors de la confirmation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa 'Cambia credenziale...' nei dettagli di uno storage a oggetti attivo per scegliere una credenziale esistente e utilizzabile della stessa regione. L'accesso completo viene verificato di nuovo alla conferma."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruik 'Inloggegevens wijzigen...' in de details van een actieve objectopslag om bestaande, bruikbare inloggegevens uit dezelfde regio te kiezen. Volledige toegang wordt bij bevestiging opnieuw gecontroleerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Użyj 'Zmień poświadczenia...' w szczegółach aktywnego magazynu obiektów, aby wybrać istniejące, użyteczne poświadczenia z tego samego regionu. Pełny dostęp jest ponownie sprawdzany przy potwierdzeniu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use 'Alterar credencial...' nos detalhes de um armazenamento de objetos ativo para escolher uma credencial existente e utilizável da mesma região. O acesso completo é verificado novamente ao confirmar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите 'Сменить учетные данные...' в сведениях активного хранилища объектов, чтобы выбрать существующие и пригодные учетные данные из того же региона. При подтверждении полный доступ проверяется снова."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aynı bölgedeki mevcut ve kullanılabilir bir kimlik bilgisini seçmek için etkin nesne deposunun ayrıntılarında 'Kimlik Bilgisini Değiştir...' seçeneğini kullanın. Onayladığınızda Tam Erişim yeniden kontrol edilir."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gunakan 'Ubah Kredensial...' di detail penyimpanan objek aktif untuk memilih kredensial yang sudah ada dan dapat digunakan dari wilayah yang sama. Akses Penuh diperiksa lagi saat Anda mengonfirmasi."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدم 'تغيير بيانات الاعتماد...' في تفاصيل مخزن كائنات نشط لاختيار بيانات اعتماد موجودة وقابلة للاستخدام من المنطقة نفسها. يتم التحقق من الوصول الكامل مجددا عند التأكيد."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सक्रिय ऑब्जेक्ट स्टोर के विवरण में 'क्रेडेंशियल बदलें...' का उपयोग करके उसी क्षेत्र का मौजूदा, उपयोग योग्य क्रेडेंशियल चुनें। पुष्टि करते समय पूर्ण एक्सेस फिर जाँचा जाता है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクティブなオブジェクトストアの詳細で'認証情報を変更...'を選び、同じリージョンの既存の利用可能な認証情報を選択します。確認時にフルアクセスが再確認されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활성 오브젝트 스토어의 세부 정보에서 '자격 증명 변경...'을 사용하여 같은 리전의 기존 사용 가능한 자격 증명을 선택하세요. 확인 시 전체 액세스가 다시 검사됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在活动对象存储的详细信息中使用'更改凭据...'，选择同一区域中现有且可用的凭据。确认时将再次检查完全访问权限。"
+          }
+        }
+      }
+    },
+    "If a change cannot be confirmed, browsing and secret reveal stay blocked. 'Check again' only unlocks them after the requested assignment is observed. An old assignment keeps the warning." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If a change cannot be confirmed, browsing and secret reveal stay blocked. 'Check again' only unlocks them after the requested assignment is observed. An old assignment keeps the warning."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn ein Wechsel nicht bestätigt werden kann, bleiben Dateizugriff und Geheimnisanzeige gesperrt. 'Erneut prüfen' gibt sie erst frei, wenn die angeforderte Zuordnung vorliegt. Bei der alten Zuordnung bleibt die Warnung bestehen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si no se puede confirmar un cambio, la navegación y la visualización de secretos siguen bloqueadas. 'Comprobar de nuevo' solo las desbloquea cuando se observa la asignación solicitada. La asignación anterior mantiene la advertencia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si un changement ne peut pas être confirmé, la navigation et l'affichage du secret restent bloqués. 'Vérifier à nouveau' ne les débloque que lorsque l'attribution demandée est observée. L'ancienne attribution maintient l'avertissement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se una modifica non può essere confermata, la navigazione e la visualizzazione del segreto restano bloccate. 'Verifica di nuovo' le sblocca solo quando viene rilevata l'assegnazione richiesta. La vecchia assegnazione mantiene l'avviso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als een wijziging niet kan worden bevestigd, blijven bladeren en het tonen van de geheime sleutel geblokkeerd. 'Opnieuw controleren' heft dit pas op als de gevraagde toewijzing is waargenomen. Bij de oude toewijzing blijft de waarschuwing staan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeśli nie można potwierdzić zmiany, przeglądanie i ujawnianie sekretu pozostają zablokowane. 'Sprawdź ponownie' odblokowuje je dopiero po wykryciu żądanego przypisania. Stare przypisanie zachowuje ostrzeżenie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se não for possível confirmar uma alteração, a navegação e a revelação do segredo continuam bloqueadas. 'Verificar novamente' só as desbloqueia quando a atribuição pedida é observada. A atribuição antiga mantém o aviso."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если смена не подтверждена, просмотр файлов и показ секрета остаются заблокированы. 'Проверить снова' снимает блокировку только после обнаружения запрошенного назначения. При старом назначении предупреждение сохраняется."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklik doğrulanamazsa gezinme ve gizli anahtarı gösterme engelli kalır. 'Tekrar kontrol et' yalnızca istenen atama görüldüğünde engeli kaldırır. Eski atamada uyarı devam eder."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jika perubahan tidak dapat dikonfirmasi, penelusuran dan pengungkapan rahasia tetap diblokir. 'Periksa lagi' hanya membukanya setelah penetapan yang diminta teramati. Penetapan lama tetap menampilkan peringatan."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إذا تعذر تأكيد التغيير، يظل التصفح وإظهار السر محظورين. لا يفتحهما 'تحقق مجددا' إلا بعد رصد التعيين المطلوب. يبقى التحذير عند ظهور التعيين القديم."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यदि परिवर्तन की पुष्टि नहीं हो सके, तो ब्राउज़िंग और सीक्रेट दिखाना अवरुद्ध रहता है। 'फिर जाँचें' केवल अनुरोधित असाइनमेंट दिखाई देने पर इन्हें खोलता है। पुराने असाइनमेंट पर चेतावनी बनी रहती है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更を確認できない場合、閲覧とシークレットの表示はブロックされたままになります。'再確認'は、要求した割り当てが確認された後にのみ解除します。古い割り当てのままなら警告が続きます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경을 확인할 수 없으면 탐색과 비밀 키 표시가 계속 차단됩니다. '다시 확인'은 요청한 할당이 확인된 후에만 차단을 해제합니다. 기존 할당이면 경고가 유지됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果无法确认更改，浏览和显示密钥将保持禁用。只有观察到请求的分配后，'再次检查'才会解锁。旧分配会保留警告。"
+          }
+        }
+      }
+    },
+    "Leaving the file browser cancels its running transfers and listings. Credential changes wait until all storage work has finished." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leaving the file browser cancels its running transfers and listings. Credential changes wait until all storage work has finished."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Verlassen des Dateibrowsers werden laufende Übertragungen und Auflistungen abgebrochen. Zugangsdatenwechsel warten, bis alle Speicheroperationen beendet sind."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al salir del explorador de archivos se cancelan sus transferencias y listados en curso. Los cambios de credenciales esperan a que termine todo el trabajo de almacenamiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter le navigateur de fichiers annule ses transferts et chargements en cours. Les changements d'identifiants attendent la fin de toutes les opérations de stockage."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uscire dal browser dei file annulla i trasferimenti e gli elenchi in corso. I cambi di credenziali attendono il completamento di tutte le operazioni di storage."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij het verlaten van de bestandsbrowser worden lopende overdrachten en lijsten geannuleerd. Wijzigingen van inloggegevens wachten tot al het opslagwerk is voltooid."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opuszczenie przeglądarki plików anuluje trwające transfery i pobieranie list. Zmiana poświadczeń wymaga zakończenia wszystkich operacji magazynu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair do navegador de ficheiros cancela as transferências e listagens em curso. As alterações de credenciais aguardam o fim de todas as operações de armazenamento."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При выходе из браузера файлов текущие передачи и получение списков отменяются. Смена учетных данных ждет завершения всех операций хранилища."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dosya tarayıcısından çıkmak devam eden aktarımları ve listelemeleri iptal eder. Kimlik bilgisi değişiklikleri tüm depolama işlerinin bitmesini bekler."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meninggalkan penjelajah file membatalkan transfer dan pemuatan daftar yang berjalan. Perubahan kredensial menunggu sampai semua pekerjaan penyimpanan selesai."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تؤدي مغادرة متصفح الملفات إلى إلغاء عمليات النقل وعرض القوائم الجارية. تنتظر تغييرات بيانات الاعتماد حتى تنتهي جميع عمليات التخزين."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ाइल ब्राउज़र छोड़ने पर चल रहे ट्रांसफ़र और सूची लोडिंग रद्द हो जाते हैं। क्रेडेंशियल परिवर्तन सभी स्टोरेज कार्य समाप्त होने तक प्रतीक्षा करता है।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイルブラウザを離れると、実行中の転送と一覧取得がキャンセルされます。認証情報の変更はすべてのストレージ処理が終了するまで待機します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "파일 브라우저를 벗어나면 진행 중인 전송과 목록 불러오기가 취소됩니다. 자격 증명 변경은 모든 스토리지 작업이 끝날 때까지 기다립니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离开文件浏览器会取消正在进行的传输和列表加载。凭据更改需等待所有存储操作完成。"
+          }
+        }
+      }
+    },
+    "Changed object store credential" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changed object store credential"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zugangsdaten des Object Stores geändert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credencial del almacén de objetos cambiada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identifiants du stockage objet modifiés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credenziale dello storage a oggetti cambiata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inloggegevens van objectopslag gewijzigd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmieniono poświadczenia magazynu obiektów"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credencial do armazenamento de objetos alterada"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Учетные данные хранилища объектов изменены"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesne deposu kimlik bilgisi değiştirildi"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial penyimpanan objek diubah"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تغيير بيانات اعتماد مخزن الكائنات"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ऑब्जेक्ट स्टोर का क्रेडेंशियल बदला गया"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オブジェクトストアの認証情報を変更しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오브젝트 스토어 자격 증명 변경됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已更改对象存储凭据"
+          }
+        }
+      }
+    },
+    "Pending warnings are kept only in this window's memory and disappear when it closes or the app restarts. This does not cancel a request already sent to Civo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pending warnings are kept only in this window's memory and disappear when it closes or the app restarts. This does not cancel a request already sent to Civo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offene Warnungen bleiben nur im Speicher dieses Fensters und verschwinden beim Schließen oder beim Neustart der App. Eine bereits an Civo gesendete Anfrage wird dadurch nicht abgebrochen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las advertencias pendientes solo se guardan en la memoria de esta ventana y desaparecen al cerrarla o reiniciar la app. Esto no cancela una solicitud ya enviada a Civo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les avertissements en attente ne sont conservés que dans la mémoire de cette fenêtre et disparaissent à sa fermeture ou au redémarrage de l'app. Cela n'annule pas une demande déjà envoyée à Civo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gli avvisi in sospeso restano solo nella memoria di questa finestra e scompaiono alla chiusura o al riavvio dell'app. Questo non annulla una richiesta già inviata a Civo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Openstaande waarschuwingen blijven alleen in het geheugen van dit venster en verdwijnen wanneer het sluit of de app opnieuw start. Dit annuleert geen verzoek dat al naar Civo is verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oczekujące ostrzeżenia są przechowywane tylko w pamięci tego okna i znikają po jego zamknięciu lub ponownym uruchomieniu aplikacji. Nie anuluje to żądania już wysłanego do Civo."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os avisos pendentes ficam apenas na memória desta janela e desaparecem ao fechá-la ou reiniciar a app. Isto não cancela um pedido já enviado à Civo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неразрешенные предупреждения хранятся только в памяти этого окна и исчезают при его закрытии или перезапуске приложения. Это не отменяет запрос, уже отправленный в Civo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekleyen uyarılar yalnızca bu pencerenin belleğinde tutulur ve pencere kapatıldığında veya uygulama yeniden başlatıldığında kaybolur. Bu, Civo'ya gönderilmiş bir isteği iptal etmez."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peringatan tertunda hanya disimpan dalam memori jendela ini dan hilang saat jendela ditutup atau aplikasi dimulai ulang. Ini tidak membatalkan permintaan yang sudah dikirim ke Civo."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُحفظ التحذيرات المعلقة في ذاكرة هذه النافذة فقط وتختفي عند إغلاقها أو إعادة تشغيل التطبيق. هذا لا يلغي طلبا سبق إرساله إلى Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लंबित चेतावनियाँ केवल इस विंडो की मेमोरी में रहती हैं और इसे बंद करने या ऐप फिर शुरू करने पर हट जाती हैं। इससे Civo को पहले भेजा गया अनुरोध रद्द नहीं होता।"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未解決の警告はこのウィンドウのメモリ内だけに保持され、ウィンドウを閉じるかアプリを再起動すると消えます。これによりCivoに送信済みのリクエストがキャンセルされることはありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "대기 중인 경고는 이 창의 메모리에만 저장되며 창을 닫거나 앱을 다시 시작하면 사라집니다. 이미 Civo에 전송된 요청은 취소되지 않습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待处理的警告仅保存在此窗口的内存中，关闭窗口或重启应用后会消失。这不会取消已发送到 Civo 的请求。"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
