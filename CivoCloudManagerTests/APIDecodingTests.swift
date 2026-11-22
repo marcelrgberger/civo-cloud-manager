@@ -462,6 +462,21 @@ struct APIDecodingTests {
         let data = json.data(using: .utf8)!
         let fws = try JSONDecoder().decode([CivoFirewall].self, from: data)
         #expect(fws[0].rulesCountInt == 7)
+        #expect(fws[0].networkId == nil)
+        #expect(!fws[0].isDefault)
+    }
+
+    @Test("Decode firewall list (network_id, default as string or bool)")
+    func decodeFirewallNetworkAndDefault() throws {
+        // Fields as in the example of https://www.civo.com/api/firewall
+        let json = """
+        [{"id":"cde686be","name":"Default (all open)","rules_count":3,"default":"true","network_id":"5c16ab17"},
+         {"id":"af5f3bae","name":"test","rules_count":0,"default":"false","network_id":"5c16ab17"},
+         {"id":"b6dfca68","name":"bool","rules_count":0,"default":true}]
+        """
+        let fws = try JSONDecoder().decode([CivoFirewall].self, from: Data(json.utf8))
+        #expect(fws.map(\.networkId) == ["5c16ab17", "5c16ab17", nil])
+        #expect(fws.map(\.isDefault) == [true, false, true])
     }
 
     @Test("Decode firewall list (rules_count as int)")
@@ -1831,6 +1846,7 @@ private actor FakeInstanceAPI: InstanceAPI {
     var instancesByRegion: [String: [CivoInstance]]
     private(set) var calls: [String] = []
     private var deletionFails = false
+    private var firewallError: Error?
 
     init(instancesByRegion: [String: [CivoInstance]]) {
         self.instancesByRegion = instancesByRegion
@@ -1838,6 +1854,7 @@ private actor FakeInstanceAPI: InstanceAPI {
 
     func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
     func failDeletion() { deletionFails = true }
+    func failFirewallChange(with error: Error) { firewallError = error }
 
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance> {
         PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
@@ -1848,6 +1865,10 @@ private actor FakeInstanceAPI: InstanceAPI {
         calls.append("\(action) \(id) \(region)")
     }
     func resizeInstance(_ id: String, size: String, region: String) async throws { calls.append("resize \(id) \(region)") }
+    func setFirewall(_ id: String, firewallId: String, region: String) async throws {
+        calls.append("firewall \(id) \(firewallId) \(region)")
+        if let firewallError { throw firewallError }
+    }
 
     func removeInstance(_ id: String, region: String) async throws {
         struct DeletionFailed: Error {}
@@ -1865,10 +1886,24 @@ private final class InstanceEnvironment {
         from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "ACTIVE"}"#.utf8)
     )
 
+    /// The region's default network and a private one, as in https://www.civo.com/api/networks.
+    nonisolated static let networks = try! JSONDecoder().decode([CivoNetwork].self, from: Data("""
+    [{"id":"net-private","default":false,"label":"private"},
+     {"id":"net-default","default":true,"label":"Default"}]
+    """.utf8))
+
+    static let firewalls = try! JSONDecoder().decode([CivoFirewall].self, from: Data("""
+    [{"id":"fw-custom","name":"custom","rules_count":2,"default":"false","network_id":"net-default"},
+     {"id":"fw-default","name":"Default (all open)","rules_count":3,"default":"true","network_id":"net-default"},
+     {"id":"fw-private","name":"private","rules_count":1,"default":"true","network_id":"net-private"}]
+    """.utf8))
+
     var region = "LON1"
     var accessAllowed = true
     let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
     let center = NotificationCenter()
+    /// The firewalls Civo lists for each region.
+    var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
     private(set) var activities: [String] = []
     private(set) var vm: InstanceViewModel!
 
@@ -1878,10 +1913,16 @@ private final class InstanceEnvironment {
             credentials: store,
             api: api,
             loadSSHKeys: { [] },
+            loadFirewallOptions: { [weak self] region in
+                let firewalls = await self?.firewallsByRegion[region] ?? []
+                return InstanceFirewallOptions(region: region, firewalls: firewalls, networks: InstanceEnvironment.networks)
+            },
             settingsRegion: { [weak self] in self?.region ?? "" },
             isAccessAllowed: { [weak self] in self?.accessAllowed ?? false },
             notificationCenter: center,
-            recordActivity: { [weak self] action, _ in self?.activities.append(action) }
+            recordActivity: { [weak self] action, detail, _ in
+                self?.activities.append(detail.map { String(format: action, $0) } ?? action)
+            }
         )
     }
 
@@ -2028,6 +2069,102 @@ struct InstanceActionTargetTests {
         #expect(throws: CivoAPIError.self) {
             try CivoAPIClient.resolvedQueryItems(unknownRegion.queryItems, defaultRegion: "NYC1", regionRequired: true)
         }
+    }
+}
+
+@Suite("Instance firewall change")
+@MainActor
+struct InstanceFirewallChangeTests {
+    private static func instance(_ json: String) throws -> CivoInstance {
+        try JSONDecoder().decode(CivoInstance.self, from: Data(json.utf8))
+    }
+
+    @Test("Only firewalls of the instance's network are offered; without network_id the default network counts")
+    func offeredFirewalls() throws {
+        let options = InstanceFirewallOptions(region: "LON1", firewalls: InstanceEnvironment.firewalls, networks: InstanceEnvironment.networks)
+        #expect(options.offered(for: InstanceEnvironment.instance).map(\.id) == ["fw-default", "fw-custom"])
+
+        let privateInstance = try Self.instance(#"{"id": "i-2", "network_id": "net-private"}"#)
+        #expect(options.offered(for: privateInstance).map(\.id) == ["fw-private"])
+
+        let withoutDefaultNetwork = InstanceFirewallOptions(
+            region: "LON1",
+            firewalls: InstanceEnvironment.firewalls,
+            networks: InstanceEnvironment.networks.filter { $0.isDefault != true }
+        )
+        #expect(withoutDefaultNetwork.offered(for: InstanceEnvironment.instance).isEmpty)
+    }
+
+    @Test("The set-firewall answer is accepted as an acknowledgment or an instance object, anything else is refused")
+    func setFirewallResponse() throws {
+        let accepted = [
+            #"{"result": "success"}"#,
+            #"{"id": "779d651a", "result": "success"}"#,
+            // Shortened example response of https://www.civo.com/api/instances
+            #"{"id": "779d651a", "hostname": "test", "firewall_id": "b6dfca68", "initial_password": "foobar", "status": "ACTIVE"}"#,
+        ]
+        for json in accepted {
+            _ = try JSONDecoder().decode(InstanceFirewallChangeResponse.self, from: Data(json.utf8))
+        }
+        for json in ["{}", #"{"result": "failed"}"#, #"{"id": 42}"#, "[]"] {
+            #expect(throws: DecodingError.self, "\(json)") {
+                try JSONDecoder().decode(InstanceFirewallChangeResponse.self, from: Data(json.utf8))
+            }
+        }
+    }
+
+    @Test("The change is sent with the captured region only after confirmation and logged with the firewall name")
+    func change() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.firewall, for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction?.kind == .firewall)
+        #expect(await env.api.calls.isEmpty)
+
+        let target = try #require(env.vm.confirmPendingAction())
+        await env.vm.setFirewall("fw-custom", of: target)
+        #expect(await env.api.calls == ["firewall \(consoleInstanceId) fw-custom LON1"])
+        #expect(env.activities == ["Firewall set to custom"])
+        #expect(env.vm.error == nil)
+    }
+
+    @Test("Full Access, a deleted firewall and a firewall of another network are checked when the user confirms")
+    func confirmTimeChecks() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.firewall, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+
+        env.accessAllowed = false
+        await env.vm.setFirewall("fw-custom", of: target)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+
+        env.accessAllowed = true
+        await env.vm.setFirewall("fw-private", of: target)
+        #expect(env.vm.error == InstanceTargetError.firewallUnavailable.message)
+
+        env.firewallsByRegion["LON1"] = InstanceEnvironment.firewalls.filter { $0.id != "fw-custom" }
+        await env.vm.setFirewall("fw-custom", of: target)
+        #expect(env.vm.error == InstanceTargetError.firewallUnavailable.message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.activities.isEmpty)
+    }
+
+    @Test("An unreadable answer shows a clear error and still reloads the instance")
+    func unreadableAnswer() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+
+        let changed = try Self.instance(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "ACTIVE", "firewall_id": "fw-custom"}"#)
+        await env.api.list([changed], in: "LON1")
+        await env.api.failFirewallChange(with: CivoAPIError.decodingError("unexpected answer"))
+        await env.vm.setFirewall("fw-custom", of: target)
+
+        #expect(env.vm.selectedInstance?.firewallId == "fw-custom")
+        #expect(env.vm.error == InstanceViewModel.unreadableFirewallChangeMessage)
+        #expect(env.activities.isEmpty)
     }
 }
 

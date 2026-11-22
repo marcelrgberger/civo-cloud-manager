@@ -23,6 +23,26 @@ enum InstancePowerAction: Equatable, Sendable {
     }
 }
 
+/// Civo's answer to `PUT /v2/instances/:id/firewall`. The docs call it an acknowledgment but show an
+/// instance object (https://www.civo.com/api/instances), so both are accepted. Nothing of the instance
+/// is kept: it carries the initial password, and the caller reloads the instance anyway.
+struct InstanceFirewallChangeResponse: Decodable, Equatable {
+    private enum CodingKeys: String, CodingKey {
+        case id, result
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if let result = try c.decodeIfPresent(String.self, forKey: .result) {
+            guard result.lowercased() == "success" else {
+                throw DecodingError.dataCorruptedError(forKey: .result, in: c, debugDescription: "Unexpected result")
+            }
+        } else {
+            _ = try c.decode(String.self, forKey: .id)
+        }
+    }
+}
+
 /// Requests for one existing instance. Each takes the region the instance was listed from,
 /// never the current Settings region, so a later region change cannot redirect them.
 protocol InstanceAPI: Sendable {
@@ -30,6 +50,7 @@ protocol InstanceAPI: Sendable {
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws
     func changePower(_ action: InstancePowerAction, of id: String, region: String) async throws
     func resizeInstance(_ id: String, size: String, region: String) async throws
+    func setFirewall(_ id: String, firewallId: String, region: String) async throws
     func removeInstance(_ id: String, region: String) async throws
 }
 
@@ -59,8 +80,13 @@ final class CivoInstanceService: InstanceAPI {
         let _: CivoResult = try await api.put(path: "/instances/\(id)/resize", body: ["size": size], queryItems: Self.pinned(region))
     }
 
-    func setFirewall(_ instanceId: String, firewallId: String) async throws {
-        let _: CivoInstance = try await api.put(path: "/instances/\(instanceId)/firewall", body: ["firewall_id": firewallId])
+    /// Civo requires the region in the body as well.
+    func setFirewall(_ id: String, firewallId: String, region: String) async throws {
+        let _: InstanceFirewallChangeResponse = try await api.put(
+            path: "/instances/\(id)/firewall",
+            body: ["firewall_id": firewallId, "region": region],
+            queryItems: Self.pinned(region)
+        )
     }
 
     func removeInstance(_ id: String, region: String) async throws {

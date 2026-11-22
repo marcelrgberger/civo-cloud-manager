@@ -87740,6 +87740,1208 @@
           }
         }
       }
+    },
+    "The selected firewall is no longer in the network of this instance, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected firewall is no longer in the network of this instance, so nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die ausgewählte Firewall ist nicht mehr im Netzwerk dieser Instanz, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El firewall seleccionado ya no está en la red de esta instancia, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le pare-feu sélectionné ne se trouve plus dans le réseau de cette instance, rien n'a donc été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il firewall selezionato non è più nella rete di questa istanza, quindi non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De geselecteerde firewall staat niet meer in het netwerk van deze instantie, daarom is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybranej zapory sieciowej nie ma już w sieci tej instancji, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O firewall selecionado já não está na rede desta instância, por isso nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选防火墙已不在此实例的网络中，因此未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択したファイアウォールはこのインスタンスのネットワークにもうないため、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 방화벽이 더 이상 이 인스턴스의 네트워크에 없으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يعد جدار الحماية المحدد موجودًا في شبكة هذا المثيل، لذلك لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चुना गया फ़ायरवॉल अब इस इंस्टेंस के नेटवर्क में नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall yang dipilih tidak lagi ada di jaringan instance ini, jadi tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçilen güvenlik duvarı artık bu sunucunun ağında değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбранного брандмауэра больше нет в сети этого инстанса, поэтому ничего не отправлено."
+          }
+        }
+      }
+    },
+    "Change..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ändern..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wijzigen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बदलें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubah..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değiştir..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить..."
+          }
+        }
+      }
+    },
+    "Use another firewall of this instance's network" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use another firewall of this instance's network"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine andere Firewall aus dem Netzwerk dieser Instanz verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar otro firewall de la red de esta instancia"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utiliser un autre pare-feu du réseau de cette instance"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa un altro firewall della rete di questa istanza"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een andere firewall uit het netwerk van deze instantie gebruiken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Użyj innej zapory sieciowej z sieci tej instancji"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar outro firewall da rede desta instância"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用此实例网络中的其他防火墙"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのネットワークにある別のファイアウォールを使用"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스 네트워크의 다른 방화벽 사용"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدام جدار حماية آخر من شبكة هذا المثيل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस के नेटवर्क का कोई दूसरा फ़ायरवॉल उपयोग करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gunakan firewall lain dari jaringan instance ini"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu sunucunun ağındaki başka bir güvenlik duvarını kullan"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использовать другой брандмауэр из сети этого инстанса"
+          }
+        }
+      }
+    },
+    "Change Firewall" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Firewall"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall ändern"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar firewall"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier le pare-feu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia firewall"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall wijzigen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zmień zaporę sieciową"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alterar firewall"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改防火墙"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォールを変更"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽 변경"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير جدار الحماية"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल बदलें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubah Firewall"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik Duvarını Değiştir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сменить брандмауэр"
+          }
+        }
+      }
+    },
+    "Only firewalls in the network of this instance are listed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only firewalls in the network of this instance are listed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es werden nur Firewalls im Netzwerk dieser Instanz angezeigt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo se muestran los firewalls de la red de esta instancia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seuls les pare-feu du réseau de cette instance sont affichés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sono elencati solo i firewall nella rete di questa istanza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alleen firewalls in het netwerk van deze instantie worden weergegeven."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyświetlane są tylko zapory sieciowe z sieci tej instancji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Só são listados os firewalls da rede desta instância."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅列出此实例网络中的防火墙。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのネットワークにあるファイアウォールのみ表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스 네트워크의 방화벽만 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُعرض فقط جدران الحماية الموجودة في شبكة هذا المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "केवल इस इंस्टेंस के नेटवर्क के फ़ायरवॉल दिखाए जाते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya firewall di jaringan instance ini yang ditampilkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca bu sunucunun ağındaki güvenlik duvarları listelenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показаны только брандмауэры из сети этого инстанса."
+          }
+        }
+      }
+    },
+    "No firewall was found in the network of this instance." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No firewall was found in the network of this instance."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Netzwerk dieser Instanz wurde keine Firewall gefunden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se encontró ningún firewall en la red de esta instancia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun pare-feu n'a été trouvé dans le réseau de cette instance."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun firewall trovato nella rete di questa istanza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen firewall gevonden in het netwerk van deze instantie."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie znaleziono zapory sieciowej w sieci tej instancji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi encontrado nenhum firewall na rede desta instância."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在此实例的网络中未找到防火墙。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのネットワークにファイアウォールが見つかりませんでした。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스의 네트워크에서 방화벽을 찾을 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يُعثر على أي جدار حماية في شبكة هذا المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस के नेटवर्क में कोई फ़ायरवॉल नहीं मिला।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ada firewall yang ditemukan di jaringan instance ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu sunucunun ağında güvenlik duvarı bulunamadı."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В сети этого инстанса не найдено ни одного брандмауэра."
+          }
+        }
+      }
+    },
+    "Rules: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules: %lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regeln: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reglas: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Règles : %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regole: %lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regels: %lld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reguły: %lld"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regras: %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "规则：%lld"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ルール: %lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "규칙: %lld"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "القواعد: %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नियम: %lld"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan: %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurallar: %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правила: %lld"
+          }
+        }
+      }
+    },
+    "Switch %@ to firewall %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switch %@ to firewall %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ auf die Firewall %2$@ umstellen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cambiar %1$@ al firewall %2$@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer %1$@ au pare-feu %2$@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passare %1$@ al firewall %2$@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ overzetten naar firewall %2$@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Przełączyć %1$@ na zaporę sieciową %2$@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mudar %1$@ para o firewall %2$@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将 %1$@ 切换到防火墙 %2$@？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ をファイアウォール %2$@ に切り替えますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@을(를) 방화벽 %2$@(으)로 전환할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد تبديل %1$@ إلى جدار الحماية %2$@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ को फ़ायरवॉल %2$@ पर बदलें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alihkan %1$@ ke firewall %2$@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sunucusu %2$@ güvenlik duvarına geçirilsin mi?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переключить %1$@ на брандмауэр %2$@?"
+          }
+        }
+      }
+    },
+    "The rules of the new firewall apply right away. If they do not allow SSH or other access you rely on, that access to the instance is blocked." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The rules of the new firewall apply right away. If they do not allow SSH or other access you rely on, that access to the instance is blocked."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Regeln der neuen Firewall gelten sofort. Erlauben sie SSH oder einen anderen Zugriff, auf den du angewiesen bist, nicht, wird dieser Zugriff auf die Instanz blockiert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las reglas del nuevo firewall se aplican de inmediato. Si no permiten SSH u otro acceso del que dependes, ese acceso a la instancia queda bloqueado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les règles du nouveau pare-feu s'appliquent immédiatement. Si elles n'autorisent pas SSH ou un autre accès dont vous dépendez, cet accès à l'instance est bloqué."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le regole del nuovo firewall si applicano subito. Se non consentono SSH o un altro accesso su cui fai affidamento, quell'accesso all'istanza viene bloccato."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regels van de nieuwe firewall gelden direct. Als ze SSH of andere toegang waarop je vertrouwt niet toestaan, wordt die toegang tot de instantie geblokkeerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reguły nowej zapory sieciowej obowiązują od razu. Jeśli nie zezwalają na SSH lub inny potrzebny dostęp, ten dostęp do instancji zostanie zablokowany."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As regras do novo firewall aplicam-se de imediato. Se não permitirem SSH ou outro acesso de que depende, esse acesso à instância fica bloqueado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新防火墙的规则会立即生效。如果它们不允许 SSH 或您依赖的其他访问，对该实例的这些访问将被阻止。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいファイアウォールのルールはすぐに適用されます。SSH や必要な他のアクセスが許可されていない場合、そのインスタンスへのアクセスはブロックされます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새 방화벽의 규칙은 즉시 적용됩니다. SSH나 필요한 다른 접근을 허용하지 않으면 인스턴스에 대한 해당 접근이 차단됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُطبَّق قواعد جدار الحماية الجديد فورًا. إذا لم تسمح بـ SSH أو بوصول آخر تعتمد عليه، فسيُحظر هذا الوصول إلى المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नए फ़ायरवॉल के नियम तुरंत लागू होते हैं। अगर वे SSH या किसी दूसरी ज़रूरी पहुँच की अनुमति नहीं देते, तो इंस्टेंस तक वह पहुँच रुक जाती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aturan firewall baru langsung berlaku. Jika aturan tersebut tidak mengizinkan SSH atau akses lain yang Anda andalkan, akses itu ke instance akan diblokir."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni güvenlik duvarının kuralları hemen geçerli olur. SSH'ye veya güvendiğiniz başka bir erişime izin vermiyorsa, sunucuya bu erişim engellenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правила нового брандмауэра действуют сразу. Если они не разрешают SSH или другой нужный вам доступ, этот доступ к инстансу будет заблокирован."
+          }
+        }
+      }
+    },
+    "'Change...' next to the firewall in the Security box switches the instance to another firewall of its network. A second confirmation follows; Full Access, the region and the firewall list are checked again before anything is sent. The new rules apply right away and can block SSH or other access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Change...' next to the firewall in the Security box switches the instance to another firewall of its network. A second confirmation follows; Full Access, the region and the firewall list are checked again before anything is sent. The new rules apply right away and can block SSH or other access."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Ändern...' neben der Firewall im Bereich Sicherheit stellt die Instanz auf eine andere Firewall ihres Netzwerks um. Danach folgt eine zweite Bestätigung; Vollzugriff, Region und Firewall-Liste werden vor dem Senden erneut geprüft. Die neuen Regeln gelten sofort und können SSH oder andere Zugriffe blockieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Cambiar...' junto al firewall en el cuadro Seguridad cambia la instancia a otro firewall de su red. Después hay una segunda confirmación; el Acceso completo, la región y la lista de firewalls se comprueban de nuevo antes de enviar nada. Las nuevas reglas se aplican de inmediato y pueden bloquear SSH u otros accesos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Modifier...' à côté du pare-feu dans la zone Sécurité fait passer l'instance à un autre pare-feu de son réseau. Une seconde confirmation suit ; l'Accès complet, la région et la liste des pare-feu sont de nouveau vérifiés avant tout envoi. Les nouvelles règles s'appliquent immédiatement et peuvent bloquer SSH ou d'autres accès."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Modifica...' accanto al firewall nel riquadro Sicurezza passa l'istanza a un altro firewall della sua rete. Segue una seconda conferma; Accesso completo, regione ed elenco dei firewall vengono controllati di nuovo prima di inviare qualcosa. Le nuove regole si applicano subito e possono bloccare SSH o altri accessi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Wijzigen...' naast de firewall in het vak Beveiliging zet de instantie over naar een andere firewall van haar netwerk. Daarna volgt een tweede bevestiging; Volledige toegang, de regio en de firewalllijst worden opnieuw gecontroleerd voordat er iets wordt verzonden. De nieuwe regels gelden direct en kunnen SSH of andere toegang blokkeren."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Zmień...' obok zapory sieciowej w sekcji Bezpieczeństwo przełącza instancję na inną zaporę z jej sieci. Następuje drugie potwierdzenie; Pełny dostęp, region i lista zapór są sprawdzane ponownie, zanim cokolwiek zostanie wysłane. Nowe reguły obowiązują od razu i mogą zablokować SSH lub inny dostęp."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Alterar...' junto ao firewall na caixa Segurança muda a instância para outro firewall da sua rede. Segue-se uma segunda confirmação; o Acesso total, a região e a lista de firewalls são verificados novamente antes de qualquer envio. As novas regras aplicam-se de imediato e podem bloquear SSH ou outros acessos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全区域中防火墙旁的'更改...'可将实例切换到其网络中的另一个防火墙。随后需要再次确认；发送前会重新检查完整访问权限、区域和防火墙列表。新规则会立即生效，可能阻止 SSH 或其他访问。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "セキュリティ欄のファイアウォールの横にある'変更...'で、インスタンスを同じネットワークの別のファイアウォールに切り替えます。続いて2回目の確認があり、送信前にフルアクセス、リージョン、ファイアウォール一覧が再確認されます。新しいルールはすぐに適用され、SSH や他のアクセスをブロックする場合があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보안 상자에서 방화벽 옆의 '변경...'은 인스턴스를 해당 네트워크의 다른 방화벽으로 전환합니다. 이어서 두 번째 확인이 있으며, 전송 전에 전체 액세스, 리전, 방화벽 목록을 다시 확인합니다. 새 규칙은 즉시 적용되며 SSH 또는 다른 접근을 차단할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يبدّل 'تغيير...' بجانب جدار الحماية في قسم الأمان المثيلَ إلى جدار حماية آخر من شبكته. يلي ذلك تأكيد ثانٍ؛ ويُعاد التحقق من الوصول الكامل والمنطقة وقائمة جدران الحماية قبل إرسال أي شيء. تُطبَّق القواعد الجديدة فورًا وقد تحظر SSH أو وصولًا آخر."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सुरक्षा बॉक्स में फ़ायरवॉल के पास 'बदलें...' इंस्टेंस को उसके नेटवर्क के किसी दूसरे फ़ायरवॉल पर बदल देता है। इसके बाद दूसरी पुष्टि होती है; कुछ भी भेजने से पहले पूर्ण एक्सेस, क्षेत्र और फ़ायरवॉल सूची फिर से जाँची जाती है। नए नियम तुरंत लागू होते हैं और SSH या दूसरी पहुँच रोक सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Ubah...' di samping firewall pada kotak Keamanan mengalihkan instance ke firewall lain di jaringannya. Setelah itu ada konfirmasi kedua; Akses Penuh, region, dan daftar firewall diperiksa lagi sebelum apa pun dikirim. Aturan baru langsung berlaku dan dapat memblokir SSH atau akses lain."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik kutusunda güvenlik duvarının yanındaki 'Değiştir...' sunucuyu ağındaki başka bir güvenlik duvarına geçirir. Ardından ikinci bir onay gelir; bir şey gönderilmeden önce Tam Erişim, bölge ve güvenlik duvarı listesi yeniden kontrol edilir. Yeni kurallar hemen geçerli olur ve SSH'yi veya başka erişimleri engelleyebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Изменить...' рядом с брандмауэром в разделе Безопасность переключает инстанс на другой брандмауэр его сети. Затем следует второе подтверждение; перед отправкой снова проверяются полный доступ, регион и список брандмауэров. Новые правила действуют сразу и могут заблокировать SSH или другой доступ."
+          }
+        }
+      }
+    },
+    "Firewall set to %@" : {
+      "comment" : "Instance activity log entry after a firewall change; %@ is the firewall name",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall set to %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall auf %@ gesetzt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall cambiado a %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pare-feu défini sur %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall impostato su %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall ingesteld op %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ustawiono zaporę sieciową %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall definido como %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "防火墙已设为 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ファイアウォールを %@ に設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "방화벽을 %@(으)로 설정함"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تعيين جدار الحماية إلى %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "फ़ायरवॉल %@ पर सेट किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Firewall diatur ke %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güvenlik duvarı %@ olarak ayarlandı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Брандмауэр изменён на %@"
+          }
+        }
+      }
+    },
+    "Civo accepted the firewall change, but its answer could not be read. Check which firewall the instance uses now." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the firewall change, but its answer could not be read. Check which firewall the instance uses now."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat den Firewall-Wechsel angenommen, aber die Antwort konnte nicht gelesen werden. Prüfe, welche Firewall die Instanz jetzt verwendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó el cambio de firewall, pero no se pudo leer su respuesta. Comprueba qué firewall usa ahora la instancia."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté le changement de pare-feu, mais sa réponse n'a pas pu être lue. Vérifiez quel pare-feu l'instance utilise maintenant."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato il cambio di firewall, ma non è stato possibile leggere la risposta. Controlla quale firewall usa ora l'istanza."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de firewallwijziging geaccepteerd, maar het antwoord kon niet worden gelezen. Controleer welke firewall de instantie nu gebruikt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło zmianę zapory sieciowej, ale nie udało się odczytać odpowiedzi. Sprawdź, której zapory instancja używa teraz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou a alteração do firewall, mas não foi possível ler a resposta. Verifique que firewall a instância usa agora."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受防火墙更改，但无法读取其响应。请检查该实例现在使用的防火墙。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo はファイアウォールの変更を受け付けましたが、応答を読み取れませんでした。インスタンスが現在使用しているファイアウォールを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 방화벽 변경을 수락했지만 응답을 읽을 수 없습니다. 인스턴스가 지금 사용하는 방화벽을 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo تغيير جدار الحماية، لكن تعذّرت قراءة ردّها. تحقّق من جدار الحماية الذي يستخدمه المثيل الآن."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने फ़ायरवॉल बदलाव स्वीकार कर लिया, लेकिन उसका जवाब पढ़ा नहीं जा सका। जाँचें कि इंस्टेंस अब कौन सा फ़ायरवॉल उपयोग करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima perubahan firewall, tetapi jawabannya tidak dapat dibaca. Periksa firewall mana yang digunakan instance sekarang."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo güvenlik duvarı değişikliğini kabul etti, ancak yanıtı okunamadı. Sunucunun şimdi hangi güvenlik duvarını kullandığını kontrol edin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo принял смену брандмауэра, но его ответ не удалось прочитать. Проверьте, какой брандмауэр инстанс использует сейчас."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
