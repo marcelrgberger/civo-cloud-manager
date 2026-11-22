@@ -158,11 +158,7 @@ enum KubernetesVersionCatalog {
     /// Why `cluster` cannot be upgraded right now, nil while it can.
     static func upgradeBlocker(for cluster: CivoKubernetesCluster) -> KubernetesUpgradeError? {
         guard cluster.status.lowercased() == "active" else { return .clusterNotActive(cluster.status) }
-        // Civo's condition "Cluster is on desired version", named as in its CLI.
-        if let versionSync = cluster.conditions?.first(where: { $0.type == "ClusterVersionSync" }), !versionSync.isHealthy {
-            return .upgradeInProgress
-        }
-        return nil
+        return cluster.isUpgradeRunning ? .upgradeInProgress : nil
     }
 
     /// Sorted by version; an entry listed again in another spelling is kept once.

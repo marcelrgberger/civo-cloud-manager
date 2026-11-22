@@ -107766,6 +107766,106 @@
           }
         }
       }
+    },
+    "The cluster is not on its desired version yet, so no node is replaced. Wait until the upgrade has finished, then try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster is not on its desired version yet, so no node is replaced. Wait until the upgrade has finished, then try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Cluster ist noch nicht auf seiner Zielversion, daher wird kein Knoten ersetzt. Warten Sie, bis das Upgrade abgeschlossen ist, und versuchen Sie es dann erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El clúster aún no está en su versión deseada, así que no se reemplaza ningún nodo. Espere a que finalice la actualización y vuelva a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le cluster n'est pas encore à sa version cible, aucun nœud n'est donc remplacé. Attendez la fin de la mise à niveau, puis réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cluster non è ancora alla versione desiderata, quindi nessun nodo viene sostituito. Attendi il termine dell'aggiornamento, poi riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het cluster heeft zijn gewenste versie nog niet bereikt, daarom wordt er geen node vervangen. Wacht tot de upgrade is voltooid en probeer het dan opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster nie ma jeszcze docelowej wersji, więc żaden węzeł nie zostanie wymieniony. Poczekaj na zakończenie aktualizacji i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O cluster ainda não está na versão pretendida, por isso nenhum nó é substituído. Aguarde até que a atualização termine e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群尚未处于目标版本，因此不会替换任何节点。请等待升级完成后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタはまだ目的のバージョンになっていません。そのためノードは置き換えられません。アップグレードが完了するまで待ってから、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터가 아직 원하는 버전이 아니므로 노드를 교체하지 않습니다. 업그레이드가 완료될 때까지 기다린 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنقود ليس على إصداره المطلوب بعد، لذلك لن تُستبدل أي عقدة. انتظر حتى تكتمل الترقية، ثم حاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर अभी अपने वांछित संस्करण पर नहीं है, इसलिए कोई नोड नहीं बदला जाएगा। अपग्रेड पूरा होने तक प्रतीक्षा करें, फिर दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster belum berada pada versi yang diinginkan, jadi tidak ada node yang diganti. Tunggu hingga peningkatan selesai, lalu coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme henüz hedef sürümünde değil, bu nedenle hiçbir düğüm değiştirilmez. Yükseltme tamamlanana kadar bekleyin, ardından tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер ещё не на целевой версии, поэтому узел не заменяется. Дождитесь завершения обновления и повторите попытку."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

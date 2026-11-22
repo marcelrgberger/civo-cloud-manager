@@ -20,6 +20,7 @@ enum KubernetesNodeRecycleError: Error, Equatable {
     case accountChanged
     case clusterRemoved
     case clusterBusy(String)
+    case upgradeInProgress
     case nodeRemoved(String)
     case nodeAmbiguous(String)
     case nodeMoved(String)
@@ -40,6 +41,8 @@ enum KubernetesNodeRecycleError: Error, Equatable {
             String(localized: "The cluster no longer exists, so nothing was sent.")
         case .clusterBusy(let status):
             String(localized: "The cluster is busy (status \(status)), so no node is replaced. Wait until it is active, then try again.")
+        case .upgradeInProgress:
+            String(localized: "The cluster is not on its desired version yet, so no node is replaced. Wait until the upgrade has finished, then try again.")
         case .nodeRemoved(let hostname):
             String(localized: "The node \"\(hostname)\" is no longer part of the cluster, so nothing was sent.")
         case .nodeAmbiguous(let hostname):
@@ -72,6 +75,7 @@ enum KubernetesNodeIdentity {
 
     /// Why no node of `cluster` can be replaced right now, nil while it can.
     static func busyStatus(of cluster: CivoKubernetesCluster) -> KubernetesNodeRecycleError? {
-        cluster.status.lowercased() == "active" ? nil : .clusterBusy(cluster.status)
+        guard cluster.status.lowercased() == "active" else { return .clusterBusy(cluster.status) }
+        return cluster.isUpgradeRunning ? .upgradeInProgress : nil
     }
 }

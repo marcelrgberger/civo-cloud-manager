@@ -47,6 +47,13 @@ struct CivoKubernetesCluster: Codable, Identifiable, Sendable {
     }
 }
 
+extension CivoKubernetesCluster {
+    /// Whether Civo reports the cluster as not yet on its desired version. The condition is named as in Civo's CLI.
+    var isUpgradeRunning: Bool {
+        conditions?.first(where: { $0.type == "ClusterVersionSync" }).map { !$0.isHealthy } ?? false
+    }
+}
+
 
 struct CivoNodePool: Codable, Identifiable, Sendable {
     let id: String

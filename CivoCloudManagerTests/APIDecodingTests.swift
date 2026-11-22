@@ -3959,12 +3959,15 @@ struct KubernetesUpgradeTests {
 }
 
 /// A cluster whose pools list `pools`, keyed by pool id, as Civo's `instance_names`.
-private func kubernetesCluster(status: String = "ACTIVE", pools: KeyValuePairs<String, [String]>) -> CivoKubernetesCluster {
+private func kubernetesCluster(status: String = "ACTIVE", pools: KeyValuePairs<String, [String]>, extra: String = "") -> CivoKubernetesCluster {
     let entries = pools.map { id, names in
         #"{"id": "\#(id)", "instance_names": [\#(names.map { "\"\($0)\"" }.joined(separator: ", "))]}"#
     }
-    return kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": [\#(entries.joined(separator: ", "))]"#)
+    return kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": [\#(entries.joined(separator: ", "))]"# + extra)
 }
+
+/// Civo's condition while a cluster is not yet on its desired version.
+private let versionSyncPending = #", "conditions": [{"type": "ClusterVersionSync", "status": "False"}]"#
 
 private actor FakeKubernetesNodeRecycleAPI: KubernetesNodeRecycleAPI {
     var cluster = kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"], "pool-b": ["node-3"]])
@@ -4080,11 +4083,12 @@ struct KubernetesNodeRecycleTests {
         #expect(await env.recycleCalls.count == 1)
     }
 
-    @Test("A node that is gone, listed twice or moved, or a busy cluster, when the user confirms sends nothing", arguments: [
+    @Test("A node that is gone, listed twice or moved, or a busy or still upgrading cluster, when the user confirms sends nothing", arguments: [
         (kubernetesCluster(pools: ["pool-a": ["node-1"], "pool-b": ["node-3"]]), KubernetesNodeRecycleError.nodeRemoved("node-2")),
         (kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"], "pool-b": ["node-2"]]), .nodeAmbiguous("node-2")),
         (kubernetesCluster(pools: ["pool-a": ["node-1"], "pool-b": ["node-2"]]), .nodeMoved("node-2")),
         (kubernetesCluster(status: "SCALING", pools: ["pool-a": ["node-1", "node-2"]]), .clusterBusy("SCALING")),
+        (kubernetesCluster(pools: ["pool-a": ["node-1", "node-2"]], extra: versionSyncPending), .upgradeInProgress),
     ])
     func staleTarget(reloaded: CivoKubernetesCluster, problem: KubernetesNodeRecycleError) async {
         let env = Environment()
@@ -4096,7 +4100,7 @@ struct KubernetesNodeRecycleTests {
         #expect(env.notice == problem.message)
     }
 
-    @Test("Revoked Full Access, a region change while the cluster is loaded again, a changed key or a busy cluster sends nothing")
+    @Test("Revoked Full Access, a region change while the cluster is loaded again, a changed key, a busy or a still upgrading cluster sends nothing")
     func targetChecks() async {
         let revoked = Environment()
         await revoked.begin()
@@ -4129,6 +4133,12 @@ struct KubernetesNodeRecycleTests {
         #expect(busy.controller.request == nil)
         #expect(busy.notice == KubernetesNodeRecycleError.clusterBusy("UPGRADING").message)
         #expect(await busy.api.calls.isEmpty)
+
+        let upgrading = Environment()
+        await upgrading.begin(in: kubernetesCluster(pools: ["pool-a": ["node-2"]], extra: versionSyncPending))
+        #expect(upgrading.controller.request == nil)
+        #expect(upgrading.notice == KubernetesNodeRecycleError.upgradeInProgress.message)
+        #expect(await upgrading.api.calls.isEmpty)
     }
 
     @Test("A refusal keeps the sheet open with Civo's reason; a timeout, also an HTTP 408, is reported as unknown and not sent again; a removed cluster sends nothing")
