@@ -281,7 +281,7 @@ final class InstanceViewModel {
         }
     }
 
-    /// Not localized, like the other instance entries in the activity log.
+    /// Stored in English; the activity log translates it when shown.
     private static func activity(for action: InstancePowerAction) -> String {
         switch action {
         case .start: "Started"

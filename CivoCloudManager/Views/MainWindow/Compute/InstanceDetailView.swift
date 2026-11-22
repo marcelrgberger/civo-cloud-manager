@@ -272,7 +272,7 @@ struct InstanceDetailView: View {
                                 .foregroundStyle(.secondary)
                                 .font(.caption)
                                 .frame(width: 16)
-                            Text(entry.action)
+                            Text(entry.localizedAction)
                                 .font(.caption)
                             Spacer()
                             Text(entry.timeAgo)
