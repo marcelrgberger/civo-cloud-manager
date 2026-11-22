@@ -12,7 +12,7 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | --- | --- |
 | Menu bar | Open/close access for the current public IP, per-firewall ports, bulk actions, named IP presets, timed access, refresh every 60 seconds |
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
-| Compute | Create/delete instances, start/stop, soft and hard reboot (each confirmed first), resize, firewall change within the instance network (confirmed first), reverse DNS, tag editing (removing all tags is confirmed first) and a tag filter on the instance list, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
+| Compute | Create/delete instances (with count, public IP, initial user, reverse DNS and startup script; several at once only after a cost confirmation), start/stop, soft and hard reboot (each confirmed first), resize, firewall change within the instance network (confirmed first), reverse DNS, tag editing (removing all tags is confirmed first) and a tag filter on the instance list, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
 | Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
 | Networking | Networks, firewall rules, load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |
@@ -365,6 +365,20 @@ classDiagram
 
 The network picker preselects the network that `GET /v2/networks` flags as `default` and always sends its ID as `network_id`, as the official Go client does (`civogo` `NewInstanceConfig` via `GetDefaultNetwork`). If no network is flagged as default, the user has to pick one. The firewall picker lists only firewalls whose `network_id` matches the selected network, and changing the network clears the chosen firewall. Leaving the firewall on Default omits `firewall_id`; in the default network Civo then uses the default firewall. API errors such as an exceeded quota are shown in the form.
 
+Tags are split at commas, trimmed and deduplicated, then sent space-separated; a tag containing a space disables Create, because Civo would split it. The collapsible **Advanced** section adds the remaining documented options. Enterprise-only parameters (`allowed_ips`, `network_bandwidth_limit`, `private_ipv4`) are not offered.
+
+| Option | Parameter | Sent |
+|---|---|---|
+| Number of instances | `count` | Only above 1 |
+| Public IP address (on by default) | `public_ip` | Always, `create` or `none` |
+| Initial user | `initial_user` | Trimmed, left out when empty (Civo then uses the disk image's default user) |
+| Reverse DNS | `reverse_dns` | Follows the hostname until edited, left out when cleared (Civo then uses the hostname) |
+| Startup script | `script` | As written, in a monospaced editor without smart quotes or dashes; left out when blank |
+
+The region is still taken from Settings. The stepper's upper bound comes from `GET /v2/quota`, loaded with the form data: `InstanceBulkCreation.maximumCount` takes the smallest of the free instances, free CPU cores, RAM and disk divided by the size's needs, and free public IPs when one is created, but at least 1: a used-up quota shows a hint, and Civo refuses the request itself. If the quota cannot be loaded, only one instance can be created at a time. The view model checks the count and Full Access again right before sending. A count above 1 opens a confirmation, and confirming sends exactly the form it was opened for, with the estimated total cost per hour, the count times the size's rate from the editable hourly rates (`instance-<size>`). Public IP pricing is not documented, so the estimate leaves it out and says so; an unknown rate is stated instead of a cost.
+
+The create answer is decoded into `InstanceCreationResponse`, which accepts one instance or a list (the docs show no answer for `count` above 1) and keeps only whether Civo set an `initial_password`, never the password. In that case the instance list shows a notice that the password is on the instance's detail page under Security, behind Touch ID or the system password. If Civo answers with success but the answer cannot be read, the sheet closes, the list is reloaded and the user is told to check it before creating again. A script that is too large or otherwise refused shows Civo's error in the form. Without a public IP address the detail view shows no SSH command, as for an instance still waiting for its IP.
+
 ## Instance action targets
 
 Every instance action (stop, start, soft reboot, hard reboot, resize, reverse DNS, delete, console and credentials) starts from a `ConsoleTarget` captured by `InstanceViewModel.consoleTarget(for:)`: the instance ID with the region the instance list was fetched from. Requests send that region explicitly, so a later Settings region never redirects them. Right before each request, `targetError(for:)` checks the target again and refuses it without sending anything when Full Access has ended, the region is unknown, the Settings region or the loaded list region no longer matches, or the instance is missing from the reloaded list. The reason is shown in the error banner.
@@ -580,7 +594,7 @@ Incomplete lists show an orange notice in the instance, cluster, database and ob
 
 ## Validation
 
-The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field, the Create Instance required fields, default network and firewall filter, and complete pagination. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
+The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field, the Create Instance required fields, default network and firewall filter, the advanced create options, quota limit, bulk cost confirmation and create answer, and complete pagination. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests

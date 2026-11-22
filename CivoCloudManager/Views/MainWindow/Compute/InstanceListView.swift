@@ -96,6 +96,7 @@ struct InstanceListView: View {
         .safeAreaInset(edge: .top) {
             VStack(spacing: 0) {
                 if let error = vm.error { ErrorBanner(message: error) }
+                if let notice = vm.creationNotice { NoticeBanner(message: notice) { vm.creationNotice = nil } }
                 if vm.instanceCompleteness.mayBeMissingItems { IncompleteListBanner() }
                 if !vm.instances.isEmpty { tagFilterField }
             }

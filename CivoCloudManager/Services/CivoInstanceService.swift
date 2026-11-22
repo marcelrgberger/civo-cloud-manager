@@ -43,6 +43,40 @@ struct InstanceFirewallChangeResponse: Decodable, Equatable {
     }
 }
 
+/// Civo's answer to `POST /v2/instances`. The docs show one instance object; for `count` above 1 they show
+/// no answer, so a list of instances is accepted as well. Only whether Civo set an initial password is kept,
+/// never the password itself: the instance's detail page shows it after authentication.
+struct InstanceCreationResponse: Decodable, Equatable {
+    let setsInitialPassword: Bool
+
+    private struct CreatedInstance: Decodable {
+        let setsInitialPassword: Bool
+
+        private enum CodingKeys: String, CodingKey {
+            case id
+            case initialPassword = "initial_password"
+        }
+
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            _ = try c.decode(String.self, forKey: .id)
+            setsInitialPassword = try c.decodeIfPresent(String.self, forKey: .initialPassword)?.isEmpty == false
+        }
+    }
+
+    init(from decoder: Decoder) throws {
+        if var list = try? decoder.unkeyedContainer() {
+            var setsInitialPassword = false
+            while !list.isAtEnd {
+                setsInitialPassword = try list.decode(CreatedInstance.self).setsInitialPassword || setsInitialPassword
+            }
+            self.setsInitialPassword = setsInitialPassword
+        } else {
+            setsInitialPassword = try CreatedInstance(from: decoder).setsInitialPassword
+        }
+    }
+}
+
 /// Requests for one existing instance. Each takes the region the instance was listed from,
 /// never the current Settings region, so a later region change cannot redirect them.
 protocol InstanceAPI: Sendable {
@@ -64,7 +98,7 @@ final class CivoInstanceService: InstanceAPI {
         return try await api.getPaginatedList(path: "/instances", queryItems: queryItems)
     }
 
-    func createInstance(_ body: [String: Any]) async throws -> CivoInstance {
+    func createInstance(_ body: [String: Any]) async throws -> InstanceCreationResponse {
         try await api.post(path: "/instances", body: body)
     }
 

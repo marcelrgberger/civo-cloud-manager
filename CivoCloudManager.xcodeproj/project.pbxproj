@@ -64,6 +64,7 @@
 		5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */; };
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
 		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
+		FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */; };
 		A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F7DC7779832C4095638A6 /* InstanceTags.swift */; };
 		5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */; };
 		C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */; };
@@ -211,6 +212,7 @@
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
 		A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCreationForm.swift; sourceTree = "<group>"; };
+		DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceBulkCreation.swift; sourceTree = "<group>"; };
 		838F7DC7779832C4095638A6 /* InstanceTags.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTags.swift; sourceTree = "<group>"; };
 		23455AFA03C51527C20C9FD9 /* ObjectStoreDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreDetailView.swift; sourceTree = "<group>"; };
 		23D1F2CA91D34560B712C7E9 /* CivoSizeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSizeService.swift; sourceTree = "<group>"; };
@@ -720,6 +722,7 @@
 				837D1AE2173B4355ACCED79B /* HelmRelease.swift */,
 				3AF890BB389705BC2A4C42E1 /* IPPreset.swift */,
 				A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */,
+				DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */,
 				838F7DC7779832C4095638A6 /* InstanceTags.swift */,
 				E4E32B8C0292ABE978042F2F /* K8sConfig.swift */,
 				E65306F70453D10A71A4761E /* K8sEvent.swift */,
@@ -927,6 +930,7 @@
 				5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */,
 				5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */,
 				78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */,
+				FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */,
 				A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */,
 				7EF19B51E1ED62E56F211D5F /* HelmRelease.swift in Sources */,
 				58E4FC5F2AD63FF75334D043 /* IPPreset.swift in Sources */,

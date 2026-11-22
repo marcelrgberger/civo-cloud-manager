@@ -90749,6 +90749,2006 @@
           }
         }
       }
+    },
+    "Advanced" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweitert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzate"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geavanceerd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaawansowane"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avançado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高级"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細設定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "고급"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متقدم"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "उन्नत"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lanjutan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelişmiş"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительно"
+          }
+        }
+      }
+    },
+    "Number of instances: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number of instances: %lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anzahl der Instanzen: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de instancias: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre d'instances : %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numero di istanze: %lld"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aantal instanties: %lld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liczba instancji: %lld"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Número de instâncias: %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例数量：%lld"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンス数: %lld"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 수: %lld"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المثيلات: %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस की संख्या: %lld"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jumlah instance: %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu sayısı: %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Количество экземпляров: %lld"
+          }
+        }
+      }
+    },
+    "The quota could not be loaded, so only one instance can be created at a time." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The quota could not be loaded, so only one instance can be created at a time."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Kontingent konnte nicht geladen werden, daher kann jeweils nur eine Instanz erstellt werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo cargar la cuota, por lo que solo se puede crear una instancia a la vez."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le quota n'a pas pu être chargé, une seule instance peut donc être créée à la fois."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato possibile caricare la quota, quindi si può creare una sola istanza alla volta."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het quotum kon niet worden geladen, daarom kan er maar één instantie tegelijk worden aangemaakt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się wczytać limitu, dlatego można utworzyć tylko jedną instancję naraz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar a quota, por isso só pode ser criada uma instância de cada vez."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载配额，因此一次只能创建一个实例。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クォータを読み込めなかったため、一度に作成できるインスタンスは 1 つだけです。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "할당량을 불러올 수 없어 한 번에 하나의 인스턴스만 생성할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر تحميل الحصة، لذا يمكن إنشاء مثيل واحد فقط في كل مرة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कोटा लोड नहीं हो सका, इसलिए एक बार में केवल एक इंस्टेंस बनाया जा सकता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuota tidak dapat dimuat, jadi hanya satu instance yang dapat dibuat sekaligus."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kota yüklenemedi, bu nedenle aynı anda yalnızca bir sunucu oluşturulabilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить квоту, поэтому за раз можно создать только один экземпляр."
+          }
+        }
+      }
+    },
+    "The remaining quota allows up to %lld instances of this size." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The remaining quota allows up to %lld instances of this size."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das verbleibende Kontingent erlaubt bis zu %lld Instanzen dieser Größe."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La cuota restante permite hasta %lld instancias de este tamaño."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le quota restant permet jusqu'à %lld instances de cette taille."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La quota rimanente consente fino a %lld istanze di questa dimensione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resterende quotum staat maximaal %lld instanties van deze grootte toe."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozostały limit pozwala na maksymalnie %lld instancji tego rozmiaru."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A quota restante permite até %lld instâncias deste tamanho."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "剩余配额最多允许 %lld 个此规格的实例。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "残りのクォータでは、このサイズのインスタンスを最大 %lld 個作成できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "남은 할당량으로 이 크기의 인스턴스를 최대 %lld개까지 만들 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسمح الحصة المتبقية بما يصل إلى %lld مثيلات بهذا الحجم."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "शेष कोटा इस आकार के अधिकतम %lld इंस्टेंस की अनुमति देता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuota yang tersisa mengizinkan hingga %lld instance dengan ukuran ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalan kota bu boyutta en fazla %lld sunucuya izin veriyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оставшаяся квота позволяет создать до %lld экземпляров этого размера."
+          }
+        }
+      }
+    },
+    "Public IP address" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public IP address"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffentliche IP-Adresse"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirección IP pública"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresse IP publique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indirizzo IP pubblico"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Openbaar IP-adres"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publiczny adres IP"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endereço IP público"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公网 IP 地址"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パブリック IP アドレス"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공인 IP 주소"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان IP عام"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सार्वजनिक IP पता"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alamat IP publik"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genel IP adresi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Публичный IP-адрес"
+          }
+        }
+      }
+    },
+    "Without a public IP address, the instance is reachable only inside its network, and the detail view shows no SSH command." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without a public IP address, the instance is reachable only inside its network, and the detail view shows no SSH command."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohne öffentliche IP-Adresse ist die Instanz nur innerhalb ihres Netzwerks erreichbar, und die Detailansicht zeigt keinen SSH-Befehl."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin dirección IP pública, la instancia solo es accesible dentro de su red y la vista de detalles no muestra ningún comando SSH."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans adresse IP publique, l'instance n'est joignable qu'à l'intérieur de son réseau, et la vue détaillée n'affiche aucune commande SSH."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza indirizzo IP pubblico, l'istanza è raggiungibile solo all'interno della sua rete e la vista dettagli non mostra alcun comando SSH."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zonder openbaar IP-adres is de instantie alleen binnen haar netwerk bereikbaar en toont de detailweergave geen SSH-opdracht."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez publicznego adresu IP instancja jest dostępna tylko w swojej sieci, a widok szczegółów nie pokazuje polecenia SSH."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem endereço IP público, a instância só é acessível dentro da sua rede e a vista de detalhes não mostra nenhum comando SSH."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有公网 IP 地址时，实例只能在其网络内访问，详情视图也不会显示 SSH 命令。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パブリック IP アドレスがない場合、インスタンスはそのネットワーク内からのみ到達でき、詳細ビューに SSH コマンドは表示されません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "공인 IP 주소가 없으면 인스턴스는 해당 네트워크 안에서만 접근할 수 있으며, 상세 보기에 SSH 명령이 표시되지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بدون عنوان IP عام، لا يمكن الوصول إلى المثيل إلا داخل شبكته، ولا يعرض عرض التفاصيل أي أمر SSH."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सार्वजनिक IP पते के बिना इंस्टेंस केवल अपने नेटवर्क के भीतर पहुंच योग्य है, और विवरण दृश्य में कोई SSH कमांड नहीं दिखती।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanpa alamat IP publik, instance hanya dapat dijangkau di dalam jaringannya, dan tampilan detail tidak menampilkan perintah SSH."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genel IP adresi olmadan sunucuya yalnızca kendi ağı içinden erişilebilir ve ayrıntı görünümü SSH komutu göstermez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Без публичного IP-адреса экземпляр доступен только внутри своей сети, а в подробном представлении нет команды SSH."
+          }
+        }
+      }
+    },
+    "Default user of the disk image" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default user of the disk image"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standardbenutzer des Disk-Images"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuario predeterminado de la imagen de disco"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisateur par défaut de l'image disque"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utente predefinito dell'immagine disco"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standaardgebruiker van de schijfkopie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domyślny użytkownik obrazu dysku"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizador predefinido da imagem de disco"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘映像的默认用户"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ディスクイメージのデフォルトユーザー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "디스크 이미지의 기본 사용자"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المستخدم الافتراضي لصورة القرص"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "डिस्क इमेज का डिफ़ॉल्ट यूज़र"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pengguna bawaan image disk"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disk imajının varsayılan kullanıcısı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользователь образа диска по умолчанию"
+          }
+        }
+      }
+    },
+    "Startup Script" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Startup Script"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Startskript"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Script de inicio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Script de démarrage"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Script di avvio"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opstartscript"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skrypt startowy"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Script de arranque"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动脚本"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "起動スクリプト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시작 스크립트"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نص بدء التشغيل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्टार्टअप स्क्रिप्ट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skrip startup"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlangıç betiği"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрипт запуска"
+          }
+        }
+      }
+    },
+    "Civo runs the script as root at the end of the first boot." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo runs the script as root at the end of the first boot."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo führt das Skript am Ende des ersten Starts als root aus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ejecuta el script como root al final del primer arranque."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo exécute le script en tant que root à la fin du premier démarrage."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo esegue lo script come root alla fine del primo avvio."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo voert het script als root uit aan het einde van de eerste opstart."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo uruchamia skrypt jako root na końcu pierwszego uruchomienia."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo executa o script como root no final do primeiro arranque."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 会在首次启动结束时以 root 身份运行该脚本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo は初回起動の最後にこのスクリプトを root として実行します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo는 첫 부팅이 끝날 때 스크립트를 root로 실행합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تشغّل Civo النص بصلاحيات root في نهاية التشغيل الأول."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo पहले बूट के अंत में स्क्रिप्ट को root के रूप में चलाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menjalankan skrip sebagai root di akhir boot pertama."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo betiği ilk açılışın sonunda root olarak çalıştırır."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo запускает скрипт от имени root в конце первой загрузки."
+          }
+        }
+      }
+    },
+    "Create %lld Instances" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create %lld Instances"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Instanzen erstellen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear %lld instancias"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer %lld instances"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea %lld istanze"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld instanties aanmaken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utwórz instancje (%lld)"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar %lld instâncias"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建 %lld 个实例"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 個のインスタンスを作成"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 %lld개 생성"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إنشاء %lld مثيلات"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld इंस्टेंस बनाएं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buat %lld instance"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sunucu oluştur"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать экземпляры (%lld)"
+          }
+        }
+      }
+    },
+    "Create %lld instances?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create %lld instances?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Instanzen erstellen?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Crear %lld instancias?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer %lld instances ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creare %lld istanze?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld instanties aanmaken?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utworzyć instancje (%lld)?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar %lld instâncias?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建 %lld 个实例？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 個のインスタンスを作成しますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 %lld개를 생성할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد إنشاء %lld مثيلات؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld इंस्टेंस बनाएं?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buat %lld instance?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sunucu oluşturulsun mu?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать экземпляры (%lld)?"
+          }
+        }
+      }
+    },
+    "%lld instances of size %@ will be created. No hourly rate is known for this size, so no cost can be estimated." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld instances of size %@ will be created. No hourly rate is known for this size, so no cost can be estimated."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es werden %1$lld Instanzen der Größe %2$@ erstellt. Für diese Größe ist kein Stundensatz bekannt, daher können keine Kosten geschätzt werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se crearán %1$lld instancias del tamaño %2$@. No se conoce ninguna tarifa por hora para este tamaño, por lo que no se puede estimar el coste."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld instances de taille %2$@ seront créées. Aucun tarif horaire n'est connu pour cette taille, le coût ne peut donc pas être estimé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verranno create %1$lld istanze di dimensione %2$@. Per questa dimensione non è nota alcuna tariffa oraria, quindi il costo non può essere stimato."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er worden %1$lld instanties van grootte %2$@ aangemaakt. Voor deze grootte is geen uurtarief bekend, daarom kunnen de kosten niet worden geschat."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zostanie utworzonych instancji rozmiaru %2$@: %1$lld. Dla tego rozmiaru nie jest znana stawka godzinowa, więc nie można oszacować kosztu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serão criadas %1$lld instâncias do tamanho %2$@. Não é conhecida nenhuma tarifa por hora para este tamanho, por isso não é possível estimar o custo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将创建 %1$lld 个规格为 %2$@ 的实例。此规格没有已知的小时费率，因此无法估算费用。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サイズ %2$@ のインスタンスを %1$lld 個作成します。このサイズの時間単価が不明なため、費用を見積もれません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "크기가 %2$@인 인스턴스 %1$lld개가 생성됩니다. 이 크기의 시간당 요금을 알 수 없어 비용을 추정할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم إنشاء %1$lld مثيلات بالحجم %2$@. لا يُعرف سعر بالساعة لهذا الحجم، لذا لا يمكن تقدير التكلفة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आकार %2$@ के %1$lld इंस्टेंस बनाए जाएंगे। इस आकार के लिए कोई प्रति घंटा दर ज्ञात नहीं है, इसलिए लागत का अनुमान नहीं लगाया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld instance dengan ukuran %2$@ akan dibuat. Tidak ada tarif per jam yang diketahui untuk ukuran ini, jadi biaya tidak dapat diperkirakan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ boyutunda %1$lld sunucu oluşturulacak. Bu boyut için bilinen bir saatlik ücret yok, bu nedenle maliyet tahmin edilemiyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будет создано экземпляров размера %2$@: %1$lld. Почасовая ставка для этого размера неизвестна, поэтому стоимость оценить нельзя."
+          }
+        }
+      }
+    },
+    "%lld instances of size %@ will be created, at an estimated %@ per hour in total. Public IP addresses are not included in this estimate." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld instances of size %@ will be created, at an estimated %@ per hour in total. Public IP addresses are not included in this estimate."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es werden %1$lld Instanzen der Größe %2$@ erstellt, geschätzt insgesamt %3$@ pro Stunde. Öffentliche IP-Adressen sind in dieser Schätzung nicht enthalten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se crearán %1$lld instancias del tamaño %2$@, con un coste estimado total de %3$@ por hora. Las direcciones IP públicas no están incluidas en esta estimación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld instances de taille %2$@ seront créées, pour un coût estimé de %3$@ par heure au total. Les adresses IP publiques ne sont pas incluses dans cette estimation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verranno create %1$lld istanze di dimensione %2$@, con un costo stimato totale di %3$@ all'ora. Gli indirizzi IP pubblici non sono inclusi in questa stima."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er worden %1$lld instanties van grootte %2$@ aangemaakt, naar schatting %3$@ per uur in totaal. Openbare IP-adressen zijn niet in deze schatting opgenomen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zostanie utworzonych instancji rozmiaru %2$@: %1$lld, za szacunkowo %3$@ za godzinę łącznie. Publiczne adresy IP nie są uwzględnione w tym szacunku."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serão criadas %1$lld instâncias do tamanho %2$@, com um custo estimado total de %3$@ por hora. Os endereços IP públicos não estão incluídos nesta estimativa."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将创建 %1$lld 个规格为 %2$@ 的实例，预计总费用为每小时 %3$@。此估算不包括公网 IP 地址。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サイズ %2$@ のインスタンスを %1$lld 個作成します。見積もり費用は合計で 1 時間あたり %3$@ です。パブリック IP アドレスはこの見積もりに含まれません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "크기가 %2$@인 인스턴스 %1$lld개가 생성되며, 예상 비용은 시간당 총 %3$@입니다. 공인 IP 주소는 이 추정에 포함되지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم إنشاء %1$lld مثيلات بالحجم %2$@، بتكلفة تقديرية إجمالية قدرها %3$@ في الساعة. عناوين IP العامة غير مشمولة في هذا التقدير."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आकार %2$@ के %1$lld इंस्टेंस बनाए जाएंगे, अनुमानित कुल लागत %3$@ प्रति घंटा। सार्वजनिक IP पते इस अनुमान में शामिल नहीं हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld instance dengan ukuran %2$@ akan dibuat, dengan perkiraan total %3$@ per jam. Alamat IP publik tidak termasuk dalam perkiraan ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$@ boyutunda %1$lld sunucu oluşturulacak, tahmini toplam maliyet saatte %3$@. Genel IP adresleri bu tahmine dahil değildir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будет создано экземпляров размера %2$@: %1$lld, ориентировочно %3$@ в час в сумме. Публичные IP-адреса в эту оценку не входят."
+          }
+        }
+      }
+    },
+    "The remaining quota does not allow this many instances. Lower the count." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The remaining quota does not allow this many instances. Lower the count."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das verbleibende Kontingent erlaubt nicht so viele Instanzen. Verringere die Anzahl."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La cuota restante no permite tantas instancias. Reduce el número."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le quota restant ne permet pas autant d'instances. Réduisez le nombre."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La quota rimanente non consente così tante istanze. Riduci il numero."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resterende quotum staat niet zoveel instanties toe. Verlaag het aantal."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozostały limit nie pozwala na tyle instancji. Zmniejsz liczbę."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A quota restante não permite tantas instâncias. Reduza o número."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "剩余配额不允许创建这么多实例。请减少数量。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "残りのクォータではこの数のインスタンスを作成できません。数を減らしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "남은 할당량으로는 이만큼의 인스턴스를 만들 수 없습니다. 수를 줄이세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تسمح الحصة المتبقية بهذا العدد من المثيلات. قلّل العدد."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "शेष कोटा इतने इंस्टेंस की अनुमति नहीं देता। संख्या कम करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuota yang tersisa tidak mengizinkan sebanyak ini instance. Kurangi jumlahnya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalan kota bu kadar sunucuya izin vermiyor. Sayıyı azaltın."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оставшаяся квота не позволяет создать столько экземпляров. Уменьшите количество."
+          }
+        }
+      }
+    },
+    "Civo accepted the request, but its answer could not be read. Check the instance list before creating again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the request, but its answer could not be read. Check the instance list before creating again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat die Anfrage angenommen, aber die Antwort konnte nicht gelesen werden. Prüfe die Instanzliste, bevor du erneut erstellst."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó la solicitud, pero no se pudo leer su respuesta. Revisa la lista de instancias antes de volver a crear."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté la demande, mais sa réponse n'a pas pu être lue. Vérifiez la liste des instances avant de recréer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato la richiesta, ma non è stato possibile leggere la risposta. Controlla l'elenco delle istanze prima di creare di nuovo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft het verzoek geaccepteerd, maar het antwoord kon niet worden gelezen. Controleer de lijst met instanties voordat je opnieuw aanmaakt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło żądanie, ale nie udało się odczytać odpowiedzi. Sprawdź listę instancji, zanim utworzysz je ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou o pedido, mas não foi possível ler a resposta. Verifique a lista de instâncias antes de criar novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受请求，但无法读取其响应。再次创建前请先检查实例列表。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo はリクエストを受け付けましたが、応答を読み取れませんでした。再度作成する前にインスタンス一覧を確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 요청을 수락했지만 응답을 읽을 수 없습니다. 다시 생성하기 전에 인스턴스 목록을 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo الطلب، لكن تعذّرت قراءة ردها. تحقّق من قائمة المثيلات قبل الإنشاء مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने अनुरोध स्वीकार कर लिया, लेकिन उसका उत्तर पढ़ा नहीं जा सका। फिर से बनाने से पहले इंस्टेंस सूची जांचें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima permintaan, tetapi jawabannya tidak dapat dibaca. Periksa daftar instance sebelum membuat lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo isteği kabul etti, ancak yanıtı okunamadı. Yeniden oluşturmadan önce sunucu listesini kontrol edin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo принял запрос, но его ответ не удалось прочитать. Проверьте список экземпляров, прежде чем создавать снова."
+          }
+        }
+      }
+    },
+    "No SSH key was chosen, so Civo set an initial password. Open the instance: its detail page shows the password under Security after Touch ID or your system password." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No SSH key was chosen, so Civo set an initial password. Open the instance: its detail page shows the password under Security after Touch ID or your system password."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es wurde kein SSH-Schlüssel gewählt, daher hat Civo ein Anfangspasswort gesetzt. Öffne die Instanz: Ihre Detailseite zeigt das Passwort unter Sicherheit nach Touch ID oder deinem Systempasswort."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se eligió ninguna clave SSH, así que Civo estableció una contraseña inicial. Abre la instancia: su página de detalles muestra la contraseña en Seguridad tras Touch ID o la contraseña del sistema."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune clé SSH n'a été choisie, Civo a donc défini un mot de passe initial. Ouvrez l'instance : sa page de détails affiche le mot de passe sous Sécurité après Touch ID ou votre mot de passe système."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stata scelta alcuna chiave SSH, quindi Civo ha impostato una password iniziale. Apri l'istanza: la sua pagina dei dettagli mostra la password in Sicurezza dopo Touch ID o la password di sistema."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is geen SSH-sleutel gekozen, daarom heeft Civo een initieel wachtwoord ingesteld. Open de instantie: de detailpagina toont het wachtwoord onder Beveiliging na Touch ID of je systeemwachtwoord."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie wybrano klucza SSH, więc Civo ustawiło hasło początkowe. Otwórz instancję: jej strona szczegółów pokazuje hasło w sekcji Bezpieczeństwo po Touch ID lub haśle systemowym."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi escolhida nenhuma chave SSH, por isso a Civo definiu uma palavra-passe inicial. Abra a instância: a sua página de detalhes mostra a palavra-passe em Segurança após Touch ID ou a palavra-passe do sistema."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未选择 SSH 密钥，因此 Civo 设置了初始密码。打开该实例：通过 Touch ID 或系统密码验证后，其详情页面会在安全部分显示该密码。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH キーが選択されなかったため、Civo が初期パスワードを設定しました。インスタンスを開くと、Touch ID またはシステムパスワードの認証後に詳細ページのセキュリティ欄にパスワードが表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH 키를 선택하지 않아 Civo가 초기 암호를 설정했습니다. 인스턴스를 여세요. Touch ID 또는 시스템 암호로 인증하면 상세 페이지의 보안 항목에 암호가 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم اختيار مفتاح SSH، لذا عيّنت Civo كلمة مرور أولية. افتح المثيل: تعرض صفحة التفاصيل كلمة المرور ضمن الأمان بعد Touch ID أو كلمة مرور النظام."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कोई SSH कुंजी नहीं चुनी गई, इसलिए Civo ने एक प्रारंभिक पासवर्ड सेट किया। इंस्टेंस खोलें: Touch ID या सिस्टम पासवर्ड के बाद उसका विवरण पेज सुरक्षा के अंतर्गत पासवर्ड दिखाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ada kunci SSH yang dipilih, jadi Civo menetapkan kata sandi awal. Buka instance: halaman detailnya menampilkan kata sandi di bagian Keamanan setelah Touch ID atau kata sandi sistem."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH anahtarı seçilmedi, bu nedenle Civo bir ilk parola belirledi. Sunucuyu açın: ayrıntı sayfası, Touch ID ya da sistem parolasından sonra parolayı Güvenlik altında gösterir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH-ключ не выбран, поэтому Civo задал начальный пароль. Откройте экземпляр: на его странице сведений пароль показан в разделе Безопасность после Touch ID или системного пароля."
+          }
+        }
+      }
+    },
+    "Advanced in Create Instance sets the number of instances (limited by the remaining quota), whether a public IP address is created, the initial user, the reverse DNS (prefilled with the hostname) and a startup script in a monospaced editor." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced in Create Instance sets the number of instances (limited by the remaining quota), whether a public IP address is created, the initial user, the reverse DNS (prefilled with the hostname) and a startup script in a monospaced editor."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweitert in Instanz erstellen legt die Anzahl der Instanzen (begrenzt durch das verbleibende Kontingent), die Vergabe einer öffentlichen IP-Adresse, den Anfangsbenutzer, das Reverse DNS (mit dem Hostnamen vorausgefüllt) und ein Startskript in einem Editor mit fester Zeichenbreite fest."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzado en Crear instancia define el número de instancias (limitado por la cuota restante), si se crea una dirección IP pública, el usuario inicial, el DNS inverso (rellenado con el nombre de host) y un script de inicio en un editor monoespaciado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancé dans Créer une instance définit le nombre d'instances (limité par le quota restant), la création d'une adresse IP publique, l'utilisateur initial, le DNS inversé (prérempli avec le nom d'hôte) et un script de démarrage dans un éditeur à chasse fixe."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzate in Crea istanza imposta il numero di istanze (limitato dalla quota rimanente), se creare un indirizzo IP pubblico, l'utente iniziale, il DNS inverso (precompilato con il nome host) e uno script di avvio in un editor a spaziatura fissa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geavanceerd in Instantie aanmaken stelt het aantal instanties in (beperkt door het resterende quotum), of er een openbaar IP-adres wordt aangemaakt, de initiële gebruiker, de reverse DNS (vooraf ingevuld met de hostnaam) en een opstartscript in een editor met vaste tekenbreedte."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaawansowane w Utwórz instancję ustawia liczbę instancji (ograniczoną pozostałym limitem), utworzenie publicznego adresu IP, użytkownika początkowego, reverse DNS (wstępnie wypełniony nazwą hosta) oraz skrypt startowy w edytorze o stałej szerokości znaków."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avançado em Criar instância define o número de instâncias (limitado pela quota restante), se é criado um endereço IP público, o utilizador inicial, o DNS reverso (preenchido com o nome do anfitrião) e um script de arranque num editor monoespaçado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建实例中的高级选项可设置实例数量（受剩余配额限制）、是否创建公网 IP 地址、初始用户、反向 DNS（预填主机名）以及在等宽编辑器中编写的启动脚本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスを作成の詳細設定では、インスタンス数（残りのクォータで制限）、パブリック IP アドレスを作成するかどうか、初期ユーザー、リバースDNS（ホスト名で事前入力）、等幅エディタでの起動スクリプトを設定できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 생성의 고급에서는 인스턴스 수(남은 할당량으로 제한), 공인 IP 주소 생성 여부, 초기 사용자, 역방향 DNS(호스트 이름으로 미리 채움), 고정폭 편집기의 시작 스크립트를 설정합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يحدد قسم متقدم في إنشاء مثيل عدد المثيلات (محدود بالحصة المتبقية)، وإنشاء عنوان IP عام أم لا، والمستخدم الأولي، وعكس DNS (معبأ مسبقًا باسم المضيف)، ونص بدء تشغيل في محرر بخط ثابت العرض."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस बनाएं में उन्नत से इंस्टेंस की संख्या (शेष कोटा तक सीमित), सार्वजनिक IP पता बनाना है या नहीं, प्रारंभिक यूज़र, रिवर्स DNS (होस्टनेम से पहले से भरा) और मोनोस्पेस्ड एडिटर में स्टार्टअप स्क्रिप्ट सेट होती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lanjutan di Buat Instance mengatur jumlah instance (dibatasi oleh kuota yang tersisa), apakah alamat IP publik dibuat, pengguna awal, reverse DNS (terisi dengan nama host) dan skrip startup dalam editor monospace."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu Oluştur içindeki Gelişmiş bölümü sunucu sayısını (kalan kotayla sınırlı), genel IP adresi oluşturulup oluşturulmayacağını, ilk kullanıcıyı, ters DNS'i (ana bilgisayar adıyla önceden doldurulur) ve eş aralıklı bir düzenleyicide başlangıç betiğini ayarlar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Раздел Дополнительно в окне Создать экземпляр задаёт количество экземпляров (в пределах оставшейся квоты), создание публичного IP-адреса, начального пользователя, обратный DNS (заполнен именем хоста) и скрипт запуска в моноширинном редакторе."
+          }
+        }
+      }
+    },
+    "Creating more than one instance asks for confirmation first and shows the estimated total cost per hour from your hourly rates. Public IP addresses are not included in the estimate." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creating more than one instance asks for confirmation first and shows the estimated total cost per hour from your hourly rates. Public IP addresses are not included in the estimate."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Erstellen mehrerer Instanzen fragt die App zuerst nach einer Bestätigung und zeigt die geschätzten Gesamtkosten pro Stunde aus deinen Stundensätzen. Öffentliche IP-Adressen sind in der Schätzung nicht enthalten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear más de una instancia pide confirmación primero y muestra el coste total estimado por hora según tus tarifas por hora. Las direcciones IP públicas no están incluidas en la estimación."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La création de plusieurs instances demande d'abord une confirmation et affiche le coût total estimé par heure selon vos tarifs horaires. Les adresses IP publiques ne sont pas incluses dans l'estimation."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La creazione di più istanze chiede prima una conferma e mostra il costo totale stimato all'ora in base alle tue tariffe orarie. Gli indirizzi IP pubblici non sono inclusi nella stima."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bij het aanmaken van meer dan één instantie wordt eerst om bevestiging gevraagd en worden de geschatte totale kosten per uur volgens je uurtarieven getoond. Openbare IP-adressen zijn niet in de schatting opgenomen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tworzenie więcej niż jednej instancji wymaga najpierw potwierdzenia i pokazuje szacunkowy łączny koszt za godzinę według Twoich stawek godzinowych. Publiczne adresy IP nie są uwzględnione w szacunku."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar mais do que uma instância pede primeiro confirmação e mostra o custo total estimado por hora com base nas suas tarifas por hora. Os endereços IP públicos não estão incluídos na estimativa."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建多个实例时会先请求确认，并根据你的小时费率显示预计的每小时总费用。此估算不包括公网 IP 地址。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複数のインスタンスを作成する場合は、まず確認を求め、時間単価に基づく 1 時間あたりの見積もり合計費用を表示します。パブリック IP アドレスは見積もりに含まれません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스를 두 개 이상 생성하면 먼저 확인을 요청하고 시간당 요금을 바탕으로 예상 시간당 총비용을 표시합니다. 공인 IP 주소는 추정에 포함되지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يطلب إنشاء أكثر من مثيل تأكيدًا أولًا ويعرض التكلفة الإجمالية التقديرية في الساعة وفق أسعارك بالساعة. عناوين IP العامة غير مشمولة في التقدير."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक से अधिक इंस्टेंस बनाने पर पहले पुष्टि मांगी जाती है और आपकी प्रति घंटा दरों से अनुमानित कुल प्रति घंटा लागत दिखाई जाती है। सार्वजनिक IP पते अनुमान में शामिल नहीं हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Membuat lebih dari satu instance meminta konfirmasi terlebih dahulu dan menampilkan perkiraan total biaya per jam dari tarif per jam Anda. Alamat IP publik tidak termasuk dalam perkiraan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birden fazla sunucu oluşturmak önce onay ister ve saatlik ücretlerinize göre tahmini toplam saatlik maliyeti gösterir. Genel IP adresleri tahmine dahil değildir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При создании нескольких экземпляров сначала запрашивается подтверждение и показывается ориентировочная общая стоимость в час по вашим почасовым ставкам. Публичные IP-адреса в оценку не входят."
+          }
+        }
+      }
+    },
+    "Without an SSH key, Civo sets an initial password. After creation, a notice says where to find it: on the instance's detail page under Security, after Touch ID or your system password. The notice never contains the password." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without an SSH key, Civo sets an initial password. After creation, a notice says where to find it: on the instance's detail page under Security, after Touch ID or your system password. The notice never contains the password."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohne SSH-Schlüssel setzt Civo ein Anfangspasswort. Nach dem Erstellen sagt ein Hinweis, wo du es findest: auf der Detailseite der Instanz unter Sicherheit, nach Touch ID oder deinem Systempasswort. Der Hinweis enthält das Passwort nie."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin clave SSH, Civo establece una contraseña inicial. Tras la creación, un aviso indica dónde encontrarla: en la página de detalles de la instancia, en Seguridad, tras Touch ID o la contraseña del sistema. El aviso nunca contiene la contraseña."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sans clé SSH, Civo définit un mot de passe initial. Après la création, un avis indique où le trouver : sur la page de détails de l'instance, sous Sécurité, après Touch ID ou votre mot de passe système. L'avis ne contient jamais le mot de passe."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza chiave SSH, Civo imposta una password iniziale. Dopo la creazione, un avviso indica dove trovarla: nella pagina dei dettagli dell'istanza, in Sicurezza, dopo Touch ID o la password di sistema. L'avviso non contiene mai la password."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zonder SSH-sleutel stelt Civo een initieel wachtwoord in. Na het aanmaken vertelt een melding waar je het vindt: op de detailpagina van de instantie onder Beveiliging, na Touch ID of je systeemwachtwoord. De melding bevat nooit het wachtwoord."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bez klucza SSH Civo ustawia hasło początkowe. Po utworzeniu komunikat informuje, gdzie je znaleźć: na stronie szczegółów instancji w sekcji Bezpieczeństwo, po Touch ID lub haśle systemowym. Komunikat nigdy nie zawiera hasła."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem chave SSH, a Civo define uma palavra-passe inicial. Após a criação, um aviso indica onde a encontrar: na página de detalhes da instância, em Segurança, após Touch ID ou a palavra-passe do sistema. O aviso nunca contém a palavra-passe."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未使用 SSH 密钥时，Civo 会设置初始密码。创建后，一条提示会告诉你在哪里找到它：在实例详情页面的安全部分，通过 Touch ID 或系统密码验证后查看。提示中从不包含密码。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH キーがない場合、Civo は初期パスワードを設定します。作成後、その場所を案内する通知が表示されます。インスタンスの詳細ページのセキュリティ欄で、Touch ID またはシステムパスワードの認証後に確認できます。通知にパスワードが含まれることはありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH 키가 없으면 Civo가 초기 암호를 설정합니다. 생성 후 암호를 찾을 위치를 알려 주는 알림이 표시됩니다. Touch ID 또는 시스템 암호로 인증한 후 인스턴스 상세 페이지의 보안 항목에서 확인할 수 있습니다. 알림에는 암호가 포함되지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بدون مفتاح SSH، تعيّن Civo كلمة مرور أولية. بعد الإنشاء، يوضح إشعار مكان العثور عليها: في صفحة تفاصيل المثيل ضمن الأمان، بعد Touch ID أو كلمة مرور النظام. لا يحتوي الإشعار على كلمة المرور أبدًا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH कुंजी के बिना Civo एक प्रारंभिक पासवर्ड सेट करता है। बनाने के बाद एक सूचना बताती है कि उसे कहां पाएं: इंस्टेंस के विवरण पेज पर सुरक्षा के अंतर्गत, Touch ID या सिस्टम पासवर्ड के बाद। सूचना में पासवर्ड कभी नहीं होता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanpa kunci SSH, Civo menetapkan kata sandi awal. Setelah dibuat, sebuah pemberitahuan menunjukkan tempat menemukannya: di halaman detail instance di bagian Keamanan, setelah Touch ID atau kata sandi sistem. Pemberitahuan tidak pernah berisi kata sandi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SSH anahtarı olmadan Civo bir ilk parola belirler. Oluşturduktan sonra bir bildirim parolanın nerede olduğunu söyler: sunucunun ayrıntı sayfasında Güvenlik altında, Touch ID ya da sistem parolasından sonra. Bildirim parolayı asla içermez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Без SSH-ключа Civo задаёт начальный пароль. После создания уведомление сообщает, где его найти: на странице сведений экземпляра в разделе Безопасность, после Touch ID или системного пароля. Уведомление никогда не содержит пароль."
+          }
+        }
+      }
+    },
+    "The remaining quota is used up for this size. Civo refuses instances beyond the quota." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The remaining quota is used up for this size. Civo refuses instances beyond the quota."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das verbleibende Kontingent ist für diese Größe aufgebraucht. Civo lehnt Instanzen über das Kontingent hinaus ab."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La cuota restante está agotada para este tamaño. Civo rechaza las instancias que superan la cuota."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le quota restant est épuisé pour cette taille. Civo refuse les instances au-delà du quota."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La quota rimanente è esaurita per questa dimensione. Civo rifiuta le istanze oltre la quota."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resterende quotum is voor deze grootte opgebruikt. Civo weigert instanties boven het quotum."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozostały limit dla tego rozmiaru jest wyczerpany. Civo odrzuca instancje ponad limit."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A quota restante está esgotada para este tamanho. A Civo recusa instâncias acima da quota."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此规格的剩余配额已用完。Civo 会拒绝超出配额的实例。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このサイズの残りのクォータは使い切られています。Civo はクォータを超えるインスタンスを拒否します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 크기의 남은 할당량을 모두 사용했습니다. Civo는 할당량을 초과하는 인스턴스를 거부합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحصة المتبقية مستنفدة لهذا الحجم. ترفض Civo المثيلات التي تتجاوز الحصة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस आकार के लिए शेष कोटा समाप्त हो गया है। Civo कोटा से अधिक इंस्टेंस अस्वीकार करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuota yang tersisa untuk ukuran ini sudah habis. Civo menolak instance yang melebihi kuota."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu boyut için kalan kota tükendi. Civo kotayı aşan sunucuları reddeder."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Оставшаяся квота для этого размера исчерпана. Civo отклоняет экземпляры сверх квоты."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
