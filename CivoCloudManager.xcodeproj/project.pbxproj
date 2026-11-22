@@ -63,6 +63,7 @@
 		58E4FC5F2AD63FF75334D043 /* IPPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF890BB389705BC2A4C42E1 /* IPPreset.swift */; };
 		5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */; };
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
+		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
 		5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */; };
 		5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 88320D84F47B5B7234DED63F /* PrivacyPolicy.md */; };
 		613988765DB18F19D7936F26 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */; };
@@ -205,6 +206,7 @@
 		1FDC2D559CDF199ED3540F04 /* CivoDatabase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
+		A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCreationForm.swift; sourceTree = "<group>"; };
 		23455AFA03C51527C20C9FD9 /* ObjectStoreDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreDetailView.swift; sourceTree = "<group>"; };
 		23D1F2CA91D34560B712C7E9 /* CivoSizeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSizeService.swift; sourceTree = "<group>"; };
 		24636777C50BBB3191CDEE29 /* CivoCharge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoCharge.swift; sourceTree = "<group>"; };
@@ -709,6 +711,7 @@
 				229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */,
 				837D1AE2173B4355ACCED79B /* HelmRelease.swift */,
 				3AF890BB389705BC2A4C42E1 /* IPPreset.swift */,
+				A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */,
 				E4E32B8C0292ABE978042F2F /* K8sConfig.swift */,
 				E65306F70453D10A71A4761E /* K8sEvent.swift */,
 				6573B0CCE355C008B097BE98 /* K8sMetrics.swift */,
@@ -911,6 +914,7 @@
 				907441463543C41FE777296C /* CivoSize.swift in Sources */,
 				5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */,
 				5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */,
+				78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */,
 				7EF19B51E1ED62E56F211D5F /* HelmRelease.swift in Sources */,
 				58E4FC5F2AD63FF75334D043 /* IPPreset.swift in Sources */,
 				3CC8C0AFDCF2C9EAC2987D2E /* K8sConfig.swift in Sources */,

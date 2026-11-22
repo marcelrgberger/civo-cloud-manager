@@ -98,7 +98,8 @@ final class InstanceViewModel {
         }
     }
 
-    func createInstance(_ body: sending [String: Any]) async -> Bool {
+    func createInstance(_ form: InstanceCreationForm) async -> Bool {
+        guard let body = form.requestBody() else { return false }
         isSaving = true
         saveError = nil
         defer { isSaving = false }
