@@ -4825,3 +4825,357 @@ struct KubernetesNodePoolTests {
         #expect(await lost.sentPools.count == 1)
     }
 }
+
+// MARK: - Kubernetes marketplace
+
+private func marketplaceEntries(_ json: String) throws -> [RawMarketplaceEntry] {
+    try JSONDecoder().decode([RawMarketplaceEntry].self, from: Data(json.utf8))
+}
+
+private func marketplaceApplication(_ name: String, version: String? = "1.0", description: String? = "An app", plans: [String] = []) -> CivoMarketplaceApplication {
+    CivoMarketplaceApplication(
+        id: MarketplaceIdentity.key(name), name: name, title: nil, version: version, isDefault: false,
+        dependencies: [], description: description, category: nil, plans: plans, availability: .selectable
+    )
+}
+
+private let marketplaceLondon = MarketplaceContext(account: CivoAccount(apiKey: "key-a"), region: "LON1")
+
+@Suite("Kubernetes marketplace")
+struct KubernetesMarketplaceTests {
+    @Test("Choices serialize to Civo's comma separated list with spaces inside names and plans, one entry per application")
+    func serialization() throws {
+        var selection = MarketplaceSelection()
+        #expect(try selection.serialized() == nil)
+
+        selection.choose(marketplaceApplication("Linkerd", plans: ["Linkerd & Jaeger"]), plan: "Linkerd & Jaeger", context: marketplaceLondon)
+        selection.choose(marketplaceApplication("MariaDB", plans: ["5GB", "10GB"]), plan: "10GB", context: marketplaceLondon)
+        selection.choose(marketplaceApplication("Rancher Desktop"), plan: nil, context: marketplaceLondon)
+        selection.choose(marketplaceApplication("MariaDB", plans: ["5GB", "10GB"]), plan: "5GB", context: marketplaceLondon)
+        #expect(try selection.serialized() == "Linkerd:Linkerd & Jaeger,MariaDB:5GB,Rancher Desktop")
+
+        // Civo documents application names as case-sensitive.
+        selection.choose(marketplaceApplication("mariadb"), plan: nil, context: marketplaceLondon)
+        #expect(try selection.serialized() == "Linkerd:Linkerd & Jaeger,MariaDB:5GB,Rancher Desktop,mariadb")
+
+        for name in ["Linkerd", "MariaDB", "Rancher Desktop", "mariadb"] {
+            selection.remove(MarketplaceIdentity.key(name))
+        }
+        #expect(try selection.serialized() == nil)
+    }
+
+    @Test("A name or plan that would split the list, name a plan or remove an application is never sent")
+    func unsafeEntries() {
+        for (name, plan) in [("a,b", nil), ("a:b", nil), ("-traefik2-nodeport", nil), (" ", nil), ("ok", "5GB,10GB"), ("ok", "x:y"), ("ok", "-x"), ("ok", "")] as [(String, String?)] {
+            var selection = MarketplaceSelection()
+            selection.choose(marketplaceApplication(name, plans: plan.map { [$0] } ?? []), plan: plan, context: marketplaceLondon)
+            #expect(throws: MarketplaceSelectionError.self, "\(name) \(plan ?? "")") { try selection.serialized() }
+        }
+    }
+
+    @Test("Civo's list is read entry by entry: unusable entries are skipped or reduced and counted, the rest stays usable")
+    func catalogDecoding() throws {
+        let entries = try marketplaceEntries(#"""
+        [
+          {"name": "Longhorn", "title": null, "version": "1.0.2", "default": null, "dependencies": [], "maintainer": "x", "description": "Distributed block storage", "post_install": "SYNTHETIC-SECRET", "url": "u", "category": "storage", "image_url": "i", "plans": null},
+          {"name": "MariaDB", "title": "MariaDB", "version": "10.4", "default": true, "dependencies": ["Longhorn"], "description": "Database", "category": "database",
+           "plans": [{"label": "5GB", "configuration": {"VOLUME_SIZE": {"value": "5Gi"}}}, {"label": " "}, {"label": "1,2"}, {"label": "5GB"}, 7]},
+          {"title": "No name"},
+          {"name": "   "},
+          {"name": "Odd", "description": 42, "plans": "5GB"},
+          "not an object",
+          {"name": "OnlyBadPlans", "plans": [{"label": "a:b"}]}
+        ]
+        """#)
+        let catalog = try MarketplaceCatalog(validating: entries)
+
+        #expect(catalog.applications.map(\.name) == ["Longhorn", "MariaDB", "Odd", "OnlyBadPlans"])
+        let mariaDB = try #require(catalog.application(withID: "MariaDB"))
+        #expect(mariaDB.plans == ["5GB"])
+        #expect(mariaDB.isDefault && mariaDB.dependencies == ["Longhorn"] && mariaDB.availability == .selectable)
+        #expect(catalog.application(withID: "Longhorn")?.availability == .selectable)
+        #expect(catalog.application(withID: "Odd")?.description == nil)
+        #expect(catalog.application(withID: "Odd")?.availability == .unsupported)
+        #expect(catalog.application(withID: "OnlyBadPlans")?.availability == .unsupported)
+        // Three without a usable name, MariaDB lost plans, Odd and OnlyBadPlans cannot be selected.
+        #expect(catalog.unusableEntryCount == 6)
+        #expect(!catalog.isComplete)
+        #expect(catalog.search("STÖRAGE").map(\.name) == ["Longhorn"])
+
+        #expect(throws: MarketplaceCatalogError.noApplications) { try MarketplaceCatalog(validating: try marketplaceEntries(#"[{"name": ""}, 1]"#)) }
+        #expect(throws: DecodingError.self) { try marketplaceEntries(#"{"items": []}"#) }
+    }
+
+    @Test("Identical duplicates collapse to one row; differing duplicates are listed once and cannot be chosen, in any order")
+    func duplicates() throws {
+        let catalog = try MarketplaceCatalog(validating: try marketplaceEntries(#"""
+        [
+          {"name": "cert-manager", "version": "1.0", "description": "Certificates"},
+          {"name": "cert-manager ", "version": "1.0", "description": "Certificates"},
+          {"name": "Cert-Manager", "version": "1.0", "description": "Certificates"},
+          {"name": "bitwarden", "version": "1.0", "description": "First text"},
+          {"name": "bitwarden", "version": "1.0", "description": "Second text"},
+          {"name": "gitlab", "plans": [{"label": "Community"}, {"label": "Enterprise"}]},
+          {"name": "gitlab", "plans": [{"label": "Enterprise"}, {"label": "Community"}]},
+          {"name": "argo", "dependencies": ["a"]},
+          {"name": "argo", "dependencies": ["b"]}
+        ]
+        """#))
+        #expect(catalog.applications.map(\.id) == ["cert-manager", "Cert-Manager", "bitwarden", "gitlab", "argo"])
+        #expect(catalog.application(withID: "cert-manager")?.availability == .selectable)
+        #expect(catalog.application(withID: "gitlab")?.availability == .selectable)
+        #expect(catalog.application(withID: "bitwarden")?.availability == .listedMoreThanOnce)
+        #expect(catalog.application(withID: "argo")?.availability == .listedMoreThanOnce)
+        #expect(catalog.unusableEntryCount == 4)
+
+        for unreadableFirst in [true, false] {
+            let entries = [#"{"name": "A"}"#, #"{"name": "A", "plans": "5GB"}"#]
+            let ordered = unreadableFirst ? entries.reversed() : entries
+            let mixed = try MarketplaceCatalog(validating: try marketplaceEntries("[\(ordered.joined(separator: ","))]"))
+            #expect(mixed.application(withID: "A")?.availability == .listedMoreThanOnce)
+        }
+
+        var state = MarketplaceCreateState()
+        state.catalogLoaded(catalog, in: marketplaceLondon, at: .now)
+        state.choose(try #require(catalog.application(withID: "bitwarden")), plan: nil)
+        state.choose(try #require(catalog.application(withID: "gitlab")), plan: nil)
+        #expect(state.selection.isEmpty)
+    }
+
+    @Test("Create sends the reviewed choices as one string, or nothing, and only under the account and region they were chosen in")
+    func createApplications() throws {
+        var state = MarketplaceCreateState()
+        #expect(state.canSubmit)
+        #expect(try state.applicationsField(in: marketplaceLondon) == nil)
+
+        let catalog = try MarketplaceCatalog(validating: try marketplaceEntries(#"[{"name": "Longhorn", "version": "1"}, {"name": "MariaDB", "version": "1", "plans": [{"label": "5GB"}]}]"#))
+        state.catalogLoaded(catalog, in: marketplaceLondon, at: .now)
+        state.choose(try #require(catalog.application(withID: "Longhorn")), plan: nil)
+        state.choose(try #require(catalog.application(withID: "MariaDB")), plan: "5GB")
+        #expect(try state.applicationsField(in: marketplaceLondon) == "Longhorn,MariaDB:5GB")
+
+        let frankfurt = MarketplaceContext(account: CivoAccount(apiKey: "key-a"), region: "FRA1")
+        let otherAccount = MarketplaceContext(account: CivoAccount(apiKey: "key-b"), region: "LON1")
+        #expect(throws: MarketplaceSelectionError.contextChanged) { try state.applicationsField(in: frankfurt) }
+        #expect(throws: MarketplaceSelectionError.contextChanged) { try state.applicationsField(in: otherAccount) }
+    }
+
+    @Test("A reload that changes a chosen application blocks Create until it is removed or accepted; a failed reload keeps what was reviewed")
+    func selectionInvalidation() throws {
+        let first = try MarketplaceCatalog(validating: try marketplaceEntries(#"""
+        [{"name": "A", "version": "1"}, {"name": "B", "version": "1", "plans": [{"label": "5GB"}]}, {"name": "C", "version": "1"}, {"name": "D", "version": "1"}, {"name": "E", "dependencies": ["x"]}]
+        """#))
+        var state = MarketplaceCreateState()
+        state.catalogLoaded(first, in: marketplaceLondon, at: Date(timeIntervalSince1970: 0))
+        for (id, plan) in [("A", nil), ("B", "5GB"), ("C", nil), ("D", nil), ("E", nil)] as [(String, String?)] {
+            state.choose(try #require(first.application(withID: id)), plan: plan)
+        }
+
+        state.catalogFailed("offline")
+        #expect(state.catalog == first && state.selection.choices.count == 5 && state.canSubmit)
+        #expect(state.loadedAt == Date(timeIntervalSince1970: 0) && state.loadError == "offline")
+
+        let second = try MarketplaceCatalog(validating: try marketplaceEntries(#"""
+        [{"name": "B", "version": "1", "plans": [{"label": "10GB"}]}, {"name": "C", "version": "2"}, {"name": "D", "version": "1"}, {"name": "E", "dependencies": ["x", "y"]}]
+        """#))
+        state.catalogLoaded(second, in: marketplaceLondon, at: .now)
+        #expect(state.issues == ["A": .noLongerOffered, "B": .planNoLongerOffered, "C": .detailsChanged, "E": .detailsChanged])
+        #expect(!state.canSubmit)
+        #expect(throws: MarketplaceSelectionError.needsReview) { try state.applicationsField(in: marketplaceLondon) }
+
+        for id in ["A", "B", "C", "E"] { state.acceptAgain(id) }
+        #expect(state.issues == ["A": .noLongerOffered, "B": .planNoLongerOffered])
+        state.remove("A")
+        state.remove("B")
+        #expect(try state.applicationsField(in: marketplaceLondon) == "C,D,E")
+
+        let frankfurt = MarketplaceContext(account: CivoAccount(apiKey: "key-a"), region: "FRA1")
+        state.catalogLoaded(second, in: frankfurt, at: .now)
+        #expect(state.issues == ["C": .contextChanged, "D": .contextChanged, "E": .contextChanged])
+        for id in ["C", "D", "E"] { state.acceptAgain(id) }
+        #expect(try state.applicationsField(in: frankfurt) == "C,D,E")
+    }
+
+    @Test("Installed applications show what Civo reports, never more")
+    func installedState() throws {
+        let cluster = kubernetesCluster(version: "1.30.0-k3s1", extra: #"""
+        , "installed_applications": [
+          {"application": "cert-manager", "name": "cert-manager", "installed": true, "plan": "", "configuration": {"PASSWORD": {"value": "SYNTHETIC"}}},
+          {"name": "MariaDB", "installed": false, "plan": "5GB"},
+          {"name": "Longhorn"},
+          {"name": "Odd", "installed": "yes"}
+        ]
+        """#)
+        let apps = try #require(cluster.installedApplications)
+        #expect(apps.map(\.state) == [.installed, .installing, .listed, .listed])
+        #expect(apps.map(\.planLabel) == [nil, "5GB", nil, nil])
+    }
+
+    @Test("Errors show a fixed text or Civo's short plain reason, never the rest of the answer")
+    func safeErrors() {
+        let marker = "SYNTHETIC-PASSWORD-123"
+        let leaking: [CivoAPIError] = [
+            .httpError(400, #"{"code": "x", "configuration": {"PASSWORD": {"value": "\#(marker)"}}}"#),
+            .httpError(422, #"{"code": "x", "detail": "\#(marker)"}"#),
+            .httpError(400, "<html><body>\(marker)</body></html>"),
+            .httpError(400, #"{"reason": "password=\#(marker)"}"#),
+            .httpError(400, #"{"reason": "Bad token \#(marker)"}"#),
+            .httpError(400, #"{"reason": "{\"value\": \"\#(marker)\"}"}"#),
+            .httpError(400, #"{"reason": "\#(String(repeating: "x", count: 201))\#(marker)"}"#),
+            .httpError(400, #"{"reason": "line one\n\#(marker)"}"#),
+            .httpError(400, #"{"reason": "Authorization: Bearer \#(marker)"}"#),
+            .httpError(500, marker),
+            .httpError(403, marker),
+            .decodingError(marker),
+            .networkError(marker),
+        ]
+        for error in leaking {
+            let message = MarketplaceFailure.message(for: error)
+            #expect(message?.isEmpty == false)
+            #expect(message?.contains(marker) == false, "\(error)")
+        }
+        #expect(MarketplaceFailure.message(for: CivoAPIError.httpError(422, #"{"code": "app_plan_unknown", "reason": "The plan is not available"}"#)) == "Civo says: The plan is not available")
+        #expect(MarketplaceFailure.message(for: CivoAPIError.httpError(400, "not json")) == "Civo refused the request (HTTP 400).")
+        #expect(MarketplaceFailure.message(for: CivoAPIError.httpError(400, #"{"reason": "Key Abc123XyZ789qWeRtY456uIoP012 is invalid"}"#)) == "Civo refused the request (HTTP 400).")
+        #expect(MarketplaceFailure.message(for: CivoAPIError.httpError(403, #"{"reason": "Fine"}"#)) == "Civo did not accept the request for this account.")
+        #expect(MarketplaceFailure.message(for: CivoAPIError.cancelled) == nil)
+    }
+}
+
+/// Create Cluster requests recorded instead of sent. Each list request takes the next scripted answer; a held
+/// answer waits until it is released, like a slow request.
+private actor FakeClusterCreateAPI: KubernetesClusterCreateAPI {
+    enum Answer: Sendable {
+        case list(String)
+        case fail(String)
+        case held(String)
+    }
+
+    private var answers: [Answer] = []
+    private var waiting: CheckedContinuation<Void, Never>?
+    private(set) var created: [String] = []
+
+    var isHolding: Bool { waiting != nil }
+
+    func script(_ answers: [Answer]) { self.answers = answers }
+
+    func release() {
+        waiting?.resume()
+        waiting = nil
+    }
+
+    func listApplications(apiKey: String?) async throws -> [RawMarketplaceEntry] {
+        switch answers.removeFirst() {
+        case .list(let json):
+            return try marketplaceEntries(json)
+        case .fail(let reason):
+            throw CivoAPIError.networkError(reason)
+        case .held(let json):
+            await withCheckedContinuation { waiting = $0 }
+            return try marketplaceEntries(json)
+        }
+    }
+
+    func createCluster(_ body: sending [String: Any], region: String, apiKey: String) async throws {
+        created.append("\(region) \(apiKey) \(body["applications"] as? String ?? "-")")
+    }
+}
+
+@Suite("Kubernetes marketplace in Create Cluster")
+@MainActor
+struct KubernetesMarketplaceControllerTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeClusterCreateAPI()
+        var apiKey = "key-a"
+        var region = "LON1"
+        /// Runs once right after the region is read, like a Settings change while Create is under way.
+        var afterRegionRead: (() -> Void)?
+        lazy var controller = KubernetesMarketplaceController(
+            api: api,
+            apiKey: { [unowned self] in apiKey },
+            region: { [unowned self] in
+                defer { afterRegionRead?(); afterRegionRead = nil }
+                return region
+            }
+        )
+
+        func waitUntilHolding() async {
+            while !(await api.isHolding) { await Task.yield() }
+        }
+    }
+
+    @Test("Create goes to the account and region the choices were checked against, even if Settings change meanwhile")
+    func createIsPinned() async throws {
+        let env = Environment()
+        await env.api.script([.list(#"[{"name": "Longhorn", "version": "1"}]"#)])
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "Longhorn")), plan: nil)
+
+        env.afterRegionRead = { env.apiKey = "key-b"; env.region = "FRA1" }
+        try await env.controller.createCluster(["name": "c"])
+        #expect(await env.api.created == ["LON1 key-a Longhorn"])
+
+        await #expect(throws: MarketplaceSelectionError.contextChanged) { try await env.controller.createCluster(["name": "c"]) }
+        #expect(await env.api.created.count == 1)
+    }
+
+    @Test("A new form starts empty before anything loads, and a late answer for an earlier form changes nothing")
+    func formLifecycle() async throws {
+        let env = Environment()
+        await env.api.script([
+            .list(#"[{"name": "A"}]"#),
+            .held(#"[{"name": "Old"}]"#),
+            .list(#"[{"name": "C"}]"#),
+        ])
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "A")), plan: nil)
+
+        env.controller.beginForm()
+        #expect(env.controller.state == MarketplaceCreateState())
+        let earlier = Task { await env.controller.reload() }
+        await env.waitUntilHolding()
+
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "C")), plan: nil)
+        await env.api.release()
+        await earlier.value
+
+        #expect(env.controller.state.catalog?.applications.map(\.name) == ["C"])
+        #expect(env.controller.state.selection.choices.map(\.name) == ["C"])
+        #expect(!env.controller.isLoading)
+        try await env.controller.createCluster(["name": "c"])
+        #expect(await env.api.created == ["LON1 key-a C"])
+    }
+
+    @Test("After a region change whose reload fails, the choices stay marked and Create stays blocked until reviewed")
+    func targetChangeWithFailedReload() async throws {
+        let env = Environment()
+        let catalog = #"[{"name": "A", "version": "1"}, {"name": "B", "version": "1"}]"#
+        await env.api.script([.list(catalog), .fail("offline"), .list(catalog)])
+        env.controller.beginForm()
+        await env.controller.reload()
+        env.controller.choose(try #require(env.controller.state.catalog?.application(withID: "A")), plan: nil)
+
+        env.region = "FRA1"
+        await env.controller.reload()
+        let shown = try #require(env.controller.state.catalog)
+        #expect(env.controller.state.loadError != nil && !env.controller.state.isCatalogCurrent)
+        #expect(env.controller.state.issues == ["A": .contextChanged] && !env.controller.state.canSubmit)
+        env.controller.choose(try #require(shown.application(withID: "B")), plan: nil)
+        env.controller.acceptAgain("A")
+        #expect(env.controller.state.selection.choices.map(\.name) == ["A"])
+        #expect(env.controller.state.issues == ["A": .contextChanged])
+        await #expect(throws: MarketplaceSelectionError.needsReview) { try await env.controller.createCluster(["name": "c"]) }
+
+        await env.controller.reload()
+        #expect(env.controller.state.issues == ["A": .contextChanged])
+        env.controller.acceptAgain("A")
+        #expect(env.controller.state.canSubmit)
+        try await env.controller.createCluster(["name": "c"])
+        #expect(await env.api.created == ["FRA1 key-a A"])
+    }
+}

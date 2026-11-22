@@ -27,6 +27,8 @@ final class KubernetesViewModel {
     var availableVersions: [CivoKubernetesVersion] = []
     /// Set when the version list could not be loaded; Civo's default version is used then.
     var versionListError: String?
+    /// Civo's marketplace list and the applications chosen in Create Cluster.
+    let marketplace = KubernetesMarketplaceController()
 
     // K8s API state
     var k8sNodes: [K8sNode] = []
@@ -101,7 +103,11 @@ final class KubernetesViewModel {
         }
     }
 
+    /// Starts a new Create Cluster form: the marketplace part is reset before anything is awaited, so nothing
+    /// from an earlier form can be chosen or sent while the lists load.
     func loadFormData() async {
+        marketplace.beginForm()
+        async let catalog: Void = marketplace.reload()
         do {
             async let nets = networkService.listNetworks()
             async let sizes = sizeService.listSizes()
@@ -117,6 +123,7 @@ final class KubernetesViewModel {
             availableVersions = []
             versionListError = CivoAPIError.userMessage(error)
         }
+        await catalog
     }
 
     func loadClusterDetail(_ id: String) async {
@@ -641,12 +648,14 @@ final class KubernetesViewModel {
 
     // MARK: - CRUD
 
+    /// Creates the cluster with the chosen marketplace applications, in the account and region they were
+    /// reviewed for; see `KubernetesMarketplaceController.createCluster`.
     func createCluster(_ body: sending [String: Any]) async -> Bool {
         isSaving = true; saveError = nil; defer { isSaving = false }
         do {
-            _ = try await service.createCluster(body)
+            try await marketplace.createCluster(body)
             isCreating = false; showSuccess = true; await refresh(); return true
-        } catch { saveError = CivoAPIError.userMessage(error); return false }
+        } catch { saveError = MarketplaceFailure.message(for: error); return false }
     }
 
     /// Saves the labels of one pool of the cluster in `target`; see `KubernetesNodePoolController.saveLabels`.
