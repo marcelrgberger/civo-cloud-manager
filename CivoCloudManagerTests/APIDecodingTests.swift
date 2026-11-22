@@ -1586,6 +1586,33 @@ struct ChargesServiceTests {
         #expect(model.charges.count == 4)
     }
 
+    @Test("A cancelled refresh whose fetch still succeeds does not overwrite a newer cached month")
+    func cancelledRefreshKeepsNewerCache() async {
+        let store = MemoryStore()
+        let gate = FetchGate()
+        let fetchCount = OSAllocatedUnfairLock(initialState: 0)
+        let service = CivoChargesService(
+            fetch: { window, _ in
+                let call = fetchCount.withLock { $0 += 1; return $0 }
+                // The superseded fetch ignores cancellation, like decoding after URLSession returned.
+                if call == 1 { await gate.suspend() }
+                return [Self.charge(id: call, hours: window.to.timeIntervalSince(window.from) / 3600)]
+            },
+            store: store,
+            account: { ChargeAccount(apiKey: "key-a") },
+            now: { Self.now }
+        )
+
+        let superseded = Task { try await service.charges(for: .lastMonth, trigger: .manualRefresh) }
+        await gate.untilSuspended()
+        superseded.cancel()
+        _ = try? await service.charges(for: .lastMonth, trigger: .manualRefresh)
+        await gate.open()
+
+        await #expect(throws: CancellationError.self) { try await superseded.value }
+        #expect(store.load(scope: Self.scopeA, month: "2026-10")?.first?.id == 2)
+    }
+
     @Test("Error messages never contain the Civo response body")
     func sanitizedErrors() {
         let body = #"{"code":"parameter_date_range_too_long","reason":"The date range spanned more than 31 days"}"#

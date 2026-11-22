@@ -208,6 +208,8 @@ struct CivoChargesService: Sendable {
                 continue
             }
             let fetched = try await fetch(window, account)
+            // A superseded load must not overwrite the cache a newer load may already have written.
+            try Task.checkCancellation()
             if isCompletedMonth, let scope {
                 store.save(fetched, scope: scope, month: month)
             }
