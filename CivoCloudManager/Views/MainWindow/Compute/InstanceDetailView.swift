@@ -32,6 +32,9 @@ struct InstanceDetailView: View {
                 InstanceVolumesSection(instance: instance, vm: vm)
                     .opacity(appeared ? 1 : 0)
                     .animation(.easeOut(duration: 0.3).delay(0.28), value: appeared)
+                InstanceRecoverySection(instance: instance, vm: vm)
+                    .opacity(appeared ? 1 : 0)
+                    .animation(.easeOut(duration: 0.3).delay(0.29), value: appeared)
                 metadataSection
             }
             .padding(24)
@@ -49,6 +52,7 @@ struct InstanceDetailView: View {
                     Task {
                         await vm.refresh()
                         await vm.loadVolumeOptions(for: instance)
+                        await vm.loadRecoveryStatus(for: instance)
                     }
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")

@@ -1849,6 +1849,11 @@ private actor FakeInstanceAPI: InstanceAPI {
     private var firewallError: Error?
     /// Civo's answer to the next create; one that cannot be decoded is reported like the API client does.
     private var creationAnswer = Data(#"{"id": "created-1", "initial_password": "not-shown"}"#.utf8)
+    /// Civo's answer to the recovery mode status, in the string form its docs show.
+    private var recoveryAnswer = Data(#"{"result": "false"}"#.utf8)
+    private var recoveryError: Error?
+    /// Holds the next power change until the test releases it, like a request still on its way.
+    private var powerGate: ChargesServiceTests.FetchGate?
 
     init(instancesByRegion: [String: [CivoInstance]]) {
         self.instancesByRegion = instancesByRegion
@@ -1858,6 +1863,9 @@ private actor FakeInstanceAPI: InstanceAPI {
     func failDeletion(with error: Error = CivoAPIError.networkError("offline")) { deletionError = error }
     func failFirewallChange(with error: Error) { firewallError = error }
     func answerCreation(with answer: Data) { creationAnswer = answer }
+    func answerRecoveryStatus(with answer: String) { recoveryAnswer = Data(answer.utf8) }
+    func failRecoveryChange(with error: Error) { recoveryError = error }
+    func holdNextPowerChange(at gate: ChargesServiceTests.FetchGate) { powerGate = gate }
 
     func listInstances(region: String?) async throws -> PaginatedList<CivoInstance> {
         PaginatedList(items: instancesByRegion[region ?? ""] ?? [], isComplete: true)
@@ -1874,6 +1882,10 @@ private actor FakeInstanceAPI: InstanceAPI {
 
     func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
     func changePower(_ action: InstancePowerAction, of id: String, region: String) async throws {
+        if let gate = powerGate {
+            powerGate = nil
+            await gate.suspend()
+        }
         calls.append("\(action) \(id) \(region)")
     }
     func resizeInstance(_ id: String, size: String, region: String) async throws { calls.append("resize \(id) \(region)") }
@@ -1883,6 +1895,21 @@ private actor FakeInstanceAPI: InstanceAPI {
     }
     func setTags(_ id: String, _ change: InstanceTagChange, region: String) async throws {
         calls.append("tags \(id) [\(change.parameter)] \(region)")
+    }
+
+    func recoveryStatus(of id: String, region: String) async throws -> InstanceRecoveryStatus {
+        do {
+            return try JSONDecoder().decode(InstanceRecoveryStatus.self, from: recoveryAnswer)
+        } catch {
+            throw CivoAPIError.decodingError(error.localizedDescription)
+        }
+    }
+
+    /// Civo reports the new setting right away, although it takes effect only after a reboot.
+    func changeRecovery(_ change: InstanceRecoveryChange, of id: String, region: String) async throws {
+        if let recoveryError { throw recoveryError }
+        calls.append("recovery \(change) \(id) \(region)")
+        recoveryAnswer = Data(#"{"result": "\#(change == .enter)"}"#.utf8)
     }
 
     /// A successful deletion removes the instance from its region's list, as Civo does.
@@ -1959,15 +1986,27 @@ private final class InstanceEnvironment {
     private(set) var activities: [String] = []
     /// Kept alive for the default store: its client refers to it unowned.
     private let keychain = FakeKeychain()
+    private let credentials: InstanceCredentialStore
+    /// What the app keeps in its defaults, held in memory so a restart can be simulated without touching disk.
+    private var storedRecoveryReboots: Data?
     private(set) var vm: InstanceViewModel!
 
     init(credentials: InstanceCredentialStore? = nil, attachGate: ChargesServiceTests.FetchGate? = nil) {
         volumes = FakeVolumeAPI(volumesByRegion: ["LON1": InstanceVolumeTests.volumes], attachGate: attachGate)
-        let store = credentials ?? InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
-        vm = InstanceViewModel(
-            credentials: store,
+        self.credentials = credentials ?? InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
+        vm = makeViewModel()
+    }
+
+    /// A view model as after an app restart: same Civo account, defaults and keychain, nothing in memory.
+    func makeViewModel() -> InstanceViewModel {
+        InstanceViewModel(
+            credentials: credentials,
             api: api,
             volumes: volumes,
+            recoveryReboots: RecoveryRebootStore(
+                read: { [weak self] in self?.storedRecoveryReboots },
+                write: { [weak self] in self?.storedRecoveryReboots = $0 }
+            ),
             loadSSHKeys: { [] },
             loadFirewallOptions: { [weak self] region in
                 let firewalls = await self?.firewallsByRegion[region] ?? []
@@ -2200,6 +2239,193 @@ struct InstanceActionTargetTests {
         #expect(throws: CivoAPIError.self) {
             try CivoAPIClient.resolvedQueryItems(unknownRegion.queryItems, defaultRegion: "NYC1", regionRequired: true)
         }
+    }
+}
+
+@Suite("Instance recovery mode")
+@MainActor
+struct InstanceRecoveryModeTests {
+    @Test("Enter, exit and status use PUT, DELETE and GET on the recovery path with the captured region")
+    func requests() throws {
+        let requests = [
+            ("PUT", InstanceRecoveryChange.enter.request(instanceId: consoleInstanceId, region: "LON1")),
+            ("DELETE", InstanceRecoveryChange.exit.request(instanceId: consoleInstanceId, region: "LON1")),
+            ("GET", InstanceRecoveryChange.statusRequest(instanceId: consoleInstanceId, region: "LON1")),
+        ]
+        for (method, request) in requests {
+            #expect(request.method == method)
+            #expect(request.path == "/instances/\(consoleInstanceId)/recovery")
+            let sent = try CivoAPIClient.resolvedQueryItems(request.queryItems, defaultRegion: "NYC1", regionRequired: true)
+            #expect(sent == [URLQueryItem(name: "region", value: "LON1")])
+        }
+
+        let unknownRegion = InstanceRecoveryChange.enter.request(instanceId: consoleInstanceId, region: "")
+        #expect(throws: CivoAPIError.self) {
+            try CivoAPIClient.resolvedQueryItems(unknownRegion.queryItems, defaultRegion: "NYC1", regionRequired: true)
+        }
+    }
+
+    @Test("The status is read from a string as in Civo's docs or from a boolean; anything else is refused")
+    func statusDecoding() throws {
+        let accepted = [
+            #"{"result": "true"}"#: true, #"{"result": true}"#: true, #"{"result": "TRUE"}"#: true,
+            #"{"result": "false"}"#: false, #"{"result": false}"#: false,
+        ]
+        for (json, isEnabled) in accepted {
+            #expect(try JSONDecoder().decode(InstanceRecoveryStatus.self, from: Data(json.utf8)).isEnabled == isEnabled, "\(json)")
+        }
+        for json in ["{}", #"{"result": null}"#, #"{"result": "success"}"#, #"{"result": "yes"}"#, #"{"result": 1}"#, "[]"] {
+            #expect(throws: DecodingError.self, "\(json)") {
+                try JSONDecoder().decode(InstanceRecoveryStatus.self, from: Data(json.utf8))
+            }
+        }
+    }
+
+    @Test("Entering is sent only after confirmation, with Full Access checked on confirm, and then waits for a reboot")
+    func enter() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        await env.vm.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == false)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .enter)
+
+        env.vm.beginConfirmation(.recovery(.enter), for: InstanceEnvironment.instance)
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.changeRecovery(.enter, of: refused)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        env.accessAllowed = true
+        env.vm.beginConfirmation(.recovery(.enter), for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.confirmPendingAction())
+        await env.vm.changeRecovery(.enter, of: target)
+        #expect(await env.api.calls == ["recovery enter \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Entered recovery mode"])
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == true)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("The reboot warning stays until a reboot is sent from the app; a stop and start or a failed reboot keep it")
+    func rebootWarning() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        await env.vm.changePower(.stop, of: target)
+        await env.vm.changePower(.start, of: target)
+        await env.vm.refresh()
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+
+        env.accessAllowed = false
+        await env.vm.changePower(.hardReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+
+        env.accessAllowed = true
+        await env.vm.changePower(.softReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        // Exiting needs a reboot again before the instance can be reached as normal.
+        await env.vm.changeRecovery(.exit, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .exit)
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == false)
+        await env.vm.changePower(.hardReboot, of: target)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+    }
+
+    @Test("A skipped reboot is still warned about after an app restart, until a reboot or the deletion")
+    func warningSurvivesRestart() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+        await env.vm.changeRecovery(.exit, of: target)
+
+        // Civo already reports Off, but the instance still runs the recovery system until it is rebooted.
+        let restarted = env.makeViewModel()
+        await restarted.refresh()
+        await restarted.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        #expect(restarted.recoveryMode(for: InstanceEnvironment.instance) == false)
+        #expect(restarted.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .exit)
+
+        await restarted.changePower(.softReboot, of: target)
+        #expect(env.makeViewModel().recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+
+        await restarted.changeRecovery(.enter, of: target)
+        #expect(await restarted.removeInstance(target) == .deleted)
+        let afterDeletion = env.makeViewModel()
+        await env.api.list([InstanceEnvironment.instance], in: "LON1")
+        await afterDeletion.refresh()
+        #expect(afterDeletion.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
+    }
+
+    @Test("A reboot sent before a later change does not clear that change's warning")
+    func rebootBeforeLaterChange() async throws {
+        let gate = ChargesServiceTests.FetchGate()
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        await env.api.holdNextPowerChange(at: gate)
+        let reboot = Task { await env.vm.changePower(.hardReboot, of: target) }
+        await gate.untilSuspended()
+        await env.vm.changeRecovery(.exit, of: target)
+        await gate.open()
+        await reboot.value
+
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("A status load for one instance neither replaces nor outdates another instance's status")
+    func statusPerInstance() async throws {
+        let env = InstanceEnvironment()
+        let other = try JSONDecoder().decode(CivoInstance.self, from: Data(#"{"id": "i-2", "hostname": "web-2", "status": "ACTIVE"}"#.utf8))
+        await env.api.list([InstanceEnvironment.instance, other], in: "LON1")
+        await env.vm.refresh()
+        await env.vm.loadRecoveryStatus(for: other)
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == true)
+        #expect(env.vm.recoveryMode(for: other) == false)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: other) == nil)
+    }
+
+    @Test("Without Full Access or with an unreadable status, the warning and the Exit action stay")
+    func exitStaysOffered() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        await env.vm.changeRecovery(.enter, of: target)
+
+        env.accessAllowed = false
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == .enter)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+
+        await env.api.answerRecoveryStatus(with: #"{"result": "maybe"}"#)
+        await env.vm.loadRecoveryStatus(for: InstanceEnvironment.instance)
+        #expect(env.vm.recoveryMode(for: InstanceEnvironment.instance) == nil)
+        #expect(env.vm.recoveryStatusError(for: InstanceEnvironment.instance) == InstanceViewModel.unreadableRecoveryStatusMessage)
+        #expect(env.vm.offeredRecoveryChange(for: InstanceEnvironment.instance) == .exit)
+    }
+
+    @Test("A change Civo refuses is shown as returned and neither logged nor marked as waiting for a reboot")
+    func refusedChange() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        let failure = CivoAPIError.httpError(403, "forbidden")
+        await env.api.failRecoveryChange(with: failure)
+
+        await env.vm.changeRecovery(.enter, of: target)
+        #expect(env.vm.error == failure.localizedDescription)
+        #expect(env.activities.isEmpty)
+        #expect(!env.vm.showSuccess)
+        #expect(env.vm.recoveryChangeAwaitingReboot(for: InstanceEnvironment.instance) == nil)
     }
 }
 
