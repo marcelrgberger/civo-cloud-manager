@@ -46,6 +46,7 @@ struct ActivityEntry: Codable, Identifiable, Sendable {
         case let a where a.contains("attach"): return "link.circle.fill"
         case let a where a.contains("download"): return "arrow.down.circle.fill"
         case let a where a.contains("connect"): return "bolt.circle.fill"
+        case let a where a.contains("recovery"): return "lifepreserver.fill"
         default: return "circle.fill"
         }
     }

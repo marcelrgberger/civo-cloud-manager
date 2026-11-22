@@ -45,11 +45,47 @@ struct PendingInstanceAction: Equatable {
     enum Kind: Equatable {
         case resize, delete, firewall, removeAllTags, attachVolume
         case power(InstancePowerAction)
+        case recovery(InstanceRecoveryChange)
         case detachVolume(id: String, name: String)
     }
 
     let kind: Kind
     let target: ConsoleTarget
+}
+
+/// Why the recovery mode status of an instance could not be read.
+struct InstanceRecoveryStatusFailure: Error, Equatable {
+    let message: String
+}
+
+/// Recovery mode changes Civo accepted that still wait for a reboot, kept across app restarts: until the
+/// reboot, Civo's status shows the new setting while the instance still runs the old one.
+/// Holds only instance IDs, names and regions.
+@MainActor
+struct RecoveryRebootStore {
+    let read: () -> Data?
+    let write: (Data) -> Void
+
+    private static let key = "CivoRecoveryChangesAwaitingReboot"
+    static let standard = RecoveryRebootStore(
+        read: { UserDefaults.standard.data(forKey: key) },
+        write: { UserDefaults.standard.set($0, forKey: key) }
+    )
+
+    private struct Entry: Codable {
+        let target: ConsoleTarget
+        let change: InstanceRecoveryChange
+    }
+
+    func load() -> [ConsoleTarget: InstanceRecoveryChange] {
+        guard let data = read(), let entries = try? JSONDecoder().decode([Entry].self, from: data) else { return [:] }
+        return Dictionary(entries.map { ($0.target, $0.change) }, uniquingKeysWith: { _, last in last })
+    }
+
+    func save(_ changes: [ConsoleTarget: InstanceRecoveryChange]) {
+        let entries = changes.map { Entry(target: $0.key, change: $0.value) }
+        if let data = try? JSONEncoder().encode(entries) { write(data) }
+    }
 }
 
 /// A detach the user confirmed after being told to unmount the volume. Only `confirmDetach()` creates one.
@@ -99,6 +135,15 @@ final class InstanceViewModel {
     private(set) var volumeOptions: InstanceVolumeOptions?
     /// Why the last loading of `volumeOptions` failed, nil while it succeeded or is running.
     private(set) var volumeOptionsError: String?
+    /// The recovery mode status Civo last reported per instance, or why it could not be read.
+    private var recoveryStatuses: [ConsoleTarget: Result<Bool, InstanceRecoveryStatusFailure>] = [:]
+    /// The recovery mode setting Civo last reported or accepted per instance. Outlasts a failed status load, so
+    /// Exit and the console notice stay while recovery mode was last known to be on, also after the reboot.
+    private var knownRecoveryModes: [ConsoleTarget: Bool] = [:]
+    /// Recovery mode changes Civo accepted that no reboot sent from this app has applied yet.
+    private var recoveryChangesAwaitingReboot: [ConsoleTarget: InstanceRecoveryChange] {
+        didSet { recoveryReboots.save(recoveryChangesAwaitingReboot) }
+    }
 
     private let sshKeyService = CivoSSHKeyService()
     private let networkService = CivoNetworkService()
@@ -118,12 +163,19 @@ final class InstanceViewModel {
     @ObservationIgnored private var cancellationNotice: String?
     /// Counts volume list loads, so only the latest one is shown.
     @ObservationIgnored private var volumeLoads = 0
+    /// Counts recovery mode status loads per instance, so only the latest one is shown.
+    @ObservationIgnored private var recoveryLoads: [ConsoleTarget: Int] = [:]
+    /// Counts accepted recovery mode changes, so a reboot clears only the change that existed when it was sent.
+    @ObservationIgnored private var recoveryChangeCount = 0
+    @ObservationIgnored private var recoveryChangeNumbers: [ConsoleTarget: Int] = [:]
+    private let recoveryReboots: RecoveryRebootStore
     @ObservationIgnored nonisolated(unsafe) private var regionObserver: NSObjectProtocol?
 
     init(
         credentials: InstanceCredentialStore? = nil,
         api: any InstanceAPI = CivoInstanceService(),
         volumes: any InstanceVolumeAPI = CivoVolumeService(),
+        recoveryReboots: RecoveryRebootStore = .standard,
         loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
         loadFirewallOptions: (@Sendable (_ region: String) async throws -> InstanceFirewallOptions)? = nil,
         settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
@@ -136,6 +188,8 @@ final class InstanceViewModel {
         self.credentials = credentials ?? .shared
         self.api = api
         self.volumes = volumes
+        self.recoveryReboots = recoveryReboots
+        recoveryChangesAwaitingReboot = recoveryReboots.load()
         let sshKeyService = CivoSSHKeyService()
         self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
         let firewallService = CivoFirewallService()
@@ -380,7 +434,15 @@ final class InstanceViewModel {
     }
 
     func changePower(_ action: InstancePowerAction, of target: ConsoleTarget) async {
-        await perform(Self.activity(for: action), on: target) {
+        // Captured before sending: a change accepted while the reboot is on its way still needs another one.
+        let changeBeforeReboot = recoveryChangeNumbers[target]
+        await perform(Self.activity(for: action), on: target, onAccepted: {
+            // Civo documents a reboot, not a stop and start, as what applies a recovery mode change.
+            if action == .softReboot || action == .hardReboot,
+               recoveryChangeNumbers[target] == changeBeforeReboot {
+                recoveryChangesAwaitingReboot[target] = nil
+            }
+        }) {
             try await $0.changePower(action, of: target.instanceId, region: target.region)
         }
     }
@@ -575,6 +637,88 @@ final class InstanceViewModel {
         await loadVolumeOptions(region: target.region)
     }
 
+    // MARK: - Recovery mode
+
+    /// Whether recovery mode is on for `instance` as Civo last reported it, nil until it is read.
+    func recoveryMode(for instance: CivoInstance) -> Bool? {
+        guard case .success(let isEnabled) = recoveryStatus(for: instance) else { return nil }
+        return isEnabled
+    }
+
+    /// Why the recovery mode status of `instance` could not be read, nil while it was read or is loading.
+    func recoveryStatusError(for instance: CivoInstance) -> String? {
+        guard case .failure(let failure) = recoveryStatus(for: instance) else { return nil }
+        return failure.message
+    }
+
+    /// The recovery mode change Civo accepted for `instance` that still waits for a reboot.
+    func recoveryChangeAwaitingReboot(for instance: CivoInstance) -> InstanceRecoveryChange? {
+        consoleTarget(for: instance).flatMap { recoveryChangesAwaitingReboot[$0] }
+    }
+
+    /// Exit while recovery mode is on, Enter while it is off. While the status cannot be read, the setting last
+    /// known decides, so Exit stays offered after entering, also after the reboot or once Full Access is gone.
+    /// After an app restart, before Civo answered, the change still waiting for a reboot decides.
+    func offeredRecoveryChange(for instance: CivoInstance) -> InstanceRecoveryChange? {
+        let knownMode = consoleTarget(for: instance).flatMap { knownRecoveryModes[$0] }
+        guard let isOn = knownMode ?? recoveryChangeAwaitingReboot(for: instance).map({ $0 == .enter })
+        else { return nil }
+        return isOn ? .exit : .enter
+    }
+
+    private func recoveryStatus(for instance: CivoInstance) -> Result<Bool, InstanceRecoveryStatusFailure>? {
+        consoleTarget(for: instance).flatMap { recoveryStatuses[$0] }
+    }
+
+    /// Loads the recovery mode status of `instance` from the region it was listed from.
+    func loadRecoveryStatus(for instance: CivoInstance) async {
+        guard let target = consoleTarget(for: instance) else { return }
+        await loadRecoveryStatus(of: target)
+    }
+
+    /// Shows the answer unless a later load started or the Settings region changed meanwhile.
+    private func loadRecoveryStatus(of target: ConsoleTarget) async {
+        guard Self.isSameRegion(target.region, settingsRegion()) else { return }
+        let load = (recoveryLoads[target] ?? 0) + 1
+        recoveryLoads[target] = load
+        let status: Result<Bool, InstanceRecoveryStatusFailure>
+        do {
+            status = .success(try await api.recoveryStatus(of: target.instanceId, region: target.region).isEnabled)
+        } catch CivoAPIError.decodingError {
+            status = .failure(.init(message: Self.unreadableRecoveryStatusMessage))
+        } catch {
+            // A load cancelled by leaving the page is not a failure; the next load replaces it.
+            guard let message = CivoAPIError.userMessage(error) else { return }
+            status = .failure(.init(message: message))
+        }
+        guard load == recoveryLoads[target], Self.isSameRegion(target.region, settingsRegion()) else { return }
+        recoveryStatuses[target] = status
+        if case .success(let isEnabled) = status { knownRecoveryModes[target] = isEnabled }
+    }
+
+    static var unreadableRecoveryStatusMessage: String {
+        String(localized: "Civo reported the recovery mode status in an unexpected form, so it is unknown.")
+    }
+
+    /// Turns recovery mode on or off after the confirmation opened with `beginConfirmation(.recovery(_:), for:)`.
+    /// The change then waits for a reboot, which the detail page offers until one is sent from this app.
+    /// It is saved as soon as Civo accepts it, so quitting during the following reload does not lose the warning.
+    func changeRecovery(_ change: InstanceRecoveryChange, of target: ConsoleTarget) async {
+        let activity = change == .enter ? "Entered recovery mode" : "Exited recovery mode"
+        let changed = await perform(activity, on: target, onAccepted: {
+            recoveryChangeCount += 1
+            recoveryChangeNumbers[target] = recoveryChangeCount
+            recoveryChangesAwaitingReboot[target] = change
+            knownRecoveryModes[target] = change == .enter
+            // A status load sent before the change would report the old setting.
+            recoveryLoads[target, default: 0] += 1
+        }) {
+            try await $0.changeRecovery(change, of: target.instanceId, region: target.region)
+        }
+        guard changed else { return }
+        await loadRecoveryStatus(of: target)
+    }
+
     // MARK: - Tags
 
     /// Replaces the tags with the comma-separated `input`. Input that is invalid or holds no tag sends
@@ -612,11 +756,13 @@ final class InstanceViewModel {
     }
 
     /// Sends one request for `target`, only if the target is still valid at this moment. Returns whether it succeeded.
+    /// `onAccepted` runs as soon as Civo accepted the request, before the instances are reloaded.
     @discardableResult
     private func perform(
         _ activity: String,
         detail: String? = nil,
         on target: ConsoleTarget,
+        onAccepted: () -> Void = {},
         _ request: (any InstanceAPI) async throws -> Void
     ) async -> Bool {
         if let problem = targetError(for: target) {
@@ -625,6 +771,7 @@ final class InstanceViewModel {
         }
         do {
             try await request(api)
+            onAccepted()
             showSuccess = true
             recordActivity(activity, detail, target)
             await refresh()
@@ -650,6 +797,7 @@ final class InstanceViewModel {
             break
         }
         if selectedInstance?.id == target.instanceId { selectedInstance = nil }
+        recoveryChangesAwaitingReboot[target] = nil
         // Refreshing replaces `error`; the notice and a warning about leftover credentials must stay visible.
         let warning = error
         await refresh()

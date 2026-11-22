@@ -95056,6 +95056,2014 @@
           }
         }
       }
+    },
+    "Recovery Mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery Mode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de recuperación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de récupération"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità di ripristino"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb odzyskiwania"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de recuperação"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复模式"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وضع الاسترداد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode Pemulihan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma Modu"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим восстановления"
+          }
+        }
+      }
+    },
+    "On" : {
+      "comment" : "Recovery mode status of an instance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attivo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aan"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włączony"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "켜짐"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مفعّل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चालू"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Açık"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включён"
+          }
+        }
+      }
+    },
+    "Off" : {
+      "comment" : "Recovery mode status of an instance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desactivado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactivé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non attivo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uit"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłączony"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desativado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "꺼짐"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير مفعّل"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बंद"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nonaktif"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapalı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выключен"
+          }
+        }
+      }
+    },
+    "Recovery mode starts an emergency operating system, so you can inspect and repair the boot volume." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery mode starts an emergency operating system, so you can inspect and repair the boot volume."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Wiederherstellungsmodus startet ein Notfall-Betriebssystem, damit Sie das Boot-Volume prüfen und reparieren können."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El modo de recuperación inicia un sistema operativo de emergencia para que pueda inspeccionar y reparar el volumen de arranque."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le mode de récupération démarre un système d'exploitation de secours pour vous permettre d'inspecter et de réparer le volume de démarrage."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modalità di ripristino avvia un sistema operativo di emergenza per ispezionare e riparare il volume di avvio."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De herstelmodus start een noodbesturingssysteem, zodat u het opstartvolume kunt inspecteren en herstellen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb odzyskiwania uruchamia awaryjny system operacyjny, aby można było sprawdzić i naprawić wolumin rozruchowy."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O modo de recuperação inicia um sistema operativo de emergência para que possa inspecionar e reparar o volume de arranque."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复模式会启动一个应急操作系统,以便检查和修复启动卷。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードでは緊急用のオペレーティングシステムが起動し、ブートボリュームを調査して修復できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드는 비상용 운영 체제를 시작하여 부트 볼륨을 검사하고 복구할 수 있게 합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يبدأ وضع الاسترداد نظام تشغيل للطوارئ، حتى تتمكن من فحص وحدة تخزين الإقلاع وإصلاحها."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड एक आपातकालीन ऑपरेटिंग सिस्टम शुरू करता है, ताकि आप बूट वॉल्यूम की जाँच और मरम्मत कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode pemulihan memulai sistem operasi darurat, sehingga Anda dapat memeriksa dan memperbaiki volume boot."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma modu, önyükleme birimini inceleyip onarabilmeniz için bir acil durum işletim sistemi başlatır."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим восстановления запускает аварийную операционную систему, чтобы вы могли проверить и исправить загрузочный том."
+          }
+        }
+      }
+    },
+    "Enter Recovery Mode..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter Recovery Mode..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus aktivieren..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar modo de recuperación..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le mode de récupération..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva modalità di ripristino..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus inschakelen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włącz tryb odzyskiwania..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar modo de recuperação..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进入恢复模式..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードに入る..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 시작..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الدخول إلى وضع الاسترداد..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड चालू करें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masuk Mode Pemulihan..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma Moduna Gir..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить режим восстановления..."
+          }
+        }
+      }
+    },
+    "Exit Recovery Mode..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit Recovery Mode..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus beenden..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salir del modo de recuperación..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter le mode de récupération..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci dalla modalità di ripristino..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus uitschakelen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłącz tryb odzyskiwania..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair do modo de recuperação..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出恢复模式..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードを終了..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 종료..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخروج من وضع الاسترداد..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड बंद करें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keluar dari Mode Pemulihan..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma Modundan Çık..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выключить режим восстановления..."
+          }
+        }
+      }
+    },
+    "Enter Recovery Mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter Recovery Mode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus aktivieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar modo de recuperación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le mode de récupération"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva modalità di ripristino"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus inschakelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włącz tryb odzyskiwania"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar modo de recuperação"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进入恢复模式"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードに入る"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 시작"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الدخول إلى وضع الاسترداد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड चालू करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masuk Mode Pemulihan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma Moduna Gir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить режим восстановления"
+          }
+        }
+      }
+    },
+    "Exit Recovery Mode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit Recovery Mode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus beenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salir del modo de recuperación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter le mode de récupération"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci dalla modalità di ripristino"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus uitschakelen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłącz tryb odzyskiwania"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair do modo de recuperação"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出恢复模式"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードを終了"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 종료"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخروج من وضع الاسترداد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड बंद करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keluar dari Mode Pemulihan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma Modundan Çık"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выключить режим восстановления"
+          }
+        }
+      }
+    },
+    "Enter recovery mode for %@?" : {
+      "comment" : "%@ is the instance name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter recovery mode for %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus für %@ aktivieren?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Activar el modo de recuperación para %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le mode de récupération pour %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attivare la modalità di ripristino per %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus inschakelen voor %@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włączyć tryb odzyskiwania dla %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativar o modo de recuperação para %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为 %@ 进入恢复模式?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ をリカバリモードにしますか?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@의 복구 모드를 시작할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد الدخول إلى وضع الاسترداد لـ %@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ के लिए रिकवरी मोड चालू करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masuk mode pemulihan untuk %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ için kurtarma moduna girilsin mi?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить режим восстановления для %@?"
+          }
+        }
+      }
+    },
+    "Exit recovery mode for %@?" : {
+      "comment" : "%@ is the instance name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit recovery mode for %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus für %@ beenden?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Salir del modo de recuperación para %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter le mode de récupération pour %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uscire dalla modalità di ripristino per %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus uitschakelen voor %@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłączyć tryb odzyskiwania dla %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair do modo de recuperação para %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为 %@ 退出恢复模式?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ のリカバリモードを終了しますか?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@의 복구 모드를 종료할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد الخروج من وضع الاسترداد لـ %@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ के लिए रिकवरी मोड बंद करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keluar dari mode pemulihan untuk %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ için kurtarma modundan çıkılsın mı?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выключить режим восстановления для %@?"
+          }
+        }
+      }
+    },
+    "The instance has to be rebooted before recovery mode takes effect. While recovery mode is active, the instance can be reached only through the console, not through SSH or its services." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance has to be rebooted before recovery mode takes effect. While recovery mode is active, the instance can be reached only through the console, not through SSH or its services."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz muss neu gestartet werden, bevor der Wiederherstellungsmodus wirksam wird. Solange der Wiederherstellungsmodus aktiv ist, ist die Instanz nur über die Konsole erreichbar, nicht über SSH oder ihre Dienste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia debe reiniciarse para que el modo de recuperación surta efecto. Mientras el modo de recuperación esté activo, solo se puede acceder a la instancia a través de la consola, no por SSH ni por sus servicios."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance doit être redémarrée pour que le mode de récupération prenne effet. Tant que le mode de récupération est actif, l'instance n'est accessible que par la console, ni par SSH ni par ses services."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza deve essere riavviata perché la modalità di ripristino abbia effetto. Finché la modalità di ripristino è attiva, l'istanza è raggiungibile solo tramite la console, non tramite SSH o i suoi servizi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instance moet opnieuw worden opgestart voordat de herstelmodus van kracht wordt. Zolang de herstelmodus actief is, is de instance alleen via de console bereikbaar, niet via SSH of haar diensten."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancję trzeba ponownie uruchomić, zanim tryb odzyskiwania zacznie działać. Gdy tryb odzyskiwania jest aktywny, instancja jest dostępna tylko przez konsolę, a nie przez SSH ani jej usługi."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância tem de ser reiniciada para que o modo de recuperação entre em vigor. Enquanto o modo de recuperação estiver ativo, a instância só pode ser acedida através da consola, não por SSH nem pelos seus serviços."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必须重启实例,恢复模式才会生效。恢复模式激活期间,只能通过控制台访问实例,无法通过 SSH 或其服务访问。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードを有効にするには、インスタンスを再起動する必要があります。リカバリモードが有効な間は、インスタンスにはコンソールからのみアクセスでき、SSH やそのサービスからはアクセスできません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드가 적용되려면 인스턴스를 재부팅해야 합니다. 복구 모드가 활성 상태인 동안에는 SSH나 해당 서비스가 아닌 콘솔을 통해서만 인스턴스에 접근할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب إعادة تشغيل المثيل قبل أن يسري وضع الاسترداد. وطالما كان وضع الاسترداد نشطًا، لا يمكن الوصول إلى المثيل إلا عبر وحدة التحكم، وليس عبر SSH أو خدماته."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड लागू होने से पहले इंस्टेंस को रीबूट करना होगा। जब तक रिकवरी मोड सक्रिय है, इंस्टेंस तक केवल कंसोल से पहुँचा जा सकता है, SSH या उसकी सेवाओं से नहीं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans harus dimulai ulang sebelum mode pemulihan berlaku. Selama mode pemulihan aktif, instans hanya dapat dijangkau melalui konsol, bukan melalui SSH atau layanannya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma modunun etkili olması için örneğin yeniden başlatılması gerekir. Kurtarma modu etkin olduğu sürece örneğe SSH veya hizmetleri üzerinden değil, yalnızca konsol üzerinden erişilebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы режим восстановления вступил в силу, инстанс нужно перезагрузить. Пока режим восстановления активен, инстанс доступен только через консоль, но не через SSH или его сервисы."
+          }
+        }
+      }
+    },
+    "The instance has to be rebooted again before it can be reached as normal. Until then it stays in recovery mode and can be reached only through the console." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance has to be rebooted again before it can be reached as normal. Until then it stays in recovery mode and can be reached only through the console."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz muss erneut neu gestartet werden, bevor sie wieder normal erreichbar ist. Bis dahin bleibt sie im Wiederherstellungsmodus und ist nur über die Konsole erreichbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia debe reiniciarse de nuevo para volver a ser accesible con normalidad. Hasta entonces permanece en modo de recuperación y solo se puede acceder a ella a través de la consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance doit être redémarrée à nouveau pour être de nouveau accessible normalement. D'ici là, elle reste en mode de récupération et n'est accessible que par la console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza deve essere riavviata di nuovo prima di essere raggiungibile normalmente. Fino ad allora resta in modalità di ripristino ed è raggiungibile solo tramite la console."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instance moet opnieuw worden opgestart voordat ze weer normaal bereikbaar is. Tot dan blijft ze in de herstelmodus en is ze alleen via de console bereikbaar."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancję trzeba ponownie uruchomić jeszcze raz, zanim znów będzie normalnie dostępna. Do tego czasu pozostaje w trybie odzyskiwania i jest dostępna tylko przez konsolę."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância tem de ser reiniciada novamente para voltar a ser acedida normalmente. Até lá, permanece em modo de recuperação e só pode ser acedida através da consola."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必须再次重启实例,才能恢复正常访问。在此之前,实例仍处于恢复模式,只能通过控制台访问。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通常どおりアクセスできるようにするには、インスタンスをもう一度再起動する必要があります。それまではリカバリモードのままで、コンソールからのみアクセスできます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정상적으로 접근하려면 인스턴스를 다시 재부팅해야 합니다. 그때까지는 복구 모드가 유지되며 콘솔을 통해서만 접근할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب إعادة تشغيل المثيل مرة أخرى قبل أن يصبح الوصول إليه ممكنًا كالمعتاد. وحتى ذلك الحين يبقى في وضع الاسترداد ولا يمكن الوصول إليه إلا عبر وحدة التحكم."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस तक सामान्य रूप से पहुँचने से पहले उसे फिर से रीबूट करना होगा। तब तक वह रिकवरी मोड में रहता है और उस तक केवल कंसोल से पहुँचा जा सकता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instans harus dimulai ulang lagi sebelum dapat dijangkau seperti biasa. Sampai saat itu, instans tetap dalam mode pemulihan dan hanya dapat dijangkau melalui konsol."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Örneğe normal şekilde erişilebilmesi için yeniden başlatılması gerekir. O zamana kadar kurtarma modunda kalır ve yalnızca konsol üzerinden erişilebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы инстанс снова стал доступен как обычно, его нужно ещё раз перезагрузить. До этого он остаётся в режиме восстановления и доступен только через консоль."
+          }
+        }
+      }
+    },
+    "Recovery mode is not in effect yet. Reboot the instance to start the recovery system; then it can be reached only through the console. If the operating system does not respond, use a hard reboot." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery mode is not in effect yet. Reboot the instance to start the recovery system; then it can be reached only through the console. If the operating system does not respond, use a hard reboot."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Wiederherstellungsmodus ist noch nicht wirksam. Starten Sie die Instanz neu, um das Wiederherstellungssystem zu starten; danach ist sie nur über die Konsole erreichbar. Reagiert das Betriebssystem nicht, verwenden Sie einen harten Neustart."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El modo de recuperación aún no está en vigor. Reinicie la instancia para iniciar el sistema de recuperación; después solo se podrá acceder a ella a través de la consola. Si el sistema operativo no responde, use un reinicio forzado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le mode de récupération n'est pas encore effectif. Redémarrez l'instance pour lancer le système de récupération ; elle ne sera ensuite accessible que par la console. Si le système d'exploitation ne répond pas, utilisez un redémarrage forcé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modalità di ripristino non è ancora attiva. Riavvia l'istanza per avviare il sistema di ripristino; dopo sarà raggiungibile solo tramite la console. Se il sistema operativo non risponde, usa un riavvio forzato."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De herstelmodus is nog niet van kracht. Start de instance opnieuw op om het herstelsysteem te starten; daarna is ze alleen via de console bereikbaar. Reageert het besturingssysteem niet, gebruik dan een geforceerde herstart."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb odzyskiwania jeszcze nie działa. Uruchom ponownie instancję, aby uruchomić system odzyskiwania; potem będzie dostępna tylko przez konsolę. Jeśli system operacyjny nie odpowiada, użyj twardego restartu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O modo de recuperação ainda não está em vigor. Reinicie a instância para iniciar o sistema de recuperação; depois só poderá ser acedida através da consola. Se o sistema operativo não responder, use um reinício forçado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复模式尚未生效。请重启实例以启动恢复系统;之后只能通过控制台访问实例。如果操作系统没有响应,请使用硬重启。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードはまだ有効になっていません。インスタンスを再起動してリカバリシステムを起動してください。その後はコンソールからのみアクセスできます。オペレーティングシステムが応答しない場合は、ハードリブートを使用してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드가 아직 적용되지 않았습니다. 인스턴스를 재부팅하여 복구 시스템을 시작하세요. 그 후에는 콘솔을 통해서만 접근할 수 있습니다. 운영 체제가 응답하지 않으면 하드 재부팅을 사용하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يسرِ وضع الاسترداد بعد. أعد تشغيل المثيل لبدء نظام الاسترداد؛ وبعد ذلك لا يمكن الوصول إليه إلا عبر وحدة التحكم. إذا لم يستجب نظام التشغيل، فاستخدم إعادة تشغيل قسرية."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड अभी लागू नहीं हुआ है। रिकवरी सिस्टम शुरू करने के लिए इंस्टेंस को रीबूट करें; उसके बाद उस तक केवल कंसोल से पहुँचा जा सकता है। यदि ऑपरेटिंग सिस्टम प्रतिक्रिया नहीं देता, तो हार्ड रीबूट का उपयोग करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode pemulihan belum berlaku. Mulai ulang instans untuk memulai sistem pemulihan; setelah itu instans hanya dapat dijangkau melalui konsol. Jika sistem operasi tidak merespons, gunakan mulai ulang paksa."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma modu henüz etkin değil. Kurtarma sistemini başlatmak için örneği yeniden başlatın; ardından örneğe yalnızca konsol üzerinden erişilebilir. İşletim sistemi yanıt vermezse zorla yeniden başlatmayı kullanın."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим восстановления ещё не вступил в силу. Перезагрузите инстанс, чтобы запустить систему восстановления; после этого он будет доступен только через консоль. Если операционная система не отвечает, используйте жёсткую перезагрузку."
+          }
+        }
+      }
+    },
+    "Recovery mode is still in effect. Reboot the instance to start its own operating system again; until then it can be reached only through the console." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recovery mode is still in effect. Reboot the instance to start its own operating system again; until then it can be reached only through the console."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Wiederherstellungsmodus ist noch wirksam. Starten Sie die Instanz neu, um wieder ihr eigenes Betriebssystem zu starten; bis dahin ist sie nur über die Konsole erreichbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El modo de recuperación sigue en vigor. Reinicie la instancia para volver a iniciar su propio sistema operativo; hasta entonces solo se puede acceder a ella a través de la consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le mode de récupération est toujours effectif. Redémarrez l'instance pour relancer son propre système d'exploitation ; d'ici là, elle n'est accessible que par la console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La modalità di ripristino è ancora attiva. Riavvia l'istanza per avviare di nuovo il suo sistema operativo; fino ad allora è raggiungibile solo tramite la console."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De herstelmodus is nog van kracht. Start de instance opnieuw op om haar eigen besturingssysteem weer te starten; tot dan is ze alleen via de console bereikbaar."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryb odzyskiwania nadal działa. Uruchom ponownie instancję, aby znów uruchomić jej własny system operacyjny; do tego czasu jest dostępna tylko przez konsolę."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O modo de recuperação continua em vigor. Reinicie a instância para voltar a iniciar o seu próprio sistema operativo; até lá só pode ser acedida através da consola."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复模式仍在生效。请重启实例以重新启动其自身的操作系统;在此之前只能通过控制台访问实例。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードはまだ有効です。インスタンスを再起動して、本来のオペレーティングシステムを再び起動してください。それまではコンソールからのみアクセスできます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드가 아직 적용 중입니다. 인스턴스를 재부팅하여 원래 운영 체제를 다시 시작하세요. 그때까지는 콘솔을 통해서만 접근할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يزال وضع الاسترداد ساريًا. أعد تشغيل المثيل لبدء نظام تشغيله الخاص مرة أخرى؛ وحتى ذلك الحين لا يمكن الوصول إليه إلا عبر وحدة التحكم."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड अभी भी लागू है। इंस्टेंस का अपना ऑपरेटिंग सिस्टम फिर से शुरू करने के लिए उसे रीबूट करें; तब तक उस तक केवल कंसोल से पहुँचा जा सकता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode pemulihan masih berlaku. Mulai ulang instans untuk memulai lagi sistem operasinya sendiri; sampai saat itu instans hanya dapat dijangkau melalui konsol."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma modu hâlâ etkin. Örneğin kendi işletim sistemini yeniden başlatmak için örneği yeniden başlatın; o zamana kadar örneğe yalnızca konsol üzerinden erişilebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим восстановления всё ещё действует. Перезагрузите инстанс, чтобы снова запустить его собственную операционную систему; до этого он доступен только через консоль."
+          }
+        }
+      }
+    },
+    "Soft Reboot..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soft Reboot..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanfter Neustart..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicio suave..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrage logiciel..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvio soft..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zachte herstart..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miękki restart..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinício suave..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "软重启..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ソフトリブート..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "소프트 재부팅..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعادة تشغيل مرنة..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सॉफ़्ट रीबूट..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mulai Ulang Lunak..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yazılımsal Yeniden Başlatma..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мягкая перезагрузка..."
+          }
+        }
+      }
+    },
+    "While recovery mode is active, the instance can be reached only through the console." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "While recovery mode is active, the instance can be reached only through the console."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solange der Wiederherstellungsmodus aktiv ist, ist die Instanz nur über die Konsole erreichbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mientras el modo de recuperación esté activo, solo se puede acceder a la instancia a través de la consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tant que le mode de récupération est actif, l'instance n'est accessible que par la console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finché la modalità di ripristino è attiva, l'istanza è raggiungibile solo tramite la console."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zolang de herstelmodus actief is, is de instance alleen via de console bereikbaar."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gdy tryb odzyskiwania jest aktywny, instancja jest dostępna tylko przez konsolę."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enquanto o modo de recuperação estiver ativo, a instância só pode ser acedida através da consola."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复模式激活期间,只能通过控制台访问实例。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードが有効な間は、インスタンスにはコンソールからのみアクセスできます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드가 활성 상태인 동안에는 콘솔을 통해서만 인스턴스에 접근할 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طالما كان وضع الاسترداد نشطًا، لا يمكن الوصول إلى المثيل إلا عبر وحدة التحكم."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "जब तक रिकवरी मोड सक्रिय है, इंस्टेंस तक केवल कंसोल से पहुँचा जा सकता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selama mode pemulihan aktif, instans hanya dapat dijangkau melalui konsol."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma modu etkin olduğu sürece örneğe yalnızca konsol üzerinden erişilebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока режим восстановления активен, инстанс доступен только через консоль."
+          }
+        }
+      }
+    },
+    "Civo reported the recovery mode status in an unexpected form, so it is unknown." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo reported the recovery mode status in an unexpected form, so it is unknown."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat den Status des Wiederherstellungsmodus in einer unerwarteten Form gemeldet, daher ist er unbekannt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo informó del estado del modo de recuperación en un formato inesperado, por lo que se desconoce."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a indiqué l'état du mode de récupération sous une forme inattendue ; il est donc inconnu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha riportato lo stato della modalità di ripristino in una forma inattesa, quindi non è noto."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo meldde de status van de herstelmodus in een onverwachte vorm, dus die is onbekend."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo zgłosiło stan trybu odzyskiwania w nieoczekiwanej postaci, więc jest on nieznany."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo indicou o estado do modo de recuperação num formato inesperado, pelo que é desconhecido."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 以意外的格式报告了恢复模式状态,因此状态未知。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo がリカバリモードの状態を想定外の形式で返したため、状態は不明です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 예상하지 못한 형식으로 복구 모드 상태를 보고하여 상태를 알 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أبلغت Civo عن حالة وضع الاسترداد بصيغة غير متوقعة، لذا فهي غير معروفة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने रिकवरी मोड की स्थिति अप्रत्याशित रूप में बताई, इसलिए वह अज्ञात है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo melaporkan status mode pemulihan dalam bentuk yang tidak terduga, sehingga statusnya tidak diketahui."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo kurtarma modu durumunu beklenmeyen bir biçimde bildirdi, bu nedenle durum bilinmiyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo сообщил состояние режима восстановления в неожиданном виде, поэтому оно неизвестно."
+          }
+        }
+      }
+    },
+    "Entered recovery mode" : {
+      "comment" : "Instance activity log entry after recovery mode was turned on",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entered recovery mode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus aktiviert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de recuperación activado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de récupération activé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità di ripristino attivata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus ingeschakeld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Włączono tryb odzyskiwania"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de recuperação ativado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已进入恢复模式"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードに入りました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 시작됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الدخول إلى وضع الاسترداد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड चालू किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masuk mode pemulihan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma moduna girildi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим восстановления включён"
+          }
+        }
+      }
+    },
+    "Exited recovery mode" : {
+      "comment" : "Instance activity log entry after recovery mode was turned off",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exited recovery mode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiederherstellungsmodus beendet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de recuperación desactivado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode de récupération désactivé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalità di ripristino disattivata"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Herstelmodus uitgeschakeld"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyłączono tryb odzyskiwania"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de recuperação desativado"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已退出恢复模式"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードを終了しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 종료됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الخروج من وضع الاسترداد"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड बंद किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keluar dari mode pemulihan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma modundan çıkıldı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим восстановления выключен"
+          }
+        }
+      }
+    },
+    "The Recovery Mode box shows whether recovery mode is on. 'Enter Recovery Mode...' boots an emergency operating system on the next reboot, so you can inspect and repair the boot volume; 'Exit Recovery Mode...' returns to the instance's own system on the next reboot. Both ask for confirmation, and Full Access and the region are checked again before anything is sent. Until a reboot is sent from this app, a warning stays in the box with 'Soft Reboot...' and 'Hard Reboot...'. While recovery mode is active, the instance can be reached only through the console; 'Open Console' appears once the instance is running." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Recovery Mode box shows whether recovery mode is on. 'Enter Recovery Mode...' boots an emergency operating system on the next reboot, so you can inspect and repair the boot volume; 'Exit Recovery Mode...' returns to the instance's own system on the next reboot. Both ask for confirmation, and Full Access and the region are checked again before anything is sent. Until a reboot is sent from this app, a warning stays in the box with 'Soft Reboot...' and 'Hard Reboot...'. While recovery mode is active, the instance can be reached only through the console; 'Open Console' appears once the instance is running."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Bereich Wiederherstellungsmodus zeigt, ob der Wiederherstellungsmodus aktiv ist. 'Wiederherstellungsmodus aktivieren...' startet beim nächsten Neustart ein Notfall-Betriebssystem, damit Sie das Boot-Volume prüfen und reparieren können; 'Wiederherstellungsmodus beenden...' kehrt beim nächsten Neustart zum eigenen System der Instanz zurück. Beides wird zuerst bestätigt, und Full Access und die Region werden erneut geprüft, bevor etwas gesendet wird. Bis ein Neustart aus dieser App gesendet wurde, bleibt im Bereich ein Warnhinweis mit 'Sanfter Neustart...' und 'Harter Neustart...'. Solange der Wiederherstellungsmodus aktiv ist, ist die Instanz nur über die Konsole erreichbar; 'Konsole öffnen' erscheint, sobald die Instanz läuft."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El cuadro Modo de recuperación muestra si el modo de recuperación está activado. 'Activar modo de recuperación...' arranca un sistema operativo de emergencia en el siguiente reinicio, para que pueda inspeccionar y reparar el volumen de arranque; 'Salir del modo de recuperación...' vuelve al sistema propio de la instancia en el siguiente reinicio. Ambos piden confirmación, y Full Access y la región se comprueban de nuevo antes de enviar nada. Hasta que se envíe un reinicio desde esta app, el cuadro mantiene una advertencia con 'Reinicio suave...' y 'Reinicio forzado...'. Mientras el modo de recuperación esté activo, solo se puede acceder a la instancia a través de la consola; 'Abrir consola' aparece en cuanto la instancia está en ejecución."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La zone Mode de récupération indique si le mode de récupération est activé. 'Activer le mode de récupération...' démarre un système d'exploitation de secours au prochain redémarrage, pour inspecter et réparer le volume de démarrage ; 'Quitter le mode de récupération...' revient au système propre de l'instance au prochain redémarrage. Les deux demandent une confirmation, et Full Access et la région sont vérifiés à nouveau avant tout envoi. Tant qu'aucun redémarrage n'a été envoyé depuis cette app, un avertissement reste dans la zone avec 'Redémarrage logiciel...' et 'Redémarrage forcé...'. Tant que le mode de récupération est actif, l'instance n'est accessible que par la console ; 'Ouvrir la console' apparaît dès que l'instance est en marche."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il riquadro Modalità di ripristino mostra se la modalità di ripristino è attiva. 'Attiva modalità di ripristino...' avvia un sistema operativo di emergenza al riavvio successivo, per ispezionare e riparare il volume di avvio; 'Esci dalla modalità di ripristino...' torna al sistema dell'istanza al riavvio successivo. Entrambe le azioni chiedono conferma, e Full Access e la regione vengono verificati di nuovo prima di inviare qualcosa. Finché non viene inviato un riavvio da questa app, nel riquadro resta un avviso con 'Riavvio soft...' e 'Riavvio forzato...'. Finché la modalità di ripristino è attiva, l'istanza è raggiungibile solo tramite la console; 'Apri console' compare appena l'istanza è in esecuzione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het vak Herstelmodus toont of de herstelmodus aan staat. 'Herstelmodus inschakelen...' start bij de volgende herstart een noodbesturingssysteem, zodat u het opstartvolume kunt inspecteren en herstellen; 'Herstelmodus uitschakelen...' keert bij de volgende herstart terug naar het eigen systeem van de instance. Beide vragen om bevestiging, en Full Access en de regio worden opnieuw gecontroleerd voordat er iets wordt verzonden. Totdat er vanuit deze app een herstart is verzonden, blijft er een waarschuwing in het vak met 'Zachte herstart...' en 'Geforceerde herstart...'. Zolang de herstelmodus actief is, is de instance alleen via de console bereikbaar; 'Console openen' verschijnt zodra de instance draait."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pole Tryb odzyskiwania pokazuje, czy tryb odzyskiwania jest włączony. 'Włącz tryb odzyskiwania...' uruchamia przy następnym restarcie awaryjny system operacyjny, aby można było sprawdzić i naprawić wolumin rozruchowy; 'Wyłącz tryb odzyskiwania...' wraca przy następnym restarcie do własnego systemu instancji. Obie akcje wymagają potwierdzenia, a Full Access i region są ponownie sprawdzane przed wysłaniem czegokolwiek. Dopóki z tej aplikacji nie zostanie wysłany restart, w polu pozostaje ostrzeżenie z 'Miękki restart...' i 'Twardy restart...'. Gdy tryb odzyskiwania jest aktywny, instancja jest dostępna tylko przez konsolę; 'Otwórz konsolę' pojawia się, gdy instancja działa."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A caixa Modo de recuperação mostra se o modo de recuperação está ativado. 'Ativar modo de recuperação...' arranca um sistema operativo de emergência no próximo reinício, para que possa inspecionar e reparar o volume de arranque; 'Sair do modo de recuperação...' regressa ao sistema próprio da instância no próximo reinício. Ambos pedem confirmação, e Full Access e a região são verificados novamente antes de enviar algo. Até ser enviado um reinício a partir desta app, a caixa mantém um aviso com 'Reinício suave...' e 'Reinício forçado...'. Enquanto o modo de recuperação estiver ativo, a instância só pode ser acedida através da consola; 'Abrir consola' aparece assim que a instância estiver em execução."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复模式区域显示恢复模式是否开启。'进入恢复模式...' 会在下次重启时启动应急操作系统,以便检查和修复启动卷;'退出恢复模式...' 会在下次重启时回到实例自身的系统。两者都会先请求确认,发送任何内容之前会再次检查 Full Access 和区域。在从此应用发送重启之前,该区域会一直显示带有 '软重启...' 和 '硬重启...' 的警告。恢复模式激活期间,只能通过控制台访问实例;实例运行后会显示 '打开控制台'。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リカバリモードボックスには、リカバリモードがオンかどうかが表示されます。'リカバリモードに入る...' は次回の再起動時に緊急用のオペレーティングシステムを起動し、ブートボリュームを調査して修復できるようにします。'リカバリモードを終了...' は次回の再起動時にインスタンス本来のシステムに戻します。どちらも確認を求め、送信前に Full Access とリージョンが再度確認されます。このアプリから再起動が送信されるまで、ボックスには 'ソフトリブート...' と 'ハードリブート...' を含む警告が表示され続けます。リカバリモードが有効な間は、インスタンスにはコンソールからのみアクセスできます。インスタンスが実行中になると 'コンソールを開く' が表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복구 모드 상자에는 복구 모드가 켜져 있는지 표시됩니다. '복구 모드 시작...'은 다음 재부팅 시 비상용 운영 체제를 부팅하여 부트 볼륨을 검사하고 복구할 수 있게 하며, '복구 모드 종료...'는 다음 재부팅 시 인스턴스 자체 시스템으로 돌아갑니다. 두 작업 모두 확인을 요청하며, 무언가를 보내기 전에 Full Access와 리전을 다시 확인합니다. 이 앱에서 재부팅을 보낼 때까지 상자에는 '소프트 재부팅...'과 '하드 재부팅...'이 포함된 경고가 남아 있습니다. 복구 모드가 활성 상태인 동안에는 콘솔을 통해서만 인스턴스에 접근할 수 있으며, 인스턴스가 실행되면 '콘솔 열기'가 나타납니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعرض مربع وضع الاسترداد ما إذا كان وضع الاسترداد مفعّلًا. يقوم 'الدخول إلى وضع الاسترداد...' بإقلاع نظام تشغيل للطوارئ عند إعادة التشغيل التالية، حتى تتمكن من فحص وحدة تخزين الإقلاع وإصلاحها؛ ويعيد 'الخروج من وضع الاسترداد...' المثيل إلى نظامه الخاص عند إعادة التشغيل التالية. يطلب كلاهما التأكيد، ويُعاد التحقق من Full Access والمنطقة قبل إرسال أي شيء. وإلى أن تُرسل إعادة تشغيل من هذا التطبيق، يبقى في المربع تحذير مع 'إعادة تشغيل مرنة...' و'إعادة تشغيل قسرية...'. وطالما كان وضع الاسترداد نشطًا، لا يمكن الوصول إلى المثيل إلا عبر وحدة التحكم؛ ويظهر 'فتح وحدة التحكم' بمجرد تشغيل المثيل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रिकवरी मोड बॉक्स दिखाता है कि रिकवरी मोड चालू है या नहीं। 'रिकवरी मोड चालू करें...' अगले रीबूट पर एक आपातकालीन ऑपरेटिंग सिस्टम बूट करता है, ताकि आप बूट वॉल्यूम की जाँच और मरम्मत कर सकें; 'रिकवरी मोड बंद करें...' अगले रीबूट पर इंस्टेंस के अपने सिस्टम पर लौटाता है। दोनों पुष्टि माँगते हैं, और कुछ भी भेजने से पहले Full Access और क्षेत्र की फिर से जाँच होती है। जब तक इस ऐप से रीबूट नहीं भेजा जाता, बॉक्स में 'सॉफ़्ट रीबूट...' और 'हार्ड रीबूट...' के साथ एक चेतावनी बनी रहती है। जब तक रिकवरी मोड सक्रिय है, इंस्टेंस तक केवल कंसोल से पहुँचा जा सकता है; इंस्टेंस चलने पर 'कंसोल खोलें' दिखाई देता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kotak Mode Pemulihan menunjukkan apakah mode pemulihan aktif. 'Masuk Mode Pemulihan...' mem-boot sistem operasi darurat pada mulai ulang berikutnya, sehingga Anda dapat memeriksa dan memperbaiki volume boot; 'Keluar dari Mode Pemulihan...' kembali ke sistem instans sendiri pada mulai ulang berikutnya. Keduanya meminta konfirmasi, dan Full Access serta region diperiksa lagi sebelum apa pun dikirim. Sampai mulai ulang dikirim dari aplikasi ini, kotak tetap menampilkan peringatan dengan 'Mulai Ulang Lunak...' dan 'Mulai Ulang Paksa...'. Selama mode pemulihan aktif, instans hanya dapat dijangkau melalui konsol; 'Buka Konsol' muncul setelah instans berjalan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurtarma Modu kutusu, kurtarma modunun açık olup olmadığını gösterir. 'Kurtarma Moduna Gir...' bir sonraki yeniden başlatmada önyükleme birimini inceleyip onarabilmeniz için bir acil durum işletim sistemi başlatır; 'Kurtarma Modundan Çık...' bir sonraki yeniden başlatmada örneğin kendi sistemine döner. Her ikisi de onay ister ve herhangi bir şey gönderilmeden önce Full Access ile bölge yeniden denetlenir. Bu uygulamadan bir yeniden başlatma gönderilene kadar kutuda 'Yazılımsal Yeniden Başlatma...' ve 'Zorla Yeniden Başlatma...' içeren bir uyarı kalır. Kurtarma modu etkin olduğu sürece örneğe yalnızca konsol üzerinden erişilebilir; örnek çalışmaya başladığında 'Konsolu Aç' görünür."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В блоке Режим восстановления показано, включён ли режим восстановления. 'Включить режим восстановления...' при следующей перезагрузке запускает аварийную операционную систему, чтобы вы могли проверить и исправить загрузочный том; 'Выключить режим восстановления...' при следующей перезагрузке возвращает инстанс к его собственной системе. Оба действия требуют подтверждения, а Full Access и регион проверяются ещё раз перед отправкой. Пока из этого приложения не отправлена перезагрузка, в блоке остаётся предупреждение с 'Мягкая перезагрузка...' и 'Жёсткая перезагрузка...'. Пока режим восстановления активен, инстанс доступен только через консоль; 'Открыть консоль' появляется, как только инстанс запущен."
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

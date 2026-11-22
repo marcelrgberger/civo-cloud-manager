@@ -1,25 +1,74 @@
 import Foundation
 
+/// One request for an existing instance, pinned to the region it was listed from.
+struct InstanceRequest: Equatable {
+    /// Below `/v2`, see https://www.civo.com/api/instances.
+    let method: String
+    let path: String
+    let queryItems: [URLQueryItem]
+}
+
 /// A change of an instance's power state. Civo answers each request with `{ "result": "success" }`.
 enum InstancePowerAction: Equatable, Sendable {
     case start, stop, softReboot, hardReboot
 
-    struct Request: Equatable {
-        /// Below `/v2`, see https://www.civo.com/api/instances.
-        let method: String
-        let path: String
-        let queryItems: [URLQueryItem]
-    }
-
     /// The request for the instance in the region it was listed from.
-    func request(instanceId: String, region: String) -> Request {
+    func request(instanceId: String, region: String) -> InstanceRequest {
         let (method, endpoint) = switch self {
         case .start: ("PUT", "start")
         case .stop: ("PUT", "stop")
         case .softReboot: ("POST", "soft_reboots")
         case .hardReboot: ("POST", "reboots")
         }
-        return Request(method: method, path: "/instances/\(instanceId)/\(endpoint)", queryItems: CivoInstanceService.pinned(region))
+        return InstanceRequest(method: method, path: "/instances/\(instanceId)/\(endpoint)", queryItems: CivoInstanceService.pinned(region))
+    }
+}
+
+/// Turning an instance's recovery mode on or off. Either takes effect only after a reboot; while recovery
+/// mode is active, the instance can be reached only through the console (https://www.civo.com/api/recovery-mode).
+enum InstanceRecoveryChange: String, Codable, Equatable, Sendable {
+    case enter, exit
+
+    /// The request for the instance in the region it was listed from. Civo answers `{ "result": "success" }`.
+    func request(instanceId: String, region: String) -> InstanceRequest {
+        InstanceRequest(
+            method: self == .enter ? "PUT" : "DELETE",
+            path: Self.path(instanceId: instanceId),
+            queryItems: CivoInstanceService.pinned(region)
+        )
+    }
+
+    /// The `GET` request for the recovery mode status, answered by `InstanceRecoveryStatus`.
+    static func statusRequest(instanceId: String, region: String) -> InstanceRequest {
+        InstanceRequest(method: "GET", path: path(instanceId: instanceId), queryItems: CivoInstanceService.pinned(region))
+    }
+
+    private static func path(instanceId: String) -> String {
+        "/instances/\(instanceId)/recovery"
+    }
+}
+
+/// Civo's answer to `GET /v2/instances/:id/recovery`. The docs call `result` a boolean but show the string
+/// `"true"`, so both forms are accepted; any other value is refused instead of being read as off.
+struct InstanceRecoveryStatus: Decodable, Equatable {
+    let isEnabled: Bool
+
+    private enum CodingKeys: String, CodingKey {
+        case result
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        if let flag = try? c.decode(Bool.self, forKey: .result) {
+            isEnabled = flag
+            return
+        }
+        switch try c.decode(String.self, forKey: .result).lowercased() {
+        case "true": isEnabled = true
+        case "false": isEnabled = false
+        default:
+            throw DecodingError.dataCorruptedError(forKey: .result, in: c, debugDescription: "Unexpected recovery mode status")
+        }
     }
 }
 
@@ -88,6 +137,8 @@ protocol InstanceAPI: Sendable {
     func setFirewall(_ id: String, firewallId: String, region: String) async throws
     func setTags(_ id: String, _ change: InstanceTagChange, region: String) async throws
     func removeInstance(_ id: String, region: String) async throws
+    func recoveryStatus(of id: String, region: String) async throws -> InstanceRecoveryStatus
+    func changeRecovery(_ change: InstanceRecoveryChange, of id: String, region: String) async throws
 }
 
 final class CivoInstanceService: InstanceAPI {
@@ -136,6 +187,17 @@ final class CivoInstanceService: InstanceAPI {
 
     func removeInstance(_ id: String, region: String) async throws {
         try await api.delete(path: "/instances/\(id)", queryItems: Self.pinned(region))
+    }
+
+    func recoveryStatus(of id: String, region: String) async throws -> InstanceRecoveryStatus {
+        let request = InstanceRecoveryChange.statusRequest(instanceId: id, region: region)
+        return try await api.get(path: request.path, queryItems: request.queryItems)
+    }
+
+    /// Sent without a body, as in Civo's examples.
+    func changeRecovery(_ change: InstanceRecoveryChange, of id: String, region: String) async throws {
+        let request = change.request(instanceId: id, region: region)
+        let _: CivoResult = try await api.send(request.method, path: request.path, body: nil, queryItems: request.queryItems)
     }
 
     /// An empty region stays empty, so the client throws `noRegion` instead of using Settings.
