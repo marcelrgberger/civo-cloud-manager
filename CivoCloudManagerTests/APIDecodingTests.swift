@@ -5179,3 +5179,487 @@ struct KubernetesMarketplaceControllerTests {
         #expect(await env.api.created == ["FRA1 key-a A"])
     }
 }
+
+@Suite("Object store credential change")
+@MainActor
+struct ObjectStoreCredentialChangeTests {
+    static func credential(_ id: String, key: String? = nil, status: String? = nil, suspended: Bool? = nil) -> CivoObjectStoreCredential {
+        CivoObjectStoreCredential(id: id, name: id, accessKeyId: key ?? id, secretAccessKeyId: nil, status: status, suspended: suspended)
+    }
+
+    @Test("Only usable alternatives from the complete regional list are offered")
+    func eligibility() {
+        let credentials = [Self.credential("current"), Self.credential("ready", status: "READY"),
+                           Self.credential("optional"), Self.credential("paused", suspended: true),
+                           Self.credential("building", status: "creating"), Self.credential("empty", key: "")]
+        #expect(ObjectStoreCredentialEligibility.candidates(from: credentials, currentAccessKeyId: "current").map(\.id) == ["ready", "optional"])
+    }
+
+    @Test("Active storage work blocks a change; exclusive changes block every other operation")
+    func workGate() throws {
+        let gate = StorageOperationGate()
+        for kind in [StorageOperationGate.Kind.s3Work, .pauseResume, .save] {
+            let token = try #require(gate.begin(kind))
+            #expect(gate.begin(.credentialChange) == nil)
+            gate.end(token)
+            gate.end(token)
+        }
+        let change = try #require(gate.begin(.credentialChange))
+        #expect(gate.begin(.credentialChange) == nil)
+        #expect(gate.begin(.pauseResume) == nil)
+        #expect(gate.begin(.save) == nil)
+        #expect(gate.begin(.s3Work) == nil)
+        gate.end(change)
+        #expect(gate.begin(.credentialChange) != nil)
+    }
+
+    @Test("Late authentication cannot reveal a replacement credential")
+    func revealIdentity() {
+        var state = SecretRevealState()
+        let old = state.begin(for: "old")
+        state.reset()
+        let new = state.begin(for: "new")
+        state.complete(old, success: true)
+        #expect(!state.isRevealed(for: "new"))
+        state.complete(new, success: true)
+        #expect(state.isRevealed(for: "new"))
+        #expect(!state.isRevealed(for: "old"))
+        state.reset()
+        state.complete(new, success: true)
+        #expect(!state.isRevealed(for: "new"))
+    }
+}
+
+@MainActor
+private final class CredentialChangeAPIStub: ObjectStoreCredentialAPI {
+    var store = CivoObjectStore(id: "bucket", name: "photos", maxSize: 500, objectstoreEndpoint: nil, status: "ready", ownerInfo: CivoObjectStoreOwner(accessKeyId: "old", credentialId: "old", name: "Old"))
+    var credentials = [ObjectStoreCredentialChangeTests.credential("old"), ObjectStoreCredentialChangeTests.credential("new")]
+    var complete = true
+    var patchError: Error?
+    var showError: Error?
+    var applyPatch = true
+    var calls: [String] = []
+    var onShow: (() async -> Void)?
+    var onList: (() async -> Void)?
+    var onPatch: (() async -> Void)?
+    var onStores: (() async -> Void)?
+
+    func showObjectStore(_ id: String, region: String, apiKey: String) async throws -> CivoObjectStore {
+        calls.append("show \(region)")
+        let snapshot = store
+        await onShow?()
+        if let showError { throw showError }
+        return snapshot
+    }
+    func listObjectStores(region: String, apiKey: String) async throws -> PaginatedList<CivoObjectStore> {
+        let snapshot = store
+        await onStores?()
+        return PaginatedList(items: [snapshot], isComplete: true)
+    }
+    func listCredentials(region: String, apiKey: String) async throws -> PaginatedList<CivoObjectStoreCredential> {
+        calls.append("list \(region)")
+        await onList?()
+        return PaginatedList(items: credentials, isComplete: complete)
+    }
+    func changeCredential(of id: String, to key: String, region: String, apiKey: String) async throws -> CivoObjectStore {
+        calls.append("patch \(region)")
+        await onPatch?()
+        if applyPatch {
+            store = CivoObjectStore(id: id, name: store.name, maxSize: 500, objectstoreEndpoint: nil, status: "ready", ownerInfo: CivoObjectStoreOwner(accessKeyId: key, credentialId: nil, name: "New"))
+        }
+        if let patchError { throw patchError }
+        return store
+    }
+}
+
+@MainActor
+private final class CredentialChangeEnvironment {
+    let api = CredentialChangeAPIStub()
+    let notifications = NotificationCenter()
+    var key = "dummy-account"
+    var region = "LON1"
+    var access = true
+    var activities = 0
+    lazy var vm = VolumeViewModel(
+        credentialAPI: api, settingsRegion: { [unowned self] in region },
+        apiKey: { [unowned self] in key }, isAccessAllowed: { [unowned self] in access },
+        notificationCenter: notifications, recordCredentialActivity: { [unowned self] _ in activities += 1 }
+    )
+    var switcher: ObjectStoreCredentialSwitcher { vm.credentialSwitcher }
+    func open() async {
+        await vm.reloadObjectStores()
+        await vm.loadObjectStoreDetail("bucket")
+        await switcher.begin(for: api.store)
+    }
+}
+
+extension ObjectStoreCredentialChangeTests {
+    @Test("Fresh regional membership, current assignment and access are rechecked before PATCH")
+    func preflightRefusals() async {
+        for refusal in 0..<8 {
+            let env = CredentialChangeEnvironment()
+            await env.open()
+            switch refusal {
+            case 0: env.access = false
+            case 1: env.key = "other-dummy-account"
+            case 2: env.region = "NYC1"
+            case 3: env.api.complete = false
+            case 4: env.api.credentials = [Self.credential("new", suspended: true)]
+            case 5: env.api.credentials = []
+            case 6: _ = env.vm.operationGate.begin(.s3Work)
+            default: env.api.store = CivoObjectStore(id: "bucket", name: "photos", maxSize: 500, objectstoreEndpoint: nil, status: "creating", ownerInfo: nil)
+            }
+            #expect(await env.switcher.confirm(credentialId: "new") != .changed)
+            #expect(!env.api.calls.contains("patch LON1"))
+            #expect(!env.vm.showSuccess)
+            #expect(env.activities == 0)
+        }
+    }
+
+    @Test("Session and settings changes during either preflight await send nothing")
+    func suspendedPreflight() async {
+        for stage in 0..<2 {
+            for change in 0..<4 {
+                let env = CredentialChangeEnvironment()
+                await env.open()
+                let invalidate: () async -> Void = {
+                    switch change {
+                    case 0: env.switcher.cancel()
+                    case 1: env.access = false
+                    case 2: env.key = "other-dummy-account"
+                    default: env.region = "NYC1"
+                    }
+                }
+                if stage == 0 { env.api.onShow = invalidate } else { env.api.onList = invalidate }
+                #expect(await env.switcher.confirm(credentialId: "new") != .changed)
+                #expect(!env.api.calls.contains("patch LON1"))
+                #expect(!env.vm.operationGate.isExclusive)
+            }
+        }
+    }
+
+    @Test("Confirmed success invalidates browsing and survives a refresh and sheet dismissal")
+    func confirmedChange() async {
+        let env = CredentialChangeEnvironment()
+        await env.open()
+        env.vm.browsingObjectStore = env.api.store
+        env.api.onPatch = {
+            #expect(await env.switcher.confirm(credentialId: "new") == nil)
+            #expect(env.vm.operationGate.begin(.s3Work) == nil)
+            #expect(await env.vm.updateObjectStoreSize("bucket", newSize: 750) == false)
+            env.vm.pauseObjectStore(env.api.store)
+            #expect(!env.vm.isPausing)
+            await env.vm.reloadObjectStores()
+            env.switcher.cancel()
+        }
+        #expect(await env.switcher.confirm(credentialId: "new") == .changed)
+        #expect(env.api.calls.filter { $0 == "patch LON1" }.count == 1)
+        #expect(env.vm.selectedObjectStore?.accessKeyId == "new")
+        #expect(env.vm.browsingObjectStore == nil)
+        #expect(env.vm.showSuccess)
+        #expect(env.activities == 1)
+        #expect(!env.vm.operationGate.isExclusive)
+        #expect(env.vm.credentials.contains { $0.id == "old" })
+        #expect(env.vm.credentialForStore(env.api.store)?.id == "new")
+    }
+
+    @Test("Definite refusals keep the old assignment; ambiguous answers reconcile once")
+    func outcomes() async {
+        for status in [401, 403, 404, 422, 429, 408, 500] {
+            let env = CredentialChangeEnvironment()
+            await env.open()
+            env.api.applyPatch = false
+            env.api.patchError = CivoAPIError.httpError(status, "SYNTHETIC-SECRET-MARKER")
+            let outcome = await env.switcher.confirm(credentialId: "new")
+            let uncertain = [408, 500].contains(status)
+            #expect((outcome == .uncertain) == uncertain)
+            #expect(env.vm.isAssignmentUnconfirmed("bucket") == uncertain)
+            #expect(!env.vm.showSuccess)
+            #expect(env.vm.selectedObjectStore?.accessKeyId == "old")
+            #expect(env.api.calls.filter { $0 == "show LON1" }.count == (uncertain ? 3 : 2))
+            #expect(!(env.switcher.message ?? "").contains("SYNTHETIC"))
+        }
+        for failure: Error in [URLError(.timedOut), CivoAPIError.decodingError("SYNTHETIC-SECRET-MARKER"), CancellationError()] {
+            let env = CredentialChangeEnvironment()
+            await env.open()
+            env.api.patchError = failure
+            #expect(await env.switcher.confirm(credentialId: "new") == .changed)
+            #expect(env.api.calls.filter { $0 == "patch LON1" }.count == 1)
+        }
+    }
+
+    @Test("Uncertainty survives refresh and switching away; only the requested assignment resolves it")
+    func recovery() async {
+        let env = CredentialChangeEnvironment()
+        await env.open()
+        env.api.applyPatch = false
+        env.api.patchError = URLError(.timedOut)
+        #expect(await env.switcher.confirm(credentialId: "new") == .uncertain)
+        #expect(await env.switcher.confirm(credentialId: "new") != .changed)
+        #expect(env.api.calls.filter { $0 == "patch LON1" }.count == 1)
+        await env.vm.reloadObjectStores()
+        #expect(!env.vm.canUseCredentials(for: env.api.store))
+        await env.switcher.checkAgain(storeId: "bucket")
+        #expect(env.vm.isAssignmentUnconfirmed("bucket"))
+        env.region = "NYC1"
+        env.notifications.post(name: .civoRegionDidChange, object: nil)
+        env.region = "LON1"
+        env.notifications.post(name: .civoRegionDidChange, object: nil)
+        await env.vm.reloadObjectStores()
+        await env.vm.loadObjectStoreDetail("bucket")
+        #expect(env.vm.isAssignmentUnconfirmed("bucket"))
+        env.api.showError = URLError(.notConnectedToInternet)
+        await env.switcher.checkAgain(storeId: "bucket")
+        #expect(env.vm.isAssignmentUnconfirmed("bucket"))
+        env.api.showError = nil
+        env.api.store = CivoObjectStore(id: "bucket", name: "photos", maxSize: 500, objectstoreEndpoint: nil, status: "ready", ownerInfo: nil)
+        await env.switcher.checkAgain(storeId: "bucket")
+        #expect(env.vm.isAssignmentUnconfirmed("bucket"))
+        env.api.store = CivoObjectStore(id: "bucket", name: "photos", maxSize: 500, objectstoreEndpoint: nil, status: "ready", ownerInfo: CivoObjectStoreOwner(accessKeyId: "new", credentialId: nil, name: "New"))
+        await env.switcher.checkAgain(storeId: "bucket")
+        #expect(!env.vm.isAssignmentUnconfirmed("bucket"))
+        #expect(env.vm.selectedObjectStore?.accessKeyId == "new")
+    }
+
+    @Test("Missing or changed provenance never opens a credential editor")
+    func provenance() async {
+        let env = CredentialChangeEnvironment()
+        await env.switcher.begin(for: env.api.store)
+        #expect(env.switcher.session == nil)
+        await env.open()
+        env.switcher.cancel()
+        env.region = "NYC1"
+        await env.switcher.begin(for: env.api.store)
+        #expect(env.switcher.session == nil)
+        env.notifications.post(name: .civoRegionDidChange, object: nil)
+        #expect(env.vm.selectedObjectStore == nil)
+    }
+
+    @Test("An old detail or list completion cannot replace a newer read or a mutation result")
+    func staleReads() async {
+        let env = CredentialChangeEnvironment()
+        await env.open()
+        env.api.onShow = {
+            env.api.onShow = nil
+            #expect(await env.switcher.confirm(credentialId: "new") == .changed)
+        }
+        await env.vm.loadObjectStoreDetail("bucket")
+        #expect(env.vm.selectedObjectStore?.accessKeyId == "new")
+        env.api.onStores = {
+            env.api.onStores = nil
+            env.api.store = CivoObjectStore(id: "other", name: "latest", maxSize: nil, objectstoreEndpoint: nil, status: "ready", ownerInfo: nil)
+            await env.vm.reloadObjectStores()
+        }
+        await env.vm.reloadObjectStores()
+        #expect(env.vm.objectStores.first?.id == "other")
+    }
+
+    @Test("Credential lookup never guesses an ambiguous access key")
+    func credentialLookup() async {
+        let env = CredentialChangeEnvironment()
+        await env.open()
+        env.api.store = CivoObjectStore(id: "bucket", name: "photos", maxSize: nil, objectstoreEndpoint: nil, status: "ready", ownerInfo: CivoObjectStoreOwner(accessKeyId: "new", credentialId: nil, name: nil))
+        #expect(env.vm.credentialForStore(env.api.store)?.id == "new")
+        env.api.store = CivoObjectStore(id: "bucket", name: "photos", maxSize: nil, objectstoreEndpoint: nil, status: "ready", ownerInfo: CivoObjectStoreOwner(accessKeyId: "new", credentialId: "old", name: nil))
+        #expect(env.vm.credentialForStore(env.api.store)?.id == "new")
+        env.vm.credentials.append(Self.credential("duplicate", key: "new"))
+        #expect(env.vm.credentialForStore(env.api.store) == nil)
+    }
+}
+
+private final class CredentialRequestStub: URLProtocol, @unchecked Sendable {
+    static let handler = OSAllocatedUnfairLock<(@Sendable (URLRequest) -> (Int, Data))?>(initialState: nil)
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        let response = Self.handler.withLock { $0 }!(request)
+        client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: response.0, httpVersion: nil, headerFields: nil)!, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: response.1)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() {}
+}
+
+@Suite("Object store credential request boundary", .serialized)
+struct ObjectStoreCredentialRequestTests {
+    @Test("Real service uses PATCH, a pinned account and region, and only the documented body fields")
+    func patchContract() async throws {
+        let requests = OSAllocatedUnfairLock(initialState: [URLRequest]())
+        CredentialRequestStub.handler.withLock { handler in
+            handler = { request in
+                requests.withLock { $0.append(request) }
+                return (200, Data(#"{"id":"bucket","name":"photos","owner_info":{"access_key_id":"new"}}"#.utf8))
+            }
+        }
+        defer { CredentialRequestStub.handler.withLock { $0 = nil } }
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [CredentialRequestStub.self]
+        let session = URLSession(configuration: config)
+        defer { session.invalidateAndCancel() }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { "unused-dummy" }, settingsRegion: { "NYC1" }, diagnostic: { _ in })
+        let service = CivoObjectStoreService(api: client)
+        _ = try await service.changeCredential(of: "bucket", to: "new", region: "LON1", apiKey: "pinned-dummy")
+        let request = try #require(requests.withLock { $0.first })
+        #expect(request.httpMethod == "PATCH")
+        #expect(request.url?.path == "/v2/objectstores/bucket")
+        #expect(URLComponents(url: request.url!, resolvingAgainstBaseURL: false)?.queryItems == [URLQueryItem(name: "region", value: "LON1")])
+        #expect(request.value(forHTTPHeaderField: "Authorization") == "bearer pinned-dummy")
+        let body: Data
+        if let data = request.httpBody { body = data } else {
+            let stream = try #require(request.httpBodyStream)
+            stream.open()
+            defer { stream.close() }
+            var buffer = [UInt8](repeating: 0, count: 1024)
+            let count = stream.read(&buffer, maxLength: buffer.count)
+            body = Data(buffer.prefix(max(0, count)))
+        }
+        let decoded = try JSONSerialization.jsonObject(with: body) as? [String: String]
+        #expect(decoded == ["access_key_id": "new", "region": "LON1"])
+    }
+
+    @Test("Pinned pages ignore in-memory settings changes and require an explicit region")
+    func pinnedPagination() async throws {
+        let settings = OSAllocatedUnfairLock(initialState: (key: "first-dummy", region: "NYC1"))
+        let requests = OSAllocatedUnfairLock(initialState: [URLRequest]())
+        CredentialRequestStub.handler.withLock { handler in
+            handler = { request in
+                requests.withLock { $0.append(request) }
+                settings.withLock { $0 = ("second-dummy", "FRA1") }
+                let page = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!.queryItems!.first { $0.name == "page" }!.value!
+                return (200, Data("{\"page\":\(page),\"pages\":2,\"items\":[{\"id\":\"credential-\(page)\"}]}".utf8))
+            }
+        }
+        defer { CredentialRequestStub.handler.withLock { $0 = nil } }
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [CredentialRequestStub.self]
+        let session = URLSession(configuration: config)
+        defer { session.invalidateAndCancel() }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { settings.withLock { $0.key } }, settingsRegion: { settings.withLock { $0.region } }, diagnostic: { _ in })
+        let list = try await CivoObjectStoreService(api: client).listCredentials(region: "LON1", apiKey: "pinned-dummy")
+        #expect(list.isComplete && list.items.count == 2)
+        for request in requests.withLock({ $0 }) {
+            #expect(request.value(forHTTPHeaderField: "Authorization") == "bearer pinned-dummy")
+            #expect(URLComponents(url: request.url!, resolvingAgainstBaseURL: false)!.queryItems!.contains(URLQueryItem(name: "region", value: "LON1")))
+        }
+        do {
+            let _: PaginatedList<CivoObjectStoreCredential> = try await client.getPaginatedList(path: "/objectstore/credentials", apiKey: "pinned-dummy")
+            Issue.record("Pinned pagination accepted an implicit region")
+        } catch CivoAPIError.noRegion {} catch { Issue.record("Unexpected error type") }
+        #expect(requests.withLock { $0.count } == 2)
+    }
+
+    @Test("Sensitive response bodies and decode diagnostics are discarded at the API boundary")
+    func redaction() async throws {
+        let logs = OSAllocatedUnfairLock(initialState: [String]())
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [CredentialRequestStub.self]
+        let session = URLSession(configuration: config)
+        defer {
+            session.invalidateAndCancel()
+            CredentialRequestStub.handler.withLock { $0 = nil }
+        }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { "dummy" }, settingsRegion: { "LON1" }, diagnostic: { message in logs.withLock { $0.append(message) } })
+        for status in [422, 200] {
+            CredentialRequestStub.handler.withLock { handler in
+                handler = { _ in (status, Data(#"{"id":{"SYNTHETIC-SECRET-MARKER":"SYNTHETIC-ACCESS-KEY-MARKER"}}"#.utf8)) }
+            }
+            do {
+                _ = try await CivoObjectStoreService(api: client).changeCredential(of: "bucket", to: "new", region: "LON1", apiKey: "dummy")
+                Issue.record("Expected rejection or decoding failure")
+            } catch {
+                #expect(!String(describing: error).contains("SYNTHETIC"))
+                #expect(!ObjectStoreCredentialChangeError.from(error).message.contains("SYNTHETIC"))
+            }
+        }
+        #expect(logs.withLock { $0.allSatisfy { !$0.contains("SYNTHETIC") } })
+        #expect(!ObjectStoreCredentialChangeError.from(CivoAPIError.incompleteList("SYNTHETIC-SECRET-MARKER")).message.contains("SYNTHETIC"))
+    }
+}
+
+@MainActor
+private final class PausedStorageStub: ObjectStorePauseAPI {
+    var entered = false
+    var continuation: CheckedContinuation<Void, Never>?
+    var pausedStores: [PausedObjectStore] = []
+    var onLoad: (() -> Void)?
+    func hold() async throws {
+        entered = true
+        await withCheckedContinuation { continuation = $0 }
+        throw CancellationError()
+    }
+    func pauseStore(_ store: CivoObjectStore, credential: CivoObjectStoreCredential, progress: @escaping @Sendable (PauseProgress) -> Void) async throws { try await hold() }
+    func resumeStore(_ store: PausedObjectStore, progress: @escaping @Sendable (PauseProgress) -> Void) async throws { try await hold() }
+    func updatePausedStoreCredential(storeName: String, credentialId: String, accessKeyId: String?) async throws { try await hold() }
+    func loadPausedStores() async throws -> [PausedObjectStore] { onLoad?(); return pausedStores }
+    func setupVault() async throws -> (store: CivoObjectStore, credential: CivoObjectStoreCredential) { throw CancellationError() }
+    func discardPausedStore(_ paused: PausedObjectStore) async throws { throw CancellationError() }
+}
+
+extension ObjectStoreCredentialChangeTests {
+    @Test("Pause cancellation and resume assignment preparation hold the gate until completion")
+    func pauseLifecycle() async {
+        for mode in 0..<3 {
+            let api = CredentialChangeAPIStub()
+            let pause = PausedStorageStub()
+            let vm = VolumeViewModel(credentialAPI: api, pauseService: pause, settingsRegion: { "LON1" }, apiKey: { "dummy" }, isAccessAllowed: { true }, notificationCenter: NotificationCenter(), recordCredentialActivity: { _ in })
+            await vm.reloadObjectStores()
+            await vm.loadObjectStoreDetail("bucket")
+            await vm.credentialSwitcher.begin(for: api.store)
+            let paused = PausedObjectStore(id: "paused", originalName: "photos", originalMaxSize: 500, credentialId: "old", accessKeyId: "old", region: "LON1", endpoint: "example.invalid", pausedAt: Date(), fileCount: 0, totalSizeBytes: 0, vaultPrefix: "paused/")
+            let assignment: Task<Void, Never>?
+            if mode == 0 { vm.pauseObjectStore(api.store); assignment = nil }
+            else if mode == 1 { vm.resumeObjectStore(paused); assignment = nil }
+            else { assignment = Task { await vm.assignCredentialAndResume(paused, credentialId: "new", accessKeyId: "new") } }
+            while !pause.entered { await Task.yield() }
+            vm.cancelPauseResume()
+            assignment?.cancel()
+            #expect(await vm.credentialSwitcher.confirm(credentialId: "new") == .failed)
+            #expect(!api.calls.contains("patch LON1"))
+            #expect(vm.operationGate.isBusy)
+            pause.continuation?.resume()
+            if let assignment { await assignment.value }
+            if let task = vm.pausingTask { await task.value }
+            #expect(!vm.operationGate.isBusy)
+        }
+    }
+
+    @Test("A dispatched result is never installed in another account, but uncertainty remains for its origin")
+    func dispatchContextChange() async {
+        let env = CredentialChangeEnvironment()
+        await env.open()
+        env.api.applyPatch = false
+        env.api.patchError = URLError(.timedOut)
+        env.api.onPatch = {
+            env.key = "other-dummy"
+            env.notifications.post(name: .civoAPIKeyDidChange, object: nil)
+        }
+        #expect(await env.switcher.confirm(credentialId: "new") == .uncertain)
+        #expect(env.vm.selectedObjectStore == nil)
+        #expect(!env.vm.isAssignmentUnconfirmed("bucket"))
+        env.key = "dummy-account"
+        env.notifications.post(name: .civoAPIKeyDidChange, object: nil)
+        #expect(env.vm.isAssignmentUnconfirmed("bucket"))
+        #expect(!env.vm.showSuccess)
+    }
+}
+
+
+extension ObjectStoreCredentialChangeTests {
+    @Test("Refreshing paused stores reuses the mutation token without unlocking credential changes")
+    func pausedListRefresh() async throws {
+        let api = CredentialChangeAPIStub()
+        let pause = PausedStorageStub()
+        let vm = VolumeViewModel(credentialAPI: api, pauseService: pause, settingsRegion: { "LON1" }, apiKey: { "dummy" }, isAccessAllowed: { true }, notificationCenter: NotificationCenter(), recordCredentialActivity: { _ in })
+        let token = try #require(vm.operationGate.begin(.pauseResume))
+        pause.pausedStores = [PausedObjectStore(id: "paused", originalName: "photos", originalMaxSize: 500, credentialId: "old", accessKeyId: "old", region: "LON1", endpoint: "example.invalid", pausedAt: Date(), fileCount: 0, totalSizeBytes: 0, vaultPrefix: "paused/")]
+        pause.onLoad = { #expect(vm.operationGate.begin(.credentialChange) == nil) }
+        try await vm.reloadPausedStores(holding: token)
+        #expect(vm.pausedStores.map(\.id) == ["paused"])
+        #expect(vm.operationGate.isBusy)
+        pause.pausedStores = []
+        try await vm.reloadPausedStores(holding: token)
+        #expect(vm.pausedStores.isEmpty)
+        vm.operationGate.end(token)
+        #expect(!vm.operationGate.isBusy)
+    }
+}

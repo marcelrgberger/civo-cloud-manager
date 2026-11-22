@@ -40,6 +40,7 @@ struct BrowserItem: Identifiable, Hashable, Sendable {
 
 struct ObjectStoreBrowserView: View {
     let store: CivoObjectStore
+    let vm: VolumeViewModel
     let s3Client: S3Client
     let onBack: () -> Void
 
@@ -52,6 +53,7 @@ struct ObjectStoreBrowserView: View {
     @State private var pathHistory: [String] = [""]
     @State private var selection: Set<String> = []
     @State private var downloadTask: Task<Void, Never>?
+    @State private var listingTasks: [UUID: Task<Void, Never>] = [:]
 
     var body: some View {
         VStack(spacing: 0) {
@@ -74,7 +76,7 @@ struct ObjectStoreBrowserView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
-                    downloadTask = Task { await download(selection: selection) }
+                    startDownload(selection)
                 } label: {
                     Label(
                         selection.isEmpty ? "Download" : "Download (\(selection.count))",
@@ -85,14 +87,18 @@ struct ObjectStoreBrowserView: View {
             }
             ToolbarItem(placement: .automatic) {
                 Button {
-                    Task { await loadContents() }
+                    startListing()
                 } label: {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .disabled(isLoading)
             }
         }
-        .task { await loadContents() }
+        .onAppear { startListing() }
+        .onDisappear {
+            downloadTask?.cancel()
+            listingTasks.values.forEach { $0.cancel() }
+        }
     }
 
     // MARK: - Breadcrumbs
@@ -104,7 +110,7 @@ struct ObjectStoreBrowserView: View {
                     currentPrefix = ""
                     pathHistory = [""]
                     selection.removeAll()
-                    Task { await loadContents() }
+                    startListing()
                 } label: {
                     Label(store.name, systemImage: "tray.2").font(.caption.weight(.medium))
                 }
@@ -118,7 +124,7 @@ struct ObjectStoreBrowserView: View {
                         currentPrefix = newPrefix
                         pathHistory = [""] + (0...index).map { parts[0...$0].joined(separator: "/") + "/" }
                         selection.removeAll()
-                        Task { await loadContents() }
+                        startListing()
                     }
                     .font(.caption.weight(.medium))
                     .buttonStyle(.borderless)
@@ -152,7 +158,7 @@ struct ObjectStoreBrowserView: View {
         .contextMenu(forSelectionType: String.self) { selected in
             if !selected.isEmpty {
                 Button("Download \(selected.count == 1 ? "Item" : "\(selected.count) Items")") {
-                    downloadTask = Task { await download(selection: selected) }
+                    startDownload(selected)
                 }
             }
         } primaryAction: { selected in
@@ -161,7 +167,7 @@ struct ObjectStoreBrowserView: View {
             if item.isFolder {
                 navigateToFolder(item.key)
             } else {
-                downloadTask = Task { await download(selection: selected) }
+                startDownload(selected)
             }
         }
         .tableStyle(.bordered(alternatesRowBackgrounds: true))
@@ -176,9 +182,7 @@ struct ObjectStoreBrowserView: View {
             Spacer()
             Button {
                 downloadTask?.cancel()
-                downloadTask = nil
-                isDownloading = false
-                downloadProgress = ""
+                // The task releases its work token only after cancellation has finished.
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundStyle(.secondary)
@@ -205,7 +209,7 @@ struct ObjectStoreBrowserView: View {
         currentPrefix = key
         pathHistory.append(key)
         selection.removeAll()
-        Task { await loadContents() }
+        startListing()
     }
 
     private func navigateBack() {
@@ -213,9 +217,28 @@ struct ObjectStoreBrowserView: View {
             pathHistory.removeLast()
             currentPrefix = pathHistory.last ?? ""
             selection.removeAll()
-            Task { await loadContents() }
+            startListing()
         } else {
             onBack()
+        }
+    }
+
+    // The token covers folder expansion, every downloaded file and cancellation cleanup.
+    private func startDownload(_ selection: Set<String>) {
+        guard downloadTask == nil, vm.canUseCredentials(for: store),
+              let token = vm.operationGate.begin(.s3Work) else { return }
+        downloadTask = Task {
+            defer { vm.operationGate.end(token); downloadTask = nil }
+            await download(selection: selection)
+        }
+    }
+
+    private func startListing() {
+        guard vm.canUseCredentials(for: store), let token = vm.operationGate.begin(.s3Work) else { return }
+        let id = UUID()
+        listingTasks[id] = Task {
+            defer { vm.operationGate.end(token); listingTasks[id] = nil }
+            await loadContents()
         }
     }
 
@@ -227,6 +250,7 @@ struct ObjectStoreBrowserView: View {
         defer { isLoading = false }
         do {
             let result = try await s3Client.listObjects(bucket: store.name, prefix: currentPrefix)
+            try Task.checkCancellation()
             var browserItems: [BrowserItem] = []
             for prefix in result.commonPrefixes {
                 browserItems.append(BrowserItem(id: prefix, name: folderName(prefix), isFolder: true, size: 0, key: prefix))
@@ -269,6 +293,7 @@ struct ObjectStoreBrowserView: View {
             // Collect all file keys (expand folders recursively)
             var fileKeys: [String] = []
             for item in selectedItems {
+                try Task.checkCancellation()
                 if item.isFolder {
                     downloadProgress = "Listing \(item.name)..."
                     let contents = try await s3Client.listAllObjects(bucket: store.name, prefix: item.key)
@@ -299,6 +324,7 @@ struct ObjectStoreBrowserView: View {
 
                 let data = try await s3Client.downloadObject(bucket: store.name, key: key)
 
+                try Task.checkCancellation()
                 let fileURL = downloadDir.appendingPathComponent(relativePath)
                 try FileManager.default.createDirectory(
                     at: fileURL.deletingLastPathComponent(),
@@ -341,6 +367,7 @@ struct ObjectStoreBrowserView: View {
         do {
             try Task.checkCancellation()
             let data = try await s3Client.downloadObject(bucket: store.name, key: item.key)
+            try Task.checkCancellation()
             try data.write(to: saveURL)
             downloadProgress = "Done — \(item.name) saved"
             NSWorkspace.shared.activateFileViewerSelecting([saveURL])

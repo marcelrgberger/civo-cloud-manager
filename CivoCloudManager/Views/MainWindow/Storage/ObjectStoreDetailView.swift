@@ -8,7 +8,15 @@ struct ObjectStoreDetailView: View {
     @State private var appeared = false
     @State private var newSize: Int
     @State private var isResizing = false
-    @State private var secretRevealed = false
+    @State private var reveal = SecretRevealState()
+
+    private var revealIdentity: String {
+        "\(vm.credentialStateID)-\(store.id)-\(store.credentialId ?? "")-\(store.accessKeyId ?? "")"
+    }
+
+    private var secretRevealed: Bool {
+        vm.canUseCredentials(for: store) && reveal.isRevealed(for: revealIdentity)
+    }
 
     private var credential: CivoObjectStoreCredential? {
         vm.credentialForStore(store)
@@ -39,6 +47,15 @@ struct ObjectStoreDetailView: View {
                     .help("Return to list")
             }
         }
+        .sheet(isPresented: Binding(get: { vm.credentialSwitcher.session != nil }, set: { if !$0 { vm.credentialSwitcher.cancel() } })) {
+            ObjectStoreCredentialSheet(switcher: vm.credentialSwitcher)
+        }
+        .onChange(of: revealIdentity) { reveal.reset() }
+        .onChange(of: vm.canUseCredentials(for: store)) { reveal.reset() }
+        .onChange(of: vm.isCredentialAccessAllowed) {
+            if !vm.isCredentialAccessAllowed { vm.credentialSwitcher.cancel() }
+        }
+        .onDisappear { reveal.reset() }
         .onAppear {
             withAnimation(.spring(duration: 0.4, bounce: 0.15)) { appeared = true }
         }
@@ -59,7 +76,7 @@ struct ObjectStoreDetailView: View {
 
     private var browseFilesButton: some View {
         Button {
-            vm.browsingObjectStore = store
+            if vm.canUseCredentials(for: store) { vm.browsingObjectStore = store }
         } label: {
             HStack {
                 Image(systemName: "folder.fill").foregroundStyle(.blue)
@@ -75,44 +92,61 @@ struct ObjectStoreDetailView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .buttonStyle(.plain)
-        .disabled(credential == nil)
+        .disabled(credential == nil || !vm.canUseCredentials(for: store))
         .opacity(appeared ? 1 : 0)
         .animation(.easeOut(duration: 0.3).delay(0.05), value: appeared)
     }
 
     private var credentialsSection: some View {
         GroupBox("Credentials") {
-            if let cred = credential {
-                VStack(alignment: .leading, spacing: 10) {
-                    infoRow("Credential Name", cred.displayName)
-                    infoRow("Access Key ID", cred.accessKeyId ?? "—")
-                    HStack {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Secret Access Key").font(.caption).foregroundStyle(.secondary)
-                            if secretRevealed {
-                                Text(cred.secretAccessKeyId ?? "—").font(.subheadline.monospaced()).textSelection(.enabled)
-                            } else {
-                                Text(String(repeating: "*", count: 20)).font(.subheadline.monospaced())
+            VStack(alignment: .leading, spacing: 12) {
+                if let cred = credential {
+                    VStack(alignment: .leading, spacing: 10) {
+                        infoRow("Credential Name", cred.displayName)
+                        infoRow("Access Key ID", cred.accessKeyId ?? "—")
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Secret Access Key").font(.caption).foregroundStyle(.secondary)
+                                if secretRevealed {
+                                    Text(cred.secretAccessKeyId ?? "—").font(.subheadline.monospaced()).textSelection(.enabled)
+                                } else {
+                                    Text(String(repeating: "*", count: 20)).font(.subheadline.monospaced())
+                                }
                             }
+                            Spacer()
+                            Button {
+                                authenticateToRevealSecret()
+                            } label: {
+                                Image(systemName: secretRevealed ? "eye.slash" : "eye")
+                                    .font(.caption)
+                            }
+                            .buttonStyle(.borderless)
+                            .disabled(!vm.canUseCredentials(for: store))
                         }
-                        Spacer()
-                        Button {
-                            authenticateToRevealSecret()
-                        } label: {
-                            Image(systemName: secretRevealed ? "eye.slash" : "eye")
-                                .font(.caption)
-                        }
-                        .buttonStyle(.borderless)
+                        infoRow("Endpoint", store.objectstoreEndpoint ?? "—")
                     }
-                    infoRow("Endpoint", store.objectstoreEndpoint ?? "—")
+                    .padding(8)
+                } else if !vm.isAssignmentUnconfirmed(store.id) {
+                    VStack(spacing: 8) {
+                        Text("No credentials assigned").font(.caption).foregroundStyle(.secondary)
+                        Text("Assign credentials when creating the object store.").font(.caption2).foregroundStyle(.tertiary)
+                    }
+                    .padding(8)
                 }
-                .padding(8)
-            } else {
-                VStack(spacing: 8) {
-                    Text("No credentials assigned").font(.caption).foregroundStyle(.secondary)
-                    Text("Assign credentials when creating the object store.").font(.caption2).foregroundStyle(.tertiary)
+                if vm.isAssignmentUnconfirmed(store.id) {
+                    Text(ObjectStoreCredentialChangeError.unconfirmed.message).foregroundStyle(.orange)
+                    Button("Check again") {
+                        Task { await vm.credentialSwitcher.checkAgain(storeId: store.id) }
+                    }
+                    .disabled(vm.operationGate.isBusy || !vm.isCredentialAccessAllowed)
                 }
-                .padding(8)
+                if store.name != ObjectStorePauseService.vaultName {
+                    Button("Change Credential...") {
+                        Task { await vm.credentialSwitcher.begin(for: store) }
+                    }
+                    .disabled(vm.credentialChangeProblem(for: store) != nil)
+                    .help(vm.credentialChangeProblem(for: store)?.message ?? String(localized: "Change Credential..."))
+                }
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -123,7 +157,7 @@ struct ObjectStoreDetailView: View {
         GroupBox("Details") {
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 infoRow("Max Size", store.maxSizeDisplay)
-                infoRow("Region", CivoConfig.shared.region)
+                infoRow("Region", vm.selectedObjectStoreContext?.region ?? "")
                 infoRow("Status", store.status ?? "—")
             }
             .padding(8)
@@ -150,7 +184,7 @@ struct ObjectStoreDetailView: View {
                             Text("Apply: \(store.maxSize ?? 0) GB → \(newSize) GB")
                         }
                     }
-                    .disabled(isResizing)
+                    .disabled(isResizing || vm.operationGate.isBusy || vm.isAssignmentUnconfirmed(store.id))
                 }
             }
             .padding(8)
@@ -160,17 +194,21 @@ struct ObjectStoreDetailView: View {
     }
 
     private func authenticateToRevealSecret() {
+        guard vm.canUseCredentials(for: store) else { return }
         if secretRevealed {
-            secretRevealed = false
+            reveal.reset()
             return
         }
+        let identity = revealIdentity
+        let ticket = reveal.begin(for: identity)
         Task {
             let context = LAContext()
             do {
                 let success = try await context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: String(localized: "Reveal secret access key"))
-                secretRevealed = success
+                guard identity == revealIdentity, vm.canUseCredentials(for: store) else { return }
+                reveal.complete(ticket, success: success)
             } catch {
-                // User cancelled or auth failed
+                reveal.complete(ticket, success: false)
             }
         }
     }
