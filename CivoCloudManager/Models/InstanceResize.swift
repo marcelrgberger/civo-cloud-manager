@@ -8,7 +8,8 @@ import Foundation
 /// Quota and region are checked by Civo, whose error is shown.
 enum InstanceResize {
     /// App policy, not a Civo rule: neither the Civo API documentation, its CLI nor its Terraform provider
-    /// states which statuses allow a resize, so the app offers it only for ACTIVE instances.
+    /// states which statuses allow a resize, so the app offers it only for ACTIVE instances. civogo maps an
+    /// API error `instance_state_must_be_active_or_shutoff`, but does not say which actions return it.
     static func isAllowed(status: String?) -> Bool {
         status?.caseInsensitiveCompare("active") == .orderedSame
     }
