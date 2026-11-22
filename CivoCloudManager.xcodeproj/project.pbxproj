@@ -68,6 +68,7 @@
 		A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F7DC7779832C4095638A6 /* InstanceTags.swift */; };
 		5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */; };
 		C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */; };
+		A93D1E7E0C5F4B2A9D3E0001 /* InstanceDeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */; };
 		8F56319FA5CB4748B937D594 /* InstanceFirewallSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */; };
 		548C91570A6FB0A5508C6D17 /* InstanceTagsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */; };
 		5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 88320D84F47B5B7234DED63F /* PrivacyPolicy.md */; };
@@ -313,6 +314,7 @@
 		BB62487E4451FD2F578B3E9F /* K8sConnectingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConnectingView.swift; sourceTree = "<group>"; };
 		BE58D59A701E14C63EE6DB83 /* SparklineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
 		BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceListView.swift; sourceTree = "<group>"; };
+		A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDeleteConfirmation.swift; sourceTree = "<group>"; };
 		2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstancePowerConfirmation.swift; sourceTree = "<group>"; };
 		8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceFirewallSheet.swift; sourceTree = "<group>"; };
 		899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTagsEditor.swift; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 				EF44F5E3DEF4B58AF3241C8A /* InstanceDetailView.swift */,
 				6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */,
 				BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */,
+				A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */,
 				2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */,
 				8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */,
 				899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */,
@@ -994,6 +997,7 @@
 				299FA7183E6D8B4656679E80 /* PasswordAccess.swift in Sources */,
 				58DC3AF42C125EB9F8FC9967 /* InstanceCredentialsView.swift in Sources */,
 				5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */,
+				A93D1E7E0C5F4B2A9D3E0001 /* InstanceDeleteConfirmation.swift in Sources */,
 				C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */,
 				8F56319FA5CB4748B937D594 /* InstanceFirewallSheet.swift in Sources */,
 				548C91570A6FB0A5508C6D17 /* InstanceTagsEditor.swift in Sources */,
