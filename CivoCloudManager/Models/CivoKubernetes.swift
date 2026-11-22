@@ -71,7 +71,7 @@ struct CivoNodePool: Codable, Identifiable, Sendable {
     }
 }
 
-struct CivoNodeTaint: Codable, Sendable {
+struct CivoNodeTaint: Codable, Equatable, Sendable {
     let key: String?
     let value: String?
     let effect: String?

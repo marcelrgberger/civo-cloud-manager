@@ -33,6 +33,15 @@ def format_arguments(text):
     return sorted(result)
 
 
+def localized_units(key, localization):
+    """A plain string as its only form, or every plural form of a string with plural variations."""
+    if "stringUnit" in localization:
+        return {"other": localization["stringUnit"]}
+    forms = localization.get("variations", {}).get("plural", {})
+    assert "other" in forms, (key, "plural variations need an 'other' form")
+    return {form: variant["stringUnit"] for form, variant in forms.items()}
+
+
 def read_strings(path):
     # Xcode can emit binary, UTF-16 or XML .strings resources.
     return plistlib.loads(subprocess.check_output(["plutil", "-convert", "xml1", "-o", "-", str(path)]))
@@ -80,22 +89,22 @@ def main():
     for key, entry in catalog["strings"].items():
         locales = entry.get("localizations", {})
         assert set(locales) == set(LANGUAGES), f"Incomplete language coverage: {key!r}"
-        source = locales["en"]["stringUnit"]["value"]
+        source = localized_units(key, locales["en"])["other"]["value"]
         for language in LANGUAGES:
-            unit = locales[language]["stringUnit"]
-            value = unit["value"]
-            assert unit["state"] == "translated", (key, language)
-            assert not source.strip() or value.strip(), (key, language, "empty")
-            assert format_arguments(source) == format_arguments(value), (key, language, "format arguments")
-            assert "⟪KEEP" not in value, (key, language, "temporary placeholder")
-            if key in runtime_keys:
-                # Keep literal counts/ports/timers. A spelled-out English "one"
-                # may legitimately become a digit, and K8s is an identifier.
-                source_numbers = Counter(re.findall(r"(?<![A-Za-z0-9])\d+", source))
-                translated_numbers = Counter(re.findall(r"(?<![A-Za-z0-9])\d+", value))
-                assert source_numbers <= translated_numbers, (key, language, "help numbers")
-                for token in ("DELETE ALL DATA", "~/.ssh/", "civo-cloud-manager", ".yaml", "⌘K", "⌘⇧E"):
-                    assert source.count(token) == value.count(token), (key, language, "literal instruction", token)
+            for unit in localized_units(key, locales[language]).values():
+                value = unit["value"]
+                assert unit["state"] == "translated", (key, language)
+                assert not source.strip() or value.strip(), (key, language, "empty")
+                assert format_arguments(source) == format_arguments(value), (key, language, "format arguments")
+                assert "⟪KEEP" not in value, (key, language, "temporary placeholder")
+                if key in runtime_keys:
+                    # Keep literal counts/ports/timers. A spelled-out English "one"
+                    # may legitimately become a digit, and K8s is an identifier.
+                    source_numbers = Counter(re.findall(r"(?<![A-Za-z0-9])\d+", source))
+                    translated_numbers = Counter(re.findall(r"(?<![A-Za-z0-9])\d+", value))
+                    assert source_numbers <= translated_numbers, (key, language, "help numbers")
+                    for token in ("DELETE ALL DATA", "~/.ssh/", "civo-cloud-manager", ".yaml", "⌘K", "⌘⇧E"):
+                        assert source.count(token) == value.count(token), (key, language, "literal instruction", token)
 
     for language in LANGUAGES:
         path = ROOT / "CivoCloudManager" / f"{language}.lproj" / "InfoPlist.strings"
@@ -105,8 +114,13 @@ def main():
         if args.app:
             resources = args.app / "Contents/Resources" / f"{language}.lproj"
             bundled = read_strings(resources / "Localizable.strings")
+            plurals = read_strings(resources / "Localizable.stringsdict") if (resources / "Localizable.stringsdict").exists() else {}
             for key, entry in catalog["strings"].items():
-                assert bundled.get(key) == entry["localizations"][language]["stringUnit"]["value"], (language, key, "bundle mismatch")
+                localization = entry["localizations"][language]
+                if "stringUnit" in localization:
+                    assert bundled.get(key) == localization["stringUnit"]["value"], (language, key, "bundle mismatch")
+                else:
+                    assert key in plurals, (language, key, "plural rules missing from bundle")
             bundled_info = read_strings(resources / "InfoPlist.strings")
             assert bundled_info == localized_info, (language, "InfoPlist bundle mismatch")
     print(f"Validated {len(catalog['strings'])} catalog entries in {len(LANGUAGES)} languages."
