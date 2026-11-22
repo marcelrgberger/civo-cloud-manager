@@ -153,12 +153,14 @@ final class CivoAPIClient: Sendable {
     }
 
     /// GET a plain array list (API returns `[...]`).
+    /// `apiKey` pins the request to one account instead of reading the current key.
     func getArray<T: Decodable & Sendable>(
         path: String,
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey: String? = nil
     ) async throws -> [T] {
-        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired)
+        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey)
     }
 
     /// POST with a JSON body.
@@ -229,9 +231,10 @@ final class CivoAPIClient: Sendable {
         path: String,
         queryItems: [URLQueryItem]? = nil,
         body: [String: Any]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey pinnedAPIKey: String? = nil
     ) async throws -> T {
-        let apiKey = CivoConfig.shared.apiKey
+        let apiKey = pinnedAPIKey ?? CivoConfig.shared.apiKey
         guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
 
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {

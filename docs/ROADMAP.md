@@ -1,8 +1,20 @@
 # Civo Cloud Manager — Feature Roadmap
 
-Current app version: **2.1.2 (build 19)**. The feature backlog below originated from a v2.0.1 comparison and is historical planning, not a verified description of current behavior or a release commitment. See [README](../README.md) for current architecture and capabilities.
+The app version in development is **2.2.0** (`MARKETING_VERSION` in the Xcode project; release builds get their build number from Xcode Cloud). The tiers and the release plan below originated from a v2.0.1 comparison and are historical planning, not a verified description of current behavior or a release commitment. See [README](../README.md) for current architecture and capabilities.
 
 Completed reliability work: Kubernetes TLS validation, explicit request-region routing, persistent timed firewall closures and SSH encryption-key preservation. Remaining architecture work is tracked in the README under persistence and current limits.
+
+## Implemented in 2.2.0
+
+This is the delivered 2.2.0 scope (release ticket #72). It was not planned in the historical release plan below.
+
+| Ticket | Change |
+|--------|--------|
+| #71 | In-app instance console for active instances (Full Access), one-hour sessions, local close versus End session, Reconnect |
+| #83 | Console scaled to the window, initial user and password shown in the console window |
+| #102 | Initial password shown or copied only after Touch ID or the system password, in the detail view and the console |
+| #81 | Cost estimates for Last Month, Last Quarter and This Year split into UTC calendar-month requests, with a per-account cache of completed months |
+| #103 | Per-instance credential vault for a username and a password in this Mac's keychain, without iCloud sync |
 
 ---
 
@@ -28,7 +40,7 @@ Completed reliability work: Kubernetes TLS validation, explicit request-region r
 
 | Feature | Notes | Effort | Impact |
 |---------|-------|--------|--------|
-| Instance Console (VNC) | WebSocket + RFB protocol | XL | High |
+| Instance Console (VNC) | Implemented in #71: Civo-hosted noVNC in a `WKWebView`, no RFB code in the app | M | High |
 | Multi-API-Key Account Switcher | CivoConfig refactor | L | Medium |
 | Teams & Permissions | B2B feature | L | Low |
 | Recovery Mode for Instances | Edge case | M | Low |
@@ -37,10 +49,12 @@ Completed reliability work: Kubernetes TLS validation, explicit request-region r
 
 ## Historical Release Plan
 
+Kept as written at planning time. The TBD rows were never filled in; the implemented 2.2.0 scope is listed under [Implemented in 2.2.0](#implemented-in-220).
+
 | Version | Feature |
 |---------|---------|
 | **2.1.0** | Volume Resize (historical plan) |
-| 2.2.0 | TBD |
+| 2.2.0 | TBD (historical plan) |
 | 2.3.0 | TBD |
 
 ---
@@ -55,4 +69,4 @@ The app already exceeds the CLI in these areas — no roadmap items needed:
 - Cost dashboard with Charges API + custom rates
 - Auto-firewall: IP detection, one-click rules, auto open/close for K8s API
 - API health monitor, quick search ⌘K, sparklines, CSV/JSON export
-- Touch ID protection, activity log, 8-language localization
+- Touch ID protection, activity log, 16-language localization
