@@ -6,7 +6,8 @@ struct ClusterDetailView: View {
     let onBack: () -> Void
     @State private var showDeleteConfirmation = false
     @State private var appeared = false
-    @State private var editingLabelsPool: CivoNodePool?
+    /// The pool whose labels are edited, with the cluster, account and region it was loaded from.
+    @State private var editingLabels: (pool: CivoNodePool, target: KubernetesNodePoolTarget)?
 
     private var totalNodes: Int {
         cluster.pools?.reduce(0) { $0 + ($1.count ?? 0) } ?? cluster.numTargetNodes ?? 0
@@ -30,6 +31,7 @@ struct ClusterDetailView: View {
 
     private var upgrades: KubernetesUpgradeController { vm.upgrades }
     private var nodeReplacements: KubernetesNodeRecycleController { vm.nodeReplacements }
+    private var nodePools: KubernetesNodePoolController { vm.nodePools }
 
     /// The version an accepted upgrade is heading for, until the cluster reports it.
     private var requestedVersion: String? {
@@ -44,6 +46,9 @@ struct ClusterDetailView: View {
                     ErrorBanner(message: notice)
                 }
                 if let notice = nodeReplacements.notice(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
+                    ErrorBanner(message: notice)
+                }
+                if let notice = nodePools.notice(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
                     ErrorBanner(message: notice)
                 }
                 if let metrics = vm.clusterMetrics {
@@ -88,15 +93,15 @@ struct ClusterDetailView: View {
                 .help("Delete this cluster")
             }
         }
-        .sheet(isPresented: Binding(get: { editingLabelsPool != nil }, set: { if !$0 { editingLabelsPool = nil } })) {
-            if let pool = editingLabelsPool {
+        .sheet(isPresented: Binding(get: { editingLabels != nil }, set: { if !$0 { editingLabels = nil } })) {
+            if let (pool, target) = editingLabels {
                 EditLabelsView(
-                    clusterId: cluster.id,
+                    target: target,
                     poolId: pool.id,
                     initialLabels: pool.labels ?? [:],
                     vm: vm
                 ) {
-                    editingLabelsPool = nil
+                    editingLabels = nil
                 }
                 .frame(minWidth: 500, minHeight: 300)
             }
@@ -115,6 +120,14 @@ struct ClusterDetailView: View {
                     Task { await replaceNode() }
                 }
                 .frame(minWidth: 480, minHeight: 360)
+            }
+        }
+        .sheet(isPresented: Binding(get: { nodePools.session != nil }, set: { if !$0 { nodePools.cancel() } })) {
+            if let session = nodePools.session {
+                EditNodePoolsView(controller: nodePools, session: session) { confirmingRemoval in
+                    Task { await savePools(confirmingRemoval: confirmingRemoval) }
+                }
+                .frame(minWidth: 560, minHeight: 520)
             }
         }
         .sheet(isPresented: $showDeleteConfirmation) {
@@ -188,6 +201,12 @@ struct ClusterDetailView: View {
         guard let outcome = await nodeReplacements.confirm(), outcome != .cancelled else { return }
         await vm.reloadSelectedCluster(cluster.id)
         if vm.isK8sConnected { await vm.loadNodes() }
+    }
+
+    /// Civo has only accepted the request; the reloaded cluster shows how the pools change.
+    private func savePools(confirmingRemoval: Bool) async {
+        guard await nodePools.save(confirmingRemoval: confirmingRemoval) != nil else { return }
+        await vm.reloadSelectedCluster(cluster.id)
     }
 
     // MARK: - Stats
@@ -747,7 +766,7 @@ struct ClusterDetailView: View {
     // MARK: - Node Pools
 
     private var nodePoolsSection: some View {
-        GroupBox("Node Pools") {
+        GroupBox {
             if let pools = cluster.pools, !pools.isEmpty {
                 VStack(spacing: 4) {
                     ForEach(Array(pools.enumerated()), id: \.element.id) { index, pool in
@@ -779,6 +798,25 @@ struct ClusterDetailView: View {
                 Text("No node pools")
                     .foregroundStyle(.secondary)
                     .padding(8)
+            }
+        } label: {
+            HStack {
+                Text("Node Pools")
+                Spacer()
+                if nodePools.isChangePending(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
+                    Label("Changes requested", systemImage: "clock.arrow.circlepath")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                }
+                Button("Edit Pools...", systemImage: "slider.horizontal.3") {
+                    Task {
+                        await nodePools.begin(editing: cluster, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount)
+                    }
+                }
+                .font(.caption)
+                .buttonStyle(.borderless)
+                .help("Change node counts, add pools or remove them")
+                .disabled(nodePools.session != nil || nodePools.isSending)
             }
         }
         .opacity(appeared ? 1 : 0)
@@ -837,9 +875,11 @@ struct ClusterDetailView: View {
                         .font(.caption.weight(.medium))
                         .foregroundStyle(.secondary)
                     Spacer()
-                    if vm.isK8sConnected {
+                    if vm.isK8sConnected, let account = vm.selectedClusterAccount {
                         Button {
-                            editingLabelsPool = pool
+                            editingLabels = (pool, KubernetesNodePoolTarget(
+                                clusterId: cluster.id, clusterName: cluster.name, region: vm.selectedClusterRegion, account: account
+                            ))
                         } label: {
                             Label("Edit", systemImage: "pencil")
                                 .font(.caption)

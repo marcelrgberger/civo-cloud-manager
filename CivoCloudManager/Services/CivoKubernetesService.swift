@@ -13,7 +13,15 @@ protocol KubernetesNodeRecycleAPI: Sendable {
     func recycleNode(_ hostname: String, inCluster id: String, region: String, apiKey: String) async throws
 }
 
-final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAPI, Sendable {
+/// The requests of a node pool change, each pinned to the account and region the change was started in.
+protocol KubernetesNodePoolAPI: Sendable {
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster
+    func listSizes(region: String, apiKey: String) async throws -> [CivoSize]
+    func quota(apiKey: String) async throws -> CivoQuota
+    func updatePools(_ pools: [CivoNodePoolSpec], inCluster id: String, region: String, apiKey: String) async throws
+}
+
+final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAPI, KubernetesNodePoolAPI, Sendable {
     private let api = CivoAPIClient.shared
 
     func listClusters(region: String? = nil) async throws -> PaginatedList<CivoKubernetesCluster> {
@@ -36,8 +44,31 @@ final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAP
         try await api.post(path: "/kubernetes/clusters", body: body)
     }
 
-    func updateCluster(_ id: String, body: [String: Any]) async throws -> CivoKubernetesCluster {
-        try await api.put(path: "/kubernetes/clusters/\(id)", body: body)
+    /// `PUT /v2/kubernetes/clusters/:id` with the complete desired state of the pools, built by `KubernetesNodePoolPlan`.
+    func updatePools(_ pools: [CivoNodePoolSpec], inCluster id: String, region: String, apiKey: String) async throws {
+        let _: CivoKubernetesCluster = try await api.put(
+            path: "/kubernetes/clusters/\(id)",
+            body: try Self.poolsBody(pools, region: region),
+            queryItems: [URLQueryItem(name: "region", value: region)],
+            apiKey: apiKey
+        )
+    }
+
+    /// Only `pools` and `region`, so the version and applications stay as they are. An empty array would delete
+    /// every pool, so it is never sent.
+    static func poolsBody(_ pools: [CivoNodePoolSpec], region: String) throws -> [String: Any] {
+        guard !pools.isEmpty else { throw KubernetesNodePoolError.removesAllPools }
+        return ["pools": pools.map(\.body), "region": region]
+    }
+
+    /// `GET /v2/sizes` for the region the change was started in.
+    func listSizes(region: String, apiKey: String) async throws -> [CivoSize] {
+        try await api.getArray(path: "/sizes", queryItems: [URLQueryItem(name: "region", value: region)], apiKey: apiKey)
+    }
+
+    /// `GET /v2/quota` of the account the change was started with.
+    func quota(apiKey: String) async throws -> CivoQuota {
+        try await api.get(path: "/quota", regionRequired: false, apiKey: apiKey)
     }
 
     /// `PUT /v2/kubernetes/clusters/:id` with only the target version, so pools and applications stay as they are.

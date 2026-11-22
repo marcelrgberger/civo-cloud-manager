@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct EditLabelsView: View {
-    let clusterId: String
+    /// The cluster, account and region the labels were loaded from, captured when the editor opened.
+    let target: KubernetesNodePoolTarget
     let poolId: String
     let initialLabels: [String: String]
     @Bindable var vm: KubernetesViewModel
@@ -11,8 +12,8 @@ struct EditLabelsView: View {
     @State private var newKey = ""
     @State private var newValue = ""
 
-    init(clusterId: String, poolId: String, initialLabels: [String: String], vm: KubernetesViewModel, onDismiss: @escaping () -> Void) {
-        self.clusterId = clusterId
+    init(target: KubernetesNodePoolTarget, poolId: String, initialLabels: [String: String], vm: KubernetesViewModel, onDismiss: @escaping () -> Void) {
+        self.target = target
         self.poolId = poolId
         self.initialLabels = initialLabels
         self.vm = vm
@@ -78,10 +79,13 @@ struct EditLabelsView: View {
             }
         }
         .formStyle(.grouped)
+        // The labels being sent are fixed once saving starts.
+        .disabled(vm.isSaving)
         .navigationTitle("Edit Labels")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") { onDismiss() }
+                    .disabled(vm.isSaving)
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
@@ -90,6 +94,8 @@ struct EditLabelsView: View {
                 .disabled(vm.isSaving)
             }
         }
+        // Once sent, the labels can no longer be called back, so the editor stays until Civo answers.
+        .interactiveDismissDisabled(vm.isSaving)
     }
 
     private func save() async {
@@ -97,15 +103,9 @@ struct EditLabelsView: View {
         for label in labels {
             labelDict[label.key] = label.value
         }
-
-        let body: [String: Any] = [
-            "pools": [
-                ["id": poolId, "labels": labelDict]
-            ]
-        ]
-        let success = await vm.updateCluster(clusterId, body: body)
+        let success = await vm.updateLabels(labelDict, shownLabels: initialLabels, ofPool: poolId, in: target)
         if success {
-            await vm.loadClusterDetail(clusterId)
+            await vm.loadClusterDetail(target.clusterId)
             onDismiss()
         }
     }
