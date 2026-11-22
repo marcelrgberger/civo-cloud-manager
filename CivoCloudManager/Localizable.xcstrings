@@ -105264,6 +105264,108 @@
           }
         }
       }
+    },
+    "Requested Kubernetes upgrade to %@" : {
+      "comment" : "Kubernetes activity log entry after Civo accepted an upgrade; %@ is the target version",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requested Kubernetes upgrade to %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes-Upgrade auf %@ angefordert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualización de Kubernetes a %@ solicitada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à niveau de Kubernetes vers %@ demandée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamento di Kubernetes a %@ richiesto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes-upgrade naar %@ aangevraagd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zlecono aktualizację Kubernetes do %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualização do Kubernetes para %@ solicitada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求将 Kubernetes 升级到 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes の %@ へのアップグレードを要求"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes %@(으)로 업그레이드 요청함"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم طلب ترقية Kubernetes إلى %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes को %@ पर अपग्रेड करने का अनुरोध किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade Kubernetes ke %@ diminta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes'in %@ sürümüne yükseltilmesi istendi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрошено обновление Kubernetes до %@"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

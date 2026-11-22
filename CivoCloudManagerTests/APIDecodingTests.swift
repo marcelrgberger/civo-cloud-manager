@@ -3638,8 +3638,8 @@ struct FirewallRuleEditorTests {
 // MARK: - Kubernetes versions and upgrades
 
 /// Decodes a cluster shaped like the examples of https://www.civo.com/api/kubernetes.
-private func kubernetesCluster(version: String, status: String = "ACTIVE", extra: String = "") -> CivoKubernetesCluster {
-    let json = #"{"id": "c-1", "name": "prod", "status": "\#(status)", "kubernetes_version": "\#(version)"\#(extra)}"#
+private func kubernetesCluster(id: String = "c-1", version: String, status: String = "ACTIVE", extra: String = "") -> CivoKubernetesCluster {
+    let json = #"{"id": "\#(id)", "name": "prod", "status": "\#(status)", "kubernetes_version": "\#(version)"\#(extra)}"#
     return try! JSONDecoder().decode(CivoKubernetesCluster.self, from: Data(json.utf8))
 }
 
@@ -3789,6 +3789,9 @@ struct KubernetesUpgradeTests {
         )
         let target = KubernetesUpgradeTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"), fromVersion: "1.20.0-k3s1")
 
+        /// The notice the detail page of the cluster loaded from LON1 with key-a shows.
+        var notice: String? { controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) }
+
         /// Opens the upgrade as the detail page does, for the cluster loaded from LON1 with key-a.
         func begin(_ cluster: CivoKubernetesCluster = kubernetesCluster(version: "1.20.0-k3s1")) async {
             await controller.begin(upgrading: cluster, region: "LON1", account: CivoAccount(apiKey: "key-a"))
@@ -3797,7 +3800,7 @@ struct KubernetesUpgradeTests {
 
     private static let target = kubernetesVersion("1.21.2+k3s1")
 
-    @Test("After confirming, the cluster and versions are loaded again, then only the upgrade is sent and remembered until reached")
+    @Test("After confirming, the cluster and versions are loaded again, then only the upgrade is sent and remembered, with its notice, until reached")
     func upgrade() async {
         let env = Environment()
         await env.begin()
@@ -3807,19 +3810,27 @@ struct KubernetesUpgradeTests {
         #expect(await env.controller.upgrade(to: Self.target) == .requested)
         #expect(await env.api.calls == ["versions key-a", "show c-1 LON1 key-a", "versions key-a", "upgrade c-1 1.21.2+k3s1 LON1 key-a"])
         #expect(env.controller.session == nil)
-        #expect(env.controller.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
         #expect(env.activities == ["prod 1.20.0-k3s1 1.21.2+k3s1"])
+        let account = CivoAccount(apiKey: "key-a")
+        #expect(env.controller.notice(forCluster: "c-2", region: "LON1", account: account) == nil)
+        #expect(env.controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-b")) == nil)
 
         // Accepted is not finished: until the cluster reports the version, no second upgrade starts.
-        let account = CivoAccount(apiKey: "key-a")
         env.controller.clusterDidLoad(kubernetesCluster(version: "1.20.0-k3s1"), region: "LON1", account: account)
         #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == "1.21.2+k3s1")
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
         await env.begin()
         #expect(env.controller.session == nil)
-        #expect(env.controller.notice == KubernetesUpgradeError.upgradeAlreadyRequested("1.21.2+k3s1").message)
+        #expect(env.notice == KubernetesUpgradeError.upgradeAlreadyRequested("1.21.2+k3s1").message)
+
+        // Another cluster reaching the version leaves this notice alone.
+        env.controller.clusterDidLoad(kubernetesCluster(id: "c-2", version: "1.21.2-k3s1"), region: "LON1", account: account)
+        #expect(env.notice != nil)
 
         env.controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: account)
         #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == nil)
+        #expect(env.notice == nil)
     }
 
     @Test("A cluster whose version changed, or that started an upgrade, after the sheet opened sends nothing", arguments: [
@@ -3832,7 +3843,7 @@ struct KubernetesUpgradeTests {
         await env.api.replaceCluster(with: reloaded)
         #expect(await env.controller.upgrade(to: Self.target) == .cancelled)
         #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
-        #expect(env.controller.notice == problem.message)
+        #expect(env.notice == problem.message)
     }
 
     @Test("A version Civo no longer offers when the user confirms sends nothing")
@@ -3842,7 +3853,7 @@ struct KubernetesUpgradeTests {
         await env.api.replaceCatalog(with: [kubernetesVersion("1.21.2+k3s1", type: "deprecated"), kubernetesVersion("1.22.1+k3s1")])
         #expect(await env.controller.upgrade(to: Self.target) == .cancelled)
         #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
-        #expect(env.controller.notice == KubernetesUpgradeError.targetUnavailable("1.21.2+k3s1").message)
+        #expect(env.notice == KubernetesUpgradeError.targetUnavailable("1.21.2+k3s1").message)
     }
 
     @Test("Revoked Full Access, or a region or key change while the cluster is loaded again, sends nothing")
@@ -3852,7 +3863,7 @@ struct KubernetesUpgradeTests {
         revoked.accessAllowed = false
         #expect(await revoked.controller.upgrade(to: Self.target) == .cancelled)
         #expect(await revoked.api.calls == ["versions key-a"])
-        #expect(revoked.controller.notice == KubernetesUpgradeError.accessRevoked.message)
+        #expect(revoked.notice == KubernetesUpgradeError.accessRevoked.message)
 
         let moved = Environment()
         await moved.begin()
@@ -3864,14 +3875,14 @@ struct KubernetesUpgradeTests {
         }
         #expect(await moved.controller.upgrade(to: Self.target) == nil)
         #expect(moved.controller.session == nil)
-        #expect(moved.controller.notice == KubernetesUpgradeError.regionChanged.message)
+        #expect(moved.notice == KubernetesUpgradeError.regionChanged.message)
         #expect(await moved.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
 
         let rekeyed = Environment()
         rekeyed.apiKey = "key-b"
         await rekeyed.begin()
         #expect(rekeyed.controller.session == nil)
-        #expect(rekeyed.controller.notice == KubernetesUpgradeError.accountChanged.message)
+        #expect(rekeyed.notice == KubernetesUpgradeError.accountChanged.message)
         #expect(await rekeyed.api.calls.isEmpty)
     }
 
@@ -3880,17 +3891,17 @@ struct KubernetesUpgradeTests {
         let busy = Environment()
         await busy.begin(kubernetesCluster(version: "1.20.0-k3s1", status: "BUILDING"))
         #expect(busy.controller.session == nil)
-        #expect(busy.controller.notice == KubernetesUpgradeError.clusterNotActive("BUILDING").message)
+        #expect(busy.notice == KubernetesUpgradeError.clusterNotActive("BUILDING").message)
 
         let unknown = Environment()
         await unknown.begin(kubernetesCluster(version: "next"))
-        #expect(unknown.controller.notice == KubernetesUpgradeError.unknownVersionFormat("next").message)
+        #expect(unknown.notice == KubernetesUpgradeError.unknownVersionFormat("next").message)
         #expect(await unknown.api.calls.isEmpty)
 
         let newest = Environment()
         await newest.begin(kubernetesCluster(version: "1.22.1-k3s1"))
         #expect(newest.controller.session == nil)
-        #expect(newest.controller.notice == KubernetesUpgradeError.noNewerVersion.message)
+        #expect(newest.notice == KubernetesUpgradeError.noNewerVersion.message)
     }
 
     @Test("An unreachable version list keeps the sheet open to try again")
@@ -3923,7 +3934,7 @@ struct KubernetesUpgradeTests {
         await lost.api.failUpgrade(with: CivoAPIError.networkError("The request timed out."))
         #expect(await lost.controller.upgrade(to: Self.target) == .uncertain)
         #expect(lost.controller.session == nil)
-        #expect(lost.controller.notice == KubernetesUpgradeController.unknownResultMessage(for: lost.target))
+        #expect(lost.notice == KubernetesUpgradeController.unknownResultMessage(for: lost.target))
         #expect(lost.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) == nil)
         #expect(lost.activities.isEmpty)
     }
@@ -3940,6 +3951,9 @@ struct KubernetesUpgradeTests {
         }
         #expect(await controller.upgrade(to: Self.target) == .requested)
         #expect(await env.api.calls.filter { $0.hasPrefix("upgrade") }.count == 1)
-        #expect(controller.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+
+        controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: CivoAccount(apiKey: "key-a"))
+        #expect(env.notice == nil)
     }
 }

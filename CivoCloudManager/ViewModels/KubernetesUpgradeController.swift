@@ -9,6 +9,15 @@ struct KubernetesUpgradeTarget: Equatable, Sendable {
     let account: CivoAccount
     /// The version the cluster reported when the upgrade was started.
     let fromVersion: String
+
+    fileprivate var key: ClusterKey { ClusterKey(clusterId: clusterId, region: region, account: account) }
+}
+
+/// A cluster as loaded from one region with one account.
+private struct ClusterKey: Equatable {
+    let clusterId: String
+    let region: String
+    let account: CivoAccount?
 }
 
 /// How a confirmed upgrade ended. The sheet stays open, and `sheetError` explains why, when `upgrade` returns nil.
@@ -39,10 +48,16 @@ final class KubernetesUpgradeController {
 
     /// An upgrade Civo answered as accepted, kept until the cluster reports the version.
     private struct RequestedUpgrade: Equatable {
-        let clusterId: String
-        let region: String
-        let account: CivoAccount
+        let cluster: ClusterKey
         let version: String
+    }
+
+    /// Shown only on the detail page of the cluster it was raised for.
+    private struct Notice {
+        let cluster: ClusterKey
+        let message: String
+        /// The version of an accepted upgrade the notice reports as not finished; the notice goes once it is reached.
+        var pendingVersion: String?
     }
 
     private(set) var session: Session?
@@ -52,8 +67,8 @@ final class KubernetesUpgradeController {
     private var sendingSessionId: UUID?
     /// Shown in the sheet: the version list could not be loaded, or Civo refused the upgrade.
     private(set) var sheetError: String?
-    /// Why the last upgrade was closed, or what became of it, shown on the cluster detail page.
-    private(set) var notice: String?
+    /// Why the last upgrade was closed, or what became of it.
+    private var notice: Notice?
     private var requestedUpgrades: [RequestedUpgrade] = []
 
     private let api: any KubernetesUpgradeAPI
@@ -72,7 +87,7 @@ final class KubernetesUpgradeController {
         notificationCenter: NotificationCenter = .default,
         recordActivity: @escaping @MainActor (KubernetesUpgradeTarget, String) -> Void = { target, version in
             ActivityLog.shared.log(
-                "Requested Kubernetes upgrade", detail: "\(target.fromVersion) to \(version)",
+                "Requested Kubernetes upgrade to %@", detail: version,
                 resourceType: "Kubernetes", resourceName: target.clusterName, resourceId: target.clusterId
             )
         }
@@ -103,7 +118,7 @@ final class KubernetesUpgradeController {
         notice = nil
         sheetError = nil
         guard let account else {
-            notice = KubernetesUpgradeError.accountChanged.message
+            notice = Notice(cluster: ClusterKey(clusterId: cluster.id, region: region, account: nil), message: KubernetesUpgradeError.accountChanged.message)
             return
         }
         let current = cluster.kubernetesVersion ?? cluster.version ?? ""
@@ -112,7 +127,7 @@ final class KubernetesUpgradeController {
             ?? requestedVersion(forCluster: cluster.id, region: region, account: account).map(KubernetesUpgradeError.upgradeAlreadyRequested)
             ?? KubernetesVersionCatalog.upgradeBlocker(for: cluster)
             ?? (KubernetesVersionNumber(current) == nil ? .unknownVersionFormat(current) : nil) {
-            notice = problem.message
+            close(problem, for: target)
             return
         }
         session = Session(target: target, recommendedVersion: cluster.upgradeAvailableTo)
@@ -130,12 +145,12 @@ final class KubernetesUpgradeController {
             let catalog = try await api.listVersions(apiKey: key)
             guard self.session?.id == session.id else { return }
             if let problem = targetError(for: session.target) {
-                close(problem)
+                close(problem, for: session.target)
                 return
             }
             switch KubernetesVersionCatalog.upgradeTargets(from: session.target.fromVersion, in: catalog) {
             case .success(let targets): self.session?.targets = targets
-            case .failure(let problem): close(problem)
+            case .failure(let problem): close(problem, for: session.target)
             }
         } catch {
             guard self.session?.id == session.id else { return }
@@ -145,7 +160,7 @@ final class KubernetesUpgradeController {
 
     func cancel() {
         if let session, session.id == sendingSessionId {
-            notice = Self.awaitingAnswerMessage(for: session.target)
+            notice = Notice(cluster: session.target.key, message: Self.awaitingAnswerMessage(for: session.target))
         }
         session = nil
         sheetError = nil
@@ -160,20 +175,31 @@ final class KubernetesUpgradeController {
         return nil
     }
 
+    /// Why the last upgrade of the cluster, loaded from `region` with `account`, was closed, or what became of it.
+    func notice(forCluster clusterId: String, region: String, account: CivoAccount?) -> String? {
+        guard let notice, notice.cluster == ClusterKey(clusterId: clusterId, region: region, account: account) else { return nil }
+        return notice.message
+    }
+
     // MARK: - Requested upgrades
 
     /// The version an accepted upgrade of the cluster is heading for, until the cluster reports it.
     func requestedVersion(forCluster clusterId: String, region: String, account: CivoAccount?) -> String? {
-        requestedUpgrades.first { $0.clusterId == clusterId && $0.region == region && $0.account == account }?.version
+        let cluster = ClusterKey(clusterId: clusterId, region: region, account: account)
+        return requestedUpgrades.first { $0.cluster == cluster }?.version
     }
 
-    /// Forgets an accepted upgrade once `cluster`, loaded from `region` with `account`, reports its version.
+    /// Forgets an accepted upgrade, and the notice that it is not finished, once `cluster`, loaded from
+    /// `region` with `account`, reports its version.
     func clusterDidLoad(_ cluster: CivoKubernetesCluster, region: String, account: CivoAccount) {
         guard let reported = (cluster.kubernetesVersion ?? cluster.version).flatMap(KubernetesVersionNumber.init) else { return }
-        requestedUpgrades.removeAll { request in
-            guard request.clusterId == cluster.id, request.region == region, request.account == account,
-                  let requested = KubernetesVersionNumber(request.version) else { return false }
-            return reported.compare(to: requested).map { $0 != .orderedAscending } ?? false
+        let key = ClusterKey(clusterId: cluster.id, region: region, account: account)
+        func isReached(_ version: String) -> Bool {
+            KubernetesVersionNumber(version).flatMap(reported.compare).map { $0 != .orderedAscending } ?? false
+        }
+        requestedUpgrades.removeAll { $0.cluster == key && isReached($0.version) }
+        if let notice, notice.cluster == key, let pending = notice.pendingVersion, isReached(pending) {
+            self.notice = nil
         }
     }
 
@@ -185,7 +211,7 @@ final class KubernetesUpgradeController {
         guard let session, !isSending, !isLoadingVersions else { return nil }
         let target = session.target
         sheetError = nil
-        if let problem = targetError(for: target) { return close(problem) }
+        if let problem = targetError(for: target) { return close(problem, for: target) }
         // One key for every request, so all reach the same account.
         let key = apiKey()
         guard !key.isEmpty else {
@@ -202,23 +228,23 @@ final class KubernetesUpgradeController {
             catalog = try await api.listVersions(apiKey: key)
             // Cancelled, or closed by a region or key change, while loading.
             guard self.session?.id == session.id else { return nil }
-            if let problem = targetError(for: target) { return close(problem) }
-            if let problem = Self.staleTargetError(target, cluster: cluster) { return close(problem) }
+            if let problem = targetError(for: target) { return close(problem, for: target) }
+            if let problem = Self.staleTargetError(target, cluster: cluster) { return close(problem, for: target) }
         } catch let CivoAPIError.httpError(status, _) where status == 404 {
             guard self.session?.id == session.id else { return nil }
-            return close(.clusterRemoved)
+            return close(.clusterRemoved, for: target)
         } catch {
             guard self.session?.id == session.id else { return nil }
-            if let problem = targetError(for: target) { return close(problem) }
+            if let problem = targetError(for: target) { return close(problem, for: target) }
             sheetError = CivoAPIError.userMessage(error)
             return nil
         }
         guard case .success(let offered) = KubernetesVersionCatalog.upgradeTargets(from: target.fromVersion, in: catalog),
               offered.contains(where: { $0.number == version.number }) else {
-            return close(.targetUnavailable(version.version))
+            return close(.targetUnavailable(version.version), for: target)
         }
         if let requested = requestedVersion(forCluster: target.clusterId, region: target.region, account: target.account) {
-            return close(.upgradeAlreadyRequested(requested))
+            return close(.upgradeAlreadyRequested(requested), for: target)
         }
 
         // From here on the sheet may be closed before Civo answers; the answer is then reported as a notice.
@@ -228,12 +254,12 @@ final class KubernetesUpgradeController {
             try await api.upgradeCluster(target.clusterId, to: version.version, region: target.region, apiKey: key)
         } catch CivoAPIError.decodingError {
             remember(version, for: target)
-            return finish(session, notice: Self.unreadableAnswerMessage(for: target, version: version.version), outcome: .uncertain)
+            return finish(session, notice: Self.unreadableAnswerMessage(for: target, version: version.version), pendingVersion: version.version, outcome: .uncertain)
         } catch let refusal as CivoAPIError where Self.provesNothingChanged(refusal) {
             // Civo refused the request, for example an upgrade path it does not allow.
             let reason = refusal.localizedDescription
             guard self.session?.id == session.id else {
-                notice = Self.notSentMessage(for: target, reason: reason)
+                notice = Notice(cluster: target.key, message: Self.notSentMessage(for: target, reason: reason))
                 return .cancelled
             }
             sheetError = reason
@@ -245,7 +271,7 @@ final class KubernetesUpgradeController {
         }
         remember(version, for: target)
         recordActivity(target, version.version)
-        return finish(session, notice: Self.acceptedMessage(for: target, version: version.version), outcome: .requested)
+        return finish(session, notice: Self.acceptedMessage(for: target, version: version.version), pendingVersion: version.version, outcome: .requested)
     }
 
     static func acceptedMessage(for target: KubernetesUpgradeTarget, version: String) -> String {
@@ -288,21 +314,22 @@ final class KubernetesUpgradeController {
     }
 
     private func remember(_ version: CivoKubernetesVersion, for target: KubernetesUpgradeTarget) {
-        requestedUpgrades.removeAll { $0.clusterId == target.clusterId && $0.region == target.region && $0.account == target.account }
-        requestedUpgrades.append(RequestedUpgrade(clusterId: target.clusterId, region: target.region, account: target.account, version: version.version))
+        requestedUpgrades.removeAll { $0.cluster == target.key }
+        requestedUpgrades.append(RequestedUpgrade(cluster: target.key, version: version.version))
     }
 
-    private func finish(_ sent: Session, notice: String, outcome: KubernetesUpgradeOutcome) -> KubernetesUpgradeOutcome {
+    private func finish(_ sent: Session, notice: String, pendingVersion: String? = nil, outcome: KubernetesUpgradeOutcome) -> KubernetesUpgradeOutcome {
         if session?.id == sent.id { session = nil }
-        self.notice = notice
+        self.notice = Notice(cluster: sent.target.key, message: notice, pendingVersion: pendingVersion)
         return outcome
     }
 
     @discardableResult
-    private func close(_ problem: KubernetesUpgradeError) -> KubernetesUpgradeOutcome {
+    private func close(_ problem: KubernetesUpgradeError, for target: KubernetesUpgradeTarget) -> KubernetesUpgradeOutcome {
         session = nil
         sheetError = nil
-        notice = problem.message
+        let pendingVersion: String? = if case .upgradeAlreadyRequested(let version) = problem { version } else { nil }
+        notice = Notice(cluster: target.key, message: problem.message, pendingVersion: pendingVersion)
         return .cancelled
     }
 
@@ -311,7 +338,7 @@ final class KubernetesUpgradeController {
         if session.id == sendingSessionId {
             cancel()
         } else {
-            close(problem)
+            close(problem, for: session.target)
         }
     }
 }

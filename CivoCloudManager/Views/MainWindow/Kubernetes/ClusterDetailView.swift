@@ -39,7 +39,7 @@ struct ClusterDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
-                if let notice = upgrades.notice {
+                if let notice = upgrades.notice(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
                     ErrorBanner(message: notice)
                 }
                 if let metrics = vm.clusterMetrics {
