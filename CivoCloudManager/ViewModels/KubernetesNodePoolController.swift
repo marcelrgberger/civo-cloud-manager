@@ -28,6 +28,16 @@ enum KubernetesNodePoolOutcome: Equatable {
     case cancelled
 }
 
+/// How saving the labels of a pool ended.
+enum KubernetesLabelSaveOutcome: Equatable {
+    /// Civo accepted the labels.
+    case saved
+    /// Nothing, or nothing certain, was saved; the message explains why.
+    case notSaved(String)
+    /// Nothing was sent and there is nothing to explain, as when loading the cluster again was cancelled.
+    case cancelled
+}
+
 /// Scales, adds and removes the node pools of one cluster at a time with one `PUT` of the complete desired
 /// state. Before the request the cluster is loaded again, and only the changes the user made are applied to it:
 /// a changed pool, a busy cluster or a size Civo no longer offers sends nothing. Nothing is sent again on its own.
@@ -282,17 +292,16 @@ final class KubernetesNodePoolController {
     }
 
     /// Saves the labels of pool `poolId` of the cluster in `target` as the complete desired state of its pools,
-    /// built from the cluster loaded again just now. Returns nil once Civo accepted the labels, otherwise why
-    /// nothing, or nothing certain, was saved.
-    func saveLabels(_ labels: [String: String], shownLabels: [String: String], ofPool poolId: String, in target: KubernetesNodePoolTarget) async -> String? {
-        guard !isSending else { return KubernetesNodePoolError.changeAlreadyPending.message }
+    /// built from the cluster loaded again just now.
+    func saveLabels(_ labels: [String: String], shownLabels: [String: String], ofPool poolId: String, in target: KubernetesNodePoolTarget) async -> KubernetesLabelSaveOutcome {
+        guard !isSending else { return .notSaved(KubernetesNodePoolError.changeAlreadyPending.message) }
         if let problem = targetError(for: target)
             ?? (isChangePending(forCluster: target.clusterId, region: target.region, account: target.account) ? .changeAlreadyPending : nil) {
-            return problem.message
+            return .notSaved(problem.message)
         }
         // One key for both requests, so the labels reach the account the cluster was loaded with.
         let key = apiKey()
-        guard !key.isEmpty else { return CivoAPIError.userMessage(CivoAPIError.noAPIKey) }
+        guard !key.isEmpty else { return .notSaved(CivoAPIError.noAPIKey.localizedDescription) }
 
         isSending = true
         defer { isSending = false }
@@ -300,24 +309,25 @@ final class KubernetesNodePoolController {
         let pools: [CivoNodePoolSpec]
         do {
             let cluster = try await api.showCluster(target.clusterId, region: target.region, apiKey: key)
-            if let problem = targetError(for: target) ?? KubernetesNodePoolPlan.busyStatus(of: cluster) { return problem.message }
+            if let problem = targetError(for: target) ?? KubernetesNodePoolPlan.busyStatus(of: cluster) { return .notSaved(problem.message) }
             switch KubernetesNodePoolPlan.relabeling(pool: poolId, from: shownLabels, to: labels, in: cluster) {
             case .success(let desired): pools = desired
-            case .failure(let problem): return problem.message
+            case .failure(let problem): return .notSaved(problem.message)
             }
         } catch let CivoAPIError.httpError(status, _) where status == 404 {
-            return KubernetesNodePoolError.clusterRemoved.message
+            return .notSaved(KubernetesNodePoolError.clusterRemoved.message)
         } catch {
-            return targetError(for: target)?.message ?? CivoAPIError.userMessage(error)
+            if let problem = targetError(for: target) { return .notSaved(problem.message) }
+            return CivoAPIError.userMessage(error).map(KubernetesLabelSaveOutcome.notSaved) ?? .cancelled
         }
         do {
             try await api.updatePools(pools, inCluster: target.clusterId, region: target.region, apiKey: key)
-            return nil
+            return .saved
         } catch let refusal as CivoAPIError where Self.provesNothingChanged(refusal) {
-            return Self.notSentMessage(reason: refusal.localizedDescription)
+            return .notSaved(Self.notSentMessage(reason: refusal.localizedDescription))
         } catch {
             // Not sent again; the reloaded cluster shows whether the labels were saved.
-            return Self.unknownResultMessage
+            return .notSaved(Self.unknownResultMessage)
         }
     }
 

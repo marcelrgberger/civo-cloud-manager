@@ -4186,10 +4186,19 @@ private extension Result {
 
 /// A cluster whose pools state size, node count, labels and taints, as Civo's cluster detail does.
 private func poolCluster(status: String = "ACTIVE", _ pools: [(id: String, size: String, count: Int)], extra: String = "") -> CivoKubernetesCluster {
+    kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": \#(poolEntries(pools))"# + extra)
+}
+
+/// Civo's `required_pools`: the pools it was last asked for, stated like the reported ones.
+private func requiredPools(_ pools: [(id: String, size: String, count: Int)]) -> String {
+    #", "required_pools": \#(poolEntries(pools))"#
+}
+
+private func poolEntries(_ pools: [(id: String, size: String, count: Int)]) -> String {
     let entries = pools.map { pool in
         #"{"id": "\#(pool.id)", "size": "\#(pool.size)", "count": \#(pool.count), "labels": {"team": "\#(pool.id)"}, "taints": [{"key": "dedicated", "value": "\#(pool.id)", "effect": "NoSchedule"}], "public_ip_node_pool": false}"#
     }
-    return kubernetesCluster(version: "1.20.0-k3s1", status: status, extra: #", "pools": [\#(entries.joined(separator: ", "))]"# + extra)
+    return "[\(entries.joined(separator: ", "))]"
 }
 
 private let twoPools = poolCluster([("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 2)])
@@ -4205,12 +4214,14 @@ private actor FakeKubernetesNodePoolAPI: KubernetesNodePoolAPI {
     private(set) var calls: [String] = []
     private(set) var sentPools: [[CivoNodePoolSpec]] = []
     private var updateError: Error?
+    private var showError: Error?
     /// Runs while the cluster is loaded again before saving, like a Settings change during the request.
     private var duringReload: (@Sendable () async -> Void)?
 
     func replaceCluster(with cluster: CivoKubernetesCluster) { self.cluster = cluster }
     func replaceSizes(with sizes: [CivoSize]) { self.sizes = sizes }
     func failUpdate(with error: Error) { updateError = error }
+    func failShow(with error: Error) { showError = error }
     func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
 
     func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster {
@@ -4219,6 +4230,7 @@ private actor FakeKubernetesNodePoolAPI: KubernetesNodePoolAPI {
             duringReload = nil
             await action()
         }
+        if let showError { throw showError }
         return cluster
     }
 
@@ -4444,29 +4456,66 @@ struct KubernetesNodePoolTests {
     func labelSaves() async throws {
         let target = KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"))
         let saved = Environment()
-        #expect(await saved.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == nil)
+        #expect(await saved.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .saved)
         #expect(await saved.api.calls == ["show c-1 LON1 key-a", "update c-1 LON1 key-a"])
         #expect(await saved.sentPools.first?.map(\.labels) == [["team": "pool-a"], ["tier": "batch"]])
 
         let stale = Environment()
-        #expect(await stale.controller.saveLabels([:], shownLabels: ["team": "other"], ofPool: "pool-b", in: target) == KubernetesNodePoolError.labelsChanged("pool-b").message)
+        #expect(await stale.controller.saveLabels([:], shownLabels: ["team": "other"], ofPool: "pool-b", in: target) == .notSaved(KubernetesNodePoolError.labelsChanged("pool-b").message))
 
         let moved = Environment()
         await moved.api.whileReloading {
             await MainActor.run { moved.region = "NYC1" }
         }
-        #expect(await moved.controller.saveLabels([:], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == KubernetesNodePoolError.regionChanged.message)
+        #expect(await moved.controller.saveLabels([:], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .notSaved(KubernetesNodePoolError.regionChanged.message))
 
         let pending = Environment()
         await pending.begin()
         pending.controller.edit { $0.setCount(4, ofPool: "pool-a") }
         #expect(await pending.controller.save(confirmingRemoval: false) == .requested)
-        #expect(await pending.controller.saveLabels([:], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == KubernetesNodePoolError.changeAlreadyPending.message)
+        #expect(await pending.controller.saveLabels([:], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .notSaved(KubernetesNodePoolError.changeAlreadyPending.message))
 
-        for env in [stale, moved] {
+        // A cancelled reload is neither a save nor a refusal, so the editor keeps the labels.
+        let cancelled = Environment()
+        await cancelled.api.failShow(with: CivoAPIError.cancelled)
+        #expect(await cancelled.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-b"], ofPool: "pool-b", in: target) == .cancelled)
+
+        for env in [stale, moved, cancelled] {
             #expect(await env.sentPools.isEmpty)
         }
         #expect(await pending.sentPools.count == 1)
+    }
+
+    @Test("Pools Civo was asked for but does not report yet, requested by another client, block pool and label saves; settled required pools do not")
+    func outstandingChange() async {
+        let pools: [(id: String, size: String, count: Int)] = [("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 2)]
+        #expect(KubernetesNodePoolPlan.busyStatus(of: poolCluster(pools, extra: requiredPools(pools))) == nil)
+        let grownElsewhere = poolCluster(pools, extra: requiredPools([("pool-a", "g4s.kube.small", 3), ("pool-b", "g4s.kube.medium", 4)]))
+        let addedElsewhere = poolCluster(pools, extra: requiredPools(pools + [("pool-c", "g4s.kube.large", 1)]))
+        #expect(KubernetesNodePoolPlan.busyStatus(of: grownElsewhere) == .poolChangeOutstanding)
+        #expect(KubernetesNodePoolPlan.busyStatus(of: addedElsewhere) == .poolChangeOutstanding)
+
+        let opening = Environment()
+        await opening.begin(grownElsewhere)
+        #expect(opening.controller.session == nil)
+        #expect(opening.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
+
+        let scaling = Environment()
+        await scaling.begin()
+        scaling.controller.edit { $0.setCount(5, ofPool: "pool-a") }
+        await scaling.api.replaceCluster(with: grownElsewhere)
+        #expect(await scaling.controller.save(confirmingRemoval: false) == .cancelled)
+        #expect(scaling.notice == KubernetesNodePoolError.poolChangeOutstanding.message)
+
+        let relabeling = Environment()
+        await relabeling.api.replaceCluster(with: addedElsewhere)
+        let target = KubernetesNodePoolTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: relabeling.account)
+        #expect(await relabeling.controller.saveLabels(["tier": "batch"], shownLabels: ["team": "pool-a"], ofPool: "pool-a", in: target)
+            == .notSaved(KubernetesNodePoolError.poolChangeOutstanding.message))
+
+        for env in [opening, scaling, relabeling] {
+            #expect(await env.sentPools.isEmpty)
+        }
     }
 
     @Test("A changed pool, a busy cluster, a size Civo no longer offers, revoked Full Access or a region change while loading sends nothing")

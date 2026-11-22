@@ -168,6 +168,7 @@ enum KubernetesNodePoolError: Error, Equatable {
     case clusterRemoved
     case clusterBusy(String)
     case upgradeInProgress
+    case poolChangeOutstanding
     case poolListUnavailable
     case poolStateUnknown(String)
     case poolRemoved(String)
@@ -194,6 +195,8 @@ enum KubernetesNodePoolError: Error, Equatable {
             String(localized: "The cluster is busy (status \(status)), so its node pools are not changed. Wait until it is active, then try again.")
         case .upgradeInProgress:
             String(localized: "The cluster is not on its desired version yet, so its node pools are not changed. Wait until the upgrade has finished, then try again.")
+        case .poolChangeOutstanding:
+            String(localized: "Civo has not finished an earlier node pool change of this cluster yet, so nothing was sent. Wait until the cluster shows it, then try again.")
         case .poolListUnavailable:
             String(localized: "Civo did not list the node pools of this cluster, so nothing was sent.")
         case .poolStateUnknown(let poolId):
@@ -269,7 +272,20 @@ enum KubernetesNodePoolPlan {
     /// Why the pools of `cluster` cannot be changed right now, nil while they can.
     static func busyStatus(of cluster: CivoKubernetesCluster) -> KubernetesNodePoolError? {
         guard cluster.status.lowercased() == "active" else { return .clusterBusy(cluster.status) }
-        return cluster.isUpgradeRunning ? .upgradeInProgress : nil
+        if cluster.isUpgradeRunning { return .upgradeInProgress }
+        return hasOutstandingChange(cluster) ? .poolChangeOutstanding : nil
+    }
+
+    /// Whether Civo was asked for pools the cluster does not report yet, by any client or an earlier session.
+    /// The pools sent are built from the reported ones, so sending them now would undo that request. Unknown,
+    /// and so not assumed, while Civo does not report `required_pools`.
+    static func hasOutstandingChange(_ cluster: CivoKubernetesCluster) -> Bool {
+        guard let required = cluster.requiredPools, !required.isEmpty else { return false }
+        let reported = cluster.pools ?? []
+        guard Set(required.map(\.id)) == Set(reported.map(\.id)) else { return true }
+        return required.contains { wanted in
+            !reported.contains { $0.id == wanted.id && isSameRequest($0, wanted) }
+        }
     }
 
     /// Every pool of `cluster` as it can be sent back unchanged.
@@ -295,6 +311,14 @@ enum KubernetesNodePoolPlan {
             case .remove: return !pools.contains { $0.id == change.poolId }
             }
         }
+    }
+
+    /// Compares every field a pool is sent with; an absent field means Civo's default.
+    private static func isSameRequest(_ pool: CivoNodePool, _ other: CivoNodePool) -> Bool {
+        pool.size == other.size && pool.count == other.count
+            && (pool.labels ?? [:]) == (other.labels ?? [:])
+            && (pool.taints ?? []) == (other.taints ?? [])
+            && (pool.publicIPNodePool ?? false) == (other.publicIPNodePool ?? false)
     }
 
     private static func isUnchanged(_ pool: CivoNodePoolSpec, since shownPools: [CivoNodePoolSpec]) -> Bool {

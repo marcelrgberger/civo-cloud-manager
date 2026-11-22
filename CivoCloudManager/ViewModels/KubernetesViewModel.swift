@@ -652,11 +652,15 @@ final class KubernetesViewModel {
     /// Saves the labels of one pool of the cluster in `target`; see `KubernetesNodePoolController.saveLabels`.
     func updateLabels(_ labels: [String: String], shownLabels: [String: String], ofPool poolId: String, in target: KubernetesNodePoolTarget) async -> Bool {
         isSaving = true; saveError = nil; defer { isSaving = false }
-        if let problem = await nodePools.saveLabels(labels, shownLabels: shownLabels, ofPool: poolId, in: target) {
+        switch await nodePools.saveLabels(labels, shownLabels: shownLabels, ofPool: poolId, in: target) {
+        case .saved:
+            showSuccess = true; await refresh(); return true
+        case .notSaved(let problem):
             saveError = problem
             return false
+        case .cancelled:
+            return false
         }
-        showSuccess = true; await refresh(); return true
     }
 
     func removeCluster(_ id: String) async -> Bool {

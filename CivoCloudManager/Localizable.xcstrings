@@ -110767,6 +110767,106 @@
         }
       }
     },
+    "Civo has not finished an earlier node pool change of this cluster yet, so nothing was sent. Wait until the cluster shows it, then try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo has not finished an earlier node pool change of this cluster yet, so nothing was sent. Wait until the cluster shows it, then try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat eine frühere Änderung der Node-Pools dieses Clusters noch nicht abgeschlossen, daher wurde nichts gesendet. Warten Sie, bis der Cluster sie anzeigt, und versuchen Sie es dann erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aún no ha terminado un cambio anterior en los grupos de nodos de este clúster, así que no se envió nada. Espere a que el clúster lo muestre y vuelva a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo n’a pas encore terminé une modification précédente des pools de nœuds de ce cluster, donc rien n’a été envoyé. Attendez que le cluster l’affiche, puis réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non ha ancora completato una modifica precedente ai pool di nodi di questo cluster, quindi non è stato inviato nulla. Attendi che il cluster la mostri, poi riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft een eerdere wijziging aan de node-pools van dit cluster nog niet afgerond, dus er is niets verzonden. Wacht tot het cluster die toont en probeer het dan opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie zakończyło jeszcze wcześniejszej zmiany pul węzłów tego klastra, więc nic nie zostało wysłane. Poczekaj, aż klaster ją pokaże, i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo ainda não concluiu uma alteração anterior nos pools de nós deste cluster, por isso nada foi enviado. Aguarde até o cluster mostrá-la e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 尚未完成此集群之前的节点池更改，因此未发送任何内容。请等待集群显示该更改后再试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo はこのクラスタの以前のノードプール変更をまだ完了していないため、何も送信されませんでした。クラスタに反映されるまで待ってから、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 이 클러스터의 이전 노드 풀 변경을 아직 완료하지 않아 아무것도 전송되지 않았습니다. 클러스터에 반영될 때까지 기다린 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تُكمل Civo بعد تغييرًا سابقًا لمجموعات عقد هذا العنقود، لذا لم يُرسل أي شيء. انتظر حتى يعرضه العنقود، ثم أعد المحاولة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने इस क्लस्टर के नोड पूल का पिछला बदलाव अभी पूरा नहीं किया है, इसलिए कुछ भी नहीं भेजा गया। क्लस्टर में दिखने तक प्रतीक्षा करें, फिर दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo belum menyelesaikan perubahan kolam node sebelumnya untuk klaster ini, jadi tidak ada yang dikirim. Tunggu hingga klaster menampilkannya, lalu coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bu kümenin önceki bir düğüm havuzu değişikliğini henüz tamamlamadı, bu nedenle hiçbir şey gönderilmedi. Küme bunu gösterene kadar bekleyin, sonra tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ещё не завершил предыдущее изменение пулов узлов этого кластера, поэтому ничего не отправлено. Дождитесь, пока кластер его покажет, и повторите попытку."
+          }
+        }
+      }
+    },
     "Pool %@ changed since you opened the editor, so nothing was sent. Open the node pools again to see the current state." : {
       "localizations" : {
         "en" : {
