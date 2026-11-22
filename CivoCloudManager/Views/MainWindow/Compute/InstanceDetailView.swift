@@ -8,10 +8,10 @@ struct InstanceDetailView: View {
     @State private var appeared = false
     @State private var passwordAccess = PasswordAccess()
     @State private var copiedPassword = false
-    @State private var showResize = false
     @State private var credentialsTarget: ConsoleTarget?
-    @State private var resizeTarget = ""
-    @State private var editingReverseDns = false
+    @State private var resizeSize = ""
+    /// Set while the reverse DNS is edited, captured when editing starts.
+    @State private var reverseDnsTarget: ConsoleTarget?
     @State private var reverseDnsValue = ""
     private let store = StoreManager.shared
 
@@ -32,6 +32,9 @@ struct InstanceDetailView: View {
                 metadataSection
             }
             .padding(24)
+        }
+        .safeAreaInset(edge: .top) {
+            if let error = vm.error { ErrorBanner(message: error) }
         }
         .navigationTitle(instance.name)
         .toolbar {
@@ -60,7 +63,10 @@ struct InstanceDetailView: View {
             try? await Task.sleep(for: .seconds(2))
             if !Task.isCancelled { copiedPassword = false }
         }
-        .sheet(isPresented: $showResize) {
+        .sheet(isPresented: Binding(
+            get: { vm.pendingAction?.kind == .resize && vm.pendingAction?.target.instanceId == instance.id },
+            set: { if !$0 { vm.cancelConfirmation() } }
+        )) {
             resizeSheet
         }
         .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
@@ -130,22 +136,22 @@ struct InstanceDetailView: View {
                     Text("Reverse DNS")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    if editingReverseDns {
+                    if let target = reverseDnsTarget {
                         HStack(spacing: 6) {
                             TextField("e.g. mail.example.com", text: $reverseDnsValue)
                                 .textFieldStyle(.roundedBorder)
                                 .font(.subheadline)
                             Button("Save") {
                                 Task {
-                                    await vm.updateInstance(instance.id, reverseDns: reverseDnsValue)
-                                    editingReverseDns = false
+                                    await vm.updateInstance(target, reverseDns: reverseDnsValue)
+                                    reverseDnsTarget = nil
                                 }
                             }
                             .buttonStyle(.borderedProminent)
                             .controlSize(.small)
                             .disabled(reverseDnsValue.isEmpty)
                             Button("Cancel") {
-                                editingReverseDns = false
+                                reverseDnsTarget = nil
                             }
                             .controlSize(.small)
                         }
@@ -154,14 +160,16 @@ struct InstanceDetailView: View {
                             Text(instance.reverseDns ?? "Not set")
                                 .font(.subheadline)
                                 .foregroundStyle(instance.reverseDns != nil ? .primary : .tertiary)
-                            Button {
-                                reverseDnsValue = instance.reverseDns ?? ""
-                                editingReverseDns = true
-                            } label: {
-                                Image(systemName: "pencil")
-                                    .font(.caption)
+                            if let target = vm.consoleTarget(for: instance) {
+                                Button {
+                                    reverseDnsValue = instance.reverseDns ?? ""
+                                    reverseDnsTarget = target
+                                } label: {
+                                    Image(systemName: "pencil")
+                                        .font(.caption)
+                                }
+                                .buttonStyle(.borderless)
                             }
-                            .buttonStyle(.borderless)
                         }
                     }
                 }
@@ -246,61 +254,8 @@ struct InstanceDetailView: View {
     private var metadataSection: some View {
         GroupBox("Actions & Metadata") {
             VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 10) {
-                    if instance.status?.lowercased() == "active" {
-                        Button { Task { await vm.stopInstance(instance.id) } } label: {
-                            Label("Stop", systemImage: "stop.circle")
-                        }
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-                        .tint(.orange)
-
-                        Button { Task { await vm.rebootInstance(instance.id) } } label: {
-                            Label("Reboot", systemImage: "arrow.clockwise.circle")
-                        }
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-
-                        if let target = vm.consoleTarget(for: instance) {
-                            Button {
-                                vm.handOverConsoleLogin(of: instance, to: target)
-                                openWindow(id: "console", value: target)
-                            } label: {
-                                Label("Open Console", systemImage: "terminal")
-                            }
-                            .buttonStyle(.bordered)
-                            .controlSize(.small)
-                            .help("Open the instance console in a new window")
-                        }
-                    } else if instance.status?.lowercased() == "shutoff" {
-                        Button { Task { await vm.startInstance(instance.id) } } label: {
-                            Label("Start", systemImage: "play.circle")
-                        }
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-                        .tint(.green)
-                    }
-
-                    // Unlike the console, available in every state, so credentials can be kept up to date.
-                    if let target = vm.consoleTarget(for: instance) {
-                        Button {
-                            credentialsTarget = target
-                        } label: {
-                            Label("Credentials…", systemImage: "key")
-                        }
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-                        .help("Save a username and password for this instance in this Mac's keychain")
-                    }
-
-                    Button {
-                        showResize = true
-                        resizeTarget = instance.size ?? ""
-                    } label: {
-                        Label("Resize", systemImage: "arrow.up.right.circle")
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.small)
+                if let target = vm.consoleTarget(for: instance) {
+                    actionButtons(target)
                 }
 
                 // Activity log for this instance
@@ -342,6 +297,62 @@ struct InstanceDetailView: View {
         .animation(.easeOut(duration: 0.3).delay(0.3), value: appeared)
     }
 
+    /// Every action uses the target captured from the listed instance, never the Settings region.
+    private func actionButtons(_ target: ConsoleTarget) -> some View {
+        HStack(spacing: 10) {
+            if instance.status?.lowercased() == "active" {
+                Button { Task { await vm.stopInstance(target) } } label: {
+                    Label("Stop", systemImage: "stop.circle")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .tint(.orange)
+
+                Button { Task { await vm.rebootInstance(target) } } label: {
+                    Label("Reboot", systemImage: "arrow.clockwise.circle")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+
+                Button {
+                    vm.handOverConsoleLogin(of: instance, to: target)
+                    openWindow(id: "console", value: target)
+                } label: {
+                    Label("Open Console", systemImage: "terminal")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .help("Open the instance console in a new window")
+            } else if instance.status?.lowercased() == "shutoff" {
+                Button { Task { await vm.startInstance(target) } } label: {
+                    Label("Start", systemImage: "play.circle")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .tint(.green)
+            }
+
+            // Unlike the console, available in every state, so credentials can be kept up to date.
+            Button {
+                credentialsTarget = target
+            } label: {
+                Label("Credentials…", systemImage: "key")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+            .help("Save a username and password for this instance in this Mac's keychain")
+
+            Button {
+                resizeSize = instance.size ?? ""
+                vm.beginConfirmation(.resize, for: instance)
+            } label: {
+                Label("Resize", systemImage: "arrow.up.right.circle")
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.small)
+        }
+    }
+
     // MARK: - Resize Sheet
 
     private var resizeSheet: some View {
@@ -352,21 +363,20 @@ struct InstanceDetailView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            SizePickerGrid(sizes: vm.availableSizes, selectedSize: $resizeTarget, filterPrefix: "Instance")
+            SizePickerGrid(sizes: vm.availableSizes, selectedSize: $resizeSize, filterPrefix: "Instance")
                 .frame(maxHeight: 300)
 
             HStack {
-                Button("Cancel") { showResize = false }
+                Button("Cancel") { vm.cancelConfirmation() }
                     .keyboardShortcut(.cancelAction)
                 Spacer()
                 Button("Resize") {
-                    Task {
-                        await vm.resizeInstance(instance.id, size: resizeTarget)
-                        showResize = false
-                    }
+                    guard let target = vm.confirmPendingAction() else { return }
+                    let size = resizeSize
+                    Task { await vm.resizeInstance(target, size: size) }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(resizeTarget.isEmpty || resizeTarget == instance.size)
+                .disabled(resizeSize.isEmpty || resizeSize == instance.size)
                 .keyboardShortcut(.defaultAction)
             }
         }

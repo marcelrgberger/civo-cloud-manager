@@ -2,7 +2,6 @@ import SwiftUI
 
 struct InstanceListView: View {
     @Bindable var vm: InstanceViewModel
-    @State private var deleteTarget: CivoInstance?
     @State private var credentialsTarget: ConsoleTarget?
     @Environment(\.openWindow) private var openWindow
 
@@ -64,24 +63,22 @@ struct InstanceListView: View {
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
-                        if inst.status?.lowercased() == "active" {
-                            Button("Stop") { Task { await vm.stopInstance(inst.id) } }
-                            Button("Reboot") { Task { await vm.rebootInstance(inst.id) } }
-                            if let target = vm.consoleTarget(for: inst) {
+                        if let target = vm.consoleTarget(for: inst) {
+                            if inst.status?.lowercased() == "active" {
+                                Button("Stop") { Task { await vm.stopInstance(target) } }
+                                Button("Reboot") { Task { await vm.rebootInstance(target) } }
                                 Button("Open Console") {
                                     vm.handOverConsoleLogin(of: inst, to: target)
                                     openWindow(id: "console", value: target)
                                 }
                             }
-                        }
-                        if let target = vm.consoleTarget(for: inst) {
                             Button("Credentials…") { credentialsTarget = target }
-                        }
-                        if inst.status?.lowercased() == "shutoff" {
-                            Button("Start") { Task { await vm.startInstance(inst.id) } }
+                            if inst.status?.lowercased() == "shutoff" {
+                                Button("Start") { Task { await vm.startInstance(target) } }
+                            }
                         }
                         Divider()
-                        Button("Delete", role: .destructive) { deleteTarget = inst }
+                        Button("Delete", role: .destructive) { vm.beginConfirmation(.delete, for: inst) }
                     }
                 }
             }
@@ -92,16 +89,16 @@ struct InstanceListView: View {
         }
         .navigationTitle("Instances")
         .overlay { if vm.isLoading && vm.instances.isEmpty { ProgressView("Loading instances...") } }
-        .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
-            if let target = deleteTarget {
+        .sheet(isPresented: Binding(get: { vm.pendingAction?.kind == .delete }, set: { if !$0 { vm.cancelConfirmation() } })) {
+            if let target = vm.pendingAction?.target {
                 DeleteConfirmationSheet(
                     resourceType: "Instance",
-                    resourceName: target.name,
+                    resourceName: target.instanceName,
                     onConfirm: {
+                        guard let target = vm.confirmPendingAction() else { return }
                         Task { await vm.removeInstance(target) }
-                        deleteTarget = nil
                     },
-                    onCancel: { deleteTarget = nil },
+                    onCancel: { vm.cancelConfirmation() },
                     note: vm.mayHaveSavedCredentials(target) ? "Saved credentials for this instance will be deleted as well." : nil
                 )
             }

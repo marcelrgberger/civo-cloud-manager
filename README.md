@@ -364,6 +364,24 @@ classDiagram
 
 The network picker preselects the network that `GET /v2/networks` flags as `default` and always sends its ID as `network_id`, as the official Go client does (`civogo` `NewInstanceConfig` via `GetDefaultNetwork`). If no network is flagged as default, the user has to pick one. The firewall picker lists only firewalls whose `network_id` matches the selected network, and changing the network clears the chosen firewall. Leaving the firewall on Default omits `firewall_id`; in the default network Civo then uses the default firewall. API errors such as an exceeded quota are shown in the form.
 
+## Instance action targets
+
+Every instance action (stop, start, reboot, resize, reverse DNS, delete, console and credentials) starts from a `ConsoleTarget` captured by `InstanceViewModel.consoleTarget(for:)`: the instance ID with the region the instance list was fetched from. Requests send that region explicitly, so a later Settings region never redirects them. Right before each request, `targetError(for:)` checks the target again and refuses it without sending anything when Full Access has ended, the region is unknown, the Settings region or the loaded list region no longer matches, or the instance is missing from the reloaded list. The reason is shown in the error banner.
+
+Actions that need a confirmation (resize, delete) are held as `pendingAction`. A Settings region change (`civoRegionDidChange`) or a reload that invalidates the target closes the confirmation and shows why. A selection from another region, or one missing from the reloaded list, is cleared. Later instance actions reuse the same capture, confirmation and check.
+
+```mermaid
+flowchart TD
+    A[User starts action] --> B[Capture instance ID and list region]
+    B --> C{Needs confirmation?}
+    C -->|Yes| D[pendingAction]
+    D -->|Region change or reload invalidates target| E[Close confirmation, show reason]
+    D -->|User confirms| F{targetError}
+    C -->|No| F
+    F -->|Full Access, region or instance no longer valid| G[Refuse, show reason, send nothing]
+    F -->|Valid| H[Send request with captured region]
+```
+
 ## Instance console
 
 Active instances offer **Open Console** in the detail view and the list's context menu. The console opens in its own window and requires Full Access; the window checks access itself and detaches the console if access ends while it is open.
@@ -372,8 +390,8 @@ The app uses the API-key path only: `PUT /v2/instances/{id}/vnc?region={r}&durat
 
 | Action | Effect |
 | --- | --- |
-| Close the window | Disconnects locally only. The Civo session stays active until it expires (requested for 1 hour). No DELETE, because the API cannot prove who owns a session. |
-| End session | `DELETE .../vnc` ends the session on Civo for everyone, including a dashboard console. A 404 counts as already ended. A failed DELETE is reported as such and is not logged as ended. |
+| Close the window | Disconnects locally only. The web view unloads the noVNC page, which closes its WebSocket. The Civo session stays active until it expires (requested for 1 hour). No DELETE, because the API cannot prove who owns a session. |
+| End session | First unloads the noVNC page and waits until WebKit reports the empty replacement page loaded, so the page's WebSocket is closed by the app (at most 2 seconds; a hung web content process does not block the end). Then `DELETE .../vnc` ends the session on Civo for everyone, including a dashboard console. Closing the window during that wait does not cancel the confirmed end. A 404 counts as already ended. A failed DELETE is reported as such and is not logged as ended. |
 | Reconnect | Repeats the PUT, fetches a fresh JWT and waits again. It does not only refresh the JWT, so an expired session is restarted. |
 
 Every start requests `duration=1h`. When a session is already active, Civo returns it; Civo does not document whether that resets the remaining time, so the app does not promise a fresh hour on reuse.
@@ -403,9 +421,10 @@ sequenceDiagram
     end
     W->>V: WKWebView loads noVNC page
     alt Window closed
-        W-->>W: Detach web view, keep server session
+        W-->>W: Unload page (closes WebSocket), keep server session
     else End session
-        W-->>W: Detach web view first
+        W->>V: Unload page, WebSocket closed
+        W-->>W: Wait for unload (max 2 s)
         W->>A: DELETE /instances/{id}/vnc?region
         A-->>W: 200 ended / 404 already ended / error reported
     end

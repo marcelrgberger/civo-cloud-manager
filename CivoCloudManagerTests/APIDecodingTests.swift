@@ -1,6 +1,8 @@
 import AppKit
 import Foundation
+import Network
 import Testing
+import WebKit
 import Security
 import CryptoKit
 import LocalAuthentication
@@ -844,6 +846,36 @@ private actor FakeConsoleAPI: ConsoleAPI {
     }
 }
 
+/// Page unloader whose unload finishes only when the test says so.
+@MainActor
+private final class FakePageUnloader: ConsolePageUnloading {
+    private let order: EventOrder?
+    private var waiter: CheckedContinuation<Void, Never>?
+    private var isUnloaded = false
+    private(set) var started = false
+    var isWaiting: Bool { waiter != nil }
+
+    init(order: EventOrder? = nil) { self.order = order }
+
+    func start() {
+        guard !started else { return }
+        started = true
+        order?.append("unload")
+    }
+
+    func waitUntilUnloaded() async {
+        guard !isUnloaded else { return }
+        await withCheckedContinuation { waiter = $0 }
+        order?.append("unloaded")
+    }
+
+    func finish() {
+        isUnloaded = true
+        waiter?.resume()
+        waiter = nil
+    }
+}
+
 private actor SleepRecorder {
     private(set) var sleeps: [Duration] = []
     func record(_ duration: Duration) { sleeps.append(duration) }
@@ -1010,6 +1042,101 @@ private func waitUntil(_ condition: @MainActor () async -> Bool) async {
     Issue.record("Condition not met")
 }
 
+/// Local WebSocket server that records whether the client sent a close frame.
+@MainActor
+private final class WebSocketFixture {
+    private let listener: NWListener
+    private var connections: [NWConnection] = []
+    private(set) var isConnected = false
+    private(set) var receivedCloseFrame = false
+
+    init() throws {
+        let parameters = NWParameters.tcp
+        parameters.defaultProtocolStack.applicationProtocols.insert(NWProtocolWebSocket.Options(), at: 0)
+        parameters.requiredLocalEndpoint = .hostPort(host: .ipv4(.loopback), port: .any)
+        listener = try NWListener(using: parameters)
+        listener.newConnectionHandler = { [weak self] connection in
+            MainActor.assumeIsolated { self?.accept(connection) }
+        }
+    }
+
+    func start() async throws -> UInt16 {
+        listener.start(queue: .main)
+        try await poll { self.listener.state == .ready }
+        return try #require(listener.port?.rawValue)
+    }
+
+    func stop() {
+        connections.forEach { $0.cancel() }
+        listener.cancel()
+    }
+
+    private func accept(_ connection: NWConnection) {
+        connections.append(connection)
+        connection.stateUpdateHandler = { [weak self] state in
+            MainActor.assumeIsolated {
+                if case .ready = state { self?.isConnected = true }
+            }
+        }
+        connection.start(queue: .main)
+        receive(on: connection)
+    }
+
+    private func receive(on connection: NWConnection) {
+        connection.receiveMessage { [weak self] _, context, _, error in
+            MainActor.assumeIsolated {
+                guard let self, error == nil else { return }
+                let metadata = context?.protocolMetadata(definition: NWProtocolWebSocket.definition) as? NWProtocolWebSocket.Metadata
+                if metadata?.opcode == .close {
+                    self.receivedCloseFrame = true
+                } else {
+                    self.receive(on: connection)
+                }
+            }
+        }
+    }
+}
+
+@MainActor
+private func poll(timeout: Duration = .seconds(10), _ condition: @MainActor () -> Bool) async throws {
+    let clock = ContinuousClock()
+    let deadline = clock.now + timeout
+    while !condition() && clock.now < deadline { try await Task.sleep(for: .milliseconds(10)) }
+    try #require(condition())
+}
+
+@Suite("Console page unload")
+@MainActor
+struct ConsolePageUnloadTests {
+    @Test("Unloading closes the page's WebSocket with a close frame and returns well before the timeout")
+    func closesWebSocketBeforeReturning() async throws {
+        let server = try WebSocketFixture()
+        defer { server.stop() }
+        let port = try await server.start()
+
+        let config = WKWebViewConfiguration()
+        config.websiteDataStore = .nonPersistent()
+        let webView = WKWebView(frame: .zero, configuration: config)
+        webView.loadHTMLString("<script>window.socket = new WebSocket('ws://127.0.0.1:\(port)')</script>", baseURL: nil)
+        try await poll { server.isConnected }
+        #expect(!server.receivedCloseFrame)
+
+        let unloader = ConsolePageUnloader(webView: webView, timeout: .seconds(30))
+        let clock = ContinuousClock()
+        let started = clock.now
+        unloader.start()
+        unloader.start()
+        await unloader.waitUntilUnloaded()
+        #expect(clock.now - started < .seconds(10))
+
+        // The frame travels through WebKit's network process, so its receipt is awaited separately.
+        try await poll(timeout: .seconds(2)) { server.receivedCloseFrame }
+        #expect(webView.isHidden)
+        // A later wait, for example from a second End session, returns immediately.
+        await unloader.waitUntilUnloaded()
+    }
+}
+
 @Suite("Console session lifecycle")
 @MainActor
 struct ConsoleLifecycleTests {
@@ -1020,28 +1147,38 @@ struct ConsoleLifecycleTests {
         #expect(env.vm.phase == .loading)
         let url = try #require(env.vm.connection?.url)
         #expect(url.absoluteString.contains("token=jwt-1"))
+        let unloader = FakePageUnloader()
+        env.vm.webViewDidAttach(connectionID: try #require(env.vm.connection).id, unloader: unloader)
 
         env.vm.closeLocally()
+        #expect(unloader.started)
         #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .disconnected)
         #expect(await env.api.endCalls == 0)
         #expect(env.activities == ["Opened console"])
     }
 
-    @Test("End session runs the web view teardown before DELETE is sent")
-    func endDetachesFirst() async throws {
+    @Test("End session unloads the page and sends DELETE only after the unload finished")
+    func endUnloadsFirst() async throws {
         let env = ConsoleEnvironment()
         await env.connectAndSettle()
         let connection = try #require(env.vm.connection)
-        env.vm.webViewDidAttach(connectionID: connection.id) { env.api.order.append("teardown") }
+        let unloader = FakePageUnloader(order: env.api.order)
+        env.vm.webViewDidAttach(connectionID: connection.id, unloader: unloader)
         await env.api.configure(holdEnd: true)
 
         let ending = Task { await env.vm.endSession() }
-        await waitUntil { await env.api.endCalls == 1 }
-        #expect(env.api.order.all == ["teardown", "delete"])
+        await waitUntil { unloader.isWaiting }
+        #expect(env.api.order.all == ["unload"])
         #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .ending)
         await env.vm.endSession()
+        #expect(await env.api.endCalls == 0)
+
+        unloader.finish()
+        await waitUntil { await env.api.endCalls == 1 }
+        #expect(env.api.order.all == ["unload", "unloaded", "delete"])
+        #expect(env.vm.phase == .ending)
         #expect(await env.api.endCalls == 1)
 
         await env.api.releaseEnds()
@@ -1065,6 +1202,22 @@ struct ConsoleLifecycleTests {
         #expect(failing.vm.phase == .endFailed(.server(502)))
         #expect(failing.vm.connection == nil)
         #expect(!failing.activities.contains { $0.contains("Ended") })
+    }
+
+    @Test("A confirmed End session still sends DELETE when the window closes during the unload")
+    func endSurvivesWindowCloseWhileUnloading() async throws {
+        let env = ConsoleEnvironment()
+        await env.connectAndSettle()
+        let unloader = FakePageUnloader()
+        env.vm.webViewDidAttach(connectionID: try #require(env.vm.connection).id, unloader: unloader)
+
+        let ending = Task { await env.vm.endSession() }
+        await waitUntil { unloader.isWaiting }
+        env.vm.closeLocally()
+        unloader.finish()
+        await ending.value
+        #expect(await env.api.endCalls == 1)
+        #expect(env.vm.phase == .disconnected)
     }
 
     @Test("A session that arrives after the window closed is ignored, not used or deleted")
@@ -1104,12 +1257,12 @@ struct ConsoleLifecycleTests {
         await env.connectAndSettle()
         let old = try #require(env.vm.connection)
         await env.connectAndSettle()
-        var staleTornDown = false
-        env.vm.webViewDidAttach(connectionID: old.id) { staleTornDown = true }
+        let staleUnloader = FakePageUnloader()
+        env.vm.webViewDidAttach(connectionID: old.id, unloader: staleUnloader)
         env.vm.pageDidFail(connectionID: old.id)
         env.vm.pageDidLoad(connectionID: old.id)
 
-        #expect(staleTornDown)
+        #expect(staleUnloader.started)
         #expect(env.vm.connection != nil)
         #expect(env.vm.phase == .loading)
     }
@@ -1524,25 +1677,22 @@ struct InstanceCredentialVaultTests {
 
     @Test("Saved credentials go only after Civo confirmed the instance deletion")
     func instanceDeletion() async throws {
-        let instance = try JSONDecoder().decode(
-            CivoInstance.self,
-            from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "region": "LON1"}"#.utf8)
-        )
-        struct DeletionFailed: Error {}
         let keychain = FakeKeychain()
         let store = InstanceCredentialStore(keychain: keychain.client, notificationCenter: NotificationCenter())
         try store.create(credential, for: key)
 
-        let failing = InstanceViewModel(credentials: store, deleteInstance: { _ in throw DeletionFailed() })
-        #expect(await failing.delete(instance) == false)
+        let failing = InstanceEnvironment(credentials: store)
+        await failing.api.failDeletion()
+        await failing.vm.refresh()
+        #expect(await failing.vm.delete(consoleTarget) == false)
         #expect(try store.contains(key))
 
-        var deleted: [String] = []
-        let succeeding = InstanceViewModel(credentials: store, deleteInstance: { deleted.append($0) })
-        #expect(await succeeding.delete(instance))
-        #expect(deleted == [consoleInstanceId])
+        let succeeding = InstanceEnvironment(credentials: store)
+        await succeeding.vm.refresh()
+        #expect(await succeeding.vm.delete(consoleTarget))
+        #expect(await succeeding.api.calls == ["delete \(consoleInstanceId) LON1"])
         #expect(try store.contains(key) == false)
-        #expect(succeeding.error == nil)
+        #expect(succeeding.vm.error == nil)
     }
 
     @Test("An edit holding the stored values ends after its time and needs a new authentication")
@@ -1579,6 +1729,161 @@ struct InstanceCredentialVaultTests {
         let relocks = vault.relocks
         vault.invalidate()
         #expect(vault.relocks == relocks + 1)
+    }
+}
+
+/// Instance requests recorded instead of sent; each call names the region it was sent to.
+private actor FakeInstanceAPI: InstanceAPI {
+    var instancesByRegion: [String: [CivoInstance]]
+    private(set) var calls: [String] = []
+    private var deletionFails = false
+
+    init(instancesByRegion: [String: [CivoInstance]]) {
+        self.instancesByRegion = instancesByRegion
+    }
+
+    func list(_ instances: [CivoInstance], in region: String) { instancesByRegion[region] = instances }
+    func failDeletion() { deletionFails = true }
+
+    func listInstances(region: String?) async throws -> [CivoInstance] {
+        instancesByRegion[region ?? ""] ?? []
+    }
+
+    func updateInstance(_ id: String, body: sending [String: Any], region: String) async throws { calls.append("update \(id) \(region)") }
+    func stopInstance(_ id: String, region: String) async throws { calls.append("stop \(id) \(region)") }
+    func startInstance(_ id: String, region: String) async throws { calls.append("start \(id) \(region)") }
+    func rebootInstance(_ id: String, region: String) async throws { calls.append("reboot \(id) \(region)") }
+    func resizeInstance(_ id: String, size: String, region: String) async throws { calls.append("resize \(id) \(region)") }
+
+    func removeInstance(_ id: String, region: String) async throws {
+        struct DeletionFailed: Error {}
+        if deletionFails { throw DeletionFailed() }
+        calls.append("delete \(id) \(region)")
+    }
+}
+
+/// An instance view model with a fake API, its own Settings region, notification center and activity log.
+@MainActor
+private final class InstanceEnvironment {
+    /// Listed without its own `region`, so the target can only come from the list region.
+    static let instance = try! JSONDecoder().decode(
+        CivoInstance.self,
+        from: Data(#"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "ACTIVE"}"#.utf8)
+    )
+
+    var region = "LON1"
+    var accessAllowed = true
+    let api = FakeInstanceAPI(instancesByRegion: ["LON1": [instance]])
+    let center = NotificationCenter()
+    private(set) var activities: [String] = []
+    private(set) var vm: InstanceViewModel!
+
+    init(credentials: InstanceCredentialStore? = nil) {
+        let store = credentials ?? InstanceCredentialStore(keychain: FakeKeychain().client, notificationCenter: NotificationCenter())
+        vm = InstanceViewModel(
+            credentials: store,
+            api: api,
+            loadSSHKeys: { [] },
+            settingsRegion: { [weak self] in self?.region ?? "" },
+            isAccessAllowed: { [weak self] in self?.accessAllowed ?? false },
+            notificationCenter: center,
+            recordActivity: { [weak self] action, _ in self?.activities.append(action) }
+        )
+    }
+
+    /// Changes the Settings region the way `CivoConfig` does.
+    func changeRegion(to region: String) {
+        self.region = region
+        center.post(name: .civoRegionDidChange, object: nil)
+    }
+}
+
+@Suite("Instance action targets")
+@MainActor
+struct InstanceActionTargetTests {
+    @Test("Actions use the region the instance was listed from, never a later Settings region")
+    func capturedRegion() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        let target = try #require(env.vm.consoleTarget(for: InstanceEnvironment.instance))
+        #expect(target.region == "LON1")
+
+        await env.vm.stopInstance(target)
+        #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Stopped"])
+
+        // Settings changed, list not reloaded yet: refused, not redirected to NYC1.
+        env.region = "NYC1"
+        await env.vm.rebootInstance(target)
+        #expect(await env.api.calls == ["stop \(consoleInstanceId) LON1"])
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+
+        // After reloading NYC1 the old instance yields no target, so nothing can fall back to NYC1.
+        await env.vm.refresh()
+        #expect(env.vm.consoleTarget(for: InstanceEnvironment.instance) == nil)
+    }
+
+    @Test("A region change while a confirmation is open cancels it, tells the user and sends nothing")
+    func regionChangeCancelsConfirmation() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.beginConfirmation(.resize, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.pendingAction?.target)
+
+        env.changeRegion(to: "NYC1")
+        #expect(env.vm.pendingAction == nil)
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+        #expect(env.vm.confirmPendingAction() == nil)
+
+        // The old list is still shown until it is reloaded, but no new confirmation opens for it.
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+        #expect(env.vm.pendingAction == nil)
+
+        // A confirm button that still holds the old target is refused as well.
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(await env.api.calls.isEmpty)
+
+        // The reason stays visible through the refresh that the region change starts.
+        await env.vm.refresh()
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+    }
+
+    @Test("A selection missing from the reloaded list is cleared and its target refused")
+    func staleSelection() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.selectedInstance = InstanceEnvironment.instance
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+        let target = try #require(env.vm.pendingAction?.target)
+
+        await env.api.list([], in: "LON1")
+        await env.vm.refresh()
+        #expect(env.vm.selectedInstance == nil)
+        #expect(env.vm.pendingAction == nil)
+        #expect(env.vm.error == InstanceTargetError.instanceMissing.message)
+
+        #expect(await env.vm.delete(target) == false)
+        #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("Full Access and the region are checked again when the user confirms")
+    func confirmTimeChecks() async throws {
+        let env = InstanceEnvironment()
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.delete, for: InstanceEnvironment.instance)
+
+        env.accessAllowed = false
+        let target = try #require(env.vm.confirmPendingAction())
+        #expect(await env.vm.delete(target) == false)
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+
+        env.accessAllowed = true
+        let unknownRegion = ConsoleTarget(instanceId: consoleInstanceId, instanceName: "web-1", region: "")
+        await env.vm.stopInstance(unknownRegion)
+        #expect(env.vm.error == InstanceTargetError.noRegion.message)
+        #expect(await env.api.calls.isEmpty)
     }
 }
 
