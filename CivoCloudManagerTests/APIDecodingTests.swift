@@ -766,7 +766,6 @@ struct ConsoleURLTests {
         let json = #"{"access_token":"\#(secret)","token_type":"Bearer","refresh_token":"<refresh>","expires_in":3600,"id_token":"<id>","account_id":"<account>"}"#
         let token = try JSONDecoder().decode(AuthTokenExchangeResponse.self, from: Data(json.utf8))
         #expect(token.accessToken == secret)
-        #expect(token.expiresIn == 3600)
         #expect(!String(describing: token).contains(secret))
         #expect(!String(reflecting: token).contains(secret))
     }
@@ -776,7 +775,6 @@ struct ConsoleURLTests {
         let json = #"{"uri":"https://vnc.lon1.civo.com/<instance-id>/vnc.html?path=/<instance-id>/websockify","duration":"1h"}"#
         let session = try JSONDecoder().decode(ConsoleSessionResponse.self, from: Data(json.utf8))
         #expect(session.uri.hasPrefix("https://vnc.lon1.civo.com/"))
-        #expect(session.duration == "1h")
     }
 }
 
@@ -825,7 +823,7 @@ private actor FakeConsoleAPI: ConsoleAPI {
     func startSession(_ target: ConsoleTarget, apiKey: String) async throws -> ConsoleSessionResponse {
         startCalls += 1
         if holdStart { await withCheckedContinuation { startWaiters.append($0) } }
-        return ConsoleSessionResponse(uri: consoleURI, duration: "1h")
+        return ConsoleSessionResponse(uri: consoleURI)
     }
 
     func endSession(_ target: ConsoleTarget, apiKey: String) async throws -> ConsoleEndResult {
@@ -1020,11 +1018,11 @@ struct ConsoleLifecycleTests {
         let env = ConsoleEnvironment()
         await env.connectAndSettle()
         #expect(env.vm.phase == .loading)
-        let url = try #require(env.vm.consoleURL)
+        let url = try #require(env.vm.connection?.url)
         #expect(url.absoluteString.contains("token=jwt-1"))
 
         env.vm.closeLocally()
-        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .disconnected)
         #expect(await env.api.endCalls == 0)
         #expect(env.activities == ["Opened console"])
@@ -1041,7 +1039,7 @@ struct ConsoleLifecycleTests {
         let ending = Task { await env.vm.endSession() }
         await waitUntil { await env.api.endCalls == 1 }
         #expect(env.api.order.all == ["teardown", "delete"])
-        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .ending)
         await env.vm.endSession()
         #expect(await env.api.endCalls == 1)
@@ -1065,7 +1063,7 @@ struct ConsoleLifecycleTests {
         await failing.api.configure(endResult: .failure(.server(502)))
         await failing.vm.endSession()
         #expect(failing.vm.phase == .endFailed(.server(502)))
-        #expect(failing.vm.consoleURL == nil)
+        #expect(failing.vm.connection == nil)
         #expect(!failing.activities.contains { $0.contains("Ended") })
     }
 
@@ -1080,7 +1078,7 @@ struct ConsoleLifecycleTests {
         for _ in 0..<100 { await Task.yield() }
 
         #expect(env.vm.phase == .disconnected)
-        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.connection == nil)
         #expect(await env.api.exchangeCalls == 0)
         #expect(await env.api.endCalls == 0)
     }
@@ -1112,7 +1110,7 @@ struct ConsoleLifecycleTests {
         env.vm.pageDidLoad(connectionID: old.id)
 
         #expect(staleTornDown)
-        #expect(env.vm.consoleURL != nil)
+        #expect(env.vm.connection != nil)
         #expect(env.vm.phase == .loading)
     }
 
@@ -1123,7 +1121,7 @@ struct ConsoleLifecycleTests {
         await env.connectAndSettle()
         #expect(await env.api.startCalls == 2)
         #expect(await env.api.exchangeCalls == 2)
-        #expect(env.vm.consoleURL?.absoluteString.contains("token=jwt-2") == true)
+        #expect(env.vm.connection?.url.absoluteString.contains("token=jwt-2") == true)
     }
 
     @Test("Readiness wait is bounded and uses the injected clock")
@@ -1131,7 +1129,7 @@ struct ConsoleLifecycleTests {
         let env = ConsoleEnvironment(probeResults: Array(repeating: .notReady, count: 10))
         await env.connectAndSettle()
         #expect(env.vm.phase == .failed(.notReady))
-        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.connection == nil)
         #expect(await env.api.probeCalls == 5)
         #expect(await env.sleeps.sleeps == Array(repeating: .seconds(7), count: 4))
     }
@@ -1156,7 +1154,7 @@ struct ConsoleLifecycleTests {
         await env.connectAndSettle()
         env.apiKey = "key-b"
         env.vm.apiKeyDidChange()
-        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .failed(.accountChanged))
 
         await env.vm.endSession()
@@ -1178,10 +1176,10 @@ struct ConsoleLifecycleTests {
 
         env.accessAllowed = true
         await env.connectAndSettle()
-        #expect(env.vm.consoleURL != nil)
+        #expect(env.vm.connection != nil)
         env.accessAllowed = false
         env.vm.revokeAccess()
-        #expect(env.vm.consoleURL == nil)
+        #expect(env.vm.connection == nil)
         #expect(env.vm.phase == .failed(.accessRevoked))
         await env.vm.endSession()
         #expect(await env.api.endCalls == 0)

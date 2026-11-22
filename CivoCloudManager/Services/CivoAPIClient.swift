@@ -177,10 +177,9 @@ final class CivoAPIClient: Sendable {
     func put<T: Decodable>(
         path: String,
         body: [String: Any],
-        queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true
     ) async throws -> T {
-        try await execute("PUT", path: path, queryItems: queryItems, body: body, regionRequired: regionRequired)
+        try await execute("PUT", path: path, body: body, regionRequired: regionRequired)
     }
 
     /// PUT with a JSON body, discarding the response body.

@@ -43,7 +43,6 @@ final class ConsoleViewModel {
     private(set) var phase: Phase = .idle
     /// nil whenever no console is attached.
     private(set) var connection: Connection?
-    var consoleURL: URL? { connection?.url }
 
     private let api: any ConsoleAPI
     private let timing: Timing
