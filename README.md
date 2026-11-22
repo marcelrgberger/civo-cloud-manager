@@ -563,6 +563,29 @@ Unsupported language preferences resolve to **English**. Missing, unreadable or 
 
 The provider is **DigitalFreedom Global LLC**, 30 N Gould St, Ste N, Sheridan, WY 82801, United States. Source provenance and localization maintenance are documented in [docs/legal-documents.md](docs/legal-documents.md). Existing bundle, purchase and Keychain identifiers are retained for App Store and credential continuity; they do not identify the current legal provider.
 
+## Changing an object store credential
+
+In an active object store's details, choose **Change Credential...** and select an existing credential by name. The current assignment, new assignment and captured region are shown without a secret. Other S3 clients must be updated to use the new credential. The old credential is retained, including when it is shared with other stores.
+
+The action follows the [Civo Object Store PATCH contract](https://www.civo.com/api/object-stores): `PATCH /v2/objectstores/{id}`, with exactly `access_key_id` and `region` in the body and the captured region in the query. It leaves the existing resize PUT path unchanged. Account and region are captured from the loaded store's provenance. Full Access, the session, the store's current assignment and the complete region-scoped credential list are rechecked before dispatch. Suspended and known non-ready credentials are excluded. The pause vault and non-ready stores cannot use this action.
+
+Pause, resume, credential assignment preparation, saves, resizing and S3 work share a gate with credential changes. Cancellation retains its work token until the underlying task has actually ended. Leaving the file browser cancels its transfers and listings. A credential change remains blocked until their cleanup finishes.
+
+```mermaid
+flowchart TD
+    A[Choose existing regional credential] --> B[Recheck access, target and complete list]
+    B --> C[PATCH once]
+    C -->|Explicit refusal| D[Keep current assignment]
+    C -->|Accepted or ambiguous result| E[GET pinned store]
+    E -->|Requested assignment confirmed| F[Replace store and discard browser state]
+    E -->|Not confirmed| G[Block browsing and secret reveal]
+    G --> H[Check again with GET only]
+    H -->|Requested assignment confirmed| F
+    H -->|Old, missing or unreadable assignment| G
+```
+
+Timeouts, connection loss, unreadable success responses and unexpected HTTP statuses never trigger an automatic PATCH retry or a false success. **Check again** keeps the warning until a ready store with the requested assignment is observed; an old-key GET cannot prove that a timed-out PATCH will not still apply. Pending uncertainty survives refresh and account/region changes in the current window's memory. Closing the window or restarting the app clears the in-memory marker; it does not cancel a request already sent to Civo. Errors use fixed localized messages; sensitive response bodies, access keys and secrets are excluded from this flow's diagnostics and activity entries. After a confirmed change, revealing the secret requires fresh Touch ID or system-password authentication. A late authentication response cannot reveal a replacement credential.
+
 ## Object store pause/resume
 
 Pause copies objects into the central `civo-cloud-manager` vault, resizing it when needed. Resume recreates the store, restores objects and cleans up the vault. Transfers run with up to four concurrent whole-object `Data` buffers.
@@ -618,7 +641,7 @@ Incomplete lists show an orange notice in the instance, cluster, database and ob
 
 ## Validation
 
-The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field, the Create Instance required fields, default network and firewall filter, the advanced create options, quota limit, bulk cost confirmation and create answer, Kubernetes version comparison and cluster upgrades, the marketplace catalog, application choices and their serialization, the Create form lifecycle and the account and region Create is sent to, safe error messages, unique node identification and node replacement, and complete pagination. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
+The Swift Testing suites in `CivoCloudManagerTests/APIDecodingTests.swift` cover response decoding, free-trial access, localized legal documents, Kubernetes TLS trust, request-region routing, persistent firewall closures, SSH encryption key preservation, console URLs and sensitive requests, the console initial login and its password protection, the console session lifecycle, cost estimate periods, windows and caching, the instance credential vault, the concealed text field, the Create Instance required fields, default network and firewall filter, the advanced create options, quota limit, bulk cost confirmation and create answer, Kubernetes version comparison and cluster upgrades, the marketplace catalog, application choices and their serialization, the Create form lifecycle and the account and region Create is sent to, safe error messages, unique node identification and node replacement, complete pagination, object store credential eligibility, captured request context, pause/transfer exclusion, uncertain-result recovery, stale-read rejection, secret reveal identity and the real PATCH request boundary. Counts are intentionally not listed here because they change with every feature. Manual firewall Retry saves the reset immediately; regression coverage includes an immediate restart and a failed reset write followed by recovery.
 
 ```bash
 swift test --scratch-path /tmp/civo-tests
@@ -628,6 +651,12 @@ xcodebuild -project CivoCloudManager.xcodeproj -scheme CivoCloudManager \
 python3 scripts/check_legal_localizations.py
 python3 scripts/test_legal_localizations.py
 python3 scripts/check_app_localizations.py
+```
+
+For changes limited to object store credential assignment, run the affected suites instead of the full suite:
+
+```bash
+swift test --filter 'ObjectStoreCredential(Change|Request)Tests|PaginationTests|RegionRoutingTests'
 ```
 
 `scripts/check_app_localizations.py` needs Python 3.10 or later. The commands above check catalog translations and runtime help/sidebar keys. Complete coverage of Swift-extracted keys and packaged resources additionally requires a fresh native build:

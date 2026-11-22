@@ -15,14 +15,15 @@ struct ObjectStoreListView: View {
 
     var body: some View {
         Group {
-            if let store = vm.browsingObjectStore, let cred = vm.credentialForStore(store) {
+            if let store = vm.browsingObjectStore, vm.canUseCredentials(for: store), let cred = vm.credentialForStore(store) {
                 ObjectStoreBrowserView(
                     store: store,
+                    vm: vm,
                     s3Client: S3Client(
-                        endpoint: store.objectstoreEndpoint ?? "objectstore.\(CivoConfig.shared.region).civo.com",
+                        endpoint: store.objectstoreEndpoint ?? "objectstore.\(vm.loadContext?.region ?? "").civo.com",
                         accessKey: cred.accessKeyId ?? "",
                         secretKey: cred.secretAccessKeyId ?? "",
-                        region: CivoConfig.shared.region
+                        region: vm.loadContext?.region ?? ""
                     )
                 ) {
                     withAnimation(.spring(duration: 0.3, bounce: 0.1)) {
@@ -52,7 +53,7 @@ struct ObjectStoreListView: View {
             ToolbarItem(placement: .automatic) {
                 Button { Task { await vm.refresh() } } label: { Label("Refresh", systemImage: "arrow.clockwise") }
                     .help("Reload data from API")
-                    .disabled(vm.isLoading)
+                    .disabled(vm.isLoading || vm.operationGate.isBusy)
             }
         }
         .overlay { SuccessOverlay(isPresented: $vm.showSuccess) }

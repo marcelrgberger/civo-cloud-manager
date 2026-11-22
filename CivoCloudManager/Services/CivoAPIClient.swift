@@ -126,12 +126,37 @@ final class CivoAPIClient: Sendable {
 
     private let baseURL = "https://api.civo.com/v2"
     private let session: URLSession
+    private let sensitiveSession: URLSession
 
-    init() {
+    private let settingsAPIKey: @Sendable () -> String
+    private let settingsRegion: @Sendable () -> String
+    private let diagnostic: @Sendable (String) -> Void
+
+    convenience init() {
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 30
         config.timeoutIntervalForResource = 60
-        self.session = URLSession(configuration: config)
+        let sensitive = URLSessionConfiguration.ephemeral
+        sensitive.timeoutIntervalForRequest = 30
+        sensitive.timeoutIntervalForResource = 60
+        sensitive.urlCache = nil
+        sensitive.httpCookieStorage = nil
+        sensitive.urlCredentialStorage = nil
+        self.init(session: URLSession(configuration: config), sensitiveSession: URLSession(configuration: sensitive))
+    }
+
+    init(
+        session: URLSession,
+        sensitiveSession: URLSession? = nil,
+        settingsAPIKey: @escaping @Sendable () -> String = { CivoConfig.shared.apiKey },
+        settingsRegion: @escaping @Sendable () -> String = { CivoConfig.shared.region },
+        diagnostic: @escaping @Sendable (String) -> Void = { Log.error($0) }
+    ) {
+        self.session = session
+        self.sensitiveSession = sensitiveSession ?? session
+        self.settingsAPIKey = settingsAPIKey
+        self.settingsRegion = settingsRegion
+        self.diagnostic = diagnostic
     }
 
     // MARK: - Public API
@@ -142,13 +167,13 @@ final class CivoAPIClient: Sendable {
         queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true
     ) async throws -> String {
-        let apiKey = CivoConfig.shared.apiKey
+        let apiKey = settingsAPIKey()
         guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
 
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {
             throw CivoAPIError.networkError("Invalid API path: \(path)")
         }
-        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
+        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: settingsRegion(), regionRequired: regionRequired)
         if !items.isEmpty { components.queryItems = items }
 
         guard let url = components.url else {
@@ -176,9 +201,10 @@ final class CivoAPIClient: Sendable {
         path: String,
         queryItems: [URLQueryItem]? = nil,
         regionRequired: Bool = true,
-        apiKey: String? = nil
+        apiKey: String? = nil,
+        redactDiagnostics: Bool = false
     ) async throws -> T {
-        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey)
+        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey, redactDiagnostics: redactDiagnostics)
     }
 
     /// GET every page of a paginated list (API returns `{ page, per_page, pages, items }`).
@@ -186,14 +212,33 @@ final class CivoAPIClient: Sendable {
     func getPaginatedList<T: Decodable & Identifiable & Sendable>(
         path: String,
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey pinnedAPIKey: String? = nil,
+        redactDiagnostics: Bool = false
     ) async throws -> PaginatedList<T> {
-        let apiKey = CivoConfig.shared.apiKey
+        let apiKey = pinnedAPIKey ?? settingsAPIKey()
         guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
-        let filters = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
-        return try await Self.collectPages(filters: filters) { pageQuery in
-            try await self.execute("GET", path: path, queryItems: pageQuery, regionRequired: regionRequired, apiKey: apiKey)
+        if pinnedAPIKey != nil && !(queryItems ?? []).contains(where: { $0.name == "region" && !($0.value ?? "").isEmpty }) {
+            throw CivoAPIError.noRegion
         }
+        let filters = try Self.resolvedQueryItems(queryItems, defaultRegion: pinnedAPIKey == nil ? settingsRegion() : "", regionRequired: regionRequired)
+        do {
+            return try await Self.collectPages(filters: filters) { pageQuery in
+                try await self.execute("GET", path: path, queryItems: pageQuery, regionRequired: regionRequired, apiKey: apiKey, redactDiagnostics: redactDiagnostics)
+            }
+        } catch CivoAPIError.incompleteList where redactDiagnostics {
+            throw CivoAPIError.incompleteList(nil)
+        }
+    }
+
+    func patch<T: Decodable>(
+        path: String,
+        body: [String: Any],
+        queryItems: [URLQueryItem],
+        apiKey: String,
+        redactDiagnostics: Bool = false
+    ) async throws -> T {
+        try await execute("PATCH", path: path, queryItems: queryItems, body: body, apiKey: apiKey, redactDiagnostics: redactDiagnostics)
     }
 
     /// GET a plain array list (API returns `[...]`).
@@ -333,15 +378,16 @@ final class CivoAPIClient: Sendable {
         queryItems: [URLQueryItem]? = nil,
         body: [String: Any]? = nil,
         regionRequired: Bool = true,
-        apiKey pinnedAPIKey: String? = nil
+        apiKey pinnedAPIKey: String? = nil,
+        redactDiagnostics: Bool = false
     ) async throws -> T {
-        let apiKey = pinnedAPIKey ?? CivoConfig.shared.apiKey
+        let apiKey = pinnedAPIKey ?? settingsAPIKey()
         guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
 
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {
             throw CivoAPIError.networkError("Invalid API path: \(path)")
         }
-        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
+        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: settingsRegion(), regionRequired: regionRequired)
         if !items.isEmpty { components.queryItems = items }
 
         guard let url = components.url else {
@@ -349,6 +395,7 @@ final class CivoAPIClient: Sendable {
         }
         var request = URLRequest(url: url)
         request.httpMethod = method
+        if redactDiagnostics { request.cachePolicy = .reloadIgnoringLocalCacheData }
         request.setValue("bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -360,13 +407,13 @@ final class CivoAPIClient: Sendable {
         let data: Data
         let response: URLResponse
         do {
-            (data, response) = try await session.data(for: request)
+            (data, response) = try await (redactDiagnostics ? sensitiveSession : session).data(for: request)
         } catch is CancellationError {
             throw CivoAPIError.cancelled
         } catch let urlError as URLError where urlError.code == .cancelled {
             throw CivoAPIError.cancelled
         } catch {
-            throw CivoAPIError.networkError(error.localizedDescription)
+            throw CivoAPIError.networkError(redactDiagnostics ? "" : error.localizedDescription)
         }
 
         guard let httpResponse = response as? HTTPURLResponse else {
@@ -374,15 +421,15 @@ final class CivoAPIClient: Sendable {
         }
 
         guard (200...299).contains(httpResponse.statusCode) else {
-            let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            let message = redactDiagnostics ? "" : (String(data: data, encoding: .utf8) ?? "Unknown error")
             throw CivoAPIError.httpError(httpResponse.statusCode, message)
         }
 
         do {
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
-            Log.error("Decoding error for \(path): \(error)")
-            throw CivoAPIError.decodingError(error.localizedDescription)
+            diagnostic(redactDiagnostics ? "Unable to decode sensitive API response" : "Decoding error for \(path): \(error)")
+            throw CivoAPIError.decodingError(redactDiagnostics ? "" : error.localizedDescription)
         }
     }
 
@@ -394,13 +441,13 @@ final class CivoAPIClient: Sendable {
         body: [String: Any]? = nil,
         regionRequired: Bool = true
     ) async throws {
-        let apiKey = CivoConfig.shared.apiKey
+        let apiKey = settingsAPIKey()
         guard !apiKey.isEmpty else { throw CivoAPIError.noAPIKey }
 
         guard var components = URLComponents(string: "\(baseURL)\(path)") else {
             throw CivoAPIError.networkError("Invalid API path: \(path)")
         }
-        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: CivoConfig.shared.region, regionRequired: regionRequired)
+        let items = try Self.resolvedQueryItems(queryItems, defaultRegion: settingsRegion(), regionRequired: regionRequired)
         if !items.isEmpty { components.queryItems = items }
 
         guard let url = components.url else {

@@ -760,3 +760,14 @@ private extension JSONEncoder {
         return e
     }()
 }
+
+protocol ObjectStorePauseAPI: Sendable {
+    func setupVault() async throws -> (store: CivoObjectStore, credential: CivoObjectStoreCredential)
+    func pauseStore(_ store: CivoObjectStore, credential: CivoObjectStoreCredential, progress: @escaping @Sendable (PauseProgress) -> Void) async throws
+    func resumeStore(_ paused: PausedObjectStore, progress: @escaping @Sendable (PauseProgress) -> Void) async throws
+    func loadPausedStores() async throws -> [PausedObjectStore]
+    func discardPausedStore(_ paused: PausedObjectStore) async throws
+    func updatePausedStoreCredential(storeName: String, credentialId: String, accessKeyId: String?) async throws
+}
+
+extension ObjectStorePauseService: ObjectStorePauseAPI {}
