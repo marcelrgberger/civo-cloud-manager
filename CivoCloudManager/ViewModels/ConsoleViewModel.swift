@@ -5,8 +5,11 @@ import Foundation
 ///
 /// - Closing the window only disconnects locally; the Civo session stays active until it expires.
 /// - "End session" sends DELETE, which ends the session for everyone, including the dashboard.
-/// - Every close, end or reconnect first cancels the running preparation and drops the tokenized URL,
-///   before any network cleanup is awaited. Late responses from a superseded attempt are ignored.
+/// - Every close, end or reconnect first cancels the running preparation, starts unloading the page
+///   and drops the tokenized URL, before any network cleanup is awaited. Late responses from a
+///   superseded attempt are ignored.
+/// - End session sends DELETE only after the page has unloaded, so the noVNC WebSocket is closed by
+///   the app instead of being cut off by the server.
 @Observable
 @MainActor
 final class ConsoleViewModel {
@@ -43,7 +46,6 @@ final class ConsoleViewModel {
     private(set) var phase: Phase = .idle
     /// nil whenever no console is attached.
     private(set) var connection: Connection?
-    var consoleURL: URL? { connection?.url }
 
     private let api: any ConsoleAPI
     private let timing: Timing
@@ -53,8 +55,8 @@ final class ConsoleViewModel {
     private var openedKeyFingerprint: SHA256.Digest?
     private var generation = 0
     private var task: Task<Void, Never>?
-    /// Synchronous web view teardown registered by the view, so detaching does not wait for a SwiftUI update.
-    private var webViewTeardown: (@MainActor () -> Void)?
+    /// Registered by the view, so detaching does not wait for a SwiftUI update.
+    private var pageUnloader: (any ConsolePageUnloading)?
 
     init(
         target: ConsoleTarget,
@@ -117,13 +119,15 @@ final class ConsoleViewModel {
     /// Ends the server-side session for everyone. A 404 counts as already stopped.
     func endSession() async {
         guard phase != .ending else { return }
-        detach()
+        let unloading = detach()
         guard isAccessAllowed() else { return fail(.accessRevoked) }
         let apiKey: String
         do { apiKey = try currentAPIKey() } catch { return fail(ConsoleError.sanitize(error)) }
 
         phase = .ending
         let current = generation
+        // The user confirmed the end, so DELETE is sent even if the window closes during the wait.
+        await unloading?.waitUntilUnloaded()
         do {
             let result = try await api.endSession(target, apiKey: apiKey)
             guard current == generation else { return }
@@ -140,9 +144,9 @@ final class ConsoleViewModel {
 
     // MARK: - Web view callbacks
 
-    func webViewDidAttach(connectionID: Int, teardown: @escaping @MainActor () -> Void) {
-        guard connectionID == connection?.id else { return teardown() }
-        webViewTeardown = teardown
+    func webViewDidAttach(connectionID: Int, unloader: any ConsolePageUnloading) {
+        guard connectionID == connection?.id else { return unloader.start() }
+        pageUnloader = unloader
     }
 
     func pageDidLoad(connectionID: Int) {
@@ -165,15 +169,18 @@ final class ConsoleViewModel {
         }
     }
 
-    /// Cancels preparation, tears the web view down and drops the console URL immediately;
-    /// invalidates in-flight results and callbacks.
-    private func detach() {
+    /// Cancels preparation, starts unloading the page and drops the console URL immediately;
+    /// invalidates in-flight results and callbacks. Returns the unloader of the detached page.
+    @discardableResult
+    private func detach() -> (any ConsolePageUnloading)? {
         generation += 1
         task?.cancel()
         task = nil
-        webViewTeardown?()
-        webViewTeardown = nil
+        let unloader = pageUnloader
+        unloader?.start()
+        pageUnloader = nil
         connection = nil
+        return unloader
     }
 
     private func fail(_ error: ConsoleError) {
@@ -248,4 +255,13 @@ final class ConsoleViewModel {
         let token = try await api.exchangeToken(region: target.region, apiKey: apiKey)
         return try ConsoleURL.make(uri: uri, token: token, target: target)
     }
+}
+
+/// Unloads the console page of one web view, which makes WebKit close the page's WebSocket.
+@MainActor
+protocol ConsolePageUnloading: AnyObject {
+    /// Detaches callbacks and starts the unload immediately. Repeated calls have no effect.
+    func start()
+    /// Returns once the page has unloaded, or after a bounded timeout.
+    func waitUntilUnloaded() async
 }

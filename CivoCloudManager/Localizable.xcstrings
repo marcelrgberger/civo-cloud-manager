@@ -70982,107 +70982,6 @@
       },
       "extractionState" : "manual"
     },
-    "Past months are cached locally for faster loading." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Past months are cached locally for faster loading."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vergangene Monate werden lokal zwischengespeichert für schnelleren Zugriff."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Los meses anteriores se almacenan en caché localmente para carga más rápida."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Les mois précédents sont mis en cache localement pour un chargement plus rapide."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I mesi precedenti sono memorizzati localmente per caricamenti più rapidi."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Afgelopen maanden worden lokaal gecachet voor snellere laadtijden."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poprzednie miesiące są buforowane lokalnie dla szybszego ładowania."
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meses anteriores são guardados em cache local para carregamento mais rápido."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "历史月份数据本地缓存以加快加载速度。"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "過去の月はローカルキャッシュされ、読み込みが高速化されます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이전 달 데이터는 로컬에 캐시되어 빠르게 불러옵니다."
-          }
-        },
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الأشهر السابقة مخزنة محلياً لتحميل أسرع."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "पिछले महीनों का डेटा तेज़ लोडिंग के लिए लोकली कैश किया जाता है।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bulan-bulan sebelumnya di-cache secara lokal untuk pemuatan lebih cepat."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geçmiş aylar daha hızlı yükleme için yerel olarak önbelleğe alınır."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Прошлые месяцы кэшируются локально для ускорения загрузки."
-          }
-        }
-      },
-      "extractionState" : "manual"
-    },
     "Period picker: This Month, Last Month, Last Quarter, This Year." : {
       "localizations" : {
         "en" : {
@@ -84028,6 +83927,2006 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Списки ресурсов загружают все страницы из Civo. Оранжевое уведомление означает, что не все страницы удалось загрузить и часть результатов может отсутствовать; обновите список, чтобы повторить попытку."
+          }
+        }
+      }
+    },
+    "A console session is requested for one hour. If a session is already active, it is reused and may end sooner." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A console session is requested for one hour. If a session is already active, it is reused and may end sooner."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Konsolensitzung wird für eine Stunde angefordert. Ist bereits eine Sitzung aktiv, wird sie weiterverwendet und kann früher enden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sesión de consola se solicita por una hora. Si ya hay una sesión activa, se reutiliza y puede terminar antes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une session de console est demandée pour une heure. Si une session est déjà active, elle est réutilisée et peut se terminer plus tôt."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La sessione della console viene richiesta per un'ora. Se una sessione è già attiva, viene riutilizzata e può terminare prima."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een consolesessie wordt voor één uur aangevraagd. Als er al een sessie actief is, wordt die hergebruikt en kan die eerder eindigen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesja konsoli jest zamawiana na godzinę. Jeśli sesja jest już aktywna, zostaje użyta ponownie i może zakończyć się wcześniej."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sessão de consola é pedida por uma hora. Se já existir uma sessão ativa, é reutilizada e pode terminar mais cedo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制台会话的申请时长为一小时。如果已有活动会话，将继续使用该会话，它可能会更早结束。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コンソールセッションは1時間で要求されます。すでにセッションが有効な場合はそれを再利用するため、より早く終了することがあります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "콘솔 세션은 1시간으로 요청됩니다. 이미 활성 세션이 있으면 그 세션을 다시 사용하므로 더 일찍 끝날 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُطلب جلسة وحدة التحكم لمدة ساعة واحدة. إذا كانت هناك جلسة نشطة بالفعل، يُعاد استخدامها وقد تنتهي في وقت أبكر."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कंसोल सत्र एक घंटे के लिए अनुरोधित किया जाता है। यदि कोई सत्र पहले से सक्रिय है, तो उसी का फिर से उपयोग होता है और वह पहले समाप्त हो सकता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sesi konsol diminta untuk satu jam. Jika sesi sudah aktif, sesi itu digunakan kembali dan dapat berakhir lebih cepat."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsol oturumu bir saatliğine istenir. Zaten etkin bir oturum varsa yeniden kullanılır ve daha erken bitebilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сеанс консоли запрашивается на один час. Если сеанс уже активен, он используется повторно и может закончиться раньше."
+          }
+        }
+      }
+    },
+    "The console scales the remote screen to the window, keeps its aspect ratio and follows when you resize the window." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The console scales the remote screen to the window, keeps its aspect ratio and follows when you resize the window."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Konsole skaliert den entfernten Bildschirm auf die Fenstergröße, behält das Seitenverhältnis bei und passt sich an, wenn Sie das Fenster vergrößern oder verkleinern."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La consola ajusta la pantalla remota a la ventana, mantiene su relación de aspecto y se adapta cuando cambias el tamaño de la ventana."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La console adapte l'écran distant à la fenêtre, conserve ses proportions et suit le redimensionnement de la fenêtre."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La console adatta lo schermo remoto alla finestra, mantiene le proporzioni e si adegua quando ridimensioni la finestra."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De console schaalt het externe scherm naar het venster, behoudt de beeldverhouding en past zich aan als je het venster van grootte verandert."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsola skaluje zdalny ekran do rozmiaru okna, zachowuje proporcje i dopasowuje się przy zmianie rozmiaru okna."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A consola ajusta o ecrã remoto à janela, mantém a proporção e acompanha o redimensionamento da janela."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制台会将远程屏幕缩放到窗口大小，保持其宽高比，并在你调整窗口大小时随之变化。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コンソールはリモート画面をウインドウに合わせて拡大縮小し、縦横比を保ち、ウインドウのサイズ変更に追従します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "콘솔은 원격 화면을 창 크기에 맞게 조정하고 화면 비율을 유지하며, 창 크기를 바꾸면 그에 맞춰 따라갑니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقوم وحدة التحكم بتحجيم الشاشة البعيدة لتلائم النافذة مع الحفاظ على نسبة العرض إلى الارتفاع، وتتكيف عند تغيير حجم النافذة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कंसोल रिमोट स्क्रीन को विंडो के अनुसार स्केल करता है, उसका आस्पेक्ट रेशियो बनाए रखता है और विंडो का आकार बदलने पर उसके साथ बदलता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsol menyesuaikan layar jarak jauh dengan jendela, mempertahankan rasio aspek, dan mengikuti saat Anda mengubah ukuran jendela."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsol uzak ekranı pencereye göre ölçekler, en boy oranını korur ve pencereyi yeniden boyutlandırdığınızda buna uyar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Консоль масштабирует удалённый экран под размер окна, сохраняет пропорции и подстраивается при изменении размера окна."
+          }
+        }
+      }
+    },
+    "Above the console, the initial user and password reported by Civo are shown. The password stays masked until you show or copy it with Touch ID or your system password. If Civo reports no initial login, the console says so." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Above the console, the initial user and password reported by Civo are shown. The password stays masked until you show or copy it with Touch ID or your system password. If Civo reports no initial login, the console says so."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über der Konsole werden der Anfangsbenutzer und das Anfangspasswort angezeigt, die Civo meldet. Das Passwort bleibt verborgen, bis Sie es mit Touch ID oder Ihrem Systempasswort anzeigen oder kopieren. Meldet Civo keine Anfangsanmeldung, weist die Konsole darauf hin."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encima de la consola se muestran el usuario y la contraseña iniciales que indica Civo. La contraseña permanece oculta hasta que la muestres o copies con Touch ID o la contraseña del sistema. Si Civo no indica ningún inicio de sesión inicial, la consola lo avisa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Au-dessus de la console s'affichent l'utilisateur et le mot de passe initiaux fournis par Civo. Le mot de passe reste masqué jusqu'à ce que vous l'affichiez ou le copiiez avec Touch ID ou votre mot de passe système. Si Civo ne fournit aucun identifiant initial, la console l'indique."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sopra la console vengono mostrati l'utente e la password iniziali indicati da Civo. La password resta nascosta finché non la mostri o la copi con Touch ID o la password di sistema. Se Civo non indica alcun accesso iniziale, la console lo segnala."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boven de console worden de initiële gebruiker en het initiële wachtwoord getoond die Civo meldt. Het wachtwoord blijft verborgen tot je het met Touch ID of je systeemwachtwoord toont of kopieert. Als Civo geen initiële aanmelding meldt, geeft de console dat aan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nad konsolą wyświetlane są użytkownik i hasło początkowe podane przez Civo. Hasło pozostaje ukryte, dopóki nie wyświetlisz go lub nie skopiujesz za pomocą Touch ID lub hasła systemowego. Jeśli Civo nie podaje danych logowania początkowego, konsola o tym informuje."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por cima da consola são mostrados o utilizador e a palavra-passe iniciais indicados pela Civo. A palavra-passe fica oculta até a mostrar ou copiar com Touch ID ou a palavra-passe do sistema. Se a Civo não indicar nenhum início de sessão inicial, a consola informa disso."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制台上方会显示 Civo 提供的初始用户和初始密码。密码会保持隐藏，直到你通过 Touch ID 或系统密码显示或复制它。如果 Civo 没有提供初始登录信息，控制台会给出提示。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コンソールの上に、Civo が報告する初期ユーザーと初期パスワードが表示されます。パスワードは Touch ID またはシステムパスワードで表示またはコピーするまで隠されたままです。Civo が初期ログイン情報を報告しない場合は、コンソールにその旨が表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "콘솔 위에 Civo가 알려 주는 초기 사용자와 초기 비밀번호가 표시됩니다. 비밀번호는 Touch ID 또는 시스템 암호로 표시하거나 복사할 때까지 가려져 있습니다. Civo가 초기 로그인 정보를 제공하지 않으면 콘솔에 그렇게 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يُعرض فوق وحدة التحكم المستخدم الأولي وكلمة المرور الأولية كما يبلّغ عنهما Civo. تبقى كلمة المرور مخفية إلى أن تعرضها أو تنسخها باستخدام Touch ID أو كلمة مرور النظام. إذا لم يبلّغ Civo عن بيانات دخول أولية، تشير وحدة التحكم إلى ذلك."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कंसोल के ऊपर Civo द्वारा बताए गए प्रारंभिक यूज़र और प्रारंभिक पासवर्ड दिखाए जाते हैं। पासवर्ड तब तक छिपा रहता है जब तक आप उसे Touch ID या सिस्टम पासवर्ड से दिखाते या कॉपी नहीं करते। यदि Civo कोई प्रारंभिक लॉगिन नहीं बताता, तो कंसोल यह सूचित करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Di atas konsol ditampilkan pengguna awal dan kata sandi awal yang dilaporkan Civo. Kata sandi tetap tersembunyi sampai Anda menampilkan atau menyalinnya dengan Touch ID atau kata sandi sistem. Jika Civo tidak melaporkan login awal, konsol akan memberitahukannya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konsolun üstünde Civo'nun bildirdiği ilk kullanıcı ve ilk parola gösterilir. Parola, Touch ID ya da sistem parolasıyla gösterene veya kopyalayana kadar gizli kalır. Civo bir ilk oturum açma bilgisi bildirmezse konsol bunu belirtir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Над консолью показываются начальный пользователь и начальный пароль, которые сообщает Civo. Пароль остаётся скрытым, пока вы не покажете или не скопируете его с помощью Touch ID или системного пароля. Если Civo не сообщает начальные данные для входа, консоль сообщает об этом."
+          }
+        }
+      }
+    },
+    "A password changed later on the instance does not update the initial password shown by Civo. Save the current login as credentials instead." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A password changed later on the instance does not update the initial password shown by Civo. Save the current login as credentials instead."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein später auf der Instanz geändertes Passwort ändert nicht das von Civo angezeigte Anfangspasswort. Speichern Sie die aktuelle Anmeldung stattdessen als Zugangsdaten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una contraseña cambiada después en la instancia no actualiza la contraseña inicial que muestra Civo. Guarda el inicio de sesión actual como credenciales."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un mot de passe modifié plus tard sur l'instance ne met pas à jour le mot de passe initial affiché par Civo. Enregistrez plutôt l'identifiant actuel comme identifiants."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una password modificata in seguito sull'istanza non aggiorna la password iniziale mostrata da Civo. Salva invece l'accesso attuale come credenziali."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Een later op de instance gewijzigd wachtwoord werkt het initiële wachtwoord van Civo niet bij. Sla de huidige aanmelding in plaats daarvan op als inloggegevens."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasło zmienione później na instancji nie aktualizuje hasła początkowego wyświetlanego przez Civo. Zamiast tego zapisz bieżące dane jako dane logowania."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma palavra-passe alterada mais tarde na instância não atualiza a palavra-passe inicial mostrada pela Civo. Guarde antes o início de sessão atual como credenciais."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "之后在实例上更改的密码不会更新 Civo 显示的初始密码。请改为将当前登录信息保存为凭据。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "後からインスタンス上で変更したパスワードは、Civo が表示する初期パスワードには反映されません。代わりに現在のログイン情報を認証情報として保存してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나중에 인스턴스에서 변경한 비밀번호는 Civo가 표시하는 초기 비밀번호에 반영되지 않습니다. 대신 현재 로그인 정보를 자격 증명으로 저장하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمة المرور التي تُغيَّر لاحقًا على المثيل لا تحدّث كلمة المرور الأولية التي يعرضها Civo. احفظ بيانات الدخول الحالية بدلًا من ذلك."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस पर बाद में बदला गया पासवर्ड Civo द्वारा दिखाए गए प्रारंभिक पासवर्ड को अपडेट नहीं करता। इसके बजाय वर्तमान लॉगिन को क्रेडेंशियल के रूप में सहेजें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kata sandi yang diubah kemudian di instans tidak memperbarui kata sandi awal yang ditampilkan Civo. Simpan login saat ini sebagai kredensial."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Örnekte sonradan değiştirilen bir parola, Civo'nun gösterdiği ilk parolayı güncellemez. Bunun yerine geçerli oturum açma bilgisini kimlik bilgisi olarak kaydedin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль, изменённый позже на инстансе, не обновляет начальный пароль, который показывает Civo. Вместо этого сохраните текущие данные для входа как учётные данные."
+          }
+        }
+      }
+    },
+    "Add, edit or delete saved credentials with 'Credentials' in the instance detail view or the instance list context menu, for running and stopped instances. An open edit closes after 30 seconds." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add, edit or delete saved credentials with 'Credentials' in the instance detail view or the instance list context menu, for running and stopped instances. An open edit closes after 30 seconds."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeicherte Zugangsdaten fügen Sie über 'Zugangsdaten' in der Instanz-Detailansicht oder im Kontextmenü der Instanzliste hinzu, bearbeiten oder löschen sie dort, für laufende und gestoppte Instanzen. Eine offene Bearbeitung schließt sich nach 30 Sekunden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade, edita o elimina credenciales guardadas con 'Credenciales' en la vista de detalle de la instancia o en el menú contextual de la lista de instancias, tanto para instancias en ejecución como detenidas. Una edición abierta se cierra a los 30 segundos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajoutez, modifiez ou supprimez des identifiants enregistrés avec 'Identifiants' dans la vue détaillée de l'instance ou dans le menu contextuel de la liste des instances, pour les instances en cours d'exécution ou arrêtées. Une modification ouverte se ferme après 30 secondes."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi, modifica o elimina le credenziali salvate con 'Credenziali' nella vista dettagli dell'istanza o nel menu contestuale dell'elenco istanze, per istanze in esecuzione e arrestate. Una modifica aperta si chiude dopo 30 secondi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voeg opgeslagen inloggegevens toe, bewerk of verwijder ze met 'Inloggegevens' in de detailweergave van de instance of in het contextmenu van de instancelijst, voor actieve en gestopte instances. Een geopende bewerking sluit na 30 seconden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodawaj, edytuj lub usuwaj zapisane dane logowania za pomocą 'Dane logowania' w widoku szczegółów instancji lub w menu kontekstowym listy instancji, dla instancji uruchomionych i zatrzymanych. Otwarta edycja zamyka się po 30 sekundach."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicione, edite ou elimine credenciais guardadas com 'Credenciais' na vista de detalhe da instância ou no menu de contexto da lista de instâncias, para instâncias em execução e paradas. Uma edição aberta fecha após 30 segundos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在实例详情视图或实例列表的上下文菜单中，通过 '凭据' 添加、编辑或删除已保存的凭据，适用于运行中和已停止的实例。打开的编辑会在 30 秒后关闭。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスの詳細表示またはインスタンス一覧のコンテキストメニューにある '認証情報' で、保存した認証情報を追加、編集、削除できます。稼働中と停止中のインスタンスの両方で使えます。開いた編集は30秒後に閉じます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 상세 보기나 인스턴스 목록의 컨텍스트 메뉴에서 '자격 증명'으로 저장된 자격 증명을 추가, 편집 또는 삭제할 수 있으며, 실행 중인 인스턴스와 중지된 인스턴스 모두에서 가능합니다. 열린 편집은 30초 후에 닫힙니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أضف بيانات الدخول المحفوظة أو عدّلها أو احذفها عبر 'بيانات الدخول' في عرض تفاصيل المثيل أو في قائمة السياق لقائمة المثيلات، للمثيلات قيد التشغيل والمتوقفة. يُغلق التعديل المفتوح بعد 30 ثانية."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस विवरण दृश्य या इंस्टेंस सूची के संदर्भ मेनू में 'क्रेडेंशियल' से सहेजे गए क्रेडेंशियल जोड़ें, संपादित करें या हटाएँ, चल रहे और रुके हुए दोनों इंस्टेंस के लिए। खुला संपादन 30 सेकंड बाद बंद हो जाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambahkan, edit, atau hapus kredensial tersimpan dengan 'Kredensial' di tampilan detail instans atau di menu konteks daftar instans, untuk instans yang berjalan maupun yang dihentikan. Pengeditan yang terbuka ditutup setelah 30 detik."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kayıtlı kimlik bilgilerini örnek ayrıntı görünümündeki veya örnek listesinin bağlam menüsündeki 'Kimlik Bilgileri' ile ekleyin, düzenleyin ya da silin; bu, çalışan ve durdurulmuş örnekler için geçerlidir. Açık bir düzenleme 30 saniye sonra kapanır."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавляйте, изменяйте или удаляйте сохранённые учётные данные через 'Учётные данные' в подробном представлении инстанса или в контекстном меню списка инстансов, как для запущенных, так и для остановленных инстансов. Открытое редактирование закрывается через 30 секунд."
+          }
+        }
+      }
+    },
+    "Saved credentials are also shown in the console window so you can type them in. Copy and paste are not available in the console." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved credentials are also shown in the console window so you can type them in. Copy and paste are not available in the console."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeicherte Zugangsdaten werden auch im Konsolenfenster angezeigt, damit Sie sie eintippen können. Kopieren und Einfügen sind in der Konsole nicht verfügbar."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las credenciales guardadas también se muestran en la ventana de la consola para que puedas escribirlas. Copiar y pegar no está disponible en la consola."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les identifiants enregistrés s'affichent aussi dans la fenêtre de la console pour que vous puissiez les saisir. Le copier-coller n'est pas disponible dans la console."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le credenziali salvate vengono mostrate anche nella finestra della console, così puoi digitarle. Copia e incolla non sono disponibili nella console."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgeslagen inloggegevens worden ook in het consolevenster getoond, zodat je ze kunt intypen. Kopiëren en plakken zijn in de console niet beschikbaar."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisane dane logowania są też wyświetlane w oknie konsoli, aby można je było wpisać. Kopiowanie i wklejanie nie są dostępne w konsoli."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As credenciais guardadas também são mostradas na janela da consola para que as possa escrever. Copiar e colar não está disponível na consola."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已保存的凭据也会显示在控制台窗口中，方便你手动输入。控制台中无法使用复制和粘贴。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存した認証情報はコンソールウインドウにも表示されるので、手で入力できます。コンソールではコピーとペーストは使えません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장된 자격 증명은 콘솔 창에도 표시되므로 직접 입력할 수 있습니다. 콘솔에서는 복사하기와 붙여넣기를 사용할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُعرض بيانات الدخول المحفوظة أيضًا في نافذة وحدة التحكم لتتمكن من كتابتها. النسخ واللصق غير متاحين في وحدة التحكم."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सहेजे गए क्रेडेंशियल कंसोल विंडो में भी दिखाए जाते हैं ताकि आप उन्हें टाइप कर सकें। कंसोल में कॉपी और पेस्ट उपलब्ध नहीं हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial tersimpan juga ditampilkan di jendela konsol agar Anda dapat mengetiknya. Salin dan tempel tidak tersedia di konsol."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kayıtlı kimlik bilgileri, yazabilmeniz için konsol penceresinde de gösterilir. Konsolda kopyalama ve yapıştırma kullanılamaz."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранённые учётные данные также показываются в окне консоли, чтобы их можно было ввести вручную. Копирование и вставка в консоли недоступны."
+          }
+        }
+      }
+    },
+    "Saved credentials hold only a username and a password. SSH keys and certificates are not stored there; manage SSH keys under SSH Keys." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved credentials hold only a username and a password. SSH keys and certificates are not stored there; manage SSH keys under SSH Keys."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeicherte Zugangsdaten enthalten nur einen Benutzernamen und ein Passwort. SSH-Schlüssel und Zertifikate werden dort nicht gespeichert; SSH-Schlüssel verwalten Sie unter SSH-Schlüssel."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las credenciales guardadas solo contienen un nombre de usuario y una contraseña. Las claves SSH y los certificados no se guardan ahí; gestiona las claves SSH en Claves SSH."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les identifiants enregistrés contiennent uniquement un nom d'utilisateur et un mot de passe. Les clés SSH et les certificats n'y sont pas stockés ; gérez les clés SSH dans Clés SSH."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le credenziali salvate contengono solo un nome utente e una password. Chiavi SSH e certificati non vengono salvati lì; gestisci le chiavi SSH in Chiavi SSH."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opgeslagen inloggegevens bevatten alleen een gebruikersnaam en een wachtwoord. SSH-sleutels en certificaten worden daar niet opgeslagen; beheer SSH-sleutels onder SSH-sleutels."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zapisane dane logowania zawierają tylko nazwę użytkownika i hasło. Klucze SSH i certyfikaty nie są tam przechowywane; kluczami SSH zarządzaj w sekcji Klucze SSH."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As credenciais guardadas contêm apenas um nome de utilizador e uma palavra-passe. Chaves SSH e certificados não são guardados aí; gira as chaves SSH em Chaves SSH."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已保存的凭据只包含用户名和密码，不会存储 SSH 密钥和证书。SSH 密钥请在 SSH 密钥中管理。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存した認証情報に含まれるのはユーザー名とパスワードだけです。SSH キーや証明書はそこには保存されません。SSH キーは SSHキー で管理してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장된 자격 증명에는 사용자 이름과 비밀번호만 들어 있습니다. SSH 키와 인증서는 여기에 저장되지 않으며, SSH 키는 SSH 키에서 관리하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتوي بيانات الدخول المحفوظة على اسم مستخدم وكلمة مرور فقط. لا تُخزَّن مفاتيح SSH والشهادات فيها؛ أدِر مفاتيح SSH من قسم مفاتيح SSH."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सहेजे गए क्रेडेंशियल में केवल एक यूज़रनेम और एक पासवर्ड होता है। SSH कुंजियाँ और प्रमाणपत्र वहाँ संग्रहीत नहीं होते; SSH कुंजियाँ SSH कुंजियाँ अनुभाग में प्रबंधित करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kredensial tersimpan hanya berisi nama pengguna dan kata sandi. Kunci SSH dan sertifikat tidak disimpan di sana; kelola kunci SSH di Kunci SSH."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kayıtlı kimlik bilgileri yalnızca bir kullanıcı adı ve bir parola içerir. SSH anahtarları ve sertifikalar orada saklanmaz; SSH anahtarlarını SSH Anahtarları bölümünde yönetin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранённые учётные данные содержат только имя пользователя и пароль. SSH-ключи и сертификаты там не хранятся; управляйте SSH-ключами в разделе SSH-ключи."
+          }
+        }
+      }
+    },
+    "Deleting an instance also deletes its saved credentials. If they cannot be removed, the app shows an error." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deleting an instance also deletes its saved credentials. If they cannot be removed, the app shows an error."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Löschen einer Instanz werden auch ihre gespeicherten Zugangsdaten gelöscht. Lassen sie sich nicht entfernen, zeigt die App einen Fehler an."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al eliminar una instancia también se eliminan sus credenciales guardadas. Si no se pueden eliminar, la app muestra un error."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La suppression d'une instance supprime aussi ses identifiants enregistrés. S'ils ne peuvent pas être supprimés, l'app affiche une erreur."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminando un'istanza vengono eliminate anche le sue credenziali salvate. Se non possono essere rimosse, l'app mostra un errore."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Als je een instance verwijdert, worden ook de opgeslagen inloggegevens ervan verwijderd. Lukt dat niet, dan toont de app een foutmelding."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usunięcie instancji usuwa także jej zapisane dane logowania. Jeśli nie można ich usunąć, aplikacja wyświetla błąd."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar uma instância também elimina as suas credenciais guardadas. Se não for possível removê-las, a app mostra um erro."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除实例时，也会删除其已保存的凭据。如果无法移除这些凭据，App 会显示错误。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスを削除すると、保存した認証情報も削除されます。削除できなかった場合は、App にエラーが表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스를 삭제하면 저장된 자격 증명도 함께 삭제됩니다. 삭제할 수 없으면 앱에 오류가 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يؤدي حذف مثيل إلى حذف بيانات الدخول المحفوظة له أيضًا. إذا تعذّرت إزالتها، يعرض التطبيق خطأً."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किसी इंस्टेंस को हटाने पर उसके सहेजे गए क्रेडेंशियल भी हट जाते हैं। यदि उन्हें हटाया नहीं जा सकता, तो ऐप एक त्रुटि दिखाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menghapus instans juga menghapus kredensial tersimpannya. Jika kredensial tidak dapat dihapus, app menampilkan kesalahan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir örneği silmek, kayıtlı kimlik bilgilerini de siler. Bunlar kaldırılamazsa uygulama bir hata gösterir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При удалении инстанса удаляются и его сохранённые учётные данные. Если удалить их не удаётся, приложение показывает ошибку."
+          }
+        }
+      }
+    },
+    "Calendar boundaries use UTC rather than local time, so they can fall a few hours before or after local midnight. This Month, Last Quarter and This Year include the current month so far; Last Month covers the previous complete UTC month." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar boundaries use UTC rather than local time, so they can fall a few hours before or after local midnight. This Month, Last Quarter and This Year include the current month so far; Last Month covers the previous complete UTC month."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalendergrenzen richten sich nach UTC statt nach der Ortszeit und können daher einige Stunden vor oder nach Mitternacht Ortszeit liegen. Dieser Monat, Letztes Quartal und Dieses Jahr umfassen den laufenden Monat bis jetzt; Letzter Monat umfasst den vorherigen vollständigen Monat in UTC."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los límites del calendario usan UTC en lugar de la hora local, por lo que pueden caer unas horas antes o después de la medianoche local. Este mes, Último trimestre y Este año incluyen el mes actual hasta ahora; Mes pasado abarca el mes UTC completo anterior."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les limites du calendrier utilisent l'UTC et non l'heure locale ; elles peuvent donc tomber quelques heures avant ou après minuit, heure locale. Ce mois-ci, Le trimestre dernier et Cette année incluent le mois en cours jusqu'à maintenant ; Le mois dernier couvre le mois UTC complet précédent."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I confini del calendario usano l'UTC anziché l'ora locale, quindi possono cadere alcune ore prima o dopo la mezzanotte locale. Questo mese, Ultimo trimestre e Quest'anno includono il mese corrente fino a ora; Mese scorso copre il mese UTC completo precedente."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalendergrenzen gebruiken UTC in plaats van lokale tijd en kunnen daardoor enkele uren voor of na middernacht lokale tijd liggen. Deze maand, Vorig kwartaal en Dit jaar omvatten de huidige maand tot nu toe; Vorige maand omvat de vorige volledige UTC-maand."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Granice kalendarzowe są liczone w UTC, a nie w czasie lokalnym, więc mogą przypadać kilka godzin przed północą lub po północy czasu lokalnego. Ten miesiąc, Poprzedni kwartał i Ten rok obejmują bieżący miesiąc do teraz; Poprzedni miesiąc obejmuje poprzedni pełny miesiąc w UTC."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os limites do calendário usam UTC em vez da hora local, por isso podem ficar algumas horas antes ou depois da meia-noite local. Este mês, Último trimestre e Este ano incluem o mês atual até agora; Mês passado abrange o mês UTC completo anterior."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日历边界使用 UTC 而非当地时间，因此可能比当地午夜早或晚几个小时。本月、上季度和今年包括当月截至目前的部分；上月涵盖上一个完整的 UTC 月份。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暦の境界には現地時間ではなく UTC を使用するため、現地時間の午前0時より数時間早く、または遅くなることがあります。今月、前四半期、今年には今月のこれまでの分が含まれ、先月は直前の UTC の1か月全体が対象です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "달력 경계는 현지 시간이 아닌 UTC를 사용하므로 현지 자정보다 몇 시간 이르거나 늦을 수 있습니다. 이번 달, 지난 분기, 올해는 이번 달의 현재까지를 포함하며, 지난 달은 이전의 완전한 UTC 월을 포함합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعتمد حدود التقويم على توقيت UTC بدلاً من التوقيت المحلي، لذا قد تقع قبل منتصف الليل بالتوقيت المحلي أو بعده ببضع ساعات. تشمل فترات هذا الشهر والربع الماضي وهذا العام الشهر الحالي حتى الآن، بينما يغطي الشهر الماضي الشهر الكامل السابق بتوقيت UTC."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कैलेंडर की सीमाएँ स्थानीय समय के बजाय UTC पर आधारित हैं, इसलिए वे स्थानीय आधी रात से कुछ घंटे पहले या बाद में पड़ सकती हैं। यह माह, पिछली तिमाही और यह वर्ष में अब तक का वर्तमान महीना शामिल है; पिछला माह UTC के पिछले पूरे महीने को कवर करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batas kalender menggunakan UTC, bukan waktu setempat, sehingga dapat jatuh beberapa jam sebelum atau sesudah tengah malam waktu setempat. Bulan Ini, Kuartal Lalu, dan Tahun Ini mencakup bulan berjalan hingga saat ini; Bulan Lalu mencakup satu bulan UTC penuh sebelumnya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takvim sınırları yerel saat yerine UTC'yi kullanır, bu nedenle yerel gece yarısından birkaç saat önce veya sonra denk gelebilir. Bu Ay, Geçen Çeyrek ve Bu Yıl, içinde bulunulan ayın şimdiye kadarki kısmını içerir; Geçen Ay ise önceki tam UTC ayını kapsar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Границы календаря рассчитываются по UTC, а не по местному времени, поэтому они могут приходиться на несколько часов раньше или позже местной полуночи. Этот месяц, прошлый квартал и этот год включают текущий месяц на данный момент; прошлый месяц охватывает предыдущий полный месяц по UTC."
+          }
+        }
+      }
+    },
+    "Periods spanning several months are loaded month by month in UTC, Civo's billing time zone, and added up to one total without counting a month boundary twice." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periods spanning several months are loaded month by month in UTC, Civo's billing time zone, and added up to one total without counting a month boundary twice."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeiträume über mehrere Monate werden Monat für Monat in UTC, der Abrechnungszeitzone von Civo, geladen und zu einer Summe addiert, ohne eine Monatsgrenze doppelt zu zählen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los periodos de varios meses se cargan mes a mes en UTC, la zona horaria de facturación de Civo, y se suman en un total sin contar dos veces ningún límite de mes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les périodes couvrant plusieurs mois sont chargées mois par mois en UTC, le fuseau horaire de facturation de Civo, puis additionnées en un total sans compter deux fois une limite de mois."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I periodi di più mesi vengono caricati mese per mese in UTC, il fuso orario di fatturazione di Civo, e sommati in un unico totale senza contare due volte un confine di mese."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perioden van meerdere maanden worden maand voor maand in UTC, de factuurtijdzone van Civo, geladen en opgeteld tot één totaal, zonder een maandgrens dubbel te tellen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okresy obejmujące kilka miesięcy są wczytywane miesiąc po miesiącu w UTC, strefie czasowej rozliczeń Civo, i sumowane do jednej kwoty bez podwójnego liczenia granic miesięcy."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os períodos de vários meses são carregados mês a mês em UTC, o fuso horário de faturação da Civo, e somados num total sem contar duas vezes nenhum limite de mês."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跨越多个月的时间段会按 UTC（Civo 的计费时区）逐月加载，并汇总为一个总额，月份边界不会被重复计算。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複数か月にわたる期間は、Civo の請求タイムゾーンである UTC で1か月ずつ読み込まれ、月の境界を二重に数えることなく1つの合計にまとめられます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여러 달에 걸친 기간은 Civo의 청구 시간대인 UTC 기준으로 한 달씩 불러와 하나의 합계로 더하며, 월 경계를 두 번 계산하지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُحمَّل الفترات الممتدة لعدة أشهر شهرًا بشهر بتوقيت UTC، وهي المنطقة الزمنية للفوترة لدى Civo، ثم تُجمع في إجمالي واحد دون احتساب أي حد شهري مرتين."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कई महीनों में फैली अवधियाँ UTC में, जो Civo का बिलिंग टाइम ज़ोन है, महीने दर महीने लोड की जाती हैं और किसी भी महीने की सीमा को दो बार गिने बिना एक कुल राशि में जोड़ी जाती हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periode yang mencakup beberapa bulan dimuat bulan demi bulan dalam UTC, zona waktu penagihan Civo, lalu dijumlahkan menjadi satu total tanpa menghitung batas bulan dua kali."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birden fazla aya yayılan dönemler, Civo'nun faturalama saat dilimi olan UTC'de ay ay yüklenir ve hiçbir ay sınırı iki kez sayılmadan tek bir toplamda birleştirilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Периоды из нескольких месяцев загружаются помесячно в UTC, часовом поясе выставления счетов Civo, и суммируются в один итог без двойного учёта границ месяцев."
+          }
+        }
+      }
+    },
+    "Last Quarter covers the three previous calendar months plus the current month so far." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last Quarter covers the three previous calendar months plus the current month so far."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letztes Quartal umfasst die drei vorherigen Kalendermonate und den laufenden Monat bis heute."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Último trimestre abarca los tres meses naturales anteriores más el mes actual hasta hoy."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le trimestre dernier couvre les trois mois civils précédents ainsi que le mois en cours jusqu'à aujourd'hui."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ultimo trimestre comprende i tre mesi di calendario precedenti più il mese corrente fino a oggi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorig kwartaal omvat de drie vorige kalendermaanden plus de huidige maand tot nu toe."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poprzedni kwartał obejmuje trzy poprzednie miesiące kalendarzowe oraz bieżący miesiąc do dziś."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Último trimestre abrange os três meses civis anteriores mais o mês atual até agora."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上季度包括之前的三个自然月，以及当月截至目前的部分。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前四半期には、直前の3つの暦月と、今月のこれまでの分が含まれます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지난 분기는 이전 세 개의 달력 월과 이번 달의 현재까지를 포함합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يشمل الربع الماضي الأشهر التقويمية الثلاثة السابقة بالإضافة إلى الشهر الحالي حتى الآن."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पिछली तिमाही में पिछले तीन कैलेंडर महीने और अब तक का वर्तमान महीना शामिल है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kuartal Lalu mencakup tiga bulan kalender sebelumnya ditambah bulan berjalan hingga saat ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçen Çeyrek, önceki üç takvim ayını ve içinde bulunulan ayın şimdiye kadarki kısmını kapsar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прошлый квартал охватывает три предыдущих календарных месяца и текущий месяц на сегодняшний день."
+          }
+        }
+      }
+    },
+    "Completed months are cached locally per Civo account and reused. The current month and any month not cached yet are loaded from Civo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed months are cached locally per Civo account and reused. The current month and any month not cached yet are loaded from Civo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossene Monate werden pro Civo-Konto lokal zwischengespeichert und wiederverwendet. Der laufende Monat und noch nicht gespeicherte Monate werden von Civo geladen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los meses completados se guardan en caché localmente por cuenta de Civo y se reutilizan. El mes actual y los meses aún no guardados se cargan desde Civo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les mois terminés sont mis en cache localement par compte Civo et réutilisés. Le mois en cours et les mois pas encore en cache sont chargés depuis Civo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I mesi conclusi vengono memorizzati localmente per ogni account Civo e riutilizzati. Il mese corrente e i mesi non ancora memorizzati vengono caricati da Civo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afgesloten maanden worden per Civo-account lokaal in de cache bewaard en hergebruikt. De huidige maand en maanden die nog niet in de cache staan, worden bij Civo geladen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zakończone miesiące są przechowywane lokalnie w pamięci podręcznej osobno dla każdego konta Civo i używane ponownie. Bieżący miesiąc i miesiące jeszcze niezapisane są wczytywane z Civo."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os meses concluídos ficam em cache localmente por conta Civo e são reutilizados. O mês atual e os meses ainda sem cache são carregados da Civo."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已结束的月份会按 Civo 账户在本地缓存并重复使用。当月以及尚未缓存的月份会从 Civo 加载。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了した月は Civo アカウントごとにローカルにキャッシュされ、再利用されます。今月とまだキャッシュされていない月は Civo から読み込まれます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지난 달은 Civo 계정별로 로컬에 캐시되어 다시 사용됩니다. 이번 달과 아직 캐시되지 않은 달은 Civo에서 불러옵니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُخزَّن الأشهر المكتملة مؤقتًا محليًا لكل حساب Civo ويُعاد استخدامها. يُحمَّل الشهر الحالي وأي شهر لم يُخزَّن بعد من Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पूरे हो चुके महीने हर Civo खाते के लिए स्थानीय रूप से कैश किए जाते हैं और फिर से उपयोग होते हैं। वर्तमान महीना और अभी तक कैश न हुए महीने Civo से लोड किए जाते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bulan yang sudah selesai disimpan dalam cache lokal per akun Civo dan digunakan kembali. Bulan berjalan dan bulan yang belum ada di cache dimuat dari Civo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamamlanan aylar her Civo hesabı için yerel olarak önbelleğe alınır ve yeniden kullanılır. İçinde bulunulan ay ve henüz önbellekte olmayan aylar Civo'dan yüklenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершённые месяцы кэшируются локально для каждой учётной записи Civo и используются повторно. Текущий месяц и ещё не кэшированные месяцы загружаются из Civo."
+          }
+        }
+      }
+    },
+    "Select a network" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a network"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerk auswählen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleccionar una red"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionner un réseau"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona una rete"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer een netwerk"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz sieć"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecionar uma rede"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择网络"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ネットワークを選択"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "네트워크 선택"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر شبكة"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नेटवर्क चुनें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih jaringan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir ağ seçin"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите сеть"
+          }
+        }
+      }
+    },
+    "Hostname, size, disk image and network are required." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostname, size, disk image and network are required."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostname, Größe, Disk-Image und Netzwerk sind erforderlich."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se requieren el nombre de host, el tamaño, la imagen de disco y la red."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le nom d'hôte, la taille, l'image disque et le réseau sont obligatoires."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome host, dimensione, immagine disco e rete sono obbligatori."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostnaam, grootte, schijfimage en netwerk zijn verplicht."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nazwa hosta, rozmiar, obraz dysku i sieć są wymagane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O nome do host, o tamanho, a imagem de disco e a rede são obrigatórios."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主机名、规格、磁盘映像和网络为必填项。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホスト名、サイズ、ディスクイメージ、ネットワークは必須です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "호스트명, 크기, 디스크 이미지, 네트워크는 필수입니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المضيف والحجم وصورة القرص والشبكة مطلوبة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "होस्टनेम, आकार, डिस्क इमेज और नेटवर्क आवश्यक हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama host, ukuran, citra disk, dan jaringan wajib diisi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana bilgisayar adı, boyut, disk imajı ve ağ zorunludur."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя хоста, размер, образ диска и сеть обязательны."
+          }
+        }
+      }
+    },
+    "Create Instance stays disabled until hostname, size, disk image and network are set. The default network is preselected, and only firewalls of the selected network are offered." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Instance stays disabled until hostname, size, disk image and network are set. The default network is preselected, and only firewalls of the selected network are offered."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instanz erstellen bleibt deaktiviert, bis Hostname, Größe, Disk-Image und Netzwerk gesetzt sind. Das Standardnetzwerk ist vorausgewählt, und es werden nur Firewalls des gewählten Netzwerks angeboten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear instancia permanece desactivado hasta que se definan el nombre de host, el tamaño, la imagen de disco y la red. La red predeterminada viene preseleccionada y solo se ofrecen los firewalls de la red seleccionada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer une instance reste désactivé tant que le nom d'hôte, la taille, l'image disque et le réseau ne sont pas définis. Le réseau par défaut est présélectionné, et seuls les pare-feu du réseau choisi sont proposés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea istanza resta disattivato finché nome host, dimensione, immagine disco e rete non sono impostati. La rete predefinita è preselezionata e vengono proposti solo i firewall della rete selezionata."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instantie aanmaken blijft uitgeschakeld tot hostnaam, grootte, schijfimage en netwerk zijn ingesteld. Het standaardnetwerk is vooraf geselecteerd en alleen firewalls van het gekozen netwerk worden aangeboden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utwórz instancję pozostaje nieaktywne, dopóki nie zostaną ustawione nazwa hosta, rozmiar, obraz dysku i sieć. Sieć domyślna jest wstępnie wybrana, a dostępne są tylko zapory sieciowe wybranej sieci."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar instância permanece desativado até que o nome do host, o tamanho, a imagem de disco e a rede estejam definidos. A rede predefinida vem pré-selecionada e só são oferecidos os firewalls da rede selecionada."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在设置主机名、规格、磁盘映像和网络之前，创建实例保持禁用。默认网络已预先选择，并且只提供所选网络中的防火墙。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホスト名、サイズ、ディスクイメージ、ネットワークを設定するまで、インスタンスを作成は無効のままです。デフォルトのネットワークがあらかじめ選択され、選択したネットワークのファイアウォールのみが表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "호스트명, 크기, 디스크 이미지, 네트워크를 설정할 때까지 인스턴스 생성은 비활성화된 상태로 유지됩니다. 기본 네트워크가 미리 선택되며, 선택한 네트워크의 방화벽만 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يبقى إنشاء مثيل معطلًا حتى يتم تعيين اسم المضيف والحجم وصورة القرص والشبكة. تكون الشبكة الافتراضية محددة مسبقًا، ولا تُعرض إلا جدران الحماية الخاصة بالشبكة المحددة."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "होस्टनेम, आकार, डिस्क इमेज और नेटवर्क सेट होने तक इंस्टेंस बनाएं निष्क्रिय रहता है। डिफ़ॉल्ट नेटवर्क पहले से चुना रहता है, और केवल चुने गए नेटवर्क के फ़ायरवॉल दिखाए जाते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buat Instance tetap nonaktif sampai nama host, ukuran, citra disk, dan jaringan ditetapkan. Jaringan default sudah dipilih sebelumnya, dan hanya firewall dari jaringan yang dipilih yang ditawarkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ana bilgisayar adı, boyut, disk imajı ve ağ ayarlanana kadar Sunucu Oluştur devre dışı kalır. Varsayılan ağ önceden seçilidir ve yalnızca seçilen ağın güvenlik duvarları sunulur."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка Создать экземпляр остается неактивной, пока не заданы имя хоста, размер, образ диска и сеть. Сеть по умолчанию выбрана заранее, и предлагаются только брандмауэры выбранной сети."
+          }
+        }
+      }
+    },
+    "Instance actions require Full Access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance actions require Full Access."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتطلب إجراءات المثيلات الوصول الكامل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktionen für Instanzen erfordern Vollzugriff."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las acciones de instancias requieren Acceso completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les actions sur les instances nécessitent l'Accès complet."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस कार्रवाइयों के लिए पूर्ण एक्सेस आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tindakan instance memerlukan Akses Penuh."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le azioni sulle istanze richiedono l'Accesso completo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスの操作にはフルアクセスが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 작업에는 전체 액세스가 필요합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acties voor instanties vereisen Volledige toegang."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Działania na instancjach wymagają Pełnego dostępu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As ações de instâncias requerem Acesso total."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для действий с инстансами требуется полный доступ."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu işlemleri Tam Erişim gerektirir."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例操作需要完整访问权限。"
+          }
+        }
+      }
+    },
+    "The region of this instance is unknown. Reload the list and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region of this instance is unknown. Reload the list and try again."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منطقة هذا المثيل غير معروفة. أعد تحميل القائمة وحاول مرة أخرى."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region dieser Instanz ist unbekannt. Lade die Liste neu und versuche es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región de esta instancia es desconocida. Vuelve a cargar la lista e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région de cette instance est inconnue. Rechargez la liste et réessayez."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस इंस्टेंस का क्षेत्र अज्ञात है। सूची फिर से लोड करें और दोबारा प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah instance ini tidak diketahui. Muat ulang daftar dan coba lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione di questa istanza è sconosciuta. Ricarica l'elenco e riprova."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このインスタンスのリージョンが不明です。一覧を再読み込みして、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 인스턴스의 리전을 알 수 없습니다. 목록을 다시 불러온 후 다시 시도하세요."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio van deze instantie is onbekend. Laad de lijst opnieuw en probeer het nogmaals."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region tej instancji jest nieznany. Załaduj listę ponownie i spróbuj jeszcze raz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região desta instância é desconhecida. Recarregue a lista e tente novamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион этого инстанса неизвестен. Обновите список и повторите попытку."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu sunucunun bölgesi bilinmiyor. Listeyi yeniden yükleyip tekrar deneyin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此实例的区域未知。请重新加载列表后重试。"
+          }
+        }
+      }
+    },
+    "The region changed, so the instance action was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region changed, so the instance action was cancelled. Nothing was sent."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّرت المنطقة، لذلك أُلغي إجراء المثيل. لم يُرسَل أي شيء."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region hat sich geändert, daher wurde die Aktion für die Instanz abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región ha cambiado, así que se canceló la acción de la instancia. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région a changé, l'action sur l'instance a donc été annulée. Rien n'a été envoyé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्षेत्र बदल गया, इसलिए इंस्टेंस कार्रवाई रद्द कर दी गई। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah berubah, jadi tindakan instance dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione è cambiata, quindi l'azione sull'istanza è stata annullata. Non è stato inviato nulla."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リージョンが変更されたため、インスタンスの操作をキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리전이 변경되어 인스턴스 작업이 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio is gewijzigd, daarom is de actie voor de instantie geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region się zmienił, więc działanie na instancji zostało anulowane. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região mudou, por isso a ação da instância foi cancelada. Nada foi enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион изменился, поэтому действие с инстансом отменено. Ничего не отправлено."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölge değişti, bu nedenle sunucu işlemi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "区域已更改，因此实例操作已取消。未发送任何内容。"
+          }
+        }
+      }
+    },
+    "The instance is no longer in the list, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The instance is no longer in the list, so nothing was sent."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يعد المثيل موجودًا في القائمة، لذلك لم يُرسَل أي شيء."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Instanz ist nicht mehr in der Liste, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La instancia ya no está en la lista, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'instance ne figure plus dans la liste, rien n'a donc été envoyé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस अब सूची में नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance tidak lagi ada di daftar, jadi tidak ada yang dikirim."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'istanza non è più nell'elenco, quindi non è stato inviato nulla."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスが一覧にないため、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스가 더 이상 목록에 없으므로 아무것도 전송되지 않았습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De instantie staat niet meer in de lijst, daarom is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instancji nie ma już na liście, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A instância já não está na lista, por isso nada foi enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инстанса больше нет в списке, поэтому ничего не отправлено."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu artık listede değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该实例已不在列表中，因此未发送任何内容。"
+          }
+        }
+      }
+    },
+    "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance actions always go to the region the instance list was loaded from. If the region changes or the instance is no longer listed while a confirmation is open, the action is cancelled and nothing is sent."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُرسَل إجراءات المثيلات دائمًا إلى المنطقة التي حُمّلت منها قائمة المثيلات. إذا تغيّرت المنطقة أو لم يعد المثيل مدرجًا أثناء فتح نافذة تأكيد، يُلغى الإجراء ولا يُرسَل أي شيء."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktionen für Instanzen gehen immer an die Region, aus der die Instanzliste geladen wurde. Ändert sich die Region oder ist die Instanz nicht mehr in der Liste, während eine Bestätigung offen ist, wird die Aktion abgebrochen und nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las acciones de instancias siempre van a la región desde la que se cargó la lista de instancias. Si la región cambia o la instancia ya no aparece en la lista mientras hay una confirmación abierta, la acción se cancela y no se envía nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les actions sur les instances vont toujours vers la région depuis laquelle la liste des instances a été chargée. Si la région change ou si l'instance ne figure plus dans la liste pendant qu'une confirmation est ouverte, l'action est annulée et rien n'est envoyé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इंस्टेंस कार्रवाइयाँ हमेशा उसी क्षेत्र में भेजी जाती हैं जिससे इंस्टेंस सूची लोड की गई थी। यदि पुष्टि खुली रहते हुए क्षेत्र बदल जाए या इंस्टेंस सूची में न रहे, तो कार्रवाई रद्द हो जाती है और कुछ भी नहीं भेजा जाता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tindakan instance selalu dikirim ke wilayah tempat daftar instance dimuat. Jika wilayah berubah atau instance tidak lagi ada di daftar saat konfirmasi terbuka, tindakan dibatalkan dan tidak ada yang dikirim."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le azioni sulle istanze vanno sempre alla regione da cui è stato caricato l'elenco delle istanze. Se la regione cambia o l'istanza non è più nell'elenco mentre una conferma è aperta, l'azione viene annullata e non viene inviato nulla."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インスタンスの操作は、常にインスタンス一覧を読み込んだリージョンに送信されます。確認画面を開いている間にリージョンが変わったり、インスタンスが一覧からなくなったりした場合、操作はキャンセルされ、何も送信されません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인스턴스 작업은 항상 인스턴스 목록을 불러온 리전으로 전송됩니다. 확인 창이 열려 있는 동안 리전이 변경되거나 인스턴스가 목록에서 사라지면 작업이 취소되고 아무것도 전송되지 않습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acties voor instanties gaan altijd naar de regio waaruit de lijst met instanties is geladen. Als de regio verandert of de instantie niet meer in de lijst staat terwijl een bevestiging open is, wordt de actie geannuleerd en wordt er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Działania na instancjach trafiają zawsze do regionu, z którego załadowano listę instancji. Jeśli region się zmieni lub instancji nie będzie już na liście, gdy otwarte jest potwierdzenie, działanie zostanie anulowane i nic nie zostanie wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As ações de instâncias vão sempre para a região a partir da qual a lista de instâncias foi carregada. Se a região mudar ou a instância deixar de estar na lista enquanto uma confirmação está aberta, a ação é cancelada e nada é enviado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Действия с инстансами всегда отправляются в регион, из которого загружен список инстансов. Если регион изменится или инстанса больше не будет в списке, пока открыто подтверждение, действие отменяется и ничего не отправляется."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu işlemleri her zaman sunucu listesinin yüklendiği bölgeye gönderilir. Bir onay açıkken bölge değişirse veya sunucu artık listede değilse, işlem iptal edilir ve hiçbir şey gönderilmez."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实例操作始终发送到加载实例列表时所在的区域。如果在确认窗口打开期间区域发生变化或实例已不在列表中，该操作将被取消，且不会发送任何内容。"
           }
         }
       }

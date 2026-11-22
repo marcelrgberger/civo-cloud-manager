@@ -61,17 +61,14 @@ final class ConsoleLoginStore {
 /// Response of `PUT /v2/instances/{id}/vnc`.
 struct ConsoleSessionResponse: Decodable, Sendable {
     let uri: String
-    let duration: String?
 }
 
 /// Response of `POST /v2/auth/exchange`. Only the fields the console needs.
 struct AuthTokenExchangeResponse: Decodable, Sendable, CustomStringConvertible, CustomDebugStringConvertible {
     let accessToken: String
-    let expiresIn: Int?
 
     enum CodingKeys: String, CodingKey {
         case accessToken = "access_token"
-        case expiresIn = "expires_in"
     }
 
     var description: String { "AuthTokenExchangeResponse(<redacted>)" }

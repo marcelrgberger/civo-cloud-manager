@@ -1,5 +1,36 @@
 import Foundation
 
+/// Why an instance action was refused before anything was sent.
+enum InstanceTargetError: Error, Equatable {
+    case accessRevoked
+    case noRegion
+    case regionChanged
+    case instanceMissing
+
+    var message: String {
+        switch self {
+        case .accessRevoked:
+            String(localized: "Instance actions require Full Access.")
+        case .noRegion:
+            String(localized: "The region of this instance is unknown. Reload the list and try again.")
+        case .regionChanged:
+            String(localized: "The region changed, so the instance action was cancelled. Nothing was sent.")
+        case .instanceMissing:
+            String(localized: "The instance is no longer in the list, so nothing was sent.")
+        }
+    }
+}
+
+/// An instance action waiting for the user's confirmation, with the target captured when it was started.
+struct PendingInstanceAction: Equatable {
+    enum Kind {
+        case resize, delete
+    }
+
+    let kind: Kind
+    let target: ConsoleTarget
+}
+
 @Observable
 @MainActor
 final class InstanceViewModel {
@@ -12,6 +43,8 @@ final class InstanceViewModel {
     var selectedInstance: CivoInstance?
     /// Region the current `instances` were fetched from.
     private(set) var instancesRegion = ""
+    /// Dropped with a message as soon as its target is no longer valid.
+    private(set) var pendingAction: PendingInstanceAction?
     var isCreatingInstance = false
     var isCreatingSSHKey = false
     var isSaving = false
@@ -30,23 +63,54 @@ final class InstanceViewModel {
     private let sizeService = CivoSizeService()
     private let volumeService = CivoVolumeService()
     private let credentials: InstanceCredentialStore
-    private let deleteInstance: (String) async throws -> Void
+    private let api: any InstanceAPI
+    private let loadSSHKeys: @Sendable () async throws -> [CivoSSHKey]
+    private let settingsRegion: @MainActor () -> String
+    private let isAccessAllowed: @MainActor () -> Bool
+    private let notificationCenter: NotificationCenter
+    private let recordActivity: @MainActor (String, ConsoleTarget) -> Void
+    /// Why a confirmation was closed. Survives the next refresh, which a region change starts right away.
+    @ObservationIgnored private var cancellationNotice: String?
+    @ObservationIgnored nonisolated(unsafe) private var regionObserver: NSObjectProtocol?
 
-    init(credentials: InstanceCredentialStore? = nil, deleteInstance: ((String) async throws -> Void)? = nil) {
+    init(
+        credentials: InstanceCredentialStore? = nil,
+        api: any InstanceAPI = CivoInstanceService(),
+        loadSSHKeys: (@Sendable () async throws -> [CivoSSHKey])? = nil,
+        settingsRegion: @escaping @MainActor () -> String = { CivoConfig.shared.region },
+        isAccessAllowed: @escaping @MainActor () -> Bool = { StoreManager.shared.isFullAccessUnlocked },
+        notificationCenter: NotificationCenter = .default,
+        recordActivity: @escaping @MainActor (String, ConsoleTarget) -> Void = { action, target in
+            ActivityLog.shared.log(action, resourceType: "Instance", resourceName: target.instanceName, resourceId: target.instanceId)
+        }
+    ) {
         self.credentials = credentials ?? .shared
-        let service = CivoInstanceService()
-        self.deleteInstance = deleteInstance ?? { try await service.removeInstance($0) }
+        self.api = api
+        let sshKeyService = CivoSSHKeyService()
+        self.loadSSHKeys = loadSSHKeys ?? { try await sshKeyService.listSSHKeys() }
+        self.settingsRegion = settingsRegion
+        self.isAccessAllowed = isAccessAllowed
+        self.notificationCenter = notificationCenter
+        self.recordActivity = recordActivity
+        regionObserver = notificationCenter.addObserver(forName: .civoRegionDidChange, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.settingsRegionDidChange() }
+        }
+    }
+
+    deinit {
+        regionObserver.map(notificationCenter.removeObserver)
     }
 
     func refresh() async {
         isLoading = true
-        error = nil
+        error = cancellationNotice
+        cancellationNotice = nil
         defer { isLoading = false }
 
         do {
-            let region = CivoConfig.shared.region
-            async let insts = instanceService.listInstances(region: region.isEmpty ? nil : region)
-            async let keys = sshKeyService.listSSHKeys()
+            let region = settingsRegion()
+            async let insts = api.listInstances(region: region.isEmpty ? nil : region)
+            async let keys = loadSSHKeys()
 
             let instanceList: PaginatedList<CivoInstance>
             do {
@@ -55,27 +119,94 @@ final class InstanceViewModel {
                 instanceCompleteness.update(after: error)
                 throw error
             }
+            // A region change while loading starts its own refresh; this list belongs to the old region.
+            guard Self.isSameRegion(region, settingsRegion()) else { return }
             instances = instanceList.items
             instanceCompleteness.update(with: instanceList)
             instancesRegion = region
+            updateSelection()
+            dropInvalidPendingAction()
             sshKeys = try await keys
-
-            // Update selectedInstance with fresh data
-            if let selected = selectedInstance,
-               let updated = instances.first(where: { $0.id == selected.id }) {
-                selectedInstance = updated
-            }
         } catch {
             self.error = CivoAPIError.userMessage(error)
             Log.error("Instance refresh failed: \(error.localizedDescription)")
         }
     }
 
-    /// Console target with the region the instance was fetched from, never a later Settings change.
+    // MARK: - Targets
+
+    /// Captures the instance with the region it was listed from, never a later Settings change.
+    /// nil for an instance that is not in the current list or whose region is unknown.
+    /// Every instance action, including the console, starts from this target.
     func consoleTarget(for instance: CivoInstance) -> ConsoleTarget? {
+        guard instances.contains(where: { $0.id == instance.id }) else { return nil }
         let region = instance.region.flatMap { $0.isEmpty ? nil : $0 } ?? instancesRegion
         guard !region.isEmpty else { return nil }
         return ConsoleTarget(instanceId: instance.id, instanceName: instance.name, region: region)
+    }
+
+    /// Why a captured target may no longer be used, nil while it may. Checked again right before
+    /// every request, so a confirmation that outlived a region change or a reload sends nothing.
+    func targetError(for target: ConsoleTarget) -> InstanceTargetError? {
+        guard isAccessAllowed() else { return .accessRevoked }
+        guard !target.region.isEmpty else { return .noRegion }
+        guard Self.isSameRegion(target.region, settingsRegion()),
+              Self.isSameRegion(target.region, instancesRegion) else { return .regionChanged }
+        guard instances.contains(where: { $0.id == target.instanceId }) else { return .instanceMissing }
+        return nil
+    }
+
+    /// Opens a confirmation for `instance` with its target captured now, unless that target is already invalid.
+    func beginConfirmation(_ kind: PendingInstanceAction.Kind, for instance: CivoInstance) {
+        guard let target = consoleTarget(for: instance) else {
+            error = InstanceTargetError.noRegion.message
+            return
+        }
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return
+        }
+        pendingAction = PendingInstanceAction(kind: kind, target: target)
+    }
+
+    func cancelConfirmation() {
+        pendingAction = nil
+    }
+
+    /// Closes the confirmation and returns its target. The action checks the target again.
+    func confirmPendingAction() -> ConsoleTarget? {
+        defer { pendingAction = nil }
+        return pendingAction?.target
+    }
+
+    private func settingsRegionDidChange() {
+        if let selected = selectedInstance,
+           consoleTarget(for: selected).map({ !Self.isSameRegion($0.region, settingsRegion()) }) ?? true {
+            selectedInstance = nil
+        }
+        dropInvalidPendingAction()
+    }
+
+    /// Keeps the selection on fresh data, or drops it once the instance is no longer listed.
+    private func updateSelection() {
+        guard let selected = selectedInstance else { return }
+        if let updated = instances.first(where: { $0.id == selected.id }) {
+            selectedInstance = updated
+        } else {
+            selectedInstance = nil
+            error = InstanceTargetError.instanceMissing.message
+        }
+    }
+
+    private func dropInvalidPendingAction() {
+        guard let pending = pendingAction, let problem = targetError(for: pending.target) else { return }
+        pendingAction = nil
+        error = problem.message
+        cancellationNotice = problem.message
+    }
+
+    private static func isSameRegion(_ lhs: String, _ rhs: String) -> Bool {
+        lhs.caseInsensitiveCompare(rhs) == .orderedSame
     }
 
     /// Passes the instance's initial login to the console window in memory, right before it opens.
@@ -107,7 +238,8 @@ final class InstanceViewModel {
         }
     }
 
-    func createInstance(_ body: sending [String: Any]) async -> Bool {
+    func createInstance(_ form: InstanceCreationForm) async -> Bool {
+        guard let body = form.requestBody() else { return false }
         isSaving = true
         saveError = nil
         defer { isSaving = false }
@@ -142,49 +274,40 @@ final class InstanceViewModel {
         }
     }
 
-    func stopInstance(_ id: String) async {
-        let name = instances.first { $0.id == id }?.name ?? id
-        do {
-            try await instanceService.stopInstance(id); showSuccess = true
-            ActivityLog.shared.log("Stopped", resourceType: "Instance", resourceName: name, resourceId: id)
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
+    func stopInstance(_ target: ConsoleTarget) async {
+        await perform("Stopped", on: target) { try await $0.stopInstance(target.instanceId, region: target.region) }
     }
 
-    func startInstance(_ id: String) async {
-        let name = instances.first { $0.id == id }?.name ?? id
-        do {
-            try await instanceService.startInstance(id); showSuccess = true
-            ActivityLog.shared.log("Started", resourceType: "Instance", resourceName: name, resourceId: id)
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
+    func startInstance(_ target: ConsoleTarget) async {
+        await perform("Started", on: target) { try await $0.startInstance(target.instanceId, region: target.region) }
     }
 
-    func rebootInstance(_ id: String) async {
-        let name = instances.first { $0.id == id }?.name ?? id
-        do {
-            try await instanceService.rebootInstance(id); showSuccess = true
-            ActivityLog.shared.log("Rebooted", resourceType: "Instance", resourceName: name, resourceId: id)
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
+    func rebootInstance(_ target: ConsoleTarget) async {
+        await perform("Rebooted", on: target) { try await $0.rebootInstance(target.instanceId, region: target.region) }
     }
 
-    func updateInstance(_ id: String, reverseDns: String) async {
-        let name = instances.first { $0.id == id }?.name ?? id
+    func updateInstance(_ target: ConsoleTarget, reverseDns: String) async {
+        await perform("Set Reverse DNS to \(reverseDns)", on: target) {
+            try await $0.updateInstance(target.instanceId, body: ["reverse_dns": reverseDns], region: target.region)
+        }
+    }
+
+    func resizeInstance(_ target: ConsoleTarget, size: String) async {
+        await perform("Resized to \(size)", on: target) {
+            try await $0.resizeInstance(target.instanceId, size: size, region: target.region)
+        }
+    }
+
+    /// Sends one request for `target`, only if the target is still valid at this moment.
+    private func perform(_ activity: String, on target: ConsoleTarget, _ request: (any InstanceAPI) async throws -> Void) async {
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return
+        }
         do {
-            _ = try await instanceService.updateInstance(id, body: ["reverse_dns": reverseDns])
+            try await request(api)
             showSuccess = true
-            ActivityLog.shared.log("Set Reverse DNS to \(reverseDns)", resourceType: "Instance", resourceName: name, resourceId: id)
-            await refresh()
-        } catch { self.error = CivoAPIError.userMessage(error) }
-    }
-
-    func resizeInstance(_ id: String, size: String) async {
-        let name = instances.first { $0.id == id }?.name ?? id
-        do {
-            try await instanceService.resizeInstance(id, size: size)
-            showSuccess = true
-            ActivityLog.shared.log("Resized to \(size)", resourceType: "Instance", resourceName: name, resourceId: id)
+            recordActivity(activity, target)
             await refresh()
         } catch { self.error = CivoAPIError.userMessage(error) }
     }
@@ -205,8 +328,8 @@ final class InstanceViewModel {
         } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
-    func removeInstance(_ instance: CivoInstance) async {
-        guard await delete(instance) else { return }
+    func removeInstance(_ target: ConsoleTarget) async {
+        guard await delete(target) else { return }
         // Refreshing clears `error`; a warning about leftover credentials must stay visible.
         let warning = error
         await refresh()
@@ -214,20 +337,21 @@ final class InstanceViewModel {
     }
 
     /// Deletes the instance and, only once Civo confirmed the deletion, its saved credentials.
-    /// A failed deletion keeps them. Returns whether the instance was deleted.
-    func delete(_ instance: CivoInstance) async -> Bool {
+    /// A failed or refused deletion keeps them. Returns whether the instance was deleted.
+    func delete(_ target: ConsoleTarget) async -> Bool {
         error = nil
-        // Captured before the request: the key uses the region the instance was loaded from.
-        let key = consoleTarget(for: instance).map(InstanceCredentialKey.init)
+        if let problem = targetError(for: target) {
+            error = problem.message
+            return false
+        }
         do {
-            try await deleteInstance(instance.id)
+            try await api.removeInstance(target.instanceId, region: target.region)
         } catch {
             self.error = CivoAPIError.userMessage(error)
             return false
         }
-        guard let key else { return true }
         do {
-            try credentials.delete(key)
+            try credentials.delete(InstanceCredentialKey(target))
         } catch {
             let credentialError = error as? InstanceCredentialError ?? .unreadableEntry
             Log.error("Instance credentials not removed after instance deletion: \(credentialError.logDescription)")
@@ -238,9 +362,8 @@ final class InstanceViewModel {
 
     /// Whether credentials may be saved for the instance, checked without authentication. A keychain
     /// error counts as "may be saved": only a confirmed missing entry rules it out.
-    func mayHaveSavedCredentials(_ instance: CivoInstance) -> Bool {
-        guard let target = consoleTarget(for: instance) else { return false }
-        return (try? credentials.contains(InstanceCredentialKey(target))) != false
+    func mayHaveSavedCredentials(_ target: ConsoleTarget) -> Bool {
+        (try? credentials.contains(InstanceCredentialKey(target))) != false
     }
 
     func removeSSHKey(_ name: String) async {
