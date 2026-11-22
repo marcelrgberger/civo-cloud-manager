@@ -3,6 +3,8 @@ import SwiftUI
 struct InstanceListView: View {
     @Bindable var vm: InstanceViewModel
     @State private var deleteTarget: CivoInstance?
+    @State private var credentialsTarget: ConsoleTarget?
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         Group {
@@ -65,6 +67,15 @@ struct InstanceListView: View {
                         if inst.status?.lowercased() == "active" {
                             Button("Stop") { Task { await vm.stopInstance(inst.id) } }
                             Button("Reboot") { Task { await vm.rebootInstance(inst.id) } }
+                            if let target = vm.consoleTarget(for: inst) {
+                                Button("Open Console") {
+                                    vm.handOverConsoleLogin(of: inst, to: target)
+                                    openWindow(id: "console", value: target)
+                                }
+                            }
+                        }
+                        if let target = vm.consoleTarget(for: inst) {
+                            Button("Credentials…") { credentialsTarget = target }
                         }
                         if inst.status?.lowercased() == "shutoff" {
                             Button("Start") { Task { await vm.startInstance(inst.id) } }
@@ -83,10 +94,21 @@ struct InstanceListView: View {
         .overlay { if vm.isLoading && vm.instances.isEmpty { ProgressView("Loading instances...") } }
         .sheet(isPresented: Binding(get: { deleteTarget != nil }, set: { if !$0 { deleteTarget = nil } })) {
             if let target = deleteTarget {
-                DeleteConfirmationSheet(resourceType: "Instance", resourceName: target.name, onConfirm: {
-                    Task { await vm.removeInstance(target.id) }
-                    deleteTarget = nil
-                }, onCancel: { deleteTarget = nil })
+                DeleteConfirmationSheet(
+                    resourceType: "Instance",
+                    resourceName: target.name,
+                    onConfirm: {
+                        Task { await vm.removeInstance(target) }
+                        deleteTarget = nil
+                    },
+                    onCancel: { deleteTarget = nil },
+                    note: vm.mayHaveSavedCredentials(target) ? "Saved credentials for this instance will be deleted as well." : nil
+                )
+            }
+        }
+        .sheet(isPresented: Binding(get: { credentialsTarget != nil }, set: { if !$0 { credentialsTarget = nil } })) {
+            if let target = credentialsTarget {
+                InstanceCredentialsView(target: target)
             }
         }
     }

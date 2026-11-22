@@ -5,6 +5,7 @@ struct DeleteConfirmationSheet: View {
     let resourceName: String
     let onConfirm: () -> Void
     let onCancel: () -> Void
+    var note: LocalizedStringKey?
 
     @State private var confirmationText = ""
 
@@ -29,6 +30,12 @@ struct DeleteConfirmationSheet: View {
                 Text("This action cannot be undone. All associated data will be lost.")
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+                if let note {
+                    Text(note)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
             }
 
             VStack(alignment: .leading, spacing: 6) {

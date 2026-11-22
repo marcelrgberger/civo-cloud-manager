@@ -6,40 +6,19 @@ struct CostDashboardView: View {
     let databaseVM: DatabaseViewModel
     let volumeVM: VolumeViewModel
 
-    @State private var charges: [CivoCharge] = []
-    @State private var isLoading = false
-    @State private var error: String?
+    @State private var model = CostChargesViewModel()
     @State private var period: ChargePeriod = .currentMonth
     @State private var showRateEditor = false
 
-    private let service = CivoChargesService()
-
-    enum ChargePeriod: String, CaseIterable {
-        case currentMonth = "This Month"
-        case lastMonth = "Last Month"
-        case lastQuarter = "Last Quarter"
-        case thisYear = "This Year"
-
-        var dateRange: (from: Date, to: Date) {
-            let now = Date()
-            let cal = Calendar.current
-            switch self {
-            case .currentMonth:
-                let start = cal.date(from: cal.dateComponents([.year, .month], from: now))!
-                return (start, now)
-            case .lastMonth:
-                let startOfThisMonth = cal.date(from: cal.dateComponents([.year, .month], from: now))!
-                let startOfLastMonth = cal.date(byAdding: .month, value: -1, to: startOfThisMonth)!
-                return (startOfLastMonth, startOfThisMonth)
-            case .lastQuarter:
-                let threeMonthsAgo = cal.date(byAdding: .month, value: -3, to: cal.date(from: cal.dateComponents([.year, .month], from: now))!)!
-                return (threeMonthsAgo, now)
-            case .thisYear:
-                let startOfYear = cal.date(from: cal.dateComponents([.year], from: now))!
-                return (startOfYear, now)
-            }
-        }
+    /// Restarts the load, cancelling the running one, when the period or the account changes.
+    private struct LoadKey: Hashable {
+        let period: ChargePeriod
+        let accountGeneration: Int
     }
+
+    private var charges: [CivoCharge] { model.charges }
+    private var isLoading: Bool { model.isLoading }
+    private var error: String? { model.error }
 
     // MARK: - Computed
 
@@ -47,13 +26,15 @@ struct CostDashboardView: View {
         charges.reduce(0) { $0 + $1.totalCost }
     }
 
+    /// Avoids extreme extrapolation right after the month starts.
+    private static let minimumProjectionBasis: TimeInterval = 60 * 60
+
     private var projectedMonthlyCost: Double {
-        let calendar = Calendar.current
-        let now = Date()
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
-        let daysElapsed = max(calendar.dateComponents([.day], from: startOfMonth, to: now).day ?? 1, 1)
-        let daysInMonth = calendar.range(of: .day, in: .month, for: now)?.count ?? 30
-        return totalCost / Double(daysElapsed) * Double(daysInMonth)
+        let now = model.currentDate
+        let monthStart = ChargeCalendar.startOfMonth(now)
+        let monthEnd = ChargeCalendar.utc.date(byAdding: .month, value: 1, to: monthStart)!
+        let elapsed = max(now.timeIntervalSince(monthStart), Self.minimumProjectionBasis)
+        return totalCost / elapsed * monthEnd.timeIntervalSince(monthStart)
     }
 
     private var costByType: [(type: String, cost: Double, icon: String, color: Color)] {
@@ -140,7 +121,10 @@ struct CostDashboardView: View {
             .padding(20)
         }
         .navigationTitle("Costs")
-        .task { await loadCharges() }
+        .task(id: LoadKey(period: period, accountGeneration: model.accountGeneration)) { await loadCharges() }
+        .onReceive(NotificationCenter.default.publisher(for: .civoAPIKeyDidChange)) { _ in
+            model.apiKeyDidChange()
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Button {
@@ -165,9 +149,6 @@ struct CostDashboardView: View {
             }
         }
         .pickerStyle(.segmented)
-        .onChange(of: period) { _, _ in
-            Task { await loadCharges() }
-        }
     }
 
     private var totalCard: some View {
@@ -266,15 +247,6 @@ struct CostDashboardView: View {
     // MARK: - Data
 
     private func loadCharges() async {
-        isLoading = true
-        error = nil
-        defer { isLoading = false }
-
-        let range = period.dateRange
-        do {
-            charges = try await service.getChargesForRange(from: range.from, to: range.to)
-        } catch {
-            self.error = error.localizedDescription
-        }
+        await model.load(period)
     }
 }

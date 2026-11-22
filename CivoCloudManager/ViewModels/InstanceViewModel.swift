@@ -9,6 +9,8 @@ final class InstanceViewModel {
     var error: String?
 
     var selectedInstance: CivoInstance?
+    /// Region the current `instances` were fetched from.
+    private(set) var instancesRegion = ""
     var isCreatingInstance = false
     var isCreatingSSHKey = false
     var isSaving = false
@@ -26,6 +28,14 @@ final class InstanceViewModel {
     private let firewallService = CivoFirewallService()
     private let sizeService = CivoSizeService()
     private let volumeService = CivoVolumeService()
+    private let credentials: InstanceCredentialStore
+    private let deleteInstance: (String) async throws -> Void
+
+    init(credentials: InstanceCredentialStore? = nil, deleteInstance: ((String) async throws -> Void)? = nil) {
+        self.credentials = credentials ?? .shared
+        let service = CivoInstanceService()
+        self.deleteInstance = deleteInstance ?? { try await service.removeInstance($0) }
+    }
 
     func refresh() async {
         isLoading = true
@@ -33,10 +43,12 @@ final class InstanceViewModel {
         defer { isLoading = false }
 
         do {
-            async let insts = instanceService.listInstances()
+            let region = CivoConfig.shared.region
+            async let insts = instanceService.listInstances(region: region.isEmpty ? nil : region)
             async let keys = sshKeyService.listSSHKeys()
 
             instances = try await insts
+            instancesRegion = region
             sshKeys = try await keys
 
             // Update selectedInstance with fresh data
@@ -48,6 +60,21 @@ final class InstanceViewModel {
             self.error = CivoAPIError.userMessage(error)
             Log.error("Instance refresh failed: \(error.localizedDescription)")
         }
+    }
+
+    /// Console target with the region the instance was fetched from, never a later Settings change.
+    func consoleTarget(for instance: CivoInstance) -> ConsoleTarget? {
+        let region = instance.region.flatMap { $0.isEmpty ? nil : $0 } ?? instancesRegion
+        guard !region.isEmpty else { return nil }
+        return ConsoleTarget(instanceId: instance.id, instanceName: instance.name, region: region)
+    }
+
+    /// Passes the instance's initial login to the console window in memory, right before it opens.
+    func handOverConsoleLogin(of instance: CivoInstance, to target: ConsoleTarget) {
+        ConsoleLoginStore.shared.register(
+            ConsoleLogin(user: instance.initialUser, password: instance.initialPassword),
+            for: target
+        )
     }
 
     var selectedInstanceIsBuilding: Bool {
@@ -169,13 +196,42 @@ final class InstanceViewModel {
         } catch { self.error = CivoAPIError.userMessage(error) }
     }
 
-    func removeInstance(_ id: String) async {
+    func removeInstance(_ instance: CivoInstance) async {
+        guard await delete(instance) else { return }
+        // Refreshing clears `error`; a warning about leftover credentials must stay visible.
+        let warning = error
+        await refresh()
+        if error == nil { error = warning }
+    }
+
+    /// Deletes the instance and, only once Civo confirmed the deletion, its saved credentials.
+    /// A failed deletion keeps them. Returns whether the instance was deleted.
+    func delete(_ instance: CivoInstance) async -> Bool {
+        error = nil
+        // Captured before the request: the key uses the region the instance was loaded from.
+        let key = consoleTarget(for: instance).map(InstanceCredentialKey.init)
         do {
-            try await instanceService.removeInstance(id)
-            await refresh()
+            try await deleteInstance(instance.id)
         } catch {
             self.error = CivoAPIError.userMessage(error)
+            return false
         }
+        guard let key else { return true }
+        do {
+            try credentials.delete(key)
+        } catch {
+            let credentialError = error as? InstanceCredentialError ?? .unreadableEntry
+            Log.error("Instance credentials not removed after instance deletion: \(credentialError.logDescription)")
+            self.error = String(localized: "The instance was deleted, but its saved credentials could not be removed.")
+        }
+        return true
+    }
+
+    /// Whether credentials may be saved for the instance, checked without authentication. A keychain
+    /// error counts as "may be saved": only a confirmed missing entry rules it out.
+    func mayHaveSavedCredentials(_ instance: CivoInstance) -> Bool {
+        guard let target = consoleTarget(for: instance) else { return false }
+        return (try? credentials.contains(InstanceCredentialKey(target))) != false
     }
 
     func removeSSHKey(_ name: String) async {
