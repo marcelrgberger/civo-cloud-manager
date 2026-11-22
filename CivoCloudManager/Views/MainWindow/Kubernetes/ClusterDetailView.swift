@@ -28,10 +28,20 @@ struct ClusterDetailView: View {
         cluster.pools?.count ?? 0
     }
 
+    private var upgrades: KubernetesUpgradeController { vm.upgrades }
+
+    /// The version an accepted upgrade is heading for, until the cluster reports it.
+    private var requestedVersion: String? {
+        upgrades.requestedVersion(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount)
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 header
+                if let notice = upgrades.notice(forCluster: cluster.id, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount) {
+                    ErrorBanner(message: notice)
+                }
                 if let metrics = vm.clusterMetrics {
                     liveMetricsRow(metrics)
                 } else {
@@ -87,6 +97,14 @@ struct ClusterDetailView: View {
                 .frame(minWidth: 500, minHeight: 300)
             }
         }
+        .sheet(isPresented: Binding(get: { upgrades.session != nil }, set: { if !$0 { upgrades.cancel() } })) {
+            if let session = upgrades.session {
+                UpgradeClusterView(controller: upgrades, session: session) { version in
+                    Task { await upgrade(to: version) }
+                }
+                .frame(minWidth: 480, minHeight: 380)
+            }
+        }
         .sheet(isPresented: $showDeleteConfirmation) {
             DeleteConfirmationSheet(resourceType: "Kubernetes Cluster", resourceName: cluster.name, onConfirm: {
                 Task {
@@ -122,13 +140,35 @@ struct ClusterDetailView: View {
                             .background(.blue.opacity(0.1))
                             .clipShape(Capsule())
                     }
+                    if let requestedVersion {
+                        Label("Upgrade to \(requestedVersion) requested", systemImage: "clock.arrow.circlepath")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    } else if let available = cluster.upgradeAvailableTo, !available.isEmpty {
+                        Text("Upgrade available: \(available)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             Spacer()
+            Button("Upgrade...", systemImage: "arrow.up.circle") {
+                Task {
+                    await upgrades.begin(upgrading: cluster, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount)
+                }
+            }
+            .help("Upgrade this cluster to a newer Kubernetes version")
+            .disabled(upgrades.session != nil || upgrades.isSending)
             StatusBadge(status: cluster.status)
         }
         .opacity(appeared ? 1 : 0)
         .offset(y: appeared ? 0 : -10)
+    }
+
+    /// Civo has only accepted the request; the reloaded status shows how the upgrade proceeds.
+    private func upgrade(to version: CivoKubernetesVersion) async {
+        guard let outcome = await upgrades.upgrade(to: version), outcome != .cancelled else { return }
+        await vm.reloadSelectedCluster(cluster.id)
     }
 
     // MARK: - Stats

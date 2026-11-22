@@ -101164,6 +101164,4208 @@
           }
         }
       }
+    },
+    "Upgrading a cluster requires Full Access." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrading a cluster requires Full Access."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Upgrade eines Clusters erfordert Vollzugriff."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar un clúster requiere Acceso completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mise à niveau d'un cluster nécessite l'Accès complet."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'aggiornamento di un cluster richiede l'Accesso completo."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het upgraden van een cluster vereist Volledige toegang."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualizacja klastra wymaga Pełnego dostępu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar um cluster requer Acesso total."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "升级集群需要完整访问权限。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタのアップグレードにはフルアクセスが必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터를 업그레이드하려면 전체 액세스가 필요합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتطلب ترقية العنقود الوصول الكامل."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर अपग्रेड करने के लिए पूर्ण एक्सेस आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meng-upgrade klaster memerlukan Akses Penuh."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir kümeyi yükseltmek Tam Erişim gerektirir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для обновления кластера требуется полный доступ."
+          }
+        }
+      }
+    },
+    "The region of this cluster is unknown. Reload the cluster and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region of this cluster is unknown. Reload the cluster and try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region dieses Clusters ist unbekannt. Laden Sie den Cluster neu und versuchen Sie es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región de este clúster es desconocida. Vuelve a cargar el clúster e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région de ce cluster est inconnue. Rechargez le cluster et réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione di questo cluster è sconosciuta. Ricarica il cluster e riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio van dit cluster is onbekend. Laad het cluster opnieuw en probeer het nog eens."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region tego klastra jest nieznany. Załaduj klaster ponownie i spróbuj jeszcze raz."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região deste cluster é desconhecida. Recarregue o cluster e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此集群的区域未知。请重新加载集群后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このクラスタのリージョンが不明です。クラスタを再読み込みして、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 클러스터의 리전을 알 수 없습니다. 클러스터를 다시 불러온 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منطقة هذا العنقود غير معروفة. أعد تحميل العنقود وحاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस क्लस्टर का क्षेत्र अज्ञात है। क्लस्टर दोबारा लोड करें और फिर से प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah klaster ini tidak diketahui. Muat ulang klaster dan coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu kümenin bölgesi bilinmiyor. Kümeyi yeniden yükleyip tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион этого кластера неизвестен. Загрузите кластер заново и повторите попытку."
+          }
+        }
+      }
+    },
+    "The region changed, so the cluster upgrade was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The region changed, so the cluster upgrade was cancelled. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Region hat sich geändert, daher wurde das Cluster-Upgrade abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La región ha cambiado, así que se canceló la actualización del clúster. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La région a changé, la mise à niveau du cluster a donc été annulée. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La regione è cambiata, quindi l'aggiornamento del cluster è stato annullato. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De regio is gewijzigd, daarom is de clusterupgrade geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Region się zmienił, więc aktualizacja klastra została anulowana. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A região mudou, por isso a atualização do cluster foi cancelada. Nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "区域已更改，因此集群升级已取消。未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リージョンが変更されたため、クラスタのアップグレードをキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리전이 변경되어 클러스터 업그레이드가 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّرت المنطقة، لذلك أُلغيت ترقية العنقود. لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्षेत्र बदल गया, इसलिए क्लस्टर अपग्रेड रद्द कर दिया गया। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wilayah berubah, jadi upgrade klaster dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölge değişti, bu nedenle küme yükseltmesi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Регион изменился, поэтому обновление кластера отменено. Ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The API key changed, so the cluster upgrade was cancelled. Nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The API key changed, so the cluster upgrade was cancelled. Nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der API-Schlüssel hat sich geändert, daher wurde das Cluster-Upgrade abgebrochen. Es wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clave de API ha cambiado, así que se canceló la actualización del clúster. No se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La clé API a changé, la mise à niveau du cluster a donc été annulée. Rien n'a été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La chiave API è cambiata, quindi l'aggiornamento del cluster è stato annullato. Non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De API-sleutel is gewijzigd, daarom is de clusterupgrade geannuleerd. Er is niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klucz API się zmienił, więc aktualizacja klastra została anulowana. Nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A chave de API mudou, por isso a atualização do cluster foi cancelada. Nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 密钥已更改，因此集群升级已取消。未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APIキーが変更されたため、クラスタのアップグレードをキャンセルしました。何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API 키가 변경되어 클러스터 업그레이드가 취소되었습니다. 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّر مفتاح API، لذلك أُلغيت ترقية العنقود. لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API कुंजी बदल गई, इसलिए क्लस्टर अपग्रेड रद्द कर दिया गया। कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunci API berubah, jadi upgrade klaster dibatalkan. Tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API anahtarı değişti, bu nedenle küme yükseltmesi iptal edildi. Hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-ключ изменился, поэтому обновление кластера отменено. Ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The version \"%@\" has an unknown format, so no upgrade can be offered." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The version \"%@\" has an unknown format, so no upgrade can be offered."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Version \"%@\" hat ein unbekanntes Format, daher kann kein Upgrade angeboten werden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La versión \"%@\" tiene un formato desconocido, así que no se puede ofrecer ninguna actualización."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La version \"%@\" a un format inconnu, aucune mise à niveau ne peut donc être proposée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La versione \"%@\" ha un formato sconosciuto, quindi non è possibile proporre alcun aggiornamento."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De versie \"%@\" heeft een onbekende indeling, daarom kan geen upgrade worden aangeboden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja \"%@\" ma nieznany format, więc nie można zaproponować aktualizacji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A versão \"%@\" tem um formato desconhecido, por isso não é possível oferecer nenhuma atualização."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本\"%@\"的格式未知，因此无法提供升级。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バージョン\"%@\"の形式が不明なため、アップグレードを提示できません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버전 \"%@\"의 형식을 알 수 없어 업그레이드를 제안할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإصدار \"%@\" بتنسيق غير معروف، لذلك لا يمكن عرض أي ترقية."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संस्करण \"%@\" का प्रारूप अज्ञात है, इसलिए कोई अपग्रेड नहीं दिया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi \"%@\" memiliki format yang tidak dikenal, jadi tidak ada upgrade yang dapat ditawarkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" sürümünün biçimi bilinmiyor, bu nedenle yükseltme önerilemez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия \"%@\" имеет неизвестный формат, поэтому обновление предложить нельзя."
+          }
+        }
+      }
+    },
+    "Civo currently offers no newer version for this cluster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo currently offers no newer version for this cluster."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bietet derzeit keine neuere Version für diesen Cluster an."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no ofrece actualmente ninguna versión más reciente para este clúster."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ne propose actuellement aucune version plus récente pour ce cluster."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo al momento non offre alcuna versione più recente per questo cluster."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo biedt momenteel geen nieuwere versie voor dit cluster aan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie oferuje obecnie nowszej wersji dla tego klastra."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No momento, a Civo não oferece nenhuma versão mais recente para este cluster."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 目前没有为此集群提供更新的版本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在Civoは、このクラスタに対してより新しいバージョンを提供していません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 Civo는 이 클러스터에 대해 더 새로운 버전을 제공하지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا تقدّم Civo حاليًا إصدارًا أحدث لهذا العنقود."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo अभी इस क्लस्टर के लिए कोई नया संस्करण नहीं देता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo saat ini tidak menawarkan versi yang lebih baru untuk klaster ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo şu anda bu küme için daha yeni bir sürüm sunmuyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сейчас Civo не предлагает более новой версии для этого кластера."
+          }
+        }
+      }
+    },
+    "The cluster is not active (status %@). Wait until it is active, then try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster is not active (status %@). Wait until it is active, then try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Cluster ist nicht aktiv (Status %@). Warten Sie, bis er aktiv ist, und versuchen Sie es dann erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El clúster no está activo (estado %@). Espera a que esté activo e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le cluster n'est pas actif (état %@). Attendez qu'il soit actif, puis réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cluster non è attivo (stato %@). Attendi che sia attivo, poi riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het cluster is niet actief (status %@). Wacht tot het actief is en probeer het dan opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster nie jest aktywny (status %@). Poczekaj, aż stanie się aktywny, i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O cluster não está ativo (status %@). Aguarde até que esteja ativo e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群未处于活动状态(状态 %@)。请等待其变为活动状态后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタがアクティブではありません(ステータス %@)。アクティブになるまで待ってから、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터가 활성 상태가 아닙니다(상태 %@). 활성 상태가 될 때까지 기다린 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنقود غير نشط (الحالة %@). انتظر حتى يصبح نشطًا ثم حاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर सक्रिय नहीं है (स्थिति %@)। इसके सक्रिय होने तक प्रतीक्षा करें, फिर से प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster tidak aktif (status %@). Tunggu hingga aktif, lalu coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme etkin değil (durum %@). Etkin olana kadar bekleyip tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер не активен (статус %@). Дождитесь, пока он станет активным, и повторите попытку."
+          }
+        }
+      }
+    },
+    "The cluster is not on its desired version yet. An upgrade is still running." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster is not on its desired version yet. An upgrade is still running."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Cluster hat seine Zielversion noch nicht erreicht. Ein Upgrade läuft noch."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El clúster todavía no está en su versión deseada. Una actualización sigue en curso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le cluster n'a pas encore atteint sa version souhaitée. Une mise à niveau est encore en cours."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cluster non ha ancora raggiunto la versione desiderata. Un aggiornamento è ancora in corso."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het cluster heeft zijn gewenste versie nog niet bereikt. Er loopt nog een upgrade."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster nie osiągnął jeszcze docelowej wersji. Aktualizacja nadal trwa."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O cluster ainda não está na versão desejada. Uma atualização ainda está em andamento."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群尚未达到目标版本。升级仍在进行中。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタはまだ目的のバージョンに達していません。アップグレードが進行中です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터가 아직 목표 버전에 도달하지 않았습니다. 업그레이드가 아직 진행 중입니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يصل العنقود إلى إصداره المطلوب بعد. لا تزال هناك ترقية قيد التنفيذ."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर अभी अपने लक्षित संस्करण पर नहीं पहुँचा है। एक अपग्रेड अभी चल रहा है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster belum mencapai versi yang diinginkan. Upgrade masih berjalan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme henüz hedef sürümüne ulaşmadı. Bir yükseltme hâlâ sürüyor."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер ещё не достиг целевой версии. Обновление всё ещё выполняется."
+          }
+        }
+      }
+    },
+    "An upgrade to %@ was already requested. Wait until the cluster reports this version." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An upgrade to %@ was already requested. Wait until the cluster reports this version."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Upgrade auf %@ wurde bereits angefordert. Warten Sie, bis der Cluster diese Version meldet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya se solicitó una actualización a %@. Espera a que el clúster informe de esta versión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une mise à niveau vers %@ a déjà été demandée. Attendez que le cluster indique cette version."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un aggiornamento a %@ è già stato richiesto. Attendi che il cluster indichi questa versione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is al een upgrade naar %@ aangevraagd. Wacht tot het cluster deze versie meldt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualizacja do %@ została już zlecona. Poczekaj, aż klaster zgłosi tę wersję."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uma atualização para %@ já foi solicitada. Aguarde até que o cluster informe esta versão."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求升级到 %@。请等待集群报告此版本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@へのアップグレードはすでに要求されています。クラスタがこのバージョンを報告するまでお待ちください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@(으)로의 업그레이드가 이미 요청되었습니다. 클러스터가 이 버전을 보고할 때까지 기다리세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طُلبت الترقية إلى %@ بالفعل. انتظر حتى يُبلغ العنقود عن هذا الإصدار."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ पर अपग्रेड का अनुरोध पहले ही किया जा चुका है। क्लस्टर के यह संस्करण दिखाने तक प्रतीक्षा करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade ke %@ sudah diminta. Tunggu hingga klaster melaporkan versi ini."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ sürümüne yükseltme zaten istendi. Küme bu sürümü bildirene kadar bekleyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновление до %@ уже запрошено. Дождитесь, пока кластер сообщит эту версию."
+          }
+        }
+      }
+    },
+    "The cluster version changed in the meantime, so nothing was sent. Check the current version and try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster version changed in the meantime, so nothing was sent. Check the current version and try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Cluster-Version hat sich inzwischen geändert, daher wurde nichts gesendet. Prüfen Sie die aktuelle Version und versuchen Sie es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La versión del clúster ha cambiado entretanto, así que no se envió nada. Comprueba la versión actual e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La version du cluster a changé entre-temps, rien n'a donc été envoyé. Vérifiez la version actuelle et réessayez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nel frattempo la versione del cluster è cambiata, quindi non è stato inviato nulla. Controlla la versione attuale e riprova."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De clusterversie is intussen gewijzigd, daarom is er niets verzonden. Controleer de huidige versie en probeer het opnieuw."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja klastra zmieniła się w międzyczasie, więc nic nie zostało wysłane. Sprawdź bieżącą wersję i spróbuj ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A versão do cluster mudou nesse meio-tempo, por isso nada foi enviado. Verifique a versão atual e tente novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群版本在此期间已更改，因此未发送任何内容。请检查当前版本后重试。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その間にクラスタのバージョンが変更されたため、何も送信されていません。現在のバージョンを確認して、もう一度お試しください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "그 사이에 클러스터 버전이 변경되어 아무것도 전송되지 않았습니다. 현재 버전을 확인한 후 다시 시도하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيّر إصدار العنقود في الأثناء، لذلك لم يُرسَل أي شيء. تحقّق من الإصدار الحالي وحاول مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस बीच क्लस्टर का संस्करण बदल गया, इसलिए कुछ भी नहीं भेजा गया। वर्तमान संस्करण जाँचें और फिर से प्रयास करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi klaster berubah sementara itu, jadi tidak ada yang dikirim. Periksa versi saat ini dan coba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme sürümü bu arada değişti, bu nedenle hiçbir şey gönderilmedi. Geçerli sürümü kontrol edip tekrar deneyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия кластера тем временем изменилась, поэтому ничего не отправлено. Проверьте текущую версию и повторите попытку."
+          }
+        }
+      }
+    },
+    "The cluster no longer exists, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The cluster no longer exists, so nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Cluster existiert nicht mehr, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El clúster ya no existe, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le cluster n'existe plus, rien n'a donc été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il cluster non esiste più, quindi non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het cluster bestaat niet meer, daarom is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster już nie istnieje, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O cluster não existe mais, por isso nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "集群已不存在，因此未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタはもう存在しないため、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터가 더 이상 존재하지 않아 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يعد العنقود موجودًا، لذلك لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर अब मौजूद नहीं है, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klaster sudah tidak ada, jadi tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme artık mevcut değil, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кластер больше не существует, поэтому ничего не отправлено."
+          }
+        }
+      }
+    },
+    "Civo no longer offers %@ as an upgrade for this cluster, so nothing was sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no longer offers %@ as an upgrade for this cluster, so nothing was sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bietet %@ nicht mehr als Upgrade für diesen Cluster an, daher wurde nichts gesendet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ya no ofrece %@ como actualización para este clúster, así que no se envió nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ne propose plus %@ comme mise à niveau pour ce cluster, rien n'a donc été envoyé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non offre più %@ come aggiornamento per questo cluster, quindi non è stato inviato nulla."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo biedt %@ niet meer aan als upgrade voor dit cluster, daarom is er niets verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie oferuje już %@ jako aktualizacji dla tego klastra, więc nic nie zostało wysłane."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo não oferece mais %@ como atualização para este cluster, por isso nada foi enviado."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 不再为此集群提供 %@ 作为升级版本，因此未发送任何内容。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoはこのクラスタのアップグレード先として%@を提供しなくなったため、何も送信されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 더 이상 이 클러스터의 업그레이드 대상으로 %@을(를) 제공하지 않아 아무것도 전송되지 않았습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تعد Civo تقدّم %@ كترقية لهذا العنقود، لذلك لم يُرسَل أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo अब इस क्लस्टर के लिए अपग्रेड के रूप में %@ नहीं देता, इसलिए कुछ भी नहीं भेजा गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo tidak lagi menawarkan %@ sebagai upgrade untuk klaster ini, jadi tidak ada yang dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bu küme için artık %@ sürümünü yükseltme olarak sunmuyor, bu nedenle hiçbir şey gönderilmedi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo больше не предлагает %@ в качестве обновления для этого кластера, поэтому ничего не отправлено."
+          }
+        }
+      }
+    },
+    "The list of Kubernetes versions could not be loaded: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The list of Kubernetes versions could not be loaded: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Liste der Kubernetes-Versionen konnte nicht geladen werden: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo cargar la lista de versiones de Kubernetes: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La liste des versions de Kubernetes n'a pas pu être chargée : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile caricare l'elenco delle versioni di Kubernetes: %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De lijst met Kubernetes-versies kon niet worden geladen: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się załadować listy wersji Kubernetes: %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar a lista de versões do Kubernetes: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载 Kubernetes 版本列表：%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetesのバージョン一覧を読み込めませんでした: %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes 버전 목록을 불러올 수 없습니다: %@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر تحميل قائمة إصدارات Kubernetes: %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes संस्करणों की सूची लोड नहीं हो सकी: %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daftar versi Kubernetes tidak dapat dimuat: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes sürümlerinin listesi yüklenemedi: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить список версий Kubernetes: %@"
+          }
+        }
+      }
+    },
+    "The upgrade request for \"%@\" was already sent and can no longer be cancelled. Its result is shown here once Civo answers." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The upgrade request for \"%@\" was already sent and can no longer be cancelled. Its result is shown here once Civo answers."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Upgrade-Anfrage für \"%@\" wurde bereits gesendet und lässt sich nicht mehr abbrechen. Das Ergebnis erscheint hier, sobald Civo antwortet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La solicitud de actualización de \"%@\" ya se envió y ya no se puede cancelar. Su resultado se mostrará aquí cuando Civo responda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La demande de mise à niveau de \"%@\" a déjà été envoyée et ne peut plus être annulée. Son résultat s'affichera ici dès que Civo répondra."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La richiesta di aggiornamento di \"%@\" è già stata inviata e non può più essere annullata. Il risultato verrà mostrato qui non appena Civo risponde."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De upgradeaanvraag voor \"%@\" is al verzonden en kan niet meer worden geannuleerd. Het resultaat verschijnt hier zodra Civo antwoordt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Żądanie aktualizacji klastra \"%@\" zostało już wysłane i nie można go anulować. Wynik pojawi się tutaj, gdy Civo odpowie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A solicitação de atualização de \"%@\" já foi enviada e não pode mais ser cancelada. O resultado será exibido aqui assim que a Civo responder."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"的升级请求已发送，无法再取消。Civo 回复后，结果将显示在此处。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"のアップグレード要求はすでに送信されており、キャンセルできません。結果はCivoが応答するとここに表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"에 대한 업그레이드 요청이 이미 전송되어 더 이상 취소할 수 없습니다. 결과는 Civo가 응답하면 여기에 표시됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أُرسل طلب ترقية \"%@\" بالفعل ولم يعد من الممكن إلغاؤه. ستظهر النتيجة هنا بمجرد أن ترد Civo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" के लिए अपग्रेड अनुरोध पहले ही भेजा जा चुका है और अब रद्द नहीं किया जा सकता। Civo के उत्तर देते ही परिणाम यहाँ दिखेगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permintaan upgrade untuk \"%@\" sudah dikirim dan tidak dapat dibatalkan lagi. Hasilnya ditampilkan di sini setelah Civo menjawab."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" için yükseltme isteği zaten gönderildi ve artık iptal edilemez. Sonucu, Civo yanıt verdiğinde burada gösterilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрос на обновление кластера \"%@\" уже отправлен и не может быть отменён. Результат появится здесь, как только Civo ответит."
+          }
+        }
+      }
+    },
+    "Civo accepted the upgrade of \"%@\" to %@, but its answer could not be read. Refresh to see the status of the cluster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the upgrade of \"%@\" to %@, but its answer could not be read. Refresh to see the status of the cluster."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat das Upgrade von \"%@\" auf %@ angenommen, aber die Antwort konnte nicht gelesen werden. Aktualisieren Sie, um den Status des Clusters zu sehen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó la actualización de \"%@\" a %@, pero no se pudo leer su respuesta. Actualiza para ver el estado del clúster."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté la mise à niveau de \"%@\" vers %@, mais sa réponse n'a pas pu être lue. Actualisez pour voir l'état du cluster."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato l'aggiornamento di \"%@\" a %@, ma non è stato possibile leggere la risposta. Aggiorna per vedere lo stato del cluster."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de upgrade van \"%@\" naar %@ geaccepteerd, maar het antwoord kon niet worden gelezen. Vernieuw om de status van het cluster te zien."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło aktualizację klastra \"%@\" do %@, ale nie udało się odczytać odpowiedzi. Odśwież, aby zobaczyć status klastra."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou a atualização de \"%@\" para %@, mas não foi possível ler a resposta. Atualize para ver o status do cluster."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受将\"%@\"升级到 %@，但无法读取其回复。请刷新以查看集群状态。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoは\"%1$@\"の%2$@へのアップグレードを受け付けましたが、応答を読み取れませんでした。更新してクラスタのステータスを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 \"%1$@\"의 %2$@(으)로의 업그레이드를 수락했지만 응답을 읽을 수 없습니다. 새로 고쳐 클러스터의 상태를 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo ترقية \"%@\" إلى %@، لكن تعذّرت قراءة ردها. حدّث لعرض حالة العنقود."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने \"%1$@\" को %2$@ पर अपग्रेड करना स्वीकार कर लिया, लेकिन उसका उत्तर पढ़ा नहीं जा सका। क्लस्टर की स्थिति देखने के लिए रीफ़्रेश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima upgrade \"%@\" ke %@, tetapi jawabannya tidak dapat dibaca. Segarkan untuk melihat status klaster."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo, \"%1$@\" kümesinin %2$@ sürümüne yükseltilmesini kabul etti ancak yanıtı okunamadı. Kümenin durumunu görmek için yenileyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo приняла обновление кластера \"%@\" до %@, но её ответ не удалось прочитать. Обновите данные, чтобы увидеть статус кластера."
+          }
+        }
+      }
+    },
+    "Civo did not upgrade \"%@\": %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo did not upgrade \"%@\": %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat \"%@\" nicht aktualisiert: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo no actualizó \"%@\": %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo n'a pas mis à niveau \"%@\" : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo non ha aggiornato \"%@\": %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft \"%@\" niet geüpgraded: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo nie zaktualizowało klastra \"%@\": %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo não atualizou \"%@\": %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 未升级\"%@\"：%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoは\"%1$@\"をアップグレードしませんでした: %2$@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 \"%1$@\"을(를) 업그레이드하지 않았습니다: %2$@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تقم Civo بترقية \"%@\": %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने \"%1$@\" को अपग्रेड नहीं किया: %2$@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo tidak meng-upgrade \"%@\": %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo \"%1$@\" kümesini yükseltmedi: %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo не обновила кластер \"%@\": %@"
+          }
+        }
+      }
+    },
+    "The result of the upgrade request for \"%@\" is unknown. Refresh to see the status of the cluster before trying again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The result of the upgrade request for \"%@\" is unknown. Refresh to see the status of the cluster before trying again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ergebnis der Upgrade-Anfrage für \"%@\" ist unbekannt. Aktualisieren Sie, um den Status des Clusters zu sehen, bevor Sie es erneut versuchen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El resultado de la solicitud de actualización de \"%@\" es desconocido. Actualiza para ver el estado del clúster antes de volver a intentarlo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le résultat de la demande de mise à niveau de \"%@\" est inconnu. Actualisez pour voir l'état du cluster avant de réessayer."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il risultato della richiesta di aggiornamento di \"%@\" è sconosciuto. Aggiorna per vedere lo stato del cluster prima di riprovare."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het resultaat van de upgradeaanvraag voor \"%@\" is onbekend. Vernieuw om de status van het cluster te zien voordat je het opnieuw probeert."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wynik żądania aktualizacji klastra \"%@\" jest nieznany. Odśwież, aby zobaczyć status klastra, zanim spróbujesz ponownie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O resultado da solicitação de atualização de \"%@\" é desconhecido. Atualize para ver o status do cluster antes de tentar novamente."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"的升级请求结果未知。请在重试前刷新以查看集群状态。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"のアップグレード要求の結果は不明です。もう一度試す前に、更新してクラスタのステータスを確認してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\"에 대한 업그레이드 요청의 결과를 알 수 없습니다. 다시 시도하기 전에 새로 고쳐 클러스터의 상태를 확인하세요."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نتيجة طلب ترقية \"%@\" غير معروفة. حدّث لعرض حالة العنقود قبل المحاولة مرة أخرى."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" के लिए अपग्रेड अनुरोध का परिणाम अज्ञात है। फिर से प्रयास करने से पहले क्लस्टर की स्थिति देखने के लिए रीफ़्रेश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasil permintaan upgrade untuk \"%@\" tidak diketahui. Segarkan untuk melihat status klaster sebelum mencoba lagi."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" için yükseltme isteğinin sonucu bilinmiyor. Tekrar denemeden önce kümenin durumunu görmek için yenileyin."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результат запроса на обновление кластера \"%@\" неизвестен. Обновите данные, чтобы увидеть статус кластера, прежде чем повторять попытку."
+          }
+        }
+      }
+    },
+    "Civo accepted the upgrade of \"%@\" from %@ to %@. The upgrade runs on Civo's side and is not finished yet; the status shown here updates when you refresh." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo accepted the upgrade of \"%@\" from %@ to %@. The upgrade runs on Civo's side and is not finished yet; the status shown here updates when you refresh."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo hat das Upgrade von \"%@\" von %@ auf %@ angenommen. Das Upgrade läuft bei Civo und ist noch nicht abgeschlossen; der hier angezeigte Status wird beim Aktualisieren neu geladen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo aceptó la actualización de \"%@\" de %@ a %@. La actualización se ejecuta en Civo y todavía no ha terminado; el estado mostrado aquí se actualiza cuando refrescas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo a accepté la mise à niveau de \"%@\" de %@ vers %@. La mise à niveau s'exécute chez Civo et n'est pas encore terminée ; l'état affiché ici se met à jour lorsque vous actualisez."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ha accettato l'aggiornamento di \"%@\" da %@ a %@. L'aggiornamento viene eseguito da Civo e non è ancora terminato; lo stato mostrato qui si aggiorna quando ricarichi."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo heeft de upgrade van \"%@\" van %@ naar %@ geaccepteerd. De upgrade wordt bij Civo uitgevoerd en is nog niet klaar; de status hier wordt bijgewerkt wanneer je vernieuwt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo przyjęło aktualizację klastra \"%@\" z %@ do %@. Aktualizacja jest wykonywana po stronie Civo i jeszcze się nie zakończyła; widoczny tu status zmieni się po odświeżeniu."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo aceitou a atualização de \"%@\" de %@ para %@. A atualização é executada na Civo e ainda não terminou; o status exibido aqui muda quando você atualiza."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 已接受将\"%@\"从 %@ 升级到 %@。升级在 Civo 端进行，尚未完成；刷新时此处显示的状态会更新。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoは\"%1$@\"の%2$@から%3$@へのアップグレードを受け付けました。アップグレードはCivo側で実行中で、まだ完了していません。ここに表示されるステータスは更新すると反映されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 \"%1$@\"의 %2$@에서 %3$@(으)로의 업그레이드를 수락했습니다. 업그레이드는 Civo 측에서 진행되며 아직 완료되지 않았습니다. 여기에 표시된 상태는 새로 고칠 때 업데이트됩니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبلت Civo ترقية \"%@\" من %@ إلى %@. تجري الترقية لدى Civo ولم تكتمل بعد؛ تتحدّث الحالة المعروضة هنا عند التحديث."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo ने \"%1$@\" को %2$@ से %3$@ पर अपग्रेड करना स्वीकार कर लिया। अपग्रेड Civo की ओर से चल रहा है और अभी पूरा नहीं हुआ है; यहाँ दिखाई गई स्थिति रीफ़्रेश करने पर अपडेट होती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo menerima upgrade \"%@\" dari %@ ke %@. Upgrade berjalan di sisi Civo dan belum selesai; status yang ditampilkan di sini diperbarui saat Anda menyegarkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo, \"%1$@\" kümesinin %2$@ sürümünden %3$@ sürümüne yükseltilmesini kabul etti. Yükseltme Civo tarafında yürütülüyor ve henüz bitmedi; burada gösterilen durum yenilediğinizde güncellenir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo приняла обновление кластера \"%@\" с %@ до %@. Обновление выполняется на стороне Civo и ещё не завершено; показанный здесь статус меняется при обновлении данных."
+          }
+        }
+      }
+    },
+    "Upgrade %@ from %@ to %@?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade %@ from %@ to %@?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ von %@ auf %@ aktualisieren?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Actualizar %@ de %@ a %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à niveau %@ de %@ vers %@ ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornare %@ da %@ a %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ upgraden van %@ naar %@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaktualizować %@ z %@ do %@?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar %@ de %@ para %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将 %@ 从 %@ 升级到 %@？"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@を%2$@から%3$@にアップグレードしますか?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@을(를) %2$@에서 %3$@(으)로 업그레이드할까요?"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد ترقية %@ من %@ إلى %@؟"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ को %2$@ से %3$@ पर अपग्रेड करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade %@ dari %@ ke %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ kümesi %2$@ sürümünden %3$@ sürümüne yükseltilsin mi?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить %@ с %@ до %@?"
+          }
+        }
+      }
+    },
+    "Upgrade %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ aktualisieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à niveau %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ upgraden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualizuj %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "升级 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@をアップグレード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 업그레이드"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترقية %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ अपग्रेड करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ kümesini yükselt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить %@"
+          }
+        }
+      }
+    },
+    "Current Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current Version"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelle Version"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión actual"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version actuelle"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versione attuale"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huidige versie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bieżąca wersja"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão atual"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前版本"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在のバージョン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 버전"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإصدار الحالي"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वर्तमान संस्करण"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi Saat Ini"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçerli sürüm"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Текущая версия"
+          }
+        }
+      }
+    },
+    "Target Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target Version"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zielversion"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión de destino"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version cible"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versione di destinazione"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doelversie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja docelowa"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão de destino"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标版本"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップグレード先のバージョン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "대상 버전"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإصدار المستهدف"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लक्षित संस्करण"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi Tujuan"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hedef sürüm"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Целевая версия"
+          }
+        }
+      }
+    },
+    "Loading versions..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading versions..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versionen werden geladen..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando versiones..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement des versions..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento delle versioni..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versies laden..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ładowanie wersji..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando versões..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载版本..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バージョンを読み込み中..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버전을 불러오는 중..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جارٍ تحميل الإصدارات..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संस्करण लोड हो रहे हैं..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuat versi..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sürümler yükleniyor..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка версий..."
+          }
+        }
+      }
+    },
+    "Choose a version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose a version"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version auswählen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige una versión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir une version"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli una versione"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies een versie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wybierz wersję"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha uma versão"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择版本"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バージョンを選択"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버전 선택"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر إصدارًا"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कोई संस्करण चुनें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih versi"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir sürüm seçin"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите версию"
+          }
+        }
+      }
+    },
+    "%@ (recommended by Civo)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (recommended by Civo)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (von Civo empfohlen)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (recomendada por Civo)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (recommandée par Civo)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (consigliata da Civo)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (aanbevolen door Civo)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (zalecana przez Civo)"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (recomendada pela Civo)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@(Civo 推荐)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@(Civo推奨)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Civo 권장)"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (موصى به من Civo)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Civo द्वारा अनुशंसित)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (direkomendasikan oleh Civo)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (Civo tarafından önerilir)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (рекомендует Civo)"
+          }
+        }
+      }
+    },
+    "Only versions newer than the current one are offered. Civo does not support downgrades and decides itself whether an upgrade path is allowed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only versions newer than the current one are offered. Civo does not support downgrades and decides itself whether an upgrade path is allowed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es werden nur Versionen angeboten, die neuer als die aktuelle sind. Civo unterstützt keine Downgrades und entscheidet selbst, ob ein Upgrade-Pfad zulässig ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo se ofrecen versiones más recientes que la actual. Civo no admite cambios a versiones anteriores y decide por sí mismo si una ruta de actualización está permitida."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seules les versions plus récentes que l'actuelle sont proposées. Civo ne prend pas en charge le retour à une version antérieure et décide lui-même si un chemin de mise à niveau est autorisé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vengono proposte solo versioni più recenti di quella attuale. Civo non supporta il ritorno a una versione precedente e decide autonomamente se un percorso di aggiornamento è consentito."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alleen versies die nieuwer zijn dan de huidige worden aangeboden. Civo ondersteunt geen downgrades en bepaalt zelf of een upgradepad is toegestaan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oferowane są tylko wersje nowsze od bieżącej. Civo nie obsługuje przejścia na starszą wersję i samo decyduje, czy dana ścieżka aktualizacji jest dozwolona."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Somente versões mais recentes que a atual são oferecidas. A Civo não permite voltar para uma versão anterior e decide por conta própria se um caminho de atualização é permitido."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅提供比当前版本更新的版本。Civo 不支持降级，并自行决定是否允许某条升级路径。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在より新しいバージョンのみが表示されます。Civoはダウングレードをサポートしておらず、アップグレードパスが許可されるかどうかはCivoが判断します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "현재 버전보다 새로운 버전만 제공됩니다. Civo는 다운그레이드를 지원하지 않으며 업그레이드 경로의 허용 여부는 Civo가 직접 결정합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تُعرض فقط الإصدارات الأحدث من الإصدار الحالي. لا تدعم Civo الرجوع إلى إصدار أقدم، وتقرر بنفسها ما إذا كان مسار الترقية مسموحًا."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "केवल वर्तमान से नए संस्करण दिए जाते हैं। Civo डाउनग्रेड का समर्थन नहीं करता और स्वयं तय करता है कि कोई अपग्रेड पथ अनुमत है या नहीं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya versi yang lebih baru dari versi saat ini yang ditawarkan. Civo tidak mendukung downgrade dan memutuskan sendiri apakah suatu jalur upgrade diizinkan."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca geçerli sürümden daha yeni sürümler sunulur. Civo eski bir sürüme geri dönmeyi desteklemez ve bir yükseltme yolunun izinli olup olmadığına kendisi karar verir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предлагаются только версии новее текущей. Civo не поддерживает откат на более старую версию и сама решает, допустим ли путь обновления."
+          }
+        }
+      }
+    },
+    "Workloads can be interrupted while Civo upgrades the cluster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workloads can be interrupted while Civo upgrades the cluster."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workloads können unterbrochen werden, während Civo den Cluster aktualisiert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las cargas de trabajo pueden interrumpirse mientras Civo actualiza el clúster."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les charges de travail peuvent être interrompues pendant que Civo met à niveau le cluster."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I carichi di lavoro possono essere interrotti mentre Civo aggiorna il cluster."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workloads kunnen worden onderbroken terwijl Civo het cluster upgradet."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obciążenia mogą zostać przerwane podczas aktualizacji klastra przez Civo."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As cargas de trabalho podem ser interrompidas enquanto a Civo atualiza o cluster."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 升级集群期间，工作负载可能会中断。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoがクラスタをアップグレードしている間、ワークロードが中断される場合があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 클러스터를 업그레이드하는 동안 워크로드가 중단될 수 있습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قد تنقطع أحمال العمل أثناء ترقية Civo للعنقود."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo के क्लस्टर अपग्रेड करते समय वर्कलोड बाधित हो सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beban kerja dapat terganggu selama Civo meng-upgrade klaster."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo kümeyi yükseltirken iş yükleri kesintiye uğrayabilir."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Во время обновления кластера в Civo работа нагрузок может прерываться."
+          }
+        }
+      }
+    },
+    "Upgrade..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à niveau..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgraden..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualizuj..."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "升级..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップグレード..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "업그레이드..."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترقية..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपग्रेड करें..."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükselt..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить..."
+          }
+        }
+      }
+    },
+    "Upgrade to %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade to %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade auf %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar a %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à niveau vers %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna a %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgraden naar %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualizuj do %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar para %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "升级到 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@にアップグレード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@(으)로 업그레이드"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترقية إلى %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ पर अपग्रेड करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade ke %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ sürümüne yükselt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить до %@"
+          }
+        }
+      }
+    },
+    "Workloads can be interrupted while Civo upgrades the cluster. The cluster cannot be downgraded afterwards." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workloads can be interrupted while Civo upgrades the cluster. The cluster cannot be downgraded afterwards."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workloads können unterbrochen werden, während Civo den Cluster aktualisiert. Ein späteres Downgrade des Clusters ist nicht möglich."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las cargas de trabajo pueden interrumpirse mientras Civo actualiza el clúster. Después no se podrá volver a una versión anterior."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les charges de travail peuvent être interrompues pendant que Civo met à niveau le cluster. Le cluster ne pourra pas revenir ensuite à une version antérieure."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I carichi di lavoro possono essere interrotti mentre Civo aggiorna il cluster. In seguito non sarà possibile tornare a una versione precedente."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workloads kunnen worden onderbroken terwijl Civo het cluster upgradet. Het cluster kan daarna niet worden gedowngraded."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obciążenia mogą zostać przerwane podczas aktualizacji klastra przez Civo. Później nie będzie można przywrócić starszej wersji klastra."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As cargas de trabalho podem ser interrompidas enquanto a Civo atualiza o cluster. Depois não será possível voltar para uma versão anterior."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 升级集群期间，工作负载可能会中断。之后无法将集群降级。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoがクラスタをアップグレードしている間、ワークロードが中断される場合があります。後からクラスタをダウングレードすることはできません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo가 클러스터를 업그레이드하는 동안 워크로드가 중단될 수 있습니다. 이후에는 클러스터를 다운그레이드할 수 없습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قد تنقطع أحمال العمل أثناء ترقية Civo للعنقود. لا يمكن إرجاع العنقود إلى إصدار أقدم بعد ذلك."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo के क्लस्टर अपग्रेड करते समय वर्कलोड बाधित हो सकते हैं। बाद में क्लस्टर को डाउनग्रेड नहीं किया जा सकता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beban kerja dapat terganggu selama Civo meng-upgrade klaster. Klaster tidak dapat di-downgrade setelahnya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo kümeyi yükseltirken iş yükleri kesintiye uğrayabilir. Küme daha sonra eski bir sürüme geri döndürülemez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Во время обновления кластера в Civo работа нагрузок может прерываться. Откатить кластер на более старую версию потом будет нельзя."
+          }
+        }
+      }
+    },
+    "Kubernetes Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes Version"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes-Version"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión de Kubernetes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version de Kubernetes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versione di Kubernetes"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes-versie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wersja Kubernetes"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versão do Kubernetes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes 版本"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetesバージョン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes 버전"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إصدار Kubernetes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes संस्करण"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versi Kubernetes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes Sürümü"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия Kubernetes"
+          }
+        }
+      }
+    },
+    "Civo default" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo default"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo-Standard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predeterminada de Civo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par défaut de Civo"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predefinita di Civo"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo-standaard"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domyślna Civo"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padrão da Civo"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 默认"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoのデフォルト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 기본값"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الافتراضي من Civo"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo डिफ़ॉल्ट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Civo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo varsayılanı"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По умолчанию Civo"
+          }
+        }
+      }
+    },
+    "The list of versions could not be loaded, so Civo installs its default version." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The list of versions could not be loaded, so Civo installs its default version."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Liste der Versionen konnte nicht geladen werden, daher installiert Civo seine Standardversion."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo cargar la lista de versiones, así que Civo instala su versión predeterminada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La liste des versions n'a pas pu être chargée, Civo installe donc sa version par défaut."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile caricare l'elenco delle versioni, quindi Civo installa la sua versione predefinita."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De lijst met versies kon niet worden geladen, daarom installeert Civo zijn standaardversie."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie udało się załadować listy wersji, więc Civo zainstaluje swoją wersję domyślną."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não foi possível carregar a lista de versões, por isso a Civo instala sua versão padrão."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载版本列表，因此 Civo 将安装其默认版本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バージョン一覧を読み込めなかったため、Civoはデフォルトのバージョンをインストールします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버전 목록을 불러올 수 없어 Civo가 기본 버전을 설치합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر تحميل قائمة الإصدارات، لذلك تثبّت Civo إصدارها الافتراضي."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "संस्करणों की सूची लोड नहीं हो सकी, इसलिए Civo अपना डिफ़ॉल्ट संस्करण इंस्टॉल करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daftar versi tidak dapat dimuat, jadi Civo memasang versi default-nya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sürüm listesi yüklenemedi, bu nedenle Civo kendi varsayılan sürümünü kurar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить список версий, поэтому Civo установит свою версию по умолчанию."
+          }
+        }
+      }
+    },
+    "Civo default sends no version, so Civo installs the version it marks as default, currently %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo default sends no version, so Civo installs the version it marks as default, currently %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo-Standard sendet keine Version, daher installiert Civo die Version, die es als Standard markiert, derzeit %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predeterminada de Civo no envía ninguna versión, así que Civo instala la versión que marca como predeterminada, actualmente %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par défaut de Civo n'envoie aucune version, Civo installe donc la version qu'il marque par défaut, actuellement %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predefinita di Civo non invia alcuna versione, quindi Civo installa la versione che indica come predefinita, attualmente %@."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo-standaard verzendt geen versie, daarom installeert Civo de versie die het als standaard markeert, momenteel %@."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domyślna Civo nie wysyła wersji, więc Civo zainstaluje wersję oznaczoną jako domyślna, obecnie %@."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padrão da Civo não envia nenhuma versão, por isso a Civo instala a versão que marca como padrão, atualmente %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 默认不发送版本，因此 Civo 将安装其标记为默认的版本，当前为 %@。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoのデフォルトではバージョンを送信しないため、Civoがデフォルトとして指定しているバージョン(現在は%@)がインストールされます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 기본값은 버전을 보내지 않으므로 Civo가 기본값으로 지정한 버전(현재 %@)을 설치합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيار الافتراضي من Civo لا يرسل أي إصدار، لذلك تثبّت Civo الإصدار الذي تحدده افتراضيًا، وهو حاليًا %@."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo डिफ़ॉल्ट कोई संस्करण नहीं भेजता, इसलिए Civo वह संस्करण इंस्टॉल करता है जिसे वह डिफ़ॉल्ट के रूप में चिह्नित करता है, अभी %@।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Civo tidak mengirim versi, jadi Civo memasang versi yang ditandainya sebagai default, saat ini %@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo varsayılanı sürüm göndermez, bu nedenle Civo varsayılan olarak işaretlediği sürümü kurar, şu anda %@."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При варианте \"По умолчанию Civo\" версия не отправляется, поэтому Civo установит версию, отмеченную как версия по умолчанию, сейчас %@."
+          }
+        }
+      }
+    },
+    "Civo default sends no version, so Civo installs its default version." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo default sends no version, so Civo installs its default version."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo-Standard sendet keine Version, daher installiert Civo seine Standardversion."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predeterminada de Civo no envía ninguna versión, así que Civo instala su versión predeterminada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par défaut de Civo n'envoie aucune version, Civo installe donc sa version par défaut."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predefinita di Civo non invia alcuna versione, quindi Civo installa la sua versione predefinita."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo-standaard verzendt geen versie, daarom installeert Civo zijn standaardversie."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domyślna Civo nie wysyła wersji, więc Civo zainstaluje swoją wersję domyślną."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Padrão da Civo não envia nenhuma versão, por isso a Civo instala sua versão padrão."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 默认不发送版本，因此 Civo 将安装其默认版本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civoのデフォルトではバージョンを送信しないため、Civoのデフォルトのバージョンがインストールされます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 기본값은 버전을 보내지 않으므로 Civo가 기본 버전을 설치합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيار الافتراضي من Civo لا يرسل أي إصدار، لذلك تثبّت Civo إصدارها الافتراضي."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo डिफ़ॉल्ट कोई संस्करण नहीं भेजता, इसलिए Civo अपना डिफ़ॉल्ट संस्करण इंस्टॉल करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Civo tidak mengirim versi, jadi Civo memasang versi default-nya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo varsayılanı sürüm göndermez, bu nedenle Civo kendi varsayılan sürümünü kurar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При варианте \"По умолчанию Civo\" версия не отправляется, поэтому Civo установит свою версию по умолчанию."
+          }
+        }
+      }
+    },
+    "Upgrade this cluster to a newer Kubernetes version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade this cluster to a newer Kubernetes version"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diesen Cluster auf eine neuere Kubernetes-Version aktualisieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizar este clúster a una versión más reciente de Kubernetes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre à niveau ce cluster vers une version plus récente de Kubernetes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna questo cluster a una versione più recente di Kubernetes"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dit cluster upgraden naar een nieuwere Kubernetes-versie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaktualizuj ten klaster do nowszej wersji Kubernetes"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualizar este cluster para uma versão mais recente do Kubernetes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将此集群升级到更新的 Kubernetes 版本"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このクラスタをより新しいKubernetesバージョンにアップグレード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 클러스터를 더 새로운 Kubernetes 버전으로 업그레이드"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترقية هذا العنقود إلى إصدار أحدث من Kubernetes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "इस क्लस्टर को नए Kubernetes संस्करण पर अपग्रेड करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade klaster ini ke versi Kubernetes yang lebih baru"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu kümeyi daha yeni bir Kubernetes sürümüne yükselt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновить этот кластер до более новой версии Kubernetes"
+          }
+        }
+      }
+    },
+    "Upgrade available: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade available: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade verfügbar: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualización disponible: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à niveau disponible : %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamento disponibile: %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade beschikbaar: %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dostępna aktualizacja: %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualização disponível: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可升级：%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップグレード可能: %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "업그레이드 가능: %@"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتوفر ترقية: %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपग्रेड उपलब्ध: %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade tersedia: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükseltme mevcut: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступно обновление: %@"
+          }
+        }
+      }
+    },
+    "Upgrade to %@ requested" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade to %@ requested"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade auf %@ angefordert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualización a %@ solicitada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à niveau vers %@ demandée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamento a %@ richiesto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade naar %@ aangevraagd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zlecono aktualizację do %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualização para %@ solicitada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求升级到 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@へのアップグレードを要求済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@(으)로 업그레이드 요청됨"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طُلبت الترقية إلى %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ पर अपग्रेड का अनुरोध किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade ke %@ diminta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ sürümüne yükseltme istendi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрошено обновление до %@"
+          }
+        }
+      }
+    },
+    "Click 'Upgrade...' on a cluster to move it to a newer Kubernetes version from Civo's list. Only newer versions are offered, since Civo does not support downgrades. Civo's own recommendation is preselected, and you confirm the current and the target version before anything is sent." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click 'Upgrade...' on a cluster to move it to a newer Kubernetes version from Civo's list. Only newer versions are offered, since Civo does not support downgrades. Civo's own recommendation is preselected, and you confirm the current and the target version before anything is sent."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klicken Sie bei einem Cluster auf \"Upgrade...\", um ihn auf eine neuere Kubernetes-Version aus der Liste von Civo zu bringen. Es werden nur neuere Versionen angeboten, da Civo keine Downgrades unterstützt. Die Empfehlung von Civo ist vorausgewählt, und Sie bestätigen die aktuelle und die Zielversion, bevor etwas gesendet wird."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haz clic en \"Actualizar...\" en un clúster para llevarlo a una versión más reciente de Kubernetes de la lista de Civo. Solo se ofrecen versiones más recientes, ya que Civo no admite cambios a versiones anteriores. La recomendación de Civo aparece preseleccionada, y confirmas la versión actual y la de destino antes de que se envíe nada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cliquez sur \"Mettre à niveau...\" sur un cluster pour le passer à une version plus récente de Kubernetes de la liste de Civo. Seules les versions plus récentes sont proposées, car Civo ne prend pas en charge le retour à une version antérieure. La recommandation de Civo est présélectionnée, et vous confirmez la version actuelle et la version cible avant tout envoi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fai clic su \"Aggiorna...\" in un cluster per portarlo a una versione più recente di Kubernetes dall'elenco di Civo. Vengono proposte solo versioni più recenti, perché Civo non supporta il ritorno a una versione precedente. La raccomandazione di Civo è preselezionata e confermi la versione attuale e quella di destinazione prima che venga inviato qualcosa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik bij een cluster op \"Upgraden...\" om het naar een nieuwere Kubernetes-versie uit de lijst van Civo te brengen. Alleen nieuwere versies worden aangeboden, omdat Civo geen downgrades ondersteunt. De aanbeveling van Civo is vooraf geselecteerd, en je bevestigt de huidige en de doelversie voordat er iets wordt verzonden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kliknij \"Aktualizuj...\" przy klastrze, aby przenieść go na nowszą wersję Kubernetes z listy Civo. Oferowane są tylko nowsze wersje, ponieważ Civo nie obsługuje przejścia na starszą wersję. Zalecenie Civo jest wstępnie wybrane, a przed wysłaniem czegokolwiek potwierdzasz bieżącą i docelową wersję."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique em \"Atualizar...\" em um cluster para levá-lo a uma versão mais recente do Kubernetes da lista da Civo. Somente versões mais recentes são oferecidas, pois a Civo não permite voltar para uma versão anterior. A recomendação da Civo vem pré-selecionada, e você confirma a versão atual e a de destino antes de qualquer envio."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在集群上点击\"升级...\"，即可将其升级到 Civo 列表中更新的 Kubernetes 版本。由于 Civo 不支持降级，因此仅提供更新的版本。Civo 的推荐版本已预先选中，发送任何内容前你需要确认当前版本和目标版本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタの\"アップグレード...\"をクリックすると、Civoの一覧にあるより新しいKubernetesバージョンに移行できます。Civoはダウングレードをサポートしていないため、より新しいバージョンのみが表示されます。Civoの推奨があらかじめ選択されており、送信前に現在のバージョンとアップグレード先のバージョンを確認します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터에서 \"업그레이드...\"를 클릭하면 Civo 목록에 있는 더 새로운 Kubernetes 버전으로 옮길 수 있습니다. Civo는 다운그레이드를 지원하지 않으므로 더 새로운 버전만 제공됩니다. Civo의 권장 버전이 미리 선택되며, 전송하기 전에 현재 버전과 대상 버전을 확인합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انقر على \"ترقية...\" في أحد العناقيد لنقله إلى إصدار أحدث من Kubernetes من قائمة Civo. تُعرض الإصدارات الأحدث فقط، لأن Civo لا تدعم الرجوع إلى إصدار أقدم. تكون توصية Civo محددة مسبقًا، وتؤكد الإصدار الحالي والإصدار المستهدف قبل إرسال أي شيء."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किसी क्लस्टर पर \"अपग्रेड करें...\" पर क्लिक करके उसे Civo की सूची के नए Kubernetes संस्करण पर ले जाएँ। केवल नए संस्करण दिए जाते हैं, क्योंकि Civo डाउनग्रेड का समर्थन नहीं करता। Civo की अनुशंसा पहले से चुनी होती है, और कुछ भी भेजे जाने से पहले आप वर्तमान और लक्षित संस्करण की पुष्टि करते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik \"Upgrade...\" pada klaster untuk memindahkannya ke versi Kubernetes yang lebih baru dari daftar Civo. Hanya versi yang lebih baru yang ditawarkan, karena Civo tidak mendukung downgrade. Rekomendasi Civo sudah dipilih sebelumnya, dan Anda mengonfirmasi versi saat ini dan versi tujuan sebelum apa pun dikirim."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir kümeyi Civo listesindeki daha yeni bir Kubernetes sürümüne taşımak için kümede \"Yükselt...\" düğmesine tıklayın. Civo eski bir sürüme geri dönmeyi desteklemediği için yalnızca daha yeni sürümler sunulur. Civo'nun önerisi önceden seçilidir ve herhangi bir şey gönderilmeden önce geçerli ve hedef sürümü onaylarsınız."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите \"Обновить...\" у кластера, чтобы перевести его на более новую версию Kubernetes из списка Civo. Предлагаются только более новые версии, так как Civo не поддерживает откат на старую версию. Рекомендация Civo выбрана заранее, и перед отправкой вы подтверждаете текущую и целевую версии."
+          }
+        }
+      }
+    },
+    "Civo decides whether an upgrade path is allowed and may refuse it. After Civo accepts the request, the cluster shows the requested upgrade until it reports the new version; refresh to see its status. The app never upgrades a cluster on its own." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo decides whether an upgrade path is allowed and may refuse it. After Civo accepts the request, the cluster shows the requested upgrade until it reports the new version; refresh to see its status. The app never upgrades a cluster on its own."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo entscheidet, ob ein Upgrade-Pfad zulässig ist, und kann ihn ablehnen. Nachdem Civo die Anfrage angenommen hat, zeigt der Cluster das angeforderte Upgrade, bis er die neue Version meldet; aktualisieren Sie, um den Status zu sehen. Die App aktualisiert einen Cluster nie von sich aus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo decide si una ruta de actualización está permitida y puede rechazarla. Cuando Civo acepta la solicitud, el clúster muestra la actualización solicitada hasta que informa de la nueva versión; actualiza para ver su estado. La app nunca actualiza un clúster por su cuenta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo décide si un chemin de mise à niveau est autorisé et peut le refuser. Une fois la demande acceptée par Civo, le cluster affiche la mise à niveau demandée jusqu'à ce qu'il indique la nouvelle version ; actualisez pour voir son état. L'app ne met jamais un cluster à niveau d'elle-même."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo decide se un percorso di aggiornamento è consentito e può rifiutarlo. Dopo che Civo ha accettato la richiesta, il cluster mostra l'aggiornamento richiesto finché non indica la nuova versione; aggiorna per vederne lo stato. L'app non aggiorna mai un cluster di sua iniziativa."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo bepaalt of een upgradepad is toegestaan en kan het weigeren. Nadat Civo de aanvraag heeft geaccepteerd, toont het cluster de aangevraagde upgrade totdat het de nieuwe versie meldt; vernieuw om de status te zien. De app upgradet een cluster nooit uit zichzelf."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo decyduje, czy dana ścieżka aktualizacji jest dozwolona, i może ją odrzucić. Gdy Civo przyjmie żądanie, klaster pokazuje zleconą aktualizację, dopóki nie zgłosi nowej wersji; odśwież, aby zobaczyć jego status. Aplikacja nigdy nie aktualizuje klastra samodzielnie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Civo decide se um caminho de atualização é permitido e pode recusá-lo. Depois que a Civo aceita a solicitação, o cluster mostra a atualização solicitada até informar a nova versão; atualize para ver o status. O app nunca atualiza um cluster por conta própria."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo 决定是否允许某条升级路径，并可能拒绝。Civo 接受请求后，集群会显示已请求的升级，直到报告新版本；刷新即可查看其状态。应用永远不会自行升级集群。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップグレードパスが許可されるかどうかはCivoが判断し、拒否される場合もあります。Civoが要求を受け付けると、クラスタが新しいバージョンを報告するまで、要求済みのアップグレードが表示されます。ステータスは更新して確認してください。アプリが自動でクラスタをアップグレードすることはありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "업그레이드 경로의 허용 여부는 Civo가 결정하며 거부할 수도 있습니다. Civo가 요청을 수락하면 클러스터가 새 버전을 보고할 때까지 요청된 업그레이드가 표시됩니다. 상태를 보려면 새로 고치세요. 앱은 클러스터를 스스로 업그레이드하지 않습니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرر Civo ما إذا كان مسار الترقية مسموحًا وقد ترفضه. بعد أن تقبل Civo الطلب، يعرض العنقود الترقية المطلوبة حتى يُبلغ عن الإصدار الجديد؛ حدّث لعرض حالته. لا يرقّي التطبيق أي عنقود من تلقاء نفسه."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo तय करता है कि कोई अपग्रेड पथ अनुमत है या नहीं, और उसे अस्वीकार कर सकता है। Civo के अनुरोध स्वीकार करने के बाद, क्लस्टर नया संस्करण दिखाने तक अनुरोधित अपग्रेड दिखाता है; उसकी स्थिति देखने के लिए रीफ़्रेश करें। ऐप कभी भी अपने आप किसी क्लस्टर को अपग्रेड नहीं करता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo memutuskan apakah suatu jalur upgrade diizinkan dan dapat menolaknya. Setelah Civo menerima permintaan, klaster menampilkan upgrade yang diminta hingga melaporkan versi baru; segarkan untuk melihat statusnya. Aplikasi tidak pernah meng-upgrade klaster dengan sendirinya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir yükseltme yolunun izinli olup olmadığına Civo karar verir ve yolu reddedebilir. Civo isteği kabul ettikten sonra küme, yeni sürümü bildirene kadar istenen yükseltmeyi gösterir; durumunu görmek için yenileyin. Uygulama bir kümeyi asla kendiliğinden yükseltmez."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civo решает, допустим ли путь обновления, и может его отклонить. После того как Civo примет запрос, кластер показывает запрошенное обновление, пока не сообщит новую версию; обновите данные, чтобы увидеть его статус. Приложение никогда не обновляет кластер само."
+          }
+        }
+      }
+    },
+    "When creating a cluster, pick a Kubernetes version or keep 'Civo default', which sends no version so Civo installs its default one." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When creating a cluster, pick a Kubernetes version or keep 'Civo default', which sends no version so Civo installs its default one."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wählen Sie beim Erstellen eines Clusters eine Kubernetes-Version oder behalten Sie \"Civo-Standard\", das keine Version sendet, sodass Civo seine Standardversion installiert."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Al crear un clúster, elige una versión de Kubernetes o deja \"Predeterminada de Civo\", que no envía ninguna versión, de modo que Civo instala la suya predeterminada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lors de la création d'un cluster, choisissez une version de Kubernetes ou gardez \"Par défaut de Civo\", qui n'envoie aucune version afin que Civo installe sa version par défaut."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando crei un cluster, scegli una versione di Kubernetes o mantieni \"Predefinita di Civo\", che non invia alcuna versione, così Civo installa la sua predefinita."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies bij het aanmaken van een cluster een Kubernetes-versie of behoud \"Civo-standaard\", dat geen versie verzendt zodat Civo zijn standaardversie installeert."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podczas tworzenia klastra wybierz wersję Kubernetes lub pozostaw \"Domyślna Civo\", która nie wysyła wersji, więc Civo zainstaluje swoją domyślną."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ao criar um cluster, escolha uma versão do Kubernetes ou mantenha \"Padrão da Civo\", que não envia nenhuma versão, para que a Civo instale a sua padrão."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建集群时，选择一个 Kubernetes 版本，或保留\"Civo 默认\"：它不发送版本，Civo 将安装其默认版本。"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クラスタの作成時にKubernetesバージョンを選択するか、\"Civoのデフォルト\"のままにします。その場合はバージョンを送信せず、Civoがデフォルトのバージョンをインストールします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클러스터를 만들 때 Kubernetes 버전을 선택하거나 \"Civo 기본값\"을 유지하세요. 이 경우 버전을 보내지 않으며 Civo가 기본 버전을 설치합니다."
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند إنشاء عنقود، اختر إصدار Kubernetes أو أبقِ \"الافتراضي من Civo\"، الذي لا يرسل أي إصدار فتثبّت Civo إصدارها الافتراضي."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "क्लस्टर बनाते समय कोई Kubernetes संस्करण चुनें या \"Civo डिफ़ॉल्ट\" रहने दें, जो कोई संस्करण नहीं भेजता, ताकि Civo अपना डिफ़ॉल्ट संस्करण इंस्टॉल करे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat membuat klaster, pilih versi Kubernetes atau biarkan \"Default Civo\", yang tidak mengirim versi sehingga Civo memasang versi default-nya."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Küme oluştururken bir Kubernetes sürümü seçin veya sürüm göndermeyen \"Civo varsayılanı\" seçeneğini koruyun; bu durumda Civo kendi varsayılan sürümünü kurar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При создании кластера выберите версию Kubernetes или оставьте \"По умолчанию Civo\": тогда версия не отправляется и Civo установит свою версию по умолчанию."
+          }
+        }
+      }
+    },
+    "Requested Kubernetes upgrade to %@" : {
+      "comment" : "Kubernetes activity log entry after Civo accepted an upgrade; %@ is the target version",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requested Kubernetes upgrade to %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes-Upgrade auf %@ angefordert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualización de Kubernetes a %@ solicitada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à niveau de Kubernetes vers %@ demandée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamento di Kubernetes a %@ richiesto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes-upgrade naar %@ aangevraagd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zlecono aktualizację Kubernetes do %@"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atualização do Kubernetes para %@ solicitada"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已请求将 Kubernetes 升级到 %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes の %@ へのアップグレードを要求"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes %@(으)로 업그레이드 요청함"
+          }
+        },
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم طلب ترقية Kubernetes إلى %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes को %@ पर अपग्रेड करने का अनुरोध किया गया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade Kubernetes ke %@ diminta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kubernetes'in %@ sürümüne yükseltilmesi istendi"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запрошено обновление Kubernetes до %@"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

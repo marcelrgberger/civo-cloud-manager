@@ -3634,3 +3634,326 @@ struct FirewallRuleEditorTests {
         #expect(env.activities == (failure == nil ? ["web rule-1"] : []))
     }
 }
+
+// MARK: - Kubernetes versions and upgrades
+
+/// Decodes a cluster shaped like the examples of https://www.civo.com/api/kubernetes.
+private func kubernetesCluster(id: String = "c-1", version: String, status: String = "ACTIVE", extra: String = "") -> CivoKubernetesCluster {
+    let json = #"{"id": "\#(id)", "name": "prod", "status": "\#(status)", "kubernetes_version": "\#(version)"\#(extra)}"#
+    return try! JSONDecoder().decode(CivoKubernetesCluster.self, from: Data(json.utf8))
+}
+
+private func kubernetesVersion(_ version: String, type: String = "stable", isDefault: Bool = false) -> CivoKubernetesVersion {
+    CivoKubernetesVersion(version: version, flatVersion: nil, label: "v\(version)", type: type, isDefault: isDefault, clusterType: nil)
+}
+
+@Suite("Kubernetes versions")
+struct KubernetesVersionTests {
+    @Test("Civo's list and cluster spellings read as one version and compare by number, then by build")
+    func comparison() throws {
+        let listed = try #require(KubernetesVersionNumber("1.20.0+k3s1"))
+        #expect(KubernetesVersionNumber("1.20.0-k3s1") == listed)
+        #expect(KubernetesVersionNumber("v1.20.0+k3s1") == listed)
+        #expect(KubernetesVersionNumber(" 1.20.0+K3S1 ") == listed)
+
+        func isNewer(_ lhs: String, _ rhs: String) -> Bool {
+            KubernetesVersionNumber(lhs)!.isNewer(than: KubernetesVersionNumber(rhs)!)
+        }
+        #expect(isNewer("1.20.0+k3s2", "1.20.0-k3s1"))
+        #expect(isNewer("1.21.0+k3s1", "1.20.9+k3s9"))
+        #expect(isNewer("1.10.0+k3s1", "1.9.0+k3s1"))
+        #expect(isNewer("1.20.1", "1.20.0"))
+        #expect(!isNewer("1.20.0+k3s1", "1.20.0-k3s1"))
+        #expect(!isNewer("1.19.9+k3s1", "1.20.0+k3s1"))
+    }
+
+    @Test("Unknown formats are not read, and versions of another distribution cannot be compared")
+    func unknownFormats() {
+        for unknown in ["", "latest", "1.20", "1.20.0.1", "1.2a.0", "1.20.0+", "1.20.0+k3s", "1.20.0-rc.1", "1.20.0+k3s1+k3s2", "talos-v1.5.0", "１.20.0+k3s1", "1.20.0+3s1"] {
+            #expect(KubernetesVersionNumber(unknown) == nil, "\(unknown)")
+        }
+        let k3s = KubernetesVersionNumber("1.20.0+k3s1")!
+        #expect(KubernetesVersionNumber("1.21.0+rke2r1")!.compare(to: k3s) == nil)
+        #expect(KubernetesVersionNumber("1.21.0")!.compare(to: k3s) == nil)
+    }
+
+    @Test("Only listed, not deprecated, newer versions of the same distribution are offered, newest first and each once")
+    func upgradeTargets() {
+        let catalog = [
+            kubernetesVersion("1.19.4+k3s1"),
+            kubernetesVersion("1.20.0+k3s1"),
+            kubernetesVersion("1.20.0+k3s2", type: "deprecated"),
+            kubernetesVersion("1.21.2+k3s1"),
+            CivoKubernetesVersion(version: "1.21.2-k3s1", flatVersion: nil, label: nil, type: "stable", isDefault: nil, clusterType: nil),
+            kubernetesVersion("1.22.1+k3s1", isDefault: true),
+            kubernetesVersion("1.23.0+rke2r1"),
+            kubernetesVersion("talos-v1.5.0"),
+        ]
+        let offered = try? KubernetesVersionCatalog.upgradeTargets(from: "1.20.0-k3s1", in: catalog).get()
+        #expect(offered?.map(\.version) == ["1.22.1+k3s1", "1.21.2+k3s1"])
+
+        #expect(KubernetesVersionCatalog.upgradeTargets(from: "1.22.1-k3s1", in: catalog) == .failure(.noNewerVersion))
+        #expect(KubernetesVersionCatalog.upgradeTargets(from: "1.30.0-k3s1", in: catalog) == .failure(.noNewerVersion))
+        #expect(KubernetesVersionCatalog.upgradeTargets(from: "1.20.0-beta", in: catalog) == .failure(.unknownVersionFormat("1.20.0-beta")))
+        #expect(KubernetesVersionCatalog.createOptions(in: catalog).map(\.version) == ["1.22.1+k3s1", "1.21.2+k3s1", "1.20.0+k3s1", "1.19.4+k3s1"])
+    }
+
+    @Test("A cluster that is not active, or not yet on its desired version, cannot be upgraded")
+    func blockers() {
+        #expect(KubernetesVersionCatalog.upgradeBlocker(for: kubernetesCluster(version: "1.20.0-k3s1")) == nil)
+        #expect(KubernetesVersionCatalog.upgradeBlocker(for: kubernetesCluster(version: "1.20.0-k3s1", status: "BUILDING")) == .clusterNotActive("BUILDING"))
+        let syncing = kubernetesCluster(version: "1.20.0-k3s1", extra: #", "conditions": [{"type": "ClusterVersionSync", "status": "False"}]"#)
+        #expect(KubernetesVersionCatalog.upgradeBlocker(for: syncing) == .upgradeInProgress)
+    }
+
+    @Test("The version list and the cluster's upgrade hint decode as Civo documents them")
+    func decoding() throws {
+        let json = #"[{"version": "1.20.0+k3s1", "flat_version": "1.20.0-k3s1", "label": "v1.20.0+k3s1", "type": "stable", "default": true}, {"version": "1.20.0+k3s2", "flat_version": "1.20.0-k3s2", "label": "v1.20.0+k3s2", "type": "deprecated"}]"#
+        let versions = try JSONDecoder().decode([CivoKubernetesVersion].self, from: Data(json.utf8))
+        #expect(versions.map(\.isDefault) == [true, nil])
+        #expect(versions.map(\.isDeprecated) == [false, true])
+        #expect(kubernetesCluster(version: "1.20.0-k3s1", extra: #", "upgrade_available_to": "1.21.2+k3s1""#).upgradeAvailableTo == "1.21.2+k3s1")
+    }
+
+    @Test("An upgrade sends only the version and region, never pools or applications")
+    func upgradeBody() {
+        let body = CivoKubernetesService.upgradeBody(to: "1.21.2+k3s1", region: "LON1")
+        #expect(Set(body.keys) == ["kubernetes_version", "region"])
+        #expect(body["kubernetes_version"] as? String == "1.21.2+k3s1")
+        #expect(body["region"] as? String == "LON1")
+    }
+}
+
+/// Upgrade requests recorded instead of sent.
+private actor FakeKubernetesUpgradeAPI: KubernetesUpgradeAPI {
+    var catalog = [kubernetesVersion("1.20.0+k3s1"), kubernetesVersion("1.21.2+k3s1"), kubernetesVersion("1.22.1+k3s1")]
+    var cluster = kubernetesCluster(version: "1.20.0-k3s1")
+    private(set) var calls: [String] = []
+    private var versionsError: Error?
+    private var upgradeError: Error?
+    /// Runs while the cluster is loaded again before the upgrade, like a Settings change during the request.
+    private var duringReload: (@Sendable () async -> Void)?
+    /// Runs while the upgrade is on its way, after it was sent.
+    private var duringUpgrade: (@Sendable () async -> Void)?
+
+    func replaceCluster(with cluster: CivoKubernetesCluster) { self.cluster = cluster }
+    func replaceCatalog(with catalog: [CivoKubernetesVersion]) { self.catalog = catalog }
+    func failVersions(with error: Error?) { versionsError = error }
+    func failUpgrade(with error: Error) { upgradeError = error }
+    func whileReloading(_ action: @escaping @Sendable () async -> Void) { duringReload = action }
+    func whileUpgrading(_ action: @escaping @Sendable () async -> Void) { duringUpgrade = action }
+
+    func listVersions(apiKey: String?) async throws -> [CivoKubernetesVersion] {
+        calls.append("versions \(apiKey ?? "-")")
+        if let versionsError { throw versionsError }
+        return catalog
+    }
+
+    func showCluster(_ id: String, region: String?, apiKey: String?) async throws -> CivoKubernetesCluster {
+        calls.append("show \(id) \(region ?? "-") \(apiKey ?? "-")")
+        if let action = duringReload {
+            duringReload = nil
+            await action()
+        }
+        return cluster
+    }
+
+    func upgradeCluster(_ id: String, to version: String, region: String, apiKey: String) async throws {
+        calls.append("upgrade \(id) \(version) \(region) \(apiKey)")
+        if let action = duringUpgrade {
+            duringUpgrade = nil
+            await action()
+        }
+        if let upgradeError { throw upgradeError }
+    }
+}
+
+@Suite("Kubernetes cluster upgrade")
+@MainActor
+struct KubernetesUpgradeTests {
+    @MainActor
+    fileprivate final class Environment {
+        fileprivate let api = FakeKubernetesUpgradeAPI()
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var activities: [String] = []
+        lazy var controller = KubernetesUpgradeController(
+            api: api,
+            settingsRegion: { [unowned self] in region },
+            isAccessAllowed: { [unowned self] in accessAllowed },
+            apiKey: { [unowned self] in apiKey },
+            notificationCenter: notifications,
+            recordActivity: { [unowned self] target, version in activities.append("\(target.clusterName) \(target.fromVersion) \(version)") }
+        )
+        let target = KubernetesUpgradeTarget(clusterId: "c-1", clusterName: "prod", region: "LON1", account: CivoAccount(apiKey: "key-a"), fromVersion: "1.20.0-k3s1")
+
+        /// The notice the detail page of the cluster loaded from LON1 with key-a shows.
+        var notice: String? { controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) }
+
+        /// Opens the upgrade as the detail page does, for the cluster loaded from LON1 with key-a.
+        func begin(_ cluster: CivoKubernetesCluster = kubernetesCluster(version: "1.20.0-k3s1")) async {
+            await controller.begin(upgrading: cluster, region: "LON1", account: CivoAccount(apiKey: "key-a"))
+        }
+    }
+
+    private static let target = kubernetesVersion("1.21.2+k3s1")
+
+    @Test("After confirming, the cluster and versions are loaded again, then only the upgrade is sent and remembered, with its notice, until reached")
+    func upgrade() async {
+        let env = Environment()
+        await env.begin()
+        #expect(env.controller.session?.target == env.target)
+        #expect(env.controller.session?.targets?.map(\.version) == ["1.22.1+k3s1", "1.21.2+k3s1"])
+
+        #expect(await env.controller.upgrade(to: Self.target) == .requested)
+        #expect(await env.api.calls == ["versions key-a", "show c-1 LON1 key-a", "versions key-a", "upgrade c-1 1.21.2+k3s1 LON1 key-a"])
+        #expect(env.controller.session == nil)
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+        #expect(env.activities == ["prod 1.20.0-k3s1 1.21.2+k3s1"])
+        let account = CivoAccount(apiKey: "key-a")
+        #expect(env.controller.notice(forCluster: "c-2", region: "LON1", account: account) == nil)
+        #expect(env.controller.notice(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-b")) == nil)
+
+        // Accepted is not finished: until the cluster reports the version, no second upgrade starts.
+        env.controller.clusterDidLoad(kubernetesCluster(version: "1.20.0-k3s1"), region: "LON1", account: account)
+        #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == "1.21.2+k3s1")
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+        await env.begin()
+        #expect(env.controller.session == nil)
+        #expect(env.notice == KubernetesUpgradeError.upgradeAlreadyRequested("1.21.2+k3s1").message)
+
+        // Another cluster reaching the version leaves this notice alone.
+        env.controller.clusterDidLoad(kubernetesCluster(id: "c-2", version: "1.21.2-k3s1"), region: "LON1", account: account)
+        #expect(env.notice != nil)
+
+        env.controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: account)
+        #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == nil)
+        #expect(env.notice == nil)
+    }
+
+    @Test("A cluster whose version changed, or that started an upgrade, after the sheet opened sends nothing", arguments: [
+        (kubernetesCluster(version: "1.21.2-k3s1"), KubernetesUpgradeError.clusterChanged),
+        (kubernetesCluster(version: "1.20.0-k3s1", status: "UPGRADING"), .clusterNotActive("UPGRADING")),
+    ])
+    func staleCluster(reloaded: CivoKubernetesCluster, problem: KubernetesUpgradeError) async {
+        let env = Environment()
+        await env.begin()
+        await env.api.replaceCluster(with: reloaded)
+        #expect(await env.controller.upgrade(to: Self.target) == .cancelled)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
+        #expect(env.notice == problem.message)
+    }
+
+    @Test("A version Civo no longer offers when the user confirms sends nothing")
+    func withdrawnVersion() async {
+        let env = Environment()
+        await env.begin()
+        await env.api.replaceCatalog(with: [kubernetesVersion("1.21.2+k3s1", type: "deprecated"), kubernetesVersion("1.22.1+k3s1")])
+        #expect(await env.controller.upgrade(to: Self.target) == .cancelled)
+        #expect(await env.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
+        #expect(env.notice == KubernetesUpgradeError.targetUnavailable("1.21.2+k3s1").message)
+    }
+
+    @Test("Revoked Full Access, or a region or key change while the cluster is loaded again, sends nothing")
+    func targetChecks() async {
+        let revoked = Environment()
+        await revoked.begin()
+        revoked.accessAllowed = false
+        #expect(await revoked.controller.upgrade(to: Self.target) == .cancelled)
+        #expect(await revoked.api.calls == ["versions key-a"])
+        #expect(revoked.notice == KubernetesUpgradeError.accessRevoked.message)
+
+        let moved = Environment()
+        await moved.begin()
+        await moved.api.whileReloading {
+            await MainActor.run {
+                moved.region = "NYC1"
+                moved.notifications.post(name: .civoRegionDidChange, object: nil)
+            }
+        }
+        #expect(await moved.controller.upgrade(to: Self.target) == nil)
+        #expect(moved.controller.session == nil)
+        #expect(moved.notice == KubernetesUpgradeError.regionChanged.message)
+        #expect(await moved.api.calls.allSatisfy { !$0.hasPrefix("upgrade") })
+
+        let rekeyed = Environment()
+        rekeyed.apiKey = "key-b"
+        await rekeyed.begin()
+        #expect(rekeyed.controller.session == nil)
+        #expect(rekeyed.notice == KubernetesUpgradeError.accountChanged.message)
+        #expect(await rekeyed.api.calls.isEmpty)
+    }
+
+    @Test("A cluster that is busy or reports an unknown version is not offered an upgrade")
+    func notOffered() async {
+        let busy = Environment()
+        await busy.begin(kubernetesCluster(version: "1.20.0-k3s1", status: "BUILDING"))
+        #expect(busy.controller.session == nil)
+        #expect(busy.notice == KubernetesUpgradeError.clusterNotActive("BUILDING").message)
+
+        let unknown = Environment()
+        await unknown.begin(kubernetesCluster(version: "next"))
+        #expect(unknown.notice == KubernetesUpgradeError.unknownVersionFormat("next").message)
+        #expect(await unknown.api.calls.isEmpty)
+
+        let newest = Environment()
+        await newest.begin(kubernetesCluster(version: "1.22.1-k3s1"))
+        #expect(newest.controller.session == nil)
+        #expect(newest.notice == KubernetesUpgradeError.noNewerVersion.message)
+    }
+
+    @Test("An unreachable version list keeps the sheet open to try again")
+    func unreachableCatalog() async {
+        let env = Environment()
+        await env.api.failVersions(with: CivoAPIError.httpError(503, "Unavailable"))
+        await env.begin()
+        #expect(env.controller.session?.targets == nil)
+        #expect(env.controller.sheetError == KubernetesUpgradeController.versionListFailedMessage(reason: CivoAPIError.userMessage(CivoAPIError.httpError(503, "Unavailable"))))
+
+        await env.api.failVersions(with: nil)
+        await env.controller.loadVersions()
+        #expect(env.controller.sheetError == nil)
+        #expect(env.controller.session?.targets?.count == 2)
+    }
+
+    @Test("A refused upgrade path keeps the sheet open with Civo's reason; an unknown result is not reported as a success")
+    func failures() async throws {
+        let refused = Environment()
+        await refused.begin()
+        await refused.api.failUpgrade(with: CivoAPIError.httpError(422, "upgrade path not allowed"))
+        #expect(await refused.controller.upgrade(to: Self.target) == nil)
+        #expect(refused.controller.session != nil)
+        #expect(refused.controller.sheetError == CivoAPIError.httpError(422, "upgrade path not allowed").localizedDescription)
+        #expect(refused.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) == nil)
+        #expect(refused.activities.isEmpty)
+
+        let lost = Environment()
+        await lost.begin()
+        await lost.api.failUpgrade(with: CivoAPIError.networkError("The request timed out."))
+        #expect(await lost.controller.upgrade(to: Self.target) == .uncertain)
+        #expect(lost.controller.session == nil)
+        #expect(lost.notice == KubernetesUpgradeController.unknownResultMessage(for: lost.target))
+        #expect(lost.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: CivoAccount(apiKey: "key-a")) == nil)
+        #expect(lost.activities.isEmpty)
+    }
+
+    @Test("While an upgrade is on its way, the sheet cannot be opened again, so no second upgrade is sent")
+    func noSecondUpgradeWhileSending() async {
+        let env = Environment()
+        await env.begin()
+        let controller = env.controller
+        await env.api.whileUpgrading {
+            await MainActor.run { controller.cancel() }
+            await env.begin()
+            await MainActor.run { #expect(controller.session == nil) }
+        }
+        #expect(await controller.upgrade(to: Self.target) == .requested)
+        #expect(await env.api.calls.filter { $0.hasPrefix("upgrade") }.count == 1)
+        #expect(env.notice == KubernetesUpgradeController.acceptedMessage(for: env.target, version: "1.21.2+k3s1"))
+
+        controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: CivoAccount(apiKey: "key-a"))
+        #expect(env.notice == nil)
+    }
+}

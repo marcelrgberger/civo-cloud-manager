@@ -171,12 +171,14 @@ final class CivoAPIClient: Sendable {
     }
 
     /// GET a decoded response from the API.
+    /// `apiKey` pins the request to one account instead of reading the current key.
     func get<T: Decodable>(
         path: String,
         queryItems: [URLQueryItem]? = nil,
-        regionRequired: Bool = true
+        regionRequired: Bool = true,
+        apiKey: String? = nil
     ) async throws -> T {
-        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired)
+        try await execute("GET", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey)
     }
 
     /// GET every page of a paginated list (API returns `{ page, per_page, pages, items }`).
