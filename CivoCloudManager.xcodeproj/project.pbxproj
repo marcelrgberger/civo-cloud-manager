@@ -27,6 +27,7 @@
 		1BDBCC9AD214C3280BE42876 /* CreateFirewallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF001A1D2E20FC2079DBDCA /* CreateFirewallView.swift */; };
 		1D6E0750575C50DCBF61A11B /* CivoFirewallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3B983A59EFD4C3E70560F6 /* CivoFirewallService.swift */; };
 		1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */; };
+		62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */; };
 		1F53D892FB96A5B8444E7CE1 /* K8sMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6573B0CCE355C008B097BE98 /* K8sMetrics.swift */; };
 		26AE2B95EE1C325878952853 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */; };
 		284AC248923AA2EA5CDA17B7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B5732ED7605F4B787E59C7E8 /* PrivacyInfo.xcprivacy */; };
@@ -63,6 +64,7 @@
 		58E4FC5F2AD63FF75334D043 /* IPPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF890BB389705BC2A4C42E1 /* IPPreset.swift */; };
 		5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */; };
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
+		304ED48A654AEAA516C7178C /* FirewallRuleEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */; };
 		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
 		FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */; };
 		A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F7DC7779832C4095638A6 /* InstanceTags.swift */; };
@@ -153,6 +155,7 @@
 		EC3E72BAEDE07422A50EF33E /* QuickSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */; };
 		EC5AAB7DC191448F60CD7959 /* VolumeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6B375E3D2A3808726F712 /* VolumeListView.swift */; };
 		EFA7E70AB8444AE2999DC969 /* CreateRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */; };
+		144D14E2D568F9258659A21F /* EditRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */; };
 		F05AD484AF3628B9D2B9C577 /* CivoDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0E621B8A284E2DEA9AD09B /* CivoDatabaseService.swift */; };
 		F13E64C912A91CE2F8FD8012 /* ObjectStoreBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F803DCD5E699794A5E2F38 /* ObjectStoreBrowserView.swift */; };
 		F509E7FC3A31BA71147F314D /* LoadBalancerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CA8D131FFE0C87209269A /* LoadBalancerListView.swift */; };
@@ -214,6 +217,7 @@
 		1FDC2D559CDF199ED3540F04 /* CivoDatabase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
+		00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEdit.swift; sourceTree = "<group>"; };
 		A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCreationForm.swift; sourceTree = "<group>"; };
 		DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceBulkCreation.swift; sourceTree = "<group>"; };
 		838F7DC7779832C4095638A6 /* InstanceTags.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTags.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 		96924B1B50C19D9665E1D252 /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDatabaseView.swift; sourceTree = "<group>"; };
 		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
+		42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEditor.swift; sourceTree = "<group>"; };
 		9A0D734E5AADEC5426048D0D /* NetworkListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		9B01D46854B56A4823DA0330 /* QuotaGauge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
 		9B383DBDB2B764F3E8F02769 /* LegalView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
@@ -307,6 +312,7 @@
 		B12F7996F1A16922E40D6BD3 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/Impressum.md; sourceTree = "<group>"; };
 		B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetwork.swift; sourceTree = "<group>"; };
 		B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateRuleView.swift; sourceTree = "<group>"; };
+		30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditRuleView.swift; sourceTree = "<group>"; };
 		B438532CEAB87ACE7FE3EAD9 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
 		B5732ED7605F4B787E59C7E8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B603EEEBA9DCFD1B87098CAF /* RateEditorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RateEditorView.swift; sourceTree = "<group>"; };
@@ -630,6 +636,7 @@
 				0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */,
 				356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */,
 				982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */,
+				42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */,
 				08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */,
 				51B062260472FCFDFF253E9F /* VolumeViewModel.swift */,
 			);
@@ -652,6 +659,7 @@
 				9CF001A1D2E20FC2079DBDCA /* CreateFirewallView.swift */,
 				9D863C92BB8355FC86FD7921 /* CreateNetworkView.swift */,
 				B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */,
+				30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */,
 				139202D046776B2447E7538A /* DomainListView.swift */,
 				05845953997D598F9CF53203 /* FirewallDetailView.swift */,
 				F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */,
@@ -725,6 +733,7 @@
 				A20A85AE8A0AAB61AEB6A794 /* CivoSize.swift */,
 				EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */,
 				229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */,
+				00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */,
 				837D1AE2173B4355ACCED79B /* HelmRelease.swift */,
 				3AF890BB389705BC2A4C42E1 /* IPPreset.swift */,
 				A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */,
@@ -938,6 +947,7 @@
 				907441463543C41FE777296C /* CivoSize.swift in Sources */,
 				5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */,
 				5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */,
+				304ED48A654AEAA516C7178C /* FirewallRuleEdit.swift in Sources */,
 				78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */,
 				FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */,
 				A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */,
@@ -989,6 +999,7 @@
 				EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */,
 				9E96AAFD3703722C2DBCAE5E /* KubernetesViewModel.swift in Sources */,
 				1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */,
+				62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */,
 				A0F4E426FF1D7B3A27BB7796 /* RegionViewModel.swift in Sources */,
 				548833FEB722C3B9F7FE72CF /* VolumeViewModel.swift in Sources */,
 				F7932F2F6136032F8147B674 /* AppState.swift in Sources */,
@@ -1026,6 +1037,7 @@
 				1BDBCC9AD214C3280BE42876 /* CreateFirewallView.swift in Sources */,
 				2AB1468AFB1AA9D0DD469304 /* CreateNetworkView.swift in Sources */,
 				EFA7E70AB8444AE2999DC969 /* CreateRuleView.swift in Sources */,
+				144D14E2D568F9258659A21F /* EditRuleView.swift in Sources */,
 				892FCB7DC09D656750106A3A /* DomainListView.swift in Sources */,
 				F8E59DF15B5E473A3E1EB661 /* FirewallDetailView.swift in Sources */,
 				827BF0CFC34CB7D5CA8417BD /* FirewallListView.swift in Sources */,

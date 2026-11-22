@@ -140,6 +140,9 @@ struct HelpSection {
         HelpSection(title: "Networking", icon: "point.3.connected.trianglepath.dotted", items: [
             "Click a firewall to see all its rules (protocol, ports, CIDR, direction, action).",
             "Add new rules with '+' in the rule detail view.",
+            "Right-click a rule and choose 'Edit Rule' to change its protocol, ports, CIDR, direction or label. The action cannot be changed. A comparison shows the values before and after.",
+            "Saving loads the rule again first. A removed rule is not recreated, and a rule changed elsewhere is shown with its current values to save again. Allowing every address or changing the rule that admits your own IP asks for confirmation.",
+            "Rules the app opens and closes itself, from the menu bar, a timer or the Kubernetes connection, show a lock and cannot be edited.",
             "Create networks with a label and optional CIDR range.",
             "Default network cannot be deleted.",
             "Expand a domain to see DNS records. Add, edit, or delete records inline.",

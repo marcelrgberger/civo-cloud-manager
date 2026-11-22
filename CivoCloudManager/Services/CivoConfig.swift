@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import Security
 
@@ -12,6 +13,15 @@ extension Notification.Name {
     static let civoAPIKeyDidChange = Notification.Name("CivoCloudManager.apiKeyDidChange")
     /// Posted after the Settings region changes, so captured instance targets of the old region are dropped.
     static let civoRegionDidChange = Notification.Name("CivoCloudManager.regionDidChange")
+}
+
+/// The account of an API key, held as a SHA-256 fingerprint so the key itself is not kept.
+struct CivoAccount: Equatable, Sendable {
+    private let fingerprint: SHA256.Digest
+
+    init(apiKey: String) {
+        fingerprint = SHA256.hash(data: Data(apiKey.utf8))
+    }
 }
 
 final class CivoConfig: @unchecked Sendable {

@@ -14,11 +14,11 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
 | Compute | Create/delete instances (with count, public IP, initial user, reverse DNS and startup script; several at once only after a cost confirmation), start/stop, soft and hard reboot (each confirmed first), resize, firewall change within the instance network (confirmed first), attaching and detaching volumes of the instance network (detaching confirmed first, with a reminder to unmount), recovery mode (entering and exiting confirmed first, with a persistent reboot reminder and the console as the only access path), reverse DNS, tag editing (removing all tags is confirmed first) and a tag filter on the instance list, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
 | Kubernetes | Cluster creation, node pools, kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
-| Networking | Networks, firewall rules, load balancers, domains and DNS records |
+| Networking | Networks, firewall rules (create, edit protocol, ports, CIDR, direction and label with a before and after comparison, delete), load balancers, domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |
 | Account | Billing estimates over single and multi-month periods with a per-account cache of completed months, editable rates, region selection, API health checks, legal documents |
 
-Deletion dialogs require the resource name. Sensitive database and object store credentials, initial instance passwords and saved instance credentials use LocalAuthentication. Menu bar ownership matching and bulk closure target rules the app created, labeled `civo-cloud-<hostname>-<firewall-name>`; Kubernetes API rules use the `k8s-api` suffix.
+Deletion dialogs require the resource name. Sensitive database and object store credentials, initial instance passwords and saved instance credentials use LocalAuthentication. Menu bar ownership matching and bulk closure target rules the app created, labeled `civo-cloud-<hostname>-<firewall-name>`; Kubernetes API rules use the `k8s-api` suffix. The rule editor leaves these rules and rules with a pending timer untouched, keeps the action of every rule, loads the rule again before saving and asks again when it changed elsewhere; a removed rule is never recreated.
 
 ## Build and first launch
 

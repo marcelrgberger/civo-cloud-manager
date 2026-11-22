@@ -76,20 +76,25 @@ struct InstanceFirewallOptions: Sendable {
 // MARK: - Rule
 
 /// Represents a single firewall rule.
-struct CivoRule: Codable, Identifiable, Sendable {
+struct CivoRule: Decodable, Identifiable, Equatable, Sendable {
     let id: String
     let label: String?
-    let cidr: String?
+    let proto: String?
+    let cidrs: [String]
     let ports: String?
     let startPort: String?
     let endPort: String?
     let direction: String?
     let action: String?
+
+    /// The first CIDR of the rule.
+    var cidr: String? { cidrs.first }
 }
 
 extension CivoRule {
     enum CodingKeys: String, CodingKey {
         case id, label, cidr, ports, direction, action
+        case proto = "protocol"
         case startPort = "start_port"
         case endPort = "end_port"
     }
@@ -98,6 +103,7 @@ extension CivoRule {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
         label = try c.decodeIfPresent(String.self, forKey: .label)
+        proto = try c.decodeIfPresent(String.self, forKey: .proto)
         ports = try c.decodeIfPresent(String.self, forKey: .ports)
         startPort = try c.decodeIfPresent(String.self, forKey: .startPort)
         endPort = try c.decodeIfPresent(String.self, forKey: .endPort)
@@ -106,11 +112,11 @@ extension CivoRule {
 
         // cidr can be a String or an Array of Strings
         if let s = try? c.decode(String.self, forKey: .cidr) {
-            cidr = s
-        } else if let arr = try? c.decode([String].self, forKey: .cidr), let first = arr.first {
-            cidr = first
+            cidrs = [s]
+        } else if let arr = try? c.decode([String].self, forKey: .cidr) {
+            cidrs = arr
         } else {
-            cidr = nil
+            cidrs = []
         }
     }
 }
