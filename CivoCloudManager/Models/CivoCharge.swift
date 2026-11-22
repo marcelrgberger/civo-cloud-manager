@@ -59,6 +59,16 @@ struct CivoCharge: Codable, Identifiable, Sendable {
 
     private static let ratesKey = "CivoHourlyRates"
 
+    /// Hours in the estimated month used for every monthly cost shown.
+    static let hoursPerMonth = 730.0
+
+    /// The hourly rate of a size such as `g3.small`, matched exactly or by a rate key containing the
+    /// size name. nil when no positive rate is known, so a missing rate never reads as $0.
+    static func hourlyRate(forSize sizeName: String, in rates: [String: Double] = hourlyRates) -> Double? {
+        let rate = rates[sizeName] ?? rates.first { key, _ in key.contains(sizeName) }?.value
+        return rate.flatMap { $0 > 0 ? $0 : nil }
+    }
+
     static var hourlyRates: [String: Double] {
         get {
             if let data = UserDefaults.standard.data(forKey: ratesKey),

@@ -1990,6 +1990,12 @@ private final class InstanceEnvironment {
     let center = NotificationCenter()
     /// The firewalls Civo lists for each region.
     var firewallsByRegion = ["LON1": InstanceEnvironment.firewalls]
+    /// The sizes Civo lists for each region, and the regions they were requested for.
+    var sizesByRegion: [String: [CivoSize]] = [:]
+    var sizeLoadError: Error?
+    private(set) var sizeRequests: [String] = []
+    /// Set to hold every size load until the test finishes it, so loads can complete in any order.
+    var heldSizeLoads: HeldSizeLoads?
     private(set) var activities: [String] = []
     /// Kept alive for the default store: its client refers to it unowned.
     private let keychain = FakeKeychain()
@@ -2015,6 +2021,7 @@ private final class InstanceEnvironment {
                 write: { [weak self] in self?.storedRecoveryReboots = $0 }
             ),
             loadSSHKeys: { [] },
+            loadSizes: { [weak self] region in try await self?.listSizes(in: region) ?? [] },
             loadFirewallOptions: { [weak self] region in
                 let firewalls = await self?.firewallsByRegion[region] ?? []
                 return InstanceFirewallOptions(region: region, firewalls: firewalls, networks: InstanceEnvironment.networks)
@@ -2026,6 +2033,13 @@ private final class InstanceEnvironment {
                 self?.activities.append(detail.map { String(format: action, $0) } ?? action)
             }
         )
+    }
+
+    private func listSizes(in region: String) async throws -> [CivoSize] {
+        sizeRequests.append(region)
+        if let heldSizeLoads { return try await heldSizeLoads.hold() }
+        if let sizeLoadError { throw sizeLoadError }
+        return sizesByRegion[region] ?? []
     }
 
     /// Changes the Settings region the way `CivoConfig` does.
@@ -3087,6 +3101,225 @@ struct InstanceCreationFormTests {
         form.networkId = "5c16ab17"
         #expect(form.firewallId.isEmpty)
         #expect(try #require(form.requestBody())["firewall_id"] == nil)
+    }
+}
+
+// MARK: - Instance resize
+
+/// Sizes in the documented `/v2/sizes` payload, without `type` (https://www.civo.com/api/sizes), and typed ones.
+/// A live LON1 response types sizes `Instance`, `Kubernetes` or `Database`; `Performance` stands for any other type.
+private let documentedSizes = try! JSONDecoder().decode([CivoSize].self, from: Data("""
+[{"name":"g3.small","nice_name":"Small","cpu_cores":1,"ram_mb":2048,"disk_gb":25,"description":"Small","selectable":true},
+ {"name":"g3.medium","nice_name":"Medium","cpu_cores":2,"ram_mb":4096,"disk_gb":50,"description":"Medium","selectable":true},
+ {"name":"g3.large","nice_name":"Large","cpu_cores":4,"ram_mb":8192,"disk_gb":100,"description":"Large","selectable":true},
+ {"name":"g4s.medium","nice_name":"Medium Standard","cpu_cores":2,"ram_mb":4096,"disk_gb":50,"description":"Medium","selectable":true},
+ {"name":"g4c.large","nice_name":"Large CPU","cpu_cores":8,"ram_mb":16384,"disk_gb":40,"description":"Less disk","selectable":true},
+ {"name":"g3.xlarge","nice_name":"Extra Large","cpu_cores":6,"ram_mb":16384,"disk_gb":150,"description":"Retired","selectable":false},
+ {"name":"g4s.kube.large","nice_name":"Large Kube","cpu_cores":4,"ram_mb":8192,"disk_gb":60,"description":"Kube","selectable":true},
+ {"name":"g3.db.large","nice_name":"Large DB","cpu_cores":4,"ram_mb":8192,"disk_gb":160,"description":"DB","selectable":true},
+ {"name":"g4s.2xlarge","nice_name":"2XL","type":"Instance","cpu_cores":8,"ram_mb":32768,"disk_gb":200,"selectable":true},
+ {"name":"g4p.small","nice_name":"Small Performance","type":"Performance","cpu_cores":4,"ram_mb":16384,"disk_gb":100,"selectable":true},
+ {"name":"g3.k3s.large","nice_name":"Large K3s","cpu_cores":4,"ram_mb":8192,"disk_gb":60,"selectable":true},
+ {"name":"g3.db.xlarge","nice_name":"XL DB","type":"Database","cpu_cores":8,"ram_mb":32768,"disk_gb":320,"selectable":true},
+ {"name":"g4s.kube.2xlarge","nice_name":"2XL Kube","type":"Kubernetes","cpu_cores":8,"ram_mb":32768,"disk_gb":200,"selectable":true}]
+""".utf8))
+
+/// A running `g3.medium` instance, as listed by `/v2/instances`.
+private func resizableInstance(status: String = "ACTIVE", size: String? = "g3.medium", specs: Bool = true) -> CivoInstance {
+    let specFields = specs ? #", "cpu_cores": 2, "ram_mb": 4096, "disk_gb": 50"# : ""
+    let sizeField = size.map { #", "size": "\#($0)""# } ?? ""
+    return try! JSONDecoder().decode(CivoInstance.self, from: Data(
+        #"{"id": "\#(consoleInstanceId)", "hostname": "web-1", "status": "\#(status)"\#(sizeField)\#(specFields)}"#.utf8
+    ))
+}
+
+/// Size loads waiting for the test to finish them, in the order they were started.
+@MainActor
+private final class HeldSizeLoads {
+    private var waiting: [CheckedContinuation<[CivoSize], Error>] = []
+    private(set) var started = 0
+
+    func hold() async throws -> [CivoSize] {
+        try await withCheckedThrowingContinuation { waiting.append($0); started += 1 }
+    }
+
+    /// Finishes the `index`th load started, counting from 0.
+    func finish(_ index: Int, with result: Result<[CivoSize], Error>) {
+        waiting[index].resume(with: result)
+    }
+}
+
+private struct Offline: LocalizedError {
+    var errorDescription: String? { "The Internet connection appears to be offline." }
+}
+
+@Suite("Instance resize")
+@MainActor
+struct InstanceResizeTests {
+    @Test("Only selectable, larger instance sizes are offered, with or without a type other than Instance")
+    func eligibleSizes() {
+        let offered = InstanceResize.options(documentedSizes, for: resizableInstance()).sizes.map(\.name)
+        // g3.small is smaller, g4s.medium is not larger, g4c.large has less disk, g3.xlarge is not selectable,
+        // kube, k3s and db sizes are other products.
+        #expect(offered == ["g3.large", "g4p.small", "g4s.2xlarge"])
+    }
+
+    @Test("Without its own specs, the instance is compared by its listed size; with neither, the comparison is unavailable")
+    func unknownCurrentSpecs() {
+        let bySize = InstanceResize.options(documentedSizes, for: resizableInstance(specs: false)).sizes.map(\.name)
+        #expect(bySize == ["g3.large", "g4p.small", "g4s.2xlarge"])
+        #expect(InstanceResize.options(documentedSizes, for: resizableInstance(size: nil, specs: false)) == .comparisonUnavailable)
+        #expect(InstanceResize.options(documentedSizes, for: resizableInstance(size: "g9.unlisted", specs: false)) == .comparisonUnavailable)
+        // Only a completed comparison may report that no larger size exists.
+        let largest = resizableInstance(size: "g4s.2xlarge", specs: false)
+        #expect(InstanceResize.options(documentedSizes, for: largest) == .larger([]))
+    }
+
+    @Test("App policy: Resize is offered only for a running instance")
+    func allowedStatuses() {
+        #expect(InstanceResize.isAllowed(status: "ACTIVE"))
+        for status in ["SHUTOFF", "BUILDING", "REBOOTING", "ERROR", nil] {
+            #expect(!InstanceResize.isAllowed(status: status))
+        }
+    }
+
+    @Test("The cost change uses the shared rate lookup and a 730-hour month; a missing or zero rate hides it")
+    func costEstimate() throws {
+        let rates = ["instance-g3.medium": 0.029762, "instance-g3.large": 0.059524, "instance-g4s.medium": 0]
+        let current = CivoCharge.hourlyRate(forSize: "g3.medium", in: rates)
+        let estimate = try #require(ResizeCostEstimate(currentHourly: current, newHourly: CivoCharge.hourlyRate(forSize: "g3.large", in: rates)))
+        #expect(abs(estimate.hourlyDifference - 0.029762) < 0.000001)
+        #expect(abs(estimate.monthlyDifference - 21.72626) < 0.0001)
+
+        #expect(CivoCharge.hourlyRate(forSize: "g4s.medium", in: rates) == nil)
+        #expect(ResizeCostEstimate(currentHourly: current, newHourly: CivoCharge.hourlyRate(forSize: "g4s.medium", in: rates)) == nil)
+        #expect(ResizeCostEstimate(currentHourly: nil, newHourly: 0.059524) == nil)
+    }
+
+    /// Regression for the empty picker of 2026-11-22: the sheet showed only the sizes the Create form had loaded,
+    /// filtered to the type `Instance`.
+    @Test("The sheet loads the sizes of the captured region itself, without the Create form")
+    func sizesOfCapturedRegion() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes, "NYC1": []]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        #expect(env.vm.availableSizes.isEmpty)
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        let target = try #require(env.vm.pendingAction?.target)
+        env.region = "NYC1"
+        await env.vm.loadResizeSizes()
+        #expect(env.sizeRequests == ["LON1"])
+        #expect(env.vm.resizeOptions(for: target)?.sizes.map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+        #expect(env.vm.resizeOptions(for: ConsoleTarget(instanceId: target.instanceId, instanceName: target.instanceName, region: "NYC1")) == nil)
+    }
+
+    @Test("A resize keeps the captured region, after Full Access is checked on confirm")
+    func confirmedResize() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        env.accessAllowed = false
+        let refused = try #require(env.vm.confirmPendingAction())
+        await env.vm.resizeInstance(refused, size: "g3.large")
+        #expect(env.vm.error == InstanceTargetError.accessRevoked.message)
+        #expect(await env.api.calls.isEmpty)
+
+        env.accessAllowed = true
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        #expect(env.vm.resizeSizes == .loading)
+        await env.vm.loadResizeSizes()
+        let target = try #require(env.vm.confirmPendingAction())
+        env.region = "NYC1"
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(env.vm.error == InstanceTargetError.regionChanged.message)
+        env.region = "LON1"
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(await env.api.calls == ["resize \(consoleInstanceId) LON1"])
+        #expect(env.activities == ["Resized to g3.large"])
+    }
+
+    @Test("A smaller size, or an instance that stopped while the sheet was open, is refused before sending")
+    func refusedResize() async throws {
+        let env = InstanceEnvironment()
+        env.sizesByRegion = ["LON1": documentedSizes]
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        let target = try #require(env.vm.confirmPendingAction())
+
+        await env.vm.resizeInstance(target, size: "g3.small")
+        #expect(env.vm.error == InstanceResizeError.sizeNotEligible.message)
+
+        await env.api.list([resizableInstance(status: "SHUTOFF")], in: "LON1")
+        await env.vm.refresh()
+        await env.vm.resizeInstance(target, size: "g3.large")
+        #expect(env.vm.error == InstanceResizeError.notRunning.message)
+        #expect(await env.api.calls.isEmpty)
+    }
+
+    @Test("A failed size load is shown instead of an empty grid")
+    func failedSizeLoad() async {
+        let env = InstanceEnvironment()
+        env.sizeLoadError = Offline()
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        await env.vm.loadResizeSizes()
+        #expect(env.vm.resizeSizes == .failed("The Internet connection appears to be offline."))
+    }
+
+    @Test("A load that finishes after the sheet was closed and opened again changes nothing", arguments: [false, true])
+    func lateLoadOfClosedSheet(lateLoadFails: Bool) async throws {
+        let env = InstanceEnvironment()
+        let held = HeldSizeLoads()
+        env.heldSizeLoads = held
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        // Not cancelled, like a Retry task that outlives its sheet.
+        let closedSheetLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 1 }
+        env.vm.cancelConfirmation()
+
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+        let target = try #require(env.vm.pendingAction?.target)
+        #expect(env.vm.resizeSizes == .loading)
+        let openSheetLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 2 }
+        held.finish(1, with: .success(documentedSizes))
+        await openSheetLoad.value
+
+        held.finish(0, with: lateLoadFails ? .failure(Offline()) : .success([]))
+        await closedSheetLoad.value
+        #expect(env.vm.resizeSizes == .loaded(documentedSizes, region: "LON1"))
+        #expect(env.vm.resizeOptions(for: target)?.sizes.map(\.name) == ["g3.large", "g4p.small", "g4s.2xlarge"])
+    }
+
+    @Test("Only the newest load of an open sheet is shown, so an earlier one that fails after Retry changes nothing")
+    func loadSupersededByRetry() async throws {
+        let env = InstanceEnvironment()
+        let held = HeldSizeLoads()
+        env.heldSizeLoads = held
+        await env.api.list([resizableInstance()], in: "LON1")
+        await env.vm.refresh()
+        env.vm.beginConfirmation(.resize, for: resizableInstance())
+
+        let firstLoad = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 1 }
+        let retry = Task { await env.vm.loadResizeSizes() }
+        await waitUntil { held.started == 2 }
+        held.finish(1, with: .success(documentedSizes))
+        await retry.value
+        held.finish(0, with: .failure(Offline()))
+        await firstLoad.value
+        #expect(env.vm.resizeSizes == .loaded(documentedSizes, region: "LON1"))
     }
 }
 
