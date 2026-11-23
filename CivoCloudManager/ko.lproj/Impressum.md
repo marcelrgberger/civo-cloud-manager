@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: ko | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: ko | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # 임프레숨 / 법적 고지
 
 ## § 5 DDG(디지털 서비스법) 및 적용 가능한 국제 공개 요건에 따른 정보
 
-**최종 업데이트:** 2026년 9월
+**최종 업데이트:** 2026년 11월
 
 ---
 
 ## 1. 서비스 제공자
 
 본 서비스는 **DigitalFreedom** 브랜드로 제공됩니다. 운영 법인은(§ 5 DDG상 서비스 제공자) 다음과 같습니다:
+
+[제공자가 미국 LLC인 이유는 무엇입니까?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Sheridan, WY 82801
 상호명: **DigitalFreedom** (웹사이트, 앱, 마케팅, 고객 커뮤니케이션 및 제품 UI에 사용)
 
 **이메일:**  hello@digitalfreedom.co.za 
-**전화:** +1 307 451 0707
+**문의 양식:** https://support.apps.digitalfreedom.co.za
 **웹사이트:**  https://digitalfreedom.co.za 
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **지원 포털(신속한 전자 연락, § 5 DDG):**  https://support.apps.digitalfreedom.co.za 
 **개인정보 보호 문의:**  data-protection@digitalfreedom.co.za 
 **개인정보 보호 요청 양식:**  https://data-protection.digitalfreedom.co.za 
-**전화:** +1 307 451 0707
+**보안 취약점 신고:** security@digitalfreedom.co.za
+**보안 신고 양식:** https://security.digitalfreedom.co.za
 **웹사이트:**  https://digitalfreedom.co.za 
 
 ---
@@ -70,9 +73,13 @@ J. Rosenstock
 
 두 연락처 모두 실제 담당자가 응대하며, 전적으로 자동화되어 있지 않습니다.
 
-**허용 언어:** 독일어 및 영어.
+**허용 언어:** 영어 및 독일어.
 
 **연합 내 법적 대표자(제 13조 DSA):** 지정되지 않았습니다. 제 13조(1항)는 연합 내에 설립지가 없는 중개 서비스 제공자에게 적용되며, 온라인 플랫폼에만 국한되지 않습니다. 따라서 서비스가 제 3조(i)항의 온라인 플랫폼이 아니라는 사실만으로 의무가 면제되는 것은 아닙니다. 해당 서비스가 중개 서비스에 해당하는지 여부는 미해결된 문제이며, 이에 대한 입장은 위에 명시되어 있습니다: 제 11조 및 12조에 따른 연락처는 어쨌든 공개되며, 대표자는 지정하지 않습니다. 이와 관련된 위험은 의도적으로 감수합니다.
+
+### 4.4 보험
+
+Hiscox Insurance Company Inc.의 일반 영업배상책임보험 및 사이버·데이터 리스크 보험.
 
 ---
 
@@ -122,9 +129,11 @@ J. Rosenstock
 
 ## 10. 국제 공개 의무
 
+아래에 열거된 규정은 참고를 위해 기재한 것입니다. 이는 본 고지의 정보가 부합하고자 하는 법제도입니다. 이 목록은 완전성을 보장하지 않으며, 개별 사안에서 본 고지가 그 규정 중 어느 하나를 충족한다고 보장하지도 않습니다.
+
 ### 10.1 유럽 연합 / EEA
 
-이 법적 고지는 다음의 요건을 충족합니다:
+EU 및 일부 회원국의 제공자 식별 관련 규정:
 
 - **독일:** § 5 DDG(디지털 서비스법), § 18(2) MStV(미디어 국가조약)
 - **EU:** E-Commerce Directive(2000/31/EC) 제 5조, Digital Services Act(규정(EU) 2022/2065) 제 12조
@@ -140,14 +149,14 @@ J. Rosenstock
 
 ### 10.2 영국
 
-이 고지는 다음의 요건을 충족합니다:
+영국의 제공자 식별 관련 규정:
 
 - 전자상거래(EC 지침) 규정 2002
 - 회사법 2006(비즈니스 웹사이트의 경우)
 
 ### 10.3 미국
 
-사업자 식별 공시는 다음을 준수합니다:
+미국의 사업자 식별과 관련된 규정:
 
 - FTC 법 § 5(불공정 또는 기만적 행위)
 - 주별 사업자 공시 요건
@@ -185,7 +194,7 @@ J. Rosenstock
 
 ### 10.10 기타 관할지역
 
-제공자는 서비스가 제공되는 모든 관할지역에서 적용 가능한 사업자 식별 및 공시 요건을 준수합니다.
+서비스가 다른 관할권에서 제공되는 경우, 본 고지의 정보는 해당 관할권에서 적용되는 제공자 식별 의무에 기여합니다. 그러한 모든 의무가 충족된다고 보장하지는 않습니다.
 
 ---
 

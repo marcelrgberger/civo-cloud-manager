@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: it | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: it | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / AVVISO LEGALE
 
 ## Informazioni ai sensi del § 5 DDG (Digitale-Dienste-Gesetz) e degli obblighi internazionali di informativa applicabili
 
-**Ultimo aggiornamento:** settembre 2026
+**Ultimo aggiornamento:** novembre 2026
 
 ---
 
 ## 1. FORNITORE DEL SERVIZIO
 
 I Servizi sono offerti con il marchio **DigitalFreedom**. L'entità giuridica operativa (Diensteanbieter / Fornitore di Servizi ai sensi del § 5 DDG) è:
+
+[Perché il fornitore è una LLC statunitense?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Stati Uniti
 Denominazione commerciale: **DigitalFreedom** (utilizzata su siti web, app, marketing, comunicazioni con i clienti e interfaccia utente del prodotto)
 
 **Email:** hello@digitalfreedom.co.za
-**Telefono:** +1 307 451 0707
+**Modulo di contatto:** https://support.apps.digitalfreedom.co.za
 **Sito web:** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Portale di supporto (contatto elettronico rapido, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Richieste relative alla protezione dei dati:** data-protection@digitalfreedom.co.za
 **Modulo per richieste sulla protezione dei dati:** https://data-protection.digitalfreedom.co.za
-**Telefono:** +1 307 451 0707
+**Segnalazione di vulnerabilità di sicurezza:** security@digitalfreedom.co.za
+**Modulo di segnalazione di sicurezza:** https://security.digitalfreedom.co.za
 **Sito web:** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za, oppure il modulo di supporto su https://support.ap
 
 La comunicazione con entrambi i punti di contatto è gestita da una persona; non è esclusivamente automatizzata.
 
-**Lingue accettate:** tedesco e inglese.
+**Lingue accettate:** inglese e tedesco.
 
 **Rappresentante legale nell'Unione (Art. 13 DSA):** nessuno designato. L'art. 13(1) si applica ai fornitori di servizi intermediari senza una sede nell'Unione, non solo alle piattaforme online — pertanto il fatto che i servizi non siano una piattaforma online ai sensi dell'art. 3(i) non esclude di per sé l'obbligo. Se i servizi siano o meno un servizio intermediario è la questione aperta, e la posizione assunta è indicata sopra: i punti di contatto ai sensi degli artt. 11 e 12 sono pubblicati comunque, e nessun rappresentante è designato. Il rischio è assunto consapevolmente.
+
+### 4.4 Assicurazione
+
+Assicurazione di responsabilità civile generale e assicurazione contro i rischi informatici e dei dati presso Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ I contenuti e le opere creati dagli operatori del sito su queste pagine sono pro
 
 ## 10. OBBLIGHI DI INFORMATIVA INTERNAZIONALI
 
+Le disposizioni elencate di seguito sono indicate a titolo orientativo: sono i regimi che le informazioni di questa informativa intendono servire. L'elenco non offre alcuna garanzia di completezza né che l'informativa soddisfi una di esse in un caso concreto.
+
 ### 10.1 Unione Europea / SEE
 
-Il presente avviso legale soddisfa i requisiti di:
+Disposizioni sull'identificazione del fornitore nell'UE e in alcuni Stati membri:
 
 - **Germania:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
 - **UE:** Articolo 5 della Direttiva sul commercio elettronico (2000/31/CE), Articolo 12 del Digital Services Act (Regolamento (UE) 2022/2065)
@@ -140,14 +149,14 @@ Il presente avviso legale soddisfa i requisiti di:
 
 ### 10.2 Regno Unito
 
-Il presente avviso soddisfa i requisiti di:
+Disposizioni sull'identificazione del fornitore nel Regno Unito:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (per siti web aziendali)
 
 ### 10.3 Stati Uniti
 
-Le informative sull'identificazione aziendale sono conformi a:
+Disposizioni rilevanti per l'identificazione delle imprese negli Stati Uniti:
 
 - FTC Act § 5 (atti o pratiche sleali o ingannevoli)
 - Requisiti statali specifici di informativa aziendale
@@ -185,7 +194,7 @@ Le informative sull'identificazione aziendale sono conformi a:
 
 ### 10.10 Altre giurisdizioni
 
-Il Fornitore rispetta gli obblighi di identificazione aziendale e di informativa applicabili in tutte le giurisdizioni in cui i Servizi sono offerti.
+Laddove i Servizi siano offerti in altre giurisdizioni, le informazioni di questa informativa servono gli obblighi di identificazione del fornitore ivi applicabili. Non viene fornita alcuna garanzia che ciascuno di tali obblighi sia adempiuto.
 
 ---
 

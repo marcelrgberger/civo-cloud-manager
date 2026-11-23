@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: id | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: id | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESUM / PEMBERITAHUAN HUKUM
 
 ## Informasi sesuai dengan § 5 DDG (Digitale-Dienste-Gesetz) dan persyaratan pengungkapan internasional yang berlaku
 
-**Terakhir Diperbarui:** September 2026
+**Terakhir Diperbarui:** November 2026
 
 ---
 
 ## 1. PENYEDIA LAYANAN
 
 Layanan ditawarkan di bawah merek **DigitalFreedom**. Badan hukum yang mengoperasikan (Diensteanbieter / Penyedia Layanan dalam arti § 5 DDG) adalah:
+
+[Mengapa penyedia adalah LLC Amerika Serikat?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Amerika Serikat
 Nama dagang: **DigitalFreedom** (digunakan pada situs web, aplikasi, pemasaran, komunikasi pelanggan, dan antarmuka produk)
 
 **Email:**  hello@digitalfreedom.co.za 
-**Telepon:** +1 307 451 0707
+**Formulir kontak:** https://support.apps.digitalfreedom.co.za
 **Situs web:**  https://digitalfreedom.co.za 
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Portal dukungan (kontak elektronik cepat, § 5 DDG):**  https://support.apps.digitalfreedom.co.za 
 **Pertanyaan perlindungan data:**  data-protection@digitalfreedom.co.za 
 **Formulir permintaan perlindungan data:**  https://data-protection.digitalfreedom.co.za 
-**Telepon:** +1 307 451 0707
+**Laporan kerentanan keamanan:** security@digitalfreedom.co.za
+**Formulir laporan keamanan:** https://security.digitalfreedom.co.za
 **Situs web:**  https://digitalfreedom.co.za 
 
 ---
@@ -70,9 +73,13 @@ Regulasi (UE) 2022/2065 mewajibkan penyedia layanan perantara untuk menunjuk dua
 
 Komunikasi dengan kedua titik kontak ditangani oleh seorang individu; tidak sepenuhnya otomatis.
 
-**Bahasa yang diterima:** Jerman dan Inggris.
+**Bahasa yang diterima:** Inggris dan Jerman.
 
 **Perwakilan hukum di Uni (Pasal 13 DSA):** tidak ada yang ditunjuk. Pasal 13(1) mengatur penyedia layanan perantara tanpa pendirian di Uni, bukan hanya platform daring — sehingga fakta bahwa layanan ini bukan platform daring dalam Pasal 3(i) tidak dengan sendirinya menghapus kewajiban tersebut. Apakah layanan ini merupakan layanan perantara masih menjadi pertanyaan terbuka, dan posisi yang diambil telah dijelaskan di atas: titik kontak berdasarkan Pasal 11 dan 12 tetap dipublikasikan, dan tidak ada perwakilan yang ditunjuk. Risiko ini ditanggung secara sadar.
+
+### 4.4 Asuransi
+
+Asuransi tanggung gugat umum komersial serta asuransi risiko siber dan data pada Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Konten dan karya yang dibuat oleh operator situs pada halaman ini dilindungi ole
 
 ## 10. PERSYARATAN PENGUNGKAPAN INTERNASIONAL
 
+Ketentuan yang tercantum di bawah ini disebutkan sebagai orientasi: ketentuan tersebut adalah rezim hukum yang hendak dilayani oleh informasi dalam pemberitahuan ini. Daftar ini tidak memberikan jaminan kelengkapan dan tidak menjamin bahwa pemberitahuan ini memenuhi salah satu ketentuan tersebut dalam kasus tertentu.
+
 ### 10.1 Uni Eropa / EEA
 
-Pemberitahuan hukum ini memenuhi persyaratan berikut:
+Ketentuan tentang identifikasi penyedia di UE dan negara anggota tertentu:
 
 - **Jerman:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
 - **UE:** Pasal 5 dari E-Commerce Directive (2000/31/EC), Pasal 12 dari Digital Services Act (Regulasi (UE) 2022/2065)
@@ -140,14 +149,14 @@ Pemberitahuan hukum ini memenuhi persyaratan berikut:
 
 ### 10.2 Britania Raya
 
-Pemberitahuan ini memenuhi persyaratan dari:
+Ketentuan tentang identifikasi penyedia di Inggris Raya:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (untuk situs web bisnis)
 
 ### 10.3 Amerika Serikat
 
-Pengungkapan identifikasi bisnis mematuhi:
+Ketentuan yang relevan dengan identifikasi bisnis di Amerika Serikat:
 
 - FTC Act § 5 (tindakan tidak adil atau menipu)
 - Persyaratan pengungkapan bisnis khusus negara bagian
@@ -185,7 +194,7 @@ Pengungkapan identifikasi bisnis mematuhi:
 
 ### 10.10 Yurisdiksi Lain
 
-Penyedia mematuhi persyaratan identifikasi dan pengungkapan bisnis yang berlaku di semua yurisdiksi tempat Layanan ditawarkan.
+Jika Layanan ditawarkan di yurisdiksi lain, informasi dalam pemberitahuan ini melayani kewajiban identifikasi penyedia yang berlaku di sana. Tidak ada jaminan bahwa setiap kewajiban tersebut terpenuhi.
 
 ---
 

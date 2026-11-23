@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: de | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / RECHTLICHER HINWEIS
 
 ## Informationen gemäß § 5 DDG (Digitale-Dienste-Gesetz) und anwendbaren internationalen Offenlegungspflichten
 
-**Letzte Aktualisierung:** September 2026
+**Letzte Aktualisierung:** November 2026
 
 ---
 
 ## 1. DIENSTEANBIETER
 
 Die Dienste werden unter der Marke **DigitalFreedom** angeboten. Die betreibende juristische Person (Diensteanbieter im Sinne des § 5 DDG) ist:
+
+[Warum ist der Anbieter eine US-LLC?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Vereinigte Staaten
 Handelsname: **DigitalFreedom** (verwendet auf Websites, Apps, Marketing, Kundenkommunikation und Produkt-Oberfläche)
 
 **E-Mail:** hello@digitalfreedom.co.za
-**Telefon:** +1 307 451 0707
+**Kontaktformular:** https://support.apps.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Support-Portal (schneller elektronischer Kontakt, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Datenschutzanfragen:** data-protection@digitalfreedom.co.za
 **Datenschutz-Antragsformular:** https://data-protection.digitalfreedom.co.za
-**Telefon:** +1 307 451 0707
+**Meldung von Sicherheitslücken:** security@digitalfreedom.co.za
+**Formular für Sicherheitsmeldungen:** https://security.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za oder das Support-Formular unter https://support.app
 
 Die Kommunikation mit beiden Kontaktstellen erfolgt durch eine Person; sie ist nicht ausschließlich automatisiert.
 
-**Akzeptierte Sprachen:** Deutsch und Englisch.
+**Akzeptierte Sprachen:** Englisch und Deutsch.
 
 **Repräsentant in der Union (Art. 13 DSA):** nicht benannt. Art. 13 Abs. 1 richtet sich an Anbieter von Vermittlungsdiensten ohne Niederlassung in der Union, nicht nur an Online-Plattformen — daher entfällt die Pflicht nicht allein dadurch, dass die Dienste keine Online-Plattform im Sinne des Art. 3(i) sind. Ob es sich überhaupt um einen Vermittlungsdienst handelt, ist die offene Frage; die vertretene Auffassung ist oben dargelegt: Die Kontaktstellen nach Art. 11 und 12 werden unabhängig davon veröffentlicht, ein Vertreter wird nicht benannt. Das Risiko wird bewusst getragen.
+
+### 4.4 Versicherung
+
+Betriebshaftpflichtversicherung sowie Cyber- und Datenrisikoversicherung bei der Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unt
 
 ## 10. INTERNATIONALE OFFENLEGUNGSPFLICHTEN
 
+Die nachstehend aufgeführten Vorschriften werden zur Orientierung genannt: Sie bezeichnen die Regelwerke, denen die Angaben in diesem Hinweis dienen sollen. Die Aufstellung erhebt keinen Anspruch auf Vollständigkeit und gibt keine Gewähr dafür, dass der Hinweis im Einzelfall eine dieser Vorschriften erfüllt.
+
 ### 10.1 Europäische Union / EWR
 
-Dieser rechtliche Hinweis erfüllt die Anforderungen von:
+Vorschriften zur Anbieterkennzeichnung in der EU und ausgewählten Mitgliedstaaten:
 
 - **Deutschland:** § 5 DDG (Digitale-Dienste-Gesetz), § 18 Abs. 2 MStV (Medienstaatsvertrag)
 - **EU:** Artikel 5 der E-Commerce-Richtlinie (2000/31/EG), Artikel 12 des Digital Services Act (Verordnung (EU) 2022/2065)
@@ -140,14 +149,14 @@ Dieser rechtliche Hinweis erfüllt die Anforderungen von:
 
 ### 10.2 Vereinigtes Königreich
 
-Dieser Hinweis erfüllt die Anforderungen von:
+Vorschriften zur Anbieterkennzeichnung im Vereinigten Königreich:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (für Unternehmenswebsites)
 
 ### 10.3 Vereinigte Staaten
 
-Die Offenlegung der Unternehmensidentität entspricht:
+Für die Identifizierung von Unternehmen in den Vereinigten Staaten relevante Vorschriften:
 
 - FTC Act § 5 (unlautere oder irreführende Handlungen oder Praktiken)
 - Staatsspezifische Offenlegungspflichten für Unternehmen
@@ -185,7 +194,7 @@ Die Offenlegung der Unternehmensidentität entspricht:
 
 ### 10.10 Weitere Rechtsordnungen
 
-Der Anbieter erfüllt die jeweils geltenden Anforderungen zur Unternehmensidentifikation und Offenlegung in allen Rechtsordnungen, in denen die Dienste angeboten werden.
+Soweit die Dienste in anderen Rechtsordnungen angeboten werden, dienen die Angaben in diesem Hinweis den dort geltenden Pflichten zur Anbieterkennzeichnung. Es wird keine Gewähr dafür übernommen, dass jede dieser Pflichten erfüllt ist.
 
 ---
 

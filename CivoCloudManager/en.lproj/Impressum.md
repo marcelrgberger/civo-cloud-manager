@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: en | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / LEGAL NOTICE
 
 ## Information pursuant to § 5 DDG (Digitale-Dienste-Gesetz) and applicable international disclosure requirements
 
-**Last Updated:** September 2026
+**Last Updated:** November 2026
 
 ---
 
 ## 1. SERVICE PROVIDER
 
 The Services are offered under the **DigitalFreedom** brand. The operating legal entity (Diensteanbieter / Service Provider within the meaning of § 5 DDG) is:
+
+[Why is the provider a US LLC?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ United States
 Trade name: **DigitalFreedom** (used on websites, apps, marketing, customer communications and product UI)
 
 **Email:** hello@digitalfreedom.co.za
-**Phone:** +1 307 451 0707
+**Contact form:** https://support.apps.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Support portal (rapid electronic contact, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Data protection inquiries:** data-protection@digitalfreedom.co.za
 **Data protection request form:** https://data-protection.digitalfreedom.co.za
-**Phone:** +1 307 451 0707
+**Security vulnerability reports:** security@digitalfreedom.co.za
+**Security report form:** https://security.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za, or the support form at https://support.apps.digita
 
 Communication with both contact points is handled by a person; it is not exclusively automated.
 
-**Languages accepted:** German and English.
+**Languages accepted:** English and German.
 
 **Legal representative in the Union (Art. 13 DSA):** none designated. Art. 13(1) addresses providers of intermediary services without an establishment in the Union, not only online platforms — so the fact that the services are not an online platform within Art. 3(i) does not by itself remove the duty. Whether the services are an intermediary service at all is the open question, and the position taken is set out above: the contact points under Art. 11 and 12 are published regardless, and no representative is designated. The risk is carried deliberately.
+
+### 4.4 Insurance
+
+Commercial general liability insurance and cyber and data risk insurance with Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Content and works created by the site operators on these pages are protected by 
 
 ## 10. INTERNATIONAL DISCLOSURE REQUIREMENTS
 
+The provisions listed below are named for orientation: they are the regimes the information in this notice is meant to serve. The list gives no assurance of completeness and no guarantee that the notice satisfies any of them in a given case.
+
 ### 10.1 European Union / EEA
 
-This legal notice fulfills the requirements of:
+Provisions on provider identification in the EU and selected Member States:
 
 - **Germany:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
 - **EU:** Article 5 of the E-Commerce Directive (2000/31/EC), Article 12 of the Digital Services Act (Regulation (EU) 2022/2065)
@@ -140,14 +149,14 @@ This legal notice fulfills the requirements of:
 
 ### 10.2 United Kingdom
 
-This notice fulfills the requirements of:
+Provisions on provider identification in the United Kingdom:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (for business websites)
 
 ### 10.3 United States
 
-Business identification disclosures comply with:
+Provisions relevant to business identification in the United States:
 
 - FTC Act § 5 (unfair or deceptive acts or practices)
 - State-specific business disclosure requirements
@@ -185,7 +194,7 @@ Business identification disclosures comply with:
 
 ### 10.10 Other Jurisdictions
 
-The Provider complies with applicable business identification and disclosure requirements in all jurisdictions where the Services are offered.
+Where the Services are offered in other jurisdictions, the information in this notice serves the provider-identification duties that apply there. No assurance is given that every such duty is met.
 
 ---
 
