@@ -3997,6 +3997,19 @@ struct KubernetesVersionTests {
         #expect(body["kubernetes_version"] as? String == "1.21.2+k3s1")
         #expect(body["region"] as? String == "LON1")
     }
+
+    @Test("A version decoded from Civo's list reaches the upgrade body exactly as listed, not as its Release spelling")
+    func upgradeBodyKeepsListedVersion() throws {
+        let listed = try #require(decodedDashVersions().first)
+        let body = CivoKubernetesService.upgradeBody(to: listed.version, region: "LON1")
+        #expect(body["kubernetes_version"] as? String == "1.21.2-k3s1")
+    }
+}
+
+/// The list as Civo sends it: `Version` and `Release` differ in spelling.
+private func decodedDashVersions() throws -> [CivoKubernetesVersion] {
+    let json = #"[{"Version": "1.21.2-k3s1", "Release": "1.21.2+k3s1", "Type": "stable", "ClusterType": "k3s"}, {"Version": "1.22.1-k3s1", "Release": "1.22.1+k3s1", "Type": "stable", "ClusterType": "k3s"}]"#
+    return try JSONDecoder().decode([CivoKubernetesVersion].self, from: Data(json.utf8))
 }
 
 /// Upgrade requests recorded instead of sent.
@@ -4106,6 +4119,18 @@ struct KubernetesUpgradeTests {
         env.controller.clusterDidLoad(kubernetesCluster(version: "1.21.2-k3s1"), region: "LON1", account: account)
         #expect(env.controller.requestedVersion(forCluster: "c-1", region: "LON1", account: account) == nil)
         #expect(env.notice == nil)
+    }
+
+    @Test("A decoded dash-form version is offered, confirmed and sent unchanged, never as its Release spelling")
+    func upgradeToDecodedVersion() async throws {
+        let env = Environment()
+        let listed = try decodedDashVersions()
+        await env.api.replaceCatalog(with: listed)
+        await env.begin()
+        #expect(env.controller.session?.targets?.map(\.version) == ["1.22.1-k3s1", "1.21.2-k3s1"])
+
+        #expect(await env.controller.upgrade(to: listed[0]) == .requested)
+        #expect(await env.api.calls.last == "upgrade c-1 1.21.2-k3s1 LON1 key-a")
     }
 
     @Test("A cluster whose version changed, or that started an upgrade, after the sheet opened sends nothing", arguments: [
@@ -5576,8 +5601,23 @@ struct KubernetesVersionListTests {
     func emptyAndUnreadable() async throws {
         let (empty, _) = try await list(answering: "[]")
         #expect(empty.isEmpty)
-        for body in [#"[null, {"Release": "1.1.0+k3s1"}]"#, #"{"Version": "1.38.0-k3s1"}"#, "null"] {
-            await #expect(throws: CivoAPIError.self, "\(body)") { try await list(answering: body) }
+        let notAList = [#"{"Version": "1.38.0-k3s1"}"#, "null", #""text""#]
+        for body in notAList {
+            do {
+                _ = try await list(answering: body)
+                Issue.record("\(body) was accepted")
+            } catch CivoAPIError.decodingError {
+            } catch {
+                Issue.record("\(body) failed with \(error)")
+            }
+        }
+        do {
+            _ = try await list(answering: #"[null, {"Release": "1.1.0+k3s1"}]"#)
+            Issue.record("a list without any readable entry was accepted")
+        } catch CivoAPIError.decodingError(let detail) {
+            #expect(detail.isEmpty)
+        } catch {
+            Issue.record("a list without any readable entry failed with \(error)")
         }
     }
 
