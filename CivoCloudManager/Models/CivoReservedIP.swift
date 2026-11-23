@@ -16,9 +16,9 @@ enum ReservedIPAssignment: Equatable, Sendable {
     /// Civo reported an empty `assigned_to`.
     case unassigned
     case assigned(ReservedIPTarget)
-    /// Civo reported a target that is not an instance with an id, a type and a name. The fingerprint is what Civo
-    /// reported, so a different unrecognized target is told apart from this one.
-    case unrecognized(fingerprint: String)
+    /// Civo reported a target that is not an instance with an id, a type and a name. Such targets cannot be told
+    /// apart, so a confirmation never carries over to a reloaded unrecognized target.
+    case unrecognized
 
     /// The only target type Civo accepted and reported back when the assignment was verified.
     static let instanceType = "instance"
@@ -34,53 +34,6 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case id, name, ip
         case assignedTo = "assigned_to"
-    }
-
-    /// Any JSON, kept only to tell two reported targets apart. Integers that fit 64 bits keep their exact value. Any
-    /// other number cannot be compared exactly after decoding, so it gets a mark that is unique to this decoding:
-    /// two reports of it never match and release is refused rather than guessed.
-    private enum AnyJSON: Decodable {
-        case null, bool(Bool), integer(String), inexactNumber(UUID), string(String), array([AnyJSON]), object([String: AnyJSON])
-
-        init(from decoder: Decoder) throws {
-            let c = try decoder.singleValueContainer()
-            if c.decodeNil() {
-                self = .null
-            } else if let value = try? c.decode(Bool.self) {
-                self = .bool(value)
-            } else if let value = try? c.decode(Int64.self) {
-                self = .integer(String(value))
-            } else if let value = try? c.decode(UInt64.self) {
-                self = .integer(String(value))
-            } else if (try? c.decode(Double.self)) != nil {
-                self = .inexactNumber(UUID())
-            } else if let value = try? c.decode(String.self) {
-                self = .string(value)
-            } else if let value = try? c.decode([AnyJSON].self) {
-                self = .array(value)
-            } else {
-                self = .object(try c.decode([String: AnyJSON].self))
-            }
-        }
-
-        /// The same content gives the same text, whatever the order of the keys, and different content never does:
-        /// quotes and backslashes inside strings and keys are escaped, so they cannot imitate the structure.
-        var canonical: String {
-            switch self {
-            case .null: "null"
-            case .bool(let value): String(value)
-            case .integer(let digits): digits
-            case .inexactNumber(let mark): "inexact-\(mark.uuidString)"
-            case .string(let value): Self.quoted(value)
-            case .array(let values): "[" + values.map(\.canonical).joined(separator: ",") + "]"
-            case .object(let fields): "{" + fields.sorted { $0.key < $1.key }.map { "\(Self.quoted($0.key)):\($0.value.canonical)" }.joined(separator: ",") + "}"
-            }
-        }
-
-        private static func quoted(_ text: String) -> String {
-            let escaped = text.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
-            return "\"\(escaped)\""
-        }
     }
 
     private struct AnyKey: CodingKey {
@@ -107,17 +60,12 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
 
     private static func assignment(in c: KeyedDecodingContainer<CodingKeys>) throws -> ReservedIPAssignment {
         guard c.contains(.assignedTo), try !c.decodeNil(forKey: .assignedTo) else { return .unknown }
-        let reported = try c.decode(AnyJSON.self, forKey: .assignedTo)
-        guard let fields = try? c.nestedContainer(keyedBy: AnyKey.self, forKey: .assignedTo) else {
-            return .unrecognized(fingerprint: reported.canonical)
-        }
+        guard let fields = try? c.nestedContainer(keyedBy: AnyKey.self, forKey: .assignedTo) else { return .unrecognized }
         guard !fields.allKeys.isEmpty else { return .unassigned }
         let type = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "type"))
         let id = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "id"))
         let name = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "name"))
-        guard type == ReservedIPAssignment.instanceType, let id, !id.isEmpty, let name else {
-            return .unrecognized(fingerprint: reported.canonical)
-        }
+        guard type == ReservedIPAssignment.instanceType, let id, !id.isEmpty, let name else { return .unrecognized }
         return .assigned(ReservedIPTarget(id: id, name: name))
     }
 }

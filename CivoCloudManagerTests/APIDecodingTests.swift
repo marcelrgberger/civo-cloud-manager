@@ -6400,7 +6400,7 @@ struct ReservedIPTests {
     }
 
     private static let instance = ReservedIPAssignment.assigned(ReservedIPTarget(id: "vm-1", name: "web"))
-    private static let balancer = ReservedIPAssignment.unrecognized(fingerprint: #"{"id":"lb-1","name":"lb","type":"loadbalancer"}"#)
+    private static let balancer = ReservedIPAssignment.unrecognized
 
     private static func decoded(_ json: String) throws -> CivoReservedIP {
         try JSONDecoder().decode(CivoReservedIP.self, from: Data(json.utf8))
@@ -6414,7 +6414,7 @@ struct ReservedIPTests {
         let assigned = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "vm-1", "type": "instance", "name": "web"}}"#)
         #expect(assigned.assignment == Self.instance)
         #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "type": "loadbalancer", "name": "lb"}}"#).assignment == Self.balancer)
-        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"type": "instance"}}"#).assignment == .unrecognized(fingerprint: #"{"type":"instance"}"#))
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"type": "instance"}}"#).assignment == .unrecognized)
         for name in [#""#, #", "name": null"#, #", "name": 42"#] {
             let assignedTo = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "vm-1", "type": "instance"\#(name)}}"#).assignment
             guard case .unrecognized = assignedTo else {
@@ -6423,34 +6423,24 @@ struct ReservedIPTests {
             }
             #expect(ReservedIPRules.eligibilityError(for: .unassign, assignment: assignedTo) == .targetNotIdentifiable)
         }
-        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"unexpected": 1}}"#).assignment == .unrecognized(fingerprint: #"{"unexpected":1}"#))
-        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": "vm-1"}"#).assignment == .unrecognized(fingerprint: #""vm-1""#))
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"unexpected": 1}}"#).assignment == .unrecognized)
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": "vm-1"}"#).assignment == .unrecognized)
     }
 
-    @Test("Targets that differ only by quotes inside a value stay distinct, and the changed one blocks release")
-    func fingerprintsAreUnambiguous() throws {
-        let embedded = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1\",\"other\":\"value", "type": "loadbalancer"}}"#)
-        let separate = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "other": "value", "type": "loadbalancer"}}"#)
-        #expect(embedded.assignment != separate.assignment)
-        #expect(ReservedIPRules.staleError(captured: embedded, reloaded: separate) == .assignmentChanged)
-    }
-
-    @Test("Numeric target ids that cannot be compared exactly never match, and the changed one blocks release")
-    func numericFingerprintsKeepTheirValue() async throws {
-        let pairs = [
-            ("9007199254740992", "9007199254740993"),
-            ("12345678901234567890123456789012345678901", "12345678901234567890123456789012345678902"),
-        ]
-        for (before, after) in pairs {
-            let captured = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": \#(before), "type": "loadbalancer"}}"#)
-            let reloaded = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": \#(after), "type": "loadbalancer"}}"#)
-            #expect(captured.assignment != reloaded.assignment)
+    @Test("An unrecognized target never counts as the confirmed one, not even when it looks the same, and release sends nothing")
+    func unrecognizedAlwaysNeedsReconfirmation() async throws {
+        let payload = #"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "type": "loadbalancer", "name": "lb"}}"#
+        let other = #"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-2", "type": "loadbalancer", "name": "lb"}}"#
+        let unrecognized = try Self.decoded(payload)
+        let assigned = CivoReservedIP(id: "ip-1", name: "edge", ip: nil, assignment: Self.instance)
+        for (captured, reloaded) in [(unrecognized, try Self.decoded(payload)), (unrecognized, try Self.decoded(other)),
+                                     (unrecognized, assigned), (assigned, unrecognized)] {
             #expect(ReservedIPRules.staleError(captured: captured, reloaded: reloaded) == .assignmentChanged)
-
             let env = Environment()
             env.begin(.release, captured.assignment)
             await env.setIP(reloaded.assignment)
             #expect(await env.controller.confirm(.release(typedName: "edge")) == .cancelled)
+            #expect(env.controller.notice?.message == ReservedIPError.assignmentChanged.message)
             #expect(await env.mutations.isEmpty)
         }
     }
@@ -6498,7 +6488,6 @@ struct ReservedIPTests {
             (.release, .unassigned, Self.instance, "edge", .assignmentChanged),
             (.release, Self.instance, .unassigned, "edge", .assignmentChanged),
             (.release, .unassigned, .unassigned, "renamed", .nameChanged),
-            (.release, Self.balancer, .unrecognized(fingerprint: #"{"id":"lb-2","name":"lb","type":"loadbalancer"}"#), "edge", .assignmentChanged),
         ]
         for (operation, captured, reloaded, name, problem) in cases {
             let env = Environment()
@@ -6514,7 +6503,7 @@ struct ReservedIPTests {
 
     @Test("Release works for an unused IP and for an assigned one, whose target loses connectivity")
     func release() async {
-        for assignment in [ReservedIPAssignment.unassigned, Self.instance, Self.balancer] {
+        for assignment in [ReservedIPAssignment.unassigned, Self.instance] {
             let env = Environment()
             env.begin(.release, assignment)
             await env.setIP(assignment)

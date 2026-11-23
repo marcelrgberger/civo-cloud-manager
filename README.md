@@ -418,9 +418,9 @@ The assignment is one of four states and is verified only by the detail request 
 | `unknown` | `assigned_to` is missing or not loaded. Shown as "Assignment unknown", never as not assigned; actions that depend on the assignment stay disabled |
 | `unassigned` | `assigned_to` is an empty object |
 | `assigned` | `assigned_to` holds `id`, `type: "instance"` and a string `name`. A populated object missing any of them, or with a null or non-string `name`, is `unrecognized` |
-| `unrecognized` | `assigned_to` holds anything else, told apart from another target by an escaped, order-independent fingerprint of what Civo reported. Shown as "Assigned (target not recognized)"; unassign is refused, release stays possible |
+| `unrecognized` | `assigned_to` holds anything else. Targets of this state are never told apart, so they never count as the one the user confirmed: when the captured or the reloaded assignment is `unrecognized`, unassign and release send nothing and ask to open the action again, even when both look identical. Shown as "Assigned (target not recognized)"; unassign is refused |
 
-Unassign needs `assigned`. Release is possible from every loaded state, so an unused or unidentifiable reservation can always be freed; its confirmation says that the reserved IP itself is deleted, also while it is assigned. Both ask for the exact name. The public address is never used to infer a target. No price is estimated, and "Not assigned" is never described as free: the screens only say that a reserved IP can incur running costs.
+Unassign needs `assigned`. Release is offered from every loaded state, but a confirmed release of an `unrecognized` assignment is cancelled before anything is sent; its confirmation says that the reserved IP itself is deleted, also while it is assigned. Both ask for the exact name. The public address is never used to infer a target. No price is estimated, and "Not assigned" is never described as free: the screens only say that a reserved IP can incur running costs.
 
 | Outcome | When | What the user sees |
 | --- | --- | --- |

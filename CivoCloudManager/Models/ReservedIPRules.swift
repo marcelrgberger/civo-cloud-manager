@@ -88,9 +88,11 @@ enum ReservedIPRules {
     }
 
     /// Why the reloaded IP no longer matches what the user confirmed, nil while it does.
+    /// An unrecognized target is never taken to be the one that was confirmed, not even when it looks the same.
     static func staleError(captured: CivoReservedIP, reloaded: CivoReservedIP) -> ReservedIPError? {
         if reloaded.name != captured.name { return .nameChanged }
         if reloaded.assignment == .unknown { return .assignmentUnknown }
+        if captured.assignment == .unrecognized || reloaded.assignment == .unrecognized { return .assignmentChanged }
         return reloaded.assignment == captured.assignment ? nil : .assignmentChanged
     }
 }
