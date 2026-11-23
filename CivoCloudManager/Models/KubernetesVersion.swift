@@ -1,9 +1,15 @@
 import Foundation
 
-/// One entry of `GET /v2/kubernetes/versions` (https://www.civo.com/api/kubernetes), e.g.
+/// One entry of `GET /v2/kubernetes/versions` (https://www.civo.com/api/kubernetes), documented as
 /// `{"version": "1.20.0+k3s1", "flat_version": "1.20.0-k3s1", "label": "v1.20.0+k3s1", "type": "stable", "default": true}`.
-/// `clusterType` follows Civo's Go client `civogo`.
-struct CivoKubernetesVersion: Codable, Equatable, Identifiable, Sendable {
+/// The live API capitalises the keys (`Version`, `Label`, `Type`, `Default`, `ClusterType`), so both spellings are read from
+/// a fixed list. `clusterType` follows Civo's Go client `civogo`.
+///
+/// Only `version` and `type` decide what is offered. A record without a readable `version`, or one that gives two
+/// different values for `version` or `type` or a `type` that is not text, is rejected; the other fields only inform
+/// and read as nil when missing, mistyped or contradictory. `version` is kept exactly as listed, since it is also
+/// what is sent back to upgrade or create a cluster.
+struct CivoKubernetesVersion: Decodable, Equatable, Identifiable, Sendable {
     let version: String
     let flatVersion: String?
     let label: String?
@@ -17,10 +23,53 @@ struct CivoKubernetesVersion: Codable, Equatable, Identifiable, Sendable {
 
     var number: KubernetesVersionNumber? { KubernetesVersionNumber(version) }
 
-    enum CodingKeys: String, CodingKey {
-        case version, label, type, clusterType
-        case flatVersion = "flat_version"
-        case isDefault = "default"
+    init(version: String, flatVersion: String?, label: String?, type: String?, isDefault: Bool?, clusterType: String?) {
+        self.version = version
+        self.flatVersion = flatVersion
+        self.label = label
+        self.type = type
+        self.isDefault = isDefault
+        self.clusterType = clusterType
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Key.self)
+        let versions = try Self.values(String.self, for: ["version", "Version"], in: container)
+        guard let version = versions.first, Set(versions).count == 1,
+              !version.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "No usable version"))
+        }
+        let types = try Self.values(String.self, for: ["type", "Type"], in: container)
+        guard Set(types).count <= 1 else {
+            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Contradicting types"))
+        }
+        self.version = version
+        type = types.first
+        flatVersion = Self.informative(String.self, for: ["flat_version"], in: container)
+        label = Self.informative(String.self, for: ["label", "Label"], in: container)
+        isDefault = Self.informative(Bool.self, for: ["default", "Default"], in: container)
+        clusterType = Self.informative(String.self, for: ["clusterType", "ClusterType"], in: container)
+    }
+
+    private struct Key: CodingKey {
+        let stringValue: String
+        let intValue: Int? = nil
+        init(stringValue: String) { self.stringValue = stringValue }
+        init?(intValue: Int) { nil }
+    }
+
+    /// The non-null values under `names`; a value of the wrong type throws.
+    private static func values<T: Decodable>(_ type: T.Type, for names: [String], in container: KeyedDecodingContainer<Key>) throws -> [T] {
+        try names.map(Key.init(stringValue:)).compactMap { key in
+            guard container.contains(key), try !container.decodeNil(forKey: key) else { return nil }
+            return try container.decode(T.self, forKey: key)
+        }
+    }
+
+    /// The single value under `names`, or nil when it is missing, mistyped or contradictory.
+    private static func informative<T: Decodable & Hashable>(_ type: T.Type, for names: [String], in container: KeyedDecodingContainer<Key>) -> T? {
+        guard let found = try? values(type, for: names, in: container), Set(found).count == 1 else { return nil }
+        return found.first
     }
 }
 

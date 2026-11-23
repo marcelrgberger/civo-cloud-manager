@@ -3948,6 +3948,48 @@ struct KubernetesVersionTests {
         #expect(kubernetesCluster(version: "1.20.0-k3s1", extra: #", "upgrade_available_to": "1.21.2+k3s1""#).upgradeAvailableTo == "1.21.2+k3s1")
     }
 
+    @Test("The version list as Civo really sends it, with capitalised keys, offers only newer k3s versions")
+    func decodingCapitalisedKeys() throws {
+        let json = #"[{"Version": "1.38.0-k3s1", "Label": "1.38.0-k3s1", "Release": "1.38.0+k3s1", "Type": "stable", "Default": true, "ClusterType": "k3s"}, {"Version": "1.36.0-k3s1", "Label": "1.36.0-k3s1", "Release": "1.36.0+k3s1", "Type": "deprecated", "Default": false, "ClusterType": "k3s"}, {"Version": "1.37.1-k3s1", "Type": "development", "ClusterType": "k3s"}, {"Version": "1.9.0", "Label": "talos-v1.9.0", "Release": "1.9.0", "Type": "stable", "ClusterType": "talos"}]"#
+        let versions = try JSONDecoder().decode([CivoKubernetesVersion].self, from: Data(json.utf8))
+        #expect(versions.map(\.version) == ["1.38.0-k3s1", "1.36.0-k3s1", "1.37.1-k3s1", "1.9.0"])
+        #expect(versions.map(\.isDeprecated) == [false, true, false, false])
+        #expect(versions.map(\.isDefault) == [true, false, nil, nil])
+        #expect(versions.map(\.clusterType) == ["k3s", "k3s", "k3s", "talos"])
+        let offered = try KubernetesVersionCatalog.upgradeTargets(from: "1.37.0-k3s1", in: versions).get()
+        #expect(offered.map(\.version) == ["1.38.0-k3s1", "1.37.1-k3s1"])
+    }
+
+    @Test("A version string is kept exactly as listed, and an entry needs a readable, consistent version and type")
+    func entryPolicy() throws {
+        func decode(_ entry: String) -> CivoKubernetesVersion? {
+            try? JSONDecoder().decode(CivoKubernetesVersion.self, from: Data(entry.utf8))
+        }
+        #expect(decode(#"{"Version": "1.20.0+k3s1"}"#)?.id == "1.20.0+k3s1")
+        #expect(decode(#"{"version": " 1.20.0-k3s1 "}"#)?.id == " 1.20.0-k3s1 ")
+
+        let accepted = [
+            #"{"Version": "1.20.0-k3s1"}"#,
+            #"{"version": "1.20.0-k3s1", "Version": "1.20.0-k3s1"}"#,
+            #"{"Version": "1.20.0-k3s1", "Type": null, "Default": "yes", "ClusterType": 3}"#,
+        ]
+        for entry in accepted { #expect(decode(entry) != nil, "\(entry)") }
+        #expect(decode(accepted[2])?.isDefault == nil)
+        #expect(decode(accepted[2])?.isDeprecated == false)
+
+        let rejected = [
+            #"{"Release": "1.20.0+k3s1", "Label": "1.20.0-k3s1"}"#,
+            #"{"flat_version": "1.20.0-k3s1"}"#,
+            #"{"Version": null}"#,
+            #"{"Version": "  "}"#,
+            #"{"Version": 120}"#,
+            #"{"version": "1.20.0-k3s1", "Version": "1.21.0-k3s1"}"#,
+            #"{"Version": "1.20.0-k3s1", "Type": "stable", "type": "deprecated"}"#,
+            #"{"Version": "1.20.0-k3s1", "Type": 1}"#,
+        ]
+        for entry in rejected { #expect(decode(entry) == nil, "\(entry)") }
+    }
+
     @Test("An upgrade sends only the version and region, never pools or applications")
     func upgradeBody() {
         let body = CivoKubernetesService.upgradeBody(to: "1.21.2+k3s1", region: "LON1")
@@ -5478,6 +5520,75 @@ private final class CredentialRequestStub: URLProtocol, @unchecked Sendable {
         client?.urlProtocolDidFinishLoading(self)
     }
     override func stopLoading() {}
+}
+
+private final class KubernetesVersionsStub: URLProtocol, @unchecked Sendable {
+    static let handler = OSAllocatedUnfairLock<(@Sendable (URLRequest) -> Data)?>(initialState: nil)
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        let body = Self.handler.withLock { $0 }!(request)
+        client?.urlProtocol(self, didReceive: HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: body)
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() {}
+}
+
+@Suite("Kubernetes version list request", .serialized)
+struct KubernetesVersionListTests {
+    private func list(answering body: String) async throws -> (versions: [CivoKubernetesVersion], request: URLRequest?) {
+        let requests = OSAllocatedUnfairLock(initialState: [URLRequest]())
+        KubernetesVersionsStub.handler.withLock { handler in
+            handler = { request in
+                requests.withLock { $0.append(request) }
+                return Data(body.utf8)
+            }
+        }
+        defer { KubernetesVersionsStub.handler.withLock { $0 = nil } }
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [KubernetesVersionsStub.self]
+        let session = URLSession(configuration: config)
+        defer { session.invalidateAndCancel() }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { "unused-dummy" }, settingsRegion: { "NYC1" }, diagnostic: { _ in })
+        let versions = try await CivoKubernetesService(api: client).listVersions(apiKey: "pinned-dummy")
+        return (versions, requests.withLock { $0.first })
+    }
+
+    @Test("The request is a GET without region and pinned to the given key")
+    func requestContract() async throws {
+        let (_, request) = try await list(answering: #"[{"Version": "1.38.0-k3s1"}]"#)
+        let sent = try #require(request)
+        #expect(sent.httpMethod == "GET")
+        #expect(sent.url?.path == "/v2/kubernetes/versions")
+        #expect(URLComponents(url: sent.url!, resolvingAgainstBaseURL: false)?.queryItems == nil)
+        #expect(sent.value(forHTTPHeaderField: "Authorization") == "bearer pinned-dummy")
+    }
+
+    @Test("Unreadable entries are skipped, the readable ones stay in order")
+    func mixedEntries() async throws {
+        let body = #"[{"Version": "1.38.0-k3s1"}, null, "text", {"Version": ""}, {"Version": "1.20.0-k3s1", "Type": "a", "type": "b"}, {"version": "1.37.0+k3s1", "type": "stable"}]"#
+        let (versions, _) = try await list(answering: body)
+        #expect(versions.map(\.version) == ["1.38.0-k3s1", "1.37.0+k3s1"])
+    }
+
+    @Test("An empty list is a valid answer, a list without any readable entry is a parse failure")
+    func emptyAndUnreadable() async throws {
+        let (empty, _) = try await list(answering: "[]")
+        #expect(empty.isEmpty)
+        for body in [#"[null, {"Release": "1.1.0+k3s1"}]"#, #"{"Version": "1.38.0-k3s1"}"#, "null"] {
+            await #expect(throws: CivoAPIError.self, "\(body)") { try await list(answering: body) }
+        }
+    }
+
+    @Test("A valid list without a newer, eligible version is returned whole and reads as no newer version")
+    func onlyIneligible() async throws {
+        let body = #"[{"Version": "1.36.0-k3s1", "Type": "deprecated"}, {"Version": "1.9.0", "ClusterType": "talos"}]"#
+        let (versions, _) = try await list(answering: body)
+        #expect(versions.count == 2)
+        #expect(KubernetesVersionCatalog.createOptions(in: versions).isEmpty)
+        #expect(throws: KubernetesUpgradeError.noNewerVersion) { try KubernetesVersionCatalog.upgradeTargets(from: "1.35.0-k3s1", in: versions).get() }
+    }
 }
 
 @Suite("Object store credential request boundary", .serialized)
