@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: nl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: nl | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / JURIDISCHE KENNISGEVING
 
 ## Informatie overeenkomstig § 5 DDG (Digitale-Dienste-Gesetz) en toepasselijke internationale openbaarmakingsvereisten
 
-**Laatst bijgewerkt:** september 2026
+**Laatst bijgewerkt:** november 2026
 
 ---
 
 ## 1. DIENSTENAANBIEDER
 
 De Diensten worden aangeboden onder het merk **DigitalFreedom**. De exploitant (Diensteanbieter / Dienstverlener in de zin van § 5 DDG) is de volgende rechtspersoon:
+
+[Waarom is de aanbieder een Amerikaanse LLC?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Verenigde Staten
 Handelsnaam: **DigitalFreedom** (gebruikt op websites, apps, marketing, klantcommunicatie en product-UI)
 
 **E-mail:** hello@digitalfreedom.co.za
-**Telefoon:** +1 307 451 0707
+**Contactformulier:** https://support.apps.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Supportportaal (snelle elektronische contactmogelijkheid, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Vragen over gegevensbescherming:** data-protection@digitalfreedom.co.za
 **Formulier voor verzoeken inzake gegevensbescherming:** https://data-protection.digitalfreedom.co.za
-**Telefoon:** +1 307 451 0707
+**Melding van beveiligingskwetsbaarheden:** security@digitalfreedom.co.za
+**Meldformulier voor beveiliging:** https://security.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za, of het supportformulier op https://support.apps.di
 
 Communicatie met beide contactpunten wordt door een persoon afgehandeld; deze is niet uitsluitend geautomatiseerd.
 
-**Geaccepteerde talen:** Duits en Engels.
+**Geaccepteerde talen:** Engels en Duits.
 
 **Wettelijk vertegenwoordiger in de Unie (art. 13 DSA):** niet aangewezen. Art. 13(1) is van toepassing op aanbieders van intermediaire diensten zonder vestiging in de Unie, niet alleen op onlineplatforms — het feit dat de diensten geen onlineplatform zijn in de zin van art. 3(i) sluit de verplichting dus niet uit. Of de diensten überhaupt een intermediaire dienst zijn, is de open vraag; het ingenomen standpunt is hierboven uiteengezet: de contactpunten onder art. 11 en 12 worden ongeacht gepubliceerd en er is geen vertegenwoordiger aangewezen. Het risico wordt bewust gedragen.
+
+### 4.4 Verzekering
+
+Algemene aansprakelijkheidsverzekering en verzekering tegen cyber- en datarisico's bij Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Inhoud en werken die door de exploitanten van deze site zijn gemaakt, zijn auteu
 
 ## 10. INTERNATIONALE OPENBAARMAKINGSVEREISTEN
 
+De hieronder genoemde bepalingen worden ter oriëntatie vermeld: het zijn de regelingen waaraan de informatie in deze kennisgeving moet bijdragen. De lijst geeft geen garantie voor volledigheid en geen garantie dat de kennisgeving in een concreet geval aan een van deze bepalingen voldoet.
+
 ### 10.1 Europese Unie / EER
 
-Deze juridische kennisgeving voldoet aan de vereisten van:
+Bepalingen over de identificatie van de aanbieder in de EU en in een aantal lidstaten:
 
 - **Duitsland:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
 - **EU:** Artikel 5 van de E-Commerce Richtlijn (2000/31/EG), Artikel 12 van de Digital Services Act (Verordening (EU) 2022/2065)
@@ -140,14 +149,14 @@ Deze juridische kennisgeving voldoet aan de vereisten van:
 
 ### 10.2 Verenigd Koninkrijk
 
-Deze kennisgeving voldoet aan de vereisten van:
+Bepalingen over de identificatie van de aanbieder in het Verenigd Koninkrijk:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (voor zakelijke websites)
 
 ### 10.3 Verenigde Staten
 
-Bedrijfsidentificatie en openbaarmaking voldoen aan:
+Bepalingen die relevant zijn voor de identificatie van bedrijven in de Verenigde Staten:
 
 - FTC Act § 5 (oneerlijke of misleidende handelspraktijken)
 - Staatsspecifieke vereisten voor bedrijfsopenbaarmaking
@@ -185,7 +194,7 @@ Bedrijfsidentificatie en openbaarmaking voldoen aan:
 
 ### 10.10 Overige rechtsgebieden
 
-De Aanbieder voldoet aan de toepasselijke vereisten voor bedrijfsidentificatie en openbaarmaking in alle rechtsgebieden waar de Diensten worden aangeboden.
+Voor zover de Diensten in andere rechtsgebieden worden aangeboden, dient de informatie in deze kennisgeving de aldaar geldende verplichtingen tot identificatie van de aanbieder. Er wordt geen garantie gegeven dat aan elk van die verplichtingen is voldaan.
 
 ---
 

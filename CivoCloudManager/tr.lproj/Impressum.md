@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: tr | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: tr | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # KÜNYE / YASAL BİLGİLENDİRME
 
 ## § 5 DDG (Dijital Hizmetler Yasası) ve geçerli uluslararası açıklama gerekliliklerine göre bilgiler
 
-**Son Güncelleme:** Eylül 2026
+**Son Güncelleme:** Kasım 2026
 
 ---
 
 ## 1. HİZMET SAĞLAYICI
 
 Hizmetler **DigitalFreedom** markası altında sunulmaktadır. Faaliyet gösteren tüzel kişi (Diensteanbieter / Hizmet Sağlayıcı, § 5 DDG anlamında) şudur:
+
+[Sağlayıcı neden bir ABD LLC'sidir?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Amerika Birleşik Devletleri
 Ticari unvan: **DigitalFreedom** (web sitelerinde, uygulamalarda, pazarlama, müşteri iletişimi ve ürün arayüzünde kullanılır)
 
 **E-posta:**  hello@digitalfreedom.co.za 
-**Telefon:** +1 307 451 0707
+**İletişim formu:** https://support.apps.digitalfreedom.co.za
 **Web sitesi:**  https://digitalfreedom.co.za 
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Destek portalı (hızlı elektronik iletişim, § 5 DDG):**  https://support.apps.digitalfreedom.co.za 
 **Veri koruma ile ilgili sorular:**  data-protection@digitalfreedom.co.za 
 **Veri koruma talep formu:**  https://data-protection.digitalfreedom.co.za 
-**Telefon:** +1 307 451 0707
+**Güvenlik açığı bildirimleri:** security@digitalfreedom.co.za
+**Güvenlik bildirim formu:** https://security.digitalfreedom.co.za
 **Web sitesi:**  https://digitalfreedom.co.za 
 
 ---
@@ -70,9 +73,13 @@ Regülasyon (AB) 2022/2065, aracı hizmet sağlayıcılarının iki irtibat nokt
 
 Her iki irtibat noktasıyla iletişim bir kişi tarafından yürütülmektedir; tamamen otomatik değildir.
 
-**Kabul edilen diller:** Almanca ve İngilizce.
+**Kabul edilen diller:** İngilizce ve Almanca.
 
 **Birlik içinde yasal temsilci (Mad. 13 DSA):** atanmadı. Mad. 13(1), Birlik'te yerleşik olmayan aracı hizmet sağlayıcılarını kapsar, yalnızca çevrimiçi platformları değil — dolayısıyla hizmetlerin Mad. 3(i) kapsamında çevrimiçi platform olmaması, yükümlülüğü tek başına ortadan kaldırmaz. Hizmetlerin aracı hizmet olup olmadığı ise açık bir sorudur ve yukarıda belirtilen görüş benimsenmiştir: Mad. 11 ve 12 uyarınca iletişim noktaları her halükarda yayımlanmakta, temsilci atanmış değildir. Bu risk bilinçli olarak üstlenilmiştir.
+
+### 4.4 Sigorta
+
+Hiscox Insurance Company Inc. nezdinde ticari genel sorumluluk sigortası ile siber ve veri riski sigortası.
 
 ---
 
@@ -122,9 +129,11 @@ Bu sayfalarda site işletmecileri tarafından oluşturulan içerik ve eserler te
 
 ## 10. ULUSLARARASI AÇIKLAMA YÜKÜMLÜLÜKLERİ
 
+Aşağıda listelenen hükümler yol göstermek amacıyla anılmıştır: bunlar, bu bildirimdeki bilgilerin hizmet etmeyi amaçladığı düzenlemelerdir. Liste, eksiksiz olduğuna dair bir güvence vermez ve bildirimin belirli bir durumda bunlardan herhangi birini karşıladığına dair bir garanti de içermez.
+
 ### 10.1 Avrupa Birliği / AEA
 
-Bu yasal bildirim aşağıdaki gereklilikleri karşılamaktadır:
+AB'de ve seçili üye devletlerde sağlayıcının tanımlanmasına ilişkin hükümler:
 
 - **Almanya:** § 5 DDG (Dijital Hizmetler Yasası), § 18(2) MStV (Medya Devlet Sözleşmesi)
 - **AB:** E-Ticaret Direktifi'nin 5. Maddesi (2000/31/EC), Dijital Hizmetler Yasası'nın 12. Maddesi (Tüzük (AB) 2022/2065)
@@ -140,14 +149,14 @@ Bu yasal bildirim aşağıdaki gereklilikleri karşılamaktadır:
 
 ### 10.2 Birleşik Krallık
 
-Bu bildirim aşağıdaki gereklilikleri karşılamaktadır:
+Birleşik Krallık'ta sağlayıcının tanımlanmasına ilişkin hükümler:
 
 - Elektronik Ticaret (AB Direktifi) Yönetmelikleri 2002
 - Şirketler Yasası 2006 (ticari web siteleri için)
 
 ### 10.3 Amerika Birleşik Devletleri
 
-Ticari kimlik açıklamaları aşağıdakilere uygundur:
+Amerika Birleşik Devletleri'nde işletmenin tanımlanmasıyla ilgili hükümler:
 
 - FTC Yasası § 5 (haksız veya aldatıcı eylem ya da uygulamalar)
 - Eyalete özgü ticari açıklama gereklilikleri
@@ -185,7 +194,7 @@ Ticari kimlik açıklamaları aşağıdakilere uygundur:
 
 ### 10.10 Diğer Yargı Bölgeleri
 
-Sağlayıcı, Hizmetlerin sunulduğu tüm yargı bölgelerinde geçerli ticari kimlik ve açıklama gerekliliklerine uymaktadır.
+Hizmetlerin diğer yargı alanlarında sunulduğu durumlarda, bu bildirimdeki bilgiler oralarda geçerli olan sağlayıcıyı tanımlama yükümlülüklerine hizmet eder. Bu yükümlülüklerin her birinin yerine getirildiğine dair bir güvence verilmez.
 
 ---
 

@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: pl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: pl | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / INFORMACJA PRAWNA
 
 ## Informacje zgodnie z § 5 DDG (Digitale-Dienste-Gesetz) oraz obowiązującymi międzynarodowymi wymogami ujawniania informacji
 
-**Ostatnia aktualizacja:** wrzesień 2026
+**Ostatnia aktualizacja:** listopad 2026
 
 ---
 
 ## 1. DOSTAWCA USŁUG
 
 Usługi są oferowane pod marką **DigitalFreedom**. Podmiotem prowadzącym działalność (Diensteanbieter / Dostawca Usług w rozumieniu § 5 DDG) jest:
+
+[Dlaczego dostawca jest amerykańską spółką LLC?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Stany Zjednoczone
 Nazwa handlowa: **DigitalFreedom** (używana na stronach internetowych, w aplikacjach, materiałach marketingowych, komunikacji z klientem oraz w interfejsie produktu)
 
 **E-mail:** hello@digitalfreedom.co.za
-**Telefon:** +1 307 451 0707
+**Formularz kontaktowy:** https://support.apps.digitalfreedom.co.za
 **Strona internetowa:** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Portal wsparcia (szybki kontakt elektroniczny, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Zapytania dotyczące ochrony danych:** data-protection@digitalfreedom.co.za
 **Formularz żądania dotyczącego ochrony danych:** https://data-protection.digitalfreedom.co.za
-**Telefon:** +1 307 451 0707
+**Zgłaszanie luk w zabezpieczeniach:** security@digitalfreedom.co.za
+**Formularz zgłoszeń dotyczących bezpieczeństwa:** https://security.digitalfreedom.co.za
 **Strona internetowa:** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za lub formularz wsparcia na https://support.apps.digi
 
 Komunikacja z oboma punktami kontaktowymi jest obsługiwana przez osobę fizyczną; nie jest wyłącznie zautomatyzowana.
 
-**Akceptowane języki:** niemiecki i angielski.
+**Akceptowane języki:** angielski i niemiecki.
 
 **Przedstawiciel prawny w Unii (art. 13 DSA):** nie wyznaczono. Art. 13 ust. 1 dotyczy dostawców usług pośredniczących bez siedziby w Unii, nie tylko platform internetowych — zatem fakt, że usługi nie są platformą internetową w rozumieniu art. 3(i), sam w sobie nie znosi obowiązku. Kwestia, czy usługi w ogóle są usługą pośredniczącą, pozostaje otwarta, a stanowisko w tej sprawie zostało przedstawione powyżej: punkty kontaktowe z art. 11 i 12 są publikowane niezależnie, a przedstawiciel nie został wyznaczony. Ryzyko jest podejmowane świadomie.
+
+### 4.4 Ubezpieczenie
+
+Ubezpieczenie odpowiedzialności cywilnej ogólnej oraz ubezpieczenie od ryzyk cybernetycznych i ryzyk związanych z danymi w Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Treści i utwory stworzone przez operatorów strony na tych stronach są chronio
 
 ## 10. MIĘDZYNARODOWE WYMOGI UJAWNIANIA INFORMACJI
 
+Poniższe przepisy wymieniono poglądowo: są to porządki prawne, którym mają służyć informacje zawarte w niniejszej informacji. Wykaz nie daje gwarancji kompletności ani gwarancji, że informacja spełnia którykolwiek z tych przepisów w konkretnym przypadku.
+
 ### 10.1 Unia Europejska / EOG
 
-Niniejsza informacja prawna spełnia wymogi:
+Przepisy dotyczące identyfikacji dostawcy w UE i wybranych państwach członkowskich:
 
 - **Niemcy:** § 5 DDG (Digitale-Dienste-Gesetz), § 18 ust. 2 MStV (Medienstaatsvertrag)
 - **UE:** artykuł 5 dyrektywy o handlu elektronicznym (2000/31/WE), artykuł 12 Aktu o Usługach Cyfrowych (rozporządzenie (UE) 2022/2065)
@@ -140,14 +149,14 @@ Niniejsza informacja prawna spełnia wymogi:
 
 ### 10.2 Zjednoczone Królestwo
 
-Niniejsza informacja spełnia wymogi:
+Przepisy dotyczące identyfikacji dostawcy w Zjednoczonym Królestwie:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (dla stron internetowych przedsiębiorstw)
 
 ### 10.3 Stany Zjednoczone
 
-Ujawnienia identyfikacyjne działalności gospodarczej są zgodne z:
+Przepisy istotne dla identyfikacji przedsiębiorstw w Stanach Zjednoczonych:
 
 - FTC Act § 5 (czyny lub praktyki nieuczciwe lub wprowadzające w błąd)
 - Wymogi ujawniania działalności gospodarczej specyficzne dla poszczególnych stanów
@@ -185,7 +194,7 @@ Ujawnienia identyfikacyjne działalności gospodarczej są zgodne z:
 
 ### 10.10 Inne jurysdykcje
 
-Dostawca spełnia obowiązujące wymogi identyfikacji działalności gospodarczej i ujawniania informacji we wszystkich jurysdykcjach, w których oferowane są Usługi.
+Jeżeli Usługi są oferowane w innych jurysdykcjach, informacje zawarte w niniejszej informacji służą obowiązkom identyfikacji dostawcy obowiązującym w tych jurysdykcjach. Nie udziela się gwarancji, że każdy z tych obowiązków jest spełniony.
 
 ---
 
