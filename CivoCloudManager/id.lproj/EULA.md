@@ -1,9 +1,9 @@
-<!-- doc-id: EULA | lang: id | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: EULA | lang: id | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 1.4.0 | source: apps/documents/EULA.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Google Play section and Apple Business seats omitted -->
 # PERJANJIAN LISENSI PENGGUNA AKHIR (EULA)
 
 ## Perjanjian Lisensi Multi-Platform Global
 
-**Tanggal Berlaku:** September 2026
+**Tanggal Berlaku:** 10 Desember 2026
 
 **Penerbit:**
 DigitalFreedom
@@ -11,8 +11,8 @@ Merek dari DigitalFreedom Global LLC
 30 N Gould St, Ste N
 Sheridan, WY 82801
 Amerika Serikat
-Kontak:  hello@digitalfreedom.co.za 
-Situs web:  https://digitalfreedom.co.za 
+Kontak: hello@digitalfreedom.co.za
+Situs web: https://digitalfreedom.co.za
 
 ---
 
@@ -28,17 +28,13 @@ Jika Anda tidak setuju, Anda tidak boleh menggunakan Aplikasi.
 
 Perjanjian ini berlaku untuk semua saluran distribusi, termasuk namun tidak terbatas pada:
 
-- Apple App Store / TestFlight
-- Google Play Store / distribusi APK
-- GitHub atau repositori kode sumber lainnya
-- Homebrew atau manajer paket lainnya
-- Unduhan langsung atau distribusi perusahaan
+- Apple App Store, termasuk distribusi TestFlight (yang tidak melibatkan pembelian)
 
 Aplikasi dapat disediakan sebagai perangkat lunak gratis, berbayar, open-source, atau hibrida.
 
 ### 2.1 Ruang lingkup global
 
-Aplikasi didistribusikan melalui Apple App Store dan Google Play Store dan dengan demikian tersedia di setiap negara dan wilayah yang dilayani oleh platform tersebut. Perjanjian ini berlaku secara global untuk semua pengguna tersebut, terlepas dari negara tempat Aplikasi diunduh, diinstal, atau digunakan. Penerbit mengadopsi Peraturan Perlindungan Data Umum Uni Eropa (GDPR) dan hukum terkait Uni Eropa sebagai standar dasar dan menerapkannya secara global; hak perlindungan konsumen wajib dan hak hukum lainnya yang diberikan oleh negara tempat tinggal pengguna tetap berlaku dan diutamakan jika lebih melindungi.
+Aplikasi didistribusikan melalui Apple App Store dan dengan demikian tersedia di setiap negara dan wilayah yang dilayani oleh platform tersebut. Perjanjian ini berlaku secara global untuk semua pengguna tersebut, terlepas dari negara tempat Aplikasi diunduh, diinstal, atau digunakan. Penerbit mengadopsi Peraturan Perlindungan Data Umum Uni Eropa (GDPR) dan hukum terkait Uni Eropa sebagai standar dasar dan menerapkannya secara global; hak perlindungan konsumen wajib dan hak hukum lainnya yang diberikan oleh negara tempat tinggal pengguna tetap berlaku dan diutamakan jika lebih melindungi.
 
 ---
 
@@ -78,15 +74,11 @@ Anda tidak boleh:
 
 ## 6. KETENTUAN KOMERSIAL
 
-Aplikasi dapat ditawarkan:
+Aplikasi menyertakan masa akses gratis selama tujuh hari sejak peluncuran pertama dengan fungsionalitas penuh. Setelah masa tersebut, pengelolaan firewall di bilah menu tetap gratis, dan dasbor memerlukan pembelian satu kali yang bersifat non-consumable untuk Full Access melalui Apple App Store. Aplikasi tidak memiliki langganan, tidak ada perpanjangan otomatis, dan tidak ada biaya berulang. Harga ditampilkan oleh Apple App Store, dan pembelian yang telah selesai dapat dipulihkan.
 
-- Gratis
-- Dengan pembelian satu kali
-- Dengan langganan
+Pembayaran diproses melalui Apple App Store. Tidak ada jalur pembayaran lain.
 
-Pembayaran dapat diproses melalui platform pihak ketiga (misalnya, Apple, Google) atau secara langsung.
-
-Pengembalian dana dan penagihan tunduk pada ketentuan platform terkait atau hukum yang berlaku.
+Pengembalian dana dan penagihan tunduk pada ketentuan Apple App Store atau hukum yang berlaku.
 
 ---
 
@@ -180,7 +172,9 @@ Anda setuju untuk mengganti kerugian kepada Penerbit atas klaim yang timbul dari
 
 ## 14. PENGAKHIRAN
 
-Penerbit dapat mengakhiri Perjanjian ini kapan saja.
+Penerbit dapat mengakhiri Perjanjian ini jika Anda melakukan pelanggaran material terhadapnya; jika pelanggaran tersebut dapat diperbaiki, hanya setelah Anda diminta untuk memperbaikinya dan tidak melakukannya dalam jangka waktu yang wajar.
+
+Penerbit juga dapat mengakhiri Perjanjian ini kapan saja dengan alasan lain, dengan satu pengecualian untuk apa yang telah Anda bayar: lisensi yang diperoleh melalui pembelian satu kali (lisensi yang telah lunas, seperti pembelian seumur hidup) tidak dapat diakhiri dengan cara ini. Hak hukum yang bersifat wajib, termasuk hak atas pengembalian dana, tetap berlaku.
 
 Setelah pengakhiran, Anda harus berhenti menggunakan dan menghapus semua salinan Aplikasi.
 
@@ -221,9 +215,18 @@ Hukum perlindungan konsumen wajib di negara tempat tinggal Anda tetap berlaku.
 
 - Undang-undang perlindungan konsumen berbeda di setiap provinsi dan dapat menggantikan bagian dari Perjanjian ini
 
-### 17.5 Australia
+### 17.5 Australia dan Selandia Baru
 
-- Jaminan hukum berdasarkan Hukum Konsumen Australia berlaku dan tidak dapat dikecualikan
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
+
+Pemberitahuan di atas membatasi setiap penafian jaminan dan pembatasan tanggung jawab dalam Perjanjian ini dan diutamakan atas semuanya. Jaminan tersebut melekat pada Penerbit sebagai pemasok: Apple bertindak sebagai agen Penerbit di wilayah-wilayah ini. Pasal 64 ACL dan pasal 43 Consumer Guarantees Act Selandia Baru menyatakan batal setiap pengesampingan kontraktual.
 
 ### 17.6 Yurisdiksi Lain
 
@@ -237,11 +240,43 @@ Jika ada ketentuan yang tidak sah, sisanya tetap berlaku.
 
 ---
 
-## 19. PERJANJIAN KESELURUHAN
+## 19. APPLE APP STORE - KETENTUAN TAMBAHAN
+
+Bagian ini berlaku **hanya** untuk salinan Aplikasi yang diperoleh melalui Apple App Store. Jika bertentangan dengan ketentuan lain dalam Perjanjian ini, bagian ini diutamakan untuk salinan tersebut. Bagian ini mencerminkan ketentuan minimum yang disyaratkan Apple dari pengembang yang menyediakan perjanjian lisensi pengguna akhirnya sendiri.
+
+**19.1 Pengakuan.** Perjanjian ini dibuat hanya antara Anda dan Penerbit, dan bukan dengan Apple. Penerbit, bukan Apple, bertanggung jawab sepenuhnya atas Aplikasi dan kontennya.
+
+**19.2 Ruang lingkup lisensi.** Lisensi yang diberikan kepada Anda untuk Aplikasi adalah lisensi yang tidak dapat dipindahtangankan untuk menggunakan Aplikasi pada perangkat bermerek Apple mana pun yang Anda miliki atau kendalikan, dan sebagaimana diizinkan oleh Aturan Penggunaan (Usage Rules) yang diatur dalam Apple Media Services Terms and Conditions, kecuali bahwa Aplikasi dapat diakses dan digunakan oleh akun lain yang terkait dengan Anda melalui Berbagi Keluarga (Family Sharing) atau pembelian volume.
+
+**19.3 Pemeliharaan dan dukungan.** Penerbit bertanggung jawab sepenuhnya atas penyediaan layanan pemeliharaan dan dukungan apa pun untuk Aplikasi. Apple sama sekali tidak berkewajiban untuk menyediakan layanan pemeliharaan dan dukungan apa pun sehubungan dengan Aplikasi.
+
+**19.4 Garansi.** Penerbit bertanggung jawab sepenuhnya atas garansi produk apa pun, baik tersurat maupun tersirat menurut hukum, sejauh garansi tersebut tidak dinafikan secara efektif. Jika Aplikasi gagal memenuhi garansi yang berlaku, Anda dapat memberitahu Apple, dan Apple akan mengembalikan harga pembelian Aplikasi kepada Anda. Sejauh diizinkan oleh hukum yang berlaku, Apple tidak memiliki kewajiban garansi lain apa pun sehubungan dengan Aplikasi. Klaim, kerugian, tanggung jawab, kerusakan, biaya, atau pengeluaran lain yang disebabkan oleh kegagalan memenuhi garansi menjadi tanggung jawab sepenuhnya Penerbit.
+
+**19.5 Klaim produk.** Penerbit, bukan Apple, bertanggung jawab untuk menangani setiap klaim yang berkaitan dengan Aplikasi atau kepemilikan dan penggunaan Aplikasi oleh Anda, termasuk namun tidak terbatas pada klaim tanggung jawab produk, klaim bahwa Aplikasi gagal memenuhi persyaratan hukum atau peraturan yang berlaku, dan klaim yang timbul berdasarkan perundang-undangan perlindungan konsumen, privasi, atau yang serupa, termasuk sehubungan dengan penggunaan kerangka kerja apa pun oleh Aplikasi untuk pengelolaan data kesehatan atau kebugaran.
+
+**19.6 Hak kekayaan intelektual.** Jika ada klaim pihak ketiga bahwa Aplikasi atau kepemilikan dan penggunaan Aplikasi oleh Anda melanggar hak kekayaan intelektual pihak ketiga tersebut, Penerbit, bukan Apple, bertanggung jawab sepenuhnya atas penyelidikan, pembelaan, penyelesaian, dan pelunasan klaim tersebut.
+
+**19.7 Kepatuhan hukum.** Anda menyatakan dan menjamin bahwa Anda tidak berada di negara yang dikenai embargo Pemerintah AS atau yang ditetapkan oleh Pemerintah AS sebagai negara pendukung terorisme, dan bahwa Anda tidak tercantum dalam daftar pihak terlarang atau terbatas mana pun dari Pemerintah AS.
+
+**19.8 Nama dan alamat pengembang.** Pertanyaan, keluhan, dan klaim yang berkaitan dengan Aplikasi ditujukan kepada: DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, Amerika Serikat, `support@digitalfreedom.co.za`, https://support.apps.digitalfreedom.co.za
+
+**19.9 Ketentuan pihak ketiga.** Anda harus mematuhi ketentuan perjanjian pihak ketiga yang berlaku saat menggunakan Aplikasi.
+
+**19.10 Pihak ketiga penerima manfaat.** Anda mengakui dan menyetujui bahwa Apple dan anak perusahaan Apple adalah pihak ketiga penerima manfaat dari Perjanjian ini, dan bahwa setelah Anda menerimanya, Apple akan berhak (dan dianggap telah menerima hak tersebut) untuk menegakkan Perjanjian ini terhadap Anda sebagai pihak ketiga penerima manfaatnya.
+
+---
+
+## 20. GOOGLE PLAY
+
+Civo Cloud Manager tidak didistribusikan melalui Google Play; bagian ini tidak berlaku.
+
+---
+
+## 21. PERJANJIAN KESELURUHAN
 
 Perjanjian ini merupakan keseluruhan perjanjian antara Anda dan Penerbit.
 
-Ini melengkapi syarat khusus platform (Apple, Google).
+Perjanjian ini melengkapi ketentuan platform Apple App Store. Bagian 19 diutamakan atas ketentuan apa pun dalam Perjanjian ini yang bertentangan untuk salinan yang diperoleh melalui App Store.
 
 ---
 
