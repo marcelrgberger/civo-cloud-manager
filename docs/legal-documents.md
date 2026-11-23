@@ -32,8 +32,10 @@ matching clauses are stated inline instead (Terms section 7). The prescribed
 Australian Consumer Law notice stays in English in every language. The Privacy Policy was reconciled in November 2026 with
 `shared/PRIVACY_POLICY.en.md` version 2.3.2 (valid from 8 November 2026, legal
 repository commit `cc9c4543cf0ed58be97cd3c9d38fc86781b04680`), which is why it
-carries 8 November 2026 as its effective date while the other documents keep
-September 2026; versions 2.4.0 and 2.5.0 (both valid from 10 December 2026) are not
+carries 8 November 2026 as its effective date; the other documents carry their own
+dates (the EULA and Terms of Service 10 December 2026, the Imprint and the
+notification notice November 2026, the Acceptable Use Policy and Trademark
+Disclaimer September 2026); versions 2.4.0 and 2.5.0 (both valid from 10 December 2026) are not
 used. Which sentences are historical text, newly incorporated text or removed text,
 and the evidence for every data flow, legal basis and recipient, are recorded in
 [privacy-applicability.md](privacy-applicability.md). `PushNotificationConsent.md`

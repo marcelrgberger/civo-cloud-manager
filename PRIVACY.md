@@ -36,7 +36,7 @@ The Application stores the following data locally on your macOS device. None of 
 | Activity log (resource type, name, identifier, action, short detail; no keys, headers or raw answers) | UserDefaults; newest 200 entries, older entries are dropped | Show your recent actions |
 | Timed firewall closures; cache of billing amounts of completed months | Files in the Application Support folder | Close firewall access on time; avoid repeated requests |
 | Kubeconfig credentials of a cluster | Used in memory for the connection; the Application does not save them itself | Connect to the Kubernetes API |
-| Purchase status | StoreKit (Apple managed) | Verify the Full Access purchase and the trial |
+| Purchase status | StoreKit (Apple managed) | Verify the Full Access purchase (the trial is computed locally and does not use StoreKit) |
 | System log entries | Unified log of macOS, managed by the operating system | Diagnose errors; not uploaded |
 
 Files you export (SSH private keys, kubeconfig files, object store downloads) are written where you choose, with the system file dialog. They are outside the protection and the management of the Application, which does not track, encrypt or delete them.
