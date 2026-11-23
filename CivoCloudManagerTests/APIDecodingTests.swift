@@ -6435,18 +6435,24 @@ struct ReservedIPTests {
         #expect(ReservedIPRules.staleError(captured: embedded, reloaded: separate) == .assignmentChanged)
     }
 
-    @Test("Targets whose numeric ids differ only beyond double precision stay distinct, and the changed one blocks release")
+    @Test("Numeric target ids that cannot be compared exactly never match, and the changed one blocks release")
     func numericFingerprintsKeepTheirValue() async throws {
-        let captured = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": 9007199254740992, "type": "loadbalancer"}}"#)
-        let reloaded = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": 9007199254740993, "type": "loadbalancer"}}"#)
-        #expect(captured.assignment != reloaded.assignment)
-        #expect(ReservedIPRules.staleError(captured: captured, reloaded: reloaded) == .assignmentChanged)
+        let pairs = [
+            ("9007199254740992", "9007199254740993"),
+            ("12345678901234567890123456789012345678901", "12345678901234567890123456789012345678902"),
+        ]
+        for (before, after) in pairs {
+            let captured = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": \#(before), "type": "loadbalancer"}}"#)
+            let reloaded = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": \#(after), "type": "loadbalancer"}}"#)
+            #expect(captured.assignment != reloaded.assignment)
+            #expect(ReservedIPRules.staleError(captured: captured, reloaded: reloaded) == .assignmentChanged)
 
-        let env = Environment()
-        env.begin(.release, captured.assignment)
-        await env.setIP(reloaded.assignment)
-        #expect(await env.controller.confirm(.release(typedName: "edge")) == .cancelled)
-        #expect(await env.mutations.isEmpty)
+            let env = Environment()
+            env.begin(.release, captured.assignment)
+            await env.setIP(reloaded.assignment)
+            #expect(await env.controller.confirm(.release(typedName: "edge")) == .cancelled)
+            #expect(await env.mutations.isEmpty)
+        }
     }
 
     @Test("Each action is offered only for the assignment it fits, and release stays possible for any loaded one")

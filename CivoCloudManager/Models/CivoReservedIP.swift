@@ -36,10 +36,11 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
         case assignedTo = "assigned_to"
     }
 
-    /// Any JSON, kept only to tell two reported targets apart. Numbers are decimals, not doubles, so large ids keep
-    /// their exact value.
+    /// Any JSON, kept only to tell two reported targets apart. Integers that fit 64 bits keep their exact value. Any
+    /// other number cannot be compared exactly after decoding, so it gets a mark that is unique to this decoding:
+    /// two reports of it never match and release is refused rather than guessed.
     private enum AnyJSON: Decodable {
-        case null, bool(Bool), number(Decimal), string(String), array([AnyJSON]), object([String: AnyJSON])
+        case null, bool(Bool), integer(String), inexactNumber(UUID), string(String), array([AnyJSON]), object([String: AnyJSON])
 
         init(from decoder: Decoder) throws {
             let c = try decoder.singleValueContainer()
@@ -47,8 +48,12 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
                 self = .null
             } else if let value = try? c.decode(Bool.self) {
                 self = .bool(value)
-            } else if let value = try? c.decode(Decimal.self) {
-                self = .number(value)
+            } else if let value = try? c.decode(Int64.self) {
+                self = .integer(String(value))
+            } else if let value = try? c.decode(UInt64.self) {
+                self = .integer(String(value))
+            } else if (try? c.decode(Double.self)) != nil {
+                self = .inexactNumber(UUID())
             } else if let value = try? c.decode(String.self) {
                 self = .string(value)
             } else if let value = try? c.decode([AnyJSON].self) {
@@ -64,7 +69,8 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
             switch self {
             case .null: "null"
             case .bool(let value): String(value)
-            case .number(let value): "\(value)"
+            case .integer(let digits): digits
+            case .inexactNumber(let mark): "inexact-\(mark.uuidString)"
             case .string(let value): Self.quoted(value)
             case .array(let values): "[" + values.map(\.canonical).joined(separator: ",") + "]"
             case .object(let fields): "{" + fields.sorted { $0.key < $1.key }.map { "\(Self.quoted($0.key)):\($0.value.canonical)" }.joined(separator: ",") + "}"
