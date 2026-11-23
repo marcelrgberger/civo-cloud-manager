@@ -5548,6 +5548,45 @@ struct ObjectStoreCredentialRequestTests {
         #expect(requests.withLock { $0.count } == 2)
     }
 
+    @Test("Reserved IP requests use the pinned account and region, and an assignment names its target type")
+    func reservedIPContract() async throws {
+        let requests = OSAllocatedUnfairLock(initialState: [(request: URLRequest, body: Data)]())
+        CredentialRequestStub.handler.withLock { handler in
+            handler = { request in
+                requests.withLock { $0.append((request, Self.body(of: request))) }
+                return (200, Data(#"{"result":"success"}"#.utf8))
+            }
+        }
+        defer { CredentialRequestStub.handler.withLock { $0 = nil } }
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [CredentialRequestStub.self]
+        let session = URLSession(configuration: config)
+        defer { session.invalidateAndCancel() }
+        let client = CivoAPIClient(session: session, settingsAPIKey: { "unused-dummy" }, settingsRegion: { "NYC1" }, diagnostic: { _ in })
+        let service = CivoReservedIPService(api: client)
+        _ = try await service.assign("ip-1", toInstance: "vm-1", region: "LON1", apiKey: "pinned-dummy")
+        _ = try await service.release("ip-1", region: "LON1", apiKey: "pinned-dummy")
+        let sent = requests.withLock { $0 }
+        #expect(sent.map(\.request.httpMethod) == ["POST", "DELETE"])
+        #expect(sent.map { $0.request.url?.path } == ["/v2/ips/ip-1/actions", "/v2/ips/ip-1"])
+        for entry in sent {
+            #expect(entry.request.value(forHTTPHeaderField: "Authorization") == "bearer pinned-dummy")
+            #expect(URLComponents(url: entry.request.url!, resolvingAgainstBaseURL: false)?.queryItems == [URLQueryItem(name: "region", value: "LON1")])
+        }
+        let body = try JSONSerialization.jsonObject(with: sent[0].body) as? [String: String]
+        #expect(body == ["action": "assign", "assign_to_id": "vm-1", "assign_to_type": "instance"])
+    }
+
+    private static func body(of request: URLRequest) -> Data {
+        if let data = request.httpBody { return data }
+        guard let stream = request.httpBodyStream else { return Data() }
+        stream.open()
+        defer { stream.close() }
+        var buffer = [UInt8](repeating: 0, count: 1024)
+        let count = stream.read(&buffer, maxLength: buffer.count)
+        return Data(buffer.prefix(max(0, count)))
+    }
+
     @Test("Sensitive response bodies and decode diagnostics are discarded at the API boundary")
     func redaction() async throws {
         let logs = OSAllocatedUnfairLock(initialState: [String]())
@@ -6235,5 +6274,407 @@ struct LoadBalancerCreateTests {
         #expect(await env.creator.create(Self.draft) == .created(id: "lb-1"))
         let sentTo = LoadBalancerContext(account: CivoAccount(apiKey: "key-a"), region: "LON1")
         #expect(env.creator.unresolved(in: sentTo).map(\.wasCreated) == [true])
+    }
+}
+
+private actor FakeReservedIPAPI: ReservedIPAPI {
+    struct State: Sendable {
+        var ip = CivoReservedIP(id: "ip-1", name: "edge", ip: "203.0.113.7", assignment: .unassigned)
+        var list = PaginatedList(items: [CivoReservedIP(id: "ip-1", name: "edge", ip: "203.0.113.7", assignment: .unknown)], isComplete: true)
+        var instances = PaginatedList(items: [ReservedIPInstanceChoice(id: "vm-1", hostname: "web", publicIp: "198.51.100.4")], isComplete: true)
+        var showError: Error?
+        var mutationError: Error?
+        var ack = ReservedIPAck(id: "ip-1", name: "edge")
+        var result = ReservedIPActionResult(result: "success")
+        /// Runs while the IP is loaded again, like a Settings change during the request.
+        var duringShow: (@Sendable () async -> Void)?
+        /// Runs while a change is on its way, like a Settings change before Civo answers.
+        var duringMutation: (@Sendable () async -> Void)?
+    }
+
+    var state = State()
+    private(set) var calls: [String] = []
+
+    func update(_ change: @Sendable (inout State) -> Void) { change(&state) }
+
+    func listReservedIPs(region: String, apiKey: String) async throws -> PaginatedList<CivoReservedIP> {
+        calls.append("list \(region) \(apiKey)")
+        return state.list
+    }
+
+    func showReservedIP(_ id: String, region: String, apiKey: String) async throws -> CivoReservedIP {
+        calls.append("show \(id) \(region) \(apiKey)")
+        if let action = state.duringShow {
+            state.duringShow = nil
+            await action()
+        }
+        if let error = state.showError { throw error }
+        return state.ip
+    }
+
+    func reserve(name: String, region: String, apiKey: String) async throws -> ReservedIPAck {
+        calls.append("reserve \(name) \(region) \(apiKey)")
+        await state.duringMutation?()
+        if let error = state.mutationError { throw error }
+        return state.ack
+    }
+
+    func rename(_ id: String, to name: String, region: String, apiKey: String) async throws -> ReservedIPAck {
+        calls.append("rename \(id) \(name) \(region) \(apiKey)")
+        if let error = state.mutationError { throw error }
+        return state.ack
+    }
+
+    func assign(_ id: String, toInstance instanceId: String, region: String, apiKey: String) async throws -> ReservedIPActionResult {
+        calls.append("assign \(id) \(instanceId) \(region) \(apiKey)")
+        if let error = state.mutationError { throw error }
+        return state.result
+    }
+
+    func unassign(_ id: String, region: String, apiKey: String) async throws -> ReservedIPActionResult {
+        calls.append("unassign \(id) \(region) \(apiKey)")
+        if let error = state.mutationError { throw error }
+        return state.result
+    }
+
+    func release(_ id: String, region: String, apiKey: String) async throws -> ReservedIPActionResult {
+        calls.append("release \(id) \(region) \(apiKey)")
+        await state.duringMutation?()
+        if let error = state.mutationError { throw error }
+        return state.result
+    }
+
+    func listInstances(region: String, apiKey: String) async throws -> PaginatedList<ReservedIPInstanceChoice> {
+        calls.append("instances \(region) \(apiKey)")
+        return state.instances
+    }
+}
+
+@Suite("Reserved IPs")
+@MainActor
+struct ReservedIPTests {
+    @MainActor
+    fileprivate final class Environment {
+        let api = FakeReservedIPAPI()
+        let notifications = NotificationCenter()
+        var region = "LON1"
+        var apiKey = "key-a"
+        var accessAllowed = true
+        var reloadSucceeds = true
+        var reloads = 0
+        var activities: [ReservedIPActivity] = []
+        let account = CivoAccount(apiKey: "key-a")
+        lazy var controller: ReservedIPController = {
+            let controller = ReservedIPController(
+                api: api,
+                settingsRegion: { [unowned self] in region },
+                isAccessAllowed: { [unowned self] in accessAllowed },
+                apiKey: { [unowned self] in apiKey },
+                notificationCenter: notifications,
+                recordActivity: { [unowned self] activity in activities.append(activity) }
+            )
+            controller.reloadList = { [unowned self] in
+                reloads += 1
+                return reloadSucceeds
+            }
+            return controller
+        }()
+
+        /// What was sent, without the loads before it.
+        var mutations: [String] {
+            get async { await api.calls.filter { !$0.hasPrefix("show") && !$0.hasPrefix("list") && !$0.hasPrefix("instances") } }
+        }
+
+        func setIP(_ assignment: ReservedIPAssignment, name: String = "edge") async {
+            await api.update { $0.ip = CivoReservedIP(id: "ip-1", name: name, ip: "203.0.113.7", assignment: assignment) }
+        }
+
+        /// Opens the action as the detail page does, for the IP loaded from LON1 with key-a.
+        func begin(_ operation: ReservedIPOperation, _ assignment: ReservedIPAssignment = .unassigned, listIsComplete: Bool = true) {
+            let ip = operation == .reserve ? nil : CivoReservedIP(id: "ip-1", name: "edge", ip: "203.0.113.7", assignment: assignment)
+            controller.begin(operation, ip: ip, region: "LON1", account: account, listIsComplete: listIsComplete)
+        }
+    }
+
+    private static let instance = ReservedIPAssignment.assigned(ReservedIPTarget(id: "vm-1", name: "web"))
+    private static let balancer = ReservedIPAssignment.unrecognized(fingerprint: #"{"id":"lb-1","name":"lb","type":"loadbalancer"}"#)
+
+    private static func decoded(_ json: String) throws -> CivoReservedIP {
+        try JSONDecoder().decode(CivoReservedIP.self, from: Data(json.utf8))
+    }
+
+    @Test("The assignment follows the shapes Civo was seen to send; anything else is never read as unassigned")
+    func decoding() throws {
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge"}"#).assignment == .unknown)
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": null}"#).assignment == .unknown)
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "ip": "203.0.113.7", "assigned_to": {}}"#).assignment == .unassigned)
+        let assigned = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "vm-1", "type": "instance", "name": "web"}}"#)
+        #expect(assigned.assignment == Self.instance)
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "type": "loadbalancer", "name": "lb"}}"#).assignment == Self.balancer)
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"type": "instance"}}"#).assignment == .unrecognized(fingerprint: #"{"type":"instance"}"#))
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"unexpected": 1}}"#).assignment == .unrecognized(fingerprint: #"{"unexpected":1.0}"#))
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": "vm-1"}"#).assignment == .unrecognized(fingerprint: #""vm-1""#))
+    }
+
+    @Test("Each action is offered only for the assignment it fits, and release stays possible for any loaded one")
+    func eligibility() {
+        let all: [ReservedIPAssignment] = [.unknown, .unassigned, Self.instance, Self.balancer]
+        let offered = { (operation: ReservedIPOperation) in
+            all.map { ReservedIPRules.eligibilityError(for: operation, assignment: $0) == nil }
+        }
+        #expect(offered(.assign) == [false, true, false, false])
+        #expect(offered(.unassign) == [false, false, true, false])
+        #expect(offered(.release) == [false, true, true, true])
+        #expect(ReservedIPRules.typedNameMatches("edge", name: "edge"))
+        #expect(!ReservedIPRules.typedNameMatches("edge ", name: "edge"))
+        #expect(!ReservedIPRules.typedNameMatches("Edge", name: "edge"))
+    }
+
+    @Test("Unassign loads the IP again with the same key and sends once, only for the confirmed target and name")
+    func unassign() async {
+        let env = Environment()
+        env.begin(.unassign, Self.instance)
+        #expect(env.controller.request != nil)
+        #expect(await env.controller.confirm(.unassign(typedName: "edg")) == nil)
+        #expect(await env.controller.confirm(.release(typedName: "edge")) == nil)
+        #expect(await env.api.calls.isEmpty)
+
+        await env.setIP(Self.instance)
+        #expect(await env.controller.confirm(.unassign(typedName: "edge")) == .done)
+        #expect(await env.api.calls == ["show ip-1 LON1 key-a", "unassign ip-1 LON1 key-a"])
+        #expect(env.controller.request == nil)
+        #expect(env.activities == [ReservedIPActivity(action: "Unassigned reserved IP", detail: nil, name: "edge", id: "ip-1")])
+        #expect(env.reloads == 1)
+        #expect(await env.controller.confirm(.unassign(typedName: "edge")) == nil)
+        #expect(await env.mutations.count == 1)
+    }
+
+    @Test("Unassign and release send nothing when the IP changed since the user saw it")
+    func changedSinceOpened() async {
+        let other = ReservedIPAssignment.assigned(ReservedIPTarget(id: "vm-2", name: "db"))
+        let cases: [(ReservedIPOperation, ReservedIPAssignment, ReservedIPAssignment, String, ReservedIPError)] = [
+            (.unassign, Self.instance, .unassigned, "edge", .assignmentChanged),
+            (.unassign, Self.instance, other, "edge", .assignmentChanged),
+            (.unassign, Self.instance, .unknown, "edge", .assignmentUnknown),
+            (.release, .unassigned, Self.instance, "edge", .assignmentChanged),
+            (.release, Self.instance, .unassigned, "edge", .assignmentChanged),
+            (.release, .unassigned, .unassigned, "renamed", .nameChanged),
+            (.release, Self.balancer, .unrecognized(fingerprint: #"{"id":"lb-2","name":"lb","type":"loadbalancer"}"#), "edge", .assignmentChanged),
+        ]
+        for (operation, captured, reloaded, name, problem) in cases {
+            let env = Environment()
+            env.begin(operation, captured)
+            await env.setIP(reloaded, name: name)
+            let action: ReservedIPAction = operation == .unassign ? .unassign(typedName: "edge") : .release(typedName: "edge")
+            #expect(await env.controller.confirm(action) == .cancelled)
+            #expect(await env.mutations.isEmpty)
+            #expect(env.controller.request == nil)
+            #expect(env.controller.notice?.message == problem.message)
+        }
+    }
+
+    @Test("Release works for an unused IP and for an assigned one, whose target loses connectivity")
+    func release() async {
+        for assignment in [ReservedIPAssignment.unassigned, Self.instance, Self.balancer] {
+            let env = Environment()
+            env.begin(.release, assignment)
+            await env.setIP(assignment)
+            #expect(await env.controller.confirm(.release(typedName: "edge")) == .done)
+            #expect(await env.mutations == ["release ip-1 LON1 key-a"])
+        }
+    }
+
+    @Test("A 404 counts as gone only when the complete list no longer shows the IP")
+    func notFound() async {
+        let notFound = CivoAPIError.httpError(404, "")
+        let gone = Environment()
+        gone.begin(.release)
+        await gone.api.update { $0.showError = notFound; $0.list = PaginatedList(items: [], isComplete: true) }
+        #expect(await gone.controller.confirm(.release(typedName: "edge")) == .cancelled)
+        #expect(gone.controller.notice?.message == ReservedIPError.ipGone.message)
+
+        for list in [PaginatedList(items: [CivoReservedIP(id: "ip-1", name: "edge", ip: nil, assignment: .unknown)], isComplete: true),
+                     PaginatedList<CivoReservedIP>(items: [], isComplete: false)] {
+            let unclear = Environment()
+            unclear.begin(.release)
+            await unclear.api.update { $0.showError = notFound; $0.list = list }
+            #expect(await unclear.controller.confirm(.release(typedName: "edge")) == .uncertain)
+            #expect(unclear.controller.notice?.message == ReservedIPError.ipStateUnclear.message)
+            #expect(await unclear.mutations.isEmpty)
+        }
+    }
+
+    @Test("Assign sends the chosen instance, with its type, only while a complete list still has it")
+    func assign() async {
+        let env = Environment()
+        env.begin(.assign)
+        await env.controller.loadInstances()
+        #expect(env.controller.instanceChoices == .loaded([ReservedIPInstanceChoice(id: "vm-1", hostname: "web", publicIp: "198.51.100.4")]))
+        #expect(await env.controller.confirm(.assign(instanceId: "vm-1")) == .done)
+        #expect(await env.mutations == ["assign ip-1 vm-1 LON1 key-a"])
+        #expect(env.activities.first?.detail == "web")
+
+        let gone = Environment()
+        gone.begin(.assign)
+        #expect(await gone.controller.confirm(.assign(instanceId: "vm-9")) == .cancelled)
+        #expect(gone.controller.notice?.message == ReservedIPError.instanceGone.message)
+
+        let incomplete = Environment()
+        incomplete.begin(.assign)
+        await incomplete.api.update { $0.instances = PaginatedList(items: $0.instances.items, isComplete: false) }
+        #expect(await incomplete.controller.confirm(.assign(instanceId: "vm-1")) == nil)
+        #expect(incomplete.controller.sheetError == ReservedIPError.incompleteInstanceList.message)
+        #expect(incomplete.controller.request != nil)
+
+        let assigned = Environment()
+        assigned.begin(.assign)
+        await assigned.setIP(Self.instance)
+        #expect(await assigned.controller.confirm(.assign(instanceId: "vm-1")) == .cancelled)
+        #expect(await assigned.mutations.isEmpty)
+    }
+
+    @Test("Nothing is sent once Full Access, the account or the region changed, at any step")
+    func staleTarget() async {
+        let revoked = Environment()
+        revoked.begin(.release)
+        revoked.accessAllowed = false
+        #expect(await revoked.controller.confirm(.release(typedName: "edge")) == .cancelled)
+        #expect(revoked.controller.notice?.message == ReservedIPError.accessRevoked.message)
+        #expect(await revoked.api.calls.isEmpty)
+
+        let changes: [(String, @MainActor (Environment) -> Void, ReservedIPError)] = [
+            ("before", { $0.apiKey = "key-b" }, .accountChanged),
+            ("before", { $0.region = "NYC1" }, .regionChanged),
+            ("during", { $0.apiKey = "key-b" }, .accountChanged),
+            ("during", { $0.region = "NYC1" }, .regionChanged),
+        ]
+        for (moment, change, problem) in changes {
+            let env = Environment()
+            env.begin(.unassign, Self.instance)
+            await env.setIP(Self.instance)
+            if moment == "before" {
+                change(env)
+            } else {
+                await env.api.update { $0.duringShow = { await MainActor.run { change(env) } } }
+            }
+            #expect(await env.controller.confirm(.unassign(typedName: "edge")) == .cancelled)
+            #expect(env.controller.notice?.message == problem.message)
+            #expect(await env.mutations.isEmpty)
+            #expect(env.controller.request == nil)
+        }
+    }
+
+    @Test("When the account or region changes while a request is pending, no list of the other context stands in for its result")
+    func contextChangedWhilePending() async {
+        let accepted = Environment()
+        accepted.begin(.reserve)
+        await accepted.api.update { $0.ack = ReservedIPAck(id: "ip-2", name: "edge") }
+        await accepted.api.update { $0.duringMutation = { await MainActor.run { accepted.apiKey = "key-b" } } }
+        #expect(await accepted.controller.confirm(.reserve(name: "edge")) == .doneRefreshFailed)
+        #expect(accepted.activities.count == 1)
+        #expect(accepted.reloads == 0)
+        #expect(accepted.controller.notice?.message == ReservedIPError.contextChangedWhilePending.message)
+
+        let unclear = Environment()
+        unclear.begin(.release)
+        await unclear.api.update {
+            $0.mutationError = CivoAPIError.httpError(503, "")
+            $0.duringMutation = { await MainActor.run { unclear.region = "NYC1" } }
+        }
+        #expect(await unclear.controller.confirm(.release(typedName: "edge")) == .uncertain)
+        #expect(unclear.reloads == 0)
+        #expect(unclear.controller.notice?.message == ReservedIPError.contextChangedWhilePending.message)
+    }
+
+    @Test("A change of account or region closes an open action before anything is awaited")
+    func observers() {
+        let env = Environment()
+        env.begin(.release)
+        env.region = "NYC1"
+        env.notifications.post(name: .civoRegionDidChange, object: nil)
+        #expect(env.controller.request == nil)
+        #expect(env.controller.notice?.message == ReservedIPError.regionChanged.message)
+    }
+
+    @Test("An incomplete list, an unknown assignment or a mismatching assignment keeps an action from opening")
+    func blockedOpening() {
+        let env = Environment()
+        env.begin(.release, listIsComplete: false)
+        #expect(env.controller.request == nil)
+        #expect(env.controller.notice?.message == ReservedIPError.incompleteList.message)
+        env.begin(.release, .unknown)
+        #expect(env.controller.request == nil)
+        env.begin(.unassign, Self.balancer)
+        #expect(env.controller.notice?.message == ReservedIPError.targetNotIdentifiable.message)
+        env.begin(.assign, Self.instance)
+        #expect(env.controller.notice?.message == ReservedIPError.alreadyAssigned.message)
+    }
+
+    @Test("Reserve and rename send once, and an unexpected answer is uncertain, never success")
+    func reserveAndRename() async {
+        let env = Environment()
+        env.begin(.reserve)
+        #expect(await env.controller.confirm(.reserve(name: "  ")) == nil)
+        await env.api.update { $0.ack = ReservedIPAck(id: "ip-2", name: "edge") }
+        #expect(await env.controller.confirm(.reserve(name: " edge ")) == .done)
+        #expect(await env.mutations == ["reserve edge LON1 key-a"])
+        #expect(env.activities == [ReservedIPActivity(action: "Created reserved IP", detail: nil, name: "edge", id: "ip-2")])
+
+        let empty = Environment()
+        empty.begin(.reserve)
+        await empty.api.update { $0.ack = ReservedIPAck(id: "", name: "edge") }
+        #expect(await empty.controller.confirm(.reserve(name: "edge")) == .uncertain)
+        #expect(empty.controller.request == nil)
+        #expect(empty.reloads == 1)
+
+        let renamed = Environment()
+        renamed.begin(.rename)
+        #expect(await renamed.controller.confirm(.rename(name: "edge")) == nil)
+        await renamed.api.update { $0.ack = ReservedIPAck(id: "ip-9", name: "core") }
+        #expect(await renamed.controller.confirm(.rename(name: "core")) == .uncertain)
+        #expect(await renamed.mutations == ["rename ip-1 core LON1 key-a"])
+        #expect(renamed.activities.isEmpty)
+    }
+
+    @Test("A refusal can be corrected and sent again on purpose; a timeout or server error is never sent again")
+    func refusalAndUncertainty() async {
+        let env = Environment()
+        env.begin(.reserve)
+        await env.api.update { $0.mutationError = CivoAPIError.httpError(409, "") }
+        #expect(await env.controller.confirm(.reserve(name: "edge")) == .failed)
+        #expect(env.controller.request != nil)
+        #expect(env.controller.sheetError != nil)
+        await env.api.update { $0.mutationError = nil }
+        #expect(await env.controller.confirm(.reserve(name: "edge2")) == .done)
+        #expect(await env.mutations == ["reserve edge LON1 key-a", "reserve edge2 LON1 key-a"])
+
+        for error in [CivoAPIError.httpError(408, ""), .httpError(503, ""), .networkError("timed out"), .decodingError("")] {
+            let uncertain = Environment()
+            uncertain.begin(.release)
+            await uncertain.api.update { $0.mutationError = error }
+            #expect(await uncertain.controller.confirm(.release(typedName: "edge")) == .uncertain)
+            #expect(uncertain.controller.request == nil)
+            #expect(uncertain.controller.notice?.message == ReservedIPController.unclearResultMessage)
+            #expect(await uncertain.mutations.count == 1)
+            #expect(uncertain.reloads == 1)
+        }
+
+        let pending = Environment()
+        pending.begin(.release)
+        await pending.api.update { $0.result = ReservedIPActionResult(result: "pending") }
+        #expect(await pending.controller.confirm(.release(typedName: "edge")) == .uncertain)
+        #expect(pending.activities.isEmpty)
+    }
+
+    @Test("An accepted change whose follow-up reload failed says so, and a later successful reload clears it")
+    func refreshFailure() async {
+        let env = Environment()
+        env.begin(.reserve)
+        env.reloadSucceeds = false
+        #expect(await env.controller.confirm(.reserve(name: "edge")) == .doneRefreshFailed)
+        #expect(env.controller.request == nil)
+        #expect(env.controller.notice == ReservedIPController.Notice(message: ReservedIPController.refreshFailedMessage, offersReload: true))
+        env.controller.listDidLoad()
+        #expect(env.controller.notice == nil)
     }
 }
