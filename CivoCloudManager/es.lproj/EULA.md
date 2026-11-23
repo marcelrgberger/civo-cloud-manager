@@ -1,9 +1,9 @@
-<!-- doc-id: EULA | lang: es | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: EULA | lang: es | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 1.4.0 | source: apps/documents/EULA.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Google Play section and Apple Business seats omitted -->
 # ACUERDO DE LICENCIA DE USUARIO FINAL (EULA)
 
 ## Acuerdo de Licencia Global Multiplataforma
 
-**Fecha de entrada en vigor:** Septiembre de 2026
+**Fecha de entrada en vigor:** 10 de diciembre de 2026
 
 **Editor:**
 DigitalFreedom
@@ -28,17 +28,13 @@ Si no está de acuerdo, no debe utilizar la Aplicación.
 
 Este Acuerdo se aplica a todos los canales de distribución, incluyendo, entre otros:
 
-- Apple App Store / TestFlight
-- Google Play Store / distribución APK
-- GitHub u otros repositorios de código fuente
-- Homebrew u otros gestores de paquetes
-- Descargas directas o distribución empresarial
+- Apple App Store, incluida la distribución a través de TestFlight (que no implica ninguna compra)
 
 La Aplicación puede proporcionarse como software gratuito, de pago, de código abierto o híbrido.
 
 ### 2.1 Ámbito global
 
-La Aplicación se distribuye a través de la Apple App Store y la Google Play Store y, por lo tanto, está disponible en todos los países y territorios a los que prestan servicio dichas plataformas. Este Acuerdo se aplica globalmente a todos esos usuarios, independientemente del país en el que se descargue, instale o utilice la Aplicación. El Editor adopta el Reglamento General de Protección de Datos (RGPD) de la Unión Europea y la legislación relacionada de la UE como estándar mínimo y lo aplica como base global; los derechos obligatorios de protección al consumidor y otros derechos legales otorgados por el país de residencia del usuario permanecen intactos y prevalecen siempre que sean más protectores.
+La Aplicación se distribuye a través de la Apple App Store y, por lo tanto, está disponible en todos los países y territorios a los que presta servicio dicha plataforma. Este Acuerdo se aplica globalmente a todos esos usuarios, independientemente del país en el que se descargue, instale o utilice la Aplicación. El Editor adopta el Reglamento General de Protección de Datos (RGPD) de la Unión Europea y la legislación relacionada de la UE como estándar mínimo y lo aplica como base global; los derechos obligatorios de protección al consumidor y otros derechos legales otorgados por el país de residencia del usuario permanecen intactos y prevalecen siempre que sean más protectores.
 
 ---
 
@@ -78,15 +74,11 @@ Usted no deberá:
 
 ## 6. TÉRMINOS COMERCIALES
 
-La Aplicación puede ofrecerse:
+La Aplicación incluye un período de acceso gratuito de siete días desde el primer inicio, con plena funcionalidad. Transcurrido ese período, la gestión del cortafuegos en la barra de menús sigue siendo gratuita, y el panel de control requiere una compra única no consumible de Full Access a través de la Apple App Store. La Aplicación no tiene suscripción, ni renovación automática, ni cargo recurrente. El precio lo muestra la Apple App Store, y una compra completada puede restaurarse.
 
-- De forma gratuita
-- Como compra única
-- Como suscripción
+Los pagos se procesan a través de la Apple App Store. No existe ninguna otra vía de pago.
 
-Los pagos pueden procesarse a través de plataformas de terceros (por ejemplo, Apple, Google) o directamente.
-
-Los reembolsos y la facturación están sujetos a los términos de la plataforma respectiva o a la legislación aplicable.
+Los reembolsos y la facturación están sujetos a los términos de la Apple App Store o a la legislación aplicable.
 
 ---
 
@@ -180,7 +172,9 @@ Usted acepta indemnizar al Editor frente a reclamaciones derivadas de:
 
 ## 14. TERMINACIÓN
 
-El Editor podrá dar por terminado este Acuerdo en cualquier momento.
+El Editor podrá dar por terminado este Acuerdo si usted lo incumple de forma sustancial; cuando el incumplimiento pueda subsanarse, solo después de haberle requerido que lo subsane y de que no lo haya hecho en un plazo razonable.
+
+El Editor podrá, por lo demás, dar por terminado este Acuerdo en cualquier momento, con una excepción respecto de lo que usted ha pagado: una licencia adquirida mediante una compra única (una licencia totalmente pagada, como una compra vitalicia) no puede darse por terminada de esta manera. Los derechos legales imperativos, incluido cualquier derecho a reembolso, permanecen intactos.
 
 Tras la terminación, usted debe cesar el uso y eliminar todas las copias de la Aplicación.
 
@@ -221,9 +215,18 @@ Las leyes obligatorias de protección al consumidor de su país de residencia pe
 
 - Las leyes de protección al consumidor varían según la provincia y pueden prevalecer sobre partes de este Acuerdo
 
-### 17.5 Australia
+### 17.5 Australia y Nueva Zelanda
 
-- Se aplican las garantías legales bajo la Ley de Consumidor Australiana y no pueden ser excluidas
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
+
+El aviso anterior califica todas las exenciones de garantía y limitaciones de responsabilidad de este Acuerdo y prevalece sobre ellas. Las garantías se imputan al Editor como proveedor: Apple actúa como agente del Editor en estos territorios. El artículo 64 de la ACL y el artículo 43 de la Ley neozelandesa de Garantías al Consumidor (Consumer Guarantees Act) anulan cualquier exclusión contractual.
 
 ### 17.6 Otras jurisdicciones
 
@@ -237,11 +240,43 @@ Si alguna disposición es inválida, el resto permanece en vigor.
 
 ---
 
-## 19. ACUERDO COMPLETO
+## 19. APPLE APP STORE - TÉRMINOS ADICIONALES
+
+Esta sección se aplica **únicamente** a las copias de la Aplicación adquiridas a través de la Apple App Store. Si entra en conflicto con cualquier otra disposición de este Acuerdo, esta sección prevalece para dichas copias. Refleja los términos mínimos que Apple exige a un desarrollador que aporta su propio acuerdo de licencia de usuario final.
+
+**19.1 Reconocimiento.** Este Acuerdo se celebra únicamente entre usted y el Editor, y no con Apple. El Editor, y no Apple, es el único responsable de la Aplicación y de su contenido.
+
+**19.2 Alcance de la licencia.** La licencia que se le concede para la Aplicación es una licencia intransferible para utilizar la Aplicación en cualquier dispositivo de la marca Apple que usted posea o controle, y conforme a lo permitido por las Reglas de Uso establecidas en los Términos y Condiciones de los Servicios Multimedia de Apple (Apple Media Services Terms and Conditions), salvo que otras cuentas asociadas con usted puedan acceder a la Aplicación y utilizarla mediante Compartir en Familia o compras por volumen.
+
+**19.3 Mantenimiento y soporte.** El Editor es el único responsable de prestar cualquier servicio de mantenimiento y soporte de la Aplicación. Apple no tiene ninguna obligación de prestar servicios de mantenimiento y soporte en relación con la Aplicación.
+
+**19.4 Garantía.** El Editor es el único responsable de cualquier garantía del producto, ya sea expresa o implícita por ley, en la medida en que no haya sido excluida de forma efectiva. En caso de que la Aplicación no se ajuste a una garantía aplicable, usted podrá notificarlo a Apple, y Apple le reembolsará el precio de compra de la Aplicación. En la máxima medida permitida por la legislación aplicable, Apple no tendrá ninguna otra obligación de garantía respecto de la Aplicación. Cualesquiera otras reclamaciones, pérdidas, responsabilidades, daños, costes o gastos atribuibles a la falta de conformidad con una garantía son responsabilidad exclusiva del Editor.
+
+**19.5 Reclamaciones sobre el producto.** El Editor, y no Apple, es responsable de atender cualquier reclamación relacionada con la Aplicación o con su posesión y uso de ella, incluidas, entre otras, las reclamaciones por responsabilidad por productos, cualquier reclamación de que la Aplicación no cumple un requisito legal o reglamentario aplicable, y las reclamaciones derivadas de la legislación de protección al consumidor, de privacidad o similar, incluso en relación con el uso por parte de la Aplicación de cualquier marco para la gestión de datos de salud o actividad física.
+
+**19.6 Derechos de propiedad intelectual.** En caso de que un tercero reclame que la Aplicación o su posesión y uso de ella infringen los derechos de propiedad intelectual de ese tercero, el Editor, y no Apple, es el único responsable de la investigación, defensa, transacción y resolución de dicha reclamación.
+
+**19.7 Cumplimiento legal.** Usted declara y garantiza que no se encuentra en un país sujeto a un embargo del Gobierno de los Estados Unidos o designado por el Gobierno de los Estados Unidos como país que apoya el terrorismo, y que no figura en ninguna lista del Gobierno de los Estados Unidos de partes prohibidas o restringidas.
+
+**19.8 Nombre y dirección del desarrollador.** Las preguntas, quejas y reclamaciones relacionadas con la Aplicación deben dirigirse a: DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, Estados Unidos, `support@digitalfreedom.co.za`, https://support.apps.digitalfreedom.co.za
+
+**19.9 Términos de terceros.** Usted debe cumplir los términos de acuerdo de terceros aplicables al utilizar la Aplicación.
+
+**19.10 Tercero beneficiario.** Usted reconoce y acepta que Apple y las filiales de Apple son terceros beneficiarios de este Acuerdo, y que, una vez que usted lo acepte, Apple tendrá el derecho (y se considerará que ha aceptado el derecho) de hacer valer este Acuerdo frente a usted como tercero beneficiario del mismo.
+
+---
+
+## 20. GOOGLE PLAY
+
+Civo Cloud Manager no se distribuye a través de Google Play; esta sección no es aplicable.
+
+---
+
+## 21. ACUERDO COMPLETO
 
 Este Acuerdo constituye el acuerdo completo entre usted y el Editor.
 
-Complementa los términos específicos de la plataforma (Apple, Google).
+Complementa los términos de la plataforma Apple App Store. La sección 19 prevalece sobre cualquier disposición contradictoria de este Acuerdo para las copias adquiridas a través de la App Store.
 
 ---
 

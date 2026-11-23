@@ -1,9 +1,9 @@
-<!-- doc-id: EULA | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: EULA | lang: de | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 1.4.0 | source: apps/documents/EULA.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Google Play section and Apple Business seats omitted -->
 # ENDNUTZER-LIZENZVEREINBARUNG (EULA)
 
 ## Globale plattformübergreifende Lizenzvereinbarung
 
-**Wirksamkeitsdatum:** September 2026
+**Wirksamkeitsdatum:** 10. Dezember 2026
 
 **Herausgeber:**
 DigitalFreedom
@@ -28,17 +28,13 @@ Wenn Sie nicht einverstanden sind, dürfen Sie die App nicht nutzen.
 
 Diese Vereinbarung gilt für alle Vertriebskanäle, einschließlich, aber nicht beschränkt auf:
 
-- Apple App Store / TestFlight
-- Google Play Store / APK-Verteilung
-- GitHub oder andere Quellcode-Repositorien
-- Homebrew oder andere Paketmanager
-- Direkte Downloads oder Unternehmensverteilung
+- Apple App Store, einschließlich der Verteilung über TestFlight (die keinen Kauf umfasst)
 
 Die App kann als kostenlose, kostenpflichtige, Open-Source- oder hybride Software bereitgestellt werden.
 
 ### 2.1 Globaler Geltungsbereich
 
-Die App wird über den Apple App Store und den Google Play Store vertrieben und ist daher in jedem Land und jedem Gebiet verfügbar, das von diesen Plattformen bedient wird. Diese Vereinbarung gilt weltweit für alle derartigen Nutzer, unabhängig davon, in welchem Land die App heruntergeladen, installiert oder genutzt wird. Der Herausgeber übernimmt die Datenschutz-Grundverordnung (DSGVO) der Europäischen Union und die damit verbundenen EU-Gesetze als Mindeststandard und wendet diese weltweit an; zwingende Verbraucherschutzrechte und andere gesetzliche Rechte, die dem Nutzer durch das Recht seines Wohnsitzlandes gewährt werden, bleiben unberührt und haben Vorrang, sofern sie weitergehenden Schutz bieten.
+Die App wird über den Apple App Store vertrieben und ist daher in jedem Land und jedem Gebiet verfügbar, das von dieser Plattform bedient wird. Diese Vereinbarung gilt weltweit für alle derartigen Nutzer, unabhängig davon, in welchem Land die App heruntergeladen, installiert oder genutzt wird. Der Herausgeber übernimmt die Datenschutz-Grundverordnung (DSGVO) der Europäischen Union und die damit verbundenen EU-Gesetze als Mindeststandard und wendet diese weltweit an; zwingende Verbraucherschutzrechte und andere gesetzliche Rechte, die dem Nutzer durch das Recht seines Wohnsitzlandes gewährt werden, bleiben unberührt und haben Vorrang, sofern sie weitergehenden Schutz bieten.
 
 ---
 
@@ -78,15 +74,11 @@ Sie dürfen nicht:
 
 ## 6. KOMMERZIELLE BEDINGUNGEN
 
-Die App kann angeboten werden:
+Die App enthält einen kostenlosen Zugangszeitraum von sieben Tagen ab dem ersten Start mit vollem Funktionsumfang. Nach Ablauf dieses Zeitraums bleibt die Firewall-Verwaltung in der Menüleiste kostenlos, und das Dashboard erfordert den einmaligen, nicht verbrauchbaren Kauf von Vollzugriff über den Apple App Store. Die App hat kein Abonnement, keine automatische Verlängerung und keine wiederkehrende Gebühr. Der Preis wird vom Apple App Store angezeigt, und ein abgeschlossener Kauf kann wiederhergestellt werden.
 
-- Kostenfrei
-- Als Einmalkauf
-- Als Abonnement
+Zahlungen werden über den Apple App Store abgewickelt. Einen anderen Zahlungsweg gibt es nicht.
 
-Zahlungen können über Drittanbieter-Plattformen (z. B. Apple, Google) oder direkt abgewickelt werden.
-
-Rückerstattungen und Abrechnungen unterliegen den jeweiligen Plattformbedingungen oder geltendem Recht.
+Rückerstattungen und Abrechnungen unterliegen den Bedingungen des Apple App Store oder geltendem Recht.
 
 ---
 
@@ -180,7 +172,9 @@ Sie verpflichten sich, den Herausgeber von Ansprüchen freizustellen, die entste
 
 ## 14. KÜNDIGUNG
 
-Der Herausgeber kann diese Vereinbarung jederzeit kündigen.
+Der Herausgeber kann diese Vereinbarung kündigen, wenn Sie wesentlich gegen sie verstoßen; ist der Verstoß behebbar, erst nachdem Sie zur Behebung aufgefordert wurden und diese nicht innerhalb einer angemessenen Frist erfolgt ist.
+
+Der Herausgeber kann diese Vereinbarung im Übrigen jederzeit kündigen, mit einer Ausnahme für das, was Sie bezahlt haben: Eine durch Einmalkauf erworbene Lizenz (eine vollständig bezahlte Lizenz, etwa ein Lifetime-Kauf) kann auf diese Weise nicht gekündigt werden. Zwingende gesetzliche Rechte, einschließlich eines etwaigen Anspruchs auf Rückerstattung, bleiben unberührt.
 
 Nach Beendigung müssen Sie die Nutzung einstellen und alle Kopien der App löschen.
 
@@ -221,9 +215,18 @@ Zwingende Verbraucherschutzgesetze Ihres Wohnsitzlandes bleiben unberührt.
 
 - Verbraucherschutzgesetze variieren je nach Provinz und können Teile dieser Vereinbarung außer Kraft setzen
 
-### 17.5 Australien
+### 17.5 Australien und Neuseeland
 
-- Gesetzliche Garantien nach dem australischen Verbraucherschutzgesetz gelten und können nicht ausgeschlossen werden
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
+
+Der vorstehende Hinweis schränkt jeden Gewährleistungsausschluss und jede Haftungsbeschränkung in dieser Vereinbarung ein und geht ihnen vor. Die Garantien richten sich gegen den Herausgeber als Lieferanten: Apple handelt in diesen Gebieten als Vertreter des Herausgebers. Section 64 ACL und s. 43 des neuseeländischen Consumer Guarantees Act erklären jeden Ausschluss durch Vertrag für unwirksam.
 
 ### 17.6 Andere Rechtsordnungen
 
@@ -237,11 +240,43 @@ Sollte eine Bestimmung unwirksam sein, bleibt der Rest wirksam.
 
 ---
 
-## 19. GESAMTVEREINBARUNG
+## 19. APPLE APP STORE - ZUSÄTZLICHE BEDINGUNGEN
+
+Dieser Abschnitt gilt **nur** für Kopien der App, die über den Apple App Store erworben wurden. Soweit er mit einer anderen Bestimmung dieser Vereinbarung in Widerspruch steht, geht dieser Abschnitt für diese Kopien vor. Er gibt die Mindestbedingungen wieder, die Apple von einem Entwickler verlangt, der eine eigene Endnutzer-Lizenzvereinbarung bereitstellt.
+
+**19.1 Bestätigung.** Diese Vereinbarung wird ausschließlich zwischen Ihnen und dem Herausgeber geschlossen, nicht mit Apple. Der Herausgeber, nicht Apple, ist allein für die App und ihre Inhalte verantwortlich.
+
+**19.2 Umfang der Lizenz.** Die Ihnen für die App gewährte Lizenz ist eine nicht übertragbare Lizenz zur Nutzung der App auf jedem Gerät der Marke Apple, das Sie besitzen oder kontrollieren, und gemäß den Nutzungsregeln (Usage Rules) in den Apple Media Services Terms and Conditions; abweichend davon darf auf die App auch über die Familienfreigabe oder den Mengenkauf von anderen mit Ihnen verbundenen Accounts zugegriffen werden und sie dürfen von diesen genutzt werden.
+
+**19.3 Wartung und Support.** Der Herausgeber ist allein für die Erbringung von Wartungs- und Supportleistungen für die App verantwortlich. Apple ist in keiner Weise verpflichtet, Wartungs- und Supportleistungen für die App zu erbringen.
+
+**19.4 Gewährleistung.** Der Herausgeber ist allein für alle Produktgarantien verantwortlich, seien sie ausdrücklich oder gesetzlich vorausgesetzt, soweit sie nicht wirksam ausgeschlossen sind. Entspricht die App einer geltenden Gewährleistung nicht, können Sie Apple benachrichtigen, und Apple erstattet Ihnen den Kaufpreis der App. Soweit nach geltendem Recht zulässig, hat Apple in Bezug auf die App keine weitere Gewährleistungspflicht. Alle sonstigen Ansprüche, Verluste, Verbindlichkeiten, Schäden, Kosten oder Aufwendungen, die auf die Nichteinhaltung einer Gewährleistung zurückzuführen sind, liegen in der alleinigen Verantwortung des Herausgebers.
+
+**19.5 Produktbezogene Ansprüche.** Der Herausgeber, nicht Apple, ist für die Bearbeitung aller Ansprüche im Zusammenhang mit der App oder Ihrem Besitz und Ihrer Nutzung der App verantwortlich, einschließlich, aber nicht beschränkt auf Produkthaftungsansprüche, Ansprüche wegen Nichteinhaltung geltender gesetzlicher oder behördlicher Anforderungen sowie Ansprüche aus Verbraucherschutz-, Datenschutz- oder ähnlichen Gesetzen, auch im Zusammenhang mit der Nutzung eines Frameworks zur Verwaltung von Gesundheits- oder Fitnessdaten durch die App.
+
+**19.6 Rechte des geistigen Eigentums.** Macht ein Dritter geltend, dass die App oder Ihr Besitz und Ihre Nutzung der App seine Rechte des geistigen Eigentums verletzt, ist allein der Herausgeber, nicht Apple, für die Untersuchung, Abwehr, Beilegung und Erledigung dieses Anspruchs verantwortlich.
+
+**19.7 Einhaltung des Rechts.** Sie versichern und gewährleisten, dass Sie sich nicht in einem Land befinden, das einem Embargo der US-Regierung unterliegt oder von der US-Regierung als Land eingestuft wurde, das den Terrorismus unterstützt, und dass Sie auf keiner Liste der US-Regierung für verbotene oder beschränkte Parteien geführt werden.
+
+**19.8 Name und Anschrift des Entwicklers.** Fragen, Beschwerden und Ansprüche im Zusammenhang mit der App sind zu richten an: DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, Vereinigte Staaten, `support@digitalfreedom.co.za`, https://support.apps.digitalfreedom.co.za
+
+**19.9 Bedingungen Dritter.** Sie müssen bei der Nutzung der App die geltenden Vertragsbedingungen Dritter einhalten.
+
+**19.10 Drittbegünstigter.** Sie erkennen an und stimmen zu, dass Apple und die Tochtergesellschaften von Apple Drittbegünstigte dieser Vereinbarung sind und dass Apple mit Ihrer Annahme dieser Vereinbarung das Recht hat (und als berechtigt gilt, dieses Recht angenommen zu haben), diese Vereinbarung als Drittbegünstigter gegen Sie durchzusetzen.
+
+---
+
+## 20. GOOGLE PLAY
+
+Civo Cloud Manager wird nicht über Google Play vertrieben; dieser Abschnitt ist nicht anwendbar.
+
+---
+
+## 21. GESAMTVEREINBARUNG
 
 Diese Vereinbarung stellt die vollständige Vereinbarung zwischen Ihnen und dem Herausgeber dar.
 
-Sie ergänzt plattformspezifische Bedingungen (Apple, Google).
+Sie ergänzt die Plattformbedingungen des Apple App Store. Abschnitt 19 hat für über den App Store erworbene Kopien Vorrang vor jeder widersprechenden Bestimmung dieser Vereinbarung.
 
 ---
 

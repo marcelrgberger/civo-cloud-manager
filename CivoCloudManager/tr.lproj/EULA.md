@@ -1,9 +1,9 @@
-<!-- doc-id: EULA | lang: tr | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: EULA | lang: tr | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 1.4.0 | source: apps/documents/EULA.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Google Play section and Apple Business seats omitted -->
 # SON KULLANICI LİSANS SÖZLEŞMESİ (EULA)
 
 ## Küresel Çoklu Platform Lisans Sözleşmesi
 
-**Yürürlük Tarihi:** Eylül 2026
+**Yürürlük Tarihi:** 10 Aralık 2026
 
 **Yayıncı:**
 DigitalFreedom
@@ -28,17 +28,13 @@ Kabul etmiyorsanız, Uygulamayı kullanmamalısınız.
 
 Bu Sözleşme, aşağıdakiler dahil ancak bunlarla sınırlı olmamak üzere tüm dağıtım kanalları için geçerlidir:
 
-- Apple App Store / TestFlight
-- Google Play Store / APK dağıtımı
-- GitHub veya diğer kaynak kodu depoları
-- Homebrew veya diğer paket yöneticileri
-- Doğrudan indirme veya kurumsal dağıtım
+- Apple App Store, TestFlight dağıtımı dahil (satın alma içermez)
 
 Uygulama ücretsiz, ücretli, açık kaynaklı veya hibrit yazılım olarak sunulabilir.
 
 ### 2.1 Küresel kapsam
 
-Uygulama, Apple App Store ve Google Play Store üzerinden dağıtılmakta olup, bu platformların hizmet verdiği tüm ülke ve bölgelerde kullanılabilir durumdadır. Bu Sözleşme, Uygulamanın indirildiği, kurulduğu veya kullanıldığı ülke fark etmeksizin tüm kullanıcılar için küresel olarak geçerlidir. Yayıncı, Avrupa Birliği Genel Veri Koruma Tüzüğü (GDPR) ve ilgili AB yasalarını asgari standart olarak benimser ve küresel taban olarak uygular; kullanıcının ikamet ettiği ülkede yürürlükte olan zorunlu tüketici koruma ve diğer yasal haklar daha koruyucu olduğu sürece etkilenmez ve öncelikli olarak uygulanır.
+Uygulama, Apple App Store üzerinden dağıtılmakta olup, bu platformun hizmet verdiği tüm ülke ve bölgelerde kullanılabilir durumdadır. Bu Sözleşme, Uygulamanın indirildiği, kurulduğu veya kullanıldığı ülke fark etmeksizin tüm kullanıcılar için küresel olarak geçerlidir. Yayıncı, Avrupa Birliği Genel Veri Koruma Tüzüğü (GDPR) ve ilgili AB yasalarını asgari standart olarak benimser ve küresel taban olarak uygular; kullanıcının ikamet ettiği ülkede yürürlükte olan zorunlu tüketici koruma ve diğer yasal haklar daha koruyucu olduğu sürece etkilenmez ve öncelikli olarak uygulanır.
 
 ---
 
@@ -78,15 +74,11 @@ Uygulama açık kaynaklı yazılım içerebilir.
 
 ## 6. TİCARİ KOŞULLAR
 
-Uygulama aşağıdaki şekillerde sunulabilir:
+Uygulama, ilk başlatmadan itibaren yedi günlük, tam işlevli bir ücretsiz erişim süresi içerir. Bu sürenin ardından menü çubuğundaki güvenlik duvarı yönetimi ücretsiz kalır; kontrol paneli ise Apple App Store üzerinden Full Access'in tek seferlik, tüketilemez bir satın alımını gerektirir. Uygulamada abonelik, otomatik yenileme ve yinelenen ücret yoktur. Fiyat Apple App Store tarafından gösterilir ve tamamlanmış bir satın alma geri yüklenebilir.
 
-- Ücretsiz olarak
-- Tek seferlik satın alma ile
-- Abonelik olarak
+Ödemeler Apple App Store üzerinden işlenir. Başka bir ödeme yolu yoktur.
 
-Ödemeler üçüncü taraf platformlar (ör. Apple, Google) aracılığıyla veya doğrudan işlenebilir.
-
-İadeler ve faturalandırma, ilgili platformun koşullarına veya yürürlükteki yasalara tabidir.
+İadeler ve faturalandırma, Apple App Store koşullarına veya yürürlükteki yasalara tabidir.
 
 ---
 
@@ -145,7 +137,7 @@ Buna şunlar dahildir ancak bunlarla sınırlı değildir:
 
 ## 11. SORUMLULUĞUN SINIRLANDIRILMASI
 
-YASALARIN İZİN VERDİĞİ AZAMİ ÖLÇÜDE, YAYIMCI ŞU DURUMLARDAN SORUMLU OLMAYACAKTIR:
+YASALARIN İZİN VERDİĞİ AZAMİ ÖLÇÜDE, YAYINCI ŞU DURUMLARDAN SORUMLU OLMAYACAKTIR:
 
 - DOLAYLI VEYA SONUÇ OLARAK ORTAYA ÇIKAN ZARARLAR
 - VERİ, KAR VEYA İŞ KAYBI
@@ -170,7 +162,7 @@ Bu tür ortamlarda kullanım tamamen kendi riskinizdedir.
 
 ## 13. TAZMİNAT
 
-Aşağıdaki durumlardan doğan taleplere karşı Yayımcıyı tazmin etmeyi kabul edersiniz:
+Aşağıdaki durumlardan doğan taleplere karşı Yayıncıyı tazmin etmeyi kabul edersiniz:
 
 - Uygulamayı kullanımınız
 - Bu Sözleşmenin ihlali
@@ -180,7 +172,9 @@ Aşağıdaki durumlardan doğan taleplere karşı Yayımcıyı tazmin etmeyi kab
 
 ## 14. FESİH
 
-Yayımcı bu Sözleşmeyi istediği zaman feshedebilir.
+Yayıncı, Sözleşmeyi esaslı biçimde ihlal etmeniz halinde bu Sözleşmeyi feshedebilir; ihlal giderilebiliyorsa, ancak ihlali gidermeniz istendikten sonra makul bir süre içinde gidermemeniz halinde.
+
+Yayıncı, bunun dışında bu Sözleşmeyi istediği zaman feshedebilir; ancak ödediğiniz bedel bakımından bir istisna vardır: tek seferlik satın alma ile edinilmiş bir lisans (ömür boyu satın alma gibi, bedeli ödenmiş bir lisans) bu şekilde feshedilemez. Para iadesi hakkı dahil zorunlu yasal haklar etkilenmez.
 
 Fesih halinde, kullanımı derhal durdurmalı ve Uygulamanın tüm kopyalarını silmelisiniz.
 
@@ -221,9 +215,18 @@ Bu Sözleşme, Amerika Birleşik Devletleri'nin Wyoming Eyaleti yasalarına, ça
 
 - Tüketici koruma yasaları eyalete göre değişir ve bu Sözleşmenin bazı bölümlerinin yerine geçebilir
 
-### 17.5 Avustralya
+### 17.5 Avustralya ve Yeni Zelanda
 
-- Avustralya Tüketici Hukuku kapsamındaki yasal garantiler geçerlidir ve hariç tutulamaz
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
+
+Yukarıdaki bildirim, bu Sözleşmedeki her garanti reddini ve sorumluluk sınırlamasını niteler ve bunlara üstündür. Garantiler tedarikçi olarak Yayıncı'ya bağlanır: Apple bu bölgelerde Yayıncı'nın temsilcisi olarak hareket eder. ACL'nin 64. maddesi ve Yeni Zelanda Tüketici Garantileri Yasası'nın 43. maddesi, sözleşmeyle bu hakların dışına çıkma girişimlerini geçersiz kılar.
 
 ### 17.6 Diğer Yargı Bölgeleri
 
@@ -237,11 +240,43 @@ Herhangi bir hüküm geçersiz olursa, kalan hükümler yürürlükte kalır.
 
 ---
 
-## 19. TÜM SÖZLEŞME
+## 19. APPLE APP STORE - EK KOŞULLAR
 
-Bu Sözleşme sizinle Yayımcı arasındaki tüm sözleşmeyi oluşturur.
+Bu bölüm **yalnızca** Apple App Store üzerinden edinilen Uygulama kopyaları için geçerlidir. Bu Sözleşmenin başka bir hükmüyle çelişmesi halinde, bu kopyalar bakımından bu bölüm üstündür. Bölüm, kendi son kullanıcı lisans sözleşmesini sunan bir geliştiriciden Apple'ın talep ettiği asgari koşulları yansıtır.
 
-Platforma özgü koşulları (Apple, Google) tamamlar.
+**19.1 Kabul beyanı.** Bu Sözleşme yalnızca sizinle Yayıncı arasında akdedilir, Apple ile akdedilmez. Uygulamadan ve içeriğinden Apple değil, Yayıncı tek başına sorumludur.
+
+**19.2 Lisansın kapsamı.** Uygulama için size verilen lisans, sahip olduğunuz veya kontrol ettiğiniz Apple markalı herhangi bir cihazda ve Apple Media Services Terms and Conditions içinde belirtilen Kullanım Kurallarının izin verdiği ölçüde Uygulamayı kullanmak için devredilemez bir lisanstır; ancak Uygulamaya, Aile Paylaşımı veya toplu satın alma yoluyla sizinle ilişkilendirilmiş diğer hesaplar da erişebilir ve onu kullanabilir.
+
+**19.3 Bakım ve destek.** Uygulama için her türlü bakım ve destek hizmetinin sağlanmasından Yayıncı tek başına sorumludur. Apple'ın Uygulamaya ilişkin herhangi bir bakım ve destek hizmeti sunma yükümlülüğü hiçbir şekilde yoktur.
+
+**19.4 Garanti.** Yasa gereği açıkça veya zımnen verilmiş her türlü ürün garantisinden, etkili biçimde reddedilmedikleri ölçüde, Yayıncı tek başına sorumludur. Uygulamanın geçerli bir garantiye uygun olmaması halinde Apple'ı bilgilendirebilirsiniz; Apple de Uygulamanın satın alma bedelini size iade eder. Uygulanabilir hukukun izin verdiği azami ölçüde, Apple'ın Uygulamaya ilişkin başka hiçbir garanti yükümlülüğü yoktur. Bir garantiye uygunsuzluğa bağlanabilen diğer tüm talepler, kayıplar, sorumluluklar, zararlar, maliyetler veya giderler yalnızca Yayıncı'nın sorumluluğundadır.
+
+**19.5 Ürün talepleri.** Uygulamaya veya onu elinizde bulundurmanıza ve kullanmanıza ilişkin her türlü talebin karşılanmasından, bunlarla sınırlı olmaksızın ürün sorumluluğu talepleri, Uygulamanın geçerli herhangi bir yasal veya düzenleyici gerekliliğe uymadığı iddiası ve tüketicinin korunması, gizlilik veya benzeri mevzuattan doğan talepler (Uygulamanın sağlık veya fitness verilerinin yönetimi için herhangi bir çerçeveyi kullanmasıyla bağlantılı olanlar dahil) bakımından Apple değil, Yayıncı sorumludur.
+
+**19.6 Fikri mülkiyet hakları.** Uygulamanın veya onu elinizde bulundurmanızın ve kullanmanızın bir üçüncü tarafın fikri mülkiyet haklarını ihlal ettiği yönünde herhangi bir üçüncü taraf talebi olması halinde, bu talebin araştırılması, savunulması, uzlaşmayla sonuçlandırılması ve ifasından Apple değil, Yayıncı tek başına sorumludur.
+
+**19.7 Yasal uyum.** ABD Hükümeti'nin ambargosuna tabi bir ülkede veya ABD Hükümeti tarafından terörü destekleyen ülke olarak belirlenmiş bir ülkede bulunmadığınızı ve ABD Hükümeti'nin yasaklı veya kısıtlı taraflar listelerinin hiçbirinde yer almadığınızı beyan ve garanti edersiniz.
+
+**19.8 Geliştiricinin adı ve adresi.** Uygulamaya ilişkin sorular, şikayetler ve talepler şuraya yöneltilir: DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, Amerika Birleşik Devletleri, `support@digitalfreedom.co.za`, https://support.apps.digitalfreedom.co.za
+
+**19.9 Üçüncü taraf koşulları.** Uygulamayı kullanırken geçerli üçüncü taraf sözleşme koşullarına uymalısınız.
+
+**19.10 Üçüncü taraf lehtar.** Apple'ın ve Apple'ın iştiraklerinin bu Sözleşmenin üçüncü taraf lehtarları olduğunu ve sizin Sözleşmeyi kabul etmenizle birlikte Apple'ın bu Sözleşmeyi, onun üçüncü taraf lehtarı olarak size karşı icra etme hakkına sahip olacağını (ve bu hakkı kabul etmiş sayılacağını) kabul ve beyan edersiniz.
+
+---
+
+## 20. GOOGLE PLAY
+
+Civo Cloud Manager Google Play üzerinden dağıtılmamaktadır; bu bölüm uygulanmaz.
+
+---
+
+## 21. TÜM SÖZLEŞME
+
+Bu Sözleşme sizinle Yayıncı arasındaki tüm sözleşmeyi oluşturur.
+
+Apple App Store'un platform koşullarını tamamlar. App Store üzerinden edinilen kopyalar bakımından 19. bölüm, bu Sözleşmenin çelişen her hükmüne üstündür.
 
 ---
 

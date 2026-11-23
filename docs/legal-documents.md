@@ -16,8 +16,21 @@ section 10 names the listed provisions for orientation without asserting
 compliance. The trader telephone number is deliberately not published in any
 bundled or root document; the checker rejects it in `Impressum.md`. Each
 document's header records the relevant source and version; it does not claim
-that unrelated template changes have been imported. The other six documents keep
-their earlier source versions. Other product-specific terms and disclosures
+that unrelated template changes have been imported. The EULA and the Terms of Service were reconciled in November 2026 with
+`apps/documents/EULA.en.md` version 1.4.0 and `shared/TERMS_OF_SERVICE.en.md`
+version 2.2.0 (legal repository commit `38869f57052d1d70ccface206e68ab46be0c3326`,
+both valid from 10 December 2026, which is why both carry that effective date and
+must not be released earlier). They add the paid-up licence protection, the Apple
+App Store additional terms (EULA section 19), the Australia and New Zealand
+wording and the reworked territorial and consumer clauses. They are adapted to
+this app, which is distributed only through the Apple App Store and sold as one
+non-consumable Full Access purchase after a seven-day free period: Subscription
+Terms, Fair Use Policy, Refund Policy, Legal Framework Overview, Support and
+Update Policy, the Children's Privacy Notice, the Google Play section and the
+Apple Business seats module are not part of the app and are omitted; the
+matching clauses are stated inline instead (Terms section 7). The prescribed
+Australian Consumer Law notice stays in English in every language. The other five
+documents keep their earlier source versions. Other product-specific terms and disclosures
 retain their existing scope.
 
 Seven documents ship in each of the 16 languages: `en`, `de`, `es`, `fr`, `it`,
@@ -33,7 +46,8 @@ remain stable to preserve the existing App Store product, purchases and credenti
 They are technical identifiers, not the displayed legal entity.
 
 Run `python3 scripts/check_legal_localizations.py` to check the document set,
-section numbering, critical legal dates, numerical values, links and company details. Add
+section numbering, critical legal dates (including the effective date of the EULA
+and the Terms of Service), numerical values, links and company details. Add
 `--app '/path/to/Civo Cloud Manager.app'` to verify that all 112 documents are
 actually included in the built app. Swift tests cover language resolution and
 English fallback behavior.

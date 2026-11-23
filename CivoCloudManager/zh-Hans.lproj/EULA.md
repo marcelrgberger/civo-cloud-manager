@@ -1,9 +1,9 @@
-<!-- doc-id: EULA | lang: zh-Hans | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: EULA | lang: zh-Hans | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 1.4.0 | source: apps/documents/EULA.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Google Play section and Apple Business seats omitted -->
 # 最终用户许可协议（EULA）
 
 ## 全球多平台许可协议
 
-**生效日期：** 2026年9月
+**生效日期：** 2026年12月10日
 
 **发行方：**
 DigitalFreedom
@@ -18,7 +18,7 @@ Sheridan, WY 82801
 
 ## 1. 条款接受
 
-通过安装、访问或使用本应用、软件或相关服务（“本应用”），您即同意受本协议约束。
+通过安装、访问或使用本应用、软件或相关服务（"本应用"），您即同意受本协议约束。
 
 如果您不同意本协议，则不得使用本应用。
 
@@ -28,17 +28,13 @@ Sheridan, WY 82801
 
 本协议适用于所有分发渠道，包括但不限于：
 
-- Apple App Store / TestFlight
-- Google Play Store / APK 分发
-- GitHub 或其他源代码仓库
-- Homebrew 或其他软件包管理器
-- 直接下载或企业分发
+- Apple App Store，包括 TestFlight 分发（不涉及购买）
 
 本应用可作为免费、付费、开源或混合软件提供。
 
 ### 2.1 全球范围
 
-本应用通过 Apple App Store 和 Google Play Store 分发，因此在这些平台服务的所有国家和地区均可获取。本协议对所有此类用户全球适用，无论本应用在何国下载、安装或使用。发行方采用欧盟通用数据保护条例（GDPR）及相关欧盟法律作为其基准标准，并将其作为全球最低标准；用户居住国授予的强制性消费者保护及其他法定权利在更具保护性时不受影响并优先适用。
+本应用通过 Apple App Store 分发，因此在该平台服务的所有国家和地区均可获取。本协议对所有此类用户全球适用，无论本应用在何国下载、安装或使用。发行方采用欧盟通用数据保护条例（GDPR）及相关欧盟法律作为其基准标准，并将其作为全球最低标准；用户居住国授予的强制性消费者保护及其他法定权利不受影响，并在更具保护性时优先适用。
 
 ---
 
@@ -69,24 +65,20 @@ Sheridan, WY 82801
 
 您不得：
 
-- 反向工程或反编译本应用程序，除非法律允许
+- 反向工程或反编译本应用，除非法律允许
 - 规避安全或访问控制机制
-- 非法使用本应用程序或侵犯第三方权利
+- 非法使用本应用或侵犯第三方权利
 - 在许可范围之外分发专有组件
 
 ---
 
 ## 6. 商业条款
 
-本应用程序可能以以下方式提供：
+本应用包含自首次启动起七天的免费使用期，期间提供完整功能。该期限届满后，菜单栏中的防火墙管理仍然免费，而仪表板需要通过 Apple App Store 一次性购买 Full Access（非消耗型商品）。本应用没有订阅、没有自动续订，也没有周期性收费。价格由 Apple App Store 显示，已完成的购买可以恢复。
 
-- 免费
-- 一次性购买
-- 订阅方式
+付款通过 Apple App Store 处理。没有其他支付途径。
 
-付款可能通过第三方平台（如 Apple、Google）或直接处理。
-
-退款和账单受相应平台条款或适用法律约束。
+退款和账单受 Apple App Store 条款或适用法律约束。
 
 ---
 
@@ -94,22 +86,22 @@ Sheridan, WY 82801
 
 您需自行负责：
 
-- 使用本应用程序进行的所有活动
+- 使用本应用进行的所有活动
 - 所有被处理、存储或传输的数据
 - 遵守适用的法律法规
 
-使用本应用程序可能导致非预期操作，包括数据修改或删除。
+使用本应用可能导致非预期操作，包括数据修改或删除。
 
 ---
 
 ## 8. 数据与隐私
 
-数据处理取决于本应用程序的具体实现方式。
+数据处理取决于本应用的具体实现方式。
 
 除非另有明确说明：
 
 - 数据可能存储于本地或通过第三方服务处理
-- 发布方不保证数据的安全性或完整性
+- 发行方不保证数据的安全性或完整性
 - 您需自行负责备份
 
 数据处理受单独的隐私政策约束。
@@ -118,9 +110,9 @@ Sheridan, WY 82801
 
 ## 9. 第三方服务
 
-本应用程序可能与第三方服务交互。
+本应用可能与第三方服务交互。
 
-发布方：
+发行方：
 
 - 不控制第三方服务
 - 不对其可用性或行为负责
@@ -132,7 +124,7 @@ Sheridan, WY 82801
 
 ## 10. 免责声明
 
-在法律允许的最大范围内，本应用程序按“原样”提供，不附带任何形式的担保。
+在法律允许的最大范围内，本应用按"原样"提供，不附带任何形式的担保。
 
 包括但不限于：
 
@@ -145,7 +137,7 @@ Sheridan, WY 82801
 
 ## 11. 责任限制
 
-在法律允许的最大范围内，出版方不对以下事项承担责任：
+在法律允许的最大范围内，发行方不对以下事项承担责任：
 
 - 间接或后果性损害
 - 数据、利润或业务损失
@@ -170,7 +162,7 @@ Sheridan, WY 82801
 
 ## 13. 赔偿
 
-您同意就因以下原因引起的索赔对出版方进行赔偿：
+您同意就因以下原因引起的索赔对发行方进行赔偿：
 
 - 您对本应用的使用
 - 违反本协议
@@ -180,7 +172,9 @@ Sheridan, WY 82801
 
 ## 14. 终止
 
-出版方可随时终止本协议。
+如果您严重违反本协议，发行方可终止本协议；如果该违约可以补救，则仅在已要求您补救而您未在合理期限内补救之后，方可终止。
+
+除此之外，发行方可随时终止本协议，但对于您已付费取得的内容有一项例外：通过一次性购买取得的许可（已付清的许可，例如终身购买）不得以这种方式终止。强制性法定权利（包括任何退款权利）不受影响。
 
 终止后，您必须停止使用并删除本应用的所有副本。
 
@@ -221,9 +215,18 @@ Sheridan, WY 82801
 
 - 消费者保护法因省份而异，可能优先于本协议部分条款
 
-### 17.5 澳大利亚
+### 17.5 澳大利亚和新西兰
 
-- 澳大利亚消费者法规定的法定保障适用且不可排除
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
+
+上述通知对本协议中的每一项担保免责和责任限制均具有限定作用，并优先于这些条款适用。上述保障由作为供应方的发行方承担：在这些地区，Apple 作为发行方的代理人行事。澳大利亚消费者法第 64 条和新西兰《消费者保障法》第 43 条使任何排除适用的约定无效。
 
 ### 17.6 其他司法管辖区
 
@@ -237,11 +240,43 @@ Sheridan, WY 82801
 
 ---
 
-## 19. 完整协议
+## 19. APPLE APP STORE - 附加条款
 
-本协议构成您与发布者之间的完整协议。
+本节**仅**适用于通过 Apple App Store 获取的本应用副本。如本节与本协议其他任何条款冲突，则就这些副本而言以本节为准。本节反映了 Apple 对提供自有最终用户许可协议的开发者所要求的最低条款。
 
-本协议补充平台专属条款（Apple、Google）。
+**19.1 确认。** 本协议仅在您与发行方之间订立，Apple 不是协议当事方。发行方（而非 Apple）对本应用及其内容独自负责。
+
+**19.2 许可范围。** 授予您的本应用许可是不可转让的许可，可在您拥有或控制的任何 Apple 品牌设备上使用本应用，并按 Apple 媒体服务条款与条件中规定的使用规则所允许的方式使用；但本应用可由与您关联的其他账户通过"家人共享"或批量购买进行访问和使用。
+
+**19.3 维护与支持。** 发行方独自负责提供本应用的任何维护和支持服务。Apple 对本应用不负有任何提供维护和支持服务的义务。
+
+**19.4 担保。** 对于未被有效排除的任何产品担保（无论是明示的还是法律默示的），发行方独自负责。如本应用不符合适用的担保，您可以通知 Apple，Apple 将向您退还本应用的购买价款。在适用法律允许的最大范围内，Apple 对本应用不再承担任何其他担保义务。因不符合担保而产生的任何其他索赔、损失、责任、损害、成本或费用，均由发行方独自负责。
+
+**19.5 产品索赔。** 与本应用或您对其的持有和使用相关的任何索赔，包括但不限于产品责任索赔、关于本应用不符合任何适用法律或监管要求的任何主张，以及依据消费者保护、隐私或类似立法产生的索赔（包括与本应用使用任何健康或健身数据管理框架相关的索赔），均由发行方（而非 Apple）负责处理。
+
+**19.6 知识产权。** 如有第三方主张本应用或您对其的持有和使用侵犯该第三方的知识产权，则对该主张的调查、抗辩、和解和解决，均由发行方（而非 Apple）独自负责。
+
+**19.7 合规声明。** 您声明并保证：您不在受美国政府禁运的国家或被美国政府认定为支持恐怖主义的国家，且您未被列入任何美国政府的禁止或限制交易方名单。
+
+**19.8 开发者名称和地址。** 与本应用相关的问题、投诉和索赔，请发送至：DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, 美国, `support@digitalfreedom.co.za`, https://support.apps.digitalfreedom.co.za
+
+**19.9 第三方条款。** 使用本应用时，您必须遵守适用的第三方协议条款。
+
+**19.10 第三方受益人。** 您确认并同意，Apple 及 Apple 的子公司是本协议的第三方受益人，并且在您接受本协议后，Apple 将有权（并将被视为已接受该权利）作为本协议的第三方受益人向您强制执行本协议。
+
+---
+
+## 20. GOOGLE PLAY
+
+Civo Cloud Manager 不通过 Google Play 分发；本节不适用。
+
+---
+
+## 21. 完整协议
+
+本协议构成您与发行方之间的完整协议。
+
+本协议补充 Apple App Store 的平台条款。对于通过 App Store 获取的副本，第 19 节优先于本协议任何相冲突的条款。
 
 ---
 

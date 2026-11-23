@@ -1,9 +1,9 @@
-<!-- doc-id: TERMS_OF_SERVICE | lang: de | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/TERMS_OF_SERVICE.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: TERMS_OF_SERVICE | lang: de | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 2.2.0 | source: shared/TERMS_OF_SERVICE.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Subscription Terms, Fair Use Policy, Refund Policy, Legal Framework Overview, Support and Update Policy, Children's Privacy Notice and Apple Business seats omitted -->
 # NUTZUNGSBEDINGUNGEN
 
 ## Allgemeine Geschäftsbedingungen
 
-**Gültig ab:** September 2026
+**Gültig ab:** 10. Dezember 2026
 
 **Anbieter:**
 DigitalFreedom
@@ -24,7 +24,7 @@ Diese Nutzungsbedingungen ("Bedingungen") regeln Ihren Zugang zu und die Nutzung
 
 ### 1.1.1 Weltweiter Geltungsbereich
 
-Die Dienste werden über den Apple App Store und den Google Play Store vertrieben und sind daher in jedem Land und jedem Gebiet verfügbar, das von diesen Plattformen bedient wird. Diese Bedingungen gelten weltweit für alle Nutzer der Dienste, unabhängig vom Land des Zugriffs oder der Nutzung. Der Anbieter übernimmt die Datenschutz-Grundverordnung der Europäischen Union (DSGVO) und die einschlägigen EU-Gesetze als Mindeststandard und wendet diese weltweit an; zwingende verbraucherschützende und andere gesetzliche Rechte, die dem Nutzer durch das Recht seines Wohnsitzlandes gewährt werden, bleiben unberührt und gehen vor, soweit sie weitergehenden Schutz bieten.
+Die Dienste werden über den Apple App Store vertrieben und sind daher in jedem Land und jedem Gebiet verfügbar, das von dieser Plattform bedient wird. Diese Bedingungen gelten weltweit für alle Nutzer der Dienste, unabhängig vom Land des Zugriffs oder der Nutzung. Der Anbieter übernimmt die Datenschutz-Grundverordnung der Europäischen Union (DSGVO) und die einschlägigen EU-Gesetze als Mindeststandard und wendet diese weltweit an; zwingende verbraucherschützende und andere gesetzliche Rechte, die dem Nutzer durch das Recht seines Wohnsitzlandes gewährt werden, bleiben unberührt und gehen vor, soweit sie weitergehenden Schutz bieten.
 
 ### 1.2 Annahme
 
@@ -32,7 +32,9 @@ Durch den Zugriff auf oder die Nutzung der Dienste erklären Sie sich mit diesen
 
 ### 1.3 Nutzungsberechtigung
 
-Sie müssen mindestens 16 Jahre alt sein (oder das jeweils geltende Mindestalter in Ihrem Land), um die Dienste nutzen zu dürfen. Mit der Nutzung der Dienste versichern Sie, dass Sie diese Voraussetzung erfüllen.
+Um einen Vertrag mit uns zu schließen, müssen Sie nach dem Recht Ihres Wohnsitzes geschäftsfähig sein, in der Regel mit 18 Jahren, in Südkorea mit 19 Jahren. Minderjährige dürfen die Dienste nur unter Einbeziehung eines Elternteils oder Erziehungsberechtigten nutzen, der diese Bedingungen in ihrem Namen annimmt.
+
+Dies ist eine andere Frage als das Alter, ab dem Sie in die Verarbeitung Ihrer personenbezogenen Daten einwilligen können; dieses liegt je nach Mitgliedstaat zwischen 13 und 16 Jahren und wird in der Datenschutzerklärung behandelt. Keine der beiden Zahlen bestimmt die andere: § 110 BGB, der Minderjährigen den Abschluss mancher Verträge mit eigenen Mitteln erlaubt, erfasst kein Dauerschuldverhältnis wie ein Abonnement.
 
 ### 1.4 Nutzung im geschäftlichen Kontext
 
@@ -48,7 +50,7 @@ Der Anbieter stellt Softwareanwendungen, Werkzeuge und damit verbundene Dienstle
 
 ### 2.2 Änderungen
 
-Der Anbieter behält sich das Recht vor, jeden Dienst jederzeit mit oder ohne Vorankündigung zu ändern, auszusetzen oder einzustellen. Wesentliche Änderungen werden, soweit praktikabel, mitgeteilt.
+Der Anbieter behält sich das Recht vor, jeden Dienst zu ändern, auszusetzen oder einzustellen. **Für Verbraucher in der EU und im EWR ist dieses Recht eingeschränkt:** Über das zur Erhaltung der Vertragsmäßigkeit des Dienstes Erforderliche hinaus wird der Dienst nur aus einem hier genannten triftigen Grund geändert (Anpassung an eine neue technische Umgebung, an geänderte Plattformanforderungen, an rechtliche Vorgaben oder Einstellung eines Dienstes Dritter, von dem die Funktion abhängt), und eine Änderung, die Ihren Zugang oder Ihre Nutzung mehr als nur geringfügig beeinträchtigt, wird Ihnen vorab auf einem dauerhaften Datenträger mitgeteilt, zusammen mit Ihrem Recht, innerhalb von 30 Tagen kostenfrei zu kündigen, wenn die Änderung nachteilig ist (Art. 19 Richtlinie (EU) 2019/770 / § 327r BGB). Wesentliche Änderungen werden allen gegenüber, soweit praktikabel, mitgeteilt.
 
 ### 2.3 Verfügbarkeit
 
@@ -100,9 +102,9 @@ Der Anbieter kann Nutzerinhalte entfernen, die gegen diese Bedingungen oder gelt
 
 ---
 
-## 5. ZULÄSSIGE NUTZUNG UND FAIR USE
+## 5. ZULÄSSIGE NUTZUNG
 
-Die Nutzung der Dienste unterliegt unserer [Richtlinie zur zulässigen Nutzung](ACCEPTABLE_USE_POLICY.md) und unserer [Fair-Use-Richtlinie](FAIR_USE_POLICY.md). Die Fair-Use-Richtlinie berechtigt den Anbieter, bei Überschreitung des üblichen individuellen Endnutzergebrauchs oder bei begründetem Verdacht auf Missbrauch die Nutzung zu drosseln, Funktionen einzuschränken, den Zugang auszusetzen oder zu kündigen.
+Die Nutzung der Dienste unterliegt unserer [Richtlinie zur zulässigen Nutzung](ACCEPTABLE_USE_POLICY.md).
 
 Sie dürfen nicht:
 
@@ -132,7 +134,7 @@ Jegliches Feedback oder Vorschläge, die Sie geben, dürfen vom Anbieter ohne Ve
 
 ---
 
-## 7. ZAHLUNGEN UND ABONNEMENTS
+## 7. KÄUFE
 
 ### 7.1 Preise
 
@@ -140,34 +142,30 @@ Die Preise für kostenpflichtige Dienste werden zum Zeitpunkt des Kaufs angezeig
 
 ### 7.2 Zahlungsabwicklung
 
-Zahlungen können durch Drittanbieter abgewickelt werden. Sie stimmen den Bedingungen dieser Anbieter zu.
+Der App Store wickelt den Kauf über StoreKit ab. Der Anbieter erhält keine Zahlungskartendaten.
 
 ### 7.3 Abonnements
 
-Abonnements verlängern sich automatisch, sofern sie nicht vor dem Verlängerungsdatum gekündigt werden. Sie können jederzeit über die jeweilige Plattform oder durch Kontaktaufnahme mit dem Anbieter kündigen. Ausführliche Informationen zu automatischer Verlängerung, Umwandlung von kostenlosen Testphasen und Kündigungswegen finden Sie in den [Abonnementbedingungen](SUBSCRIPTION_TERMS.md).
+Civo Cloud Manager enthält einen kostenlosen Zugangszeitraum von sieben Tagen ab dem ersten Start. Vollzugriff ist ein einmaliger, nicht verbrauchbarer Kauf über den App Store. Es gibt keine Abonnements, keine automatischen Verlängerungen und keine Umwandlung einer Testphase in ein Abonnement. Ein abgeschlossener Kauf kann über den App Store wiederhergestellt werden. Es gelten keine gesonderten Abonnementbedingungen.
 
-### 7.3.1 Kündigungs-Button (Deutschland, § 312k BGB)
+### 7.3.1 California Automatic Renewal Law (ARL)
 
-Für direkt mit Verbrauchern in Deutschland abgeschlossene Abonnements stellt der Anbieter einen Kündigungsbutton bereit, der mit höchstens zwei Klicks von der Kontoseite aus erreichbar ist (siehe [Abonnementbedingungen](SUBSCRIPTION_TERMS.md) § 6.3). Für über den Apple App Store oder Google Play abgeschlossene Abonnements erfolgt die Kündigung über den jeweiligen Standardmechanismus der Plattform.
-
-### 7.3.2 California Automatic Renewal Law (ARL)
-
-Für Einwohner Kaliforniens erfüllt der Anbieter die Anforderungen des Cal. Bus. & Prof. Code § 17600 ff., wie in den [Abonnementbedingungen](SUBSCRIPTION_TERMS.md) § 8 näher beschrieben.
+Civo Cloud Manager hat keine automatische Verlängerung, daher entstehen die Pflichten nach Cal. Bus. & Prof. Code § 17600 ff. nicht.
 
 ### 7.4 Rückerstattungen
 
-Rückerstattungen richten sich nach:
-
-- Den geltenden Plattformbedingungen (Apple App Store, Google Play) — siehe [Rückerstattungsrichtlinie](REFUND_POLICY.md) § 2
-- Anwendbaren verbraucherschützenden Gesetzen
-- Der [Rückerstattungsrichtlinie](REFUND_POLICY.md) des Anbieters
+Rückerstattungen für Käufe im App Store werden bei Apple nach den geltenden Bedingungen des Apple App Store beantragt. Der Anbieter wickelt keine Zahlungen ab. Anwendbare verbraucherschützende Gesetze und zwingende gesetzliche Verbraucherrechte bleiben unberührt.
 
 ### 7.5 Widerrufsrecht in der EU
 
-Verbraucher in der EU haben ein 14-tägiges Widerrufsrecht für digitale Inhalte, es sei denn:
+Verbraucher in der EU haben ein 14-tägiges Widerrufsrecht für digitale Inhalte. Bei digitalen Inhalten, die nicht auf einem körperlichen Datenträger geliefert werden, lässt § 356 Abs. 6 Nr. 2 BGB dieses Recht nur dann erlöschen, wenn alle vier der folgenden Voraussetzungen erfüllt sind:
 
-- Der Verbraucher hat ausdrücklich der sofortigen Ausführung zugestimmt
-- Der Verbraucher hat den Verlust des Widerrufsrechts anerkannt
+- (a) die Ausführung des Vertrags hat begonnen;
+- (b) Sie haben ausdrücklich zugestimmt, dass die Ausführung vor Ablauf der Widerrufsfrist beginnt;
+- (c) Sie haben Ihre Kenntnis davon bestätigt, dass Sie durch diese Zustimmung Ihr Widerrufsrecht mit Beginn der Ausführung verlieren; und
+- (d) der Unternehmer hat Ihnen eine Bestätigung des Vertrags gemäß § 312f BGB zur Verfügung gestellt.
+
+Fehlt auch nur eine dieser Voraussetzungen, bleibt das Widerrufsrecht bestehen. Für Käufe über den App Store gilt das Widerrufs- und Erstattungsverfahren von Apple (siehe § 14.1).
 
 ---
 
@@ -196,6 +194,8 @@ IM GESETZLICH ZULÄSSIGEN UMFANG:
 - Es wird keine Garantie für Genauigkeit, Vollständigkeit, Zuverlässigkeit oder Eignung für einen bestimmten Zweck übernommen
 - Es wird keine Gewähr für ununterbrochene, sichere oder fehlerfreie Dienste übernommen
 
+Nichts in diesem Abschnitt schließt eine Gewährleistung, Garantie oder Haftung aus oder beschränkt sie, die nach zwingendem anwendbarem Recht nicht ausgeschlossen oder beschränkt werden kann, einschließlich zwingender gesetzlicher Gewährleistungsrechte der Verbraucher. **Für Verbraucher in Australien und Neuseeland gilt § 14.5, der diesem Abschnitt vorgeht.**
+
 ---
 
 ## 10. HAFTUNGSBESCHRÄNKUNG
@@ -206,16 +206,20 @@ IM GESETZLICH ZULÄSSIGEN UMFANG:
 - Der Anbieter haftet nicht für Datenverlust, entgangenen Gewinn, Umsatz oder Geschäftsmöglichkeiten
 - Die Gesamthaftung ist auf den höheren Betrag von (a) dem von Ihnen in den 12 Monaten vor dem Anspruch gezahlten Betrag oder (b) EUR 100 begrenzt
 
+**Zwingende Ausnahmen.** Die vorstehenden Ausschlüsse und Beschränkungen gelten **nicht** für die folgenden Fälle, in denen der Anbieter uneingeschränkt haftet: (a) Schäden aus Vorsatz oder grober Fahrlässigkeit; (b) Verletzung von Leben, Körper oder Gesundheit; (c) Haftung nach zwingendem Produkthaftungsrecht (einschließlich des deutschen Produkthaftungsgesetzes); und (d) jede sonstige Haftung, die nach zwingendem anwendbarem Recht nicht beschränkt oder ausgeschlossen werden kann. Bei schuldhafter Verletzung einer wesentlichen Vertragspflicht (Kardinalpflicht) gelten die vorstehenden Ausschlüsse nicht; bei leichter Fahrlässigkeit ist die Haftung auf den vorhersehbaren, vertragstypischen Schaden beschränkt, und die vorstehende Obergrenze gilt dafür nicht. Zwingende gesetzliche Verbraucherrechte bleiben unberührt. **Für Verbraucher in Australien und Neuseeland gilt § 14.5, der diesem Abschnitt vorgeht.**
+
 ---
 
 ## 11. FREISTELLUNG
 
-Sie verpflichten sich, den Anbieter von Ansprüchen, Schäden, Verlusten und Aufwendungen (einschließlich angemessener Anwaltskosten) freizustellen und schadlos zu halten, die entstehen aus:
+Soweit nach geltendem Recht zulässig, verpflichten Sie sich, den Anbieter von Ansprüchen Dritter, Schäden, Verlusten und Aufwendungen (einschließlich angemessener Anwaltskosten) freizustellen und schadlos zu halten, soweit diese durch Ihr schuldhaftes (vorsätzliches oder fahrlässiges) Verhalten verursacht werden, insbesondere durch:
 
-- Ihrer Nutzung der Dienste
-- Ihrem Verstoß gegen diese Bedingungen
-- Ihrem Verstoß gegen Gesetze oder Rechte Dritter
-- Ihren Nutzerinhalten
+- Ihre rechtswidrige Nutzung der Dienste
+- Ihren schuldhaften Verstoß gegen diese Bedingungen
+- Ihren Verstoß gegen Gesetze oder Rechte Dritter
+- Ihre Nutzerinhalte
+
+Diese Verpflichtung gilt nicht, wenn und soweit Sie für den betreffenden Verstoß nicht verantwortlich sind, und sie berührt oder mindert Ihre zwingenden gesetzlichen Verbraucherrechte nicht.
 
 ---
 
@@ -227,7 +231,7 @@ Sie können die Nutzung der Dienste jederzeit beenden. Anträge auf Kontolöschu
 
 ### 12.2 Durch den Anbieter
 
-Der Anbieter kann Ihren Zugang jederzeit mit oder ohne Grund kündigen oder aussetzen. Wesentliche Verstöße können zur sofortigen Kündigung ohne Vorankündigung führen.
+Der Anbieter kann Ihren Zugang aus wichtigem Grund aussetzen oder kündigen (einschließlich eines wesentlichen Verstoßes gegen diese Bedingungen, eines Missbrauchs der Dienste oder wenn dies gesetzlich, durch ein Gericht oder eine Behörde oder durch einen App-Store- bzw. Plattformbetreiber verlangt wird). Ein wesentlicher Verstoß kann zur sofortigen Kündigung führen. Kündigt der Anbieter ohne wichtigen Grund, wahrt er eine angemessene Frist, soweit dies gesetzlich vorgeschrieben ist. Zwingende gesetzliche Kündigungsrechte von Ihnen und vom Anbieter bleiben unberührt.
 
 ### 12.3 Wirkung der Kündigung
 
@@ -256,16 +260,35 @@ Die Online-Streitbeilegungsplattform der Europäischen Kommission wurde am 20. J
 
 ## 14. REGIONALE BESTIMMUNGEN
 
-### 14.1 Europäische Union
+### 14.1 Europäische Union und EWR
 
-- Zwingende verbraucherschützende Rechte nach EU-Richtlinien (einschließlich Verbraucherrechte-Richtlinie und Richtlinie über digitale Inhalte) bleiben unberührt
-- Das Widerrufsrecht gilt für Käufe digitaler Inhalte nach den gesetzlichen Vorgaben
-- Gewährleistungsrechte für digitale Inhalte gemäß Richtlinie (EU) 2019/770 werden nicht ausgeschlossen
+**Gilt für:** Verbraucher mit gewöhnlichem Aufenthalt in der EU oder im EWR (einschließlich Norwegen, Island und Liechtenstein).
+
+**Wer Ihren Kauf verkauft.** Bei Käufen im App Store in der EU/im EWR verkauft Apple Distribution International Ltd. im eigenen Namen als Kommissionär; die vorvertraglichen Informationen nach Art. 246a EGBGB / Art. 6 Richtlinie 2011/83/EU, die Bestellschaltfläche nach § 312j Abs. 3 BGB / Art. 8 Abs. 2 dieser Richtlinie, die Widerrufsbelehrung und das Muster-Widerrufsformular, die Bestätigung auf einem dauerhaften Datenträger (§ 312f BGB) und die Erstattung des Kaufpreises schuldet Apple. **Diese Zuordnung gilt nur für die EU und den EWR**; sie überträgt sich nicht auf die Vertreter-Gebiete des App Store.
+
+**Ihr Widerrufsrecht** ist in § 7.5 beschrieben; nichts hier wiederholt oder verkürzt es.
+
+**Vertragsmäßigkeit und Aktualisierungen.** Die Richtlinie (EU) 2019/770 regelt die Bereitstellung der digitalen Inhalte und Dienstleistung zwischen Ihnen und dem Anbieter, unabhängig davon, wer die Zahlung entgegengenommen hat. Die Anforderungen an die Vertragsmäßigkeit nach Art. 6 bis 8 und die Aktualisierungspflicht nach Art. 8 Abs. 2 sind nach Art. 22 zwingend und werden durch nichts in diesen Bedingungen ausgeschlossen.
+
+**Für Verbraucher in der EU/im EWR gelten die folgenden Regelungen nicht:**
+
+- jeder Haftungsausschluss und jede Haftungsbeschränkung über die in § 10 genannten zwingenden Ausnahmen hinaus;
+- jede Änderung des Dienstes über das hinaus, was § 2.2 für Sie zulässt;
+- jede unterstellte Annahme geänderter Bedingungen allein durch Schweigen oder fortgesetzte Nutzung;
+- die automatische Verlängerung einer Jahreslaufzeit um ein weiteres volles Jahr;
+- jede Rechtswahl, die den zwingenden Schutz Ihres gewöhnlichen Aufenthaltsorts verdrängt (Art. 6 Abs. 2 Rom I);
+- jede Klausel, die die englische Fassung für verbindlich erklärt, wo das Recht Ihres Mitgliedstaats die Landessprache verlangt (§ 16.8 enthält die Regel zur maßgeblichen Sprache).
+
+**Nationale Besonderheiten.**
+
+- **Deutschland:** Die Impressumspflichten nach § 5 DDG und § 18 Abs. 2 MStV werden im [Impressum](IMPRESSUM.md) erfüllt. § 308 Nr. 5 und § 309 Nr. 9 BGB gelten für diese Bedingungen als Verbraucherbedingungen. Der Kündigungsbutton nach § 312k BGB betrifft Verträge, die Verbrauchern über eine Website zum Abschluss ermöglicht werden; der Anbieter schließt derzeit keine solchen Verträge auf diesem Weg, und ein In-App-Kaufdialog ist keine Website.
+- **Frankreich:** Verbraucherinformationen werden auf Französisch bereitgestellt; für einen Verbraucher mit Wohnsitz in Frankreich gilt die französische Fassung (Loi Toubon; § 16.8).
+- **Belgien, Polen:** Anforderungen an die Landessprache, die der französischen Regel vergleichbar sind; § 16.8 gilt.
+- **Italien, Spanien, Österreich:** Das Alter für die digitale Einwilligung (14) wird in der Datenschutzerklärung behandelt.
 
 ### 14.2 Vereinigte Staaten
 
 - Soweit durch einzelstaatliches Recht verboten, gelten Haftungs- oder Gewährleistungsbeschränkungen nicht
-- Schiedsklauseln gelten nicht in Rechtsordnungen, in denen Verbraucherschiedsverfahren eingeschränkt sind
 
 ### 14.3 Vereinigtes Königreich
 
@@ -275,17 +298,37 @@ Die Online-Streitbeilegungsplattform der Europäischen Kommission wurde am 20. J
 ### 14.4 Kanada
 
 - Provinzielle Verbraucherschutzgesetze können bestimmte Bestimmungen außer Kraft setzen
+- Für Einwohner von Québec gilt die französische Fassung, soweit das Recht von Québec dies verlangt (§ 16.8)
 
-### 14.5 Australien
+### 14.5 Australien und Neuseeland
 
-- Verbrauchergarantien nach dem australischen Verbraucherschutzgesetz (Australian Consumer Law) können nicht ausgeschlossen werden
-- Die Haftung ist auf die erneute Bereitstellung der Dienste oder die Zahlung der Kosten für die erneute Bereitstellung beschränkt
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
 
-### 14.6 Andere Rechtsordnungen
+Der vorstehende Hinweis schränkt die §§ 9 und 10 dieser Bedingungen ein und geht ihnen vor.
+
+**Die Garantien.** Für digitale Produkte und Dienstleistungen, die einem Verbraucher bereitgestellt werden, garantiert das australische Verbraucherschutzgesetz (Australian Consumer Law) annehmbare Qualität (s. 54), Eignung für jeden mitgeteilten Zweck (s. 55), Übereinstimmung mit der Beschreibung (s. 56), gebührende Sorgfalt und Fachkenntnis (s. 60) und Eignung von Dienstleistungen für den bestimmten Zweck (s. 61); der neuseeländische Consumer Guarantees Act 1993 enthält die entsprechenden Regelungen (ss. 6, 8, 9, 28, 29). Liegt ein **schwerwiegender** Mangel vor, wählen Sie zwischen Erstattung und Ersatz, nicht der Lieferant. Liegt kein schwerwiegender Mangel vor, darf der Lieferant innerhalb angemessener Frist nachbessern. Section 64 ACL erklärt jeden Versuch, diese Garantien auszuschließen, einzuschränken oder zu ändern, für unwirksam; s. 43 CGA bewirkt in Neuseeland dasselbe.
+
+**Wer sie schuldet.** Lieferant ist der **Anbieter**, nicht der Store: Apple handelt in diesen Gebieten als Vertreter des Anbieters nach Schedule 2 seines Entwicklervertrags und verkauft im Namen des Anbieters. Der Kaufvertrag besteht mit DigitalFreedom Global LLC, und die Garantien, die Rechtsbehelfe bei schwerwiegenden Mängeln und der vorstehende Hinweis werden vom Anbieter unmittelbar geschuldet. Ein Verbraucher, der vom Store keine Abhilfe erhält, bleibt nicht ohne Abhilfe: Der Weg führt über die Kontaktadresse in § 16.7.
+
+### 14.6 Türkiye
+
+Bei Käufen im App Store in der Türkei ist Apple Distribution International Ltd. (Kommissionär) der Verkäufer, und die vorvertraglichen Informationspflichten und die 14-tägigen Widerrufspflichten nach dem Verbraucherschutzgesetz (Nr. 6502) und der Verordnung über Fernabsatzverträge treffen den Store. Verbraucherstreitigkeiten unterhalb der gesetzlichen Wertgrenze müssen vor einem Gericht zunächst vor einem **Verbraucherschiedsausschuss** (Consumer Arbitration Committee) geltend gemacht werden; dies ist zwingend, nichts in diesen Bedingungen schließt es aus, und es schränkt die Formulierung "es sei denn, dies ist gesetzlich vorgeschrieben" in § 13.3 ein.
+
+### 14.7 Japan
+
+Bei Verkäufen an Verbraucher in Japan verlangt das Gesetz über bestimmte Handelsgeschäfte (特定商取引法), dass Name, Anschrift und Kontaktdaten des Verkäufers, der Preis und die Widerrufsbedingungen leicht zugänglich sind. In Japan ist der **Anbieter der Verkäufer**, da der App Store dort ein Vertreter-Gebiet ist; diese Anzeigepflichten treffen daher den Anbieter. Name, Anschrift und Kontaktdaten des Verkäufers sind im [Impressum](IMPRESSUM.md) angegeben; der Preis wird zum Zeitpunkt des Kaufs angezeigt (§ 7.1); die Widerrufsbedingungen sind in den §§ 7.4 und 7.5 dieser Bedingungen geregelt.
+
+### 14.8 Andere Rechtsordnungen
 
 - Soweit das lokale zwingende Recht eine Bestimmung einschränkt, gilt diese Bestimmung nur im gesetzlich zulässigen Umfang
-
----
+- Zwingende Verbraucherschutzbestimmungen Ihres gewöhnlichen Aufenthaltsorts bleiben überall unberührt
 
 ## 15. HÖHERE GEWALT
 
@@ -311,7 +354,7 @@ Der Anbieter kann diese Bedingungen im Zusammenhang mit einer Fusion, Übernahme
 
 ### 16.4 Gesamte Vereinbarung
 
-Diese Bedingungen bilden zusammen mit der [Datenschutzerklärung](PRIVACY_POLICY.md), der [EULA](EULA.md), den [Abonnementbedingungen](SUBSCRIPTION_TERMS.md), der [Fair-Use-Richtlinie](FAIR_USE_POLICY.md), der [Richtlinie zur zulässigen Nutzung](ACCEPTABLE_USE_POLICY.md), der [Rückerstattungsrichtlinie](REFUND_POLICY.md) und allen weiteren genannten Richtlinien die vollständige Vereinbarung zwischen Ihnen und dem Anbieter.
+Diese Bedingungen bilden zusammen mit der [Datenschutzerklärung](PRIVACY_POLICY.md), der [EULA](EULA.md), der [Richtlinie zur zulässigen Nutzung](ACCEPTABLE_USE_POLICY.md) und allen weiteren genannten Richtlinien die vollständige Vereinbarung zwischen Ihnen und dem Anbieter.
 
 ### 16.5 Änderungen
 
@@ -327,7 +370,7 @@ Mitteilungen an den Anbieter sind an `hello@digitalfreedom.co.za` (allgemein) od
 
 ### 16.8 Sprache
 
-Für Verbraucher gilt die Version in einer Amtssprache ihres gewöhnlichen Aufenthaltsortes, sofern eine solche Version existiert. Für Geschäftskunden und für Sprachen, in denen keine Version existiert, gilt die englische Version.
+Diese Bedingungen werden in mehreren Sprachen veröffentlicht. **Für Verbraucher gilt die Version in einer Amtssprache ihres gewöhnlichen Aufenthaltsortes**, sofern eine solche Version existiert. Für Geschäftskunden und für Sprachen, in denen keine Version existiert, gilt die englische Version. Dies ist die Umkehrung der üblichen Klausel und geschieht bewusst: Eine Klausel, die Englisch für verbindlich erklärt, hat in Frankreich, Belgien, Polen, Italien, Québec oder der Türkei keinen Bestand, und die Übersetzungen für unverbindlich zu erklären, würde den Grund ihrer Erstellung entwerten.
 
 ---
 

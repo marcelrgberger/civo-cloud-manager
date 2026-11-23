@@ -1,9 +1,9 @@
-<!-- doc-id: EULA | lang: ko | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.1.0 | source: apps/documents/EULA.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: EULA | lang: ko | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 1.4.0 | source: apps/documents/EULA.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Google Play section and Apple Business seats omitted -->
 # 최종 사용자 사용권 계약(EULA)
 
 ## 글로벌 다중 플랫폼 라이선스 계약
 
-**발효일:** 2026년 9월
+**발효일:** 2026년 12월 10일
 
 **발행인:**
 DigitalFreedom
@@ -28,17 +28,13 @@ Sheridan, WY 82801
 
 본 계약은 다음을 포함하되 이에 국한되지 않는 모든 배포 채널에 적용됩니다:
 
-- Apple App Store / TestFlight
-- Google Play Store / APK 배포
-- GitHub 또는 기타 소스 코드 저장소
-- Homebrew 또는 기타 패키지 관리자
-- 직접 다운로드 또는 엔터프라이즈 배포
+- Apple App Store (구매가 수반되지 않는 TestFlight 배포 포함)
 
 앱은 무료, 유료, 오픈소스 또는 하이브리드 소프트웨어로 제공될 수 있습니다.
 
 ### 2.1 글로벌 범위
 
-앱은 Apple App Store 및 Google Play Store를 통해 배포되며, 해당 플랫폼이 제공되는 모든 국가 및 지역에서 이용할 수 있습니다. 본 계약은 앱이 다운로드, 설치 또는 사용되는 국가와 관계없이 모든 사용자에게 전 세계적으로 적용됩니다. 발행인은 유럽연합 일반 데이터 보호 규정(GDPR) 및 관련 EU 법률을 기본 기준으로 채택하며, 이를 글로벌 기준으로 적용합니다. 사용자의 거주 국가에서 보장하는 강행 소비자 보호 및 기타 법정 권리는 더 보호적인 경우 영향을 받지 않으며 우선 적용됩니다.
+앱은 Apple App Store를 통해 배포되며, 해당 플랫폼이 제공되는 모든 국가 및 지역에서 이용할 수 있습니다. 본 계약은 앱이 다운로드, 설치 또는 사용되는 국가와 관계없이 모든 사용자에게 전 세계적으로 적용됩니다. 발행인은 유럽연합 일반 데이터 보호 규정(GDPR) 및 관련 EU 법률을 기본 기준으로 채택하며, 이를 글로벌 기준으로 적용합니다. 사용자의 거주 국가에서 보장하는 강행 소비자 보호 및 기타 법정 권리는 더 보호적인 경우 영향을 받지 않으며 우선 적용됩니다.
 
 ---
 
@@ -78,15 +74,11 @@ Sheridan, WY 82801
 
 ## 6. 상업적 조건
 
-앱은 다음과 같이 제공될 수 있습니다:
+앱에는 최초 실행일로부터 일주일간의 무료 이용 기간이 포함되며, 이 기간에는 모든 기능을 사용할 수 있습니다. 이 기간이 지나면 메뉴 막대의 방화벽 관리는 계속 무료이고, 대시보드를 사용하려면 Apple App Store를 통한 Full Access의 일회성 비소모성 구매가 필요합니다. 앱에는 구독, 자동 갱신, 반복 결제가 없습니다. 가격은 Apple App Store에 표시되며, 완료된 구매는 복원할 수 있습니다.
 
-- 무료 제공
-- 일회성 구매
-- 구독 방식
+결제는 Apple App Store를 통해 처리됩니다. 다른 결제 경로는 없습니다.
 
-결제는 제삼자 플랫폼(예: Apple, Google) 또는 직접 처리될 수 있습니다.
-
-환불 및 청구는 해당 플랫폼 약관 또는 관련 법률에 따릅니다.
+환불 및 청구는 Apple App Store 약관 또는 관련 법률에 따릅니다.
 
 ---
 
@@ -180,7 +172,9 @@ Sheridan, WY 82801
 
 ## 14. 계약 해지
 
-퍼블리셔는 언제든지 본 계약을 해지할 수 있습니다.
+발행인은 귀하가 본 계약을 중대하게 위반한 경우 본 계약을 해지할 수 있습니다. 위반을 시정할 수 있는 경우에는 시정을 요청받고도 상당한 기간 내에 시정하지 않은 후에만 해지할 수 있습니다.
+
+발행인은 그 밖의 경우에도 언제든지 본 계약을 해지할 수 있으나, 귀하가 대가를 지불한 부분에 대해서는 예외가 있습니다. 일회성 구매로 취득한 라이선스(평생 구매와 같은 대금 완납 라이선스)는 이러한 방식으로 해지할 수 없습니다. 환불받을 권리를 포함한 강행 법정 권리는 영향을 받지 않습니다.
 
 계약 해지 시, 귀하는 앱 사용을 중단하고 모든 사본을 삭제해야 합니다.
 
@@ -221,9 +215,18 @@ Sheridan, WY 82801
 
 - 소비자 보호법은 주마다 다르며 본 계약의 일부 조항을 우선할 수 있습니다
 
-### 17.5 호주
+### 17.5 호주 및 뉴질랜드
 
-- 호주 소비자법에 따른 법정 보장은 적용되며 제외될 수 없습니다
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
+
+위 고지는 본 계약의 모든 보증 부인 및 책임 제한을 제한하며 그에 우선합니다. 법정 보장은 공급자인 발행인에게 적용되며, 이들 지역에서 Apple은 발행인의 대리인으로 행위합니다. 호주 소비자법(ACL) s. 64와 뉴질랜드 소비자보장법(CGA) s. 43에 따라 이를 배제하는 계약 조항은 무효입니다.
 
 ### 17.6 기타 관할권
 
@@ -237,11 +240,43 @@ Sheridan, WY 82801
 
 ---
 
-## 19. 전체 계약
+## 19. APPLE APP STORE - 추가 약관
+
+본 조는 Apple App Store를 통해 취득한 앱 사본에**만** 적용됩니다. 본 조가 본 계약의 다른 조항과 충돌하는 경우, 해당 사본에 대해서는 본 조가 우선합니다. 본 조는 자체 최종 사용자 사용권 계약을 제공하는 개발자에게 Apple이 요구하는 최소 약관을 반영합니다.
+
+**19.1 확인.** 본 계약은 귀하와 발행인 사이에서만 체결되며 Apple과는 체결되지 않습니다. 앱과 그 콘텐츠에 대해서는 Apple이 아니라 발행인이 단독으로 책임을 집니다.
+
+**19.2 라이선스 범위.** 귀하에게 부여되는 앱 라이선스는 귀하가 소유하거나 관리하는 모든 Apple 브랜드 기기에서 앱을 사용할 수 있는 양도 불가 라이선스이며, Apple Media Services 이용약관에 규정된 사용 규칙이 허용하는 바에 따릅니다. 다만 앱은 가족 공유 또는 대량 구매를 통해 귀하와 연결된 다른 계정에서도 접근하고 사용할 수 있습니다.
+
+**19.3 유지보수 및 지원.** 앱에 대한 유지보수 및 지원 서비스는 발행인이 단독으로 책임을 집니다. Apple은 앱과 관련하여 어떠한 유지보수 및 지원 서비스도 제공할 의무가 없습니다.
+
+**19.4 보증.** 명시적이든 법률에 의해 묵시적으로 인정되든, 효과적으로 부인되지 않은 범위의 제품 보증에 대해서는 발행인이 단독으로 책임을 집니다. 앱이 적용 가능한 보증에 부합하지 않는 경우 귀하는 Apple에 통지할 수 있으며, Apple은 귀하에게 앱 구매 금액을 환불합니다. 관련 법률이 허용하는 최대 한도 내에서, Apple은 앱과 관련하여 그 밖의 어떠한 보증 의무도 지지 않습니다. 보증 불이행에 기인하는 그 밖의 모든 청구, 손실, 책임, 손해, 비용 또는 경비는 발행인이 단독으로 책임을 집니다.
+
+**19.5 제품 관련 청구.** 앱 또는 귀하의 앱 소지와 사용에 관한 청구에 대해서는 Apple이 아니라 발행인이 대응할 책임이 있습니다. 여기에는 제조물 책임 청구, 앱이 적용 가능한 법적 또는 규제상 요건에 부합하지 않는다는 청구, 소비자 보호, 개인정보 보호 또는 이와 유사한 법률에 따른 청구(앱이 건강 또는 피트니스 데이터 관리를 위한 프레임워크를 사용하는 것과 관련된 청구 포함)가 포함되나 이에 국한되지 않습니다.
+
+**19.6 지식재산권.** 앱 또는 귀하의 앱 소지와 사용이 제삼자의 지식재산권을 침해한다는 제삼자의 청구가 있는 경우, 해당 청구의 조사, 방어, 합의 및 이행은 Apple이 아니라 발행인이 단독으로 책임을 집니다.
+
+**19.7 법규 준수.** 귀하는 미국 정부의 금수 조치 대상 국가 또는 미국 정부가 테러 지원국으로 지정한 국가에 위치하지 않으며, 미국 정부의 거래 금지 또는 제한 대상 목록에 등재되어 있지 않음을 진술하고 보증합니다.
+
+**19.8 개발자 이름 및 주소.** 앱에 관한 질문, 불만 및 청구는 다음으로 문의하십시오: DigitalFreedom Global LLC, 30 N Gould St, Ste N, Sheridan, WY 82801, United States, `support@digitalfreedom.co.za`, https://support.apps.digitalfreedom.co.za
+
+**19.9 제삼자 약관.** 귀하는 앱을 사용할 때 적용되는 제삼자 계약 약관을 준수해야 합니다.
+
+**19.10 제삼자 수익자.** 귀하는 Apple 및 Apple의 자회사가 본 계약의 제삼자 수익자임을 인정하고 이에 동의하며, 귀하가 본 계약을 수락하면 Apple은 제삼자 수익자로서 귀하에게 본 계약을 집행할 권리를 가지게 되고(그리고 그 권리를 수락한 것으로 간주됩니다).
+
+---
+
+## 20. GOOGLE PLAY
+
+Civo Cloud Manager는 Google Play를 통해 배포되지 않으므로 본 조는 적용되지 않습니다.
+
+---
+
+## 21. 전체 계약
 
 본 계약은 귀하와 발행인 간의 전체 계약을 구성합니다.
 
-이는 플랫폼별 약관(Apple, Google)을 보완합니다.
+이는 Apple App Store의 플랫폼 약관을 보완합니다. App Store를 통해 취득한 사본에 대해서는 제19조가 본 계약의 충돌하는 모든 조항에 우선합니다.
 
 ---
 

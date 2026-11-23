@@ -1,9 +1,9 @@
-<!-- doc-id: TERMS_OF_SERVICE | lang: nl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/TERMS_OF_SERVICE.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: TERMS_OF_SERVICE | lang: nl | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 2.2.0 | source: shared/TERMS_OF_SERVICE.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Subscription Terms, Fair Use Policy, Refund Policy, Legal Framework Overview, Support and Update Policy, Children's Privacy Notice and Apple Business seats omitted -->
 # GEBRUIKSVOORWAARDEN
 
 ## Algemene Voorwaarden
 
-**Ingangsdatum:** september 2026
+**Ingangsdatum:** 10 december 2026
 
 **Aanbieder:**
 DigitalFreedom
@@ -24,7 +24,7 @@ Deze Gebruiksvoorwaarden ("Voorwaarden") zijn van toepassing op uw toegang tot e
 
 ### 1.1.1 Wereldwijde reikwijdte
 
-De Diensten worden verspreid via de Apple App Store en de Google Play Store en zijn derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Deze Voorwaarden zijn wereldwijd van toepassing op alle gebruikers van de Diensten, ongeacht het land van toegang of gebruik. De Aanbieder hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; dwingende consumentenbescherming en andere wettelijke rechten die door het land van verblijf van de gebruiker worden verleend, blijven onaangetast en prevaleren waar zij meer bescherming bieden.
+De Diensten worden verspreid via de Apple App Store en zijn derhalve beschikbaar in elk land en elk gebied dat door dit platform wordt bediend. Deze Voorwaarden zijn wereldwijd van toepassing op alle gebruikers van de Diensten, ongeacht het land van toegang of gebruik. De Aanbieder hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; dwingende consumentenbescherming en andere wettelijke rechten die door het land van verblijf van de gebruiker worden verleend, blijven onaangetast en prevaleren waar zij meer bescherming bieden.
 
 ### 1.2 Aanvaarding
 
@@ -32,7 +32,9 @@ Door toegang te verkrijgen tot of gebruik te maken van de Diensten, gaat u akkoo
 
 ### 1.3 Geschiktheid
 
-U moet ten minste 16 jaar oud zijn (of de toepasselijke leeftijd van toestemming in uw rechtsgebied) om de Diensten te gebruiken. Door gebruik te maken van de Diensten verklaart u aan deze vereiste te voldoen.
+Om een overeenkomst met ons aan te gaan, moet u handelingsbekwaam zijn volgens het recht van uw woonplaats, in het algemeen 18 jaar, en 19 jaar in Zuid-Korea. Minderjarigen mogen de Diensten alleen gebruiken met betrokkenheid van een ouder of voogd die deze Voorwaarden namens hen aanvaardt.
+
+Dit is een andere kwestie dan de leeftijd waarop u kunt instemmen met de verwerking van uw persoonsgegevens; die ligt tussen 13 en 16 jaar, afhankelijk van de lidstaat, en wordt behandeld in het Privacybeleid. Het ene getal bepaalt het andere niet: § 110 BGB, op grond waarvan een minderjarige bepaalde overeenkomsten met eigen middelen kan sluiten, geldt niet voor een duurverplichting zoals een abonnement.
 
 ### 1.4 Zakelijk gebruik
 
@@ -48,7 +50,7 @@ De Aanbieder biedt softwareapplicaties, tools en aanverwante diensten aan. De sp
 
 ### 2.2 Wijzigingen
 
-De Aanbieder behoudt zich het recht voor om op elk moment, met of zonder kennisgeving, een Dienst te wijzigen, op te schorten of stop te zetten. Materiële wijzigingen worden gecommuniceerd waar dit redelijkerwijs mogelijk is.
+De Aanbieder behoudt zich het recht voor om een Dienst te wijzigen, op te schorten of stop te zetten. **Voor consumenten in de EU en de EER is dit recht beperkt:** buiten wat nodig is om de Dienst conform te houden, wordt de Dienst slechts gewijzigd om een hier genoemde geldige reden (aanpassing aan een nieuwe technische omgeving, aan gewijzigde platformvereisten, aan wettelijke vereisten, of beëindiging van een dienst van derden waarvan de functie afhankelijk is), en een wijziging die uw toegang of gebruik meer dan onbeduidend beïnvloedt, wordt u vooraf op een duurzame drager meegedeeld, samen met uw recht om de overeenkomst binnen 30 dagen kosteloos te beëindigen indien de wijziging nadelig is (art. 19 Richtlijn (EU) 2019/770 / § 327r BGB). Materiële wijzigingen worden aan iedereen gecommuniceerd waar dit redelijkerwijs mogelijk is.
 
 ### 2.3 Beschikbaarheid
 
@@ -100,9 +102,9 @@ De Aanbieder kan Gebruikersinhoud verwijderen die deze Voorwaarden of toepasseli
 
 ---
 
-## 5. TOELAATBAAR GEBRUIK EN FAIR USE
+## 5. TOELAATBAAR GEBRUIK
 
-Het gebruik van de Diensten is onderworpen aan ons [Beleid Toelaatbaar Gebruik](ACCEPTABLE_USE_POLICY.md) en ons [Fair Use-beleid](FAIR_USE_POLICY.md). Het Fair Use-beleid geeft de Aanbieder het recht om het gebruik te beperken, functies te beperken, toegang op te schorten of te beëindigen wanneer het gebruik het normale individuele eindgebruik overschrijdt of wanneer misbruik op goede gronden wordt vermoed.
+Het gebruik van de Diensten is onderworpen aan ons [Beleid Toelaatbaar Gebruik](ACCEPTABLE_USE_POLICY.md).
 
 U mag niet:
 
@@ -132,7 +134,7 @@ Alle feedback of suggesties die u verstrekt, mogen door de Aanbieder worden gebr
 
 ---
 
-## 7. BETALINGEN EN ABONNEMENTEN
+## 7. AANKOPEN
 
 ### 7.1 Prijzen
 
@@ -140,34 +142,30 @@ Prijzen voor betaalde Diensten worden weergegeven op het moment van aankoop. All
 
 ### 7.2 Betalingsverwerking
 
-Betalingen kunnen worden verwerkt door externe betalingsverwerkers. U stemt in met de voorwaarden van deze aanbieders.
+De App Store verwerkt de aankoop via StoreKit. De Aanbieder ontvangt geen gegevens van betaalkaarten.
 
 ### 7.3 Abonnementen
 
-Abonnementen worden automatisch verlengd tenzij ze vóór de verlengingsdatum worden opgezegd. U kunt op elk moment opzeggen via het betreffende platform of door contact op te nemen met de Aanbieder. Uitgebreide informatie over automatische verlenging, omzetting van gratis proefperiodes en opzegmogelijkheden vindt u in de [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md).
+Civo Cloud Manager bevat een gratis toegangsperiode van zeven dagen vanaf de eerste start. Full Access is een eenmalige, niet-verbruikbare aankoop via de App Store. Er zijn geen abonnementen, geen automatische verlengingen en geen omzettingen van een proefperiode naar een abonnement. Een voltooide aankoop kan worden hersteld via de App Store. Er zijn geen afzonderlijke abonnementsvoorwaarden van toepassing.
 
-### 7.3.1 Kündigungs-Button (Duitsland, § 312k BGB)
+### 7.3.1 California Automatic Renewal Law (ARL)
 
-Voor directe abonnementen die met consumenten in Duitsland zijn afgesloten, biedt de Aanbieder een opzeggingsknop die in maximaal twee klikken vanaf de accountpagina bereikbaar is (zie [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md) § 6.3). Voor abonnementen via de Apple App Store of Google Play wordt opzegging afgehandeld via het standaardmechanisme van het betreffende platform.
-
-### 7.3.2 California Automatic Renewal Law (ARL)
-
-Voor inwoners van Californië voldoet de Aanbieder aan Cal. Bus. & Prof. Code § 17600 e.v., zoals verder beschreven in de [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md) § 8.
+Civo Cloud Manager kent geen automatische verlenging, zodat de verplichtingen op grond van Cal. Bus. & Prof. Code § 17600 e.v. niet ontstaan.
 
 ### 7.4 Restituties
 
-Restituties worden geregeld door:
-
-- De toepasselijke platformvoorwaarden (Apple App Store, Google Play) — zie [Restitutiebeleid](REFUND_POLICY.md) § 2
-- Toepasselijke consumentenbeschermingswetten
-- Het [Restitutiebeleid](REFUND_POLICY.md) van de Aanbieder
+Restituties voor aankopen in de App Store worden bij Apple aangevraagd op grond van de toepasselijke voorwaarden van de Apple App Store. De Aanbieder verwerkt geen betalingen. Toepasselijke consumentenbeschermingswetten en dwingende wettelijke consumentenrechten blijven onaangetast.
 
 ### 7.5 EU-herroepingsrecht
 
-Consumenten in de EU hebben een herroepingsrecht van 14 dagen voor digitale inhoud, tenzij:
+Consumenten in de EU hebben een herroepingsrecht van 14 dagen voor digitale inhoud. Voor digitale inhoud die niet op een materiële drager wordt geleverd, laat § 356(6) nr. 2 BGB dat recht pas vervallen indien aan alle vier de volgende voorwaarden is voldaan:
 
-- De consument uitdrukkelijk heeft ingestemd met onmiddellijke uitvoering
-- De consument heeft erkend het herroepingsrecht te verliezen
+- (a) de uitvoering van de overeenkomst is begonnen;
+- (b) u hebt uitdrukkelijk ingestemd met een aanvang van de uitvoering voordat de herroepingstermijn is verstreken;
+- (c) u hebt bevestigd te weten dat het herroepingsrecht door die instemming vervalt zodra de uitvoering begint; en
+- (d) de ondernemer heeft u een bevestiging van de overeenkomst verstrekt overeenkomstig § 312f BGB.
+
+Ontbreekt er één van deze voorwaarden, dan blijft het herroepingsrecht bestaan. Voor aankopen via de App Store geldt het herroepings- en restitutieproces van Apple (zie § 14.1).
 
 ---
 
@@ -196,6 +194,8 @@ VOOR ZOVER TOEGESTAAN DOOR DE WET:
 - Geen garantie op juistheid, volledigheid, betrouwbaarheid of geschiktheid voor een bepaald doel
 - Geen garantie dat de Diensten ononderbroken, veilig of foutloos zullen zijn
 
+Niets in dit artikel sluit een garantie, waarborg of aansprakelijkheid uit of beperkt deze, indien deze krachtens dwingend toepasselijk recht niet kunnen worden uitgesloten of beperkt, waaronder dwingende wettelijke garantierechten van consumenten. **Voor consumenten in Australië en Nieuw-Zeeland is § 14.5 van toepassing en prevaleert deze boven dit artikel.**
+
 ---
 
 ## 10. BEPERKING VAN AANSPRAKELIJKHEID
@@ -206,16 +206,20 @@ VOOR ZOVER TOEGESTAAN DOOR DE WET:
 - De Aanbieder is niet aansprakelijk voor verlies van gegevens, winst, omzet of zakelijke kansen
 - De totale aansprakelijkheid bedraagt niet meer dan het hoogste van (a) het door u betaalde bedrag in de 12 maanden voorafgaand aan de claim, of (b) EUR 100
 
+**Dwingende uitzonderingen.** De bovenstaande uitsluitingen en beperkingen zijn **niet** van toepassing op, en de Aanbieder blijft volledig aansprakelijk voor: (a) schade die voortvloeit uit opzet of grove nalatigheid; (b) letsel aan leven, lichaam of gezondheid; (c) aansprakelijkheid op grond van dwingend productaansprakelijkheidsrecht (waaronder de Duitse Produkthaftungsgesetz); en (d) enige andere aansprakelijkheid die krachtens dwingend toepasselijk recht niet kan worden beperkt of uitgesloten. Voor de verwijtbare schending van een wezenlijke contractuele verplichting (kardinale verplichting / *Kardinalpflicht*) zijn de bovenstaande uitsluitingen niet van toepassing; bij lichte nalatigheid is de aansprakelijkheid beperkt tot de voorzienbare, voor de overeenkomst typische schade, en is het bovenstaande maximum daarop niet van toepassing. Dwingende wettelijke consumentenrechten blijven onaangetast. **Voor consumenten in Australië en Nieuw-Zeeland is § 14.5 van toepassing en prevaleert deze boven dit artikel.**
+
 ---
 
 ## 11. VRIJWARING
 
-U stemt ermee in de Aanbieder te vrijwaren en schadeloos te stellen voor claims, schade, verliezen en kosten (inclusief redelijke juridische kosten) die voortvloeien uit:
+Voor zover toegestaan door het toepasselijke recht stemt u ermee in de Aanbieder te vrijwaren en schadeloos te stellen voor vorderingen van derden, schade, verliezen en kosten (inclusief redelijke juridische kosten) voor zover deze zijn veroorzaakt door uw verwijtbare (opzettelijke of nalatige) gedrag, in het bijzonder:
 
-- Uw gebruik van de Diensten
-- Uw schending van deze Voorwaarden
+- Uw onrechtmatig gebruik van de Diensten
+- Uw verwijtbare schending van deze Voorwaarden
 - Uw schending van enige wet of rechten van derden
 - Uw Gebruikersinhoud
+
+Deze verplichting is niet van toepassing indien en voor zover u niet verantwoordelijk bent voor de betreffende schending, en laat uw dwingende wettelijke rechten als consument onverlet.
 
 ---
 
@@ -227,7 +231,7 @@ U kunt op elk moment stoppen met het gebruik van de Diensten. Verzoeken tot verw
 
 ### 12.2 Door de Aanbieder
 
-De Aanbieder kan uw toegang op elk moment beëindigen of opschorten, met of zonder reden. Ernstige schendingen kunnen leiden tot onmiddellijke beëindiging zonder voorafgaande kennisgeving.
+De Aanbieder kan uw toegang om gewichtige redenen opschorten of beëindigen (waaronder een wezenlijke schending van deze Voorwaarden, misbruik van de Diensten, of wanneer dit wettelijk, door een rechter of autoriteit, of door een app-store- / platformexploitant vereist is). Een wezenlijke schending kan leiden tot onmiddellijke beëindiging. Indien de Aanbieder beëindigt zonder gewichtige reden, zal zij waar wettelijk vereist een redelijke opzegtermijn in acht nemen. Uw dwingende wettelijke opzeggingsrechten en die van de Aanbieder blijven onaangetast.
 
 ### 12.3 Gevolgen van beëindiging
 
@@ -256,16 +260,35 @@ Het onlinegeschillenbeslechtingsplatform van de Europese Commissie is op 20 juli
 
 ## 14. REGIONALE BEPALINGEN
 
-### 14.1 Europese Unie
+### 14.1 Europese Unie en EER
 
-- Dwingende consumentenrechten op grond van EU-richtlijnen (waaronder de Richtlijn Consumentenrechten en de Richtlijn Digitale Inhoud) blijven onaangetast
-- Het herroepingsrecht is van toepassing op aankopen van digitale inhoud zoals wettelijk bepaald
-- Garantieaanspraken voor digitale inhoud onder Richtlijn (EU) 2019/770 worden niet uitgesloten
+**Van toepassing op:** consumenten met gewone verblijfplaats in de EU of de EER (waaronder Noorwegen, IJsland en Liechtenstein).
+
+**Wie uw aankoop verkoopt.** Bij aankopen in de App Store in de EU/EER verkoopt Apple Distribution International Ltd. in eigen naam als commissionair; de precontractuele informatie op grond van art. 246a EGBGB / art. 6 Richtlijn 2011/83/EU, de bestelknop op grond van § 312j(3) BGB / art. 8(2) van die Richtlijn, de herroepingsinstructie en het modelformulier, de bevestiging op een duurzame drager (§ 312f BGB) en de terugbetaling van de aankoopprijs zijn verschuldigd door Apple. **Deze toedeling geldt uitsluitend voor de EU en de EER**; zij is niet van toepassing op de agentschapsgebieden van de App Store.
+
+**Uw herroepingsrecht** wordt beschreven in § 7.5; niets hier herhaalt of verkort dit.
+
+**Conformiteit en updates.** Richtlijn (EU) 2019/770 regelt de levering van de digitale inhoud en dienst tussen u en de Aanbieder, ongeacht wie de betaling heeft ontvangen. De conformiteitsvereisten van art. 6 tot en met 8 en de updateverplichting van art. 8(2) zijn krachtens art. 22 dwingend en worden door niets in deze Voorwaarden uitgesloten.
+
+**Voor consumenten in de EU/EER zijn de volgende bepalingen niet van toepassing:**
+
+- enige uitsluiting of beperking van aansprakelijkheid buiten de in § 10 genoemde dwingende uitzonderingen;
+- enige wijziging van de Dienst buiten hetgeen § 2.2 voor u toestaat;
+- enige veronderstelde aanvaarding van gewijzigde voorwaarden door stilzwijgen of louter voortgezet gebruik;
+- automatische verlenging van een jaartermijn met een nieuw vol jaar;
+- enige rechtskeuze die de dwingende bescherming van uw gewone verblijfplaats verdringt (art. 6(2) Rome I);
+- enige bepaling die de Engelse versie bindend maakt waar het recht van uw lidstaat de lokale taal vereist (§ 16.8 bevat de regel over de toepasselijke taal).
+
+**Nationale bijzonderheden.**
+
+- **Duitsland:** de impressumverplichtingen op grond van § 5 DDG en § 18(2) MStV worden nageleefd in het [Impressum](IMPRESSUM.md). § 308 nr. 5 en § 309 nr. 9 BGB zijn op deze Voorwaarden van toepassing als consumentenvoorwaarden. De opzeggingsknop op grond van § 312k BGB heeft betrekking op overeenkomsten die consumenten via een website kunnen sluiten; de Aanbieder sluit er momenteel geen op die wijze, en een aankoopscherm in de app is geen website.
+- **Frankrijk:** consumenteninformatie wordt in het Frans verstrekt; voor een consument die in Frankrijk woont, geldt de Franse versie (Loi Toubon; § 16.8).
+- **België, Polen:** taalvereisten die vergelijkbaar zijn met de Franse regel; § 16.8 is van toepassing.
+- **Italië, Spanje, Oostenrijk:** de leeftijd voor digitale toestemming (14) wordt behandeld in het Privacybeleid.
 
 ### 14.2 Verenigde Staten
 
 - Waar verboden door staatswetgeving, zijn beperkingen van aansprakelijkheid of garanties niet van toepassing
-- Arbitragebepalingen zijn mogelijk niet van toepassing in rechtsgebieden waar consumentenarbitrage is beperkt
 
 ### 14.3 Verenigd Koninkrijk
 
@@ -275,17 +298,37 @@ Het onlinegeschillenbeslechtingsplatform van de Europese Commissie is op 20 juli
 ### 14.4 Canada
 
 - Provinciale consumentenbeschermingswetgeving kan bepaalde bepalingen buiten werking stellen
+- Voor inwoners van Quebec geldt de Franse versie waar het recht van Quebec dit vereist (§ 16.8)
 
-### 14.5 Australië
+### 14.5 Australië en Nieuw-Zeeland
 
-- Consumentengaranties onder de Australische Consumentenwet kunnen niet worden uitgesloten
-- Aansprakelijkheid is beperkt tot herlevering van de Diensten of betaling van de kosten van herlevering
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
 
-### 14.6 Overige rechtsgebieden
+De bovenstaande kennisgeving kwalificeert de artikelen 9 en 10 van deze Voorwaarden en prevaleert daarboven.
+
+**De garanties.** Voor digitale producten en diensten die aan een consument worden geleverd, garandeert de Australian Consumer Law aanvaardbare kwaliteit (s. 54), geschiktheid voor een kenbaar gemaakt doel (s. 55), overeenstemming met de beschrijving (s. 56), zorgvuldigheid en vakbekwaamheid (s. 60) en geschiktheid van diensten voor het gespecificeerde doel (s. 61); de New Zealand Consumer Guarantees Act 1993 voorziet in gelijkwaardige bepalingen (ss. 6, 8, 9, 28, 29). Bij een **ernstig** gebrek kiest u zelf tussen restitutie en vervanging, en niet de leverancier. Is het gebrek niet ernstig, dan mag de leverancier het binnen een redelijke termijn herstellen. Section 64 ACL maakt elke poging tot uitsluiting, beperking of wijziging van deze garanties nietig; s. 43 CGA doet hetzelfde in Nieuw-Zeeland.
+
+**Wie ze verschuldigd is.** De leverancier is de **Aanbieder**, niet de store: Apple treedt in deze gebieden op als agent van de Aanbieder op grond van Schedule 2 van zijn ontwikkelaarsovereenkomst en verkoopt in naam van de Aanbieder. De koopovereenkomst is gesloten met DigitalFreedom Global LLC, en de garanties, de rechtsmiddelen bij ernstige gebreken en de bovenstaande kennisgeving zijn rechtstreeks verschuldigd door de Aanbieder. Een consument die van de store geen oplossing kan krijgen, blijft niet zonder: de route is het contactadres in § 16.7.
+
+### 14.6 Turkije (Türkiye)
+
+Bij aankopen in de App Store in Türkiye is de verkoper Apple Distribution International Ltd. (commissionair), en de precontractuele informatieplicht en de herroepingsverplichtingen van 14 dagen op grond van de Wet op consumentenbescherming (nr. 6502) en het Besluit afstandsovereenkomsten rusten op de store. Consumentengeschillen onder de wettelijke drempel moeten vóór een gerechtelijke procedure worden voorgelegd aan een **Consumer Arbitration Committee**; dit is verplicht, niets in deze Voorwaarden sluit dit uit, en het kwalificeert het voorbehoud "tenzij wettelijk verplicht" in § 13.3.
+
+### 14.7 Japan
+
+Voor verkopen aan consumenten in Japan vereist de Specified Commercial Transactions Act (特定商取引法) dat de naam, het adres en de contactgegevens van de verkoper, de prijs en de annuleringsvoorwaarden direct beschikbaar zijn. In Japan is de **Aanbieder de verkoper**, omdat de App Store daar een agentschapsgebied is, zodat deze weergaveplichten op de Aanbieder rusten. De naam, het adres en de contactgegevens van de verkoper staan in het [Impressum](IMPRESSUM.md); de prijs wordt weergegeven op het moment van aankoop (§ 7.1); de annuleringsvoorwaarden zijn opgenomen in §§ 7.4 en 7.5 van deze Voorwaarden.
+
+### 14.8 Overige rechtsgebieden
 
 - Waar lokale dwingende wetgeving een bepaling beperkt, geldt die bepaling slechts voor zover toegestaan
-
----
+- Dwingende consumentenbescherming van uw gewone verblijfplaats blijft overal onaangetast
 
 ## 15. OVERMACHT
 
@@ -311,7 +354,7 @@ De Aanbieder mag deze Voorwaarden overdragen in het kader van een fusie, overnam
 
 ### 16.4 Volledige overeenkomst
 
-Deze Voorwaarden, samen met het [Privacybeleid](PRIVACY_POLICY.md), de [EULA](EULA.md), de [Abonnementsvoorwaarden](SUBSCRIPTION_TERMS.md), het [Fair Use-beleid](FAIR_USE_POLICY.md), het [Beleid Toelaatbaar Gebruik](ACCEPTABLE_USE_POLICY.md), het [Restitutiebeleid](REFUND_POLICY.md) en alle andere genoemde beleidsregels, vormen de volledige overeenkomst tussen u en de Aanbieder.
+Deze Voorwaarden, samen met het [Privacybeleid](PRIVACY_POLICY.md), de [EULA](EULA.md), het [Beleid Toelaatbaar Gebruik](ACCEPTABLE_USE_POLICY.md) en alle andere genoemde beleidsregels, vormen de volledige overeenkomst tussen u en de Aanbieder.
 
 ### 16.5 Wijzigingen
 
@@ -327,7 +370,7 @@ Kennisgevingen aan de Aanbieder dienen te worden gestuurd naar `hello@digitalfre
 
 ### 16.8 Taal
 
-Voor consumenten geldt de versie in een officiële taal van hun gewone verblijfplaats indien een dergelijke versie bestaat. De Engelse versie geldt voor zakelijke klanten en voor talen waarvoor geen versie bestaat.
+Deze Voorwaarden worden in meerdere talen gepubliceerd. **Voor consumenten geldt de versie in een officiële taal van hun gewone verblijfplaats** indien een dergelijke versie bestaat. De Engelse versie geldt voor zakelijke klanten en voor talen waarvoor geen versie bestaat. Dit is het omgekeerde van de gebruikelijke bepaling en is bewust gekozen: een bepaling die het Engels bindend maakt, houdt in Frankrijk, België, Polen, Italië, Quebec en Türkiye geen stand, en het niet-bindend verklaren van de vertalingen zou de reden om ze te maken ontwaarden.
 
 ---
 
