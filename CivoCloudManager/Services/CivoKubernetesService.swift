@@ -29,7 +29,11 @@ protocol KubernetesClusterCreateAPI: Sendable {
 }
 
 final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAPI, KubernetesNodePoolAPI, KubernetesClusterCreateAPI, Sendable {
-    private let api = CivoAPIClient.shared
+    private let api: CivoAPIClient
+
+    init(api: CivoAPIClient = .shared) {
+        self.api = api
+    }
 
     func listClusters(region: String? = nil) async throws -> PaginatedList<CivoKubernetesCluster> {
         var queryItems: [URLQueryItem]? = nil
@@ -42,9 +46,25 @@ final class CivoKubernetesService: KubernetesUpgradeAPI, KubernetesNodeRecycleAP
         try await api.get(path: "/kubernetes/clusters/\(id)", queryItems: region.map { [URLQueryItem(name: "region", value: $0)] }, apiKey: apiKey)
     }
 
-    /// `GET /v2/kubernetes/versions`, documented without parameters.
+    /// `GET /v2/kubernetes/versions`, documented without parameters. Each entry is read on its own, so an unreadable
+    /// entry is skipped; only a failed request, an answer that is not a list, or a list without any readable entry
+    /// fails the load.
     func listVersions(apiKey: String? = nil) async throws -> [CivoKubernetesVersion] {
-        try await api.getArray(path: "/kubernetes/versions", regionRequired: false, apiKey: apiKey)
+        let entries: [LossyVersionEntry] = try await api.getArray(path: "/kubernetes/versions", regionRequired: false, apiKey: apiKey)
+        let versions = entries.compactMap(\.value)
+        if versions.count < entries.count {
+            Log.error("\(entries.count - versions.count) of \(entries.count) Kubernetes versions could not be read")
+        }
+        guard versions.isEmpty, !entries.isEmpty else { return versions }
+        throw CivoAPIError.decodingError("")
+    }
+
+    private struct LossyVersionEntry: Decodable, Sendable {
+        let value: CivoKubernetesVersion?
+
+        init(from decoder: Decoder) throws {
+            value = try? CivoKubernetesVersion(from: decoder)
+        }
     }
 
     /// `GET /v2/kubernetes/applications`, documented without parameters. Each entry is read on its own, so only a
