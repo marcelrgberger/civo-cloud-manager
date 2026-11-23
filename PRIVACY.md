@@ -1,7 +1,7 @@
 # Privacy Policy
 
 **Civo Cloud Manager**
-Last Updated: September 9, 2026
+Last Updated: November 23, 2026
 Effective Date: March 21, 2026
 
 DigitalFreedom Global LLC ("we", "us", "our"), is committed to protecting your privacy. This Privacy Policy describes how we handle information in connection with the Civo Cloud Manager application ("Application").
@@ -192,10 +192,9 @@ We will not retroactively change our privacy practices to collect data without o
 
 ---
 
-## 9. EU Online Dispute Resolution
+## 9. Dispute Resolution
 
-The European Commission provides an online dispute resolution platform at:
-https://ec.europa.eu/consumers/odr
+The European Commission's Online Dispute Resolution platform ceased operation on 20 July 2025. Regulation (EU) 2024/3228 repealed Regulation (EU) No 524/2013, under which the platform had been established. Consumers may contact us directly at hello@digitalfreedom.co.za or approach a competent alternative dispute resolution body in their country of residence.
 
 We are not obligated to participate in dispute resolution proceedings before a consumer arbitration board, but may choose to do so on a case-by-case basis.
 
@@ -209,7 +208,6 @@ DigitalFreedom Global LLC
 30 N Gould St, Ste N
 Sheridan, WY 82801
 United States
-Phone: +1 307 451 0707
 Email: hello@digitalfreedom.co.za
 Web: https://digitalfreedom.co.za
 
