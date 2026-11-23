@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: pt | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: pt | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / AVISO LEGAL
 
 ## Informação nos termos do § 5 DDG (Digitale-Dienste-Gesetz) e requisitos internacionais de divulgação aplicáveis
 
-**Última atualização:** setembro de 2026
+**Última atualização:** novembro de 2026
 
 ---
 
 ## 1. PRESTADOR DO SERVIÇO
 
 Os Serviços são oferecidos sob a marca **DigitalFreedom**. A entidade jurídica operadora (Diensteanbieter / Prestador de Serviço nos termos do § 5 DDG) é:
+
+[Porque é que o prestador é uma LLC norte-americana?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Estados Unidos
 Nome comercial: **DigitalFreedom** (utilizado em websites, aplicações, marketing, comunicações com clientes e interface do produto)
 
 **Email:** hello@digitalfreedom.co.za
-**Telefone:** +1 307 451 0707
+**Formulário de contacto:** https://support.apps.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Portal de suporte (contacto eletrónico rápido, § 5 DDG):** https://support.apps.digitalfreedom.co.za
 **Pedidos sobre proteção de dados:** data-protection@digitalfreedom.co.za
 **Formulário de pedido de proteção de dados:** https://data-protection.digitalfreedom.co.za
-**Telefone:** +1 307 451 0707
+**Comunicação de vulnerabilidades de segurança:** security@digitalfreedom.co.za
+**Formulário de comunicação de segurança:** https://security.digitalfreedom.co.za
 **Website:** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za, ou o formulário de suporte em https://support.app
 
 A comunicação com ambos os pontos de contacto é efetuada por uma pessoa; não é exclusivamente automatizada.
 
-**Idiomas aceites:** Alemão e Inglês.
+**Idiomas aceites:** Inglês e Alemão.
 
 **Representante legal na União (Art. 13 DSA):** nenhum designado. O Art. 13(1) aplica-se a prestadores de serviços intermediários sem estabelecimento na União, não apenas a plataformas online — pelo que o facto de os serviços não serem uma plataforma online nos termos do Art. 3(i) não elimina por si só a obrigação. Se os serviços são ou não um serviço intermediário é a questão em aberto, e a posição adotada está acima exposta: os pontos de contacto dos Art. 11 e 12 são publicados em qualquer caso, e nenhum representante é designado. O risco é assumido deliberadamente.
+
+### 4.4 Seguro
+
+Seguro de responsabilidade civil geral e seguro de riscos cibernéticos e de dados junto da Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Os conteúdos e obras criados pelos operadores do site nestas páginas estão pr
 
 ## 10. REQUISITOS INTERNACIONAIS DE DIVULGAÇÃO
 
+As disposições enumeradas abaixo são indicadas a título de orientação: são os regimes a que as informações deste aviso se destinam a servir. A lista não dá garantia de exaustividade nem garantia de que o aviso satisfaça qualquer uma delas num caso concreto.
+
 ### 10.1 União Europeia / EEE
 
-Este aviso legal cumpre os requisitos de:
+Disposições sobre a identificação do prestador na UE e em Estados-Membros selecionados:
 
 - **Alemanha:** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
 - **UE:** Artigo 5 da Diretiva do Comércio Eletrónico (2000/31/CE), Artigo 12 do Digital Services Act (Regulamento (UE) 2022/2065)
@@ -140,14 +149,14 @@ Este aviso legal cumpre os requisitos de:
 
 ### 10.2 Reino Unido
 
-Este aviso cumpre os requisitos de:
+Disposições sobre a identificação do prestador no Reino Unido:
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (para websites empresariais)
 
 ### 10.3 Estados Unidos
 
-As divulgações de identificação empresarial cumprem:
+Disposições relevantes para a identificação de empresas nos Estados Unidos:
 
 - FTC Act § 5 (atos ou práticas desleais ou enganosas)
 - Requisitos estaduais específicos de divulgação empresarial
@@ -185,7 +194,7 @@ As divulgações de identificação empresarial cumprem:
 
 ### 10.10 Outras Jurisdições
 
-O Prestador cumpre os requisitos aplicáveis de identificação e divulgação empresarial em todas as jurisdições onde os Serviços são oferecidos.
+Quando os Serviços são oferecidos noutras jurisdições, as informações deste aviso servem as obrigações de identificação do prestador aí aplicáveis. Não é dada qualquer garantia de que cada uma dessas obrigações seja cumprida.
 
 ---
 

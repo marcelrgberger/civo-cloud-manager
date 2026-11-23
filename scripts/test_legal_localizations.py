@@ -18,6 +18,27 @@ class LegalDateValidationTests(unittest.TestCase):
         self.assertEqual(source_counts, swapped_counts)
         self.assertNotEqual(signature(source), signature(swapped))
 
+    def test_impressum_edit_month_translates_to_its_own_token(self):
+        source, source_counts = normalize_dates("November 2026", "en")
+        for language, text in (("de", "November 2026"), ("es", "noviembre de 2026")):
+            translated, translated_counts = normalize_dates(text, language)
+            self.assertEqual(source_counts, translated_counts)
+            self.assertEqual(signature(source), signature(translated))
+            self.assertEqual(signature(translated)["date_sequence"], ["DATE_E"])
+
+    def test_stale_edit_month_fails(self):
+        source, source_counts = normalize_dates("November 2026", "en")
+        stale, stale_counts = normalize_dates("septiembre de 2026", "es")
+        self.assertNotEqual(source_counts, stale_counts)
+        self.assertNotEqual(signature(source), signature(stale))
+
+    def test_unchanged_document_date_keeps_its_token(self):
+        source, source_counts = normalize_dates("September 2026", "en")
+        translated, translated_counts = normalize_dates("septembre 2026", "fr")
+        self.assertEqual(source_counts, translated_counts)
+        self.assertEqual(signature(source), signature(translated))
+        self.assertEqual(signature(translated)["date_sequence"], ["DATE_A"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: zh-Hans | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: zh-Hans | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # 出版说明 / 法律声明
 
 ## 根据信息服务数字法（第5条DDG）及适用的国际披露要求提供的信息
 
-**最后更新：** 2026年9月
+**最后更新：** 2026年11月
 
 ---
 
 ## 1. 服务提供商
 
 本服务以**DigitalFreedom**品牌提供。运营法律实体（根据第5条DDG的服务提供商定义）为：
+
+[为什么服务提供方是一家美国 LLC？](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Sheridan, WY 82801
 商号：**DigitalFreedom**（用于网站、应用、市场营销、客户沟通及产品界面）
 
 **电子邮件：** hello@digitalfreedom.co.za 
-**电话：**+1 307 451 0707
+**联系表单：**https://support.apps.digitalfreedom.co.za
 **网站：** https://digitalfreedom.co.za 
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **支持门户（快速电子联系，第5条DDG）：** https://support.apps.digitalfreedom.co.za 
 **数据保护咨询：** data-protection@digitalfreedom.co.za 
 **数据保护请求表：** https://data-protection.digitalfreedom.co.za 
-**电话：**+1 307 451 0707
+**安全漏洞报告：**security@digitalfreedom.co.za
+**安全报告表单：**https://security.digitalfreedom.co.za
 **网站：** https://digitalfreedom.co.za 
 
 ---
@@ -70,9 +73,13 @@ J. Rosenstock
 
 两个联络点的沟通均由人工处理；并非完全自动化。
 
-**可接受的语言：** 德语和英语。
+**可接受的语言：** 英语和德语。
 
 **欧盟内的法律代表（第13条 DSA）：** 未指定。第13条第1款适用于在欧盟无设立机构的中介服务提供者，不仅限于在线平台——因此，服务并非第3条第(i)项意义上的在线平台，并不自动免除该义务。服务是否属于中介服务仍有待确定，所持立场如上所述：第11条和第12条下的联系方式已公布，未指定代表。相关风险由我们有意识地承担。
+
+### 4.4 保险
+
+商业一般责任保险以及网络与数据风险保险，承保人为 Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ J. Rosenstock
 
 ## 10. 国际披露要求
 
+以下列出的规定仅供参考：它们是本声明中的信息所要服务的法律制度。该列表不保证完整，也不保证本声明在具体个案中满足其中任何一项规定。
+
 ### 10.1 欧盟 / 欧洲经济区
 
-本法律声明满足以下要求：
+欧盟及部分成员国关于服务提供方身份标识的规定：
 
 - **德国：**§ 5 DDG（数字服务法），§ 18（2）MStV（媒体国家条约）
 - **欧盟：**电子商务指令（2000/31/EC）第5条，数字服务法案（欧盟法规 2022/2065）第12条
@@ -140,14 +149,14 @@ J. Rosenstock
 
 ### 10.2 英国
 
-本通知符合以下要求：
+英国关于服务提供方身份标识的规定：
 
 - 电子商务（欧共体指令）条例 2002
 - 公司法 2006（适用于商业网站）
 
 ### 10.3 美国
 
-企业身份披露遵循：
+美国与企业身份标识相关的规定：
 
 - 联邦贸易委员会法第5条（不公平或欺骗性行为）
 - 各州特定的企业披露要求
@@ -185,7 +194,7 @@ J. Rosenstock
 
 ### 10.10 其他司法管辖区
 
-服务提供方在所有提供服务的司法管辖区均遵守适用的企业身份识别和披露要求。
+在其他司法辖区提供服务时，本声明中的信息服务于当地适用的服务提供方身份标识义务。不保证每一项此类义务均已履行。
 
 ---
 

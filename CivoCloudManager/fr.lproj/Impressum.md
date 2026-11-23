@@ -1,15 +1,17 @@
-<!-- doc-id: IMPRESSUM | lang: fr | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
+<!-- doc-id: IMPRESSUM | lang: fr | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.5.1 | source: website/IMPRESSUM.en.md | adapted: legal notice -->
 # IMPRESSUM / MENTIONS LÉGALES
 
 ## Informations conformément à l'article 5 DDG (Digitale-Dienste-Gesetz) et aux exigences internationales de divulgation applicables
 
-**Dernière mise à jour :** septembre 2026
+**Dernière mise à jour :** novembre 2026
 
 ---
 
 ## 1. FOURNISSEUR DE SERVICES
 
 Les Services sont proposés sous la marque **DigitalFreedom**. L'entité juridique exploitante (Diensteanbieter / Fournisseur de services au sens de l'article 5 DDG) est :
+
+[Pourquoi le fournisseur est-il une LLC américaine ?](https://digitalfreedom.co.za/why-llc/)
 
 DigitalFreedom Global LLC
 30 N Gould St, Ste N
@@ -19,7 +21,7 @@ Sheridan, WY 82801
 Nom commercial : **DigitalFreedom** (utilisé sur les sites web, applications, supports marketing, communications clients et interface utilisateur du produit)
 
 **E-mail :** hello@digitalfreedom.co.za
-**Téléphone :** +1 307 451 0707
+**Formulaire de contact :** https://support.apps.digitalfreedom.co.za
 **Site web :** https://digitalfreedom.co.za
 
 ---
@@ -41,7 +43,8 @@ J. Rosenstock
 **Portail d'assistance (contact électronique rapide, § 5 DDG) :** https://support.apps.digitalfreedom.co.za
 **Demandes relatives à la protection des données :** data-protection@digitalfreedom.co.za
 **Formulaire de demande de protection des données :** https://data-protection.digitalfreedom.co.za
-**Téléphone :** +1 307 451 0707
+**Signalement de vulnérabilités de sécurité :** security@digitalfreedom.co.za
+**Formulaire de signalement de sécurité :** https://security.digitalfreedom.co.za
 **Site web :** https://digitalfreedom.co.za
 
 ---
@@ -70,9 +73,13 @@ support@digitalfreedom.co.za, ou le formulaire d'assistance à https://support.a
 
 La communication avec les deux points de contact est assurée par une personne ; elle n'est pas exclusivement automatisée.
 
-**Langues acceptées :** allemand et anglais.
+**Langues acceptées :** anglais et allemand.
 
 **Représentant légal dans l'Union (art. 13 DSA) :** aucun désigné. L'article 13(1) vise les fournisseurs de services intermédiaires sans établissement dans l'Union, et pas seulement les plateformes en ligne — ainsi, le fait que les services ne constituent pas une plateforme en ligne au sens de l'art. 3(i) n'exonère pas à lui seul de cette obligation. La question de savoir si les services constituent un service intermédiaire demeure ouverte, et la position adoptée est exposée ci-dessus : les points de contact prévus aux art. 11 et 12 sont publiés dans tous les cas, et aucun représentant n'est désigné. Le risque est assumé délibérément.
+
+### 4.4 Assurance
+
+Assurance responsabilité civile générale et assurance des risques cyber et données auprès de Hiscox Insurance Company Inc.
 
 ---
 
@@ -122,9 +129,11 @@ Les contenus et œuvres créés par les exploitants du site sur ces pages sont p
 
 ## 10. EXIGENCES INTERNATIONALES DE DIVULGATION
 
+Les dispositions énumérées ci-dessous sont citées à titre indicatif : ce sont les régimes que les informations de cet avis sont destinées à servir. La liste ne garantit ni son exhaustivité ni que l'avis satisfasse l'une d'elles dans un cas donné.
+
 ### 10.1 Union européenne / EEE
 
-La présente mention légale satisfait aux exigences de :
+Dispositions relatives à l'identification du prestataire dans l'UE et dans certains États membres :
 
 - **Allemagne :** § 5 DDG (Digitale-Dienste-Gesetz), § 18(2) MStV (Medienstaatsvertrag)
 - **UE :** Article 5 de la Directive sur le commerce électronique (2000/31/CE), Article 12 du Digital Services Act (Règlement (UE) 2022/2065)
@@ -140,14 +149,14 @@ La présente mention légale satisfait aux exigences de :
 
 ### 10.2 Royaume-Uni
 
-La présente mention satisfait aux exigences de :
+Dispositions relatives à l'identification du prestataire au Royaume-Uni :
 
 - The Electronic Commerce (EC Directive) Regulations 2002
 - Companies Act 2006 (pour les sites web d'entreprise)
 
 ### 10.3 États-Unis
 
-Les informations d'identification de l'entreprise sont conformes à :
+Dispositions relatives à l'identification des entreprises aux États-Unis :
 
 - FTC Act § 5 (pratiques déloyales ou trompeuses)
 - Exigences de divulgation commerciale propres à chaque État
@@ -185,7 +194,7 @@ Les informations d'identification de l'entreprise sont conformes à :
 
 ### 10.10 Autres juridictions
 
-Le Fournisseur respecte les exigences applicables en matière d'identification et de divulgation commerciale dans toutes les juridictions où les Services sont proposés.
+Lorsque les Services sont proposés dans d'autres juridictions, les informations de cet avis servent les obligations d'identification du prestataire qui s'y appliquent. Aucune garantie n'est donnée que chacune de ces obligations soit remplie.
 
 ---
 
