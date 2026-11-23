@@ -6423,7 +6423,7 @@ struct ReservedIPTests {
             }
             #expect(ReservedIPRules.eligibilityError(for: .unassign, assignment: assignedTo) == .targetNotIdentifiable)
         }
-        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"unexpected": 1}}"#).assignment == .unrecognized(fingerprint: #"{"unexpected":1.0}"#))
+        #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"unexpected": 1}}"#).assignment == .unrecognized(fingerprint: #"{"unexpected":1}"#))
         #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": "vm-1"}"#).assignment == .unrecognized(fingerprint: #""vm-1""#))
     }
 
@@ -6433,6 +6433,20 @@ struct ReservedIPTests {
         let separate = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "other": "value", "type": "loadbalancer"}}"#)
         #expect(embedded.assignment != separate.assignment)
         #expect(ReservedIPRules.staleError(captured: embedded, reloaded: separate) == .assignmentChanged)
+    }
+
+    @Test("Targets whose numeric ids differ only beyond double precision stay distinct, and the changed one blocks release")
+    func numericFingerprintsKeepTheirValue() async throws {
+        let captured = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": 9007199254740992, "type": "loadbalancer"}}"#)
+        let reloaded = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": 9007199254740993, "type": "loadbalancer"}}"#)
+        #expect(captured.assignment != reloaded.assignment)
+        #expect(ReservedIPRules.staleError(captured: captured, reloaded: reloaded) == .assignmentChanged)
+
+        let env = Environment()
+        env.begin(.release, captured.assignment)
+        await env.setIP(reloaded.assignment)
+        #expect(await env.controller.confirm(.release(typedName: "edge")) == .cancelled)
+        #expect(await env.mutations.isEmpty)
     }
 
     @Test("Each action is offered only for the assignment it fits, and release stays possible for any loaded one")

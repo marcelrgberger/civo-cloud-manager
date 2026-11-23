@@ -36,9 +36,10 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
         case assignedTo = "assigned_to"
     }
 
-    /// Any JSON, kept only to tell two reported targets apart.
+    /// Any JSON, kept only to tell two reported targets apart. Numbers are decimals, not doubles, so large ids keep
+    /// their exact value.
     private enum AnyJSON: Decodable {
-        case null, bool(Bool), number(Double), string(String), array([AnyJSON]), object([String: AnyJSON])
+        case null, bool(Bool), number(Decimal), string(String), array([AnyJSON]), object([String: AnyJSON])
 
         init(from decoder: Decoder) throws {
             let c = try decoder.singleValueContainer()
@@ -46,7 +47,7 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
                 self = .null
             } else if let value = try? c.decode(Bool.self) {
                 self = .bool(value)
-            } else if let value = try? c.decode(Double.self) {
+            } else if let value = try? c.decode(Decimal.self) {
                 self = .number(value)
             } else if let value = try? c.decode(String.self) {
                 self = .string(value)
@@ -63,7 +64,7 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
             switch self {
             case .null: "null"
             case .bool(let value): String(value)
-            case .number(let value): String(value)
+            case .number(let value): "\(value)"
             case .string(let value): Self.quoted(value)
             case .array(let values): "[" + values.map(\.canonical).joined(separator: ",") + "]"
             case .object(let fields): "{" + fields.sorted { $0.key < $1.key }.map { "\(Self.quoted($0.key)):\($0.value.canonical)" }.joined(separator: ",") + "}"
