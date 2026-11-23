@@ -8,6 +8,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
     case networks = "Networks"
     case firewalls = "Firewalls"
     case loadBalancers = "Load Balancers"
+    case reservedIPs = "Reserved IPs"
     case domains = "Domains"
     case databases = "Databases"
     case volumes = "Volumes"
@@ -31,6 +32,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .networks: return "point.3.connected.trianglepath.dotted"
         case .firewalls: return "shield"
         case .loadBalancers: return "arrow.triangle.branch"
+        case .reservedIPs: return "network"
         case .domains: return "globe"
         case .databases: return "cylinder.split.1x2"
         case .volumes: return "cylinder"
@@ -54,6 +56,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .networks: return .green
         case .firewalls: return .red
         case .loadBalancers: return .indigo
+        case .reservedIPs: return .blue
         case .domains: return .teal
         case .databases: return .purple
         case .volumes: return .orange
@@ -73,7 +76,7 @@ enum SidebarSection: String, CaseIterable, Identifiable {
         case .dashboard: return .overview
         case .instances, .sshKeys: return .compute
         case .clusters: return .kubernetes
-        case .networks, .firewalls, .loadBalancers, .domains: return .networking
+        case .networks, .firewalls, .loadBalancers, .reservedIPs, .domains: return .networking
         case .databases, .volumes, .objectStores, .credentials: return .storage
         case .costs: return .account
         case .apiHealth: return .account
@@ -110,6 +113,7 @@ struct MainWindowView: View {
     @State private var volumeVM = VolumeViewModel()
     @State private var instanceVM = InstanceViewModel()
     @State private var domainVM = DomainViewModel()
+    @State private var reservedIPVM = ReservedIPViewModel()
     @State private var regionVM = RegionViewModel()
 
     var body: some View {
@@ -261,6 +265,8 @@ struct MainWindowView: View {
             FirewallListView(vm: networkVM)
         case .loadBalancers:
             LoadBalancerListView(vm: networkVM)
+        case .reservedIPs:
+            ReservedIPListView(vm: reservedIPVM)
         case .domains:
             DomainListView(vm: domainVM)
         case .databases:

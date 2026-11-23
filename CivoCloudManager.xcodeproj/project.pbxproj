@@ -17,6 +17,8 @@
 		C7311014833E428FABCEEA60 /* CivoConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741081E16DA45499D7C4901 /* CivoConsole.swift */; };
 		0048C6314F5EE8F79C349F21 /* KubeconfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22ABFE0D58271BEF1C782B6 /* KubeconfigParser.swift */; };
 		031CB4D60A65F48F84CEC130 /* CivoLoadBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */; };
+		BA5DFC7320B49A45E681D8BC /* ReservedIPRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */; };
+		BCC0CBACF6D0B3C4DC46E6EB /* CivoReservedIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E0F4F0053F27D702F2E8F0 /* CivoReservedIP.swift */; };
 		03B0E27D9C1140A115E9D082 /* QuotaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEC678CBA94690F848CF1F7 /* QuotaEditView.swift */; };
 		0ABC1E4B52C487D93FFA2E5B /* ObjectStoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2DCEEDC8117A41FBC2CD5B /* ObjectStoreListView.swift */; };
 		0CAA51AE471E89CD7C79074F /* CivoKubernetesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427F5C2E5699C5774C494320 /* CivoKubernetesService.swift */; };
@@ -30,6 +32,8 @@
 		62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */; };
 		07603E847C2ACB0EF9479043 /* LoadBalancerCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */; };
 		185D78EB3644C0FED48529D4 /* LoadBalancerEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */; };
+		6B79087136669F24356A1C49 /* ReservedIPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */; };
+		77C6E5B862A318D4F36A02AF /* ReservedIPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969707EF483F7006E89F0552 /* ReservedIPController.swift */; };
 		123000000000000000000002 /* ObjectStoreCredentialSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */; };
 		1F53D892FB96A5B8444E7CE1 /* K8sMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6573B0CCE355C008B097BE98 /* K8sMetrics.swift */; };
 		26AE2B95EE1C325878952853 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */; };
@@ -89,6 +93,11 @@
 		672FBCAB272D965EEA1503A7 /* CivoInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A67F276CE2F62C20312CD2 /* CivoInstance.swift */; };
 		69AD6A864491F4044F2B011F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E080D4B547AA2B37914090E /* MenuBarView.swift */; };
 		69F6E27FFCDC4B883A1AFD23 /* LoadBalancerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */; };
+		2337D188F9472E04A2E00AC7 /* ReservedIPConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */; };
+		9C3008401A42246B7867AB6C /* AssignReservedIPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571466D45338C169B34FB273 /* AssignReservedIPView.swift */; };
+		C4C2EA2A4DB99F0A23A3AA9D /* ReserveIPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34228836FA210F83353A8189 /* ReserveIPView.swift */; };
+		5CBA8E17BBBB598619E7A605 /* ReservedIPDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */; };
+		4193E67AF8300D414425E2C5 /* ReservedIPListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */; };
 		6A344C4208F4ABD36D77273F /* Impressum.md in Resources */ = {isa = PBXBuildFile; fileRef = 94D3EC9ABD65BB78103C9392 /* Impressum.md */; };
 		6ABFB7143AA331C58109F97C /* ObjectStorePauseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84180BA7584ACEED6FC47A99 /* ObjectStorePauseService.swift */; };
 		6CCEA847DF32006176D3A9D4 /* ObjectStoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23455AFA03C51527C20C9FD9 /* ObjectStoreDetailView.swift */; };
@@ -119,6 +128,7 @@
 		8DE6B49790C0D22A4AE4B088 /* K8sNodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECBE7F88791326260A0FD0 /* K8sNodeDetailView.swift */; };
 		907441463543C41FE777296C /* CivoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20A85AE8A0AAB61AEB6A794 /* CivoSize.swift */; };
 		913AB386747BFB374D3AFCE2 /* CivoLoadBalancerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */; };
+		3048395BF05F6F2BBFC28634 /* CivoReservedIPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */; };
 		94BA1B32385BCFAC0C0FDF89 /* SparklineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE58D59A701E14C63EE6DB83 /* SparklineView.swift */; };
 		96C8BD64B63F89FC1A466BF2 /* CreateInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13645C38DACFF711738E83 /* CreateInstanceView.swift */; };
 		975EC513B73253687459C6C5 /* K8sEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65306F70453D10A71A4761E /* K8sEvent.swift */; };
@@ -221,6 +231,7 @@
 		08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionViewModel.swift; sourceTree = "<group>"; };
 		09EC708C7CF21BD04266D608 /* CivoDomainService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomainService.swift; sourceTree = "<group>"; };
 		09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
+		3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoReservedIPService.swift; sourceTree = "<group>"; };
 		0CAB90D9E06AE3F401020357 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		0DFD18515DDCB89B7B11085A /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		119A83B46A65A4C30306BE66 /* CivoVolumeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolumeService.swift; sourceTree = "<group>"; };
@@ -277,6 +288,8 @@
 		44DB18154AC50CA130D2FB09 /* CredentialListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
 		47BC22D44A6BDA44A865773F /* MainWindowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
 		4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancer.swift; sourceTree = "<group>"; };
+		B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPRules.swift; sourceTree = "<group>"; };
+		48E0F4F0053F27D702F2E8F0 /* CivoReservedIP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoReservedIP.swift; sourceTree = "<group>"; };
 		4E5FEFF737E33744B27C841B /* ActivityLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActivityLog.swift; sourceTree = "<group>"; };
 		51B062260472FCFDFF253E9F /* VolumeViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VolumeViewModel.swift; sourceTree = "<group>"; };
 		53AF79153962272EBDD278F1 /* ResourceListRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResourceListRow.swift; sourceTree = "<group>"; };
@@ -329,6 +342,8 @@
 		42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEditor.swift; sourceTree = "<group>"; };
 		C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerCreateController.swift; sourceTree = "<group>"; };
 		528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEditor.swift; sourceTree = "<group>"; };
+		3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPViewModel.swift; sourceTree = "<group>"; };
+		969707EF483F7006E89F0552 /* ReservedIPController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPController.swift; sourceTree = "<group>"; };
 		123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreCredentialSwitcher.swift; sourceTree = "<group>"; };
 		9A0D734E5AADEC5426048D0D /* NetworkListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
 		9B01D46854B56A4823DA0330 /* QuotaGauge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
@@ -358,6 +373,11 @@
 		B603EEEBA9DCFD1B87098CAF /* RateEditorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RateEditorView.swift; sourceTree = "<group>"; };
 		B75A46752B5DE0BC53F6AA21 /* CreateSSHKeyView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateSSHKeyView.swift; sourceTree = "<group>"; };
 		B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerDetailView.swift; sourceTree = "<group>"; };
+		9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPConfirmationView.swift; sourceTree = "<group>"; };
+		571466D45338C169B34FB273 /* AssignReservedIPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssignReservedIPView.swift; sourceTree = "<group>"; };
+		34228836FA210F83353A8189 /* ReserveIPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReserveIPView.swift; sourceTree = "<group>"; };
+		BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPDetailView.swift; sourceTree = "<group>"; };
+		FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPListView.swift; sourceTree = "<group>"; };
 		B90DE16F3B60F3AB46A19FAD /* CivoRegion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoRegion.swift; sourceTree = "<group>"; };
 		BB62487E4451FD2F578B3E9F /* K8sConnectingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConnectingView.swift; sourceTree = "<group>"; };
 		BE58D59A701E14C63EE6DB83 /* SparklineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
@@ -639,6 +659,7 @@
 				EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */,
 				427F5C2E5699C5774C494320 /* CivoKubernetesService.swift */,
 				09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */,
+				3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */,
 				A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */,
 				DB215CC1AD313B8729ED3E16 /* CivoObjectStoreService.swift */,
 				CD73BD70AC93DDA0F4B4C10C /* CivoQuotaService.swift */,
@@ -687,6 +708,8 @@
 				42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */,
 				C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */,
 				528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */,
+				3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */,
+				969707EF483F7006E89F0552 /* ReservedIPController.swift */,
 				123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */,
 				08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */,
 				51B062260472FCFDFF253E9F /* VolumeViewModel.swift */,
@@ -718,6 +741,11 @@
 				05845953997D598F9CF53203 /* FirewallDetailView.swift */,
 				F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */,
 				B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */,
+				9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */,
+				571466D45338C169B34FB273 /* AssignReservedIPView.swift */,
+				34228836FA210F83353A8189 /* ReserveIPView.swift */,
+				BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */,
+				FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */,
 				3A7CA8D131FFE0C87209269A /* LoadBalancerListView.swift */,
 				9A0D734E5AADEC5426048D0D /* NetworkListView.swift */,
 			);
@@ -787,6 +815,8 @@
 				9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */,
 				B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */,
 				4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */,
+				B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */,
+				48E0F4F0053F27D702F2E8F0 /* CivoReservedIP.swift */,
 				B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */,
 				F4E1448D6889E0EE066A4CBB /* CivoObjectStore.swift */,
 				1A4FC9558B135D603AC2BB25 /* CivoObjectStoreCredential.swift */,
@@ -1008,6 +1038,8 @@
 				D3B024D8D833B3C72659BAF7 /* KubernetesNodeRecycle.swift in Sources */,
 				685E20B3C41386425CFA0742 /* KubernetesNodePools.swift in Sources */,
 				031CB4D60A65F48F84CEC130 /* CivoLoadBalancer.swift in Sources */,
+				BA5DFC7320B49A45E681D8BC /* ReservedIPRules.swift in Sources */,
+				BCC0CBACF6D0B3C4DC46E6EB /* CivoReservedIP.swift in Sources */,
 				426D364547D92AF1C603A36C /* CivoNetwork.swift in Sources */,
 				FAAC509E66D41F87401520CD /* CivoObjectStore.swift in Sources */,
 				AFC0ECE2CD7BBEDDBF99B74A /* CivoObjectStoreCredential.swift in Sources */,
@@ -1046,6 +1078,7 @@
 				BDF2E72DDCF04757A4A056B8 /* CivoConsoleService.swift in Sources */,
 				0CAA51AE471E89CD7C79074F /* CivoKubernetesService.swift in Sources */,
 				913AB386747BFB374D3AFCE2 /* CivoLoadBalancerService.swift in Sources */,
+				3048395BF05F6F2BBFC28634 /* CivoReservedIPService.swift in Sources */,
 				CBE791DF55C81D2069CD3487 /* CivoNetworkService.swift in Sources */,
 				B0D00784851F20F1FDAEFC13 /* CivoObjectStoreService.swift in Sources */,
 				6D378161BBA02573371EC695 /* CivoQuotaService.swift in Sources */,
@@ -1079,6 +1112,8 @@
 				62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */,
 				07603E847C2ACB0EF9479043 /* LoadBalancerCreateController.swift in Sources */,
 				185D78EB3644C0FED48529D4 /* LoadBalancerEditor.swift in Sources */,
+				6B79087136669F24356A1C49 /* ReservedIPViewModel.swift in Sources */,
+				77C6E5B862A318D4F36A02AF /* ReservedIPController.swift in Sources */,
 				123000000000000000000002 /* ObjectStoreCredentialSwitcher.swift in Sources */,
 				A0F4E426FF1D7B3A27BB7796 /* RegionViewModel.swift in Sources */,
 				548833FEB722C3B9F7FE72CF /* VolumeViewModel.swift in Sources */,
@@ -1129,6 +1164,11 @@
 				F8E59DF15B5E473A3E1EB661 /* FirewallDetailView.swift in Sources */,
 				827BF0CFC34CB7D5CA8417BD /* FirewallListView.swift in Sources */,
 				69F6E27FFCDC4B883A1AFD23 /* LoadBalancerDetailView.swift in Sources */,
+				2337D188F9472E04A2E00AC7 /* ReservedIPConfirmationView.swift in Sources */,
+				9C3008401A42246B7867AB6C /* AssignReservedIPView.swift in Sources */,
+				C4C2EA2A4DB99F0A23A3AA9D /* ReserveIPView.swift in Sources */,
+				5CBA8E17BBBB598619E7A605 /* ReservedIPDetailView.swift in Sources */,
+				4193E67AF8300D414425E2C5 /* ReservedIPListView.swift in Sources */,
 				F509E7FC3A31BA71147F314D /* LoadBalancerListView.swift in Sources */,
 				C3A4EB341CC1BA9D8FB5DB38 /* NetworkListView.swift in Sources */,
 				03B0E27D9C1140A115E9D082 /* QuotaEditView.swift in Sources */,

@@ -164,6 +164,11 @@ struct HelpSection {
             "'Edit' in a load balancer's details changes its name, its algorithm and a traffic policy Civo reports, and adds backends. Existing backends stay unchanged. A comparison shows the values before and after.",
             "Saving loads the load balancer again first. A removed one is not recreated, and one changed elsewhere is shown with its current values to save again. Afterwards Civo's values are read back; a difference from the request is reported and never corrected automatically.",
             "Load balancers managed by Kubernetes, and those whose owner Civo's answer does not show, can only be viewed. Change a Kubernetes load balancer through its Kubernetes Service.",
+            "Reserved IPs lists the reserved IP addresses of the region chosen in Settings. Open one to load its assignment from Civo; until then the assignment is shown as unknown, never as not assigned.",
+            "'Reserve IP...' reserves an address with a name, and 'Rename...' changes the name. A reserved IP can incur running costs, also while it is not assigned.",
+            "'Assign...' attaches the IP to an instance of the same region, chosen from the complete list of instances. The address of the instance may change, and open connections may drop.",
+            "Unassigning and releasing a reserved IP can cut connections, so both ask for the name of the IP. Releasing deletes the reserved IP itself, also while it is still assigned.",
+            "Before assigning, unassigning or releasing, the reserved IP is loaded again; if its name or assignment changed, nothing is sent. After an unclear answer the list is reloaded and nothing is sent again.",
         ]),
         HelpSection(title: "Database Credentials", icon: "lock.shield", items: [
             "Click a database to see its detail view with connection info, config, and credentials.",
