@@ -39,6 +39,26 @@ class LegalDateValidationTests(unittest.TestCase):
         self.assertEqual(signature(source), signature(translated))
         self.assertEqual(signature(translated)["date_sequence"], ["DATE_A"])
 
+    def test_eula_and_terms_date_with_day_translates_to_its_own_token(self):
+        source, source_counts = normalize_dates("10 December 2026", "en")
+        for language, text in (("de", "10. Dezember 2026"), ("ja", "2026年12月10日"), ("ru", "10 декабря 2026")):
+            translated, translated_counts = normalize_dates(text, language)
+            self.assertEqual(source_counts, translated_counts)
+            self.assertEqual(signature(source), signature(translated))
+            self.assertEqual(signature(translated)["date_sequence"], ["DATE_F"])
+
+    def test_wrong_day_or_month_of_effective_date_fails(self):
+        source, source_counts = normalize_dates("10 December 2026", "en")
+        for text in ("11 December 2026", "10 November 2026", "10 September 2026"):
+            wrong, wrong_counts = normalize_dates(text, "en")
+            self.assertNotEqual(signature(source), signature(wrong), text)
+            self.assertNotEqual(source_counts, wrong_counts, text)
+
+    def test_document_date_of_the_other_group_fails(self):
+        source, _ = normalize_dates("10 December 2026", "en")
+        legacy, _ = normalize_dates("September 2026", "en")
+        self.assertNotEqual(signature(source), signature(legacy))
+
 
 if __name__ == "__main__":
     unittest.main()

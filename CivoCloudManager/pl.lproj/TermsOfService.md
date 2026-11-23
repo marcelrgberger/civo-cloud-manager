@@ -1,9 +1,9 @@
-<!-- doc-id: TERMS_OF_SERVICE | lang: pl | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 2.0.0 | source: shared/TERMS_OF_SERVICE.en.md | adapted: company identity and related clauses -->
+<!-- doc-id: TERMS_OF_SERVICE | lang: pl | app-version: 2.1.2 | updated: 2026-11-23 | source-version: 2.2.0 | source: shared/TERMS_OF_SERVICE.en.md | legal-commit: 38869f57052d1d70ccface206e68ab46be0c3326 | valid-from: 2026-12-10 | adapted: company identity, Apple App Store only, one-time purchase; Subscription Terms, Fair Use Policy, Refund Policy, Legal Framework Overview, Support and Update Policy, Children's Privacy Notice and Apple Business seats omitted -->
 # WARUNKI ŚWIADCZENIA USŁUG
 
 ## Ogólne warunki i zasady
 
-**Data wejścia w życie:** wrzesień 2026
+**Data wejścia w życie:** 10 grudnia 2026
 
 **Dostawca:**
 DigitalFreedom
@@ -24,7 +24,7 @@ Niniejsze Warunki świadczenia usług ("Warunki") regulują Twój dostęp do nas
 
 ### 1.1.1 Zakres globalny
 
-Usługi są dystrybuowane za pośrednictwem Apple App Store oraz Google Play Store i są tym samym dostępne we wszystkich krajach i terytoriach obsługiwanych przez te platformy. Niniejsze Warunki mają zastosowanie globalnie do wszystkich użytkowników Usług, niezależnie od kraju dostępu lub korzystania. Dostawca przyjmuje Rozporządzenie Ogólne o Ochronie Danych Osobowych (RODO) Unii Europejskiej oraz powiązane przepisy UE jako standard minimalny i stosuje je globalnie; obowiązkowe prawa konsumenckie oraz inne ustawowe prawa przyznane przez kraj zamieszkania użytkownika pozostają nienaruszone i mają pierwszeństwo tam, gdzie są bardziej ochronne.
+Usługi są dystrybuowane za pośrednictwem Apple App Store i są tym samym dostępne we wszystkich krajach i terytoriach obsługiwanych przez tę platformę. Niniejsze Warunki mają zastosowanie globalnie do wszystkich użytkowników Usług, niezależnie od kraju dostępu lub korzystania. Dostawca przyjmuje Rozporządzenie Ogólne o Ochronie Danych Osobowych (RODO) Unii Europejskiej oraz powiązane przepisy UE jako standard minimalny i stosuje je globalnie; obowiązkowe prawa konsumenckie oraz inne ustawowe prawa przyznane przez kraj zamieszkania użytkownika pozostają nienaruszone i mają pierwszeństwo tam, gdzie są bardziej ochronne.
 
 ### 1.2 Akceptacja
 
@@ -32,7 +32,9 @@ Uzyskując dostęp do Usług lub korzystając z nich, wyrażasz zgodę na związ
 
 ### 1.3 Uprawnienia
 
-Musisz mieć ukończone co najmniej 16 lat (lub osiągnąć odpowiedni wiek wyrażenia zgody w Twojej jurysdykcji), aby korzystać z Usług. Korzystając z Usług, oświadczasz, że spełniasz ten wymóg.
+Aby zawrzeć z nami umowę, musisz mieć zdolność prawną do jej zawarcia według prawa miejsca swojego zamieszkania, zazwyczaj ukończone 18 lat, a w Korei Południowej 19 lat. Małoletni mogą korzystać z Usług wyłącznie za udziałem rodzica lub opiekuna, który akceptuje niniejsze Warunki w ich imieniu.
+
+Jest to odrębna kwestia od wieku, w którym można wyrazić zgodę na przetwarzanie swoich danych osobowych; wiek ten wynosi od 13 do 16 lat w zależności od państwa członkowskiego i jest uregulowany w Polityce prywatności. Żadna z tych liczb nie rozstrzyga o drugiej: § 110 BGB, który pozwala małoletniemu zawrzeć niektóre umowy za własne środki, nie obejmuje zobowiązania ciągłego, takiego jak subskrypcja.
 
 ### 1.4 Użytkowanie biznesowe
 
@@ -48,7 +50,7 @@ Dostawca oferuje aplikacje programowe, narzędzia oraz powiązane usługi. Szcze
 
 ### 2.2 Zmiany
 
-Dostawca zastrzega sobie prawo do modyfikowania, zawieszania lub zaprzestania świadczenia dowolnej Usługi w dowolnym czasie, z uprzednim powiadomieniem lub bez niego. Istotne zmiany będą komunikowane w miarę możliwości.
+Dostawca zastrzega sobie prawo do modyfikowania, zawieszania lub zaprzestania świadczenia dowolnej Usługi. **W odniesieniu do konsumentów w UE i EOG prawo to jest ograniczone:** poza zmianami niezbędnymi do utrzymania zgodności Usługi z umową Usługa jest modyfikowana wyłącznie z uzasadnionego powodu wskazanego w niniejszym punkcie (dostosowanie do nowego środowiska technicznego, do zmienionych wymogów platformy, do wymogów prawnych lub zaprzestanie świadczenia usługi osoby trzeciej, od której zależy dana funkcja), a o zmianie, która w więcej niż nieznacznym stopniu wpływa na Twój dostęp lub korzystanie, jesteś z wyprzedzeniem powiadamiany na trwałym nośniku, wraz z informacją o Twoim prawie do bezpłatnego wypowiedzenia umowy w ciągu 30 dni, jeżeli zmiana jest dla Ciebie niekorzystna (art. 19 Dyrektywy (UE) 2019/770 / § 327r BGB). Istotne zmiany będą komunikowane wszystkim w miarę możliwości.
 
 ### 2.3 Dostępność
 
@@ -100,9 +102,9 @@ Dostawca może usuwać Treści Użytkownika naruszające niniejsze Warunki lub o
 
 ---
 
-## 5. DOZWOLONE I UCZCIWE UŻYTKOWANIE
+## 5. DOZWOLONE UŻYTKOWANIE
 
-Korzystanie z Usług podlega naszej [Polityce dozwolonego użytkowania](ACCEPTABLE_USE_POLICY.md) oraz [Polityce uczciwego użytkowania](FAIR_USE_POLICY.md). Polityka uczciwego użytkowania uprawnia Dostawcę do ograniczania przepustowości, limitowania, ograniczania funkcji, zawieszania lub zakończenia dostępu w przypadku przekroczenia normalnego indywidualnego użytkowania końcowego lub uzasadnionego podejrzenia nadużycia.
+Korzystanie z Usług podlega naszej [Polityce dozwolonego użytkowania](ACCEPTABLE_USE_POLICY.md).
 
 Nie wolno Ci:
 
@@ -132,7 +134,7 @@ Wszelkie opinie lub sugestie przekazane przez Ciebie mogą być wykorzystywane p
 
 ---
 
-## 7. PŁATNOŚCI I SUBSKRYPCJE
+## 7. ZAKUPY
 
 ### 7.1 Ceny
 
@@ -140,34 +142,30 @@ Ceny za płatne Usługi są wyświetlane w momencie zakupu. Wszystkie ceny zawie
 
 ### 7.2 Przetwarzanie płatności
 
-Płatności mogą być przetwarzane przez zewnętrznych dostawców usług płatniczych. Wyrażasz zgodę na warunki tych dostawców.
+App Store przetwarza zakup za pośrednictwem StoreKit. Dostawca nie otrzymuje żadnych danych karty płatniczej.
 
 ### 7.3 Subskrypcje
 
-Subskrypcje odnawiają się automatycznie, chyba że zostaną anulowane przed datą odnowienia. Możesz anulować w dowolnym momencie za pośrednictwem odpowiedniej platformy lub kontaktując się z Dostawcą. Szczegółowe informacje dotyczące automatycznego odnawiania, konwersji okresu próbnego oraz ścieżek anulowania znajdują się w [Warunkach subskrypcji](SUBSCRIPTION_TERMS.md).
+Civo Cloud Manager obejmuje bezpłatny okres dostępu trwający siedem dni od pierwszego uruchomienia. Full Access jest jednorazowym zakupem trwałym (non-consumable, niezużywalnym) za pośrednictwem App Store. Nie istnieją subskrypcje, automatyczne odnowienia ani konwersje okresu próbnego w subskrypcję. Dokonany zakup można przywrócić za pośrednictwem App Store. Nie obowiązują żadne odrębne warunki subskrypcji.
 
-### 7.3.1 Przycisk anulowania (Niemcy, § 312k BGB)
+### 7.3.1 Kalifornijska ustawa o automatycznym odnawianiu (ARL)
 
-W przypadku subskrypcji zawieranych bezpośrednio z konsumentami w Niemczech, Dostawca udostępnia przycisk anulowania dostępny w nie więcej niż dwóch kliknięciach ze strony konta (zob. [Warunki subskrypcji](SUBSCRIPTION_TERMS.md) § 6.3). W przypadku subskrypcji zawieranych za pośrednictwem Apple App Store lub Google Play, anulowanie odbywa się zgodnie ze standardowym mechanizmem danej platformy.
-
-### 7.3.2 Kalifornijska ustawa o automatycznym odnawianiu (ARL)
-
-W przypadku mieszkańców Kalifornii, Dostawca przestrzega Cal. Bus. & Prof. Code § 17600 i nast. zgodnie z opisem w [Warunkach subskrypcji](SUBSCRIPTION_TERMS.md) § 8.
+Civo Cloud Manager nie ma automatycznego odnawiania, w związku z czym obowiązki wynikające z Cal. Bus. & Prof. Code § 17600 i nast. nie powstają.
 
 ### 7.4 Zwroty
 
-Zwroty podlegają:
-
-- Warunkom obowiązującym na danej platformie (Apple App Store, Google Play) — zob. [Polityka zwrotów](REFUND_POLICY.md) § 2
-- Obowiązującym przepisom o ochronie konsumentów
-- [Polityce zwrotów](REFUND_POLICY.md) Dostawcy
+O zwrot za zakupy w App Store występuje się do Apple na podstawie obowiązujących warunków Apple App Store. Dostawca nie przetwarza płatności. Obowiązujące przepisy o ochronie konsumentów oraz obowiązkowe ustawowe prawa konsumenckie pozostają nienaruszone.
 
 ### 7.5 Prawo odstąpienia w UE
 
-Konsumentom w Unii Europejskiej przysługuje 14-dniowe prawo odstąpienia od umowy dotyczącej treści cyfrowych, chyba że:
+Konsumentom w UE przysługuje 14-dniowe prawo odstąpienia od umowy dotyczącej treści cyfrowych. W przypadku treści cyfrowych niedostarczanych na nośniku materialnym § 356(6) nr 2 BGB przewiduje wygaśnięcie tego prawa tylko wtedy, gdy spełnione są łącznie wszystkie cztery następujące warunki:
 
-- Konsument wyraził wyraźną zgodę na natychmiastowe rozpoczęcie świadczenia
-- Konsument przyjął do wiadomości utratę prawa odstąpienia
+- (a) rozpoczęło się wykonywanie umowy;
+- (b) wyraźnie wyraziłeś zgodę na rozpoczęcie wykonywania umowy przed upływem terminu do odstąpienia;
+- (c) potwierdziłeś swoją świadomość, że wskutek tej zgody prawo odstąpienia wygasa z chwilą rozpoczęcia wykonywania umowy; oraz
+- (d) przedsiębiorca przekazał Ci potwierdzenie zawarcia umowy zgodnie z § 312f BGB.
+
+Jeżeli brakuje któregokolwiek z nich, prawo odstąpienia nie wygasa. W przypadku zakupów dokonanych za pośrednictwem App Store obowiązuje procedura odstąpienia i zwrotu stosowana przez Apple (zob. § 14.1).
 
 ---
 
@@ -196,6 +194,8 @@ W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO:
 - Nie udziela się gwarancji dokładności, kompletności, niezawodności ani przydatności do określonego celu
 - Nie udziela się gwarancji nieprzerwanego, bezpiecznego lub wolnego od błędów działania Usług
 
+Żadne postanowienie niniejszego punktu nie wyłącza ani nie ogranicza żadnej gwarancji, rękojmi ani odpowiedzialności, których nie można wyłączyć ani ograniczyć na podstawie bezwzględnie obowiązującego prawa, w tym bezwzględnie obowiązujących ustawowych praw konsumenta z tytułu rękojmi. **W odniesieniu do konsumentów w Australii i Nowej Zelandii zastosowanie ma § 14.5, który ma pierwszeństwo przed niniejszym punktem.**
+
 ---
 
 ## 10. OGRANICZENIE ODPOWIEDZIALNOŚCI
@@ -206,16 +206,20 @@ W MAKSYMALNYM ZAKRESIE DOZWOLONYM PRZEZ PRAWO:
 - Dostawca nie ponosi odpowiedzialności za utratę danych, zysków, przychodów lub możliwości biznesowych
 - Całkowita łączna odpowiedzialność nie przekroczy wyższej z kwot: (a) sumy zapłaconej przez Ciebie w ciągu 12 miesięcy poprzedzających zgłoszenie roszczenia lub (b) 100 EUR
 
+**Obowiązkowe wyłączenia z ograniczeń.** Powyższe wyłączenia i ograniczenia **nie** dotyczą następujących przypadków, a Dostawca pozostaje w pełni odpowiedzialny za: (a) szkody wynikające z winy umyślnej lub rażącego niedbalstwa; (b) uszkodzenie życia, ciała lub zdrowia; (c) odpowiedzialność na podstawie bezwzględnie obowiązujących przepisów o odpowiedzialności za produkt (w tym niemieckiej ustawy o odpowiedzialności za produkt / Produkthaftungsgesetz); oraz (d) wszelką inną odpowiedzialność, której nie można ograniczyć ani wyłączyć na podstawie bezwzględnie obowiązującego prawa. W przypadku zawinionego naruszenia istotnego zobowiązania umownego (zobowiązania kardynalnego / *Kardinalpflicht*) powyższe wyłączenia nie mają zastosowania; w przypadku lekkiego niedbalstwa odpowiedzialność jest ograniczona do przewidywalnej, typowej dla umowy szkody, a powyższy limit nie ma do niej zastosowania. Obowiązkowe ustawowe prawa konsumenckie pozostają nienaruszone. **W odniesieniu do konsumentów w Australii i Nowej Zelandii zastosowanie ma § 14.5, który ma pierwszeństwo przed niniejszym punktem.**
+
 ---
 
 ## 11. ZWOLNIENIE Z ODPOWIEDZIALNOŚCI
 
-Zobowiązujesz się zwolnić Dostawcę z odpowiedzialności oraz zabezpieczyć go przed roszczeniami, szkodami, stratami i kosztami (w tym uzasadnionymi kosztami obsługi prawnej) wynikającymi z:
+W zakresie dozwolonym przez obowiązujące prawo zobowiązujesz się zwolnić Dostawcę z odpowiedzialności oraz zabezpieczyć go przed roszczeniami osób trzecich, szkodami, stratami i kosztami (w tym uzasadnionymi kosztami obsługi prawnej) w zakresie, w jakim zostały spowodowane Twoim zawinionym (umyślnym lub niedbałym) zachowaniem, w szczególności:
 
-- Twojego korzystania z Usług
-- Naruszenia przez Ciebie niniejszych Warunków
-- Naruszenia przez Ciebie przepisów prawa lub praw osób trzecich
-- Twoich Treści Użytkownika
+- Twoim bezprawnym korzystaniem z Usług
+- Zawinionym naruszeniem przez Ciebie niniejszych Warunków
+- Naruszeniem przez Ciebie przepisów prawa lub praw osób trzecich
+- Twoimi Treściami Użytkownika
+
+Zobowiązanie to nie ma zastosowania, jeżeli i w zakresie, w jakim nie ponosisz odpowiedzialności za dane naruszenie, i nie narusza ani nie uszczupla Twoich obowiązkowych ustawowych praw konsumenta.
 
 ---
 
@@ -227,7 +231,7 @@ Możesz zaprzestać korzystania z Usług w dowolnym momencie. Wnioski o usunięc
 
 ### 12.2 Przez Dostawcę
 
-Dostawca może rozwiązać lub zawiesić Twój dostęp w dowolnym momencie, z podaniem przyczyny lub bez niej. Istotne naruszenia mogą skutkować natychmiastowym rozwiązaniem bez powiadomienia.
+Dostawca może zawiesić lub rozwiązać Twój dostęp z ważnego powodu (w tym istotnego naruszenia niniejszych Warunków, nadużycia Usług lub gdy wymaga tego prawo, sąd lub organ albo operator sklepu z aplikacjami / platformy). Istotne naruszenie może skutkować natychmiastowym rozwiązaniem. Jeżeli Dostawca rozwiązuje umowę bez ważnego powodu, udzieli odpowiedniego uprzedniego powiadomienia, jeżeli wymaga tego prawo. Bezwzględnie obowiązujące ustawowe prawa do rozwiązania umowy, przysługujące Tobie i Dostawcy, pozostają nienaruszone.
 
 ### 12.3 Skutki rozwiązania
 
@@ -256,16 +260,35 @@ Platforma internetowego rozstrzygania sporów Komisji Europejskiej zakończyła 
 
 ## 14. POSTANOWIENIA REGIONALNE
 
-### 14.1 Unia Europejska
+### 14.1 Unia Europejska i EOG
 
-- Obowiązkowe prawa konsumenckie wynikające z dyrektyw UE (w tym Dyrektywy o prawach konsumenta oraz Dyrektywy o treściach cyfrowych) pozostają nienaruszone
-- Prawo odstąpienia od umowy dotyczy zakupów treści cyfrowych zgodnie z przepisami prawa
-- Prawa gwarancyjne dotyczące treści cyfrowych na podstawie Dyrektywy (UE) 2019/770 nie są wyłączone
+**Dotyczy:** konsumentów mających miejsce zwykłego pobytu w UE lub EOG (w tym w Norwegii, Islandii i Liechtensteinie).
+
+**Kto sprzedaje Twój zakup.** W przypadku zakupów w App Store w UE/EOG Apple Distribution International Ltd. sprzedaje we własnym imieniu jako komisant; informacje przedumowne wymagane na podstawie art. 246a EGBGB / art. 6 Dyrektywy 2011/83/UE, przycisk zamówienia na podstawie § 312j(3) BGB / art. 8(2) tej Dyrektywy, pouczenie o odstąpieniu i wzór formularza odstąpienia, potwierdzenie na trwałym nośniku (§ 312f BGB) oraz zwrot ceny zakupu należą do obowiązków Apple. **Ten podział obowiązuje wyłącznie w UE i EOG**; nie przenosi się on na terytoria, na których App Store działa jako przedstawiciel.
+
+**Twoje prawo odstąpienia** jest opisane w § 7.5; niniejszy punkt nie powtarza go ani nie skraca.
+
+**Zgodność z umową i aktualizacje.** Dyrektywa (UE) 2019/770 reguluje dostarczanie treści cyfrowych i usługi między Tobą a Dostawcą, niezależnie od tego, kto przyjął płatność. Wymogi zgodności z umową z art. 6 do 8 oraz obowiązek aktualizacji z art. 8(2) mają charakter bezwzględny na podstawie art. 22 i nie są wyłączone żadnym postanowieniem niniejszych Warunków.
+
+**W odniesieniu do konsumentów w UE/EOG nie mają zastosowania:**
+
+- jakiekolwiek wyłączenie lub ograniczenie odpowiedzialności wykraczające poza obowiązkowe wyłączenia z ograniczeń określone w § 10;
+- jakakolwiek modyfikacja Usługi wykraczająca poza to, na co pozwala Ci § 2.2;
+- jakiekolwiek domniemane przyjęcie zmienionych warunków przez milczenie lub samo dalsze korzystanie;
+- automatyczne odnowienie rocznego okresu na kolejny pełny rok;
+- jakikolwiek wybór prawa wypierający bezwzględnie obowiązującą ochronę prawa miejsca Twojego zwykłego pobytu (art. 6(2) Rzym I);
+- jakiekolwiek postanowienie uznające wersję angielską za wiążącą, jeżeli prawo Twojego państwa członkowskiego wymaga języka lokalnego (§ 16.8 określa zasadę dotyczącą języka rozstrzygającego).
+
+**Szczególne przepisy krajowe.**
+
+- **Niemcy:** obowiązki dotyczące stopki redakcyjnej na podstawie § 5 DDG i § 18(2) MStV są spełnione w [Impressum](IMPRESSUM.md). § 308 nr 5 i § 309 nr 9 BGB mają zastosowanie do niniejszych Warunków jako warunków konsumenckich. Przycisk wypowiedzenia na podstawie § 312k BGB dotyczy umów, które konsumenci mogą zawrzeć za pośrednictwem strony internetowej; Dostawca obecnie nie zawiera żadnych takich umów, a okno zakupu w aplikacji nie jest stroną internetową.
+- **Francja:** informacje dla konsumentów są udzielane w języku francuskim; wobec konsumenta mającego miejsce zamieszkania we Francji rozstrzyga wersja francuska (Loi Toubon; § 16.8).
+- **Belgia, Polska:** wymogi dotyczące języka lokalnego porównywalne z zasadą francuską; ma zastosowanie § 16.8.
+- **Włochy, Hiszpania, Austria:** wiek zgody cyfrowej (14 lat) jest uregulowany w Polityce prywatności.
 
 ### 14.2 Stany Zjednoczone
 
 - Tam, gdzie jest to zabronione przez prawo stanowe, ograniczenia odpowiedzialności lub gwarancji nie mają zastosowania
-- Postanowienia dotyczące arbitrażu mogą nie mieć zastosowania w jurysdykcjach, w których arbitraż konsumencki jest ograniczony
 
 ### 14.3 Zjednoczone Królestwo
 
@@ -275,17 +298,37 @@ Platforma internetowego rozstrzygania sporów Komisji Europejskiej zakończyła 
 ### 14.4 Kanada
 
 - Prowincjonalne przepisy o ochronie konsumentów mogą mieć pierwszeństwo przed niektórymi postanowieniami
+- Wobec mieszkańców Quebecu rozstrzyga wersja francuska, jeżeli wymaga tego prawo Quebecu (§ 16.8)
 
-### 14.5 Australia
+### 14.5 Australia i Nowa Zelandia
 
-- Gwarancje konsumenckie wynikające z australijskiego prawa konsumenckiego nie mogą być wyłączone
-- Odpowiedzialność ogranicza się do ponownego świadczenia Usług lub zwrotu kosztów ponownego świadczenia
+<!-- verbatim: ACL-prescribed-form | no-translate -->
+> Our goods and services come with guarantees that cannot be excluded under the Australian Consumer Law. For major failures with the service, you are entitled:
+>
+> - to cancel your service contract with us; and
+> - to a refund for the unused portion, or to compensation for its reduced value.
+>
+> You are also entitled to choose a refund or replacement for major failures with goods. If a failure with the goods or a service does not amount to a major failure, you are entitled to have the failure rectified in a reasonable time. If this is not done you are entitled to a refund for the goods and to cancel the contract for the service and obtain a refund of any unused portion. You are also entitled to be compensated for any other reasonably foreseeable loss or damage from a failure in the goods or service.
+<!-- /verbatim -->
 
-### 14.6 Inne jurysdykcje
+Powyższa informacja ogranicza §§ 9 i 10 niniejszych Warunków i ma nad nimi pierwszeństwo.
+
+**Gwarancje.** W odniesieniu do produktów i usług cyfrowych dostarczanych konsumentowi australijskie prawo konsumenckie (Australian Consumer Law) gwarantuje odpowiednią jakość (s. 54), przydatność do każdego ujawnionego celu (s. 55), zgodność z opisem (s. 56), należytą staranność i umiejętności (s. 60) oraz przydatność usług do określonego celu (s. 61); nowozelandzka ustawa Consumer Guarantees Act 1993 przewiduje odpowiedniki (ss. 6, 8, 9, 28, 29). Jeżeli wada jest **poważna**, wybierasz między zwrotem pieniędzy a wymianą Ty, a nie dostawca. Jeżeli nie jest poważna, dostawca może dokonać naprawy w odpowiednim terminie. Section 64 ACL unieważnia każdą próbę wyłączenia, ograniczenia lub zmiany tych gwarancji; s. 43 CGA czyni to samo w Nowej Zelandii.
+
+**Kto za nie odpowiada.** Dostawcą jest **Dostawca**, a nie sklep: Apple działa na tych terytoriach jako przedstawiciel Dostawcy na podstawie Schedule 2 swojej umowy deweloperskiej, sprzedając w imieniu Dostawcy. Umowa zakupu jest zawarta z DigitalFreedom Global LLC, a gwarancje, środki prawne przy poważnej wadzie oraz powyższa informacja przysługują bezpośrednio wobec Dostawcy. Konsument, który nie może uzyskać zadośćuczynienia od sklepu, nie zostaje bez ochrony: drogą jest adres kontaktowy podany w § 16.7.
+
+### 14.6 Türkiye
+
+W przypadku zakupów w App Store w Türkiye sprzedawcą jest Apple Distribution International Ltd. (komisant), a obowiązki informacji przedumownej oraz 14-dniowego odstąpienia na podstawie ustawy o ochronie konsumentów (nr 6502) i rozporządzenia o umowach zawieranych na odległość spoczywają na sklepie. Spory konsumenckie poniżej ustawowego progu muszą zostać wniesione do **Konsumenckiej Komisji Arbitrażowej (Consumer Arbitration Committee)** przed wszczęciem postępowania sądowego; jest to obowiązkowe, żadne postanowienie niniejszych Warunków tego nie wyłącza i stanowi to doprecyzowanie sformułowania "chyba że wymaga tego prawo" z § 13.3.
+
+### 14.7 Japonia
+
+W przypadku sprzedaży konsumentom w Japonii ustawa o szczególnych transakcjach handlowych (特定商取引法) wymaga, aby nazwa, adres i dane kontaktowe sprzedawcy, cena oraz warunki odstąpienia były łatwo dostępne. W Japonii **sprzedawcą jest Dostawca**, ponieważ App Store jest tam terytorium przedstawicielskim, więc te obowiązki informacyjne spoczywają na Dostawcy. Nazwa, adres i dane kontaktowe sprzedawcy są podane w [Impressum](IMPRESSUM.md); cena jest wyświetlana w momencie zakupu (§ 7.1); warunki odstąpienia określają §§ 7.4 i 7.5 niniejszych Warunków.
+
+### 14.8 Inne jurysdykcje
 
 - Tam, gdzie lokalne prawo bezwzględnie obowiązujące ogranicza jakiekolwiek postanowienie, postanowienie to ma zastosowanie tylko w zakresie dozwolonym
-
----
+- Obowiązkowa ochrona konsumentów wynikająca z prawa miejsca Twojego zwykłego pobytu pozostaje wszędzie nienaruszona
 
 ## 15. SIŁA WYŻSZA
 
@@ -311,7 +354,7 @@ Dostawca może przenieść niniejsze Warunki w związku z fuzją, przejęciem, r
 
 ### 16.4 Całość umowy
 
-Niniejsze Warunki, wraz z [Polityką prywatności](PRIVACY_POLICY.md), [EULA](EULA.md), [Warunkami subskrypcji](SUBSCRIPTION_TERMS.md), [Polityką uczciwego użytkowania](FAIR_USE_POLICY.md), [Polityką dozwolonego użytkowania](ACCEPTABLE_USE_POLICY.md), [Polityką zwrotów](REFUND_POLICY.md) oraz innymi powołanymi politykami, stanowią całość umowy pomiędzy Tobą a Dostawcą.
+Niniejsze Warunki, wraz z [Polityką prywatności](PRIVACY_POLICY.md), [EULA](EULA.md), [Polityką dozwolonego użytkowania](ACCEPTABLE_USE_POLICY.md) oraz innymi powołanymi politykami, stanowią całość umowy pomiędzy Tobą a Dostawcą.
 
 ### 16.5 Zmiany
 
@@ -327,7 +370,7 @@ Zawiadomienia do Dostawcy należy kierować na adres `hello@digitalfreedom.co.za
 
 ### 16.8 Język
 
-W przypadku konsumenta obowiązuje wersja w oficjalnym języku miejsca jego zwykłego pobytu, o ile taka wersja istnieje. Wersja angielska obowiązuje wobec klientów biznesowych oraz w przypadku braku wersji w danym języku.
+Niniejsze Warunki są publikowane w kilku językach. **W przypadku konsumenta rozstrzyga wersja w oficjalnym języku miejsca jego zwykłego pobytu**, o ile taka wersja istnieje. Wersja angielska rozstrzyga wobec klientów biznesowych oraz w przypadku języków, w których nie istnieje żadna wersja. Jest to odwrotność typowego postanowienia i jest zamierzone: postanowienie uznające język angielski za wiążący nie jest skuteczne we Francji, Belgii, Polsce, Włoszech, Quebecu ani w Türkiye, a uznanie tłumaczeń za niewiążące pozbawiałoby sensu ich przygotowywanie.
 
 ---
 
