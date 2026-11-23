@@ -3,7 +3,7 @@ import Foundation
 /// The instance a reserved IP is assigned to. Civo names it in `assigned_to`; the id is what identifies it.
 struct ReservedIPTarget: Equatable, Sendable {
     let id: String
-    let name: String?
+    let name: String
 
     static func == (lhs: Self, rhs: Self) -> Bool { lhs.id == rhs.id }
 }
@@ -16,8 +16,8 @@ enum ReservedIPAssignment: Equatable, Sendable {
     /// Civo reported an empty `assigned_to`.
     case unassigned
     case assigned(ReservedIPTarget)
-    /// Civo reported a target that is not an instance with an id. The fingerprint is what Civo reported, so a
-    /// different unrecognized target is told apart from this one.
+    /// Civo reported a target that is not an instance with an id, a type and a name. The fingerprint is what Civo
+    /// reported, so a different unrecognized target is told apart from this one.
     case unrecognized(fingerprint: String)
 
     /// The only target type Civo accepted and reported back when the assignment was verified.
@@ -57,16 +57,22 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
             }
         }
 
-        /// The same content gives the same text, whatever the order of the keys.
+        /// The same content gives the same text, whatever the order of the keys, and different content never does:
+        /// quotes and backslashes inside strings and keys are escaped, so they cannot imitate the structure.
         var canonical: String {
             switch self {
             case .null: "null"
             case .bool(let value): String(value)
             case .number(let value): String(value)
-            case .string(let value): "\"\(value)\""
+            case .string(let value): Self.quoted(value)
             case .array(let values): "[" + values.map(\.canonical).joined(separator: ",") + "]"
-            case .object(let fields): "{" + fields.sorted { $0.key < $1.key }.map { "\"\($0.key)\":\($0.value.canonical)" }.joined(separator: ",") + "}"
+            case .object(let fields): "{" + fields.sorted { $0.key < $1.key }.map { "\(Self.quoted($0.key)):\($0.value.canonical)" }.joined(separator: ",") + "}"
             }
+        }
+
+        private static func quoted(_ text: String) -> String {
+            let escaped = text.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
+            return "\"\(escaped)\""
         }
     }
 
@@ -101,10 +107,10 @@ struct CivoReservedIP: Decodable, Identifiable, Equatable, Sendable {
         guard !fields.allKeys.isEmpty else { return .unassigned }
         let type = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "type"))
         let id = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "id"))
-        guard type == ReservedIPAssignment.instanceType, let id, !id.isEmpty else {
+        let name = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "name"))
+        guard type == ReservedIPAssignment.instanceType, let id, !id.isEmpty, let name else {
             return .unrecognized(fingerprint: reported.canonical)
         }
-        let name = try? fields.decodeIfPresent(String.self, forKey: AnyKey(stringValue: "name"))
         return .assigned(ReservedIPTarget(id: id, name: name))
     }
 }
@@ -143,7 +149,7 @@ extension ReservedIPAssignment {
         switch self {
         case .unknown: String(localized: "Assignment unknown")
         case .unassigned: String(localized: "Not assigned")
-        case .assigned(let target): String(localized: "Assigned to \(target.name ?? target.id)")
+        case .assigned(let target): String(localized: "Assigned to \(target.name)")
         case .unrecognized: String(localized: "Assigned (target not recognized)")
         }
     }

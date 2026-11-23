@@ -409,7 +409,7 @@ flowchart TD
 
 The Networking section "Reserved IPs" follows https://www.civo.com/api/vpc ("VPC Reserved IPs") with `/v2/ips`. The region is always in the query. Two details of the request contract were verified against the live API on an App Store Review test account, and the reference does not state either: an assignment must send `assign_to_type: "instance"` next to `assign_to_id`, and the answer to a create carries only `id` and `name`; the address follows on a later `GET /v2/ips/:id`. Release is accepted by Civo while an IP is still assigned.
 
-Every action starts from a request captured when its sheet opens: account, region, IP id, IP name and the assignment the user saw. Full Access, account and Settings region are checked again after every awaited step and immediately before the request. Account and region changes close an open action, and late answers of loads started under the old account or region are discarded. Reserve and rename send one request. Assign, unassign and release load the IP again first with the captured key and compare it with what the user saw; assign also loads the instances again and requires the chosen one in a complete list. An IP that was renamed or assigned differently, or an incomplete list, sends nothing.
+Every action starts from a request captured when its sheet opens: account, region, IP id, IP name and the assignment the user saw. Full Access, account and Settings region are checked again after every awaited step and immediately before the request. Account and region changes close an open action, including one whose request Civo refused, and a change during the follow-up reload keeps its result from being shown for the new context. Late answers of loads started under the old account or region are discarded. Reserve and rename send one request. Assign, unassign and release load the IP again first with the captured key and compare it with what the user saw; assign also loads the instances again and requires the chosen one in a complete list. An IP that was renamed or assigned differently, or an incomplete list, sends nothing.
 
 The assignment is one of four states and is verified only by the detail request of the opened IP, not by the list:
 
@@ -417,8 +417,8 @@ The assignment is one of four states and is verified only by the detail request 
 | --- | --- |
 | `unknown` | `assigned_to` is missing or not loaded. Shown as "Assignment unknown", never as not assigned; actions that depend on the assignment stay disabled |
 | `unassigned` | `assigned_to` is an empty object |
-| `assigned` | `assigned_to` names an instance by `id` and `type: "instance"` |
-| `unrecognized` | `assigned_to` holds anything else. Shown as "Assigned (target not recognized)"; unassign is refused, release stays possible |
+| `assigned` | `assigned_to` holds `id`, `type: "instance"` and a string `name`. A populated object missing any of them, or with a null or non-string `name`, is `unrecognized` |
+| `unrecognized` | `assigned_to` holds anything else, told apart from another target by an escaped, order-independent fingerprint of what Civo reported. Shown as "Assigned (target not recognized)"; unassign is refused, release stays possible |
 
 Unassign needs `assigned`. Release is possible from every loaded state, so an unused or unidentifiable reservation can always be freed; its confirmation says that the reserved IP itself is deleted, also while it is assigned. Both ask for the exact name. The public address is never used to infer a target. No price is estimated, and "Not assigned" is never described as free: the screens only say that a reserved IP can incur running costs.
 

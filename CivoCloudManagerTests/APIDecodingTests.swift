@@ -6362,6 +6362,8 @@ struct ReservedIPTests {
         var accessAllowed = true
         var reloadSucceeds = true
         var reloads = 0
+        /// Runs while the list is reloaded after a change, like a Settings change during the reload.
+        var duringReload: (@MainActor () -> Void)?
         var activities: [ReservedIPActivity] = []
         let account = CivoAccount(apiKey: "key-a")
         lazy var controller: ReservedIPController = {
@@ -6375,6 +6377,7 @@ struct ReservedIPTests {
             )
             controller.reloadList = { [unowned self] in
                 reloads += 1
+                duringReload?()
                 return reloadSucceeds
             }
             return controller
@@ -6412,8 +6415,24 @@ struct ReservedIPTests {
         #expect(assigned.assignment == Self.instance)
         #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "type": "loadbalancer", "name": "lb"}}"#).assignment == Self.balancer)
         #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"type": "instance"}}"#).assignment == .unrecognized(fingerprint: #"{"type":"instance"}"#))
+        for name in [#""#, #", "name": null"#, #", "name": 42"#] {
+            let assignedTo = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "vm-1", "type": "instance"\#(name)}}"#).assignment
+            guard case .unrecognized = assignedTo else {
+                Issue.record("An instance without a string name was read as \(assignedTo)")
+                continue
+            }
+            #expect(ReservedIPRules.eligibilityError(for: .unassign, assignment: assignedTo) == .targetNotIdentifiable)
+        }
         #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"unexpected": 1}}"#).assignment == .unrecognized(fingerprint: #"{"unexpected":1.0}"#))
         #expect(try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": "vm-1"}"#).assignment == .unrecognized(fingerprint: #""vm-1""#))
+    }
+
+    @Test("Targets that differ only by quotes inside a value stay distinct, and the changed one blocks release")
+    func fingerprintsAreUnambiguous() throws {
+        let embedded = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1\",\"other\":\"value", "type": "loadbalancer"}}"#)
+        let separate = try Self.decoded(#"{"id": "ip-1", "name": "edge", "assigned_to": {"id": "lb-1", "other": "value", "type": "loadbalancer"}}"#)
+        #expect(embedded.assignment != separate.assignment)
+        #expect(ReservedIPRules.staleError(captured: embedded, reloaded: separate) == .assignmentChanged)
     }
 
     @Test("Each action is offered only for the assignment it fits, and release stays possible for any loaded one")
@@ -6584,6 +6603,71 @@ struct ReservedIPTests {
         #expect(await unclear.controller.confirm(.release(typedName: "edge")) == .uncertain)
         #expect(unclear.reloads == 0)
         #expect(unclear.controller.notice?.message == ReservedIPError.contextChangedWhilePending.message)
+    }
+
+    @Test("A change of account or region during the follow-up reload publishes no result for the old context")
+    func contextChangedDuringReload() async {
+        let switches: [(String, @MainActor (Environment) -> Void)] = [
+            ("account", { $0.apiKey = "key-b" }),
+            ("region", { $0.region = "NYC1" }),
+        ]
+        for (_, change) in switches {
+            let accepted = Environment()
+            accepted.begin(.reserve)
+            accepted.duringReload = { [unowned accepted] in change(accepted) }
+            #expect(await accepted.controller.confirm(.reserve(name: "edge")) == .doneRefreshFailed)
+            #expect(accepted.controller.notice?.message == ReservedIPError.contextChangedWhilePending.message)
+
+            let unclear = Environment()
+            unclear.begin(.release)
+            await unclear.api.update { $0.mutationError = CivoAPIError.httpError(503, "") }
+            unclear.duringReload = { [unowned unclear] in change(unclear) }
+            #expect(await unclear.controller.confirm(.release(typedName: "edge")) == .uncertain)
+            #expect(unclear.controller.notice?.message == ReservedIPError.contextChangedWhilePending.message)
+
+            let notFound = Environment()
+            notFound.begin(.release)
+            await notFound.api.update { $0.showError = CivoAPIError.httpError(404, ""); $0.list = PaginatedList(items: [], isComplete: true) }
+            notFound.duringReload = { [unowned notFound] in change(notFound) }
+            #expect(await notFound.controller.confirm(.release(typedName: "edge")) == .cancelled)
+            #expect(notFound.controller.request == nil)
+            #expect(notFound.controller.notice?.message != ReservedIPError.ipGone.message)
+            #expect(notFound.controller.notice?.message != nil)
+        }
+    }
+
+    @Test("A refusal after the account or region changed is still reported as refused, and closes the stale sheet")
+    func refusalAfterContextChange() async {
+        let env = Environment()
+        env.begin(.reserve)
+        await env.api.update {
+            $0.mutationError = CivoAPIError.httpError(409, "")
+            $0.duringMutation = { await MainActor.run { env.region = "NYC1" } }
+        }
+        #expect(await env.controller.confirm(.reserve(name: "edge")) == .failed)
+        #expect(env.controller.request == nil)
+        #expect(env.controller.sheetError == nil)
+        #expect(env.controller.notice?.message == ReservedIPError.regionChanged.message)
+        #expect(env.reloads == 0)
+    }
+
+    @Test("A refresh whose account changed while the detail loaded does not report success for the new context")
+    func refreshInvalidatedDuringDetail() async {
+        let api = FakeReservedIPAPI()
+        let notifications = NotificationCenter()
+        let settings = Environment()
+        let viewModel = ReservedIPViewModel(
+            api: api, settingsRegion: { "LON1" }, apiKey: { settings.apiKey }, notificationCenter: notifications
+        )
+        viewModel.select("ip-1")
+        await api.update {
+            $0.list = PaginatedList(items: [CivoReservedIP(id: "ip-1", name: "edge", ip: nil, assignment: .unknown)], isComplete: true)
+            $0.duringShow = { await MainActor.run {
+                settings.apiKey = "key-b"
+                notifications.post(name: .civoAPIKeyDidChange, object: nil)
+            } }
+        }
+        #expect(await viewModel.refresh() == false)
     }
 
     @Test("A change of account or region closes an open action before anything is awaited")

@@ -100,6 +100,8 @@ final class ReservedIPViewModel {
         } else {
             await loadDetail()
         }
+        // A change of account or region during the detail load invalidated this load, and its list is not shown.
+        guard listLoad == load else { return false }
         return !completeness.mayBeMissingItems
     }
 

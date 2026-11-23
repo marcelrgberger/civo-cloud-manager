@@ -1,7 +1,8 @@
 import Foundation
 
 /// How a confirmed reserved IP action ended. The sheet stays open, and `sheetError` explains why, for `failed`
-/// and when `confirm` returns nil; every other outcome closes it.
+/// and when `confirm` returns nil; every other outcome closes it, and so does a `failed` one after the account
+/// or region changed.
 enum ReservedIPOutcome: Equatable {
     /// Civo accepted the change and the list was reloaded.
     case done
@@ -9,7 +10,8 @@ enum ReservedIPOutcome: Equatable {
     case doneRefreshFailed
     /// The request was sent but Civo's answer was missing, unreadable or unexpected. Nothing is sent again.
     case uncertain
-    /// Civo refused the request. Nothing changed; the user may correct it and send it again on purpose.
+    /// Civo refused the request. Nothing changed; the user may correct it and send it again on purpose, unless the
+    /// account or region changed meanwhile.
     case failed
     /// The action was closed without sending anything; the notice explains why.
     case cancelled
@@ -223,6 +225,8 @@ final class ReservedIPController {
             acceptedId = try await send(action, request: request, key: key)
         } catch let refusal as CivoAPIError where Self.provesNothingChanged(refusal) {
             if case .httpError(404, _) = refusal, request.ip != nil { return await resolveNotFound(request, key: key) }
+            // The observer leaves a sending request open, so a change during the send is closed here.
+            if let problem = targetError(for: request) { return close(problem, outcome: .failed) }
             sheetError = refusal.localizedDescription
             return .failed
         } catch {
@@ -311,30 +315,34 @@ final class ReservedIPController {
         guard isCurrent(request) else { return nil }
         if let problem = targetError(for: request) { return close(problem) }
         _ = await reloadList()
+        guard isCurrent(request) else { return nil }
+        if let problem = targetError(for: request) { return close(problem) }
         return close(isGone ? .ipGone : .ipStateUnclear, outcome: isGone ? .cancelled : .uncertain)
     }
 
     private func finishDone(_ sent: Request) async -> ReservedIPOutcome {
         if request?.id == sent.id { request = nil }
         // A list of another account or region cannot show what became of this change.
-        guard targetError(for: sent) == nil else {
-            notice = Notice(message: ReservedIPError.contextChangedWhilePending.message, offersReload: false)
-            return .doneRefreshFailed
-        }
+        guard targetError(for: sent) == nil else { return contextChanged(.doneRefreshFailed) }
         let isRefreshed = await reloadList()
+        // What the reload showed belongs to the context it was started in, not to a later one.
+        guard targetError(for: sent) == nil else { return contextChanged(.doneRefreshFailed) }
         notice = isRefreshed ? nil : Notice(message: Self.refreshFailedMessage, offersReload: true)
         return isRefreshed ? .done : .doneRefreshFailed
     }
 
     private func finishUncertain(_ sent: Request) async -> ReservedIPOutcome {
         if request?.id == sent.id { request = nil }
-        guard targetError(for: sent) == nil else {
-            notice = Notice(message: ReservedIPError.contextChangedWhilePending.message, offersReload: false)
-            return .uncertain
-        }
+        guard targetError(for: sent) == nil else { return contextChanged(.uncertain) }
         let isRefreshed = await reloadList()
+        guard targetError(for: sent) == nil else { return contextChanged(.uncertain) }
         notice = Notice(message: Self.unclearResultMessage, offersReload: !isRefreshed)
         return .uncertain
+    }
+
+    private func contextChanged(_ outcome: ReservedIPOutcome) -> ReservedIPOutcome {
+        notice = Notice(message: ReservedIPError.contextChangedWhilePending.message, offersReload: false)
+        return outcome
     }
 
     static var refreshFailedMessage: String {
