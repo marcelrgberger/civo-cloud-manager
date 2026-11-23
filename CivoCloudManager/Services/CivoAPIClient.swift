@@ -303,6 +303,17 @@ final class CivoAPIClient: Sendable {
         let _: CivoResult = try await execute("DELETE", path: path, queryItems: queryItems, regionRequired: regionRequired)
     }
 
+    /// DELETE a resource and decode Civo's answer, for callers that must check it.
+    /// `apiKey` pins the request to one account instead of reading the current key.
+    func delete<T: Decodable>(
+        path: String,
+        queryItems: [URLQueryItem]? = nil,
+        regionRequired: Bool = true,
+        apiKey: String
+    ) async throws -> T {
+        try await execute("DELETE", path: path, queryItems: queryItems, regionRequired: regionRequired, apiKey: apiKey)
+    }
+
     /// Validate an API key by making a test request.
     func validateAPIKey(_ key: String) async -> Bool {
         guard let url = URL(string: "\(baseURL)/regions") else { return false }

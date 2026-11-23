@@ -14,7 +14,7 @@ The shipped app requires **macOS 15 or later**, matching the native Xcode target
 | Dashboard | Quotas, quota increase requests, resource navigation, quick search (⌘K), JSON export with secret redaction |
 | Compute | Create/delete instances (with count, public IP, initial user, reverse DNS and startup script; several at once only after a cost confirmation), start/stop, soft and hard reboot (each confirmed first), upward resize with estimated cost change (confirmed first), firewall change within the instance network (confirmed first), attaching and detaching volumes of the instance network (detaching confirmed first, with a reminder to unmount), recovery mode (entering and exiting confirmed first, with a persistent reboot reminder and the console as the only access path), reverse DNS, tag editing (removing all tags is confirmed first) and a tag filter on the instance list, in-app instance console, per-instance credential vault (username and password, this Mac only), SSH key management and local activity history |
 | Kubernetes | Cluster creation (with a version from Civo's list or Civo's default and marketplace applications chosen from Civo's searchable catalog with a review before creating), version upgrades of existing clusters (newer versions only, confirmed with the current and target version), replacing a single defective worker node, node pools (change node counts, add and remove pools with a change summary, an hourly cost estimate and a separate confirmation for deleting nodes), kubeconfig export, direct API access, metrics/history, events, workloads, namespaces, services, ingresses, volumes, pod logs and command execution |
-| Networking | Networks, firewall rules (create, edit protocol, ports, CIDR, direction and label with a before and after comparison, delete), load balancers (create with network, algorithm, optional traffic policy and a backend table after a cost notice; edit name, algorithm, a reported traffic policy and add backends with a before and after comparison; delete), domains and DNS records |
+| Networking | Networks, firewall rules (create, edit protocol, ports, CIDR, direction and label with a before and after comparison, delete), load balancers (create with network, algorithm, optional traffic policy and a backend table after a cost notice; edit name, algorithm, a reported traffic policy and add backends with a before and after comparison; delete), reserved IPs (reserve, rename, assign to an instance, unassign and release, the last two confirmed by typing the name), domains and DNS records |
 | Storage | Volumes, databases, object stores, object store credential management, S3 file browsing, object store pause/resume |
 | Account | Billing estimates over single and multi-month periods with a per-account cache of completed months, editable rates, region selection, API health checks, legal documents |
 
@@ -405,6 +405,33 @@ flowchart TD
     F -->|Valid| H[Send request with captured region]
 ```
 
+## Reserved IPs
+
+The Networking section "Reserved IPs" follows https://www.civo.com/api/vpc ("VPC Reserved IPs") with `/v2/ips`. The region is always in the query. Two details of the request contract were verified against the live API on an App Store Review test account, and the reference does not state either: an assignment must send `assign_to_type: "instance"` next to `assign_to_id`, and the answer to a create carries only `id` and `name`; the address follows on a later `GET /v2/ips/:id`. Release is accepted by Civo while an IP is still assigned.
+
+Every action starts from a request captured when its sheet opens: account, region, IP id, IP name and the assignment the user saw. Full Access, account and Settings region are checked again after every awaited step and immediately before the request. Account and region changes close an open action, including one whose request Civo refused, and a change during the follow-up reload keeps its result from being shown for the new context. Late answers of loads started under the old account or region are discarded. Reserve and rename send one request. Assign, unassign and release load the IP again first with the captured key and compare it with what the user saw; assign also loads the instances again and requires the chosen one in a complete list. An IP that was renamed or assigned differently, or an incomplete list, sends nothing.
+
+The assignment is one of four states and is verified only by the detail request of the opened IP, not by the list:
+
+| State | Meaning |
+| --- | --- |
+| `unknown` | `assigned_to` is missing or not loaded. Shown as "Assignment unknown", never as not assigned; actions that depend on the assignment stay disabled |
+| `unassigned` | `assigned_to` is an empty object |
+| `assigned` | `assigned_to` holds `id`, `type: "instance"` and a string `name`. A populated object missing any of them, or with a null or non-string `name`, is `unrecognized` |
+| `unrecognized` | `assigned_to` holds anything else. Targets of this state are never told apart, so they never count as the one the user confirmed: when the captured or the reloaded assignment is `unrecognized`, unassign and release send nothing and ask to open the action again, even when both look identical. Shown as "Assigned (target not recognized)"; unassign is refused |
+
+Unassign needs `assigned`. Release is offered from every loaded state, but a confirmed release of an `unrecognized` assignment is cancelled before anything is sent; its confirmation says that the reserved IP itself is deleted, also while it is assigned. Both ask for the exact name. The public address is never used to infer a target. No price is estimated, and "Not assigned" is never described as free: the screens only say that a reserved IP can incur running costs.
+
+| Outcome | When | What the user sees |
+| --- | --- | --- |
+| `done` | Civo accepted the change and the list was reloaded | Success mark |
+| `doneRefreshFailed` | Civo accepted the change, the reload failed | Notice with Reload; the sheet is closed and the submitted input is not offered again |
+| `uncertain` | Timeout, 408, 5xx, transport failure, an unreadable answer or an acknowledgment that is not `{"result":"success"}` or the expected `id` | The list is reloaded and a notice says to check it; nothing is sent again |
+| `failed` | Civo refused the request with a 4xx other than 408 | The sheet stays open with Civo's message; the user may correct it and send it again on purpose |
+| `cancelled` | Closed before anything was sent | Notice with the reason |
+
+A 404 counts as "already gone" only when the complete reloaded list no longer shows the IP; otherwise the result is reported as unclear.
+
 ## Instance resize
 
 `PUT /v2/instances/:id/resize` resizes an instance "upwards, providing it's within their quota" ([Civo API](https://www.civo.com/api/instances)); the official CLI states that downgrades are not possible. Neither says how CPU, RAM and disk are weighed. `InstanceResize.options` therefore offers a size only when it is selectable (`selectable` is not `false`), is an instance size, differs from the current size, is not smaller in CPU, RAM or disk than the instance and is larger in at least one of them. The current values come from the instance, or from its listed size when the instance omits them. Unless all three are known, nothing is offered and the result is `ResizeOptions.comparisonUnavailable`, which the sheet shows as its own message with Reload instead of claiming that no larger size exists. A size missing one of them is not offered either. The same response also lists Kubernetes and database sizes. The documented `GET /v2/sizes` payload has no `type` ([Civo API](https://www.civo.com/api/sizes)); a live LON1 response on 2026-11-22 typed sizes `Instance`, `Kubernetes` or `Database` and named the other products `g4s.kube.small`, `g3.k3s.small` or `g3.db.small`. Only sizes typed `Kubernetes` or `Database`, or named with `.kube.`, `.k3s.` or `.db.`, are left out; any other or missing `type` counts as an instance size, so the picker is never emptied by a type the app does not know. Quota, region availability and any other refusal are checked by Civo, and its error is shown.
@@ -620,6 +647,7 @@ This summarizes the populated-store path; empty stores use a shorter path. Verif
 | Timed firewall closures | Atomic `CivoCloudManager/firewall-closures.json` under Application Support |
 | Charges of completed months | `CivoCloudManager/ChargesCache/<account hash>/<yyyy-MM>.json` under Application Support |
 | Region, managed firewalls, IP presets, onboarding, login preference | UserDefaults |
+| Activity log (resource type, name, id, action, short detail; no keys, headers or raw answers). Reserved IP actions are recorded here too | UserDefaults key `CivoActivityLog`, newest 200 entries |
 | Trial start | UserDefaults key `fullAccessTrialStartedAt` |
 | Pause/resume metadata | Local UserDefaults manifest plus vault metadata |
 | Legal documents | Bundled language-specific Markdown resources |
@@ -630,7 +658,7 @@ Remaining architecture limitations include mutable shared API configuration acro
 
 ## Paginated lists
 
-Instances, Kubernetes clusters, databases, object stores and object store credentials come from paginated Civo endpoints. `getPaginatedList` fixes region and API key once, then requests `page=1, 2, ...` with `per_page=100` and the same filters until the page count reported in `pages`. Without `pages`, only an empty page ends the list. Page size and the cap of 100 pages follow Civo's Go client `civogo`.
+Instances, Kubernetes clusters, databases, object stores, object store credentials and reserved IPs come from paginated Civo endpoints. `getPaginatedList` fixes region and API key once, then requests `page=1, 2, ...` with `per_page=100` and the same filters until the page count reported in `pages`. Without `pages`, only an empty page ends the list. Page size and the cap of 100 pages follow Civo's Go client `civogo`.
 
 | Situation | Result |
 | --- | --- |
@@ -689,6 +717,11 @@ A native Xcode Release build additionally verifies target membership and resourc
 | `CivoCloudManager/ViewModels/InstanceCredentialVault.swift` | Authenticated show, copy, edit and delete of one instance's saved credentials |
 | `CivoCloudManager/Views/MainWindow/Compute/InstanceCredentialsView.swift` | Credentials sheet and concealed edit fields |
 | `CivoCloudManager/Views/MainWindow/Compute/PasswordAccess.swift` | Shared owner authentication, relocking and concealed clipboard |
+| `CivoCloudManager/Models/CivoReservedIP.swift`, `ReservedIPRules.swift` | Reserved IP model, assignment states, acknowledgments, eligibility and type-the-name rules |
+| `CivoCloudManager/Services/CivoReservedIPService.swift` | Reserved IP requests, each with the captured region and API key |
+| `CivoCloudManager/ViewModels/ReservedIPController.swift` | Capture-and-confirm state machine for reserve, rename, assign, unassign and release |
+| `CivoCloudManager/ViewModels/ReservedIPViewModel.swift` | Latest-load-only list and per-IP detail for the account and region in Settings |
+| `CivoCloudManager/Views/MainWindow/Networking/ReservedIP*View.swift`, `ReserveIPView.swift`, `AssignReservedIPView.swift` | Reserved IP list, detail, name form, instance picker and typed-name confirmation |
 | `CivoCloudManager/Services/CivoChargesService.swift` | UTC periods, monthly charge windows and the account-scoped month cache |
 | `CivoCloudManager/ViewModels/CostChargesViewModel.swift` | Latest-load-only charges for the cost dashboard |
 | `CivoCloudManager/Models/InstanceCreationForm.swift` | Create Instance required fields, default network and firewall filter |
