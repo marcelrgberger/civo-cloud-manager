@@ -29,8 +29,18 @@ Terms, Fair Use Policy, Refund Policy, Legal Framework Overview, Support and
 Update Policy, the Children's Privacy Notice, the Google Play section and the
 Apple Business seats module are not part of the app and are omitted; the
 matching clauses are stated inline instead (Terms section 7). The prescribed
-Australian Consumer Law notice stays in English in every language. The other five
-documents keep their earlier source versions. Other product-specific terms and disclosures
+Australian Consumer Law notice stays in English in every language. The Privacy Policy was reconciled in November 2026 with
+`shared/PRIVACY_POLICY.en.md` version 2.3.2 (valid from 8 November 2026, legal
+repository commit `cc9c4543cf0ed58be97cd3c9d38fc86781b04680`), which is why it
+carries 8 November 2026 as its effective date; the other documents carry their own
+dates (the EULA and Terms of Service 10 December 2026, the Imprint and the
+notification notice November 2026, the Acceptable Use Policy and Trademark
+Disclaimer September 2026); versions 2.4.0 and 2.5.0 (both valid from 10 December 2026) are not
+used. Which sentences are historical text, newly incorporated text or removed text,
+and the evidence for every data flow, legal basis and recipient, are recorded in
+[privacy-applicability.md](privacy-applicability.md). `PushNotificationConsent.md`
+is a short notice for the local notifications the app really uses, because the app
+has no push delivery. The remaining documents keep their earlier source versions. Other product-specific terms and disclosures
 retain their existing scope.
 
 Seven documents ship in each of the 16 languages: `en`, `de`, `es`, `fr`, `it`,
@@ -46,8 +56,9 @@ remain stable to preserve the existing App Store product, purchases and credenti
 They are technical identifiers, not the displayed legal entity.
 
 Run `python3 scripts/check_legal_localizations.py` to check the document set,
-section numbering, critical legal dates (including the effective date of the EULA
-and the Terms of Service), numerical values, links and company details. Add
+section numbering, critical legal dates (including the effective dates of the EULA, the Terms of Service
+and the Privacy Policy, which differ), vendors that never receive data of this app,
+relative links to documents that are not bundled, numerical values, links and company details. Add
 `--app '/path/to/Civo Cloud Manager.app'` to verify that all 112 documents are
 actually included in the built app. Swift tests cover language resolution and
 English fallback behavior.

@@ -1,9 +1,9 @@
-<!-- doc-id: PUSH_NOTIFICATION_CONSENT | lang: en | app-version: 2.1.2 | updated: 2026-09-09 | source-version: 1.0.0 | source: apps/screens/PUSH_NOTIFICATION_CONSENT.en.md | adapted: company identity and related clauses -->
-# PUSH NOTIFICATION CONSENT NOTICE
+<!-- doc-id: PUSH_NOTIFICATION_CONSENT | lang: en | app-version: 2.3.0 | updated: 2026-11-23 | source-version: 1.0.0 | source: apps/screens/PUSH_NOTIFICATION_CONSENT.en.md | adapted: replaced by a notice for local notifications only, because the app has no push delivery; company identity and contacts from the legal repository -->
+# NOTIFICATIONS NOTICE
 
-## Information shown alongside the system permission prompt for push notifications
+## Local notifications in Civo Cloud Manager
 
-**Effective Date:** September 2026
+**Effective Date:** November 2026
 
 **Provider:**
 DigitalFreedom
@@ -17,120 +17,23 @@ Website: https://digitalfreedom.co.za
 
 ---
 
-## 0. PURPOSE
+## 1. WHAT THE APP ASKS FOR
 
-This Notice is shown **before** the iOS / Android system permission prompt for push notifications. It informs the user — in plain language — what they are consenting to. It satisfies:
+The first time the app runs, macOS asks whether Civo Cloud Manager may show alerts and play sounds. The app requests only this permission. It uses it to show a local notification on your Mac, for example when a pod of a Kubernetes cluster you are connected to has restarted.
 
-- **Art. 6(1)(a) GDPR** — freely-given, specific, informed, unambiguous consent for processing related to notifications when the notification carries personal-data content
-- **Art. 13 GDPR** — transparency at the point of collection
-- **ePrivacy Directive 2002/58/EC Art. 13 / national implementations** — for any notification with marketing content
-- **Apple Human Interface Guidelines** and **Google Play Developer Policy** — pre-prompt best practices
+## 2. WHAT THE APP DOES NOT DO
 
-The Services are distributed globally via the Apple App Store and the Google Play Store; this Notice applies wherever push notifications are enabled and is delivered in the user's language where supported.
+- It does not use remote push notifications. Nothing is sent to your Mac from a server.
+- It uses no Apple Push Notification service (APNs) and no Firebase Cloud Messaging (FCM), and it registers and stores no push token.
+- It sends no marketing notifications.
+- It is not distributed for iOS or Android.
 
----
+The notifications are created on your Mac, from data the app has already received from the services you connected. They are not sent to us, and we do not receive them.
 
-## 1. WHAT YOU ARE ALLOWING
+## 3. HOW TO CHANGE YOUR CHOICE
 
-If you tap **"Allow"** at the next prompt, `Civo Cloud Manager` will be able to:
+You can allow or stop notifications at any time in System Settings, under Notifications, by selecting Civo Cloud Manager. If you do not allow notifications, the app works as before and shows no alerts.
 
-- send notifications to your device
-- show alerts, badges, banners and sounds (subject to your OS-level settings)
-- use Apple's APNs / Google's FCM as the delivery channel (your device push token is shared with these providers for delivery only)
+## 4. MORE INFORMATION AND CONTACT
 
----
-
-## 2. WHAT THE NOTIFICATIONS WILL BE ABOUT
-
-`Civo Cloud Manager` sends notifications for the following purposes:
-
-| Category | Examples | Default |
-|---|---|---|
-| **Service notifications** (essential) | account alerts, security warnings, payment reminders, important updates | On |
-| **Transactional** | confirmation of an action you took, status changes you asked about | On |
-| **Reminders** | reminders you set up yourself in `Civo Cloud Manager` | Your choice |
-| **Tips & new features** | occasional updates about new functionality | Off by default — opt-in |
-| **Marketing / promotional** | offers, campaigns, new product news | Off by default — opt-in; separate consent under § 4 |
-
-Each category can be enabled or disabled independently in **Settings → Notifications** inside `Civo Cloud Manager` — and at any time in your device's OS-level notification settings.
-
----
-
-## 3. NO TRACKING BY THE NOTIFICATION
-
-We do **not**:
-
-- use notifications to track your location
-- include personally identifiable information (PII) about other users in your notifications
-- use silent / background notifications to gather analytics about you
-- share your device push token with parties other than Apple / Google for delivery
-
----
-
-## 4. MARKETING NOTIFICATIONS
-
-Marketing / promotional push notifications are governed by Art. 6(1)(a) GDPR + ePrivacy Art. 13: **explicit, separate, granular opt-in is required**.
-
-- The marketing toggle is **off** by default
-- You can turn it on (and off) at any time in **Settings → Notifications → Marketing**
-- Marketing push consent is **distinct** from email-marketing consent; enabling one does not enable the other
-- Withdrawal is as easy as opt-in (single toggle), and does not affect non-marketing notifications
-
----
-
-## 5. CHILDREN
-
-If `Civo Cloud Manager` is used by minors, the [Children's Privacy Notice](CHILDREN_PRIVACY_NOTICE.md) applies in addition. We do not send marketing push notifications to minors.
-
----
-
-## 6. SUB-PROCESSORS INVOLVED
-
-Push delivery uses platform-native services:
-
-- **Apple Push Notification service (APNs)** — Apple Distribution International Ltd. (independent controller for the delivery channel)
-- **Firebase Cloud Messaging (FCM) / Google Mobile Services** — Google Ireland Limited (independent controller for the delivery channel)
-
-These act as their own controllers for the delivery layer per their own privacy policies. See [`processors/apple.md`](processors/apple.md) and [Google Cloud sub-processor record](processors/google-cloud.md).
-
----
-
-## 7. YOUR RIGHTS
-
-You may at any time:
-
-- **Disable** all notifications at the OS level (Settings → Notifications → `Civo Cloud Manager` → off)
-- **Disable specific categories** in-app (Settings → Notifications)
-- **Withdraw marketing consent** without losing service notifications
-- **Request deletion** of any data we hold related to notification preferences via `data-protection@digitalfreedom.co.za`
-
-Withdrawing consent does not affect the lawfulness of processing prior to withdrawal.
-
----
-
-## 8. IF YOU SAY "DON'T ALLOW"
-
-If you decline the system prompt:
-
-- `Civo Cloud Manager` continues to work — no feature is paywalled behind notification permission
-- you can change your mind later in **Settings → Notifications → `Civo Cloud Manager`** (OS-level)
-- we will not re-prompt repeatedly or use dark patterns to coerce consent
-
----
-
-## 9. CONTACT
-
-DigitalFreedom
-A brand of DigitalFreedom Global LLC
-30 N Gould St, Ste N
-Sheridan, WY 82801
-United States
-
-Notification preferences help: support@digitalfreedom.co.za
-Data protection: data-protection@digitalfreedom.co.za
-General: hello@digitalfreedom.co.za
-Website: https://digitalfreedom.co.za
-
----
-
-(c) 2025-2026 DigitalFreedom Global LLC. All rights reserved.
+How the app handles data is described in the [Privacy Policy](PrivacyPolicy.md). For questions about this notice, write to hello@digitalfreedom.co.za. Data protection requests go to data-protection@digitalfreedom.co.za.
