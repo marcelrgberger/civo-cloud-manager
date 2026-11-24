@@ -99,6 +99,19 @@ struct DemoRouterTests {
         }
     }
 
+    @Test("The recovery status is served for a demo instance only and cannot be changed")
+    func recoveryStatusIsServedForKnownInstances() throws {
+        let known = DemoFixtures.id(4, 1)
+        let status = DemoRouter.respond(method: "GET", url: try #require(URL(string: "\(api)/instances/\(known)/recovery?region=lon1")))
+        #expect(status.kind == .served)
+        #expect(try decoder.decode(InstanceRecoveryStatus.self, from: status.body).isEnabled == false)
+
+        let unknown = DemoRouter.respond(method: "GET", url: try #require(URL(string: "\(api)/instances/\(DemoFixtures.id(4, 99))/recovery")))
+        #expect(unknown.kind == .unrouted)
+        let change = DemoRouter.respond(method: "PUT", url: try #require(URL(string: "\(api)/instances/\(known)/recovery")))
+        #expect(change.kind == .rejectedWrite)
+    }
+
     @Test("Other hosts are blocked and never answered with data")
     func externalHostsAreBlocked() throws {
         let response = DemoRouter.respond(method: "GET", url: try #require(URL(string: "https://api.ipify.org")))
@@ -146,6 +159,17 @@ struct DemoIsolationTests {
         #expect(model.selectedCluster?.name == "demo-cluster")
         #expect(!model.isK8sConnected)
         #expect(model.k8sError == nil)
+        #expect(DemoTraffic.shared.unrouted == traffic.unrouted && DemoTraffic.shared.blocked == traffic.blocked)
+    }
+
+    @Test("Opening an instance detail reads its instance and recovery status through the real service and model without an unrouted or blocked request")
+    func instanceDetailReadsLeaveTrafficUnchanged() async throws {
+        let traffic = (unrouted: DemoTraffic.shared.unrouted, blocked: DemoTraffic.shared.blocked)
+        let service = CivoInstanceService()
+        let instances = try await service.listInstances(region: DemoMode.region)
+        let web = try #require(instances.items.first { $0.name == "web-01" })
+        let status = try await service.recoveryStatus(of: web.id, region: DemoMode.region)
+        #expect(!status.isEnabled)
         #expect(DemoTraffic.shared.unrouted == traffic.unrouted && DemoTraffic.shared.blocked == traffic.blocked)
     }
 

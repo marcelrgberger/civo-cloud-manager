@@ -102,6 +102,9 @@ enum DemoFixtures {
         }
     }
 
+    /// Every demo instance runs normally, so the detail shows recovery mode as off.
+    static var recoveryStatus: [String: Any] { ["result": false] }
+
     static var sizes: [[String: Any]] {
         sizeSpecs.map { spec in
             [

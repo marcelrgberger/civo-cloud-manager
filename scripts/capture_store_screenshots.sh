@@ -21,8 +21,10 @@ done
 
 mkdir -p "$out" "$logs"
 
-# One heavy build at a time: wait for any other xcodebuild, never kill it.
-while pgrep -x xcodebuild >/dev/null; do sleep 15; done
+# One heavy build at a time: wait for any other xcodebuild, never kill it. Called right before every xcodebuild.
+wait_for_idle_xcodebuild() { while pgrep -x xcodebuild >/dev/null; do sleep 15; done; }
+
+wait_for_idle_xcodebuild
 if pgrep -x "Civo Cloud Manager" >/dev/null; then
     echo "Civo Cloud Manager is running; quit it first so the demo run cannot touch it." >&2
     exit 1
@@ -30,6 +32,7 @@ fi
 
 caffeinate -d -w $$ &
 
+wait_for_idle_xcodebuild
 xcodebuild build-for-testing -project CivoCloudManager.xcodeproj -scheme CivoCloudManagerScreenshots \
     -destination 'platform=macOS' -derivedDataPath "$derived" >"$logs/build.log" 2>&1
 
@@ -38,6 +41,7 @@ pixel_size() { echo "$(sips -g pixelWidth "$1" | awk '/pixelWidth/ {print $2}')x
 failed=()
 for language in "${languages[@]}"; do
     rm -rf "${out:?}/$language"
+    wait_for_idle_xcodebuild
     # xcodebuild forwards TEST_RUNNER_ variables to the test runner without the prefix.
     TEST_RUNNER_CCM_CAPTURE_LANG=$language TEST_RUNNER_CCM_CAPTURE_OUT=$out \
         TEST_RUNNER_CCM_STRINGS_PATH=$repo/CivoCloudManager/Localizable.xcstrings \

@@ -69,6 +69,8 @@ enum DemoRouter {
             case "ips": return DemoFixtures.reservedIPs.first { $0["id"] as? String == parts[1] }
             default: return nil
             }
+        case 3 where parts[0] == "instances" && parts[2] == "recovery":
+            return DemoFixtures.instances.contains { $0["id"] as? String == parts[1] } ? DemoFixtures.recoveryStatus : nil
         case 3 where parts[0] == "firewalls" && parts[2] == "rules":
             return DemoFixtures.rules(forFirewall: parts[1])
         case 3 where parts[0] == "kubernetes" && parts[1] == "clusters":
