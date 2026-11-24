@@ -26,7 +26,7 @@ Korzystając z Usług, zobowiązujesz się do przestrzegania niniejszej AUP. Nar
 
 ### 1.1 Zakres globalny
 
-Usługi są dystrybuowane za pośrednictwem Apple App Store oraz Google Play Store i są tym samym dostępne we wszystkich krajach i terytoriach obsługiwanych przez te platformy. Niniejsza AUP ma zastosowanie globalnie do wszystkich takich użytkowników. Dostawca przyjmuje Rozporządzenie Ogólne o Ochronie Danych Osobowych Unii Europejskiej (RODO) oraz powiązane prawo UE jako standard bazowy i stosuje je jako minimalny poziom ochrony na całym świecie; dodatkowo stosuje się każde bardziej ochronne lokalne prawo właściwe dla jurysdykcji użytkownika.
+Usługi są dystrybuowane za pośrednictwem Apple App Store i są tym samym dostępne we wszystkich krajach i terytoriach obsługiwanych przez tę platformę. Niniejsza AUP ma zastosowanie globalnie do wszystkich takich użytkowników. Dostawca przyjmuje Rozporządzenie Ogólne o Ochronie Danych Osobowych Unii Europejskiej (RODO) oraz powiązane prawo UE jako standard bazowy i stosuje je jako minimalny poziom ochrony na całym świecie; dodatkowo stosuje się każde bardziej ochronne lokalne prawo właściwe dla jurysdykcji użytkownika.
 
 ---
 

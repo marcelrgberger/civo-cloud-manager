@@ -20,7 +20,7 @@ Situs web:  https://digitalfreedom.co.za
 
 Dokumen ini memperjelas hubungan antara aplikasi yang diterbitkan oleh Penerbit dan setiap merek dagang, nama merek, program, atau metodologi pihak ketiga yang disebutkan dalam aplikasi tersebut, materi pemasaran, atau dokumentasi pendukung.
 
-Aplikasi milik Penerbit didistribusikan melalui Apple App Store dan Google Play Store dan dengan demikian tersedia di setiap negara dan wilayah yang dilayani oleh platform tersebut. Penafian ini berlaku secara global. Penerbit menerapkan hukum merek dagang Uni Eropa (Peraturan (EU) 2017/1001 tentang merek dagang Uni Eropa dan Direktif (EU) 2015/2436) serta doktrin nominative-fair-use sebagai standar dasarnya dan juga mematuhi aturan merek dagang dan fair use di setiap yurisdiksi tempat aplikasi tersedia.
+Aplikasi milik Penerbit didistribusikan melalui Apple App Store dan dengan demikian tersedia di setiap negara dan wilayah yang dilayani oleh platform tersebut. Penafian ini berlaku secara global. Penerbit menerapkan hukum merek dagang Uni Eropa (Peraturan (EU) 2017/1001 tentang merek dagang Uni Eropa dan Direktif (EU) 2015/2436) serta doktrin nominative-fair-use sebagai standar dasarnya dan juga mematuhi aturan merek dagang dan fair use di setiap yurisdiksi tempat aplikasi tersedia.
 
 ---
 

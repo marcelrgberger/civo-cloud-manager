@@ -26,7 +26,7 @@ Hizmetleri kullanarak bu AUP'ye uymayı kabul edersiniz. İhlal halinde erişimi
 
 ### 1.1 Küresel kapsam
 
-Hizmetler Apple App Store ve Google Play Store üzerinden dağıtılmakta olup, bu platformların hizmet verdiği tüm ülke ve bölgelerde kullanılabilir durumdadır. Bu AUP, tüm bu kullanıcılar için küresel olarak geçerlidir. Sağlayıcı, Avrupa Birliği Genel Veri Koruma Tüzüğü'nü (GDPR) ve ilgili AB hukukunu asgari standart olarak benimser ve küresel taban olarak uygular; kullanıcının yargı alanındaki daha koruyucu yerel yasa ayrıca geçerlidir.
+Hizmetler Apple App Store üzerinden dağıtılmakta olup, bu platformun hizmet verdiği tüm ülke ve bölgelerde kullanılabilir durumdadır. Bu AUP, tüm bu kullanıcılar için küresel olarak geçerlidir. Sağlayıcı, Avrupa Birliği Genel Veri Koruma Tüzüğü'nü (GDPR) ve ilgili AB hukukunu asgari standart olarak benimser ve küresel taban olarak uygular; kullanıcının yargı alanındaki daha koruyucu yerel yasa ayrıca geçerlidir.
 
 ---
 

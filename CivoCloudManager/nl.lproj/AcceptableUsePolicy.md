@@ -26,7 +26,7 @@ Door gebruik te maken van de Diensten stemt u in met dit AUG. Overtreding kan le
 
 ### 1.1 Mondiale reikwijdte
 
-De Diensten worden verspreid via de Apple App Store en de Google Play Store en zijn derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Dit AUG is wereldwijd van toepassing op alle dergelijke gebruikers. De Aanbieder hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; elke verdergaande beschermende lokale wetgeving van het rechtsgebied van de gebruiker is aanvullend van toepassing.
+De Diensten worden verspreid via de Apple App Store en zijn derhalve beschikbaar in elk land en elk gebied dat door dit platform wordt bediend. Dit AUG is wereldwijd van toepassing op alle dergelijke gebruikers. De Aanbieder hanteert de Algemene Verordening Gegevensbescherming (AVG) van de Europese Unie en aanverwante EU-wetgeving als minimumnorm en past deze wereldwijd toe; elke verdergaande beschermende lokale wetgeving van het rechtsgebied van de gebruiker is aanvullend van toepassing.
 
 ---
 

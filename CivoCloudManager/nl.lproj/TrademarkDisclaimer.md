@@ -20,7 +20,7 @@ Website: https://digitalfreedom.co.za
 
 Dit document verduidelijkt de relatie tussen applicaties die door de Uitgever worden gepubliceerd en eventuele merken, merknamen, programma's of methodologieën van derden waarnaar in die applicaties, marketingmaterialen of ondersteunende documentatie wordt verwezen.
 
-De applicaties van de Uitgever worden verspreid via de Apple App Store en de Google Play Store en zijn derhalve beschikbaar in elk land en elk gebied dat door deze platforms wordt bediend. Deze Disclaimer is wereldwijd van toepassing. De Uitgever past het EU-merkenrecht toe (Verordening (EU) 2017/1001 inzake het Uniemerk en Richtlijn (EU) 2015/2436) en het beginsel van nominatief eerlijk gebruik als basisnorm en houdt daarnaast rekening met de merken- en fair-use-regels van elke jurisdictie waarin de applicaties beschikbaar worden gesteld.
+De applicaties van de Uitgever worden verspreid via de Apple App Store en zijn derhalve beschikbaar in elk land en elk gebied dat door dit platform wordt bediend. Deze Disclaimer is wereldwijd van toepassing. De Uitgever past het EU-merkenrecht toe (Verordening (EU) 2017/1001 inzake het Uniemerk en Richtlijn (EU) 2015/2436) en het beginsel van nominatief eerlijk gebruik als basisnorm en houdt daarnaast rekening met de merken- en fair-use-regels van elke jurisdictie waarin de applicaties beschikbaar worden gesteld.
 
 ---
 

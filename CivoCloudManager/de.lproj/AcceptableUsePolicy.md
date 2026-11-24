@@ -26,7 +26,7 @@ Durch die Nutzung der Dienste erklären Sie sich mit dieser AUP einverstanden. E
 
 ### 1.1 Globaler Geltungsbereich
 
-Die Dienste werden über den Apple App Store und den Google Play Store vertrieben und sind daher in jedem Land und jedem Gebiet verfügbar, das von diesen Plattformen bedient wird. Diese AUP gilt weltweit für alle derartigen Nutzer. Der Anbieter übernimmt die Datenschutz-Grundverordnung der Europäischen Union (DSGVO) und die einschlägigen EU-Gesetze als Mindeststandard und wendet diese weltweit als Mindestmaßstab an; darüber hinaus gilt jedes weitergehende lokale Recht des Nutzers zusätzlich.
+Die Dienste werden über den Apple App Store vertrieben und sind daher in jedem Land und jedem Gebiet verfügbar, das von dieser Plattform bedient wird. Diese AUP gilt weltweit für alle derartigen Nutzer. Der Anbieter übernimmt die Datenschutz-Grundverordnung der Europäischen Union (DSGVO) und die einschlägigen EU-Gesetze als Mindeststandard und wendet diese weltweit als Mindestmaßstab an; darüber hinaus gilt jedes weitergehende lokale Recht des Nutzers zusätzlich.
 
 ---
 

@@ -26,7 +26,7 @@ Ao utilizar os Serviços, concorda em cumprir esta PUA. A violação pode result
 
 ### 1.1 Âmbito global
 
-Os Serviços são distribuídos através da Apple App Store e da Google Play Store e, por conseguinte, estão disponíveis em todos os países e territórios servidos por essas plataformas. Esta PUA aplica-se globalmente a todos esses utilizadores. O Fornecedor adota o Regulamento Geral sobre a Proteção de Dados (RGPD) da União Europeia e a legislação da UE relacionada como padrão mínimo e aplica-o globalmente; qualquer legislação local mais protetora da jurisdição do utilizador aplica-se adicionalmente.
+Os Serviços são distribuídos através da Apple App Store e, por conseguinte, estão disponíveis em todos os países e territórios servidos por essa plataforma. Esta PUA aplica-se globalmente a todos esses utilizadores. O Fornecedor adota o Regulamento Geral sobre a Proteção de Dados (RGPD) da União Europeia e a legislação da UE relacionada como padrão mínimo e aplica-o globalmente; qualquer legislação local mais protetora da jurisdição do utilizador aplica-se adicionalmente.
 
 ---
 

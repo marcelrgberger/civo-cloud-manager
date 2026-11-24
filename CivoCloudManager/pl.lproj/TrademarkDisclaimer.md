@@ -20,7 +20,7 @@ Strona internetowa: https://digitalfreedom.co.za
 
 Niniejszy dokument wyjaśnia relację pomiędzy aplikacjami publikowanymi przez Wydawcę a wszelkimi znakami towarowymi, nazwami marek, programami lub metodykami stron trzecich, do których odniesienia pojawiają się w tych aplikacjach, materiałach marketingowych lub dokumentacji pomocniczej.
 
-Aplikacje Wydawcy są dystrybuowane za pośrednictwem Apple App Store oraz Google Play Store i są tym samym udostępniane we wszystkich krajach i terytoriach obsługiwanych przez te platformy. Niniejsze Zastrzeżenie obowiązuje na całym świecie. Wydawca stosuje prawo znaków towarowych Unii Europejskiej (Rozporządzenie (UE) 2017/1001 w sprawie znaku towarowego Unii Europejskiej oraz Dyrektywa (UE) 2015/2436) oraz doktrynę dozwolonego użytku nominatywnego jako standard bazowy, a ponadto przestrzega przepisów dotyczących znaków towarowych i dozwolonego użytku obowiązujących w każdej jurysdykcji, w której aplikacje są udostępniane.
+Aplikacje Wydawcy są dystrybuowane za pośrednictwem Apple App Store i są tym samym udostępniane we wszystkich krajach i terytoriach obsługiwanych przez tę platformę. Niniejsze Zastrzeżenie obowiązuje na całym świecie. Wydawca stosuje prawo znaków towarowych Unii Europejskiej (Rozporządzenie (UE) 2017/1001 w sprawie znaku towarowego Unii Europejskiej oraz Dyrektywa (UE) 2015/2436) oraz doktrynę dozwolonego użytku nominatywnego jako standard bazowy, a ponadto przestrzega przepisów dotyczących znaków towarowych i dozwolonego użytku obowiązujących w każdej jurysdykcji, w której aplikacje są udostępniane.
 
 ---
 
