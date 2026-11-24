@@ -58,23 +58,23 @@ Layanan disediakan berdasarkan "sebagaimana tersedia". Penyedia tidak menjamin a
 
 ---
 
-## 3. AKUN
+## 3. KUNCI API CIVO ANDA
 
-### 3.1 Pendaftaran
+### 3.1 Tanpa Akun Penyedia
 
-Beberapa Layanan mungkin memerlukan pendaftaran akun. Anda harus memberikan informasi yang akurat dan lengkap.
+Penyedia tidak mengelola akun pengguna untuk Layanan, dan tidak diperlukan pendaftaran pada Penyedia. Untuk menggunakan Civo Cloud Manager, Anda menghubungkannya ke lingkungan Civo Anda sendiri dengan kunci API yang Anda peroleh sendiri dari Civo.
 
 ### 3.2 Keamanan
 
 Anda bertanggung jawab untuk:
 
-- Menjaga kerahasiaan kredensial Anda
-- Semua aktivitas yang terjadi di bawah akun Anda
-- Memberitahukan Penyedia tentang penggunaan yang tidak sah
+- Menjaga kerahasiaan kunci API Civo dan kredensial Anda lainnya
+- Semua aktivitas yang dilakukan dengan kredensial Anda
+- Mencabut kunci yang disusupi di Civo dan memberitahukan Penyedia tentang penggunaan Layanan yang tidak sah
 
 ### 3.3 Penangguhan
 
-Penyedia dapat menangguhkan atau mengakhiri akun yang melanggar Ketentuan ini atau hukum yang berlaku.
+Penyedia dapat menangguhkan atau mengakhiri akses Anda ke Layanan jika Anda melanggar Ketentuan ini atau hukum yang berlaku.
 
 ---
 
@@ -227,7 +227,7 @@ Kewajiban ini tidak berlaku jika dan sejauh Anda tidak bertanggung jawab atas pe
 
 ### 12.1 Oleh Anda
 
-Anda dapat berhenti menggunakan Layanan kapan saja. Permintaan penghapusan akun dapat diajukan kepada Penyedia.
+Anda dapat berhenti menggunakan Layanan kapan saja. Karena Penyedia tidak mengelola akun untuk Layanan, tidak ada akun yang perlu dihapus.
 
 ### 12.2 Oleh Penyedia
 
@@ -366,7 +366,7 @@ Klaim berdasarkan Ketentuan ini tunduk pada masa pembatasan sesuai hukum yang be
 
 ### 16.7 Pemberitahuan
 
-Pemberitahuan kepada Penyedia harus dikirim ke `hello@digitalfreedom.co.za` (umum) atau `data-protection@digitalfreedom.co.za` (privasi / DSGVO). Pemberitahuan kepada Anda dapat dikirim melalui email ke alamat yang terkait dengan akun Anda atau melalui notifikasi dalam aplikasi.
+Pemberitahuan kepada Penyedia harus dikirim ke `hello@digitalfreedom.co.za` (umum) atau `data-protection@digitalfreedom.co.za` (privasi / DSGVO). Pemberitahuan kepada Anda dapat dikirim melalui notifikasi dalam aplikasi atau, jika Anda menghubungi Penyedia melalui email, ke alamat yang Anda gunakan.
 
 ### 16.8 Bahasa
 
