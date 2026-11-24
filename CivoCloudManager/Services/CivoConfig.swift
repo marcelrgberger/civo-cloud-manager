@@ -32,18 +32,19 @@ final class CivoConfig: @unchecked Sendable {
     static let supportPortalURL = URL(string: "https://support.apps.digitalfreedom.co.za")!
 
     var apiKey: String {
-        get { readKeychain() ?? "" }
+        get { DemoMode.isActive ? DemoMode.apiKey : readKeychain() ?? "" }
         set {
+            guard !DemoMode.isActive else { return }
             writeKeychain(newValue)
             NotificationCenter.default.post(name: .civoAPIKeyDidChange, object: nil)
         }
     }
 
     var region: String {
-        get { UserDefaults.standard.string(forKey: ConfigKey.region) ?? "" }
+        get { DemoMode.isActive ? DemoMode.region : AppEnvironment.defaults.string(forKey: ConfigKey.region) ?? "" }
         set {
-            guard newValue != region else { return }
-            UserDefaults.standard.set(newValue, forKey: ConfigKey.region)
+            guard !DemoMode.isActive, newValue != region else { return }
+            AppEnvironment.defaults.set(newValue, forKey: ConfigKey.region)
             NotificationCenter.default.post(name: .civoRegionDidChange, object: nil)
         }
     }

@@ -15,7 +15,7 @@ final class StoreManager {
     var isLoading = false
     var error: String?
     private(set) var isTrialActive: Bool
-    private(set) var hasLoadedPurchaseStatus = false
+    private(set) var hasLoadedPurchaseStatus = DemoMode.isActive
     let trialEndsAt: Date
 
     var isDebugBuild: Bool {
@@ -27,13 +27,13 @@ final class StoreManager {
     }
 
     var isFullAccessUnlocked: Bool {
-        isTrialActive || purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
+        DemoMode.isActive || isTrialActive || purchasedProductIDs.contains(AppProduct.fullAccess.rawValue)
     }
 
     private var updateTask: Task<Void, Never>?
     private var trialTask: Task<Void, Never>?
 
-    init(defaults: UserDefaults = .standard, now: Date = Date()) {
+    init(defaults: UserDefaults = AppEnvironment.defaults, now: Date = Date()) {
         let key = "fullAccessTrialStartedAt"
         let startedAt = defaults.object(forKey: key) as? Date ?? now
         if defaults.object(forKey: key) == nil {
@@ -48,7 +48,8 @@ final class StoreManager {
     }
 
     func startListening() {
-        guard updateTask == nil else { return }
+        // Demo mode never talks to StoreKit, so no purchase prompt can stall an unattended run.
+        guard updateTask == nil, !DemoMode.isActive else { return }
         refreshTrialStatus()
         trialTask = Task { [weak self] in
             while !Task.isCancelled {
@@ -130,6 +131,7 @@ final class StoreManager {
     // MARK: - Entitlements
 
     func refreshPurchaseStatus() async {
+        guard !DemoMode.isActive else { return }
         var purchased: Set<String> = []
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result) {

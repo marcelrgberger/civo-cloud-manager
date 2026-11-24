@@ -35,6 +35,7 @@ struct EditRuleView: View {
                     ForEach(protocols, id: \.self) { Text(verbatim: $0) }
                 }
                 TextField("Start Port", text: $draft.startPort)
+                    .accessibilityIdentifier(AccessibilityID.ruleStartPort)
                     .help("e.g. 80, 443, 6443")
                 TextField("End Port (optional)", text: $draft.endPort)
                     .help("Leave empty for single port")
@@ -72,6 +73,8 @@ struct EditRuleView: View {
                             }
                         }
                     }
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier(AccessibilityID.ruleChanges)
                 }
             }
 

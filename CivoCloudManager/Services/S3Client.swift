@@ -157,7 +157,7 @@ final class S3Client: Sendable {
 
         request.setValue("AWS4-HMAC-SHA256 Credential=\(accessKey)/\(scope), SignedHeaders=\(signedHeaders), Signature=\(signature)", forHTTPHeaderField: "Authorization")
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await DemoNetwork.sharedSession.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw S3Error.invalidResponse
         }

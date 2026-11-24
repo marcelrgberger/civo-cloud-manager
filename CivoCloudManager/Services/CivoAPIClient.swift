@@ -133,10 +133,10 @@ final class CivoAPIClient: Sendable {
     private let diagnostic: @Sendable (String) -> Void
 
     convenience init() {
-        let config = URLSessionConfiguration.default
+        let config = DemoNetwork.configuration(.default)
         config.timeoutIntervalForRequest = 30
         config.timeoutIntervalForResource = 60
-        let sensitive = URLSessionConfiguration.ephemeral
+        let sensitive = DemoNetwork.configuration(.ephemeral)
         sensitive.timeoutIntervalForRequest = 30
         sensitive.timeoutIntervalForResource = 60
         sensitive.urlCache = nil

@@ -56,6 +56,7 @@ struct DashboardView: View {
                 Text(error)
                     .font(.caption)
                     .foregroundStyle(.red)
+                    .accessibilityIdentifier(AccessibilityID.errorBanner)
             }
             ForEach(vm.warnings, id: \.self) { warning in
                 Text(warning)
@@ -74,6 +75,8 @@ struct DashboardView: View {
             resourceCard("Load Balancers", count: vm.loadBalancerCount, icon: "arrow.triangle.branch", color: .indigo, target: .loadBalancers, index: 4)
             resourceCard("Networks", count: vm.networkCount, icon: "point.3.connected.trianglepath.dotted", color: .green, target: .networks, index: 5)
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(AccessibilityID.dashboardResources)
         .onAppear {
             withAnimation { cardsAppeared = true }
         }
@@ -198,5 +201,7 @@ struct DashboardView: View {
                 }
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(AccessibilityID.dashboardQuota)
     }
 }

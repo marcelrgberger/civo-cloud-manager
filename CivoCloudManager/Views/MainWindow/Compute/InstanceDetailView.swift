@@ -298,6 +298,7 @@ struct InstanceDetailView: View {
             Spacer()
             if vm.consoleTarget(for: instance) != nil {
                 Button("Change...") { vm.beginConfirmation(.firewall, for: instance) }
+                    .accessibilityIdentifier(AccessibilityID.instanceChangeFirewall)
                     .buttonStyle(.bordered)
                     .controlSize(.small)
                     .help("Use another firewall of this instance's network")
@@ -409,6 +410,7 @@ struct InstanceDetailView: View {
                 } label: {
                     Label("Resize", systemImage: "arrow.up.right.circle")
                 }
+                .accessibilityIdentifier(AccessibilityID.instanceResize)
                 .buttonStyle(.bordered)
                 .controlSize(.small)
             }
@@ -546,6 +548,7 @@ struct InstanceDetailView: View {
         .font(.caption)
         .foregroundStyle(.secondary)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityIdentifier(AccessibilityID.resizeCostEstimate)
     }
 
     private func passwordRow(_ password: String) -> some View {

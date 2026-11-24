@@ -31,7 +31,11 @@ final class CivoConsoleService: ConsoleAPI {
     private let session: URLSession
 
     init() {
-        let config = URLSessionConfiguration.ephemeral
+        self.session = URLSession(configuration: Self.sessionConfiguration())
+    }
+
+    static func sessionConfiguration() -> URLSessionConfiguration {
+        let config = DemoNetwork.configuration(.ephemeral)
         config.urlCache = nil
         config.httpCookieStorage = nil
         config.httpShouldSetCookies = false
@@ -39,7 +43,7 @@ final class CivoConsoleService: ConsoleAPI {
         config.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 30
-        self.session = URLSession(configuration: config)
+        return config
     }
 
     // MARK: - Request construction

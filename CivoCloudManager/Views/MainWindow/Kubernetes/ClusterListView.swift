@@ -95,6 +95,7 @@ struct ClusterListView: View {
                             index: index
                         )
                     }
+                    .accessibilityIdentifier(AccessibilityID.clusterRow(cluster.name))
                     .buttonStyle(.plain)
                 }
             }

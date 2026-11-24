@@ -14,7 +14,7 @@ final class NotificationService: Sendable {
             defer { state = true }
             return state
         }
-        guard !alreadyRequested else { return }
+        guard !alreadyRequested, !DemoMode.isActive else { return }
 
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
             if let error {

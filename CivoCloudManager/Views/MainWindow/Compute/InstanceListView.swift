@@ -70,6 +70,7 @@ struct InstanceListView: View {
                         )
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier(AccessibilityID.instanceRow(inst.name))
                     .contextMenu {
                         if let target = vm.consoleTarget(for: inst) {
                             if inst.status?.lowercased() == "active" {
@@ -118,6 +119,7 @@ struct InstanceListView: View {
                 .foregroundStyle(.secondary)
             TextField("Filter by tag", text: $tagFilter)
                 .textFieldStyle(.plain)
+                .accessibilityIdentifier(AccessibilityID.instancesTagFilter)
             if !tagFilter.isEmpty {
                 Button {
                     tagFilter = ""

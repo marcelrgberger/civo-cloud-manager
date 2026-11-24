@@ -59,6 +59,7 @@ struct FirewallListView: View {
                         )
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier(AccessibilityID.firewallRow(fw.name))
                     .contextMenu {
                         Button("Delete", role: .destructive) {
                             deleteTarget = fw

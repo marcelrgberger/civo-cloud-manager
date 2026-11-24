@@ -24,7 +24,7 @@ final class FirewallClosureQueue {
     private var needsPersistence = false
 
     init(file: URL? = nil) {
-        self.file = file ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        self.file = file ?? AppEnvironment.supportDirectory
             .appendingPathComponent("CivoCloudManager/firewall-closures.json")
         if FileManager.default.fileExists(atPath: self.file.path) {
             do { jobs = try JSONDecoder().decode([FirewallClosureJob].self, from: Data(contentsOf: self.file)) }
@@ -169,13 +169,13 @@ final class AppState {
     var launchAtLogin: Bool {
         didSet {
             guard !isRevertingLaunchAtLogin else { return }
-            UserDefaults.standard.set(launchAtLogin, forKey: UDKey.launchAtLogin)
+            AppEnvironment.defaults.set(launchAtLogin, forKey: UDKey.launchAtLogin)
             updateLaunchAtLogin()
         }
     }
 
     var onboardingComplete: Bool {
-        didSet { UserDefaults.standard.set(onboardingComplete, forKey: UDKey.onboardingComplete) }
+        didSet { AppEnvironment.defaults.set(onboardingComplete, forKey: UDKey.onboardingComplete) }
     }
 
     // Internal
@@ -236,7 +236,7 @@ final class AppState {
 
     init() {
         self.firewallClosures = FirewallClosureQueue()
-        if let data = UserDefaults.standard.data(forKey: UDKey.managedFirewalls),
+        if let data = AppEnvironment.defaults.data(forKey: UDKey.managedFirewalls),
             let decoded = try? JSONDecoder().decode([ManagedFirewall].self, from: data)
         {
             self.managedFirewalls = decoded
@@ -244,7 +244,7 @@ final class AppState {
             self.managedFirewalls = []
         }
 
-        if let data = UserDefaults.standard.data(forKey: UDKey.ipPresets),
+        if let data = AppEnvironment.defaults.data(forKey: UDKey.ipPresets),
             let decoded = try? JSONDecoder().decode([IPPreset].self, from: data)
         {
             self.ipPresets = decoded
@@ -252,8 +252,8 @@ final class AppState {
             self.ipPresets = []
         }
 
-        self.launchAtLogin = UserDefaults.standard.bool(forKey: UDKey.launchAtLogin)
-        self.onboardingComplete = UserDefaults.standard.bool(forKey: UDKey.onboardingComplete)
+        self.launchAtLogin = AppEnvironment.defaults.bool(forKey: UDKey.launchAtLogin)
+        self.onboardingComplete = DemoMode.isActive || AppEnvironment.defaults.bool(forKey: UDKey.onboardingComplete)
         if !firewallClosures.jobs.isEmpty { startAutoCloseTimer() }
     }
 
@@ -261,7 +261,7 @@ final class AppState {
 
     private func saveManagedFirewalls() {
         if let data = try? JSONEncoder().encode(managedFirewalls) {
-            UserDefaults.standard.set(data, forKey: UDKey.managedFirewalls)
+            AppEnvironment.defaults.set(data, forKey: UDKey.managedFirewalls)
         }
     }
 
@@ -276,7 +276,7 @@ final class AppState {
         } catch {
             isRevertingLaunchAtLogin = true
             launchAtLogin = !launchAtLogin
-            UserDefaults.standard.set(launchAtLogin, forKey: UDKey.launchAtLogin)
+            AppEnvironment.defaults.set(launchAtLogin, forKey: UDKey.launchAtLogin)
             isRevertingLaunchAtLogin = false
             self.error = "Launch at login failed: \(error.localizedDescription)"
         }
@@ -286,7 +286,7 @@ final class AppState {
 
     private func savePresets() {
         if let data = try? JSONEncoder().encode(ipPresets) {
-            UserDefaults.standard.set(data, forKey: UDKey.ipPresets)
+            AppEnvironment.defaults.set(data, forKey: UDKey.ipPresets)
         }
     }
 

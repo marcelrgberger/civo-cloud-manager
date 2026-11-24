@@ -7,38 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F37C90339F0D4480B523C1C9 /* InstanceConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */; };
-		299FA7183E6D8B4656679E80 /* PasswordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */; };
-		58DC3AF42C125EB9F8FC9967 /* InstanceCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */; };
-		E9CD0B9406374CF29332B9D0 /* ConsoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */; };
-		7FC63DE8F731FF8F6B94F08C /* InstanceCredentialVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */; };
-		EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */; };
-		BDF2E72DDCF04757A4A056B8 /* CivoConsoleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */; };
-		C7311014833E428FABCEEA60 /* CivoConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741081E16DA45499D7C4901 /* CivoConsole.swift */; };
+		00304EDB3598C20A720568FA /* DemoModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C8BAA2709F55A015660E669 /* DemoModeTests.swift */; };
 		0048C6314F5EE8F79C349F21 /* KubeconfigParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22ABFE0D58271BEF1C782B6 /* KubeconfigParser.swift */; };
 		031CB4D60A65F48F84CEC130 /* CivoLoadBalancer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */; };
-		BA5DFC7320B49A45E681D8BC /* ReservedIPRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */; };
-		BCC0CBACF6D0B3C4DC46E6EB /* CivoReservedIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E0F4F0053F27D702F2E8F0 /* CivoReservedIP.swift */; };
 		03B0E27D9C1140A115E9D082 /* QuotaEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEC678CBA94690F848CF1F7 /* QuotaEditView.swift */; };
+		07603E847C2ACB0EF9479043 /* LoadBalancerCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */; };
+		08D8BF7B151FED8CBF55F299 /* DemoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C3038FA835682932E786F4 /* DemoWindow.swift */; };
 		0ABC1E4B52C487D93FFA2E5B /* ObjectStoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2DCEEDC8117A41FBC2CD5B /* ObjectStoreListView.swift */; };
 		0CAA51AE471E89CD7C79074F /* CivoKubernetesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427F5C2E5699C5774C494320 /* CivoKubernetesService.swift */; };
 		11ECB11744FF019DB7879013 /* ActivityLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5FEFF737E33744B27C841B /* ActivityLog.swift */; };
+		123000000000000000000002 /* ObjectStoreCredentialSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */; };
+		123000000000000000000004 /* ObjectStoreCredentialSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123000000000000000000003 /* ObjectStoreCredentialSheet.swift */; };
 		13EC57681B3C60D23FCA9C5C /* APIHealthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8E6CAAC1AD5DF9B154596C /* APIHealthView.swift */; };
 		140D7968FF9324C834F697A3 /* PodExecView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618697D3D7D82F7D65EDCF86 /* PodExecView.swift */; };
+		144D14E2D568F9258659A21F /* EditRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */; };
 		14C34DF3D62EA50F5593AC71 /* CivoSizeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D1F2CA91D34560B712C7E9 /* CivoSizeService.swift */; };
+		185D78EB3644C0FED48529D4 /* LoadBalancerEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */; };
+		190D3168FEF4E84E1065F9F3 /* LoadBalancerBackendTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */; };
+		1B26A10A5910CF28408332CA /* CreateLoadBalancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */; };
 		1BDBCC9AD214C3280BE42876 /* CreateFirewallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF001A1D2E20FC2079DBDCA /* CreateFirewallView.swift */; };
+		1D291856D4A9E5B0CC1A30D9 /* LoadBalancerEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */; };
 		1D6E0750575C50DCBF61A11B /* CivoFirewallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3B983A59EFD4C3E70560F6 /* CivoFirewallService.swift */; };
 		1F46619D163FA7B8C31DC396 /* NetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */; };
-		62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */; };
-		07603E847C2ACB0EF9479043 /* LoadBalancerCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */; };
-		185D78EB3644C0FED48529D4 /* LoadBalancerEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */; };
-		6B79087136669F24356A1C49 /* ReservedIPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */; };
-		77C6E5B862A318D4F36A02AF /* ReservedIPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969707EF483F7006E89F0552 /* ReservedIPController.swift */; };
-		123000000000000000000002 /* ObjectStoreCredentialSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */; };
 		1F53D892FB96A5B8444E7CE1 /* K8sMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6573B0CCE355C008B097BE98 /* K8sMetrics.swift */; };
+		2284B689A3B625FAF46585AC /* EditNodePoolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29CB2E3467730D081A8F818 /* EditNodePoolsView.swift */; };
+		2337D188F9472E04A2E00AC7 /* ReservedIPConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */; };
+		247A6800884F9CD341E8D6AB /* AccessibilityID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABAE6AB116F988986A46FAD /* AccessibilityID.swift */; };
+		25E21CD64765AD09704F9D37 /* KubernetesMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */; };
 		26AE2B95EE1C325878952853 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */; };
 		284AC248923AA2EA5CDA17B7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B5732ED7605F4B787E59C7E8 /* PrivacyInfo.xcprivacy */; };
+		285634D8FC741DFF0D894A38 /* EditLoadBalancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */; };
 		28F298316CEF805352753E99 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2B3F1204BB739A272BBB9D /* StoreManager.swift */; };
+		299FA7183E6D8B4656679E80 /* PasswordAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */; };
 		2A0541D7679D348A95BE47FA /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BC22D44A6BDA44A865773F /* MainWindowView.swift */; };
 		2AB1468AFB1AA9D0DD469304 /* CreateNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D863C92BB8355FC86FD7921 /* CreateNetworkView.swift */; };
 		2B4750363DC0E85118915620 /* K8sStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4052BA575096852699579B5A /* K8sStorage.swift */; };
@@ -46,8 +46,11 @@
 		2DB7B02BBEF1CB62D744F3A4 /* APIDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385A5AEFCBB0529144D112AA /* APIDecodingTests.swift */; };
 		2EC3DCCD6A0FF683DC0FB5E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB89B065ECDE31538143FC3E /* Cocoa.framework */; };
 		2EF85AB5C9373F85D1DC05E0 /* DatabaseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04DB08F4D84EE1B701922E0 /* DatabaseListView.swift */; };
+		3048395BF05F6F2BBFC28634 /* CivoReservedIPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */; };
+		304ED48A654AEAA516C7178C /* FirewallRuleEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */; };
 		321B368FDE354821E460FFEF /* K8sConnectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB62487E4451FD2F578B3E9F /* K8sConnectingView.swift */; };
 		34A4398F3278DF7FDF36355A /* CivoCloudManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B128061D13283F1412979DC /* CivoCloudManagerApp.swift */; };
+		35659D1E3DE448618AAE263F /* PushNotificationConsent.md in Resources */ = {isa = PBXBuildFile; fileRef = D0716BC9263146AA83EA2828 /* PushNotificationConsent.md */; };
 		35F330FC69A813F20C19C871 /* CreateDomainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5531411EA45415DC78696414 /* CreateDomainView.swift */; };
 		396F9D2639D20D77A9D2E3DA /* VolumeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285A563A8CF0FA4390D4D938 /* VolumeDetailView.swift */; };
 		3C06A1AEBCC26E75518B8C5E /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611244C5645319E3DD2DD6CA /* HelpView.swift */; };
@@ -55,9 +58,12 @@
 		3CC8C0AFDCF2C9EAC2987D2E /* K8sConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E32B8C0292ABE978042F2F /* K8sConfig.swift */; };
 		3EEC6A5C8E952FB91D9E3CCD /* CivoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC2D559CDF199ED3540F04 /* CivoDatabase.swift */; };
 		407748008878968B390015AC /* CivoVolumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119A83B46A65A4C30306BE66 /* CivoVolumeService.swift */; };
+		4193E67AF8300D414425E2C5 /* ReservedIPListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */; };
 		426D364547D92AF1C603A36C /* CivoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */; };
+		4596246716838307CBC0C691 /* KubernetesUpgradeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511458DF1DD312C80A41A11 /* KubernetesUpgradeController.swift */; };
 		459E8D06D65AB6DA9962A265 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB89B065ECDE31538143FC3E /* Cocoa.framework */; };
 		4778BBCA885824866A8DAFD7 /* EditLabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50E6CD15E3F39C39FE6FAA9 /* EditLabelsView.swift */; };
+		49C662B2D81C9DA7CE6E4ACD /* UpgradeClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */; };
 		4B15AF14CE4639F7B3470CA8 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B383DBDB2B764F3E8F02769 /* LegalView.swift */; };
 		4DB17DCC7D2CBF8F9B39921A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88481839AA22E9CED63C5D51 /* OnboardingView.swift */; };
 		4E8CDE3EFCFA23ACB58217D9 /* CreateDNSRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */; };
@@ -65,58 +71,49 @@
 		512623E040E484F055DE63AC /* QuotaGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B01D46854B56A4823DA0330 /* QuotaGauge.swift */; };
 		513524E90019F237FA4614DC /* S3Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7E5EDF83B18061721A8368 /* S3Client.swift */; };
 		548833FEB722C3B9F7FE72CF /* VolumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B062260472FCFDFF253E9F /* VolumeViewModel.swift */; };
+		548C91570A6FB0A5508C6D17 /* InstanceTagsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */; };
 		54ECDA98AB411E6933B11B61 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC352D39317C1587B65F3290 /* NotificationService.swift */; };
 		5548DD7A364ABF335B4644B2 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF124BAA294FA2132745A3A /* PaywallView.swift */; };
 		55F8F5D6B5EE5A2EE1966FC8 /* RateEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B603EEEBA9DCFD1B87098CAF /* RateEditorView.swift */; };
+		56452F95D600F3377ADF4E4D /* KubernetesVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982ABA282A573568B63318CD /* KubernetesVersion.swift */; };
+		58BB53CB110E0C5EFA08BC3E /* KubernetesMarketplaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D3FE5178B355A3C67F83C3 /* KubernetesMarketplaceController.swift */; };
+		58DC3AF42C125EB9F8FC9967 /* InstanceCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */; };
 		58E4FC5F2AD63FF75334D043 /* IPPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF890BB389705BC2A4C42E1 /* IPPreset.swift */; };
 		5952E1EE8CECC3F32EC5C45E /* CivoVolume.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */; };
 		5C3C916FEE0BB5D8C470903A /* FirewallRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */; };
-		304ED48A654AEAA516C7178C /* FirewallRuleEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */; };
-		B7E98BF22C98E6CD637204F2 /* LoadBalancerFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */; };
-		1D291856D4A9E5B0CC1A30D9 /* LoadBalancerEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */; };
-		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
-		CAC862CBA6BD0ED49BED5FF9 /* InstanceResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4043D620B2952DB90BD27713 /* InstanceResize.swift */; };
-		FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */; };
-		A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F7DC7779832C4095638A6 /* InstanceTags.swift */; };
 		5C4923F752F62B65D93A16A8 /* InstanceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */; };
-		C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */; };
-		A93D1E7E0C5F4B2A9D3E0001 /* InstanceDeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */; };
-		8F56319FA5CB4748B937D594 /* InstanceFirewallSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */; };
-		92C63FAD21F04A028A042827 /* InstanceVolumesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */; };
-		B95A7C0E3D2F4E1A9C6B0001 /* InstanceRecoverySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95A7C0E3D2F4E1A9C6B0002 /* InstanceRecoverySection.swift */; };
-		548C91570A6FB0A5508C6D17 /* InstanceTagsEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */; };
+		5CBA8E17BBBB598619E7A605 /* ReservedIPDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */; };
 		5D0D93DDB3ED7C7FEB2F23AE /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 88320D84F47B5B7234DED63F /* PrivacyPolicy.md */; };
 		613988765DB18F19D7936F26 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */; };
 		6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150226384082E5A588939D22 /* MarkdownView.swift */; };
 		61F5367A5E9DD32E68020FE1 /* SSHKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */; };
-		CDB10A3DDA4AC5E0983E14A5 /* InstanceCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967DF1876312DEA99025292C /* InstanceCredentialStore.swift */; };
+		62624571E2A1905B764A0669 /* FirewallRuleEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */; };
 		672FBCAB272D965EEA1503A7 /* CivoInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A67F276CE2F62C20312CD2 /* CivoInstance.swift */; };
+		685E20B3C41386425CFA0742 /* KubernetesNodePools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */; };
 		69AD6A864491F4044F2B011F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E080D4B547AA2B37914090E /* MenuBarView.swift */; };
 		69F6E27FFCDC4B883A1AFD23 /* LoadBalancerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */; };
-		2337D188F9472E04A2E00AC7 /* ReservedIPConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */; };
-		9C3008401A42246B7867AB6C /* AssignReservedIPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571466D45338C169B34FB273 /* AssignReservedIPView.swift */; };
-		C4C2EA2A4DB99F0A23A3AA9D /* ReserveIPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34228836FA210F83353A8189 /* ReserveIPView.swift */; };
-		5CBA8E17BBBB598619E7A605 /* ReservedIPDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */; };
-		4193E67AF8300D414425E2C5 /* ReservedIPListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */; };
 		6A344C4208F4ABD36D77273F /* Impressum.md in Resources */ = {isa = PBXBuildFile; fileRef = 94D3EC9ABD65BB78103C9392 /* Impressum.md */; };
 		6ABFB7143AA331C58109F97C /* ObjectStorePauseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84180BA7584ACEED6FC47A99 /* ObjectStorePauseService.swift */; };
+		6B79087136669F24356A1C49 /* ReservedIPViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */; };
 		6CCEA847DF32006176D3A9D4 /* ObjectStoreDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23455AFA03C51527C20C9FD9 /* ObjectStoreDetailView.swift */; };
-		123000000000000000000004 /* ObjectStoreCredentialSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123000000000000000000003 /* ObjectStoreCredentialSheet.swift */; };
 		6D119A5C224BC01FC5E3B4ED /* TermsOfService.md in Resources */ = {isa = PBXBuildFile; fileRef = 1BC43170529524470671BD19 /* TermsOfService.md */; };
 		6D378161BBA02573371EC695 /* CivoQuotaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD73BD70AC93DDA0F4B4C10C /* CivoQuotaService.swift */; };
 		6DC5321D1EB4C817873A02D1 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6058B306C16FA7AC278A657B /* Logger.swift */; };
+		6E76FF3DA3EF953AD9A70EBC /* DemoFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8FEE8C3D3FB6BF2D62438F /* DemoFixtures.swift */; };
 		716E6BD4C5E741C395B6C359 /* CreateObjectStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865A0EAD2DDB9B17FCF3CF89 /* CreateObjectStoreView.swift */; };
 		71D77DA989DA3B6D59A255A3 /* ClusterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541FD48B68AB64C17DAEF5F2 /* ClusterDetailView.swift */; };
 		73B424698FAA739D40320F7C /* CivoKubernetes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */; };
-		56452F95D600F3377ADF4E4D /* KubernetesVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982ABA282A573568B63318CD /* KubernetesVersion.swift */; };
-		25E21CD64765AD09704F9D37 /* KubernetesMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */; };
-		D3B024D8D833B3C72659BAF7 /* KubernetesNodeRecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */; };
-		685E20B3C41386425CFA0742 /* KubernetesNodePools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */; };
+		73D8F3A619D220549AC4A2A8 /* RecycleNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */; };
 		753975F3D82D9435CD26F674 /* DatabaseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85983282A122A979440979C5 /* DatabaseDetailView.swift */; };
+		7735E284F8771B7FEBD22810 /* DemoSandbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A97182DB691A79FC9CA62 /* DemoSandbox.swift */; };
+		77C6E5B862A318D4F36A02AF /* ReservedIPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969707EF483F7006E89F0552 /* ReservedIPController.swift */; };
+		78265730D6DC095332F81ED0 /* InstanceCreationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */; };
+		7AFADD01CE6DDDA503CA0454 /* AccessibilityID.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABAE6AB116F988986A46FAD /* AccessibilityID.swift */; };
 		7C871A1C8AC91B05ED99D8D1 /* PodLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371F72DDF5C28CE579789154 /* PodLogView.swift */; };
 		7EF19B51E1ED62E56F211D5F /* HelmRelease.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837D1AE2173B4355ACCED79B /* HelmRelease.swift */; };
 		7F7EA0C54266FD4D7D5A4ED1 /* PausedObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1693AEFF49056D27CAE40A92 /* PausedObjectStore.swift */; };
 		7F9DA8BCE0824BFB59A51683 /* CivoQuota.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE84E4DD07E304399A5562A3 /* CivoQuota.swift */; };
+		7FC63DE8F731FF8F6B94F08C /* InstanceCredentialVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */; };
 		7FEC86C8EA929C8AD1D4401A /* K8sPod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B5D4692DA28F2E46B9EA19 /* K8sPod.swift */; };
 		81225037F5B1D1E36B35DDD8 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD1B523085B1FE88F1390E7 /* DashboardViewModel.swift */; };
 		827BF0CFC34CB7D5CA8417BD /* FirewallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */; };
@@ -125,20 +122,21 @@
 		885F48ED34CA628EBE7F2828 /* ResourceListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AF79153962272EBDD278F1 /* ResourceListRow.swift */; };
 		88C7C637BF28A53B3619531D /* K8sNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8164394F2606510AF90B1DC /* K8sNode.swift */; };
 		892FCB7DC09D656750106A3A /* DomainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139202D046776B2447E7538A /* DomainListView.swift */; };
+		8D6FF0B021C34AA58903C92D /* TrademarkDisclaimer.md in Resources */ = {isa = PBXBuildFile; fileRef = 463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */; };
 		8DE6B49790C0D22A4AE4B088 /* K8sNodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECBE7F88791326260A0FD0 /* K8sNodeDetailView.swift */; };
+		8F56319FA5CB4748B937D594 /* InstanceFirewallSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */; };
+		8F738926268E183E74C4A0CF /* MarketplacePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */; };
 		907441463543C41FE777296C /* CivoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20A85AE8A0AAB61AEB6A794 /* CivoSize.swift */; };
 		913AB386747BFB374D3AFCE2 /* CivoLoadBalancerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */; };
-		3048395BF05F6F2BBFC28634 /* CivoReservedIPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */; };
+		92C63FAD21F04A028A042827 /* InstanceVolumesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */; };
 		94BA1B32385BCFAC0C0FDF89 /* SparklineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE58D59A701E14C63EE6DB83 /* SparklineView.swift */; };
 		96C8BD64B63F89FC1A466BF2 /* CreateInstanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C13645C38DACFF711738E83 /* CreateInstanceView.swift */; };
 		975EC513B73253687459C6C5 /* K8sEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65306F70453D10A71A4761E /* K8sEvent.swift */; };
+		9B9EEE5B427D29D1DAB1C68B /* DemoKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708AB4A4D0F7650523CA5AEB /* DemoKeychain.swift */; };
+		9C3008401A42246B7867AB6C /* AssignReservedIPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571466D45338C169B34FB273 /* AssignReservedIPView.swift */; };
 		9CC40A13E99804123BFAFFC3 /* CivoAccessLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F386D8A57C822AE215281 /* CivoAccessLabel.swift */; };
 		9E953B01155C3E5BDB427123 /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA6FF0E44C565460FE7EC0 /* ExportView.swift */; };
 		9E96AAFD3703722C2DBCAE5E /* KubernetesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */; };
-		4596246716838307CBC0C691 /* KubernetesUpgradeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511458DF1DD312C80A41A11 /* KubernetesUpgradeController.swift */; };
-		EE89F47FCF259F666D2F685C /* KubernetesNodeRecycleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07020BFB20FC327C0EEACAD8 /* KubernetesNodeRecycleController.swift */; };
-		F41D67D65903338122892805 /* KubernetesNodePoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D1D3DA92A8DA3D946A597 /* KubernetesNodePoolController.swift */; };
-		58BB53CB110E0C5EFA08BC3E /* KubernetesMarketplaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D3FE5178B355A3C67F83C3 /* KubernetesMarketplaceController.swift */; };
 		A0F4E426FF1D7B3A27BB7796 /* RegionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */; };
 		A1AAC0F11E0A4D2C8B9F0003 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AAC0F11E0A4D2C8B9F0004 /* SupportView.swift */; };
 		A2A4F5350240F0936399A783 /* CivoDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D85BF2203CFAB31EC1772C /* CivoDomain.swift */; };
@@ -146,16 +144,24 @@
 		A5835E1FCB6E30D6E95108FC /* CredentialListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DB18154AC50CA130D2FB09 /* CredentialListView.swift */; };
 		A59742F6DF25FCF2EB1AE9C6 /* StaggeredAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8410988E047AA5A0FA5D8 /* StaggeredAppear.swift */; };
 		A6580612ACEB21975C669D0D /* CreateSSHKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75A46752B5DE0BC53F6AA21 /* CreateSSHKeyView.swift */; };
+		A7F81C323B798B759A19105C /* InstanceTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F7DC7779832C4095638A6 /* InstanceTags.swift */; };
 		A8B8CE7E9765EE121B00A62E /* CivoConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F953ABDE939CB530828314B8 /* CivoConfig.swift */; };
 		A8D9E6056F792A9B5B3C146B /* CivoDomainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EC708C7CF21BD04266D608 /* CivoDomainService.swift */; };
+		A93D1E7E0C5F4B2A9D3E0001 /* InstanceDeleteConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */; };
 		AAE860F53ABC3CC6A32456D1 /* SSHKeyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A330325FCF5408E7D101EEE0 /* SSHKeyListView.swift */; };
 		AE434A3F993D37ED14D0425C /* KubernetesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B438532CEAB87ACE7FE3EAD9 /* KubernetesAPIClient.swift */; };
 		AFC0ECE2CD7BBEDDBF99B74A /* CivoObjectStoreCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4FC9558B135D603AC2BB25 /* CivoObjectStoreCredential.swift */; };
 		B0D00784851F20F1FDAEFC13 /* CivoObjectStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB215CC1AD313B8729ED3E16 /* CivoObjectStoreService.swift */; };
+		B2730DAC5DBC81292F52EC8A /* DemoRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D53995032CF050B32F5C67C /* DemoRouter.swift */; };
 		B60C62798B450D852A9DA6BF /* SuccessOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECCC382DD128691627D9B04 /* SuccessOverlay.swift */; };
+		B7E98BF22C98E6CD637204F2 /* LoadBalancerFailure.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */; };
 		B8E523E4D740B9D2E71F35B1 /* RegionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45EDC4E0AD6ACB0769F05AE /* RegionListView.swift */; };
+		B95A7C0E3D2F4E1A9C6B0001 /* InstanceRecoverySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95A7C0E3D2F4E1A9C6B0002 /* InstanceRecoverySection.swift */; };
 		B9CD1BF413043BD4E942A848 /* IPDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25A7DC489DFA0E4E49034B4 /* IPDetector.swift */; };
+		BA5DFC7320B49A45E681D8BC /* ReservedIPRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */; };
+		BCC0CBACF6D0B3C4DC46E6EB /* CivoReservedIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E0F4F0053F27D702F2E8F0 /* CivoReservedIP.swift */; };
 		BD448021D87AB4D03482C45A /* SizePickerGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC0859594861435DF119AAC /* SizePickerGrid.swift */; };
+		BDF2E72DDCF04757A4A056B8 /* CivoConsoleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */; };
 		BE737268568E5E5296EAAF8D /* CivoRegionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D4DFF0F2B2AE3D63C83F2E /* CivoRegionService.swift */; };
 		BF1DF65ED69D37793CA9C5F0 /* ClusterListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42F5740ED2DAB63A6C76059 /* ClusterListView.swift */; };
 		BF203900BC7433A55D6C7956 /* DeleteConfirmationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48C43BE86B2443BB86D258 /* DeleteConfirmationSheet.swift */; };
@@ -163,49 +169,62 @@
 		C0194B4EB9FCF712C42F8AAE /* DomainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41379F596E3D4C00FCFD675 /* DomainViewModel.swift */; };
 		C1007A55EA2064D663C8589B /* CivoSSHKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00892F556E339C6DA8722EB4 /* CivoSSHKeyService.swift */; };
 		C26A84FA3B7230665144CF0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F05D70928F4E7B5143C97B40 /* Assets.xcassets */; };
+		C3241C486E24AF1001EF6F9D /* InstancePowerConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */; };
 		C3A4EB341CC1BA9D8FB5DB38 /* NetworkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0D734E5AADEC5426048D0D /* NetworkListView.swift */; };
+		C4C2EA2A4DB99F0A23A3AA9D /* ReserveIPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34228836FA210F83353A8189 /* ReserveIPView.swift */; };
+		C7311014833E428FABCEEA60 /* CivoConsole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2741081E16DA45499D7C4901 /* CivoConsole.swift */; };
 		C7595ED1E819E71B267AFC8A /* InstanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01918F95778C2210D574D04 /* InstanceViewModel.swift */; };
+		C83FD7C981CFBC6E4203E5E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB89B065ECDE31538143FC3E /* Cocoa.framework */; };
+		CAC862CBA6BD0ED49BED5FF9 /* InstanceResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4043D620B2952DB90BD27713 /* InstanceResize.swift */; };
 		CBC10B774A879C518C119298 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C38900AD57D6A3AA1BE8D86 /* AboutView.swift */; };
 		CBE791DF55C81D2069CD3487 /* CivoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */; };
 		CCD59B14F52486292E202441 /* CivoAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3F800DB4559087DDA1A05F /* CivoAPIClient.swift */; };
 		CD1920BAE3207E9019C7B47F /* CivoChargesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94407D39E1C196B6486FC650 /* CivoChargesService.swift */; };
+		CDB10A3DDA4AC5E0983E14A5 /* InstanceCredentialStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967DF1876312DEA99025292C /* InstanceCredentialStore.swift */; };
 		CF50BCCF2F8E185500CCE542 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF50BCCE2F8E185500CCE542 /* StoreKit.framework */; };
 		CF9F71CB4409F917A64531A8 /* CivoInstanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DC139DADC42F79E5D8F30 /* CivoInstanceService.swift */; };
 		D211C0CEEDBAC68A66D8E7DA /* CivoRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90DE16F3B60F3AB46A19FAD /* CivoRegion.swift */; };
 		D2274BF5A9886FF813D32F58 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C416A972F713EDEE76B1EA1 /* DashboardView.swift */; };
+		D2A041DAD851F76D4481DBD8 /* DemoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07565DD65B1F14749F2DEDBA /* DemoMode.swift */; };
+		D31BDB7103B8408EB8F22BCE /* EULA.md in Resources */ = {isa = PBXBuildFile; fileRef = 2A897D1A14AF4EFE8B4D31C7 /* EULA.md */; };
+		D3319A862BDC8A4DCE38E123 /* StoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59852B30841B3BA1698621C3 /* StoreScreenshotTests.swift */; };
+		D3B024D8D833B3C72659BAF7 /* KubernetesNodeRecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */; };
+		DB6E42A9F4264F23AF76DDFE /* AcceptableUsePolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */; };
 		E2E5DE186A4B975A32D0ADD9 /* CivoSSHKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC522011F72417D84D6479C /* CivoSSHKey.swift */; };
 		E58574531FEC680D110F53C2 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96924B1B50C19D9665E1D252 /* EmptyStateView.swift */; };
 		E6A6AF911D33CCFEEE0A3AF6 /* K8sWorkload.swift in Sources */ = {isa = PBXBuildFile; fileRef = D730A1AEFCAFE05E6012ADE3 /* K8sWorkload.swift */; };
 		E7F063AAE44EB61F9CBD888F /* CreateClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FFA22F094F0014BBCE2A8F /* CreateClusterView.swift */; };
-		49C662B2D81C9DA7CE6E4ACD /* UpgradeClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */; };
-		8F738926268E183E74C4A0CF /* MarketplacePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */; };
-		73D8F3A619D220549AC4A2A8 /* RecycleNodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */; };
-		2284B689A3B625FAF46585AC /* EditNodePoolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29CB2E3467730D081A8F818 /* EditNodePoolsView.swift */; };
+		E9CD0B9406374CF29332B9D0 /* ConsoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */; };
+		EC16CFB8A23941F881064032 /* CostChargesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */; };
 		EC3E72BAEDE07422A50EF33E /* QuickSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */; };
 		EC5AAB7DC191448F60CD7959 /* VolumeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B6B375E3D2A3808726F712 /* VolumeListView.swift */; };
+		EE89F47FCF259F666D2F685C /* KubernetesNodeRecycleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07020BFB20FC327C0EEACAD8 /* KubernetesNodeRecycleController.swift */; };
 		EFA7E70AB8444AE2999DC969 /* CreateRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */; };
-		144D14E2D568F9258659A21F /* EditRuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */; };
-		190D3168FEF4E84E1065F9F3 /* LoadBalancerBackendTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */; };
-		285634D8FC741DFF0D894A38 /* EditLoadBalancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */; };
-		1B26A10A5910CF28408332CA /* CreateLoadBalancerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */; };
 		F05AD484AF3628B9D2B9C577 /* CivoDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0E621B8A284E2DEA9AD09B /* CivoDatabaseService.swift */; };
 		F13E64C912A91CE2F8FD8012 /* ObjectStoreBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F803DCD5E699794A5E2F38 /* ObjectStoreBrowserView.swift */; };
+		F37C90339F0D4480B523C1C9 /* InstanceConsoleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */; };
+		F41D67D65903338122892805 /* KubernetesNodePoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6D1D3DA92A8DA3D946A597 /* KubernetesNodePoolController.swift */; };
 		F509E7FC3A31BA71147F314D /* LoadBalancerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CA8D131FFE0C87209269A /* LoadBalancerListView.swift */; };
 		F5743F6D3DD9D721C81B5F02 /* ObjectStorePauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FD7A4BB9C1ACD67A6F662D /* ObjectStorePauseView.swift */; };
 		F6F922A548293F13A135D42B /* CostDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86735EED01F2D8BA1F04558F /* CostDashboardView.swift */; };
 		F7932F2F6136032F8147B674 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF45889895EE0C2002FE44 /* AppState.swift */; };
+		F852384B2C4857CAC7FEFF66 /* DemoURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31AB9C03C6951534403094A /* DemoURLProtocol.swift */; };
 		F8E59DF15B5E473A3E1EB661 /* FirewallDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05845953997D598F9CF53203 /* FirewallDetailView.swift */; };
 		F94DA13AA618B853504B71E9 /* CreateDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */; };
 		F9C47FDCDC04C1C5006271EB /* CreateVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DD872423A252DACA2ED1A /* CreateVolumeView.swift */; };
 		FAAC509E66D41F87401520CD /* CivoObjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1448D6889E0EE066A4CBB /* CivoObjectStore.swift */; };
 		FAAF3DCA9262EA12FE8B4DCB /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DFE2E2DF24970B74AA501F /* StatusBadge.swift */; };
-		D31BDB7103B8408EB8F22BCE /* EULA.md in Resources */ = {isa = PBXBuildFile; fileRef = 2A897D1A14AF4EFE8B4D31C7 /* EULA.md */; };
-		DB6E42A9F4264F23AF76DDFE /* AcceptableUsePolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */; };
-		35659D1E3DE448618AAE263F /* PushNotificationConsent.md in Resources */ = {isa = PBXBuildFile; fileRef = D0716BC9263146AA83EA2828 /* PushNotificationConsent.md */; };
-		8D6FF0B021C34AA58903C92D /* TrademarkDisclaimer.md in Resources */ = {isa = PBXBuildFile; fileRef = 463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */; };
+		FCF29C5C355FC58FE3480F87 /* InstanceBulkCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		30D618B775247C6FDA010588 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AF5037AF23E36864EDBC4F36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8C1FD72A050E4F08DB9A1650;
+			remoteInfo = CivoCloudManager;
+		};
 		6EE99BD2BFF530AE34F201DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AF5037AF23E36864EDBC4F36 /* Project object */;
@@ -216,329 +235,348 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceConsoleView.swift; sourceTree = "<group>"; };
-		F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordAccess.swift; sourceTree = "<group>"; };
-		23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialsView.swift; sourceTree = "<group>"; };
-		B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsoleViewModel.swift; sourceTree = "<group>"; };
-		3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialVault.swift; sourceTree = "<group>"; };
-		0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostChargesViewModel.swift; sourceTree = "<group>"; };
-		EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsoleService.swift; sourceTree = "<group>"; };
-		2741081E16DA45499D7C4901 /* CivoConsole.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsole.swift; sourceTree = "<group>"; };
 		00892F556E339C6DA8722EB4 /* CivoSSHKeyService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSSHKeyService.swift; sourceTree = "<group>"; };
 		00CD9DB9A03A109233D41DBD /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEdit.swift; sourceTree = "<group>"; };
+		0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarketplacePickerView.swift; sourceTree = "<group>"; };
+		02A97588917A6A8CF199B248 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		02FB2BEF141B3556EA03F5BA /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		03F8114B93982A2F65D6C5EB /* CivoCloudManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CivoCloudManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0529E990D6EA68389D4B1890 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/Impressum.md; sourceTree = "<group>"; };
 		05845953997D598F9CF53203 /* FirewallDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallDetailView.swift; sourceTree = "<group>"; };
 		05DFE2E2DF24970B74AA501F /* StatusBadge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
+		0600FEA7B69667CCB03C8D2D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0660B4FDF4FC4BE8B3DBA487 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/EULA.md; sourceTree = "<group>"; };
+		07020BFB20FC327C0EEACAD8 /* KubernetesNodeRecycleController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodeRecycleController.swift; sourceTree = "<group>"; };
+		07565DD65B1F14749F2DEDBA /* DemoMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoMode.swift; sourceTree = "<group>"; };
 		08EA781C6BA65D4C87E30D2A /* RegionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionViewModel.swift; sourceTree = "<group>"; };
+		0946922D1BCD4AA9BD0F7CA1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		09EC708C7CF21BD04266D608 /* CivoDomainService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomainService.swift; sourceTree = "<group>"; };
 		09EFA041BE8A148D92D497B3 /* CivoLoadBalancerService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancerService.swift; sourceTree = "<group>"; };
-		3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoReservedIPService.swift; sourceTree = "<group>"; };
+		0B3B5607ED2F18C4E97B4D23 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		0C657637534140BB996AC826 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		0CAB90D9E06AE3F401020357 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		0D5CD1DBF5FA4D91B1A7E184 /* CostChargesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostChargesViewModel.swift; sourceTree = "<group>"; };
+		0D66C533A1D4A7D148BAD99D /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		0DFD18515DDCB89B7B11085A /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		0E4F4E0CCEAF3A13DFDF6C04 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		119A83B46A65A4C30306BE66 /* CivoVolumeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolumeService.swift; sourceTree = "<group>"; };
+		11C1E0A6C3D046B59C67A4DF /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreCredentialSwitcher.swift; sourceTree = "<group>"; };
+		123000000000000000000003 /* ObjectStoreCredentialSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreCredentialSheet.swift; sourceTree = "<group>"; };
+		1239CF0858ADB02A9F0520F7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/EULA.md; sourceTree = "<group>"; };
+		138A97182DB691A79FC9CA62 /* DemoSandbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoSandbox.swift; sourceTree = "<group>"; };
 		139202D046776B2447E7538A /* DomainListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DomainListView.swift; sourceTree = "<group>"; };
 		150226384082E5A588939D22 /* MarkdownView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
 		158D42188BF2A1FD2BE4CD54 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		158FEB1ADBC203A9626DFBD8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		1693AEFF49056D27CAE40A92 /* PausedObjectStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PausedObjectStore.swift; sourceTree = "<group>"; };
+		1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEdit.swift; sourceTree = "<group>"; };
 		19D85BF2203CFAB31EC1772C /* CivoDomain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDomain.swift; sourceTree = "<group>"; };
 		1A4FC9558B135D603AC2BB25 /* CivoObjectStoreCredential.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreCredential.swift; sourceTree = "<group>"; };
 		1BEE043E08E69F46FD825EB1 /* K8sNetworking.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sNetworking.swift; sourceTree = "<group>"; };
+		1C8BAA2709F55A015660E669 /* DemoModeTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoModeTests.swift; sourceTree = "<group>"; };
 		1CC0859594861435DF119AAC /* SizePickerGrid.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SizePickerGrid.swift; sourceTree = "<group>"; };
 		1D4BDDF3AA8CE6F2EC6DD868 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1D6D1D3DA92A8DA3D946A597 /* KubernetesNodePoolController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodePoolController.swift; sourceTree = "<group>"; };
+		1D914EE69675240BB1C9AEFE /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/EULA.md; sourceTree = "<group>"; };
 		1E080D4B547AA2B37914090E /* MenuBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		1F3418483EDEFC2F2D8A08D8 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		1FDC2D559CDF199ED3540F04 /* CivoDatabase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabase.swift; sourceTree = "<group>"; };
 		1FFCD8C8D51F41F28ED5370D /* QuickSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuickSearchView.swift; sourceTree = "<group>"; };
 		229E5EEEB95B86DFFC416FD2 /* FirewallRule.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRule.swift; sourceTree = "<group>"; };
-		00FD6345595792E7471E6024 /* FirewallRuleEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEdit.swift; sourceTree = "<group>"; };
-		AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerFailure.swift; sourceTree = "<group>"; };
-		1808E404ECF2908066514E23 /* LoadBalancerEdit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEdit.swift; sourceTree = "<group>"; };
-		A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCreationForm.swift; sourceTree = "<group>"; };
-		4043D620B2952DB90BD27713 /* InstanceResize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceResize.swift; sourceTree = "<group>"; };
-		DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceBulkCreation.swift; sourceTree = "<group>"; };
-		838F7DC7779832C4095638A6 /* InstanceTags.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTags.swift; sourceTree = "<group>"; };
 		23455AFA03C51527C20C9FD9 /* ObjectStoreDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreDetailView.swift; sourceTree = "<group>"; };
-		123000000000000000000003 /* ObjectStoreCredentialSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreCredentialSheet.swift; sourceTree = "<group>"; };
+		23581C77F517E8401D4C2D89 /* InstanceCredentialsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialsView.swift; sourceTree = "<group>"; };
 		23D1F2CA91D34560B712C7E9 /* CivoSizeService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSizeService.swift; sourceTree = "<group>"; };
 		24636777C50BBB3191CDEE29 /* CivoCharge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoCharge.swift; sourceTree = "<group>"; };
+		26464A191217434882CF4265 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/EULA.md; sourceTree = "<group>"; };
 		26FD7A4BB9C1ACD67A6F662D /* ObjectStorePauseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStorePauseView.swift; sourceTree = "<group>"; };
+		2741081E16DA45499D7C4901 /* CivoConsole.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsole.swift; sourceTree = "<group>"; };
 		285A563A8CF0FA4390D4D938 /* VolumeDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VolumeDetailView.swift; sourceTree = "<group>"; };
 		2C13645C38DACFF711738E83 /* CreateInstanceView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateInstanceView.swift; sourceTree = "<group>"; };
 		2C7E5EDF83B18061721A8368 /* S3Client.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = S3Client.swift; sourceTree = "<group>"; };
+		2D53995032CF050B32F5C67C /* DemoRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoRouter.swift; sourceTree = "<group>"; };
+		2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstancePowerConfirmation.swift; sourceTree = "<group>"; };
 		2E3F800DB4559087DDA1A05F /* CivoAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAPIClient.swift; sourceTree = "<group>"; };
 		2E711DDE54B48DBE6F12D4A6 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		303AA24A2FAD468AA9BDE6C2 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		30C29B5780C5BD66D7761CAA /* Localizable.xcstrings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditRuleView.swift; sourceTree = "<group>"; };
 		3139DD72E464D3B3DBF382B5 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/Impressum.md; sourceTree = "<group>"; };
 		323BA1EFA2434775B360EC40 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		32DA972DCE9D23267D3212CA /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		34228836FA210F83353A8189 /* ReserveIPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReserveIPView.swift; sourceTree = "<group>"; };
+		34E6D627F0D1630A8344623C /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		356D95AD09E1E50978D20D5C /* KubernetesViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesViewModel.swift; sourceTree = "<group>"; };
-		E511458DF1DD312C80A41A11 /* KubernetesUpgradeController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesUpgradeController.swift; sourceTree = "<group>"; };
-		07020BFB20FC327C0EEACAD8 /* KubernetesNodeRecycleController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodeRecycleController.swift; sourceTree = "<group>"; };
-		1D6D1D3DA92A8DA3D946A597 /* KubernetesNodePoolController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodePoolController.swift; sourceTree = "<group>"; };
-		91D3FE5178B355A3C67F83C3 /* KubernetesMarketplaceController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesMarketplaceController.swift; sourceTree = "<group>"; };
 		371F72DDF5C28CE579789154 /* PodLogView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PodLogView.swift; sourceTree = "<group>"; };
 		385A5AEFCBB0529144D112AA /* APIDecodingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIDecodingTests.swift; sourceTree = "<group>"; };
+		38EEAFDD8DD997EC1FBA6D2A /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		3A7CA8D131FFE0C87209269A /* LoadBalancerListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerListView.swift; sourceTree = "<group>"; };
 		3AF890BB389705BC2A4C42E1 /* IPPreset.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IPPreset.swift; sourceTree = "<group>"; };
 		3B128061D13283F1412979DC /* CivoCloudManagerApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoCloudManagerApp.swift; sourceTree = "<group>"; };
+		3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPViewModel.swift; sourceTree = "<group>"; };
+		3C9BB4AE966A5520E91E5B4D /* CivoReservedIPService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoReservedIPService.swift; sourceTree = "<group>"; };
+		3D59F2CEAB692706C25F2FFB /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		3D8E2219ADA527823768CAC8 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DE14C6D32A757EE3BABE043 /* InstanceCredentialVault.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialVault.swift; sourceTree = "<group>"; };
+		4043D620B2952DB90BD27713 /* InstanceResize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceResize.swift; sourceTree = "<group>"; };
 		4052BA575096852699579B5A /* K8sStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sStorage.swift; sourceTree = "<group>"; };
+		4132B7915DA6A3F48CF54C2E /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditLoadBalancerView.swift; sourceTree = "<group>"; };
 		41F803DCD5E699794A5E2F38 /* ObjectStoreBrowserView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreBrowserView.swift; sourceTree = "<group>"; };
 		427F5C2E5699C5774C494320 /* CivoKubernetesService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetesService.swift; sourceTree = "<group>"; };
+		42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEditor.swift; sourceTree = "<group>"; };
 		432A9F0FCC3CD318FA50C44B /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		43B89799B6E74AC5B104257F /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		44DB18154AC50CA130D2FB09 /* CredentialListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
+		453D0C2AEF549B252CEC403B /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/Impressum.md; sourceTree = "<group>"; };
 		47BC22D44A6BDA44A865773F /* MainWindowView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
-		4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancer.swift; sourceTree = "<group>"; };
-		B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPRules.swift; sourceTree = "<group>"; };
 		48E0F4F0053F27D702F2E8F0 /* CivoReservedIP.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoReservedIP.swift; sourceTree = "<group>"; };
+		4A318C70F53BD9648346CAFE /* CivoLoadBalancer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoLoadBalancer.swift; sourceTree = "<group>"; };
+		4D03089F47AFCCE901739263 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4E5FEFF737E33744B27C841B /* ActivityLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ActivityLog.swift; sourceTree = "<group>"; };
 		51B062260472FCFDFF253E9F /* VolumeViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VolumeViewModel.swift; sourceTree = "<group>"; };
+		528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEditor.swift; sourceTree = "<group>"; };
 		53AF79153962272EBDD278F1 /* ResourceListRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ResourceListRow.swift; sourceTree = "<group>"; };
 		541FD48B68AB64C17DAEF5F2 /* ClusterDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClusterDetailView.swift; sourceTree = "<group>"; };
+		550F0D71512198D606CBF3DC /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		5531411EA45415DC78696414 /* CreateDomainView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDomainView.swift; sourceTree = "<group>"; };
+		56469B97DC8541E0990B7D1B /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/EULA.md; sourceTree = "<group>"; };
+		571466D45338C169B34FB273 /* AssignReservedIPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssignReservedIPView.swift; sourceTree = "<group>"; };
+		5899CAD7644F77866257E05F /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerBackendTable.swift; sourceTree = "<group>"; };
+		59852B30841B3BA1698621C3 /* StoreScreenshotTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreScreenshotTests.swift; sourceTree = "<group>"; };
 		59B503D5F35DCF0E1704B29E /* CivoKubernetes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoKubernetes.swift; sourceTree = "<group>"; };
-		982ABA282A573568B63318CD /* KubernetesVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesVersion.swift; sourceTree = "<group>"; };
-		FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesMarketplace.swift; sourceTree = "<group>"; };
-		9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodeRecycle.swift; sourceTree = "<group>"; };
-		B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodePools.swift; sourceTree = "<group>"; };
 		5AD7C8749E56550EFAB908BA /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/Impressum.md; sourceTree = "<group>"; };
+		5B1BFB96ECCB485C959ACD7E /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		5C10C1A3D33738504C94B6CB /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		5C6007AB693639033F735D50 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/Impressum.md; sourceTree = "<group>"; };
+		5D76AED2994B31EBC35A6105 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		5DEE909290CCC663692F435F /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		6042803EF9784013997EAC40 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/EULA.md; sourceTree = "<group>"; };
 		6058B306C16FA7AC278A657B /* Logger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		611244C5645319E3DD2DD6CA /* HelpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		618697D3D7D82F7D65EDCF86 /* PodExecView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PodExecView.swift; sourceTree = "<group>"; };
+		636AE12ABCF93F695CF8DF73 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		64FC1DA3C7511385F5BF0807 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/Impressum.md; sourceTree = "<group>"; };
 		6573B0CCE355C008B097BE98 /* K8sMetrics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sMetrics.swift; sourceTree = "<group>"; };
+		65EBAD480360D46630E11664 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		65ECBE7F88791326260A0FD0 /* K8sNodeDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sNodeDetailView.swift; sourceTree = "<group>"; };
+		668730B5D3B84493A662757C /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		66DFD8FC77D84A63B85725C7 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/EULA.md; sourceTree = "<group>"; };
 		67605B8A33B72AD5D3674CC1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/Impressum.md; sourceTree = "<group>"; };
+		6902CF884B991F97508E7D9D /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/EULA.md; sourceTree = "<group>"; };
+		6922660A43BA41C8BDE10679 /* InstanceConsoleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceConsoleView.swift; sourceTree = "<group>"; };
+		6A6E210697C85A147DC20508 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6AC522011F72417D84D6479C /* CivoSSHKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSSHKey.swift; sourceTree = "<group>"; };
+		6B3A28D0793407254528F843 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		6C38900AD57D6A3AA1BE8D86 /* AboutView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		6C416A972F713EDEE76B1EA1 /* DashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		6C49FB92D8E909C0B73812F2 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/Impressum.md; sourceTree = "<group>"; };
 		6C8E6CAAC1AD5DF9B154596C /* APIHealthView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = APIHealthView.swift; sourceTree = "<group>"; };
 		6CC06AA05040B36654815EFC /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		6D09EE0597317A299FF33F61 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6F45CE7E364ED5EC40AC59DA /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/Impressum.md; sourceTree = "<group>"; };
 		6FEC678CBA94690F848CF1F7 /* QuotaEditView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaEditView.swift; sourceTree = "<group>"; };
+		708AB4A4D0F7650523CA5AEB /* DemoKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoKeychain.swift; sourceTree = "<group>"; };
+		719F75E100CB751C32A9876B /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/EULA.md; sourceTree = "<group>"; };
 		730986B6978871BAFC769F98 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/Impressum.md; sourceTree = "<group>"; };
+		73576492A22346838A2BEF3C /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		74C945EC314349EA82F5B6E8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		76BF5A70C10F21E20BB37984 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
+		77C3038FA835682932E786F4 /* DemoWindow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoWindow.swift; sourceTree = "<group>"; };
 		78272E8FB0A6CE7852764B12 /* ErrorBanner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ErrorBanner.swift; sourceTree = "<group>"; };
 		78B5D4692DA28F2E46B9EA19 /* K8sPod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sPod.swift; sourceTree = "<group>"; };
+		7B08DCACC2364E7AAC7B12D1 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		7BAA3AEA842BEDF44BE85FEC /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		7D1B95B09BB745E6AA2616EE /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		7F26AD9AE845091B084D7C1F /* DatabaseViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DatabaseViewModel.swift; sourceTree = "<group>"; };
+		818C31B68A2301A444C5C63F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		837D1AE2173B4355ACCED79B /* HelmRelease.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HelmRelease.swift; sourceTree = "<group>"; };
+		838F7DC7779832C4095638A6 /* InstanceTags.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTags.swift; sourceTree = "<group>"; };
+		83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceVolumesSection.swift; sourceTree = "<group>"; };
 		84180BA7584ACEED6FC47A99 /* ObjectStorePauseService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStorePauseService.swift; sourceTree = "<group>"; };
+		841BD30B5E21314D6B21E02E /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/EULA.md; sourceTree = "<group>"; };
 		85983282A122A979440979C5 /* DatabaseDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DatabaseDetailView.swift; sourceTree = "<group>"; };
 		85B6B375E3D2A3808726F712 /* VolumeListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VolumeListView.swift; sourceTree = "<group>"; };
+		8653AB80F44985361E9456C5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		865A0EAD2DDB9B17FCF3CF89 /* CreateObjectStoreView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateObjectStoreView.swift; sourceTree = "<group>"; };
 		86735EED01F2D8BA1F04558F /* CostDashboardView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CostDashboardView.swift; sourceTree = "<group>"; };
+		86C8C04A5EF417F735D9B5C1 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		8703B7ADBE6B3FE8F2D24EB3 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceFirewallSheet.swift; sourceTree = "<group>"; };
+		88367E96C90041C98F6CCA67 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		88481839AA22E9CED63C5D51 /* OnboardingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTagsEditor.swift; sourceTree = "<group>"; };
+		8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UpgradeClusterView.swift; sourceTree = "<group>"; };
 		8A2B3F1204BB739A272BBB9D /* StoreManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		8B8FEE8C3D3FB6BF2D62438F /* DemoFixtures.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoFixtures.swift; sourceTree = "<group>"; };
 		8CD1B523085B1FE88F1390E7 /* DashboardViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		8D4A94D0108B57DDCB3A2AF0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		8D7334B33C94EA256DA23370 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91D3FE5178B355A3C67F83C3 /* KubernetesMarketplaceController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesMarketplaceController.swift; sourceTree = "<group>"; };
 		9208F7C3043B470D09B6E5F2 /* K8sPodListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sPodListView.swift; sourceTree = "<group>"; };
+		92BBFEA5E9AC65A037DCB9F8 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		93A67F276CE2F62C20312CD2 /* CivoInstance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoInstance.swift; sourceTree = "<group>"; };
 		94407D39E1C196B6486FC650 /* CivoChargesService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoChargesService.swift; sourceTree = "<group>"; };
 		96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CivoCloudManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		96084E29DDD11011EF5EE949 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
+		9661FC3238786A53B6DE65C3 /* KubernetesNodeRecycle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodeRecycle.swift; sourceTree = "<group>"; };
+		967DF1876312DEA99025292C /* InstanceCredentialStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialStore.swift; sourceTree = "<group>"; };
 		96924B1B50C19D9665E1D252 /* EmptyStateView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
-		982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDatabaseView.swift; sourceTree = "<group>"; };
-		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
-		42D55FBB586CD2A51B3666C6 /* FirewallRuleEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallRuleEditor.swift; sourceTree = "<group>"; };
-		C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerCreateController.swift; sourceTree = "<group>"; };
-		528A29B8FD110BB3D6F31AF3 /* LoadBalancerEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerEditor.swift; sourceTree = "<group>"; };
-		3C95812E673AE209BE9E6714 /* ReservedIPViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPViewModel.swift; sourceTree = "<group>"; };
 		969707EF483F7006E89F0552 /* ReservedIPController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPController.swift; sourceTree = "<group>"; };
-		123000000000000000000001 /* ObjectStoreCredentialSwitcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreCredentialSwitcher.swift; sourceTree = "<group>"; };
+		982A7E32A9CBAD68B4E63ED5 /* CreateDatabaseView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDatabaseView.swift; sourceTree = "<group>"; };
+		982ABA282A573568B63318CD /* KubernetesVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesVersion.swift; sourceTree = "<group>"; };
+		982FE02EDBEB29B9297C9B00 /* NetworkViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkViewModel.swift; sourceTree = "<group>"; };
+		98388E52F1A241CCA105722C /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/EULA.md; sourceTree = "<group>"; };
 		9A0D734E5AADEC5426048D0D /* NetworkListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkListView.swift; sourceTree = "<group>"; };
+		9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPConfirmationView.swift; sourceTree = "<group>"; };
 		9B01D46854B56A4823DA0330 /* QuotaGauge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = QuotaGauge.swift; sourceTree = "<group>"; };
 		9B383DBDB2B764F3E8F02769 /* LegalView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
+		9BD743412B76E46803D69330 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		9CF001A1D2E20FC2079DBDCA /* CreateFirewallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateFirewallView.swift; sourceTree = "<group>"; };
 		9D2DD872423A252DACA2ED1A /* CreateVolumeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateVolumeView.swift; sourceTree = "<group>"; };
+		9D4806FC512DB10148068FE6 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/Impressum.md; sourceTree = "<group>"; };
 		9D863C92BB8355FC86FD7921 /* CreateNetworkView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateNetworkView.swift; sourceTree = "<group>"; };
 		9EAF45889895EE0C2002FE44 /* AppState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		9FCA198873A8982E8D24319F /* CivoDiskImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDiskImage.swift; sourceTree = "<group>"; };
 		A1AAC0F11E0A4D2C8B9F0004 /* SupportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		A20A85AE8A0AAB61AEB6A794 /* CivoSize.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoSize.swift; sourceTree = "<group>"; };
+		A21577E4135D4DB0B5C884DA /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateLoadBalancerView.swift; sourceTree = "<group>"; };
 		A330325FCF5408E7D101EEE0 /* SSHKeyListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSHKeyListView.swift; sourceTree = "<group>"; };
+		A4BF666091D0287D43B858A7 /* InstanceCreationForm.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCreationForm.swift; sourceTree = "<group>"; };
+		A5AF5E181E9A2C6767974A30 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		A5D4DFF0F2B2AE3D63C83F2E /* CivoRegionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoRegionService.swift; sourceTree = "<group>"; };
+		A899AC4B5EB66FC75BA3E725 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/Impressum.md; sourceTree = "<group>"; };
+		A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDeleteConfirmation.swift; sourceTree = "<group>"; };
 		A99F4DBBE587D406F9C61231 /* CivoNetworkService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetworkService.swift; sourceTree = "<group>"; };
+		AB14071F721E4034AB7583B1 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		AB96A59057CCADE5302FC5F1 /* LoadBalancerFailure.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerFailure.swift; sourceTree = "<group>"; };
 		AD0F62EB7E21B32EBD060ECF /* SSHKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SSHKeychain.swift; sourceTree = "<group>"; };
-		967DF1876312DEA99025292C /* InstanceCredentialStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceCredentialStore.swift; sourceTree = "<group>"; };
 		AE84E4DD07E304399A5562A3 /* CivoQuota.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoQuota.swift; sourceTree = "<group>"; };
+		AE954C8291924AD3B0188B3D /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/EULA.md; sourceTree = "<group>"; };
 		B12F7996F1A16922E40D6BD3 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/Impressum.md; sourceTree = "<group>"; };
 		B179BC5D3C6C2737200FE5B5 /* CivoNetwork.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoNetwork.swift; sourceTree = "<group>"; };
 		B1FB061BEA512A1FA88E34EA /* CreateRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateRuleView.swift; sourceTree = "<group>"; };
-		30FA6F3C191A8BE4D78BE042 /* EditRuleView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditRuleView.swift; sourceTree = "<group>"; };
-		5950B61F809EECDDA8BD7E58 /* LoadBalancerBackendTable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerBackendTable.swift; sourceTree = "<group>"; };
-		41F55901D24DC45E45D65ECC /* EditLoadBalancerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditLoadBalancerView.swift; sourceTree = "<group>"; };
-		A2F36DD780CB0CF6157AB780 /* CreateLoadBalancerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateLoadBalancerView.swift; sourceTree = "<group>"; };
+		B2B0B46A02EDF9EDE1B6C4A8 /* KubernetesNodePools.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesNodePools.swift; sourceTree = "<group>"; };
 		B438532CEAB87ACE7FE3EAD9 /* KubernetesAPIClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesAPIClient.swift; sourceTree = "<group>"; };
 		B5732ED7605F4B787E59C7E8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B603EEEBA9DCFD1B87098CAF /* RateEditorView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RateEditorView.swift; sourceTree = "<group>"; };
+		B62A8ACD68EB410F9BD5F3CD /* ConsoleViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConsoleViewModel.swift; sourceTree = "<group>"; };
 		B75A46752B5DE0BC53F6AA21 /* CreateSSHKeyView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateSSHKeyView.swift; sourceTree = "<group>"; };
+		B7D461C9854745D0B7EFC380 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		B8EA322020F051CCE26A7200 /* LoadBalancerDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerDetailView.swift; sourceTree = "<group>"; };
-		9A91D0C36439D39930D67CB4 /* ReservedIPConfirmationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPConfirmationView.swift; sourceTree = "<group>"; };
-		571466D45338C169B34FB273 /* AssignReservedIPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AssignReservedIPView.swift; sourceTree = "<group>"; };
-		34228836FA210F83353A8189 /* ReserveIPView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReserveIPView.swift; sourceTree = "<group>"; };
-		BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPDetailView.swift; sourceTree = "<group>"; };
-		FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPListView.swift; sourceTree = "<group>"; };
 		B90DE16F3B60F3AB46A19FAD /* CivoRegion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoRegion.swift; sourceTree = "<group>"; };
+		B95A7C0E3D2F4E1A9C6B0002 /* InstanceRecoverySection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceRecoverySection.swift; sourceTree = "<group>"; };
+		B9FE5ED4E00D3632C1792CA5 /* ReservedIPRules.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPRules.swift; sourceTree = "<group>"; };
 		BB62487E4451FD2F578B3E9F /* K8sConnectingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConnectingView.swift; sourceTree = "<group>"; };
+		BC5D7AE8EB654BB2B39E556D /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		BE58D59A701E14C63EE6DB83 /* SparklineView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
 		BE75AFA851289BE4F036FCF9 /* InstanceListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceListView.swift; sourceTree = "<group>"; };
-		A93D1E7E0C5F4B2A9D3E0002 /* InstanceDeleteConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDeleteConfirmation.swift; sourceTree = "<group>"; };
-		2DAF7F61FEDA1701B118903F /* InstancePowerConfirmation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstancePowerConfirmation.swift; sourceTree = "<group>"; };
-		8774355BE48E49482B367A23 /* InstanceFirewallSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceFirewallSheet.swift; sourceTree = "<group>"; };
-		83E3EA8A10D140F88364C5BA /* InstanceVolumesSection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceVolumesSection.swift; sourceTree = "<group>"; };
-		B95A7C0E3D2F4E1A9C6B0002 /* InstanceRecoverySection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceRecoverySection.swift; sourceTree = "<group>"; };
-		899A39862DAA7D627634A6B8 /* InstanceTagsEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceTagsEditor.swift; sourceTree = "<group>"; };
+		BFFC3639114C550EACEDD51D /* ReservedIPDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPDetailView.swift; sourceTree = "<group>"; };
+		C01D9F5EE8C2423BAAE20DD1 /* LoadBalancerCreateController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoadBalancerCreateController.swift; sourceTree = "<group>"; };
 		C0A04686E2FC426D2C4B8A75 /* CreateDNSRecordView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateDNSRecordView.swift; sourceTree = "<group>"; };
+		C12D949B31113A3931F0EB50 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = id; path = id.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		C17FDFD0A2757A7BFF86340C /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		C25A7DC489DFA0E4E49034B4 /* IPDetector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IPDetector.swift; sourceTree = "<group>"; };
+		C31AB9C03C6951534403094A /* DemoURLProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DemoURLProtocol.swift; sourceTree = "<group>"; };
+		C35E755F065E462098ECFB22 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		C50E6CD15E3F39C39FE6FAA9 /* EditLabelsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditLabelsView.swift; sourceTree = "<group>"; };
 		C75DC139DADC42F79E5D8F30 /* CivoInstanceService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoInstanceService.swift; sourceTree = "<group>"; };
+		C76CFD3D06E4833EE217A833 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/Impressum.md"; sourceTree = "<group>"; };
 		C8164394F2606510AF90B1DC /* K8sNode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sNode.swift; sourceTree = "<group>"; };
 		C88D540C390C2B2F89971D0D /* Civo Cloud Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Civo Cloud Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C899FC10CDD02C81BD245E70 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		C9F305D58A45A24D40DD5E17 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CD73BD70AC93DDA0F4B4C10C /* CivoQuotaService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoQuotaService.swift; sourceTree = "<group>"; };
 		CE48C43BE86B2443BB86D258 /* DeleteConfirmationSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteConfirmationSheet.swift; sourceTree = "<group>"; };
+		CE88F195654D942C42388782 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		CEA8410988E047AA5A0FA5D8 /* StaggeredAppear.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StaggeredAppear.swift; sourceTree = "<group>"; };
+		CF4C87390BCB79EBC3C444AC /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/EULA.md; sourceTree = "<group>"; };
 		CF50BCCE2F8E185500CCE542 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CFBD215B2F8D27B1006C0080 /* CivoCloudManager.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = CivoCloudManager.storekit; sourceTree = "<group>"; };
 		D09D9D127A7D5E20328F5F30 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D213DCCE8D4C2D0ED22073DE /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		D33F386D8A57C822AE215281 /* CivoAccessLabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoAccessLabel.swift; sourceTree = "<group>"; };
+		D3AA4FF9BA3542BDB9840EAD /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
 		D730A1AEFCAFE05E6012ADE3 /* K8sWorkload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sWorkload.swift; sourceTree = "<group>"; };
 		D86101F39E79A191C020D2DE /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/Impressum.md; sourceTree = "<group>"; };
+		D9A1FC40666257F5808AD052 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/EULA.md"; sourceTree = "<group>"; };
+		DABAE6AB116F988986A46FAD /* AccessibilityID.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccessibilityID.swift; sourceTree = "<group>"; };
+		DB195696E10F4E7B9EA89645 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		DB215CC1AD313B8729ED3E16 /* CivoObjectStoreService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStoreService.swift; sourceTree = "<group>"; };
 		DB89B065ECDE31538143FC3E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		DBD4ACCCD026B1B48E7C0072 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		DBF124BAA294FA2132745A3A /* PaywallView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		DC352D39317C1587B65F3290 /* NotificationService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		DD0E621B8A284E2DEA9AD09B /* CivoDatabaseService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoDatabaseService.swift; sourceTree = "<group>"; };
+		DDF5C729EC47E53AB4837326 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/TermsOfService.md"; sourceTree = "<group>"; };
+		DE20D1AFC9FF831023E3AA68 /* InstanceBulkCreation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceBulkCreation.swift; sourceTree = "<group>"; };
+		DF304963C895A0C44B9E4D08 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		DF8C122365AB99F406470813 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E279EDFEAF2243A0A6A94CA2 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
+		E3C784A8B0DE4498B50C166B /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		E4E32B8C0292ABE978042F2F /* K8sConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sConfig.swift; sourceTree = "<group>"; };
+		E508B179BD97FD94BC6E867A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E511458DF1DD312C80A41A11 /* KubernetesUpgradeController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesUpgradeController.swift; sourceTree = "<group>"; };
+		E51DCC5C54E1E4370C8A1A33 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		E65306F70453D10A71A4761E /* K8sEvent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = K8sEvent.swift; sourceTree = "<group>"; };
+		E76FFD7E4CAFCDCDF7A98BD0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		E87E9221921143138258B015 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/EULA.md; sourceTree = "<group>"; };
 		E8EB982C6B9FBB5DD15F657A /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/Impressum.md; sourceTree = "<group>"; };
+		E9CFCEF6708F96403677629E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
+		EC20FE440080DA001342C252 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ru; path = ru.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 		EC30E33A559EF2EDE5F1EFF7 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EC4E4960816C20C03974D4DD /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
 		ECBA6FF0E44C565460FE7EC0 /* ExportView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
 		ED9C224968AEEA8411D81E21 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/TermsOfService.md; sourceTree = "<group>"; };
 		EE9DCCC44FD39C2F22151596 /* CivoVolume.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoVolume.swift; sourceTree = "<group>"; };
 		EF44F5E3DEF4B58AF3241C8A /* InstanceDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceDetailView.swift; sourceTree = "<group>"; };
+		EF467DAEBF4E49D2BBB769E5 /* CivoConsoleService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConsoleService.swift; sourceTree = "<group>"; };
 		F01918F95778C2210D574D04 /* InstanceViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InstanceViewModel.swift; sourceTree = "<group>"; };
 		F04DB08F4D84EE1B701922E0 /* DatabaseListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DatabaseListView.swift; sourceTree = "<group>"; };
 		F05D70928F4E7B5143C97B40 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F0BB12AD192A4B28927E32DD /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		F22ABFE0D58271BEF1C782B6 /* KubeconfigParser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubeconfigParser.swift; sourceTree = "<group>"; };
-		F2FFA22F094F0014BBCE2A8F /* CreateClusterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateClusterView.swift; sourceTree = "<group>"; };
-		8A0B5819DB33BFB33B52CB29 /* UpgradeClusterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UpgradeClusterView.swift; sourceTree = "<group>"; };
-		0254DF8CC84B52C91C22B3FD /* MarketplacePickerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MarketplacePickerView.swift; sourceTree = "<group>"; };
-		FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecycleNodeView.swift; sourceTree = "<group>"; };
 		F29CB2E3467730D081A8F818 /* EditNodePoolsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditNodePoolsView.swift; sourceTree = "<group>"; };
+		F2FFA22F094F0014BBCE2A8F /* CreateClusterView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CreateClusterView.swift; sourceTree = "<group>"; };
+		F3A3826B8C804D53B8762A31 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
+		F3C9C96F3E7B19A64FF6F59D /* PasswordAccess.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PasswordAccess.swift; sourceTree = "<group>"; };
+		F3E8BC45511E8AB1F3F11A40 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F41379F596E3D4C00FCFD675 /* DomainViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DomainViewModel.swift; sourceTree = "<group>"; };
 		F42F5740ED2DAB63A6C76059 /* ClusterListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClusterListView.swift; sourceTree = "<group>"; };
 		F45EDC4E0AD6ACB0769F05AE /* RegionListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegionListView.swift; sourceTree = "<group>"; };
 		F4E1448D6889E0EE066A4CBB /* CivoObjectStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoObjectStore.swift; sourceTree = "<group>"; };
+		F545067F5A0841AEB3358B41 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
 		F60841FA970B11CC88C24C39 /* CivoCloudManager.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = CivoCloudManager.entitlements; sourceTree = "<group>"; };
 		F6139AFE5D6A8935110977B3 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/TermsOfService.md; sourceTree = "<group>"; };
+		F6E8D48FE047B016D6F5E341 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = tr; path = tr.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
+		F7ECBD65A3F5499785440554 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/EULA.md; sourceTree = "<group>"; };
 		F9076D7FD4A8D5253BDED5CD /* FirewallListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FirewallListView.swift; sourceTree = "<group>"; };
 		F953ABDE939CB530828314B8 /* CivoConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoConfig.swift; sourceTree = "<group>"; };
 		F985475E4B0A46FBB3464699 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		F9FE11B50CD3EE0D3EB4EF7F /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ar; path = ar.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		FA2DB213982280DA024D7E83 /* ReservedIPListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReservedIPListView.swift; sourceTree = "<group>"; };
 		FA2DCEEDC8117A41FBC2CD5B /* ObjectStoreListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ObjectStoreListView.swift; sourceTree = "<group>"; };
+		FB9FB4F9D171ED54B625D43F /* KubernetesMarketplace.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = KubernetesMarketplace.swift; sourceTree = "<group>"; };
+		FBA1A6B09D22F5B8EE0BF4FB /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
+		FC55DFEEF7E05C59AD32C364 /* RecycleNodeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RecycleNodeView.swift; sourceTree = "<group>"; };
 		FECCC382DD128691627D9B04 /* SuccessOverlay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SuccessOverlay.swift; sourceTree = "<group>"; };
 		FF3B983A59EFD4C3E70560F6 /* CivoFirewallService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CivoFirewallService.swift; sourceTree = "<group>"; };
 		FF6DD453E48669C7FC20DB5A /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/TermsOfService.md; sourceTree = "<group>"; };
-		56469B97DC8541E0990B7D1B /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/EULA.md; sourceTree = "<group>"; };
-		E87E9221921143138258B015 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/EULA.md; sourceTree = "<group>"; };
-		66DFD8FC77D84A63B85725C7 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/EULA.md; sourceTree = "<group>"; };
-		26464A191217434882CF4265 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/EULA.md; sourceTree = "<group>"; };
-		0660B4FDF4FC4BE8B3DBA487 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/EULA.md; sourceTree = "<group>"; };
-		F7ECBD65A3F5499785440554 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/EULA.md; sourceTree = "<group>"; };
-		AE954C8291924AD3B0188B3D /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/EULA.md; sourceTree = "<group>"; };
-		6042803EF9784013997EAC40 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/EULA.md; sourceTree = "<group>"; };
-		5B1BFB96ECCB485C959ACD7E /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		F0BB12AD192A4B28927E32DD /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		B7D461C9854745D0B7EFC380 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		73576492A22346838A2BEF3C /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		0C657637534140BB996AC826 /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		0946922D1BCD4AA9BD0F7CA1 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		F3A3826B8C804D53B8762A31 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		F545067F5A0841AEB3358B41 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/AcceptableUsePolicy.md; sourceTree = "<group>"; };
-		A21577E4135D4DB0B5C884DA /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		E3C784A8B0DE4498B50C166B /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		7D1B95B09BB745E6AA2616EE /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		C35E755F065E462098ECFB22 /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		43B89799B6E74AC5B104257F /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		668730B5D3B84493A662757C /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		AB14071F721E4034AB7583B1 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		DB195696E10F4E7B9EA89645 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
-		7B08DCACC2364E7AAC7B12D1 /* en */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		303AA24A2FAD468AA9BDE6C2 /* de */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		BC5D7AE8EB654BB2B39E556D /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		D3AA4FF9BA3542BDB9840EAD /* fr */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		11C1E0A6C3D046B59C67A4DF /* it */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		E279EDFEAF2243A0A6A94CA2 /* nl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = nl; path = nl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		88367E96C90041C98F6CCA67 /* pl */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pl; path = pl.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		74C945EC314349EA82F5B6E8 /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = pt; path = pt.lproj/TrademarkDisclaimer.md; sourceTree = "<group>"; };
-		DDF5C729EC47E53AB4837326 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		E76FFD7E4CAFCDCDF7A98BD0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		34E6D627F0D1630A8344623C /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		7BAA3AEA842BEDF44BE85FEC /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		C899FC10CDD02C81BD245E70 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		86C8C04A5EF417F735D9B5C1 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		0D66C533A1D4A7D148BAD99D /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		DF304963C895A0C44B9E4D08 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/TermsOfService.md"; sourceTree = "<group>"; };
-		818C31B68A2301A444C5C63F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		4D03089F47AFCCE901739263 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ja"; path = "ja.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		C9F305D58A45A24D40DD5E17 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko"; path = "ko.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		F3E8BC45511E8AB1F3F11A40 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ar"; path = "ar.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		6A6E210697C85A147DC20508 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "hi"; path = "hi.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		DF8C122365AB99F406470813 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "id"; path = "id.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		0600FEA7B69667CCB03C8D2D /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "tr"; path = "tr.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		E508B179BD97FD94BC6E867A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru"; path = "ru.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		76BF5A70C10F21E20BB37984 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		CE88F195654D942C42388782 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		FBA1A6B09D22F5B8EE0BF4FB /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		F9FE11B50CD3EE0D3EB4EF7F /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		65EBAD480360D46630E11664 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		32DA972DCE9D23267D3212CA /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		9BD743412B76E46803D69330 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		02A97588917A6A8CF199B248 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		C76CFD3D06E4833EE217A833 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/Impressum.md"; sourceTree = "<group>"; };
-		6F45CE7E364ED5EC40AC59DA /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/Impressum.md"; sourceTree = "<group>"; };
-		0529E990D6EA68389D4B1890 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/Impressum.md"; sourceTree = "<group>"; };
-		A899AC4B5EB66FC75BA3E725 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/Impressum.md"; sourceTree = "<group>"; };
-		6C49FB92D8E909C0B73812F2 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/Impressum.md"; sourceTree = "<group>"; };
-		64FC1DA3C7511385F5BF0807 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/Impressum.md"; sourceTree = "<group>"; };
-		9D4806FC512DB10148068FE6 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/Impressum.md"; sourceTree = "<group>"; };
-		453D0C2AEF549B252CEC403B /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/Impressum.md"; sourceTree = "<group>"; };
-		D9A1FC40666257F5808AD052 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/EULA.md"; sourceTree = "<group>"; };
-		CF4C87390BCB79EBC3C444AC /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/EULA.md"; sourceTree = "<group>"; };
-		1239CF0858ADB02A9F0520F7 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/EULA.md"; sourceTree = "<group>"; };
-		1D914EE69675240BB1C9AEFE /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/EULA.md"; sourceTree = "<group>"; };
-		6902CF884B991F97508E7D9D /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/EULA.md"; sourceTree = "<group>"; };
-		98388E52F1A241CCA105722C /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/EULA.md"; sourceTree = "<group>"; };
-		841BD30B5E21314D6B21E02E /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/EULA.md"; sourceTree = "<group>"; };
-		719F75E100CB751C32A9876B /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/EULA.md"; sourceTree = "<group>"; };
-		96084E29DDD11011EF5EE949 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		8D4A94D0108B57DDCB3A2AF0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		4132B7915DA6A3F48CF54C2E /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		02FB2BEF141B3556EA03F5BA /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		6B3A28D0793407254528F843 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		3D59F2CEAB692706C25F2FFB /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		DBD4ACCCD026B1B48E7C0072 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		550F0D71512198D606CBF3DC /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/AcceptableUsePolicy.md"; sourceTree = "<group>"; };
-		E9CFCEF6708F96403677629E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		5D76AED2994B31EBC35A6105 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		92BBFEA5E9AC65A037DCB9F8 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		E51DCC5C54E1E4370C8A1A33 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		FFCB7AF3F00EA55FE39E2920 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		C12D949B31113A3931F0EB50 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		F6E8D48FE047B016D6F5E341 /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		EC20FE440080DA001342C252 /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/PushNotificationConsent.md"; sourceTree = "<group>"; };
-		636AE12ABCF93F695CF8DF73 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		0B3B5607ED2F18C4E97B4D23 /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ja"; path = "ja.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		0E4F4E0CCEAF3A13DFDF6C04 /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ko"; path = "ko.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		8653AB80F44985361E9456C5 /* ar */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ar"; path = "ar.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		D213DCCE8D4C2D0ED22073DE /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "hi"; path = "hi.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		A5AF5E181E9A2C6767974A30 /* id */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "id"; path = "id.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		38EEAFDD8DD997EC1FBA6D2A /* tr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "tr"; path = "tr.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
-		5899CAD7644F77866257E05F /* ru */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "ru"; path = "ru.lproj/TrademarkDisclaimer.md"; sourceTree = "<group>"; };
+		FFCB7AF3F00EA55FE39E2920 /* hi */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = hi; path = hi.lproj/PushNotificationConsent.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C8D23335B602D5D4CDB167F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C83FD7C981CFBC6E4203E5E2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D04BD7B3B1CC7CC084AA4CD5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -601,6 +639,7 @@
 			children = (
 				C88D540C390C2B2F89971D0D /* Civo Cloud Manager.app */,
 				96055EB467318C4CD630D27C /* CivoCloudManagerTests.xctest */,
+				03F8114B93982A2F65D6C5EB /* CivoCloudManagerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -628,6 +667,7 @@
 				C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */,
 				D0716BC9263146AA83EA2828 /* PushNotificationConsent.md */,
 				463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */,
+				6581F09FF13E69257F6C855F /* Demo */,
 			);
 			path = CivoCloudManager;
 			sourceTree = "<group>";
@@ -680,6 +720,21 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		6581F09FF13E69257F6C855F /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				07565DD65B1F14749F2DEDBA /* DemoMode.swift */,
+				138A97182DB691A79FC9CA62 /* DemoSandbox.swift */,
+				8B8FEE8C3D3FB6BF2D62438F /* DemoFixtures.swift */,
+				2D53995032CF050B32F5C67C /* DemoRouter.swift */,
+				C31AB9C03C6951534403094A /* DemoURLProtocol.swift */,
+				77C3038FA835682932E786F4 /* DemoWindow.swift */,
+				708AB4A4D0F7650523CA5AEB /* DemoKeychain.swift */,
+			);
+			name = Demo;
+			path = Demo;
+			sourceTree = "<group>";
+		};
 		72ECF1884540088CA54642BE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -687,6 +742,15 @@
 				2FD3761C8D7AB07798C79161 /* OS X */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7A43618FEE3D388924EB085F /* CivoCloudManagerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				59852B30841B3BA1698621C3 /* StoreScreenshotTests.swift */,
+			);
+			name = CivoCloudManagerUITests;
+			path = CivoCloudManagerUITests;
 			sourceTree = "<group>";
 		};
 		8B31AD445230B8B40C93281B /* ViewModels */ = {
@@ -795,6 +859,7 @@
 			isa = PBXGroup;
 			children = (
 				385A5AEFCBB0529144D112AA /* APIDecodingTests.swift */,
+				1C8BAA2709F55A015660E669 /* DemoModeTests.swift */,
 			);
 			path = CivoCloudManagerTests;
 			sourceTree = "<group>";
@@ -876,6 +941,7 @@
 				72ECF1884540088CA54642BE /* Frameworks */,
 				4F330E5CDDB568EF3829C1AF /* CivoCloudManager */,
 				B203F3D1934541A1E71AFA35 /* CivoCloudManagerTests */,
+				7A43618FEE3D388924EB085F /* CivoCloudManagerUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -905,6 +971,7 @@
 			isa = PBXGroup;
 			children = (
 				6058B306C16FA7AC278A657B /* Logger.swift */,
+				DABAE6AB116F988986A46FAD /* AccessibilityID.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -947,6 +1014,24 @@
 			productReference = C88D540C390C2B2F89971D0D /* Civo Cloud Manager.app */;
 			productType = "com.apple.product-type.application";
 		};
+		96688807C985A76BD3FF479E /* CivoCloudManagerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C326BA881B05600E776A2374 /* Build configuration list for PBXNativeTarget "CivoCloudManagerUITests" */;
+			buildPhases = (
+				0044ADBFCB7CB05B6E87703F /* Sources */,
+				C8D23335B602D5D4CDB167F3 /* Frameworks */,
+				8615107053046FE64210B4B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EFE1E9C16964E6D6F7A5DC04 /* PBXTargetDependency */,
+			);
+			name = CivoCloudManagerUITests;
+			productName = CivoCloudManagerUITests;
+			productReference = 03F8114B93982A2F65D6C5EB /* CivoCloudManagerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -971,13 +1056,13 @@
 				pl,
 				pt,
 				"zh-Hans",
-				"ja",
-				"ko",
-				"ar",
-				"hi",
-				"id",
-				"tr",
-				"ru",
+				ja,
+				ko,
+				ar,
+				hi,
+				id,
+				tr,
+				ru,
 				Base,
 			);
 			mainGroup = DB15A2E180805CA5F250A54A;
@@ -987,6 +1072,7 @@
 			targets = (
 				8C1FD72A050E4F08DB9A1650 /* CivoCloudManager */,
 				30A94BDF0329865C334CAF4C /* CivoCloudManagerTests */,
+				96688807C985A76BD3FF479E /* CivoCloudManagerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1017,9 +1103,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8615107053046FE64210B4B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0044ADBFCB7CB05B6E87703F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3319A862BDC8A4DCE38E123 /* StoreScreenshotTests.swift in Sources */,
+				7AFADD01CE6DDDA503CA0454 /* AccessibilityID.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAFD69D89FE044A706B40A1E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1205,6 +1307,14 @@
 				6173B3AB77C4E1412409C8C4 /* MarkdownView.swift in Sources */,
 				4B15AF14CE4639F7B3470CA8 /* LegalView.swift in Sources */,
 				A1AAC0F11E0A4D2C8B9F0003 /* SupportView.swift in Sources */,
+				D2A041DAD851F76D4481DBD8 /* DemoMode.swift in Sources */,
+				7735E284F8771B7FEBD22810 /* DemoSandbox.swift in Sources */,
+				6E76FF3DA3EF953AD9A70EBC /* DemoFixtures.swift in Sources */,
+				B2730DAC5DBC81292F52EC8A /* DemoRouter.swift in Sources */,
+				F852384B2C4857CAC7FEFF66 /* DemoURLProtocol.swift in Sources */,
+				08D8BF7B151FED8CBF55F299 /* DemoWindow.swift in Sources */,
+				9B9EEE5B427D29D1DAB1C68B /* DemoKeychain.swift in Sources */,
+				247A6800884F9CD341E8D6AB /* AccessibilityID.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1213,6 +1323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB7B02BBEF1CB62D744F3A4 /* APIDecodingTests.swift in Sources */,
+				00304EDB3598C20A720568FA /* DemoModeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,6 +1335,12 @@
 			name = CivoCloudManager;
 			target = 8C1FD72A050E4F08DB9A1650 /* CivoCloudManager */;
 			targetProxy = 6EE99BD2BFF530AE34F201DB /* PBXContainerItemProxy */;
+		};
+		EFE1E9C16964E6D6F7A5DC04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CivoCloudManager;
+			target = 8C1FD72A050E4F08DB9A1650 /* CivoCloudManager */;
+			targetProxy = 30D618B775247C6FDA010588 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1251,6 +1368,29 @@
 			name = TermsOfService.md;
 			sourceTree = "<group>";
 		};
+		2A897D1A14AF4EFE8B4D31C7 /* EULA.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				56469B97DC8541E0990B7D1B /* en */,
+				E87E9221921143138258B015 /* de */,
+				66DFD8FC77D84A63B85725C7 /* es */,
+				26464A191217434882CF4265 /* fr */,
+				0660B4FDF4FC4BE8B3DBA487 /* it */,
+				F7ECBD65A3F5499785440554 /* nl */,
+				AE954C8291924AD3B0188B3D /* pl */,
+				6042803EF9784013997EAC40 /* pt */,
+				D9A1FC40666257F5808AD052 /* zh-Hans */,
+				CF4C87390BCB79EBC3C444AC /* ja */,
+				1239CF0858ADB02A9F0520F7 /* ko */,
+				1D914EE69675240BB1C9AEFE /* ar */,
+				6902CF884B991F97508E7D9D /* hi */,
+				98388E52F1A241CCA105722C /* id */,
+				841BD30B5E21314D6B21E02E /* tr */,
+				719F75E100CB751C32A9876B /* ru */,
+			);
+			name = EULA.md;
+			sourceTree = "<group>";
+		};
 		3AFE7E9501806C0FDCDDE1E9 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1272,6 +1412,29 @@
 				E508B179BD97FD94BC6E867A /* ru */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7B08DCACC2364E7AAC7B12D1 /* en */,
+				303AA24A2FAD468AA9BDE6C2 /* de */,
+				BC5D7AE8EB654BB2B39E556D /* es */,
+				D3AA4FF9BA3542BDB9840EAD /* fr */,
+				11C1E0A6C3D046B59C67A4DF /* it */,
+				E279EDFEAF2243A0A6A94CA2 /* nl */,
+				88367E96C90041C98F6CCA67 /* pl */,
+				74C945EC314349EA82F5B6E8 /* pt */,
+				636AE12ABCF93F695CF8DF73 /* zh-Hans */,
+				0B3B5607ED2F18C4E97B4D23 /* ja */,
+				0E4F4E0CCEAF3A13DFDF6C04 /* ko */,
+				8653AB80F44985361E9456C5 /* ar */,
+				D213DCCE8D4C2D0ED22073DE /* hi */,
+				A5AF5E181E9A2C6767974A30 /* id */,
+				38EEAFDD8DD997EC1FBA6D2A /* tr */,
+				5899CAD7644F77866257E05F /* ru */,
+			);
+			name = TrademarkDisclaimer.md;
 			sourceTree = "<group>";
 		};
 		88320D84F47B5B7234DED63F /* PrivacyPolicy.md */ = {
@@ -1320,29 +1483,6 @@
 			name = Impressum.md;
 			sourceTree = "<group>";
 		};
-		2A897D1A14AF4EFE8B4D31C7 /* EULA.md */ = {
-			isa = PBXVariantGroup;
-			children = (
-				56469B97DC8541E0990B7D1B /* en */,
-				E87E9221921143138258B015 /* de */,
-				66DFD8FC77D84A63B85725C7 /* es */,
-				26464A191217434882CF4265 /* fr */,
-				0660B4FDF4FC4BE8B3DBA487 /* it */,
-				F7ECBD65A3F5499785440554 /* nl */,
-				AE954C8291924AD3B0188B3D /* pl */,
-				6042803EF9784013997EAC40 /* pt */,
-				D9A1FC40666257F5808AD052 /* zh-Hans */,
-				CF4C87390BCB79EBC3C444AC /* ja */,
-				1239CF0858ADB02A9F0520F7 /* ko */,
-				1D914EE69675240BB1C9AEFE /* ar */,
-				6902CF884B991F97508E7D9D /* hi */,
-				98388E52F1A241CCA105722C /* id */,
-				841BD30B5E21314D6B21E02E /* tr */,
-				719F75E100CB751C32A9876B /* ru */,
-			);
-			name = EULA.md;
-			sourceTree = "<group>";
-		};
 		C929A20E66A64F889B04B255 /* AcceptableUsePolicy.md */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1387,29 +1527,6 @@
 				EC20FE440080DA001342C252 /* ru */,
 			);
 			name = PushNotificationConsent.md;
-			sourceTree = "<group>";
-		};
-		463CA7D2754A4A0DA4E9D784 /* TrademarkDisclaimer.md */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7B08DCACC2364E7AAC7B12D1 /* en */,
-				303AA24A2FAD468AA9BDE6C2 /* de */,
-				BC5D7AE8EB654BB2B39E556D /* es */,
-				D3AA4FF9BA3542BDB9840EAD /* fr */,
-				11C1E0A6C3D046B59C67A4DF /* it */,
-				E279EDFEAF2243A0A6A94CA2 /* nl */,
-				88367E96C90041C98F6CCA67 /* pl */,
-				74C945EC314349EA82F5B6E8 /* pt */,
-				636AE12ABCF93F695CF8DF73 /* zh-Hans */,
-				0B3B5607ED2F18C4E97B4D23 /* ja */,
-				0E4F4E0CCEAF3A13DFDF6C04 /* ko */,
-				8653AB80F44985361E9456C5 /* ar */,
-				D213DCCE8D4C2D0ED22073DE /* hi */,
-				A5AF5E181E9A2C6767974A30 /* id */,
-				38EEAFDD8DD997EC1FBA6D2A /* tr */,
-				5899CAD7644F77866257E05F /* ru */,
-			);
-			name = TrademarkDisclaimer.md;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1500,6 +1617,20 @@
 			};
 			name = Release;
 		};
+		7374E9689E3956A66CB408D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManagerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = CivoCloudManager;
+			};
+			name = Release;
+		};
 		807AEF98F3687BDBCDFA7B05 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1578,6 +1709,20 @@
 			};
 			name = Debug;
 		};
+		A8A78E9973CAEAA442D76636 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.berger-rosenstock.CivoCloudManagerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TEST_TARGET_NAME = CivoCloudManager;
+			};
+			name = Debug;
+		};
 		C46588F1DB83475C4570F998 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1653,6 +1798,15 @@
 			buildConfigurations = (
 				807AEF98F3687BDBCDFA7B05 /* Debug */,
 				023573AC0928689E24383C78 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C326BA881B05600E776A2374 /* Build configuration list for PBXNativeTarget "CivoCloudManagerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7374E9689E3956A66CB408D5 /* Release */,
+				A8A78E9973CAEAA442D76636 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

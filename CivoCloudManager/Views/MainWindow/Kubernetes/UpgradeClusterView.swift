@@ -28,6 +28,7 @@ struct UpgradeClusterView: View {
                             Text(title(of: version)).tag(Optional(version.version))
                         }
                     }
+                    .accessibilityIdentifier(AccessibilityID.upgradeVersionPicker)
                 } else if controller.isLoadingVersions {
                     ProgressView("Loading versions...")
                 } else {

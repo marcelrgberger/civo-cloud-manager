@@ -182,6 +182,7 @@ struct ClusterDetailView: View {
                     await upgrades.begin(upgrading: cluster, region: vm.selectedClusterRegion, account: vm.selectedClusterAccount)
                 }
             }
+            .accessibilityIdentifier(AccessibilityID.clusterUpgrade)
             .help("Upgrade this cluster to a newer Kubernetes version")
             .disabled(upgrades.session != nil || upgrades.isSending)
             StatusBadge(status: cluster.status)

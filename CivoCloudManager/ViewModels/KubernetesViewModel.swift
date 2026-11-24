@@ -79,6 +79,10 @@ final class KubernetesViewModel {
     private let ipDetector = IPDetector()
     private var k8sClient: KubernetesAPIClient?
 
+    /// Whether opening an active cluster connects to its Kubernetes API, which looks up the public IP, opens the
+    /// cluster firewall and fetches the kubeconfig. Demo mode never does any of that.
+    var connectsToClusterAPI = !DemoMode.isActive
+
     func refresh() async {
         isLoading = true
         error = nil
@@ -135,7 +139,7 @@ final class KubernetesViewModel {
 
         // Auto-connect to K8s API — cancel previous connection first
         connectTask?.cancel()
-        if selectedCluster?.status.lowercased() == "active" {
+        if connectsToClusterAPI, selectedCluster?.status.lowercased() == "active" {
             let clusterId = id
             connectTask = Task { await connectToCluster(clusterId) }
         }

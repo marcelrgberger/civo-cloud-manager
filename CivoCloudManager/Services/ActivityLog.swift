@@ -84,14 +84,14 @@ final class ActivityLog {
     }
 
     private func load() {
-        guard let data = UserDefaults.standard.data(forKey: key),
+        guard let data = AppEnvironment.defaults.data(forKey: key),
               let decoded = try? JSONDecoder().decode([ActivityEntry].self, from: data) else { return }
         entries = decoded
     }
 
     private func save() {
         if let data = try? JSONEncoder().encode(entries) {
-            UserDefaults.standard.set(data, forKey: key)
+            AppEnvironment.defaults.set(data, forKey: key)
         }
     }
 }
