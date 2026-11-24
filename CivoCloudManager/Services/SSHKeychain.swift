@@ -28,7 +28,7 @@ enum SSHKeychain {
     }
 
     private static var storageDir: URL {
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let appSupport = AppEnvironment.supportDirectory
         let dir = appSupport.appendingPathComponent("CivoCloudManager/ssh-keys")
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
@@ -79,6 +79,8 @@ enum SSHKeychain {
     }
 
     static func save(name: String, privateKey: Data) -> Bool {
+        // Demo mode must not create or read the encryption key of the installed app.
+        guard !DemoMode.isActive else { return false }
         keyLock.lock()
         defer { keyLock.unlock() }
         do {
@@ -101,6 +103,7 @@ enum SSHKeychain {
     }
 
     static func load(name: String) -> Data? {
+        guard !DemoMode.isActive else { return nil }
         keyLock.lock()
         defer { keyLock.unlock() }
         let path = storageDir.appendingPathComponent(name)

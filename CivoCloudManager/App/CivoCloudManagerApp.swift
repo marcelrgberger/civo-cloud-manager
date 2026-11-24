@@ -11,6 +11,7 @@ struct CivoCloudManagerApp: App {
         // NSApp may be nil during init, so defer activation policy to first run loop cycle
         DispatchQueue.main.async {
             NSApp.setActivationPolicy(.accessory)
+            DemoMode.presentAsRegularApp()
         }
     }
 
@@ -41,6 +42,7 @@ struct CivoCloudManagerApp: App {
         }
         .defaultSize(width: 1100, height: 700)
         .defaultPosition(.center)
+        .defaultLaunchBehavior(DemoMode.isActive ? .presented : .automatic)
         .commands {
             CommandGroup(replacing: .help) {
                 Button("Civo Cloud Manager Help") {

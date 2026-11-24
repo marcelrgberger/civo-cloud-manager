@@ -71,7 +71,7 @@ struct CivoCharge: Codable, Identifiable, Sendable {
 
     static var hourlyRates: [String: Double] {
         get {
-            if let data = UserDefaults.standard.data(forKey: ratesKey),
+            if let data = AppEnvironment.defaults.data(forKey: ratesKey),
                let rates = try? JSONDecoder().decode([String: Double].self, from: data) {
                 return rates
             }
@@ -83,7 +83,7 @@ struct CivoCharge: Codable, Identifiable, Sendable {
 
     static func saveHourlyRates(_ rates: [String: Double]) {
         if let data = try? JSONEncoder().encode(rates) {
-            UserDefaults.standard.set(data, forKey: ratesKey)
+            AppEnvironment.defaults.set(data, forKey: ratesKey)
         }
     }
 

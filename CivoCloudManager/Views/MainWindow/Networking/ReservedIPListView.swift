@@ -71,6 +71,7 @@ struct ReservedIPListView: View {
                         )
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier(AccessibilityID.reservedIPRow(ip.name))
                 }
             }
         }

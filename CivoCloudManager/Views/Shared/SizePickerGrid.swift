@@ -65,6 +65,8 @@ struct SizePickerGrid: View {
                         SizeCard(size: size, isSelected: selectedSize == size.name)
                     }
                     .frame(maxWidth: .infinity)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier(AccessibilityID.size(size.name))
                     .onTapGesture {
                         selectedSize = size.name
                     }

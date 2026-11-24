@@ -116,7 +116,7 @@ protocol ChargesCacheStore: Sendable {
 struct FileChargesCacheStore: ChargesCacheStore {
     let directory: URL
 
-    static let standard = FileChargesCacheStore(directory: URL.applicationSupportDirectory
+    static let standard = FileChargesCacheStore(directory: AppEnvironment.supportDirectory
         .appending(path: "CivoCloudManager/ChargesCache", directoryHint: .isDirectory))
 
     func load(scope: String, month: String) -> [CivoCharge]? {
@@ -241,7 +241,7 @@ struct CivoChargesService: Sendable {
     /// Earlier versions cached months in UserDefaults without an account scope and with
     /// local-time boundaries; those entries are neither safe nor correct to reuse.
     private static let legacyCachePurge: Void = {
-        let defaults = UserDefaults.standard
+        let defaults = AppEnvironment.defaults
         for key in defaults.dictionaryRepresentation().keys where key.hasPrefix("CivoChargesCache.") {
             defaults.removeObject(forKey: key)
         }

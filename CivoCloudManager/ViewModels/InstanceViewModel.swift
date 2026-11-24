@@ -92,8 +92,8 @@ struct RecoveryRebootStore {
 
     private static let key = "CivoRecoveryChangesAwaitingReboot"
     static let standard = RecoveryRebootStore(
-        read: { UserDefaults.standard.data(forKey: key) },
-        write: { UserDefaults.standard.set($0, forKey: key) }
+        read: { AppEnvironment.defaults.data(forKey: key) },
+        write: { AppEnvironment.defaults.set($0, forKey: key) }
     )
 
     private struct Entry: Codable {

@@ -158,13 +158,15 @@ struct MainWindowView: View {
                 }
                 #if DEBUG
                 .overlay(alignment: .bottomTrailing) {
-                    Text(store.isDebugBuild ? "DEBUG BUILD" : "RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
-                        .font(.caption2.monospaced())
-                        .padding(4)
-                        .background(.black.opacity(0.7))
-                        .foregroundStyle(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                        .padding(8)
+                    if !DemoMode.isActive {
+                        Text(store.isDebugBuild ? "DEBUG BUILD" : "RELEASE (ids: \(store.purchasedProductIDs.joined(separator: ",")))")
+                            .font(.caption2.monospaced())
+                            .padding(4)
+                            .background(.black.opacity(0.7))
+                            .foregroundStyle(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            .padding(8)
+                    }
                 }
                 #endif
             } else if !store.hasLoadedPurchaseStatus {
@@ -175,6 +177,7 @@ struct MainWindowView: View {
         }
         .navigationTitle("")
         .frame(minWidth: 900, minHeight: 600)
+        .demoCaptureSupport()
         .onChange(of: selection) { oldValue, newValue in
             if oldValue == .clusters && newValue != .clusters && kubernetesVM.isK8sConnected {
                 Task { await kubernetesVM.disconnectFromCluster() }
@@ -211,6 +214,7 @@ struct MainWindowView: View {
                             Image(systemName: section.icon)
                                 .foregroundStyle(section.iconColor)
                         }
+                        .accessibilityIdentifier(AccessibilityID.sidebar("\(section)"))
                         .tag(section)
                     }
                 }

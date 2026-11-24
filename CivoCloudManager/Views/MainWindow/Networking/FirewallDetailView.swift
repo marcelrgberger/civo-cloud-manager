@@ -15,6 +15,7 @@ struct FirewallDetailView: View {
             } else {
                 ForEach(Array(vm.rules.enumerated()), id: \.element.id) { index, rule in
                     ruleRow(rule, index: index)
+                        .accessibilityIdentifier(AccessibilityID.ruleRow(index))
                         .contextMenu {
                             Button("Edit Rule") {
                                 editor.begin(

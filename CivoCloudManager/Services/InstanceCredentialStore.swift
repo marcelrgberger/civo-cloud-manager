@@ -94,7 +94,11 @@ struct KeychainClient {
 /// `errSecItemNotFound` means "no entry"; every other status is reported.
 @MainActor
 final class InstanceCredentialStore {
+    #if DEBUG
+    static let shared = InstanceCredentialStore(keychain: DemoMode.isActive ? .demo : .system)
+    #else
     static let shared = InstanceCredentialStore(keychain: .system)
+    #endif
 
     static let service = "de.berger-rosenstock.CivoCloudManager.instance-credentials"
     static let protection = kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly

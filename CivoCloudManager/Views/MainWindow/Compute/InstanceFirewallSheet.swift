@@ -80,6 +80,7 @@ struct InstanceFirewallSheet: View {
         } else {
             List(offered, selection: Binding(get: { selectedId }, set: { selectedId = $0 ?? selectedId })) { firewall in
                 row(firewall)
+                    .accessibilityIdentifier(AccessibilityID.firewallOption(firewall.name))
             }
         }
     }

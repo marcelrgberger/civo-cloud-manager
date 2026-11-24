@@ -53,6 +53,7 @@ struct AssignReservedIPView: View {
                     Text("\(instance.name) (\(instance.publicIp ?? "-"))").tag(String?.some(instance.id))
                 }
             }
+            .accessibilityIdentifier(AccessibilityID.reservedIPInstancePicker)
         }
     }
 }

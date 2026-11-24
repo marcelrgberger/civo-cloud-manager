@@ -181,7 +181,7 @@ struct APIHealthView: View {
         request.timeoutInterval = 10
 
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await DemoNetwork.sharedSession.data(for: request)
             let code = (response as? HTTPURLResponse)?.statusCode ?? 0
             let hasData: Bool
             if let json = try? JSONSerialization.jsonObject(with: data) {

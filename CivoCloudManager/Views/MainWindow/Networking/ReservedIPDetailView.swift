@@ -58,6 +58,7 @@ struct ReservedIPDetailView: View {
         HStack {
             actionButton("Rename...", .rename)
             actionButton("Assign...", .assign)
+                .accessibilityIdentifier(AccessibilityID.reservedIPAssign)
             actionButton("Unassign...", .unassign)
             actionButton("Release...", .release, role: .destructive)
         }

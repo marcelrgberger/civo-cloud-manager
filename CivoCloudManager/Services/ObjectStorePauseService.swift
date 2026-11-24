@@ -630,7 +630,7 @@ final class ObjectStorePauseService: Sendable {
     private static let localManifestKey = "CivoCloudManager.pausedStores"
 
     private func loadLocalManifest() -> PausedStoreManifest {
-        guard let data = UserDefaults.standard.data(forKey: Self.localManifestKey) else {
+        guard let data = AppEnvironment.defaults.data(forKey: Self.localManifestKey) else {
             return PausedStoreManifest(stores: [])
         }
         return (try? JSONDecoder.pauseDecoder.decode(PausedStoreManifest.self, from: data)) ?? PausedStoreManifest(stores: [])
@@ -638,7 +638,7 @@ final class ObjectStorePauseService: Sendable {
 
     private func saveLocalManifest(_ manifest: PausedStoreManifest) {
         if let data = try? JSONEncoder.pauseEncoder.encode(manifest) {
-            UserDefaults.standard.set(data, forKey: Self.localManifestKey)
+            AppEnvironment.defaults.set(data, forKey: Self.localManifestKey)
         }
     }
 

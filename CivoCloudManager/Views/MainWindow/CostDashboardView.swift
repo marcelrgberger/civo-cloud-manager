@@ -107,8 +107,12 @@ struct CostDashboardView: View {
                     }
                 } else {
                     totalCard
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier(AccessibilityID.costsTotal)
                     typeBreakdown
                     resourceBreakdown
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier(AccessibilityID.costsBreakdown)
                 }
 
                 HStack {

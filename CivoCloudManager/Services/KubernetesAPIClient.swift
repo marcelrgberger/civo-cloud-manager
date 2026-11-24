@@ -61,13 +61,17 @@ final class KubernetesAPIClient: NSObject, @unchecked Sendable {
         // Use a delegate proxy with weak back-reference to avoid retain cycle
         let delegate = K8sSessionDelegate()
         self.sessionDelegate = delegate
-        let config = URLSessionConfiguration.ephemeral
-        config.timeoutIntervalForRequest = 15
-        config.timeoutIntervalForResource = 30
-        self.session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+        self.session = URLSession(configuration: Self.sessionConfiguration(), delegate: delegate, delegateQueue: nil)
 
         super.init()
         delegate.client = self
+    }
+
+    static func sessionConfiguration() -> URLSessionConfiguration {
+        let config = DemoNetwork.configuration(.ephemeral)
+        config.timeoutIntervalForRequest = 15
+        config.timeoutIntervalForResource = 30
+        return config
     }
 
     /// Invalidates the URLSession, cancelling all in-flight requests.

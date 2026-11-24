@@ -16,6 +16,7 @@ struct ErrorBanner: View {
         .padding(10)
         .background(.red.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 8))
+        .accessibilityIdentifier(AccessibilityID.errorBanner)
         .padding(.horizontal)
         .padding(.top, 8)
         .transition(.move(edge: .top).combined(with: .opacity))

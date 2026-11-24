@@ -31,12 +31,15 @@ final class IPDetector: Sendable {
     ]
 
     func detectIP() async throws -> String {
+        #if DEBUG
+        if DemoMode.isActive { return DemoFixtures.documentationIP }
+        #endif
         var lastError: Error = IPDetectorError.allProvidersFailed
 
         for provider in providers {
             do {
                 guard let url = URL(string: provider) else { continue }
-                let (data, response) = try await URLSession.shared.data(from: url)
+                let (data, response) = try await DemoNetwork.sharedSession.data(from: url)
 
                 guard let httpResponse = response as? HTTPURLResponse,
                       httpResponse.statusCode == 200
