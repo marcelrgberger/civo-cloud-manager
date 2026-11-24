@@ -20,7 +20,7 @@ Site web : https://digitalfreedom.co.za
 
 Le présent document clarifie la relation entre les applications publiées par l'Éditeur et toute marque de commerce, nom de marque, programme ou méthodologie de tiers mentionnés dans ces applications, supports marketing ou documents d'accompagnement.
 
-Les applications de l'Éditeur sont distribuées via l'Apple App Store et le Google Play Store et sont donc disponibles dans tous les pays et territoires desservis par ces plateformes. Le présent avertissement s'applique à l'échelle mondiale. L'Éditeur applique le droit des marques de l'Union européenne (Règlement (UE) 2017/1001 sur la marque de l'Union européenne et Directive (UE) 2015/2436) ainsi que le principe d'usage loyal nominatif comme norme de référence, et respecte en outre les règles relatives aux marques et à l'usage loyal de chaque juridiction dans laquelle les applications sont disponibles.
+Les applications de l'Éditeur sont distribuées via l'Apple App Store et sont donc disponibles dans tous les pays et territoires desservis par cette plateforme. Le présent avertissement s'applique à l'échelle mondiale. L'Éditeur applique le droit des marques de l'Union européenne (Règlement (UE) 2017/1001 sur la marque de l'Union européenne et Directive (UE) 2015/2436) ainsi que le principe d'usage loyal nominatif comme norme de référence, et respecte en outre les règles relatives aux marques et à l'usage loyal de chaque juridiction dans laquelle les applications sont disponibles.
 
 ---
 

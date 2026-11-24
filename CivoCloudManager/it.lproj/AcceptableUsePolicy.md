@@ -26,7 +26,7 @@ Utilizzando i Servizi, accetti di rispettare la presente PUA. La violazione può
 
 ### 1.1 Ambito globale
 
-I Servizi sono distribuiti tramite l'Apple App Store e il Google Play Store e sono pertanto resi disponibili in ogni paese e territorio servito da tali piattaforme. La presente PUA si applica globalmente a tutti tali utenti. Il Fornitore adotta il Regolamento Generale sulla Protezione dei Dati (GDPR) dell'Unione Europea e la normativa UE correlata come standard minimo e lo applica come base globale; si applica inoltre qualsiasi legge locale più protettiva della giurisdizione dell'utente.
+I Servizi sono distribuiti tramite l'Apple App Store e sono pertanto resi disponibili in ogni paese e territorio servito da tale piattaforma. La presente PUA si applica globalmente a tutti tali utenti. Il Fornitore adotta il Regolamento Generale sulla Protezione dei Dati (GDPR) dell'Unione Europea e la normativa UE correlata come standard minimo e lo applica come base globale; si applica inoltre qualsiasi legge locale più protettiva della giurisdizione dell'utente.
 
 ---
 

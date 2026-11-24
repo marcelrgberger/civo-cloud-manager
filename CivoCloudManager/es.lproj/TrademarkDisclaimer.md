@@ -20,7 +20,7 @@ Sitio web: https://digitalfreedom.co.za
 
 Este documento aclara la relación entre las aplicaciones publicadas por el Editor y cualquier marca registrada, nombre comercial, programa o metodología de terceros mencionados en dichas aplicaciones, materiales de marketing o documentación de apoyo.
 
-Las aplicaciones del Editor se distribuyen a través de la App Store de Apple y la Google Play Store, por lo que están disponibles en todos los países y territorios a los que acceden dichas plataformas. Este Aviso Legal es de aplicación global. El Editor aplica la legislación de la Unión Europea sobre marcas registradas (Reglamento (UE) 2017/1001 sobre la marca de la Unión Europea y la Directiva (UE) 2015/2436) y el principio de uso legítimo nominativo como estándar de referencia, y adicionalmente observa las normas sobre marcas registradas y uso legítimo de todas las jurisdicciones en las que las aplicaciones estén disponibles.
+Las aplicaciones del Editor se distribuyen a través de la App Store de Apple, por lo que están disponibles en todos los países y territorios a los que accede dicha plataforma. Este Aviso Legal es de aplicación global. El Editor aplica la legislación de la Unión Europea sobre marcas registradas (Reglamento (UE) 2017/1001 sobre la marca de la Unión Europea y la Directiva (UE) 2015/2436) y el principio de uso legítimo nominativo como estándar de referencia, y adicionalmente observa las normas sobre marcas registradas y uso legítimo de todas las jurisdicciones en las que las aplicaciones estén disponibles.
 
 ---
 

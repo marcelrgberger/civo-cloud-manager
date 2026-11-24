@@ -20,7 +20,7 @@ Web sitesi:  https://digitalfreedom.co.za
 
 Bu belge, Yayıncı tarafından yayımlanan uygulamalar ile bu uygulamalarda, pazarlama materyallerinde veya destekleyici belgelerde atıfta bulunulan üçüncü taraf ticari markalar, marka adları, programlar veya metodolojiler arasındaki ilişkiyi açıklığa kavuşturur.
 
-Yayıncı'nın uygulamaları Apple App Store ve Google Play Store üzerinden dağıtılmakta olup, bu platformların hizmet verdiği tüm ülke ve bölgelerde kullanıma sunulmaktadır. Bu Feragatname küresel olarak geçerlidir. Yayıncı, temel standart olarak AB ticari marka hukukunu (AB Ticari Markası Hakkında Tüzük (AB) 2017/1001 ve Direktif (AB) 2015/2436) ve adlandırma amaçlı adil kullanıma (nominative fair use) ilişkin doktrini uygular ve ayrıca uygulamaların sunulduğu her yargı alanındaki ticari marka ve adil kullanım kurallarına uyar.
+Yayıncı'nın uygulamaları Apple App Store üzerinden dağıtılmakta olup, bu platformun hizmet verdiği tüm ülke ve bölgelerde kullanıma sunulmaktadır. Bu Feragatname küresel olarak geçerlidir. Yayıncı, temel standart olarak AB ticari marka hukukunu (AB Ticari Markası Hakkında Tüzük (AB) 2017/1001 ve Direktif (AB) 2015/2436) ve adlandırma amaçlı adil kullanıma (nominative fair use) ilişkin doktrini uygular ve ayrıca uygulamaların sunulduğu her yargı alanındaki ticari marka ve adil kullanım kurallarına uyar.
 
 ---
 
