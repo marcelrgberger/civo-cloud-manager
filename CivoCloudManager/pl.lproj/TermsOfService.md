@@ -58,23 +58,23 @@ Usługi są świadczone na zasadzie "w miarę dostępności". Dostawca nie gwara
 
 ---
 
-## 3. KONTA
+## 3. TWÓJ KLUCZ API CIVO
 
-### 3.1 Rejestracja
+### 3.1 Brak konta u Dostawcy
 
-Niektóre Usługi mogą wymagać rejestracji konta. Musisz podać prawdziwe i kompletne dane.
+Dostawca nie prowadzi kont użytkowników dla Usług i rejestracja u Dostawcy nie jest wymagana. Aby korzystać z Civo Cloud Manager, łączysz aplikację ze swoim środowiskiem Civo za pomocą klucza API, który samodzielnie uzyskujesz od Civo.
 
 ### 3.2 Bezpieczeństwo
 
 Jesteś odpowiedzialny za:
 
-- Zachowanie poufności swoich danych uwierzytelniających
-- Wszystkie działania podejmowane w ramach Twojego konta
-- Niezwłoczne powiadomienie Dostawcy o nieautoryzowanym użyciu
+- Zachowanie poufności swojego klucza API Civo i innych danych uwierzytelniających
+- Wszystkie działania podejmowane przy użyciu Twoich danych uwierzytelniających
+- Unieważnienie przejętego klucza w Civo i niezwłoczne powiadomienie Dostawcy o nieautoryzowanym użyciu Usług
 
 ### 3.3 Zawieszenie
 
-Dostawca może zawiesić lub usunąć konta naruszające niniejsze Warunki lub obowiązujące przepisy prawa.
+Dostawca może zawiesić lub zakończyć Twój dostęp do Usług, jeżeli naruszasz niniejsze Warunki lub obowiązujące przepisy prawa.
 
 ---
 
@@ -227,7 +227,7 @@ Zobowiązanie to nie ma zastosowania, jeżeli i w zakresie, w jakim nie ponosisz
 
 ### 12.1 Przez Ciebie
 
-Możesz zaprzestać korzystania z Usług w dowolnym momencie. Wnioski o usunięcie konta można składać do Dostawcy.
+Możesz zaprzestać korzystania z Usług w dowolnym momencie. Ponieważ Dostawca nie prowadzi kont dla Usług, nie ma konta, które należałoby usunąć.
 
 ### 12.2 Przez Dostawcę
 
@@ -366,7 +366,7 @@ Roszczenia wynikające z niniejszych Warunków podlegają ustawowym terminom prz
 
 ### 16.7 Zawiadomienia
 
-Zawiadomienia do Dostawcy należy kierować na adres `hello@digitalfreedom.co.za` (ogólne) lub `data-protection@digitalfreedom.co.za` (prywatność / RODO). Zawiadomienia do Ciebie mogą być wysyłane pocztą elektroniczną na adres powiązany z Twoim kontem lub poprzez powiadomienie w aplikacji.
+Zawiadomienia do Dostawcy należy kierować na adres `hello@digitalfreedom.co.za` (ogólne) lub `data-protection@digitalfreedom.co.za` (prywatność / RODO). Zawiadomienia do Ciebie mogą być wysyłane poprzez powiadomienie w aplikacji lub, jeżeli skontaktowałeś się z Dostawcą pocztą elektroniczną, na adres, z którego korzystałeś.
 
 ### 16.8 Język
 

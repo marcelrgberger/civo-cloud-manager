@@ -58,23 +58,23 @@ Hizmetler "mevcut olduğu şekilde" sunulmaktadır. Sağlayıcı, kesintisiz eri
 
 ---
 
-## 3. HESAPLAR
+## 3. CIVO API ANAHTARINIZ
 
-### 3.1 Kayıt
+### 3.1 Sağlayıcıda Hesap Yok
 
-Bazı Hizmetler için hesap kaydı gerekebilir. Doğru ve eksiksiz bilgi vermelisiniz.
+Sağlayıcı, Hizmetler için kullanıcı hesabı işletmez ve Sağlayıcıya kayıt gerekmez. Civo Cloud Manager'ı kullanmak için uygulamayı, Civo'dan kendiniz edindiğiniz bir API anahtarıyla kendi Civo ortamınıza bağlarsınız.
 
 ### 3.2 Güvenlik
 
 Şunlardan siz sorumlusunuz:
 
-- Kimlik bilgilerinizin gizliliğini korumak
-- Hesabınız altında gerçekleşen tüm faaliyetler
-- Yetkisiz kullanım durumunda Sağlayıcı'yı bilgilendirmek
+- Civo API anahtarınızın ve diğer kimlik bilgilerinizin gizliliğini korumak
+- Kimlik bilgilerinizle gerçekleştirilen tüm faaliyetler
+- Ele geçirilmiş bir anahtarı Civo'da iptal etmek ve Hizmetlerin yetkisiz kullanımı durumunda Sağlayıcı'yı bilgilendirmek
 
 ### 3.3 Askıya Alma
 
-Sağlayıcı, bu Koşulları veya yürürlükteki yasaları ihlal eden hesapları askıya alabilir veya sonlandırabilir.
+Bu Koşulları veya yürürlükteki yasaları ihlal etmeniz hâlinde Sağlayıcı, Hizmetlere erişiminizi askıya alabilir veya sonlandırabilir.
 
 ---
 
@@ -227,7 +227,7 @@ Bu yükümlülük, ilgili ihlalden sorumlu olmadığınız durumda ve olmadığ�
 
 ### 12.1 Sizin Tarafınızdan
 
-Hizmetleri kullanmayı istediğiniz zaman bırakabilirsiniz. Hesap silme talepleri Sağlayıcıya iletilebilir.
+Hizmetleri kullanmayı istediğiniz zaman bırakabilirsiniz. Sağlayıcı Hizmetler için hesap işletmediğinden silinecek bir hesap yoktur.
 
 ### 12.2 Sağlayıcı Tarafından
 
@@ -366,7 +366,7 @@ Bu Koşullara ilişkin talepler, yürürlükteki hukukun öngördüğü yasal za
 
 ### 16.7 Bildirimler
 
-Sağlayıcıya yapılacak bildirimler  `hello@digitalfreedom.co.za`  (genel) veya  `data-protection@digitalfreedom.co.za`  (gizlilik / DSGVO) adresine gönderilmelidir. Size yapılacak bildirimler, hesabınızla ilişkili e-posta adresine veya uygulama içi bildirim yoluyla gönderilebilir.
+Sağlayıcıya yapılacak bildirimler  `hello@digitalfreedom.co.za`  (genel) veya  `data-protection@digitalfreedom.co.za`  (gizlilik / DSGVO) adresine gönderilmelidir. Size yapılacak bildirimler uygulama içi bildirim yoluyla veya Sağlayıcıyla e-posta yoluyla iletişime geçtiyseniz kullandığınız adrese gönderilebilir.
 
 ### 16.8 Dil
 

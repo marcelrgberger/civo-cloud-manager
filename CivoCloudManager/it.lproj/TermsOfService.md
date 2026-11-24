@@ -58,23 +58,23 @@ I Servizi sono forniti su base "come disponibili". Il Fornitore non garantisce a
 
 ---
 
-## 3. ACCOUNT
+## 3. LA TUA CHIAVE API CIVO
 
-### 3.1 Registrazione
+### 3.1 Nessun account presso il Fornitore
 
-Alcuni Servizi possono richiedere la registrazione di un account. Devi fornire informazioni accurate e complete.
+Il Fornitore non gestisce account utente per i Servizi e non è richiesta alcuna registrazione presso di lui. Per usare Civo Cloud Manager lo colleghi al tuo ambiente Civo con una chiave API che ottieni tu stesso da Civo.
 
 ### 3.2 Sicurezza
 
 Sei responsabile di:
 
-- Mantenere la riservatezza delle tue credenziali
-- Tutte le attività che si verificano tramite il tuo account
-- Notificare al Fornitore qualsiasi uso non autorizzato
+- Mantenere la riservatezza della tua chiave API Civo e delle altre credenziali
+- Tutte le attività svolte con le tue credenziali
+- Revocare presso Civo una chiave compromessa e notificare al Fornitore qualsiasi uso non autorizzato dei Servizi
 
 ### 3.3 Sospensione
 
-Il Fornitore può sospendere o terminare account che violano i presenti Termini o la legge applicabile.
+Il Fornitore può sospendere o terminare il tuo accesso ai Servizi se violi i presenti Termini o la legge applicabile.
 
 ---
 
@@ -227,7 +227,7 @@ Tale obbligo non si applica laddove, e nella misura in cui, non sei responsabile
 
 ### 12.1 Da parte tua
 
-Puoi smettere di utilizzare i Servizi in qualsiasi momento. Le richieste di cancellazione dell'account possono essere inviate al Fornitore.
+Puoi smettere di utilizzare i Servizi in qualsiasi momento. Poiché il Fornitore non gestisce account per i Servizi, non è necessaria alcuna cancellazione di account.
 
 ### 12.2 Da parte del Fornitore
 
@@ -366,7 +366,7 @@ Le richieste ai sensi dei presenti Termini sono soggette ai termini di prescrizi
 
 ### 16.7 Comunicazioni
 
-Le comunicazioni al Fornitore devono essere inviate a `hello@digitalfreedom.co.za` (generale) o `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Le comunicazioni a te possono essere inviate via email all'indirizzo associato al tuo account o tramite notifica in-app.
+Le comunicazioni al Fornitore devono essere inviate a `hello@digitalfreedom.co.za` (generale) o `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Le comunicazioni a te possono essere inviate tramite notifica in-app o, se hai contattato il Fornitore via email, all'indirizzo da te utilizzato.
 
 ### 16.8 Lingua
 

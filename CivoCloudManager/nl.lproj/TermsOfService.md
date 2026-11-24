@@ -58,23 +58,23 @@ De Diensten worden geleverd op een "zoals beschikbaar" basis. De Aanbieder garan
 
 ---
 
-## 3. ACCOUNTS
+## 3. UW CIVO-API-SLEUTEL
 
-### 3.1 Registratie
+### 3.1 Geen account bij de Aanbieder
 
-Voor sommige Diensten is registratie van een account vereist. U dient juiste en volledige informatie te verstrekken.
+De Aanbieder beheert voor de Diensten geen gebruikersaccounts en registratie bij de Aanbieder is niet vereist. Om Civo Cloud Manager te gebruiken koppelt u de app aan uw eigen Civo-omgeving met een API-sleutel die u zelf bij Civo aanmaakt.
 
 ### 3.2 Beveiliging
 
 U bent verantwoordelijk voor:
 
-- Het vertrouwelijk houden van uw inloggegevens
-- Alle activiteiten die onder uw account plaatsvinden
-- Het melden van ongeoorloofd gebruik aan de Aanbieder
+- Het vertrouwelijk houden van uw Civo-API-sleutel en uw overige inloggegevens
+- Alle activiteiten die met uw inloggegevens worden uitgevoerd
+- Het intrekken van een gecompromitteerde sleutel bij Civo en het melden van ongeoorloofd gebruik van de Diensten aan de Aanbieder
 
 ### 3.3 Opschorting
 
-De Aanbieder kan accounts opschorten of beëindigen die deze Voorwaarden of toepasselijke wetgeving schenden.
+De Aanbieder kan uw toegang tot de Diensten opschorten of beëindigen als u deze Voorwaarden of toepasselijke wetgeving schendt.
 
 ---
 
@@ -227,7 +227,7 @@ Deze verplichting is niet van toepassing indien en voor zover u niet verantwoord
 
 ### 12.1 Door u
 
-U kunt op elk moment stoppen met het gebruik van de Diensten. Verzoeken tot verwijdering van accounts kunnen bij de Aanbieder worden ingediend.
+U kunt op elk moment stoppen met het gebruik van de Diensten. Omdat de Aanbieder voor de Diensten geen accounts beheert, hoeft er geen account te worden verwijderd.
 
 ### 12.2 Door de Aanbieder
 
@@ -366,7 +366,7 @@ Vorderingen op grond van deze Voorwaarden zijn onderworpen aan de wettelijke ver
 
 ### 16.7 Kennisgevingen
 
-Kennisgevingen aan de Aanbieder dienen te worden gestuurd naar `hello@digitalfreedom.co.za` (algemeen) of `data-protection@digitalfreedom.co.za` (privacy / AVG). Kennisgevingen aan u kunnen worden verzonden per e-mail naar het aan uw account gekoppelde adres of via een melding in de app.
+Kennisgevingen aan de Aanbieder dienen te worden gestuurd naar `hello@digitalfreedom.co.za` (algemeen) of `data-protection@digitalfreedom.co.za` (privacy / AVG). Kennisgevingen aan u kunnen worden verzonden via een melding in de app of, als u de Aanbieder per e-mail hebt benaderd, naar het daarbij gebruikte adres.
 
 ### 16.8 Taal
 
