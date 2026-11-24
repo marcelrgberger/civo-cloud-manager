@@ -58,23 +58,23 @@ Os Serviços são fornecidos numa base "conforme disponível". O Fornecedor não
 
 ---
 
-## 3. CONTAS
+## 3. A SUA CHAVE API DA CIVO
 
-### 3.1 Registo
+### 3.1 Sem conta junto do Fornecedor
 
-Alguns Serviços podem exigir o registo de conta. Deve fornecer informações precisas e completas.
+O Fornecedor não gere contas de utilizador para os Serviços e não é necessário qualquer registo junto dele. Para utilizar o Civo Cloud Manager, liga a aplicação ao seu próprio ambiente Civo através de uma chave API que obtém você mesmo junto da Civo.
 
 ### 3.2 Segurança
 
 É responsável por:
 
-- Manter a confidencialidade das suas credenciais
-- Todas as atividades que ocorram na sua conta
-- Notificar o Fornecedor de qualquer utilização não autorizada
+- Manter a confidencialidade da sua chave API da Civo e das suas restantes credenciais
+- Todas as atividades realizadas com as suas credenciais
+- Revogar junto da Civo uma chave comprometida e notificar o Fornecedor de qualquer utilização não autorizada dos Serviços
 
 ### 3.3 Suspensão
 
-O Fornecedor pode suspender ou terminar contas que violem estes Termos ou a legislação aplicável.
+O Fornecedor pode suspender ou terminar o seu acesso aos Serviços se violar estes Termos ou a legislação aplicável.
 
 ---
 
@@ -227,7 +227,7 @@ Esta obrigação não se aplica quando, e na medida em que, não seja responsáv
 
 ### 12.1 Por Si
 
-Pode deixar de utilizar os Serviços a qualquer momento. Os pedidos de eliminação de conta podem ser submetidos ao Fornecedor.
+Pode deixar de utilizar os Serviços a qualquer momento. Como o Fornecedor não gere contas para os Serviços, não há conta a eliminar.
 
 ### 12.2 Pelo Fornecedor
 
@@ -366,7 +366,7 @@ As reclamações ao abrigo destes Termos estão sujeitas aos prazos de prescriç
 
 ### 16.7 Notificações
 
-As notificações ao Fornecedor devem ser enviadas para `hello@digitalfreedom.co.za` (geral) ou `data-protection@digitalfreedom.co.za` (privacidade / RGPD). As notificações para si podem ser enviadas por email para o endereço associado à sua conta ou por notificação na aplicação.
+As notificações ao Fornecedor devem ser enviadas para `hello@digitalfreedom.co.za` (geral) ou `data-protection@digitalfreedom.co.za` (privacidade / RGPD). As notificações para si podem ser enviadas por notificação na aplicação ou, se tiver contactado o Fornecedor por email, para o endereço que utilizou.
 
 ### 16.8 Língua
 

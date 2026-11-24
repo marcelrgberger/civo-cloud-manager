@@ -4,7 +4,7 @@
 
 A native macOS app for managing Civo Cloud infrastructure from the menu bar and a full dashboard. Published by **DigitalFreedom Global LLC**, trading as DigitalFreedom.
 
-The shipped app requires **macOS 15 or later**, matching the native Xcode target, and a Civo account with an API key. The app connects directly to Civo, Kubernetes and S3-compatible endpoints. SwiftUI, Foundation, Security, CryptoKit, StoreKit and other Apple frameworks provide the implementation; no third-party runtime dependencies or cloud CLI are required.
+The shipped app requires **macOS 15 or later**, matching the native Xcode target, and a Civo account with an API key. The app connects directly to Civo, Kubernetes and S3-compatible endpoints, asks public IP lookup services for your address and shows the publisher's support portal in the Support tab. SwiftUI, Foundation, Security, CryptoKit, StoreKit and other Apple frameworks provide the implementation; no third-party runtime dependencies or cloud CLI are required.
 
 ## Features
 
@@ -655,6 +655,14 @@ This summarizes the populated-store path; empty stores use a shorter path. Verif
 Application Support paths resolve inside the app's sandbox when sandboxed. The network-client entitlement permits API access; user exports use user-selected locations. Launch at Login uses `SMAppService`.
 
 Remaining architecture limitations include mutable shared API configuration across multi-request workflows and services coupled to shared clients. A failed firewall status lookup still produces a closed/unknown model state, so that display is not proof of server-side closure. The local trial timestamp is not tamper-resistant. These limitations are distinct from the four completed TLS, query-region, timed-closure and SSH-preservation fixes.
+
+## Privacy and data flows
+
+- The app contains no analytics, crash reporting, advertising or attribution code and uses no third-party runtime dependency. It registers no push token; notifications are local.
+- The publisher operates no backend that receives the data managed with the cloud-management features. This does not cover the Support tab, which loads the support portal at `https://support.apps.digitalfreedom.co.za` (see [PRIVACY.md](PRIVACY.md) for what that portal collects).
+- Requests go directly from the Mac to `api.civo.com` and the Civo console host, to the Kubernetes API server and S3 endpoints you configure, to `api.ipify.org`, `ifconfig.me` and `icanhazip.com` (public IP lookup for firewall rules) and, for the purchase, to Apple through StoreKit.
+- Credentials, settings, the activity log (newest 200 entries) and caches stay on the Mac, see "Persistence and current limits". Files you export (SSH private keys, kubeconfig, object store downloads) are user-managed and outside the app's protection.
+- [PRIVACY.md](PRIVACY.md) is the public privacy policy, [docs/privacy-applicability.md](docs/privacy-applicability.md) records every data flow with its evidence, legal basis and source revision.
 
 ## Paginated lists
 

@@ -26,7 +26,7 @@ En utilisant les Services, vous acceptez de vous conformer à cette PUA. Toute v
 
 ### 1.1 Portée mondiale
 
-Les Services sont distribués via l’Apple App Store et le Google Play Store et sont donc disponibles dans chaque pays et territoire desservis par ces plateformes. Cette PUA s’applique mondialement à tous ces utilisateurs. Le Fournisseur adopte le Règlement Général sur la Protection des Données (RGPD) de l’Union européenne et la législation européenne connexe comme norme minimale et l’applique comme seuil mondial ; toute législation locale plus protectrice de la juridiction de l’utilisateur s’applique également.
+Les Services sont distribués via l’Apple App Store et sont donc disponibles dans chaque pays et territoire desservis par cette plateforme. Cette PUA s’applique mondialement à tous ces utilisateurs. Le Fournisseur adopte le Règlement Général sur la Protection des Données (RGPD) de l’Union européenne et la législation européenne connexe comme norme minimale et l’applique comme seuil mondial ; toute législation locale plus protectrice de la juridiction de l’utilisateur s’applique également.
 
 ---
 

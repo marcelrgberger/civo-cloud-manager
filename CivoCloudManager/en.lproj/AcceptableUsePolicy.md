@@ -26,7 +26,7 @@ By using the Services, you agree to comply with this AUP. Violation may result i
 
 ### 1.1 Global scope
 
-The Services are distributed via the Apple App Store and the Google Play Store and are therefore made available in every country and territory those platforms serve. This AUP applies globally to all such users. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; any more protective local law of the user's jurisdiction additionally applies.
+The Services are distributed via the Apple App Store and are therefore made available in every country and territory that platform serves. This AUP applies globally to all such users. The Provider adopts the European Union General Data Protection Regulation (GDPR) and related EU law as its baseline standard and applies it as a global floor; any more protective local law of the user's jurisdiction additionally applies.
 
 ---
 

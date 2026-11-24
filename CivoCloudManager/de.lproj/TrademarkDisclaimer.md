@@ -20,7 +20,7 @@ Website: https://digitalfreedom.co.za
 
 Dieses Dokument stellt klar, welches Verhältnis zwischen den vom Herausgeber veröffentlichten Anwendungen und etwaigen in diesen Anwendungen, Marketingmaterialien oder unterstützenden Dokumentationen genannten Marken, Markennamen, Programmen oder Methoden Dritter besteht.
 
-Die Anwendungen des Herausgebers werden über den Apple App Store und den Google Play Store vertrieben und sind somit in allen Ländern und Gebieten verfügbar, die von diesen Plattformen bedient werden. Dieser Haftungsausschluss gilt weltweit. Der Herausgeber wendet das EU-Markenrecht (Verordnung (EU) 2017/1001 über die Unionsmarke und Richtlinie (EU) 2015/2436) sowie das Prinzip der beschreibenden Markenbenutzung (nominative fair use) als grundlegenden Standard an und beachtet darüber hinaus die markenrechtlichen und fair-use-Vorschriften jeder Rechtsordnung, in der die Anwendungen verfügbar gemacht werden.
+Die Anwendungen des Herausgebers werden über den Apple App Store vertrieben und sind somit in allen Ländern und Gebieten verfügbar, die von dieser Plattform bedient werden. Dieser Haftungsausschluss gilt weltweit. Der Herausgeber wendet das EU-Markenrecht (Verordnung (EU) 2017/1001 über die Unionsmarke und Richtlinie (EU) 2015/2436) sowie das Prinzip der beschreibenden Markenbenutzung (nominative fair use) als grundlegenden Standard an und beachtet darüber hinaus die markenrechtlichen und fair-use-Vorschriften jeder Rechtsordnung, in der die Anwendungen verfügbar gemacht werden.
 
 ---
 

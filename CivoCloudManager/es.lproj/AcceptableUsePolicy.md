@@ -26,7 +26,7 @@ Al utilizar los Servicios, usted acepta cumplir con esta PUA. La violación pued
 
 ### 1.1 Alcance global
 
-Los Servicios se distribuyen a través de la Apple App Store y la Google Play Store y, por lo tanto, están disponibles en todos los países y territorios a los que acceden dichas plataformas. Esta PUA se aplica globalmente a todos esos usuarios. El Proveedor adopta el Reglamento General de Protección de Datos (RGPD) de la Unión Europea y la legislación relacionada de la UE como estándar mínimo y lo aplica como base global; cualquier ley local más protectora de la jurisdicción del usuario se aplica adicionalmente.
+Los Servicios se distribuyen a través de la Apple App Store y, por lo tanto, están disponibles en todos los países y territorios a los que accede dicha plataforma. Esta PUA se aplica globalmente a todos esos usuarios. El Proveedor adopta el Reglamento General de Protección de Datos (RGPD) de la Unión Europea y la legislación relacionada de la UE como estándar mínimo y lo aplica como base global; cualquier ley local más protectora de la jurisdicción del usuario se aplica adicionalmente.
 
 ---
 

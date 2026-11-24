@@ -58,23 +58,23 @@ Les Services sont fournis « en l'état de disponibilité ». Le Fournisseur ne 
 
 ---
 
-## 3. COMPTES
+## 3. VOTRE CLÉ API CIVO
 
-### 3.1 Inscription
+### 3.1 Aucun compte auprès du Fournisseur
 
-Certains Services peuvent nécessiter la création d'un compte. Vous devez fournir des informations exactes et complètes.
+Le Fournisseur n'exploite pas de comptes utilisateur pour les Services et aucune inscription auprès de lui n'est requise. Pour utiliser Civo Cloud Manager, vous le connectez à votre propre environnement Civo au moyen d'une clé API que vous obtenez vous-même auprès de Civo.
 
 ### 3.2 Sécurité
 
 Vous êtes responsable de :
 
-- Maintenir la confidentialité de vos identifiants
-- Toutes les activités effectuées via votre compte
-- Informer le Fournisseur de toute utilisation non autorisée
+- Maintenir la confidentialité de votre clé API Civo et de vos autres identifiants
+- Toutes les activités effectuées avec vos identifiants
+- Révoquer auprès de Civo une clé compromise et informer le Fournisseur de toute utilisation non autorisée des Services
 
 ### 3.3 Suspension
 
-Le Fournisseur peut suspendre ou résilier les comptes qui enfreignent les présentes Conditions ou la législation applicable.
+Le Fournisseur peut suspendre ou résilier votre accès aux Services si vous enfreignez les présentes Conditions ou la législation applicable.
 
 ---
 
@@ -227,7 +227,7 @@ Cette obligation ne s'applique pas lorsque, et dans la mesure où, vous n'êtes 
 
 ### 12.1 Par vous
 
-Vous pouvez cesser d'utiliser les Services à tout moment. Les demandes de suppression de compte peuvent être adressées au Fournisseur.
+Vous pouvez cesser d'utiliser les Services à tout moment. Le Fournisseur n'exploitant pas de comptes pour les Services, aucune suppression de compte n'est nécessaire.
 
 ### 12.2 Par le Fournisseur
 
@@ -366,7 +366,7 @@ Les réclamations au titre des présentes Conditions sont soumises aux délais d
 
 ### 16.7 Notifications
 
-Les notifications au Fournisseur doivent être envoyées à `hello@digitalfreedom.co.za` (général) ou à `data-protection@digitalfreedom.co.za` (confidentialité / RGPD). Les notifications à votre attention peuvent être envoyées par e-mail à l'adresse associée à votre compte ou par notification intégrée à l'application.
+Les notifications au Fournisseur doivent être envoyées à `hello@digitalfreedom.co.za` (général) ou à `data-protection@digitalfreedom.co.za` (confidentialité / RGPD). Les notifications à votre attention peuvent être envoyées par notification intégrée à l'application ou, si vous avez contacté le Fournisseur par e-mail, à l'adresse que vous avez utilisée.
 
 ### 16.8 Langue
 

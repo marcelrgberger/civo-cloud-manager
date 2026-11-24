@@ -58,23 +58,23 @@ Die Dienste werden auf einer "wie verfügbar"-Basis bereitgestellt. Der Anbieter
 
 ---
 
-## 3. KONTEN
+## 3. IHR CIVO-API-SCHLÜSSEL
 
-### 3.1 Registrierung
+### 3.1 Kein Anbieterkonto
 
-Für einige Dienste ist eine Registrierung eines Kontos erforderlich. Sie müssen korrekte und vollständige Angaben machen.
+Der Anbieter führt für die Dienste keine Nutzerkonten, und eine Registrierung beim Anbieter ist nicht erforderlich. Zur Nutzung von Civo Cloud Manager verbinden Sie die Anwendung mit Ihrer eigenen Civo-Umgebung über einen API-Schlüssel, den Sie selbst bei Civo erzeugen.
 
 ### 3.2 Sicherheit
 
 Sie sind verantwortlich für:
 
-- Die Wahrung der Vertraulichkeit Ihrer Zugangsdaten
-- Alle Aktivitäten, die unter Ihrem Konto erfolgen
-- Die unverzügliche Benachrichtigung des Anbieters bei unbefugter Nutzung
+- Die Wahrung der Vertraulichkeit Ihres Civo-API-Schlüssels und Ihrer sonstigen Zugangsdaten
+- Alle Aktivitäten, die mit Ihren Zugangsdaten erfolgen
+- Das Widerrufen eines kompromittierten Schlüssels bei Civo und die unverzügliche Benachrichtigung des Anbieters bei unbefugter Nutzung der Dienste
 
 ### 3.3 Sperrung
 
-Der Anbieter kann Konten sperren oder kündigen, die gegen diese Bedingungen oder geltendes Recht verstoßen.
+Der Anbieter kann Ihren Zugang zu den Diensten sperren oder beenden, wenn Sie gegen diese Bedingungen oder geltendes Recht verstoßen.
 
 ---
 
@@ -227,7 +227,7 @@ Diese Verpflichtung gilt nicht, wenn und soweit Sie für den betreffenden Versto
 
 ### 12.1 Durch Sie
 
-Sie können die Nutzung der Dienste jederzeit beenden. Anträge auf Kontolöschung können beim Anbieter eingereicht werden.
+Sie können die Nutzung der Dienste jederzeit beenden. Da der Anbieter für die Dienste keine Konten führt, gibt es kein Konto, das gelöscht werden müsste.
 
 ### 12.2 Durch den Anbieter
 
@@ -366,7 +366,7 @@ Ansprüche aus diesen Bedingungen unterliegen den gesetzlichen Verjährungsfrist
 
 ### 16.7 Mitteilungen
 
-Mitteilungen an den Anbieter sind an `hello@digitalfreedom.co.za` (allgemein) oder `data-protection@digitalfreedom.co.za` (Datenschutz / DSGVO) zu richten. Mitteilungen an Sie können per E-Mail an die mit Ihrem Konto verbundene Adresse oder per In-App-Benachrichtigung erfolgen.
+Mitteilungen an den Anbieter sind an `hello@digitalfreedom.co.za` (allgemein) oder `data-protection@digitalfreedom.co.za` (Datenschutz / DSGVO) zu richten. Mitteilungen an Sie können per In-App-Benachrichtigung oder, wenn Sie den Anbieter per E-Mail kontaktiert haben, an die dabei verwendete Adresse erfolgen.
 
 ### 16.8 Sprache
 

@@ -20,7 +20,7 @@ Sito web: https://digitalfreedom.co.za
 
 Il presente documento chiarisce il rapporto tra le applicazioni pubblicate dall’Editore e qualsiasi marchio, nome commerciale, programma o metodologia di terzi menzionati all’interno di tali applicazioni, materiali di marketing o documentazione di supporto.
 
-Le applicazioni dell’Editore sono distribuite tramite l’Apple App Store e il Google Play Store e sono pertanto rese disponibili in ogni paese e territorio serviti da tali piattaforme. Il presente Disclaimer si applica a livello globale. L’Editore applica la normativa sui marchi dell’Unione Europea (Regolamento (UE) 2017/1001 sul marchio dell’Unione Europea e Direttiva (UE) 2015/2436) e il principio del fair use nominativo come standard di base e osserva inoltre le norme sui marchi e sul fair use di ogni giurisdizione in cui le applicazioni sono rese disponibili.
+Le applicazioni dell’Editore sono distribuite tramite l’Apple App Store e sono pertanto rese disponibili in ogni paese e territorio serviti da tale piattaforma. Il presente Disclaimer si applica a livello globale. L’Editore applica la normativa sui marchi dell’Unione Europea (Regolamento (UE) 2017/1001 sul marchio dell’Unione Europea e Direttiva (UE) 2015/2436) e il principio del fair use nominativo come standard di base e osserva inoltre le norme sui marchi e sul fair use di ogni giurisdizione in cui le applicazioni sono rese disponibili.
 
 ---
 

@@ -26,7 +26,7 @@ Dengan menggunakan Layanan, Anda setuju untuk mematuhi AUP ini. Pelanggaran dapa
 
 ### 1.1 Cakupan global
 
-Layanan didistribusikan melalui Apple App Store dan Google Play Store dan oleh karena itu tersedia di setiap negara dan wilayah yang dilayani oleh platform tersebut. AUP ini berlaku secara global untuk semua pengguna tersebut. Penyedia mengadopsi Peraturan Perlindungan Data Umum Uni Eropa (GDPR) dan hukum terkait Uni Eropa sebagai standar dasar dan menerapkannya sebagai batas minimum global; setiap hukum lokal yang lebih melindungi di yurisdiksi pengguna juga berlaku.
+Layanan didistribusikan melalui Apple App Store dan oleh karena itu tersedia di setiap negara dan wilayah yang dilayani oleh platform tersebut. AUP ini berlaku secara global untuk semua pengguna tersebut. Penyedia mengadopsi Peraturan Perlindungan Data Umum Uni Eropa (GDPR) dan hukum terkait Uni Eropa sebagai standar dasar dan menerapkannya sebagai batas minimum global; setiap hukum lokal yang lebih melindungi di yurisdiksi pengguna juga berlaku.
 
 ---
 

@@ -58,23 +58,23 @@ The Services are provided on an "as available" basis. The Provider does not guar
 
 ---
 
-## 3. ACCOUNTS
+## 3. YOUR CIVO API KEY
 
-### 3.1 Registration
+### 3.1 No Provider Account
 
-Some Services may require account registration. You must provide accurate and complete information.
+The Provider does not operate user accounts for the Services, and no registration with the Provider is required. To use Civo Cloud Manager you connect it to your own Civo environment with an API key that you obtain from Civo yourself.
 
 ### 3.2 Security
 
 You are responsible for:
 
-- Maintaining the confidentiality of your credentials
-- All activities that occur under your account
-- Notifying the Provider of any unauthorized use
+- Maintaining the confidentiality of your Civo API key and other credentials
+- All activities carried out with your credentials
+- Revoking a compromised key with Civo and notifying the Provider of any unauthorized use of the Services
 
 ### 3.3 Suspension
 
-The Provider may suspend or terminate accounts that violate these Terms or applicable law.
+The Provider may suspend or terminate your access to the Services if you violate these Terms or applicable law.
 
 ---
 
@@ -227,7 +227,7 @@ This obligation does not apply where, and to the extent that, you are not respon
 
 ### 12.1 By You
 
-You may stop using the Services at any time. Account deletion requests can be submitted to the Provider.
+You may stop using the Services at any time. The Provider does not operate accounts for the Services, so there is no account to delete.
 
 ### 12.2 By the Provider
 
@@ -366,7 +366,7 @@ Claims under these Terms are subject to the statutory limitation periods of the 
 
 ### 16.7 Notices
 
-Notices to the Provider should be sent to `hello@digitalfreedom.co.za` (general) or `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Notices to you may be sent by email to the address associated with your account or by in-app notification.
+Notices to the Provider should be sent to `hello@digitalfreedom.co.za` (general) or `data-protection@digitalfreedom.co.za` (privacy / DSGVO). Notices to you may be sent by in-app notification or, if you have contacted the Provider by email, to the address you used.
 
 ### 16.8 Language
 
